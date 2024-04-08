@@ -1,0 +1,18 @@
+export const squares = [
+  "white",
+  "black",
+  "white",
+  "black",
+  "black",
+  "white",
+  "black",
+  "white",
+  "white",
+  "black",
+  "white",
+  "black",
+  "black",
+  "white",
+  "black",
+  "white",
+];

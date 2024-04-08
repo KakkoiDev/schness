@@ -10,44 +10,18 @@
   <body>
     <script type="module">
       import van from "https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.5.0.min.js";
-      import { handlePickup, handleMove, handleDrop } from "/lib/index.js";
-
-      const movingPiece = van.state(null);
-
-      document.addEventListener("mousemove", (event) =>
-        handleMove({ event, movingPiece })
-      );
-      document.addEventListener("touchmove", (event) =>
-        handleMove({ event, movingPiece })
-      );
-      document.addEventListener("mouseup", (event) =>
-        handleDrop({ event, movingPiece })
-      );
-      document.addEventListener("touchend", (event) =>
-        handleDrop({ event, movingPiece })
-      );
-
-      const pieces = ["king", "rook", "bishop", "knight"];
-      const squares = [
-        "white",
-        "black",
-        "white",
-        "black",
-        "black",
-        "white",
-        "black",
-        "white",
-        "white",
-        "black",
-        "white",
-        "black",
-        "black",
-        "white",
-        "black",
-        "white",
-      ];
+      import {
+        handlePickup,
+        handleMove,
+        handleDrop,
+        addEventListenersToDocument,
+      } from "/lib/index.js";
+      import { pieces, squares } from "/data/index.js";
 
       const { div, img } = van.tags;
+      const movingPiece = van.state(null);
+
+      addEventListenersToDocument({ movingPiece });
 
       const piece = (props) =>
         img({
