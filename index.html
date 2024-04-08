@@ -5,117 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Schness</title>
     <link rel="icon" href="/public/king-white.svg" />
-    <style>
-      :root {
-        --square-size: 4rem;
-      }
-
-      body {
-        background: gray;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
-
-      .board {
-        width: calc(4 * var(--square-size));
-        display: flex;
-        flex-wrap: wrap;
-        margin: calc(var(--square-size) / 2) 0;
-      }
-
-      .square {
-        width: var(--square-size);
-        height: var(--square-size);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .bank {
-        background: gainsboro;
-        display: flex;
-      }
-
-      .bank .square + .square {
-        border-left: 1px solid gray;
-      }
-
-      .piece {
-        user-select: none;
-      }
-
-      .white {
-        background: white;
-      }
-
-      .black {
-        background: black;
-      }
-    </style>
+    <link rel="stylesheet" href="/style.css" />
   </head>
-
   <body>
     <script type="module">
       import van from "https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.5.0.min.js";
+      import { handlePickup, handleMove, handleDrop } from "/lib/index.js";
 
-      let movingPiece = null;
+      const movingPiece = van.state(null);
 
-      const movePieceToCursor = (event) => {
-        if (event.clientX) {
-          movingPiece.style.left =
-            event.clientX - movingPiece.clientWidth / 2 + "px";
-          movingPiece.style.top =
-            event.clientY - movingPiece.clientHeight / 2 + "px";
-        } else {
-          movingPiece.style.left =
-            event.changedTouches[0].clientX -
-            movingPiece.clientWidth / 2 +
-            "px";
-          movingPiece.style.top =
-            event.changedTouches[0].clientY -
-            movingPiece.clientHeight / 2 +
-            "px";
-        }
-      };
-
-      const handlePickup = (event) => {
-        console.log("pickup");
-        event.preventDefault();
-
-        movingPiece = event.target;
-
-        movingPiece.style.position = "fixed";
-        movingPiece.style.pointerEvents = "none";
-
-        movePieceToCursor(event);
-      };
-
-      const handleMove = (event) => {
-        if (!movingPiece) return;
-        console.log("move");
-        movePieceToCursor(event);
-      };
-
-      const handleDrop = (event) => {
-        if (!movingPiece) return;
-        console.log("drop", event.currentTarget);
-        const currentTarget = event.currentTarget;
-        if (currentTarget !== document) currentTarget.appendChild(movingPiece);
-
-        movingPiece.style.left = "";
-        movingPiece.style.top = "";
-        movingPiece.style.position = "";
-        movingPiece.style.pointerEvents = "";
-
-        movingPiece = null;
-      };
-
-      document.addEventListener("mousemove", handleMove);
-      document.addEventListener("touchmove", handleMove);
-      document.addEventListener("mouseup", handleDrop);
-      document.addEventListener("touchend", handleDrop);
+      document.addEventListener("mousemove", (event) =>
+        handleMove({ event, movingPiece })
+      );
+      document.addEventListener("touchmove", (event) =>
+        handleMove({ event, movingPiece })
+      );
+      document.addEventListener("mouseup", (event) =>
+        handleDrop({ event, movingPiece })
+      );
+      document.addEventListener("touchend", (event) =>
+        handleDrop({ event, movingPiece })
+      );
 
       const pieces = ["king", "rook", "bishop", "knight"];
       const squares = [
@@ -142,8 +52,8 @@
       const piece = (props) =>
         img({
           src: props.src,
-          ontouchstart: handlePickup,
-          onmousedown: handlePickup,
+          ontouchstart: (event) => handlePickup({ event, movingPiece }),
+          onmousedown: (event) => handlePickup({ event, movingPiece }),
           className: "piece",
         });
 
@@ -161,8 +71,8 @@
       const square = (props) =>
         div({
           className: `square ${props.color === "white" ? "white" : "black"}`,
-          ontouchend: handleDrop,
-          onmouseup: handleDrop,
+          ontouchend: (event) => handleDrop({ event, movingPiece }),
+          onmouseup: (event) => handleDrop({ event, movingPiece }),
         });
 
       const board = div(

@@ -1,0 +1,47 @@
+:root {
+  --square-size: 4rem;
+}
+
+body {
+  background: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.board {
+  width: calc(4 * var(--square-size));
+  display: flex;
+  flex-wrap: wrap;
+  margin: calc(var(--square-size) / 2) 0;
+}
+
+.square {
+  width: var(--square-size);
+  height: var(--square-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bank {
+  background: gainsboro;
+  display: flex;
+}
+
+.bank .square + .square {
+  border-left: 1px solid gray;
+}
+
+.piece {
+  user-select: none;
+}
+
+.white {
+  background: white;
+}
+
+.black {
+  background: black;
+}
