@@ -15,8 +15,14 @@
         handleMove,
         handleDrop,
         addEventListenersToDocument,
+        getPieceName,
       } from "/lib/index.js";
-      import { pieces, squares } from "/data/index.js";
+      import {
+        pieces,
+        squares,
+        colors,
+        initialPiecesPosition,
+      } from "/data/index.js";
 
       const { div, img } = van.tags;
       const movingPiece = van.state(null);
@@ -25,7 +31,7 @@
 
       const piece = (props) =>
         img({
-          src: props.src,
+          ...props,
           ontouchstart: (event) => handlePickup({ event, movingPiece }),
           onmousedown: (event) => handlePickup({ event, movingPiece }),
           className: "piece",
@@ -34,17 +40,26 @@
       const bank = ({ color }) =>
         div(
           { className: "bank" },
-          pieces.map((p) =>
-            div(
-              { className: "square" },
-              piece({ src: `/public/${p}-${color}.svg` })
-            )
-          )
+          initialPiecesPosition.map((p) => {
+            const pieceName = getPieceName({ piece: p, color });
+
+            return div(
+              { id: pieceName, className: "square" },
+              piece({
+                src: `/public/${pieceName}.svg`,
+                "data-name": pieceName,
+                "data-piece": piece,
+                "data-color": color,
+              })
+            );
+          })
         );
 
       const square = (props) =>
         div({
-          className: `square ${props.color === "white" ? "white" : "black"}`,
+          className: `square ${
+            props.color === colors.white ? colors.white : colors.black
+          }`,
           ontouchend: (event) => handleDrop({ event, movingPiece }),
           onmouseup: (event) => handleDrop({ event, movingPiece }),
         });
@@ -57,9 +72,9 @@
       );
 
       const game = div(
-        bank({ color: "black" }),
+        bank({ color: colors.black }),
         board,
-        bank({ color: "white" })
+        bank({ color: colors.white })
       );
 
       van.add(document.body, game);

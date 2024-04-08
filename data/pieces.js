@@ -1,1 +1,6 @@
-export const pieces = ["king", "rook", "bishop", "knight"];
+export const pieces = {
+  king: "king",
+  rook: "rook",
+  bishop: "bishop",
+  knight: "knight",
+};
