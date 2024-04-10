@@ -19,3 +19,5 @@ Serve client with the Live Server extension: https://marketplace.visualstudio.co
 Icon set used for the pieces: font Awesome Solid https://icon-sets.iconify.design/fa6-solid/?keyword=solid
 
 Drag & Drop logic based on this article: https://www.horuskol.net/blog/2020-08-15/drag-and-drop-elements-on-touch-devices/
+
+Game based off "Check-Tac-Toe" by Alexander Everett

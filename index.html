@@ -10,6 +10,7 @@
   <body>
     <script type="module">
       import van from "https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.5.0.min.js";
+      const { div, img } = van.tags;
       import {
         handlePickup,
         handleMove,
@@ -24,7 +25,6 @@
         initialPiecesPosition,
       } from "/data/index.js";
 
-      const { div, img } = van.tags;
       const movingPiece = van.state(null);
 
       addEventListenersToDocument({ movingPiece });
@@ -48,7 +48,6 @@
               piece({
                 src: `/public/${pieceName}.svg`,
                 "data-name": pieceName,
-                "data-piece": piece,
                 "data-color": color,
               })
             );
