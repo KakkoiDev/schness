@@ -14,6 +14,8 @@ Using VanJS to make the UI reactive: https://vanjs.org/
 
 Serve client with the Live Server extension: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
 
+Test on mobile with Ngrok: `ngrok http http://localhost:5500`, website: https://ngrok.com/
+
 ## References
 
 Icon set used for the pieces: font Awesome Solid https://icon-sets.iconify.design/fa6-solid/?keyword=solid

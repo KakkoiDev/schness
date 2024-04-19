@@ -25,58 +25,98 @@
         initialPiecesPosition,
       } from "/data/index.js";
 
-      const movingPiece = van.state(null);
+      const renderGame = () => {
+        const movingPiece = van.state(null);
+        const history = van.state([new Array(16).fill(0)]);
+        const possibleMoves = van.state(new Array(16).fill(false));
 
-      addEventListenersToDocument({ movingPiece });
+        addEventListenersToDocument({ movingPiece });
 
-      const piece = (props) =>
-        img({
-          ...props,
-          ontouchstart: (event) => handlePickup({ event, movingPiece }),
-          onmousedown: (event) => handlePickup({ event, movingPiece }),
-          className: "piece",
-        });
+        const piece = (props) =>
+          img({
+            ...props,
+            ontouchstart: (event) =>
+              handlePickup({ event, movingPiece, history, possibleMoves }),
+            onmousedown: (event) =>
+              handlePickup({ event, movingPiece, history, possibleMoves }),
+            className: "piece",
+          });
 
-      const bank = ({ color }) =>
-        div(
-          { className: "bank" },
-          initialPiecesPosition.map((p) => {
-            const pieceName = getPieceName({ piece: p, color });
+        const bank = ({ color }) =>
+          div(
+            { className: "bank" },
+            initialPiecesPosition.map((p, index) => {
+              const pieceName = getPieceName({ piece: p, color });
+              const indexModifier = color === colors.black ? 5 : 1;
 
-            return div(
-              { id: pieceName, className: "square" },
-              piece({
-                src: `/public/${pieceName}.svg`,
-                "data-name": pieceName,
-                "data-color": color,
-              })
+              return div(
+                { id: pieceName, className: "square" },
+                piece({
+                  src: `/public/${pieceName}.svg`,
+                  "data-type": p,
+                  "data-color": color,
+                  "data-index": index + indexModifier,
+                })
+              );
+            })
+          );
+
+        const square = (props) => {
+          return () =>
+            div(
+              {
+                className: `square ${
+                  possibleMoves.val[props.index]
+                    ? colors.info
+                    : props.color === colors.white
+                    ? colors.white
+                    : colors.black
+                }`,
+                "data-index": props.index,
+                ontouchend: (event) =>
+                  handleDrop({ event, movingPiece, history, possibleMoves }),
+                onmouseup: (event) =>
+                  handleDrop({ event, movingPiece, history, possibleMoves }),
+              },
+              () => {
+                const squareValue = history.val.at(-1)[props.index];
+                if (squareValue !== 0) {
+                  const type = initialPiecesPosition[(squareValue - 1) % 4];
+                  const color =
+                    squareValue - 1 < initialPiecesPosition.length
+                      ? colors.white
+                      : colors.black;
+                  const pieceName = getPieceName({ piece: type, color });
+
+                  return piece({
+                    src: `/public/${pieceName}.svg`,
+                    "data-type": type,
+                    "data-color": color,
+                    "data-index": squareValue,
+                  });
+                }
+              }
             );
-          })
+        };
+
+        const board = () =>
+          div(
+            {
+              className: "board",
+            },
+            squares.map((color, index) => square({ color, index }))
+          );
+
+        const game = div(
+          bank({ color: colors.black }),
+          board,
+          bank({ color: colors.white })
         );
 
-      const square = (props) =>
-        div({
-          className: `square ${
-            props.color === colors.white ? colors.white : colors.black
-          }`,
-          ontouchend: (event) => handleDrop({ event, movingPiece }),
-          onmouseup: (event) => handleDrop({ event, movingPiece }),
-        });
+        return game;
+      };
 
-      const board = div(
-        {
-          className: "board",
-        },
-        squares.map((color) => square({ color }))
-      );
-
-      const game = div(
-        bank({ color: colors.black }),
-        board,
-        bank({ color: colors.white })
-      );
-
-      van.add(document.body, game);
+      van.add(document.body, renderGame());
     </script>
   </body>
 </html>
