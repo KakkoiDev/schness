@@ -10,13 +10,11 @@
   <body>
     <script type="module">
       import van from "https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.5.0.min.js";
-      const { div, img } = van.tags;
       import {
         handlePickup,
-        handleMove,
         handleDrop,
         addEventListenersToDocument,
-        getPieceName,
+        getPieceSrc,
       } from "/lib/index.js";
       import {
         pieces,
@@ -25,98 +23,134 @@
         initialPiecesPosition,
       } from "/data/index.js";
 
-      const renderGame = () => {
-        const movingPiece = van.state(null);
-        const history = van.state([new Array(16).fill(0)]);
-        const possibleMoves = van.state(new Array(16).fill(false));
+      const { div, img } = van.tags;
 
-        addEventListenersToDocument({ movingPiece });
+      const movingPiece = van.state(null);
+      const history = van.state([new Array(16).fill(0)]);
+      const possibleMoves = van.state(new Array(16).fill(false));
 
-        const piece = (props) =>
-          img({
-            ...props,
-            ontouchstart: (event) =>
-              handlePickup({ event, movingPiece, history, possibleMoves }),
-            onmousedown: (event) =>
-              handlePickup({ event, movingPiece, history, possibleMoves }),
-            className: "piece",
-          });
+      addEventListenersToDocument({ movingPiece, history, possibleMoves });
 
-        const bank = ({ color }) =>
+      const piece = (props) =>
+        img({
+          ...props,
+          ontouchstart: (event) =>
+            handlePickup({ event, movingPiece, history, possibleMoves }),
+          onmousedown: (event) =>
+            handlePickup({ event, movingPiece, history, possibleMoves }),
+          className: "piece",
+        });
+
+      const bank = ({ color }) => {
+        return () =>
           div(
             { className: "bank" },
             initialPiecesPosition.map((p, index) => {
-              const pieceName = getPieceName({ piece: p, color });
+              const pieceSrc = getPieceSrc({ piece: p, color });
               const indexModifier = color === colors.black ? 5 : 1;
+              const computedIndex = index + indexModifier;
+
+              if (
+                history.val.at(-1).includes(computedIndex) ||
+                Number(movingPiece.val?.dataset.index) === computedIndex
+              ) {
+                return div({ className: "square" });
+              }
 
               return div(
-                { id: pieceName, className: "square" },
+                { className: "square" },
                 piece({
-                  src: `/public/${pieceName}.svg`,
+                  src: pieceSrc,
                   "data-type": p,
                   "data-color": color,
-                  "data-index": index + indexModifier,
+                  "data-index": computedIndex,
                 })
               );
             })
           );
-
-        const square = (props) => {
-          return () =>
-            div(
-              {
-                className: `square ${
-                  possibleMoves.val[props.index]
-                    ? colors.info
-                    : props.color === colors.white
-                    ? colors.white
-                    : colors.black
-                }`,
-                "data-index": props.index,
-                ontouchend: (event) =>
-                  handleDrop({ event, movingPiece, history, possibleMoves }),
-                onmouseup: (event) =>
-                  handleDrop({ event, movingPiece, history, possibleMoves }),
-              },
-              () => {
-                const squareValue = history.val.at(-1)[props.index];
-                if (squareValue !== 0) {
-                  const type = initialPiecesPosition[(squareValue - 1) % 4];
-                  const color =
-                    squareValue - 1 < initialPiecesPosition.length
-                      ? colors.white
-                      : colors.black;
-                  const pieceName = getPieceName({ piece: type, color });
-
-                  return piece({
-                    src: `/public/${pieceName}.svg`,
-                    "data-type": type,
-                    "data-color": color,
-                    "data-index": squareValue,
-                  });
-                }
-              }
-            );
-        };
-
-        const board = () =>
-          div(
-            {
-              className: "board",
-            },
-            squares.map((color, index) => square({ color, index }))
-          );
-
-        const game = div(
-          bank({ color: colors.black }),
-          board,
-          bank({ color: colors.white })
-        );
-
-        return game;
       };
 
-      van.add(document.body, renderGame());
+      const square = (props) => {
+        return () =>
+          div(
+            {
+              className: `square ${
+                possibleMoves.val[props.index]
+                  ? colors.info
+                  : props.color === colors.white
+                  ? colors.white
+                  : colors.black
+              }`,
+              "data-index": props.index,
+              ontouchend: (event) =>
+                handleDrop({ event, movingPiece, history, possibleMoves }),
+              onmouseup: (event) =>
+                handleDrop({ event, movingPiece, history, possibleMoves }),
+            },
+            () => {
+              const squareIndex = history.val.at(-1)[props.index];
+              const movingPieceIndex = Number(movingPiece.val?.dataset.index);
+
+              if (squareIndex !== 0 && squareIndex !== movingPieceIndex) {
+                const type = initialPiecesPosition[(squareIndex - 1) % 4];
+                const color =
+                  squareIndex - 1 < initialPiecesPosition.length
+                    ? colors.white
+                    : colors.black;
+                const pieceSrc = getPieceSrc({ piece: type, color });
+
+                return piece({
+                  src: pieceSrc,
+                  "data-type": type,
+                  "data-color": color,
+                  "data-index": squareIndex,
+                });
+              }
+            }
+          );
+      };
+
+      const cursorSquare = div(
+        {
+          id: "cursor-square",
+          className: "square cursor-square",
+        },
+        () => {
+          const pieceVal = movingPiece.val;
+          let pieceElement = null;
+
+          if (pieceVal) {
+            const type = pieceVal.dataset.type;
+            const color = pieceVal.dataset.color;
+            const index = pieceVal.dataset.index;
+            pieceElement = piece({
+              src: getPieceSrc({ piece: type, color }),
+              "data-type": type,
+              "data-color": color,
+              "data-index": index,
+            });
+          }
+
+          return div(pieceElement);
+        }
+      );
+
+      const board = () =>
+        div(
+          {
+            className: "board",
+          },
+          squares.map((color, index) => square({ color, index }))
+        );
+
+      const game = div(
+        bank({ color: colors.black }),
+        board,
+        bank({ color: colors.white }),
+        cursorSquare
+      );
+
+      van.add(document.body, game);
     </script>
   </body>
 </html>
