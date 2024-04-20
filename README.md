@@ -4,9 +4,14 @@
 
 From the combination of Schnell (fast in German) and chess, Schness is a very fast paced chess variant.
 
+For this project, I'm going old school: no compiler, no TS, no framework... just some plain old HTML, CSS and JS!
+
 ## How to play
 
-Coming soon...
+The standard chess rules apply, with a few exceptions:
+
+- You can drop a piece on the board instead of making a move. You can check or checkmate your oponent with a piece drop. On you first turn, you must place your king on the board.
+- When you take a piece, it goes back to the opponent's bank and he may play it on his next turn.
 
 ## Develop
 
