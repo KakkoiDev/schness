@@ -34,9 +34,7 @@
       const piece = (props) =>
         img({
           ...props,
-          ontouchstart: (event) =>
-            handlePickup({ event, movingPiece, history, possibleMoves }),
-          onmousedown: (event) =>
+          onpointerdown: (event) =>
             handlePickup({ event, movingPiece, history, possibleMoves }),
           className: "piece",
         });
@@ -82,10 +80,6 @@
                   : colors.black
               }`,
               "data-index": props.index,
-              ontouchend: (event) =>
-                handleDrop({ event, movingPiece, history, possibleMoves }),
-              onmouseup: (event) =>
-                handleDrop({ event, movingPiece, history, possibleMoves }),
             },
             () => {
               const squareIndex = history.val.at(-1)[props.index];
