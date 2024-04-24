@@ -1,6 +1,6 @@
 # Schness
 
-**WIP: no yet playable!**
+**WIP: Not yet playable!**
 
 From the combination of Schnell (fast in German) and chess, Schness is a very fast paced chess variant.
 
