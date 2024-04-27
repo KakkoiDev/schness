@@ -1,5 +1,5 @@
 import van from "/lib/van.min.js";
-import { getPieceSrc } from "/lib/index.js";
+import { getPieceSrc, getPieceType } from "/lib/index.js";
 import { colors, initialPiecesPosition } from "/data/index.js";
 import { piece } from "/ui/index.js";
 
@@ -23,7 +23,7 @@ export const square = (props) => {
         const movingPieceIndex = Number(props.movingPiece.val?.dataset.index);
 
         if (squareIndex !== 0 && squareIndex !== movingPieceIndex) {
-          const type = initialPiecesPosition[(squareIndex - 1) % 4];
+          const type = getPieceType(squareIndex);
           const color =
             squareIndex - 1 < initialPiecesPosition.length
               ? colors.white
