@@ -1,6 +1,6 @@
 import van from "/lib/van.min.js";
-import { getPieceSrc, getPieceType } from "/lib/index.js";
-import { colors, initialPiecesPosition } from "/data/index.js";
+import { getPieceSrc, getPieceType, getPieceColor } from "/lib/index.js";
+import { colors } from "/data/index.js";
 import { piece } from "/ui/index.js";
 
 const { div } = van.tags;
@@ -24,10 +24,7 @@ export const square = (props) => {
 
         if (squareIndex !== 0 && squareIndex !== movingPieceIndex) {
           const type = getPieceType(squareIndex);
-          const color =
-            squareIndex - 1 < initialPiecesPosition.length
-              ? colors.white
-              : colors.black;
+          const color = getPieceColor(squareIndex);
           const pieceSrc = getPieceSrc({ piece: type, color });
 
           return piece({
