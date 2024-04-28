@@ -19,9 +19,11 @@ Using VanJS to make the UI reactive: https://vanjs.org/
 
 Format code with the Prettier extension: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 
+(optional) Quickly find errors in code with ESlint (run `npm i` to install dependencies): https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+
 Serve client with the Live Server extension: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
 
-Test on mobile with Ngrok: `ngrok http http://localhost:5500`, website: https://ngrok.com/
+Test on mobile with Ngrok (https://ngrok.com/): `ngrok http http://localhost:5500`
 
 ## References
 
