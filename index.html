@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f7f4ed">
+  <meta name="description" content="Schness — compact chess on a 4×4 board.">
+  <title>Schness</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="game">
+    <header>
+      <div><p class="eyebrow">4 × 4 chess</p><h1>Schness</h1></div>
+    </header>
+
+    <section id="menu" class="menu" aria-labelledby="play-title">
+      <div>
+        <p class="eyebrow">Move. Deploy. Reuse.</p>
+        <h2 id="play-title">Choose a game</h2>
+        <p>Every piece you lose returns to your reserve. Deploy it again—but a deployment can never give check.</p>
+      </div>
+      <div class="mode-buttons">
+        <button id="play-bot" class="mode" type="button"><strong>Play the bot</strong><small>Works anywhere, even offline</small></button>
+        <button id="play-online" class="mode dark" type="button"><strong>Play online</strong><small>Find another browser peer to peer</small></button>
+      </div>
+      <details><summary>Rules</summary><p>Place your king on your home row. Each turn, move a board piece or deploy a reserve piece onto an empty square. Captured pieces return to their original owner. Checkmate, stalemate, and threefold repetition work as in chess.</p></details>
+    </section>
+
+    <section id="match" hidden>
+      <div class="match-actions">
+        <button id="back-to-menu" class="text-button" type="button">← Modes</button>
+        <button id="reset" class="reset" type="button">New game</button>
+      </div>
+      <div id="network-note" class="network-note" hidden></div>
+      <button id="fallback-bot" class="mode fallback" type="button" hidden><strong>Play the bot instead</strong><small>No opponent yet</small></button>
+
+      <div class="play-area">
+        <section class="player opponent" aria-label="Opponent pieces">
+          <div><p class="label">Opponent</p><strong id="opponent-name">Bot</strong></div>
+          <div id="opponent-bank" class="bank" aria-label="Opponent reserve"></div>
+        </section>
+        <div id="board" class="board" role="grid" aria-label="Schness board"></div>
+        <section class="player you" aria-label="Your pieces">
+          <div><p class="label">Player</p><strong id="human-name">You · White</strong></div>
+          <div id="human-bank" class="bank" aria-label="Your reserve"></div>
+        </section>
+        <p id="status" class="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
