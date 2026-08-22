@@ -22,9 +22,10 @@ Serve the repository through any local HTTP server to play during development:
 python3 -m http.server 8000
 ```
 
-The `master` branch deploys automatically to GitHub Pages. No account data or game state is stored on
-a server. Online peers discover each other through public Nostr relays and then exchange legal actions
-over WebRTC. Some restrictive networks may not permit a direct peer connection.
+After GitHub Pages is enabled with **GitHub Actions** as its source, the `master` branch deploys
+automatically. No account data or game state is stored on a server. Online peers discover each other
+through public Nostr relays and then exchange legal actions over WebRTC. Some restrictive networks may
+not permit a direct peer connection.
 
 Current implementation:
 
