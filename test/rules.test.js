@@ -168,6 +168,26 @@ test('position keys include board, banks, and side to move but not history', () 
   assert.notEqual(positionKey(base), positionKey({ ...base, banks: { ...base.banks, [WHITE]: [BISHOP] } }));
 });
 
+test('position keys distinguish kings from knights', () => {
+  const kingBoard = emptyBoard();
+  kingBoard[15] = piece(WHITE, KING);
+  kingBoard[0] = piece(BLACK, KING);
+  const knightBoard = kingBoard.map((occupant) => occupant ? { ...occupant } : null);
+  knightBoard[8] = piece(WHITE, KNIGHT);
+  const withKnightOnBoard = createPosition({
+    board: knightBoard,
+    banks: { [WHITE]: [], [BLACK]: [] },
+    turn: WHITE,
+  });
+  const withKnightInBank = createPosition({
+    board: kingBoard,
+    banks: { [WHITE]: [KNIGHT], [BLACK]: [] },
+    turn: WHITE,
+  });
+  assert.notEqual(positionKey(withKnightOnBoard), positionKey(withKnightInBank));
+  assert.match(positionKey(withKnightOnBoard), /N/);
+});
+
 test('the third occurrence of a complete position is a draw', () => {
   const game = position({ pieces: [[15, WHITE, KING], [0, BLACK, KING]], whiteBank: [ROOK] });
   const key = positionKey(game);

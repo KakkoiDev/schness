@@ -16,6 +16,16 @@ of the eventual UI and peer-to-peer transport.
 npm test
 ```
 
+Serve the repository through any local HTTP server to play during development:
+
+```sh
+python3 -m http.server 8000
+```
+
+The `master` branch deploys automatically to GitHub Pages. No account data or game state is stored on
+a server. Online peers discover each other through public Nostr relays and then exchange legal actions
+over WebRTC. Some restrictive networks may not permit a direct peer connection.
+
 Current implementation:
 
 - Pure rules engine and legal-action generator
@@ -24,10 +34,10 @@ Current implementation:
 - Check, checkmate, stalemate, and threefold repetition
 - Deterministic alpha-beta minimax foundation
 - Node unit tests and GitHub Actions CI
+- Mobile-first browser board following the original design
+- Local human-vs-minimax play in a Web Worker
+- Installable offline PWA shell
+- Serverless Trystero/WebRTC quick-match play using public Nostr relays
+- Per-move validation and position hashes at the network boundary
 
-Planned next:
-
-- Browser board and local bot play
-- Offline PWA shell
-- Trystero/WebRTC online play, following the `kakkoi-online` architecture
-- Optional chess clocks after the untimed game is complete
+An optional chess clock is deliberately deferred until after the untimed game.

@@ -15,6 +15,7 @@ const KNIGHT_STEPS = [
   [-2, -1], [-2, 1], [-1, -2], [-1, 2],
   [1, -2], [1, 2], [2, -1], [2, 1],
 ];
+const PIECE_CODE = { [KING]: 'K', [ROOK]: 'R', [BISHOP]: 'B', [KNIGHT]: 'N' };
 
 export function opponent(player) {
   return player === WHITE ? BLACK : WHITE;
@@ -120,10 +121,10 @@ export function isInCheck(position, player) {
 export function positionKey(position) {
   const board = position.board.map((occupant) => {
     if (!occupant) return '--';
-    return `${occupant.owner[0]}${occupant.piece[0]}`;
+    return `${occupant.owner[0]}${PIECE_CODE[occupant.piece]}`;
   }).join('');
-  const whiteBank = [...position.banks[WHITE]].sort().map((piece) => piece[0]).join('');
-  const blackBank = [...position.banks[BLACK]].sort().map((piece) => piece[0]).join('');
+  const whiteBank = [...position.banks[WHITE]].sort().map((piece) => PIECE_CODE[piece]).join('');
+  const blackBank = [...position.banks[BLACK]].sort().map((piece) => PIECE_CODE[piece]).join('');
   return `${position.phase}|${position.turn}|${board}|${whiteBank}|${blackBank}`;
 }
 
