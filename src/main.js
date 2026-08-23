@@ -6,6 +6,9 @@ import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, s
 import { applyActionMessage, makeActionMessage } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
+import {
+  communicationPacket, loadCommunicationSettings, parseCommunicationPacket,
+} from './communication.js';
 import { initTheme } from './theme.js';
 
 initTheme();
@@ -33,7 +36,14 @@ const matchChat = document.querySelector('#match-chat');
 const chatLog = document.querySelector('#chat-log');
 const chatForm = document.querySelector('#chat-form');
 const chatMessage = document.querySelector('#chat-message');
+const chatNote = document.querySelector('#chat-note');
+const quickChat = document.querySelector('#quick-chat');
+const voiceStatus = document.querySelector('#voice-status');
+const voiceToggle = document.querySelector('#voice-toggle');
+const hearOpponent = document.querySelector('#hear-opponent');
+const peerAudio = document.querySelector('#peer-audio');
 const route = gameRoute(window.location.search);
+const communicationSettings = loadCommunicationSettings();
 
 let position = createInitialPosition();
 let humanColor = WHITE;
@@ -45,6 +55,9 @@ let worker = createWorker();
 let network = null;
 let searchTimer = null;
 let disconnected = false;
+let peerCommunication = null;
+let microphoneStream = null;
+let microphoneStarting = false;
 
 for (let visual = 0; visual < 16; visual += 1) {
   const button = document.createElement('button');
@@ -59,6 +72,17 @@ alternateButton.addEventListener('click', switchMode);
 resetButton.addEventListener('click', startNewGame);
 copyInvite.addEventListener('click', copyInviteLink);
 chatForm.addEventListener('submit', sendChatMessage);
+quickChat.addEventListener('click', (event) => {
+  const text = event.target.closest('[data-quick-message]')?.dataset.quickMessage;
+  if (text) sendChatText(text);
+});
+voiceToggle.addEventListener('click', toggleMicrophone);
+hearOpponent.addEventListener('click', () => {
+  peerAudio.play().then(() => {
+    hearOpponent.hidden = true;
+    voiceStatus.textContent = 'Voice connected.';
+  }).catch(() => { voiceStatus.textContent = 'Your browser is still blocking incoming audio.'; });
+});
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
@@ -96,8 +120,11 @@ async function startOnlineSearch(gameId) {
     network.onMatch(({ color }) => beginOnlineMatch(color));
     network.onGame(receivePeerAction);
     network.onChat(receiveChatMessage);
+    network.onPreferences(receiveCommunicationPreferences);
+    network.onPeerStream(receivePeerStream);
     network.onOpponentLeave(() => {
       disconnected = true;
+      stopMicrophone();
       render();
     });
     network.onError((message) => { networkNote.textContent = message; });
@@ -119,14 +146,20 @@ function beginOnlineMatch(color) {
   alternateButton.hidden = true;
   board.closest('.play-area').hidden = false;
   matchChat.hidden = false;
+  network.sendPreferences(communicationPacket(communicationSettings));
+  updateCommunicationUi();
   render();
 }
 
 function sendChatMessage(event) {
   event.preventDefault();
-  if (mode !== 'online' || disconnected || !network?.matched) return;
+  sendChatText(chatMessage.value);
+}
+
+function sendChatText(text) {
+  if (!canTextChat()) return;
   try {
-    const message = createChatMessage(chatMessage.value);
+    const message = createChatMessage(text);
     network.sendChat(message);
     appendChatMessage(message.text, 'You');
     chatMessage.value = '';
@@ -137,12 +170,92 @@ function sendChatMessage(event) {
 }
 
 function receiveChatMessage(payload) {
+  if (!communicationSettings.text || !peerCommunication?.text) return;
   try {
     const message = parseChatMessage(payload);
     appendChatMessage(message.text, 'Opponent');
   } catch {
     // Ignore malformed peer messages without interrupting the match.
   }
+}
+
+function receiveCommunicationPreferences(payload) {
+  try {
+    peerCommunication = parseCommunicationPacket(payload);
+    updateCommunicationUi();
+    startVoiceIfReady();
+  } catch {
+    // Ignore malformed capability announcements.
+  }
+}
+
+function canTextChat() {
+  return mode === 'online' && !disconnected && network?.matched && communicationSettings.text && peerCommunication?.text;
+}
+
+function updateCommunicationUi() {
+  const anyLocalCommunication = communicationSettings.text || communicationSettings.voice;
+  matchChat.hidden = mode !== 'online' || !anyLocalCommunication;
+  chatLog.hidden = !communicationSettings.text;
+  quickChat.hidden = !communicationSettings.text;
+  chatForm.hidden = !communicationSettings.text;
+  const textReady = canTextChat();
+  chatMessage.disabled = !textReady;
+  chatForm.querySelector('button').disabled = !textReady;
+  quickChat.querySelectorAll('button').forEach((button) => { button.disabled = !textReady; });
+  chatMessage.placeholder = peerCommunication && !peerCommunication.text
+    ? 'Opponent has text chat off' : 'Message your opponent…';
+  chatNote.textContent = communicationSettings.text && communicationSettings.voice
+    ? 'Text and voice · peer-to-peer · not saved' : communicationSettings.voice
+      ? 'Voice · peer-to-peer · not saved' : 'Text · peer-to-peer · not saved';
+  voiceStatus.hidden = !communicationSettings.voice;
+  if (communicationSettings.voice && !peerCommunication) voiceStatus.textContent = 'Waiting for voice preference…';
+  else if (communicationSettings.voice && !peerCommunication.voice) voiceStatus.textContent = 'Opponent has voice chat off.';
+}
+
+async function startVoiceIfReady() {
+  if (!communicationSettings.voice || !peerCommunication?.voice || microphoneStream || microphoneStarting || disconnected) return;
+  microphoneStarting = true;
+  voiceStatus.textContent = 'Requesting microphone access…';
+  try {
+    microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    if (disconnected || mode !== 'online') return stopMicrophone();
+    network.addStream(microphoneStream);
+    voiceStatus.textContent = 'Voice connected.';
+    voiceToggle.hidden = false;
+  } catch (error) {
+    voiceStatus.textContent = error.name === 'NotAllowedError'
+      ? 'Microphone permission was not granted.' : 'Could not start the microphone.';
+  } finally {
+    microphoneStarting = false;
+  }
+}
+
+function receivePeerStream(stream) {
+  if (!communicationSettings.voice || !peerCommunication?.voice) return;
+  peerAudio.srcObject = stream;
+  peerAudio.play().then(() => { hearOpponent.hidden = true; }).catch(() => {
+    hearOpponent.hidden = false;
+    voiceStatus.textContent = 'Tap “Hear opponent” to start incoming audio.';
+  });
+}
+
+function toggleMicrophone() {
+  const track = microphoneStream?.getAudioTracks()[0];
+  if (!track) return;
+  track.enabled = !track.enabled;
+  voiceToggle.textContent = track.enabled ? 'Mute mic' : 'Unmute mic';
+  voiceStatus.textContent = track.enabled ? 'Voice connected.' : 'Your microphone is muted.';
+}
+
+function stopMicrophone() {
+  if (!microphoneStream) return;
+  network?.removeStream(microphoneStream);
+  microphoneStream.getTracks().forEach((track) => track.stop());
+  microphoneStream = null;
+  peerAudio.srcObject = null;
+  voiceToggle.hidden = true;
+  hearOpponent.hidden = true;
 }
 
 function appendChatMessage(text, author) {
@@ -179,6 +292,8 @@ function resetState(nextMode, color) {
   selection = null;
   thinking = false;
   disconnected = false;
+  peerCommunication = null;
+  stopMicrophone();
   worker.terminate();
   worker = createWorker();
   networkNote.hidden = true;
@@ -224,6 +339,7 @@ function showMatch() {
 function stopNetwork() {
   clearTimeout(searchTimer);
   searchTimer = null;
+  stopMicrophone();
   network?.leave();
   network = null;
 }
@@ -314,8 +430,7 @@ function render() {
   renderBank(humanBank, humanColor, true);
   humanName.textContent = humanColor === WHITE ? 'You · White' : 'You · Black';
   status.textContent = statusMessage(result);
-  chatMessage.disabled = disconnected;
-  chatForm.querySelector('button').disabled = disconnected;
+  updateCommunicationUi();
 }
 
 function renderBank(container, owner, interactive) {
