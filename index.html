@@ -14,6 +14,7 @@
   <main class="game">
     <header>
       <div><p class="eyebrow">4 × 4 chess</p><h1>Schness</h1></div>
+      <button class="text-button rules-button" type="button" data-open-rules>Rules</button>
     </header>
 
     <section id="menu" class="menu" aria-labelledby="play-title">
@@ -24,17 +25,21 @@
       </div>
       <div class="mode-buttons">
         <button id="play-bot" class="mode" type="button"><strong>Play the bot</strong><small>Works anywhere, even offline</small></button>
-        <button id="play-online" class="mode dark" type="button"><strong>Play online</strong><small>Find another browser peer to peer</small></button>
+        <button id="play-online" class="mode dark" type="button"><strong>Create an online game</strong><small>Get a unique link for another player</small></button>
       </div>
-      <details><summary>Rules</summary><p>Place your king on your home row. Each turn, move a board piece or deploy a reserve piece onto an empty square. Captured pieces return to their original owner. Checkmate, stalemate, and threefold repetition work as in chess.</p></details>
+      <button class="rules-card" type="button" data-open-rules><strong>How to play</strong><span>Scan the complete rules before your first match →</span></button>
     </section>
 
     <section id="match" hidden>
       <div class="match-actions">
-        <button id="back-to-menu" class="text-button" type="button">← Modes</button>
+        <a id="back-to-menu" class="text-button" href="./">← Home</a>
         <button id="reset" class="reset" type="button">New game</button>
       </div>
       <div id="network-note" class="network-note" hidden></div>
+      <div id="invite" class="invite" hidden>
+        <label for="invite-url">Match link</label>
+        <div><input id="invite-url" type="url" readonly><button id="copy-invite" type="button">Copy</button></div>
+      </div>
       <button id="fallback-bot" class="mode fallback" type="button" hidden><strong>Play the bot instead</strong><small>No opponent yet</small></button>
 
       <div class="play-area">
@@ -51,6 +56,52 @@
       </div>
     </section>
   </main>
+
+  <dialog id="rules-dialog" class="rules-dialog" aria-labelledby="rules-title">
+    <form method="dialog"><button class="dialog-close" aria-label="Close rules">×</button></form>
+    <p class="eyebrow">The complete game</p>
+    <h2 id="rules-title">How to play Schness</h2>
+    <section>
+      <h3>1. Your army</h3>
+      <ul>
+        <li>The board is a 4 × 4 grid.</li>
+        <li>Each player owns one king, one rook, one bishop, and one knight.</li>
+        <li>The board begins completely empty.</li>
+      </ul>
+    </section>
+    <section>
+      <h3>2. Place the kings</h3>
+      <ul>
+        <li>White places their king first, anywhere on White’s home row.</li>
+        <li>Black then places their king anywhere on Black’s home row.</li>
+      </ul>
+    </section>
+    <section>
+      <h3>3. Take a turn</h3>
+      <ul>
+        <li>Either move one of your pieces already on the board, using normal chess movement, or deploy one piece from your reserve.</li>
+        <li>A reserve piece may be deployed on any empty square.</li>
+        <li>A deployment may never immediately check the opposing king.</li>
+        <li>You must always answer check and may never leave your own king in check.</li>
+      </ul>
+    </section>
+    <section>
+      <h3>4. Capture and reuse</h3>
+      <ul>
+        <li>Capture pieces as in chess.</li>
+        <li>A captured piece returns to its original owner’s reserve.</li>
+        <li>Its owner may deploy it again on a later turn.</li>
+      </ul>
+    </section>
+    <section>
+      <h3>5. End the game</h3>
+      <ul>
+        <li>Checkmate wins the game.</li>
+        <li>Stalemate is a draw.</li>
+        <li>Repeating the same position three times is a draw.</li>
+      </ul>
+    </section>
+  </dialog>
   <script type="module" src="./src/main.js"></script>
 </body>
 </html>

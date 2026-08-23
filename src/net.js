@@ -10,12 +10,12 @@ export const RELAYS = [
   'wss://offchain.pub',
 ];
 
-const APP_ID = 'schness-v1';
-const ROOM_ID = 'quick-match';
+const APP_ID = 'schness-v2';
 const PROTOCOL = 1;
 
-export function joinMatchmaking() {
-  const room = trysteroJoin({ appId: APP_ID, relayUrls: RELAYS }, ROOM_ID);
+export function joinMatchmaking(gameId) {
+  if (!/^[0-9a-f-]{36}$/i.test(gameId)) throw new Error('Invalid match id');
+  const room = trysteroJoin({ appId: APP_ID, relayUrls: RELAYS }, `match-${gameId}`);
   const [sendHello, onHello] = room.makeAction('hello');
   const [sendOffer, onOffer] = room.makeAction('offer');
   const [sendAccept, onAccept] = room.makeAction('accept');

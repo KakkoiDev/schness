@@ -67,8 +67,28 @@ h2 { margin: .25rem 0 .8rem; font-size: clamp(1.7rem, 7vw, 2.5rem); letter-spaci
 .mode:disabled { cursor: default; opacity: .45; }
 .match-actions { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; }
 .text-button { border: 0; background: transparent; padding: .5rem 0; cursor: pointer; }
+.text-button { color: inherit; text-decoration: none; }
+.rules-button { padding-inline: .5rem; font-weight: 650; }
+.rules-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 0;
+  border-top: 1px solid #c9c4ba;
+  background: transparent;
+  padding: .9rem 0;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.rules-card span { color: var(--muted); }
 .network-note { display: grid; min-height: 45svh; place-items: center; color: var(--muted); text-align: center; }
 .fallback { margin: -7rem auto 0; max-width: 23rem; }
+.invite { margin: -12svh auto 2rem; max-width: 28rem; }
+.invite label { display: block; margin-bottom: .4rem; color: var(--muted); font-size: .8rem; font-weight: 650; }
+.invite div { display: flex; }
+.invite input { min-width: 0; flex: 1; border: 1px solid var(--ink); background: white; padding: .75rem; font: inherit; }
+.invite button { border: 1px solid var(--ink); border-left: 0; background: var(--ink); color: white; padding: .75rem 1rem; cursor: pointer; }
 
 .player { min-height: 4.8rem; padding: .65rem 0; }
 .opponent { align-items: flex-end; }
@@ -96,22 +116,27 @@ h2 { margin: .25rem 0 .8rem; font-size: clamp(1.7rem, 7vw, 2.5rem); letter-spaci
 .board {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, minmax(0, 1fr));
   width: 100%;
   aspect-ratio: 1;
+  overflow: hidden;
   border: 2px solid var(--ink);
   background: white;
+  contain: layout paint;
 }
 
 .square {
   position: relative;
   display: grid;
+  width: 100%;
+  height: 100%;
   min-width: 0;
+  min-height: 0;
   padding: 0;
   place-items: center;
   border: 0;
   border-radius: 0;
   background: #fff;
-  color: var(--ink);
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(3rem, 17vw, 5.5rem);
   line-height: 1;
@@ -121,7 +146,22 @@ h2 { margin: .25rem 0 .8rem; font-size: clamp(1.7rem, 7vw, 2.5rem); letter-spaci
 .square:nth-child(8n + 2), .square:nth-child(8n + 4),
 .square:nth-child(8n + 5), .square:nth-child(8n + 7) {
   background: var(--ink);
-  color: white;
+}
+
+.piece {
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: var(--piece-color);
+  line-height: 1;
+}
+.piece-white {
+  --piece-color: #fff;
+  text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111, 0 2px 0 #111;
+}
+.piece-black {
+  --piece-color: #111;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 2px 0 #fff;
 }
 
 .square:disabled { cursor: default; opacity: 1; }
@@ -141,9 +181,22 @@ h2 { margin: .25rem 0 .8rem; font-size: clamp(1.7rem, 7vw, 2.5rem); letter-spaci
 button:focus-visible, summary:focus-visible { outline: .2rem solid var(--focus); outline-offset: .15rem; }
 
 .status { min-height: 1.5rem; margin: 1rem 0; font-weight: 650; text-align: center; }
-details { border-top: 1px solid #c9c4ba; padding-top: .8rem; color: var(--muted); }
-summary { width: fit-content; color: var(--ink); cursor: pointer; font-weight: 650; }
-details p { line-height: 1.55; }
+.rules-dialog {
+  width: min(42rem, calc(100% - 2rem));
+  max-height: calc(100svh - 2rem);
+  overflow: auto;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  padding: clamp(1.25rem, 5vw, 2.5rem);
+}
+.rules-dialog::backdrop { background: rgb(24 24 24 / .72); }
+.rules-dialog h2 { padding-right: 2rem; }
+.rules-dialog h3 { margin: 1.8rem 0 .4rem; font-size: 1rem; }
+.rules-dialog ul { margin: 0; padding-left: 1.3rem; color: var(--muted); line-height: 1.55; }
+.rules-dialog li + li { margin-top: .35rem; }
+.rules-dialog form { position: sticky; top: 0; height: 0; text-align: right; }
+.dialog-close { border: 0; background: transparent; color: var(--ink); font-size: 2rem; line-height: 1; cursor: pointer; }
 
 @media (max-width: 390px) {
   .bank { min-width: 9.5rem; }

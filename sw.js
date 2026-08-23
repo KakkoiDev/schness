@@ -1,4 +1,4 @@
-const CACHE = 'schness-v1';
+const CACHE = 'schness-v2';
 const SHELL = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const SHELL = [
   './src/rules.js',
   './src/interaction.js',
   './src/game-message.js',
+  './src/navigation.js',
   './src/matchmaking.js',
   './src/net.js',
   './src/bot.js',
@@ -35,5 +36,9 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request).catch(() => caches.match('./index.html')));
+    return;
+  }
   event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
 });

@@ -20,3 +20,18 @@ test('manifest describes a standalone app with a local icon', async () => {
   assert.equal(manifest.start_url, './');
   assert.ok(manifest.icons.every((icon) => icon.src.startsWith('./')));
 });
+
+test('board rows are fixed and pieces have owner-specific styling', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  assert.match(css, /grid-template-rows:\s*repeat\(4, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.piece-white\s*{/);
+  assert.match(css, /\.piece-black\s*{/);
+});
+
+test('lobby exposes a structured rules dialog and the game has a home link', async () => {
+  const html = await readFile(resolve(root, 'index.html'), 'utf8');
+  assert.match(html, /<dialog[^>]+id="rules-dialog"/);
+  assert.ok((html.match(/<h3>/g) ?? []).length >= 5);
+  assert.ok((html.match(/<ul>/g) ?? []).length >= 5);
+  assert.match(html, /id="back-to-menu"[^>]+href="\.\/"/);
+});

@@ -4,9 +4,10 @@ import {
 } from './rules.js';
 import { actionAt, bankSelection, boardSelection, destinations, setupActionAt } from './interaction.js';
 import { applyActionMessage, makeActionMessage } from './game-message.js';
+import { createGameId, gameRoute, gameUrl } from './navigation.js';
 
 const SYMBOLS = {
-  [WHITE]: { [KING]: '♔', [ROOK]: '♖', [BISHOP]: '♗', [KNIGHT]: '♘' },
+  [WHITE]: { [KING]: '♚', [ROOK]: '♜', [BISHOP]: '♝', [KNIGHT]: '♞' },
   [BLACK]: { [KING]: '♚', [ROOK]: '♜', [BISHOP]: '♝', [KNIGHT]: '♞' },
 };
 const menu = document.querySelector('#menu');
@@ -18,11 +19,15 @@ const humanName = document.querySelector('#human-name');
 const opponentName = document.querySelector('#opponent-name');
 const status = document.querySelector('#status');
 const networkNote = document.querySelector('#network-note');
+const invite = document.querySelector('#invite');
+const inviteUrl = document.querySelector('#invite-url');
+const copyInvite = document.querySelector('#copy-invite');
 const botButton = document.querySelector('#play-bot');
 const onlineButton = document.querySelector('#play-online');
 const fallbackButton = document.querySelector('#fallback-bot');
 const resetButton = document.querySelector('#reset');
-const menuButton = document.querySelector('#back-to-menu');
+const rulesDialog = document.querySelector('#rules-dialog');
+const route = gameRoute(window.location.search);
 
 let position = createInitialPosition();
 let humanColor = WHITE;
@@ -45,23 +50,35 @@ for (let visual = 0; visual < 16; visual += 1) {
 }
 
 botButton.addEventListener('click', startBotGame);
-onlineButton.addEventListener('click', startOnlineSearch);
+onlineButton.addEventListener('click', startOnlineGame);
 fallbackButton.addEventListener('click', startBotGame);
-resetButton.addEventListener('click', () => mode === 'bot' ? startBotGame() : startOnlineSearch());
-menuButton.addEventListener('click', showMenu);
+resetButton.addEventListener('click', startNewGame);
+copyInvite.addEventListener('click', copyInviteLink);
+document.querySelectorAll('[data-open-rules]').forEach((button) =>
+  button.addEventListener('click', () => rulesDialog.showModal()));
 window.addEventListener('online', updateOnlineAvailability);
 window.addEventListener('offline', updateOnlineAvailability);
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
-showMenu();
+if (route?.mode === 'bot') startBotMatch();
+else if (route?.mode === 'online') startOnlineSearch(route.gameId);
+else showMenu();
 
 function startBotGame() {
+  window.location.assign(gameUrl(window.location.href, 'bot'));
+}
+
+function startBotMatch() {
   stopNetwork();
   resetState('bot', WHITE);
   opponentName.textContent = 'Bot';
   showMatch();
 }
 
-async function startOnlineSearch() {
+function startOnlineGame() {
+  window.location.assign(gameUrl(window.location.href, 'online'));
+}
+
+async function startOnlineSearch(gameId) {
   if (!navigator.onLine) return;
   stopNetwork();
   resetState('online', WHITE);
@@ -69,13 +86,15 @@ async function startOnlineSearch() {
   match.hidden = false;
   board.closest('.play-area').hidden = true;
   networkNote.hidden = false;
-  networkNote.textContent = 'Looking for another player…';
+  networkNote.textContent = 'Waiting for the other player…';
+  invite.hidden = false;
+  inviteUrl.value = window.location.href;
   fallbackButton.hidden = true;
   searchTimer = setTimeout(() => { fallbackButton.hidden = false; }, 5000);
   try {
     const { joinMatchmaking } = await import('./net.js');
     if (mode !== 'online') return;
-    network = joinMatchmaking();
+    network = joinMatchmaking(gameId);
     network.onMatch(({ color }) => beginOnlineMatch(color));
     network.onGame(receivePeerAction);
     network.onOpponentLeave(() => {
@@ -97,6 +116,7 @@ function beginOnlineMatch(color) {
   disconnected = false;
   opponentName.textContent = 'Online player';
   networkNote.hidden = true;
+  invite.hidden = true;
   fallbackButton.hidden = true;
   board.closest('.play-area').hidden = false;
   render();
@@ -126,6 +146,7 @@ function resetState(nextMode, color) {
   worker.terminate();
   worker = createWorker();
   networkNote.hidden = true;
+  invite.hidden = true;
   board.closest('.play-area').hidden = false;
 }
 
@@ -135,6 +156,20 @@ function showMenu() {
   menu.hidden = false;
   match.hidden = true;
   updateOnlineAvailability();
+}
+
+function startNewGame() {
+  window.location.assign(gameUrl(window.location.href, mode ?? 'bot', createGameId()));
+}
+
+async function copyInviteLink() {
+  try {
+    await navigator.clipboard.writeText(inviteUrl.value);
+    copyInvite.textContent = 'Copied';
+  } catch {
+    inviteUrl.select();
+    copyInvite.textContent = 'Select link';
+  }
 }
 
 function showMatch() {
@@ -155,7 +190,7 @@ function stopNetwork() {
 function updateOnlineAvailability() {
   onlineButton.disabled = !navigator.onLine;
   onlineButton.querySelector('small').textContent = navigator.onLine
-    ? 'Find another browser peer to peer' : 'Unavailable while offline';
+    ? 'Get a unique link for another player' : 'Unavailable while offline';
 }
 
 function createWorker() {
@@ -228,7 +263,8 @@ function render() {
     const square = humanColor === WHITE ? visual : 15 - visual;
     const occupant = position.board[square];
     button.dataset.square = String(square);
-    button.textContent = occupant ? SYMBOLS[occupant.owner][occupant.piece] : '';
+    button.replaceChildren();
+    if (occupant) button.append(pieceElement(occupant.owner, occupant.piece));
     button.classList.toggle('selected', selection?.type === 'board' && selection.square === square);
     button.classList.toggle('target', targets.has(square));
     button.classList.toggle('capture', targets.has(square) && Boolean(occupant));
@@ -250,7 +286,7 @@ function renderBank(container, owner, interactive) {
     const button = document.createElement('button');
     button.className = 'bank-piece';
     button.type = 'button';
-    button.textContent = SYMBOLS[owner][piece];
+    button.append(pieceElement(owner, piece));
     button.setAttribute('aria-label', `${owner} ${piece} in reserve`);
     button.classList.toggle('selected', interactive && selection?.type === 'bank' && selection.piece === piece);
     button.disabled = !interactive || !canHumanAct() || position.phase !== 'play' ||
@@ -264,6 +300,14 @@ function renderBank(container, owner, interactive) {
     empty.textContent = 'No pieces in reserve';
     container.append(empty);
   }
+}
+
+function pieceElement(owner, piece) {
+  const element = document.createElement('span');
+  element.className = `piece piece-${owner}`;
+  element.textContent = SYMBOLS[owner][piece];
+  element.setAttribute('aria-hidden', 'true');
+  return element;
 }
 
 function statusMessage(result) {
