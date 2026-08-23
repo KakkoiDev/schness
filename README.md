@@ -41,5 +41,13 @@ Current implementation:
 - Unique UUID game URLs for bot matches and private P2P invitations
 - Serverless Trystero/WebRTC invite play using public Nostr relays
 - Per-move validation and position hashes at the network boundary
+- Persistent light and dark themes, with the device preference used on first visit
+- Ephemeral peer-to-peer match chat with validation and no stored transcript
 
-An optional chess clock is deliberately deferred until after the untimed game.
+## Roadmap
+
+The original repository did not preserve a numbered V2/V3 plan, so the versions are now defined here:
+
+- **V2 — social and presentation:** light/dark themes and private in-match P2P chat. Implemented.
+- **V3 — competitive play:** optional chess clocks and a move-history/replay view. Planned; untimed remains
+  the default until time-control behavior and synchronization are specified.

@@ -1,4 +1,7 @@
 import { gameUrl } from './navigation.js';
+import { initTheme } from './theme.js';
+
+initTheme();
 
 const botButton = document.querySelector('#play-bot');
 const onlineButton = document.querySelector('#play-online');

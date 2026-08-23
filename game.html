@@ -14,7 +14,10 @@
   <main class="game game-page">
     <header>
       <div><p class="eyebrow">4 × 4 chess</p><h1>Schness</h1></div>
-      <button class="text-button rules-button" type="button" data-open-rules>Rules</button>
+      <div class="header-actions">
+        <button class="text-button theme-button" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
+        <button class="text-button rules-button" type="button" data-open-rules>Rules</button>
+      </div>
     </header>
 
     <section id="match">
@@ -43,6 +46,17 @@
         </section>
         <p id="status" class="status" aria-live="polite"></p>
       </div>
+      <section id="match-chat" class="match-chat" aria-labelledby="chat-title" hidden>
+        <div class="chat-heading"><h2 id="chat-title">Match chat</h2><small>Peer-to-peer · not saved</small></div>
+        <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-relevant="additions">
+          <p class="chat-empty">No messages yet.</p>
+        </div>
+        <form id="chat-form" class="chat-form">
+          <label class="visually-hidden" for="chat-message">Message your opponent</label>
+          <input id="chat-message" maxlength="280" autocomplete="off" placeholder="Message your opponent…">
+          <button type="submit">Send</button>
+        </form>
+      </section>
     </section>
   </main>
 
