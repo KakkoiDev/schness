@@ -23,9 +23,10 @@ export function joinMatchmaking(gameId) {
   const [sendStart, onStart] = room.makeAction('start');
   const [sendGame, onGame] = room.makeAction('game');
   const [sendChatPacket, onChatPacket] = room.makeAction('chat');
-  const matchHandlers = [], gameHandlers = [], chatHandlers = [], leaveHandlers = [], errorHandlers = [];
+  const [sendPreferencesPacket, onPreferencesPacket] = room.makeAction('prefs');
+  const matchHandlers = [], gameHandlers = [], chatHandlers = [], preferenceHandlers = [], streamHandlers = [], leaveHandlers = [], errorHandlers = [];
   const peers = new Map();
-  let phase = 'waiting', target = null, opponentId = null, pendingTimer = null;
+  let phase = 'waiting', target = null, opponentId = null, pendingTimer = null, lastPreferences = null;
 
   room.onPeerJoin((id) => sendHelloPacket(id));
   room.onPeerLeave((id) => {
@@ -82,6 +83,15 @@ export function joinMatchmaking(gameId) {
   onChatPacket((payload, id) => {
     if (phase === 'matched' && id === opponentId) chatHandlers.forEach((handler) => handler(payload));
   });
+  onPreferencesPacket((payload, id) => {
+    if (phase === 'matched' && id === opponentId) {
+      lastPreferences = payload;
+      preferenceHandlers.forEach((handler) => handler(payload));
+    }
+  });
+  room.onPeerStream((stream, id) => {
+    if (phase === 'matched' && id === opponentId) streamHandlers.forEach((handler) => handler(stream));
+  });
 
   function validPacket(data) {
     if (data?.v === PROTOCOL) return true;
@@ -127,6 +137,11 @@ export function joinMatchmaking(gameId) {
     onMatch: (handler) => matchHandlers.push(handler),
     onGame: (handler) => gameHandlers.push(handler),
     onChat: (handler) => chatHandlers.push(handler),
+    onPreferences(handler) {
+      preferenceHandlers.push(handler);
+      if (lastPreferences) queueMicrotask(() => handler(lastPreferences));
+    },
+    onPeerStream: (handler) => streamHandlers.push(handler),
     onOpponentLeave: (handler) => leaveHandlers.push(handler),
     onError: (handler) => errorHandlers.push(handler),
     sendGame(payload) {
@@ -136,6 +151,17 @@ export function joinMatchmaking(gameId) {
     sendChat(payload) {
       if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
       sendChatPacket(payload, opponentId);
+    },
+    sendPreferences(payload) {
+      if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
+      sendPreferencesPacket(payload, opponentId);
+    },
+    addStream(stream) {
+      if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
+      room.addStream(stream, opponentId);
+    },
+    removeStream(stream) {
+      if (opponentId) room.removeStream(stream, opponentId);
     },
     leave() {
       clearPending();

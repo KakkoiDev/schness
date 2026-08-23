@@ -47,15 +47,22 @@
         <p id="status" class="status" aria-live="polite"></p>
       </div>
       <section id="match-chat" class="match-chat" aria-labelledby="chat-title" hidden>
-        <div class="chat-heading"><h2 id="chat-title">Match chat</h2><small>Peer-to-peer · not saved</small></div>
+        <div class="chat-heading"><div><h2 id="chat-title">At the table</h2><small id="chat-note">Peer-to-peer · not saved</small></div><div class="voice-actions"><button id="hear-opponent" class="voice-toggle" type="button" hidden>Hear opponent</button><button id="voice-toggle" class="voice-toggle" type="button" hidden>Mute mic</button></div></div>
+        <p id="voice-status" class="voice-status" hidden></p>
         <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-relevant="additions">
           <p class="chat-empty">No messages yet.</p>
+        </div>
+        <div id="quick-chat" class="quick-chat" aria-label="Quick messages">
+          <button type="button" data-quick-message="Good game!">Good game</button>
+          <button type="button" data-quick-message="Nice move!">Nice move</button>
+          <button type="button" data-quick-message="Bye!">Bye</button>
         </div>
         <form id="chat-form" class="chat-form">
           <label class="visually-hidden" for="chat-message">Message your opponent</label>
           <input id="chat-message" maxlength="280" autocomplete="off" placeholder="Message your opponent…">
           <button type="submit">Send</button>
         </form>
+        <audio id="peer-audio" autoplay playsinline></audio>
       </section>
     </section>
   </main>
