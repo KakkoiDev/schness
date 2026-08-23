@@ -9,6 +9,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 
 body {
   margin: 0;
@@ -25,6 +26,8 @@ button { font: inherit; }
   margin: 0 auto;
   padding: max(1rem, env(safe-area-inset-top)) 1rem max(1.5rem, env(safe-area-inset-bottom));
 }
+.game-page { padding-top: max(.5rem, env(safe-area-inset-top)); }
+.game-page header { margin-bottom: .55rem; }
 
 header, .player {
   display: flex;
@@ -82,9 +85,9 @@ h2 { margin: .25rem 0 .8rem; font-size: clamp(1.7rem, 7vw, 2.5rem); letter-spaci
   cursor: pointer;
 }
 .rules-card span { color: var(--muted); }
-.network-note { display: grid; min-height: 45svh; place-items: center; color: var(--muted); text-align: center; }
-.fallback { margin: -7rem auto 0; max-width: 23rem; }
-.invite { margin: -12svh auto 2rem; max-width: 28rem; }
+.network-note { display: grid; min-height: 8rem; place-items: center; color: var(--muted); text-align: center; }
+.alternative { margin: 1rem 0 0; }
+.invite { margin: 0 auto 1rem; max-width: 28rem; }
 .invite label { display: block; margin-bottom: .4rem; color: var(--muted); font-size: .8rem; font-weight: 650; }
 .invite div { display: flex; }
 .invite input { min-width: 0; flex: 1; border: 1px solid var(--ink); background: white; padding: .75rem; font: inherit; }
@@ -151,10 +154,17 @@ h2 { margin: .25rem 0 .8rem; font-size: clamp(1.7rem, 7vw, 2.5rem); letter-spaci
 .piece {
   position: relative;
   z-index: 1;
-  display: block;
+  display: grid;
+  width: .82em;
+  height: .82em;
+  flex: none;
+  place-items: center;
   color: var(--piece-color);
+  font-stretch: normal;
   line-height: 1;
 }
+.square .piece { font-size: clamp(2.8rem, 15vw, 5rem); }
+.bank-piece .piece { font-size: 2.25rem; }
 .piece-white {
   --piece-color: #fff;
   text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111, 0 2px 0 #111;
@@ -201,8 +211,10 @@ button:focus-visible, summary:focus-visible { outline: .2rem solid var(--focus);
 .dialog-close { border: 0; background: transparent; color: var(--ink); font-size: 2rem; line-height: 1; cursor: pointer; }
 
 @media (max-width: 390px) {
+  .game-page h1 { font-size: 2rem; }
   .bank { min-width: 9.5rem; }
-  .bank-piece { width: 2.75rem; font-size: 1.85rem; }
+  .bank-piece { width: 2.75rem; }
+  .bank-piece .piece { font-size: 1.85rem; }
 }
 
 @media (prefers-reduced-motion: no-preference) {

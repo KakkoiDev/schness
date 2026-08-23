@@ -26,6 +26,9 @@ test('board rows are fixed and pieces have owner-specific styling', async () => 
   assert.match(css, /grid-template-rows:\s*repeat\(4, minmax\(0, 1fr\)\)/);
   assert.match(css, /\.piece-white\s*{/);
   assert.match(css, /\.piece-black\s*{/);
+  assert.match(css, /\[hidden\]\s*{\s*display:\s*none\s*!important;/);
+  assert.match(css, /\.piece\s*{[\s\S]*?width:\s*\.82em;[\s\S]*?height:\s*\.82em;/);
+  assert.doesNotMatch(css, /\.fallback\s*{[^}]*margin:\s*-/);
 });
 
 test('lobby and game are separate documents with rules and home navigation', async () => {
@@ -38,5 +41,6 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="board"/);
   assert.match(game, /id="back-to-menu"[^>]+href="\.\/"/);
   assert.match(game, /src="\.\/src\/main\.js"/);
+  assert.match(game, /id="alternate-mode"/);
   assert.match(html, /src="\.\/src\/lobby\.js"/);
 });
