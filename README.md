@@ -38,7 +38,8 @@ Current implementation:
 - Mobile-first browser board following the original design
 - Local human-vs-minimax play in a Web Worker
 - Installable offline PWA shell
-- Serverless Trystero/WebRTC quick-match play using public Nostr relays
+- Unique UUID game URLs for bot matches and private P2P invitations
+- Serverless Trystero/WebRTC invite play using public Nostr relays
 - Per-move validation and position hashes at the network boundary
 
 An optional chess clock is deliberately deferred until after the untimed game.
