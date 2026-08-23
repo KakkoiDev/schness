@@ -31,6 +31,12 @@ export function setupActionAt(position, square) {
   ) ?? null;
 }
 
+export function setupDestinations(position) {
+  return new Set(legalActions(position)
+    .filter((action) => action.type === 'place-king')
+    .map((action) => action.to));
+}
+
 export function isLegalAction(position, action) {
   const key = actionKey(action);
   return legalActions(position).some((candidate) => actionKey(candidate) === key);

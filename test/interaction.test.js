@@ -14,6 +14,7 @@ import {
   boardSelection,
   destinations,
   setupActionAt,
+  setupDestinations,
 } from '../src/interaction.js';
 
 function game() {
@@ -50,4 +51,15 @@ test('setup square resolves to a king placement only on the home rank', () => {
   };
   assert.deepEqual(setupActionAt(position, 12), { type: 'place-king', to: 12 });
   assert.equal(setupActionAt(position, 0), null);
+  assert.deepEqual([...setupDestinations(position)], [12, 13, 14, 15]);
+});
+
+test('a reserve selection exposes a legal square that blocks check', () => {
+  const board = Array(16).fill(null);
+  board[12] = { owner: WHITE, piece: KING };
+  board[3] = { owner: BLACK, piece: KING };
+  board[0] = { owner: BLACK, piece: ROOK };
+  const position = createPosition({ board, banks: { [WHITE]: ['bishop'], [BLACK]: [] }, turn: WHITE });
+  assert.deepEqual([...destinations(position, bankSelection('bishop'))], [4, 8]);
+  assert.deepEqual(actionAt(position, bankSelection('bishop'), 4), { type: 'drop', piece: 'bishop', to: 4 });
 });
