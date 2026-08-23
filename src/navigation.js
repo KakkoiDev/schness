@@ -19,7 +19,7 @@ export function gameRoute(search) {
 }
 
 export function gameUrl(base, mode, gameId = createGameId()) {
-  const url = new URL(base);
+  const url = new URL('game.html', base);
   url.search = '';
   url.hash = '';
   url.searchParams.set('game', gameId);

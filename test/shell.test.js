@@ -28,10 +28,15 @@ test('board rows are fixed and pieces have owner-specific styling', async () => 
   assert.match(css, /\.piece-black\s*{/);
 });
 
-test('lobby exposes a structured rules dialog and the game has a home link', async () => {
+test('lobby and game are separate documents with rules and home navigation', async () => {
   const html = await readFile(resolve(root, 'index.html'), 'utf8');
+  const game = await readFile(resolve(root, 'game.html'), 'utf8');
   assert.match(html, /<dialog[^>]+id="rules-dialog"/);
   assert.ok((html.match(/<h3>/g) ?? []).length >= 5);
   assert.ok((html.match(/<ul>/g) ?? []).length >= 5);
-  assert.match(html, /id="back-to-menu"[^>]+href="\.\/"/);
+  assert.doesNotMatch(html, /id="board"/);
+  assert.match(game, /id="board"/);
+  assert.match(game, /id="back-to-menu"[^>]+href="\.\/"/);
+  assert.match(game, /src="\.\/src\/main\.js"/);
+  assert.match(html, /src="\.\/src\/lobby\.js"/);
 });

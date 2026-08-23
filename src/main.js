@@ -2,7 +2,7 @@ import {
   BLACK, BISHOP, KING, KNIGHT, ROOK, WHITE,
   applyAction, createInitialPosition, getResult, isInCheck, legalActions, opponent,
 } from './rules.js';
-import { actionAt, bankSelection, boardSelection, destinations, setupActionAt } from './interaction.js';
+import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, setupDestinations } from './interaction.js';
 import { applyActionMessage, makeActionMessage } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
 
@@ -10,8 +10,6 @@ const SYMBOLS = {
   [WHITE]: { [KING]: '♚', [ROOK]: '♜', [BISHOP]: '♝', [KNIGHT]: '♞' },
   [BLACK]: { [KING]: '♚', [ROOK]: '♜', [BISHOP]: '♝', [KNIGHT]: '♞' },
 };
-const menu = document.querySelector('#menu');
-const match = document.querySelector('#match');
 const board = document.querySelector('#board');
 const humanBank = document.querySelector('#human-bank');
 const opponentBank = document.querySelector('#opponent-bank');
@@ -22,8 +20,6 @@ const networkNote = document.querySelector('#network-note');
 const invite = document.querySelector('#invite');
 const inviteUrl = document.querySelector('#invite-url');
 const copyInvite = document.querySelector('#copy-invite');
-const botButton = document.querySelector('#play-bot');
-const onlineButton = document.querySelector('#play-online');
 const fallbackButton = document.querySelector('#fallback-bot');
 const resetButton = document.querySelector('#reset');
 const rulesDialog = document.querySelector('#rules-dialog');
@@ -49,19 +45,15 @@ for (let visual = 0; visual < 16; visual += 1) {
   board.append(button);
 }
 
-botButton.addEventListener('click', startBotGame);
-onlineButton.addEventListener('click', startOnlineGame);
 fallbackButton.addEventListener('click', startBotGame);
 resetButton.addEventListener('click', startNewGame);
 copyInvite.addEventListener('click', copyInviteLink);
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
-window.addEventListener('online', updateOnlineAvailability);
-window.addEventListener('offline', updateOnlineAvailability);
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
 if (route?.mode === 'bot') startBotMatch();
 else if (route?.mode === 'online') startOnlineSearch(route.gameId);
-else showMenu();
+else window.location.replace('./');
 
 function startBotGame() {
   window.location.assign(gameUrl(window.location.href, 'bot'));
@@ -74,16 +66,10 @@ function startBotMatch() {
   showMatch();
 }
 
-function startOnlineGame() {
-  window.location.assign(gameUrl(window.location.href, 'online'));
-}
-
 async function startOnlineSearch(gameId) {
   if (!navigator.onLine) return;
   stopNetwork();
   resetState('online', WHITE);
-  menu.hidden = true;
-  match.hidden = false;
   board.closest('.play-area').hidden = true;
   networkNote.hidden = false;
   networkNote.textContent = 'Waiting for the other player…';
@@ -150,14 +136,6 @@ function resetState(nextMode, color) {
   board.closest('.play-area').hidden = false;
 }
 
-function showMenu() {
-  stopNetwork();
-  mode = null;
-  menu.hidden = false;
-  match.hidden = true;
-  updateOnlineAvailability();
-}
-
 function startNewGame() {
   window.location.assign(gameUrl(window.location.href, mode ?? 'bot', createGameId()));
 }
@@ -173,8 +151,6 @@ async function copyInviteLink() {
 }
 
 function showMatch() {
-  menu.hidden = true;
-  match.hidden = false;
   board.closest('.play-area').hidden = false;
   networkNote.hidden = true;
   render();
@@ -185,12 +161,6 @@ function stopNetwork() {
   searchTimer = null;
   network?.leave();
   network = null;
-}
-
-function updateOnlineAvailability() {
-  onlineButton.disabled = !navigator.onLine;
-  onlineButton.querySelector('small').textContent = navigator.onLine
-    ? 'Get a unique link for another player' : 'Unavailable while offline';
 }
 
 function createWorker() {
@@ -257,7 +227,8 @@ function onBotMessage({ data }) {
 }
 
 function render() {
-  const targets = destinations(position, selection);
+  const placingKing = position.phase !== 'play' && canHumanAct();
+  const targets = placingKing ? setupDestinations(position) : destinations(position, selection);
   const result = getResult(position);
   board.querySelectorAll('.square').forEach((button, visual) => {
     const square = humanColor === WHITE ? visual : 15 - visual;
@@ -267,6 +238,7 @@ function render() {
     if (occupant) button.append(pieceElement(occupant.owner, occupant.piece));
     button.classList.toggle('selected', selection?.type === 'board' && selection.square === square);
     button.classList.toggle('target', targets.has(square));
+    button.classList.toggle('placement', placingKing && targets.has(square));
     button.classList.toggle('capture', targets.has(square) && Boolean(occupant));
     button.classList.toggle('in-check', occupant?.piece === KING && isInCheck(position, occupant.owner));
     button.disabled = !canHumanAct();
@@ -318,6 +290,6 @@ function statusMessage(result) {
   if (thinking) return position.phase === 'place-black-king' ? 'Bot is placing its king…' : 'Bot is thinking…';
   if (position.turn !== humanColor) return 'Opponent’s turn.';
   if (position.phase !== 'play') return 'Place your king on your home row.';
-  if (isInCheck(position, humanColor)) return 'Your king is in check.';
+  if (isInCheck(position, humanColor)) return 'Your king is in check — move, capture, or deploy a reserve piece to block.';
   return selection?.type === 'bank' ? `Place your ${selection.piece}.` : 'Your turn — move or deploy a piece.';
 }

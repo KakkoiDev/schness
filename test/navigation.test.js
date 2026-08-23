@@ -12,7 +12,7 @@ test('game URLs keep the app path but create an isolated game route', () => {
   const id = '7e42a0a1-710c-4d91-b753-4a18d7fec92f';
   assert.equal(
     gameUrl('https://schness.com/?old=value#fragment', 'online', id),
-    `https://schness.com/?game=${id}&mode=online`,
+    `https://schness.com/game.html?game=${id}&mode=online`,
   );
   assert.deepEqual(gameRoute(`?game=${id}&mode=online`), { gameId: id, mode: 'online' });
 });

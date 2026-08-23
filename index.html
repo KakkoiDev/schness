@@ -30,31 +30,6 @@
       <button class="rules-card" type="button" data-open-rules><strong>How to play</strong><span>Scan the complete rules before your first match →</span></button>
     </section>
 
-    <section id="match" hidden>
-      <div class="match-actions">
-        <a id="back-to-menu" class="text-button" href="./">← Home</a>
-        <button id="reset" class="reset" type="button">New game</button>
-      </div>
-      <div id="network-note" class="network-note" hidden></div>
-      <div id="invite" class="invite" hidden>
-        <label for="invite-url">Match link</label>
-        <div><input id="invite-url" type="url" readonly><button id="copy-invite" type="button">Copy</button></div>
-      </div>
-      <button id="fallback-bot" class="mode fallback" type="button" hidden><strong>Play the bot instead</strong><small>No opponent yet</small></button>
-
-      <div class="play-area">
-        <section class="player opponent" aria-label="Opponent pieces">
-          <div><p class="label">Opponent</p><strong id="opponent-name">Bot</strong></div>
-          <div id="opponent-bank" class="bank" aria-label="Opponent reserve"></div>
-        </section>
-        <div id="board" class="board" role="grid" aria-label="Schness board"></div>
-        <section class="player you" aria-label="Your pieces">
-          <div><p class="label">Player</p><strong id="human-name">You · White</strong></div>
-          <div id="human-bank" class="bank" aria-label="Your reserve"></div>
-        </section>
-        <p id="status" class="status" aria-live="polite"></p>
-      </div>
-    </section>
   </main>
 
   <dialog id="rules-dialog" class="rules-dialog" aria-labelledby="rules-title">
@@ -102,6 +77,6 @@
       </ul>
     </section>
   </dialog>
-  <script type="module" src="./src/main.js"></script>
+  <script type="module" src="./src/lobby.js"></script>
 </body>
 </html>
