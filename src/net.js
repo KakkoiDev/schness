@@ -22,7 +22,8 @@ export function joinMatchmaking(gameId) {
   const [sendDecline, onDecline] = room.makeAction('decline');
   const [sendStart, onStart] = room.makeAction('start');
   const [sendGame, onGame] = room.makeAction('game');
-  const matchHandlers = [], gameHandlers = [], leaveHandlers = [], errorHandlers = [];
+  const [sendChatPacket, onChatPacket] = room.makeAction('chat');
+  const matchHandlers = [], gameHandlers = [], chatHandlers = [], leaveHandlers = [], errorHandlers = [];
   const peers = new Map();
   let phase = 'waiting', target = null, opponentId = null, pendingTimer = null;
 
@@ -78,6 +79,9 @@ export function joinMatchmaking(gameId) {
   onGame((payload, id) => {
     if (phase === 'matched' && id === opponentId) gameHandlers.forEach((handler) => handler(payload));
   });
+  onChatPacket((payload, id) => {
+    if (phase === 'matched' && id === opponentId) chatHandlers.forEach((handler) => handler(payload));
+  });
 
   function validPacket(data) {
     if (data?.v === PROTOCOL) return true;
@@ -122,11 +126,16 @@ export function joinMatchmaking(gameId) {
     selfId,
     onMatch: (handler) => matchHandlers.push(handler),
     onGame: (handler) => gameHandlers.push(handler),
+    onChat: (handler) => chatHandlers.push(handler),
     onOpponentLeave: (handler) => leaveHandlers.push(handler),
     onError: (handler) => errorHandlers.push(handler),
     sendGame(payload) {
       if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
       sendGame(payload, opponentId);
+    },
+    sendChat(payload) {
+      if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
+      sendChatPacket(payload, opponentId);
     },
     leave() {
       clearPending();

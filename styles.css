@@ -5,7 +5,22 @@
   --muted: #67635c;
   --accent: #d85b36;
   --focus: #2f6fed;
+  --surface: #fff;
+  --line: #c9c4ba;
+  --inverse: #fff;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #161616;
+  --ink: #f2efe8;
+  --muted: #aaa59b;
+  --accent: #ff8059;
+  --focus: #79a7ff;
+  --surface: #252525;
+  --line: #4b4944;
+  --inverse: #181818;
 }
 
 * { box-sizing: border-box; }
@@ -37,6 +52,7 @@ header, .player {
 }
 
 header { margin-bottom: 1.5rem; }
+.header-actions { display: flex; align-items: center; gap: .6rem; }
 h1 { margin: 0; font-size: clamp(2rem, 9vw, 3.25rem); letter-spacing: -.07em; line-height: .9; }
 h2 { margin: .25rem 0 .8rem; font-size: clamp(1.7rem, 7vw, 2.5rem); letter-spacing: -.045em; }
 .eyebrow, .label { margin: 0 0 .2rem; color: var(--muted); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }
@@ -71,13 +87,14 @@ h2 { margin: .25rem 0 .8rem; font-size: clamp(1.7rem, 7vw, 2.5rem); letter-spaci
 .match-actions { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; }
 .text-button { border: 0; background: transparent; padding: .5rem 0; cursor: pointer; }
 .text-button { color: inherit; text-decoration: none; }
-.rules-button { padding-inline: .5rem; font-weight: 650; }
+.rules-button, .theme-button { padding-inline: .5rem; font-weight: 650; }
+.theme-button { color: var(--muted); }
 .rules-card {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   border: 0;
-  border-top: 1px solid #c9c4ba;
+  border-top: 1px solid var(--line);
   background: transparent;
   padding: .9rem 0;
   color: var(--ink);
@@ -90,8 +107,8 @@ h2 { margin: .25rem 0 .8rem; font-size: clamp(1.7rem, 7vw, 2.5rem); letter-spaci
 .invite { margin: 0 auto 1rem; max-width: 28rem; }
 .invite label { display: block; margin-bottom: .4rem; color: var(--muted); font-size: .8rem; font-weight: 650; }
 .invite div { display: flex; }
-.invite input { min-width: 0; flex: 1; border: 1px solid var(--ink); background: white; padding: .75rem; font: inherit; }
-.invite button { border: 1px solid var(--ink); border-left: 0; background: var(--ink); color: white; padding: .75rem 1rem; cursor: pointer; }
+.invite input { min-width: 0; flex: 1; border: 1px solid var(--ink); background: var(--surface); color: var(--ink); padding: .75rem; font: inherit; }
+.invite button { border: 1px solid var(--ink); border-left: 0; background: var(--ink); color: var(--inverse); padding: .75rem 1rem; cursor: pointer; }
 
 .player { min-height: 4.8rem; padding: .65rem 0; }
 .opponent { align-items: flex-end; }
@@ -193,6 +210,32 @@ h2 { margin: .25rem 0 .8rem; font-size: clamp(1.7rem, 7vw, 2.5rem); letter-spaci
 button:focus-visible, summary:focus-visible { outline: .2rem solid var(--focus); outline-offset: .15rem; }
 
 .status { min-height: 1.5rem; margin: 1rem 0; font-weight: 650; text-align: center; }
+.match-chat { margin-top: .75rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.chat-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.chat-heading h2 { margin: 0; font-size: 1rem; letter-spacing: 0; }
+.chat-heading small { color: var(--muted); }
+.chat-log {
+  display: flex;
+  max-height: 11rem;
+  min-height: 4rem;
+  flex-direction: column;
+  gap: .5rem;
+  overflow-y: auto;
+  margin: .75rem 0;
+  padding: .75rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.chat-empty { margin: auto; color: var(--muted); font-size: .85rem; }
+.chat-message { display: grid; max-width: 85%; gap: .15rem; margin: 0; font-size: .9rem; line-height: 1.35; overflow-wrap: anywhere; }
+.chat-message strong { color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; }
+.chat-own { align-self: end; text-align: right; }
+.chat-peer { align-self: start; }
+.chat-form { display: flex; }
+.chat-form input { min-width: 0; flex: 1; border: 1px solid var(--ink); background: var(--surface); color: var(--ink); padding: .7rem; font: inherit; }
+.chat-form button { border: 1px solid var(--ink); border-left: 0; background: var(--ink); color: var(--inverse); padding: .7rem 1rem; cursor: pointer; }
+.chat-form button:disabled, .chat-form input:disabled { opacity: .5; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .rules-dialog {
   width: min(42rem, calc(100% - 2rem));
   max-height: calc(100svh - 2rem);
@@ -215,6 +258,7 @@ button:focus-visible, summary:focus-visible { outline: .2rem solid var(--focus);
   .bank { min-width: 9.5rem; }
   .bank-piece { width: 2.75rem; }
   .bank-piece .piece { font-size: 1.85rem; }
+  .chat-heading small { font-size: .7rem; }
 }
 
 @media (prefers-reduced-motion: no-preference) {

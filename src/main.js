@@ -5,6 +5,10 @@ import {
 import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, setupDestinations } from './interaction.js';
 import { applyActionMessage, makeActionMessage } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
+import { createChatMessage, parseChatMessage } from './chat.js';
+import { initTheme } from './theme.js';
+
+initTheme();
 
 const SYMBOLS = {
   [WHITE]: { [KING]: '♚', [ROOK]: '♜', [BISHOP]: '♝', [KNIGHT]: '♞' },
@@ -25,6 +29,10 @@ const alternateTitle = document.querySelector('#alternate-mode-title');
 const alternateNote = document.querySelector('#alternate-mode-note');
 const resetButton = document.querySelector('#reset');
 const rulesDialog = document.querySelector('#rules-dialog');
+const matchChat = document.querySelector('#match-chat');
+const chatLog = document.querySelector('#chat-log');
+const chatForm = document.querySelector('#chat-form');
+const chatMessage = document.querySelector('#chat-message');
 const route = gameRoute(window.location.search);
 
 let position = createInitialPosition();
@@ -50,6 +58,7 @@ for (let visual = 0; visual < 16; visual += 1) {
 alternateButton.addEventListener('click', switchMode);
 resetButton.addEventListener('click', startNewGame);
 copyInvite.addEventListener('click', copyInviteLink);
+chatForm.addEventListener('submit', sendChatMessage);
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
@@ -86,6 +95,7 @@ async function startOnlineSearch(gameId) {
     network = joinMatchmaking(gameId);
     network.onMatch(({ color }) => beginOnlineMatch(color));
     network.onGame(receivePeerAction);
+    network.onChat(receiveChatMessage);
     network.onOpponentLeave(() => {
       disconnected = true;
       render();
@@ -108,7 +118,44 @@ function beginOnlineMatch(color) {
   invite.hidden = true;
   alternateButton.hidden = true;
   board.closest('.play-area').hidden = false;
+  matchChat.hidden = false;
   render();
+}
+
+function sendChatMessage(event) {
+  event.preventDefault();
+  if (mode !== 'online' || disconnected || !network?.matched) return;
+  try {
+    const message = createChatMessage(chatMessage.value);
+    network.sendChat(message);
+    appendChatMessage(message.text, 'You');
+    chatMessage.value = '';
+  } catch (error) {
+    chatMessage.setCustomValidity(error.message);
+    chatMessage.reportValidity();
+  }
+}
+
+function receiveChatMessage(payload) {
+  try {
+    const message = parseChatMessage(payload);
+    appendChatMessage(message.text, 'Opponent');
+  } catch {
+    // Ignore malformed peer messages without interrupting the match.
+  }
+}
+
+function appendChatMessage(text, author) {
+  chatLog.querySelector('.chat-empty')?.remove();
+  const row = document.createElement('p');
+  row.className = `chat-message ${author === 'You' ? 'chat-own' : 'chat-peer'}`;
+  const name = document.createElement('strong');
+  name.textContent = author;
+  const body = document.createElement('span');
+  body.textContent = text;
+  row.append(name, body);
+  chatLog.append(row);
+  chatLog.scrollTop = chatLog.scrollHeight;
 }
 
 function receivePeerAction(message) {
@@ -136,6 +183,9 @@ function resetState(nextMode, color) {
   worker = createWorker();
   networkNote.hidden = true;
   invite.hidden = true;
+  matchChat.hidden = true;
+  chatLog.replaceChildren(Object.assign(document.createElement('p'), { className: 'chat-empty', textContent: 'No messages yet.' }));
+  chatMessage.value = '';
   board.closest('.play-area').hidden = false;
 }
 
@@ -264,6 +314,8 @@ function render() {
   renderBank(humanBank, humanColor, true);
   humanName.textContent = humanColor === WHITE ? 'You · White' : 'You · Black';
   status.textContent = statusMessage(result);
+  chatMessage.disabled = disconnected;
+  chatForm.querySelector('button').disabled = disconnected;
 }
 
 function renderBank(container, owner, interactive) {
