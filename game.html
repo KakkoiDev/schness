@@ -16,6 +16,7 @@
       <div><p class="eyebrow">4 × 4 chess</p><h1>Schness</h1></div>
       <div class="header-actions">
         <button class="text-button theme-button" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
+        <button class="text-button settings-button" type="button" data-open-settings>Settings</button>
         <button class="text-button rules-button" type="button" data-open-rules>Rules</button>
       </div>
     </header>
@@ -47,7 +48,7 @@
         <p id="status" class="status" aria-live="polite"></p>
       </div>
       <section id="match-chat" class="match-chat" aria-labelledby="chat-title" hidden>
-        <div class="chat-heading"><div><h2 id="chat-title">At the table</h2><small id="chat-note">Peer-to-peer · not saved</small></div><div class="voice-actions"><button id="hear-opponent" class="voice-toggle" type="button" hidden>Hear opponent</button><button id="voice-toggle" class="voice-toggle" type="button" hidden>Mute mic</button></div></div>
+        <div class="chat-heading"><div><h2 id="chat-title">At the table</h2><small id="chat-note">Peer-to-peer · not saved</small></div><div class="voice-actions"><button id="hear-opponent" class="voice-toggle" type="button" hidden>Hear opponent</button><button id="voice-toggle" class="voice-toggle mic-on" type="button" aria-pressed="true" hidden>Mic on</button></div></div>
         <p id="voice-status" class="voice-status" hidden></p>
         <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-relevant="additions">
           <p class="chat-empty">No messages yet.</p>
@@ -74,6 +75,17 @@
     <section><h3>Place</h3><ul><li>Place your king on any highlighted square of your home row.</li><li>Deploy reserve pieces on empty squares, but a deployment may not give check.</li></ul></section>
     <section><h3>Play</h3><ul><li>Move pieces using normal chess movement.</li><li>If checked, move, capture, or deploy a reserve piece to block the attack.</li><li>Captured pieces return to their original owner’s reserve.</li></ul></section>
     <section><h3>Finish</h3><ul><li>Checkmate wins.</li><li>Stalemate and threefold repetition are draws.</li></ul></section>
+  </dialog>
+  <dialog id="settings-dialog" class="settings-dialog" aria-labelledby="settings-title">
+    <form method="dialog"><button class="dialog-close" aria-label="Close settings">×</button></form>
+    <p class="eyebrow">Your preferences</p>
+    <h2 id="settings-title">Settings</h2>
+    <fieldset class="communication-settings">
+      <legend>Online communication</legend>
+      <label><span><strong>Text chat</strong><small>Free messages and quick replies</small></span><input id="text-chat-setting" type="checkbox"></label>
+      <label><span><strong>Voice chat</strong><small>Talk casually over the board</small></span><input id="voice-chat-setting" type="checkbox"></label>
+      <p>Changes apply immediately. Both options are off by default.</p>
+    </fieldset>
   </dialog>
   <script type="module" src="./src/main.js"></script>
 </body>

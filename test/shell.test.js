@@ -29,6 +29,8 @@ test('board rows are fixed and pieces have owner-specific styling', async () => 
   assert.match(css, /\[hidden\]\s*{\s*display:\s*none\s*!important;/);
   assert.match(css, /\.piece\s*{[\s\S]*?width:\s*\.82em;[\s\S]*?height:\s*\.82em;/);
   assert.doesNotMatch(css, /\.fallback\s*{[^}]*margin:\s*-/);
+  assert.match(css, /\.square\.last-from, \.square\.last-to/);
+  assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
 });
 
 test('lobby and game are separate documents with rules and home navigation', async () => {
@@ -47,4 +49,6 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(html, /id="voice-chat-setting"[^>]+type="checkbox"/);
   assert.match(game, /id="peer-audio"[^>]+autoplay/);
   assert.match(game, /data-quick-message="Good game!"/);
+  assert.match(html, /data-open-settings/);
+  assert.match(game, /id="voice-toggle"[^>]+aria-pressed="true"[^>]*>Mic on</);
 });
