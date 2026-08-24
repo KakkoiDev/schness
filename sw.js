@@ -1,4 +1,4 @@
-const CACHE = 'schness-v6';
+const CACHE = 'schness-v8';
 const SHELL = [
   './',
   './index.html',
@@ -15,6 +15,8 @@ const SHELL = [
   './src/theme.js',
   './src/chat.js',
   './src/communication.js',
+  './src/settings.js',
+  './src/board-ui.js',
   './src/matchmaking.js',
   './src/net.js',
   './src/bot.js',

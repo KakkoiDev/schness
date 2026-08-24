@@ -7,8 +7,10 @@ import { applyActionMessage, makeActionMessage } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
 import {
-  communicationPacket, loadCommunicationSettings, parseCommunicationPacket,
+  communicationPacket, parseCommunicationPacket,
 } from './communication.js';
+import { initSettings } from './settings.js';
+import { actionHighlights } from './board-ui.js';
 import { initTheme } from './theme.js';
 
 initTheme();
@@ -43,7 +45,7 @@ const voiceToggle = document.querySelector('#voice-toggle');
 const hearOpponent = document.querySelector('#hear-opponent');
 const peerAudio = document.querySelector('#peer-audio');
 const route = gameRoute(window.location.search);
-const communicationSettings = loadCommunicationSettings();
+const communicationSettings = initSettings(onCommunicationSettingsChange);
 
 let position = createInitialPosition();
 let humanColor = WHITE;
@@ -58,6 +60,7 @@ let disconnected = false;
 let peerCommunication = null;
 let microphoneStream = null;
 let microphoneStarting = false;
+let lastAction = null;
 
 for (let visual = 0; visual < 16; visual += 1) {
   const button = document.createElement('button');
@@ -182,11 +185,21 @@ function receiveChatMessage(payload) {
 function receiveCommunicationPreferences(payload) {
   try {
     peerCommunication = parseCommunicationPacket(payload);
+    if (!peerCommunication.voice) stopMicrophone();
     updateCommunicationUi();
     startVoiceIfReady();
   } catch {
     // Ignore malformed capability announcements.
   }
+}
+
+function onCommunicationSettingsChange() {
+  if (mode === 'online' && network?.matched) {
+    network.sendPreferences(communicationPacket(communicationSettings));
+  }
+  if (!communicationSettings.voice) stopMicrophone();
+  updateCommunicationUi();
+  startVoiceIfReady();
 }
 
 function canTextChat() {
@@ -223,6 +236,7 @@ async function startVoiceIfReady() {
     network.addStream(microphoneStream);
     voiceStatus.textContent = 'Voice connected.';
     voiceToggle.hidden = false;
+    setMicrophoneState(true);
   } catch (error) {
     voiceStatus.textContent = error.name === 'NotAllowedError'
       ? 'Microphone permission was not granted.' : 'Could not start the microphone.';
@@ -244,8 +258,16 @@ function toggleMicrophone() {
   const track = microphoneStream?.getAudioTracks()[0];
   if (!track) return;
   track.enabled = !track.enabled;
-  voiceToggle.textContent = track.enabled ? 'Mute mic' : 'Unmute mic';
+  setMicrophoneState(track.enabled);
   voiceStatus.textContent = track.enabled ? 'Voice connected.' : 'Your microphone is muted.';
+}
+
+function setMicrophoneState(enabled) {
+  voiceToggle.textContent = enabled ? 'Mic on' : 'Mic muted';
+  voiceToggle.classList.toggle('mic-on', enabled);
+  voiceToggle.classList.toggle('mic-muted', !enabled);
+  voiceToggle.setAttribute('aria-pressed', String(enabled));
+  voiceToggle.setAttribute('aria-label', enabled ? 'Microphone is on; click to mute' : 'Microphone is muted; click to unmute');
 }
 
 function stopMicrophone() {
@@ -275,6 +297,7 @@ function receivePeerAction(message) {
   if (mode !== 'online' || disconnected || position.turn === humanColor) return;
   try {
     position = applyActionMessage(position, message);
+    lastAction = message.action;
     selection = null;
     render();
   } catch (error) {
@@ -293,6 +316,7 @@ function resetState(nextMode, color) {
   thinking = false;
   disconnected = false;
   peerCommunication = null;
+  lastAction = null;
   stopMicrophone();
   worker.terminate();
   worker = createWorker();
@@ -381,6 +405,7 @@ function canHumanAct() {
 function play(action) {
   const message = mode === 'online' ? makeActionMessage(position, action) : null;
   position = applyAction(position, action);
+  lastAction = action;
   selection = null;
   if (message) network.sendGame(message);
   render();
@@ -402,7 +427,10 @@ function onBotMessage({ data }) {
     status.textContent = `Bot error: ${data.error}`;
     return;
   }
-  if (data.action && position.turn !== humanColor) position = applyAction(position, data.action);
+  if (data.action && position.turn !== humanColor) {
+    position = applyAction(position, data.action);
+    lastAction = data.action;
+  }
   thinking = false;
   render();
 }
@@ -411,6 +439,7 @@ function render() {
   const placingKing = position.phase !== 'play' && canHumanAct();
   const targets = placingKing ? setupDestinations(position) : destinations(position, selection);
   const result = getResult(position);
+  const last = actionHighlights(lastAction);
   board.querySelectorAll('.square').forEach((button, visual) => {
     const square = humanColor === WHITE ? visual : 15 - visual;
     const occupant = position.board[square];
@@ -422,6 +451,8 @@ function render() {
     button.classList.toggle('placement', placingKing && targets.has(square));
     button.classList.toggle('capture', targets.has(square) && Boolean(occupant));
     button.classList.toggle('in-check', occupant?.piece === KING && isInCheck(position, occupant.owner));
+    button.classList.toggle('last-from', square === last.from);
+    button.classList.toggle('last-to', square === last.to);
     button.disabled = !canHumanAct();
     button.setAttribute('aria-label', occupant
       ? `${occupant.owner} ${occupant.piece}, square ${square + 1}` : `Empty square ${square + 1}`);
@@ -429,6 +460,8 @@ function render() {
   renderBank(opponentBank, opponent(humanColor), false);
   renderBank(humanBank, humanColor, true);
   humanName.textContent = humanColor === WHITE ? 'You · White' : 'You · Black';
+  humanBank.closest('.player').classList.toggle('active-player', position.turn === humanColor && !result);
+  opponentBank.closest('.player').classList.toggle('active-player', position.turn !== humanColor && !result);
   status.textContent = statusMessage(result);
   updateCommunicationUi();
 }
