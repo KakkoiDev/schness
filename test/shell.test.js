@@ -26,6 +26,7 @@ test('board rows are fixed and pieces have owner-specific styling', async () => 
   assert.match(css, /grid-template-rows:\s*repeat\(4, minmax\(0, 1fr\)\)/);
   assert.match(css, /\.piece-white\s*{/);
   assert.match(css, /\.piece-black\s*{/);
+  assert.match(css, /\.piece-king\s*{[^}]*scaleX\(\.86\)/);
   assert.match(css, /\[hidden\]\s*{\s*display:\s*none\s*!important;/);
   assert.match(css, /\.piece\s*{[\s\S]*?width:\s*\.82em;[\s\S]*?height:\s*\.82em;/);
   assert.doesNotMatch(css, /\.fallback\s*{[^}]*margin:\s*-/);
@@ -51,4 +52,6 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /data-quick-message="Good game!"/);
   assert.match(html, /data-open-settings/);
   assert.match(game, /id="voice-toggle"[^>]+aria-pressed="true"[^>]*>Mic on</);
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  assert.match(main, /piece-\$\{piece\}/);
 });
