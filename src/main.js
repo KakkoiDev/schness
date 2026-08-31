@@ -492,7 +492,11 @@ function renderBank(container, owner, interactive) {
 function pieceElement(owner, piece) {
   const element = document.createElement('span');
   element.className = `piece piece-${owner} piece-${piece}`;
-  element.textContent = SYMBOLS[owner][piece];
+  if (piece === KING) {
+    element.innerHTML = '<svg viewBox="0 0 64 64" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M29 5h6v8h8v6h-8v8h-6v-8h-8v-6h8V5Zm-8 25h22l-3.5 20h-15L21 30Zm1.5 23h19a4 4 0 0 1 4 4v2h-27v-2a4 4 0 0 1 4-4Z"/></svg>';
+  } else {
+    element.textContent = SYMBOLS[owner][piece];
+  }
   element.setAttribute('aria-hidden', 'true');
   return element;
 }
