@@ -1,4 +1,4 @@
-const CACHE = 'schness-v10';
+const CACHE = 'schness-v11';
 const SHELL = [
   './',
   './index.html',
