@@ -491,7 +491,7 @@ function renderBank(container, owner, interactive) {
 
 function pieceElement(owner, piece) {
   const element = document.createElement('span');
-  element.className = `piece piece-${owner}`;
+  element.className = `piece piece-${owner} piece-${piece}`;
   element.textContent = SYMBOLS[owner][piece];
   element.setAttribute('aria-hidden', 'true');
   return element;
