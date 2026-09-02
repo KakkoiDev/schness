@@ -10,7 +10,7 @@
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
+<body class="lobby-page">
   <main class="game">
     <header>
       <div><p class="eyebrow">4 × 4 chess</p><h1>Schness</h1></div>
@@ -23,16 +23,14 @@
 
     <section id="menu" class="menu" aria-labelledby="play-title">
       <div class="lobby-intro">
-        <div class="mini-board" aria-hidden="true"><span>♜</span><span></span><span>♞</span><span></span><span></span><span>♝</span><span></span><span></span><span></span><span></span><span>♚</span><span></span><span>♚</span><span></span><span></span><span></span></div>
-        <p class="eyebrow">Move · Deploy · Reuse</p>
-        <h2 id="play-title">Small board.<br>Deep trouble.</h2>
-        <p>A fast chess variant where captured pieces come back. Easy to learn, tactically vicious.</p>
+        <h2 id="play-title">Play Schness</h2>
+        <p>Chess on a 4 × 4 board. Move a piece or deploy one from your reserve. Captured pieces return.</p>
       </div>
       <div class="mode-buttons">
         <button id="play-bot" class="mode" type="button"><strong>Play the bot</strong><small>Works anywhere, even offline</small></button>
         <button id="play-online" class="mode dark" type="button"><strong>Create an online game</strong><small>Get a unique link for another player</small></button>
       </div>
-      <button class="rules-card" type="button" data-open-rules><strong>New to Schness?</strong><span>Learn the rules in 60 seconds <b>→</b></span></button>
+      <button class="rules-card" type="button" data-open-rules><strong>How to play</strong><span>Read the rules</span></button>
     </section>
 
   </main>
