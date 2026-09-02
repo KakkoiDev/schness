@@ -46,6 +46,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /src="\.\/src\/main\.js"/);
   assert.match(game, /id="alternate-mode"/);
   assert.match(html, /src="\.\/src\/lobby\.js"/);
+  assert.match(html, /<body class="lobby-page">/);
+  assert.doesNotMatch(html, /mini-board|Small board|Deep trouble/);
   assert.match(html, /id="text-chat-setting"[^>]+type="checkbox"/);
   assert.match(html, /id="voice-chat-setting"[^>]+type="checkbox"/);
   assert.match(game, /id="peer-audio"[^>]+autoplay/);
