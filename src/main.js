@@ -410,12 +410,14 @@ function beginBoardDrag(event, button) {
   const occupant = position.board[square];
   if (!event.isPrimary || !canHumanAct() || position.phase !== 'play' || occupant?.owner !== humanColor) return;
   pointerDrag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
+    pieceRect: button.querySelector('.piece')?.getBoundingClientRect(),
     selection: boardSelection(square), sourceSquare: square, owner: occupant.owner, piece: occupant.piece };
 }
 
 function beginBankDrag(event, piece) {
   if (!event.isPrimary || !canHumanAct() || position.phase !== 'play') return;
   pointerDrag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
+    pieceRect: event.currentTarget.querySelector('.piece')?.getBoundingClientRect(),
     selection: bankSelection(piece), sourcePiece: piece, owner: humanColor, piece };
 }
 
@@ -426,6 +428,10 @@ function movePointerDrag(event) {
     selection = pointerDrag.selection;
     pointerDrag.ghost = pieceElement(pointerDrag.owner, pointerDrag.piece);
     pointerDrag.ghost.classList.add('drag-ghost');
+    if (pointerDrag.pieceRect) {
+      pointerDrag.ghost.style.width = `${pointerDrag.pieceRect.width}px`;
+      pointerDrag.ghost.style.height = `${pointerDrag.pieceRect.height}px`;
+    }
     document.body.append(pointerDrag.ghost);
     render();
   }
