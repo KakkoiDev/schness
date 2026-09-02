@@ -122,3 +122,49 @@
     min-width: 0;
   }
 }
+
+/* A stable four-column player row: one name cell and three reserve cells. */
+.game-page .player {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+
+.game-page .player > div:first-child {
+  grid-column: 1;
+  min-width: 0;
+}
+
+.game-page .player strong,
+.game-page .player .label {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.game-page .player strong {
+  font-size: clamp(.72rem, 3.4vw, .9rem);
+}
+
+.game-page .bank {
+  display: grid;
+  grid-column: 2 / span 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+}
+
+.game-page .bank-piece {
+  width: 100%;
+  min-width: 0;
+}
+
+.game-page .bank-piece:first-child:nth-last-child(1) {
+  grid-column: 3;
+}
+
+.game-page .bank-piece:first-child:nth-last-child(2) {
+  grid-column: 2;
+}
