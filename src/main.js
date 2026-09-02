@@ -27,9 +27,6 @@ const networkNote = document.querySelector('#network-note');
 const invite = document.querySelector('#invite');
 const inviteUrl = document.querySelector('#invite-url');
 const copyInvite = document.querySelector('#copy-invite');
-const alternateButton = document.querySelector('#alternate-mode');
-const alternateTitle = document.querySelector('#alternate-mode-title');
-const alternateNote = document.querySelector('#alternate-mode-note');
 const resetButton = document.querySelector('#reset');
 const rulesDialog = document.querySelector('#rules-dialog');
 const matchChat = document.querySelector('#match-chat');
@@ -78,7 +75,6 @@ window.addEventListener('pointermove', movePointerDrag, { passive: false });
 window.addEventListener('pointerup', endPointerDrag);
 window.addEventListener('pointercancel', cancelPointerDrag);
 
-alternateButton.addEventListener('click', switchMode);
 resetButton.addEventListener('click', startNewGame);
 copyInvite.addEventListener('click', copyInviteLink);
 chatForm.addEventListener('submit', sendChatMessage);
@@ -100,15 +96,10 @@ if (route?.mode === 'bot') startBotMatch();
 else if (route?.mode === 'online') startOnlineSearch(route.gameId);
 else window.location.replace('./');
 
-function startBotGame() {
-  window.location.assign(gameUrl(window.location.href, 'bot'));
-}
-
 function startBotMatch() {
   stopNetwork();
   resetState('bot', WHITE);
   opponentName.textContent = 'Bot';
-  showAlternative('online');
   showMatch();
 }
 
@@ -121,8 +112,6 @@ async function startOnlineSearch(gameId) {
   networkNote.textContent = 'Waiting for the other player…';
   invite.hidden = false;
   inviteUrl.value = window.location.href;
-  alternateButton.hidden = true;
-  searchTimer = setTimeout(() => showAlternative('bot'), 5000);
   try {
     const { joinMatchmaking } = await import('./net.js');
     if (mode !== 'online') return;
@@ -140,7 +129,6 @@ async function startOnlineSearch(gameId) {
     network.onError((message) => { networkNote.textContent = message; });
   } catch (error) {
     networkNote.textContent = `Could not start online play: ${error.message}`;
-    showAlternative('bot');
   }
 }
 
@@ -153,7 +141,6 @@ function beginOnlineMatch(color) {
   opponentName.textContent = 'Online player';
   networkNote.hidden = true;
   invite.hidden = true;
-  alternateButton.hidden = true;
   board.closest('.play-area').hidden = false;
   matchChat.hidden = false;
   network.sendPreferences(communicationPacket(communicationSettings));
@@ -337,18 +324,6 @@ function resetState(nextMode, color) {
 
 function startNewGame() {
   window.location.assign(gameUrl(window.location.href, mode ?? 'bot', createGameId()));
-}
-
-function switchMode() {
-  const nextMode = mode === 'bot' ? 'online' : 'bot';
-  window.location.assign(gameUrl(window.location.href, nextMode, createGameId()));
-}
-
-function showAlternative(targetMode) {
-  alternateButton.hidden = false;
-  alternateButton.dataset.mode = targetMode;
-  alternateTitle.textContent = targetMode === 'online' ? 'Play a real player instead' : 'Play the bot instead';
-  alternateNote.textContent = targetMode === 'online' ? 'Create a private invitation link' : 'Start immediately';
 }
 
 async function copyInviteLink() {

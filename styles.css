@@ -96,3 +96,29 @@
   }
 }
 @media(prefers-reduced-motion:no-preference){.square,.bank-piece{transition:outline-color 120ms ease,transform 120ms ease}.bank-piece:not(:disabled):active,.square:not(:disabled):active{transform:scale(.96)}}
+
+@media(max-width:760px) {
+  .game-page {
+    padding-top: max(.35rem, env(safe-area-inset-top));
+    padding-bottom: max(.35rem, env(safe-area-inset-bottom));
+  }
+
+  .game-page header {
+    min-height: 2.2rem;
+  }
+
+  .game-page .play-area {
+    --mobile-board-size: min(100vw - 1.7rem, 66svh - 5.5rem, 37rem);
+    --piece-cell: calc((var(--mobile-board-size) - 2px) / 4);
+    width: var(--mobile-board-size);
+  }
+
+  .game-page .player {
+    min-height: var(--piece-cell);
+    padding-block: .15rem;
+  }
+
+  .game-page .bank {
+    min-width: 0;
+  }
+}
