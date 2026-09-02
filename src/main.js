@@ -16,10 +16,7 @@ import { initTheme } from './theme.js';
 
 initTheme();
 
-const SYMBOLS = {
-  [WHITE]: { [KING]: '♚', [ROOK]: '♜', [BISHOP]: '♝', [KNIGHT]: '♞' },
-  [BLACK]: { [KING]: '♚', [ROOK]: '♜', [BISHOP]: '♝', [KNIGHT]: '♞' },
-};
+const PIECE_FILES = { [KING]: 'K', [ROOK]: 'R', [BISHOP]: 'B', [KNIGHT]: 'N' };
 const board = document.querySelector('#board');
 const humanBank = document.querySelector('#human-bank');
 const opponentBank = document.querySelector('#opponent-bank');
@@ -559,9 +556,11 @@ function renderBank(container, owner, interactive) {
 }
 
 function pieceElement(owner, piece) {
-  const element = document.createElement('span');
+  const element = document.createElement('img');
   element.className = `piece piece-${owner} piece-${piece}`;
-  element.textContent = SYMBOLS[owner][piece];
+  element.src = `./assets/pieces/${owner === WHITE ? 'w' : 'b'}${PIECE_FILES[piece]}.svg`;
+  element.alt = '';
+  element.draggable = false;
   element.setAttribute('aria-hidden', 'true');
   return element;
 }

@@ -1,4 +1,4 @@
-const CACHE = 'schness-v14';
+const CACHE = 'schness-v15';
 const SHELL = [
   './',
   './index.html',
@@ -6,6 +6,14 @@ const SHELL = [
   './styles.css',
   './manifest.webmanifest',
   './icon.svg',
+  './assets/pieces/wK.svg',
+  './assets/pieces/wR.svg',
+  './assets/pieces/wB.svg',
+  './assets/pieces/wN.svg',
+  './assets/pieces/bK.svg',
+  './assets/pieces/bR.svg',
+  './assets/pieces/bB.svg',
+  './assets/pieces/bN.svg',
   './src/main.js',
   './src/lobby.js',
   './src/rules.js',

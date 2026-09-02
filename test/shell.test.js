@@ -21,14 +21,13 @@ test('manifest describes a standalone app with a local icon', async () => {
   assert.ok(manifest.icons.every((icon) => icon.src.startsWith('./')));
 });
 
-test('board rows are fixed and pieces have owner-specific styling', async () => {
+test('board rows are fixed and every vector piece uses the same box', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   assert.match(css, /grid-template-rows:\s*repeat\(4, minmax\(0, 1fr\)\)/);
   assert.match(css, /\.piece-white\s*{/);
   assert.match(css, /\.piece-black\s*{/);
-  assert.match(css, /\.square \.piece-king\s*{[^}]*font-size/);
   assert.match(css, /\[hidden\]\s*{\s*display:\s*none\s*!important;/);
-  assert.match(css, /\.piece\s*{[\s\S]*?width:\s*\.82em;[\s\S]*?height:\s*\.82em;/);
+  assert.match(css, /\.piece,[\s\S]*?\.bank-piece \.piece-king\s*{[\s\S]*?width:\s*78%;[\s\S]*?height:\s*78%;[\s\S]*?object-fit:\s*contain;/);
   assert.doesNotMatch(css, /\.fallback\s*{[^}]*margin:\s*-/);
   assert.match(css, /\.square\.last-from, \.square\.last-to/);
   assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
@@ -57,6 +56,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="voice-toggle"[^>]+aria-pressed="true"[^>]*>Mic on</);
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
   assert.match(main, /piece-\$\{piece\}/);
+  assert.match(main, /createElement\('img'\)/);
+  assert.match(main, /element\.draggable = false/);
   assert.match(main, /pointerdown/);
   assert.match(main, /elementFromPoint/);
   assert.match(css, /\.drag-ghost\s*{/);
