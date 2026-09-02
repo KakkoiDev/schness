@@ -11,6 +11,7 @@ import {
 } from './communication.js';
 import { initSettings } from './settings.js';
 import { actionHighlights } from './board-ui.js';
+import { movedEnough } from './drag.js';
 import { initTheme } from './theme.js';
 
 initTheme();
@@ -61,15 +62,24 @@ let peerCommunication = null;
 let microphoneStream = null;
 let microphoneStarting = false;
 let lastAction = null;
+let pointerDrag = null;
+let suppressClick = false;
 
 for (let visual = 0; visual < 16; visual += 1) {
   const button = document.createElement('button');
   button.className = 'square';
   button.type = 'button';
   button.dataset.visual = String(visual);
-  button.addEventListener('click', () => onSquare(Number(button.dataset.square)));
+  button.addEventListener('click', () => {
+    if (!suppressClick) onSquare(Number(button.dataset.square));
+  });
+  button.addEventListener('pointerdown', (event) => beginBoardDrag(event, button));
   board.append(button);
 }
+
+window.addEventListener('pointermove', movePointerDrag, { passive: false });
+window.addEventListener('pointerup', endPointerDrag);
+window.addEventListener('pointercancel', cancelPointerDrag);
 
 alternateButton.addEventListener('click', switchMode);
 resetButton.addEventListener('click', startNewGame);
@@ -398,6 +408,60 @@ function selectBank(piece) {
   render();
 }
 
+function beginBoardDrag(event, button) {
+  const square = Number(button.dataset.square);
+  const occupant = position.board[square];
+  if (!event.isPrimary || !canHumanAct() || position.phase !== 'play' || occupant?.owner !== humanColor) return;
+  pointerDrag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
+    selection: boardSelection(square), sourceSquare: square, owner: occupant.owner, piece: occupant.piece };
+}
+
+function beginBankDrag(event, piece) {
+  if (!event.isPrimary || !canHumanAct() || position.phase !== 'play') return;
+  pointerDrag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
+    selection: bankSelection(piece), sourcePiece: piece, owner: humanColor, piece };
+}
+
+function movePointerDrag(event) {
+  if (!pointerDrag || event.pointerId !== pointerDrag.pointerId) return;
+  if (!pointerDrag.active && movedEnough(pointerDrag, event)) {
+    pointerDrag.active = true;
+    selection = pointerDrag.selection;
+    pointerDrag.ghost = pieceElement(pointerDrag.owner, pointerDrag.piece);
+    pointerDrag.ghost.classList.add('drag-ghost');
+    document.body.append(pointerDrag.ghost);
+    render();
+  }
+  if (!pointerDrag.active) return;
+  event.preventDefault();
+  pointerDrag.ghost.style.left = `${event.clientX}px`;
+  pointerDrag.ghost.style.top = `${event.clientY}px`;
+}
+
+function endPointerDrag(event) {
+  if (!pointerDrag || event.pointerId !== pointerDrag.pointerId) return;
+  const drag = pointerDrag;
+  pointerDrag = null;
+  drag.ghost?.remove();
+  if (!drag.active) return;
+  const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('.square');
+  const action = target ? actionAt(position, drag.selection, Number(target.dataset.square)) : null;
+  event.preventDefault();
+  suppressClick = true;
+  setTimeout(() => { suppressClick = false; }, 0);
+  if (action) play(action);
+  else {
+    selection = null;
+    render();
+  }
+}
+
+function cancelPointerDrag() {
+  pointerDrag?.ghost?.remove();
+  pointerDrag = null;
+  render();
+}
+
 function canHumanAct() {
   return !thinking && !disconnected && position.turn === humanColor && !getResult(position);
 }
@@ -453,6 +517,7 @@ function render() {
     button.classList.toggle('in-check', occupant?.piece === KING && isInCheck(position, occupant.owner));
     button.classList.toggle('last-from', square === last.from);
     button.classList.toggle('last-to', square === last.to);
+    button.classList.toggle('drag-source', pointerDrag?.active && pointerDrag.sourceSquare === square);
     button.disabled = !canHumanAct();
     button.setAttribute('aria-label', occupant
       ? `${occupant.owner} ${occupant.piece}, square ${square + 1}` : `Empty square ${square + 1}`);
@@ -476,9 +541,13 @@ function renderBank(container, owner, interactive) {
     button.append(pieceElement(owner, piece));
     button.setAttribute('aria-label', `${owner} ${piece} in reserve`);
     button.classList.toggle('selected', interactive && selection?.type === 'bank' && selection.piece === piece);
+    button.classList.toggle('drag-source', pointerDrag?.active && pointerDrag.sourcePiece === piece);
     button.disabled = !interactive || !canHumanAct() || position.phase !== 'play' ||
       !legalActions(position).some((action) => action.type === 'drop' && action.piece === piece);
-    if (interactive) button.addEventListener('click', () => selectBank(piece));
+    if (interactive) {
+      button.addEventListener('click', () => { if (!suppressClick) selectBank(piece); });
+      button.addEventListener('pointerdown', (event) => beginBankDrag(event, piece));
+    }
     container.append(button);
   }
   if (!pieces.length) {
@@ -492,11 +561,7 @@ function renderBank(container, owner, interactive) {
 function pieceElement(owner, piece) {
   const element = document.createElement('span');
   element.className = `piece piece-${owner} piece-${piece}`;
-  if (piece === KING) {
-    element.innerHTML = '<svg viewBox="0 0 64 64" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M29 5h6v8h8v6h-8v8h-6v-8h-8v-6h8V5Zm-8 25h22l-3.5 20h-15L21 30Zm1.5 23h19a4 4 0 0 1 4 4v2h-27v-2a4 4 0 0 1 4-4Z"/></svg>';
-  } else {
-    element.textContent = SYMBOLS[owner][piece];
-  }
+  element.textContent = SYMBOLS[owner][piece];
   element.setAttribute('aria-hidden', 'true');
   return element;
 }
