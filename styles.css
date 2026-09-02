@@ -13,4 +13,18 @@
 .piece-king{transform:none}
 .piece-king svg{display:block;width:72%;height:72%;overflow:visible;fill:var(--piece-color);stroke:var(--piece-stroke);stroke-width:1.5;stroke-linejoin:round;filter:drop-shadow(0 .03em .02em rgb(0 0 0/.25))}
 .piece-white{--piece-stroke:#172019}.piece-black{--piece-stroke:#fffdf7}
+.lobby-page::before{display:none}
+.lobby-page .game{width:min(100%,42rem);padding-inline:clamp(1rem,5vw,2rem)}
+.lobby-page header{margin-bottom:clamp(4rem,12vh,7rem)}
+.lobby-page .menu{display:block;min-height:0}
+.lobby-page .lobby-intro{margin-bottom:2.75rem}
+.lobby-page .lobby-intro h2{margin:0 0 1rem;font-size:clamp(2.25rem,8vw,3.75rem);letter-spacing:-.055em}
+.lobby-page .lobby-intro>p{max-width:34rem;margin:0;color:var(--muted);font-size:1rem;line-height:1.65}
+.lobby-page .mode-buttons{gap:.625rem}
+.lobby-page .mode{border-color:var(--line);border-radius:.45rem;padding:1rem 1.1rem;box-shadow:none;transition:border-color 120ms ease,background-color 120ms ease}
+.lobby-page .mode::after{display:none}
+.lobby-page .mode.dark{box-shadow:none}
+.lobby-page .mode:not(:disabled):hover{transform:none;border-color:var(--ink);box-shadow:none}
+.lobby-page .rules-card{margin-top:1.5rem;padding:1rem 0;border-top:1px solid var(--line);font-size:.9rem}
+.lobby-page .rules-card b{display:none}
 @media(prefers-reduced-motion:no-preference){.square,.bank-piece{transition:outline-color 120ms ease,transform 120ms ease}.bank-piece:not(:disabled):active,.square:not(:disabled):active{transform:scale(.96)}}
