@@ -68,5 +68,31 @@
   width: 4.5rem;
   height: 4.5rem;
   object-fit: contain;
+  transform: translate(-50%, -50%);
+}
+
+/* Reserve pieces share the board cell scale; availability is shown by the cursor, never fading. */
+.game-page .play-area {
+  --piece-cell: calc((min(100vw - 2rem, 37rem) - 2px) / 4);
+}
+
+.game-page .bank-piece {
+  width: var(--piece-cell);
+  flex: 0 0 var(--piece-cell);
+}
+
+.game-page .bank-piece:disabled,
+.game-page .drag-source .piece {
+  opacity: 1;
+}
+
+@media(max-width:760px) and (max-height:700px) {
+  .game-page .play-area {
+    --piece-cell: calc((min(100vw - 2rem, 100svh - 12rem) - 2px) / 4);
+  }
+
+  .game-page .bank-piece {
+    width: var(--piece-cell);
+  }
 }
 @media(prefers-reduced-motion:no-preference){.square,.bank-piece{transition:outline-color 120ms ease,transform 120ms ease}.bank-piece:not(:disabled):active,.square:not(:disabled):active{transform:scale(.96)}}

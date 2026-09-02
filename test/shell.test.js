@@ -28,6 +28,8 @@ test('board rows are fixed and every vector piece uses the same box', async () =
   assert.match(css, /\.piece-black\s*{/);
   assert.match(css, /\[hidden\]\s*{\s*display:\s*none\s*!important;/);
   assert.match(css, /\.piece,[\s\S]*?\.bank-piece \.piece-king\s*{[\s\S]*?width:\s*78%;[\s\S]*?height:\s*78%;[\s\S]*?object-fit:\s*contain;/);
+  assert.match(css, /\.game-page \.bank-piece\s*{[\s\S]*?width:\s*var\(--piece-cell\)/);
+  assert.match(css, /\.game-page \.bank-piece:disabled,[\s\S]*?opacity:\s*1/);
   assert.doesNotMatch(css, /\.fallback\s*{[^}]*margin:\s*-/);
   assert.match(css, /\.square\.last-from, \.square\.last-to/);
   assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
@@ -58,9 +60,12 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(main, /piece-\$\{piece\}/);
   assert.match(main, /createElement\('img'\)/);
   assert.match(main, /element\.draggable = false/);
+  assert.match(main, /pieceRect:.*getBoundingClientRect/);
+  assert.match(main, /ghost\.style\.width/);
   assert.match(main, /pointerdown/);
   assert.match(main, /elementFromPoint/);
   assert.match(css, /\.drag-ghost\s*{/);
+  assert.match(css, /transform:\s*translate\(-50%, -50%\)/);
   assert.match(css, /touch-action:\s*none/);
   assert.doesNotMatch(html, />4 × 4 chess</);
 });
