@@ -31,6 +31,9 @@ test('board rows are fixed and every vector piece uses the same box', async () =
   assert.match(css, /\.game-page \.bank-piece\s*{[\s\S]*?width:\s*var\(--piece-cell\)/);
   assert.match(css, /\.game-page \.bank-piece:disabled,[\s\S]*?opacity:\s*1/);
   assert.match(css, /--mobile-board-size:\s*min\([^;]+66svh/);
+  assert.match(css, /grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.game-page \.player strong,[\s\S]*?white-space:\s*nowrap/);
+  assert.match(css, /\.game-page \.bank-piece:first-child:nth-last-child\(1\)/);
   assert.doesNotMatch(css, /\.fallback\s*{[^}]*margin:\s*-/);
   assert.match(css, /\.square\.last-from, \.square\.last-to/);
   assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
