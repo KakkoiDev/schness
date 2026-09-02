@@ -30,6 +30,7 @@ test('board rows are fixed and every vector piece uses the same box', async () =
   assert.match(css, /\.piece,[\s\S]*?\.bank-piece \.piece-king\s*{[\s\S]*?width:\s*78%;[\s\S]*?height:\s*78%;[\s\S]*?object-fit:\s*contain;/);
   assert.match(css, /\.game-page \.bank-piece\s*{[\s\S]*?width:\s*var\(--piece-cell\)/);
   assert.match(css, /\.game-page \.bank-piece:disabled,[\s\S]*?opacity:\s*1/);
+  assert.match(css, /--mobile-board-size:\s*min\([^;]+66svh/);
   assert.doesNotMatch(css, /\.fallback\s*{[^}]*margin:\s*-/);
   assert.match(css, /\.square\.last-from, \.square\.last-to/);
   assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
@@ -46,7 +47,7 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="board"/);
   assert.match(game, /id="back-to-menu"[^>]+href="\.\/"/);
   assert.match(game, /src="\.\/src\/main\.js"/);
-  assert.match(game, /id="alternate-mode"/);
+  assert.doesNotMatch(game, /id="alternate-mode"/);
   assert.match(html, /src="\.\/src\/lobby\.js"/);
   assert.match(html, /<body class="lobby-page">/);
   assert.doesNotMatch(html, /mini-board|Small board|Deep trouble/);
