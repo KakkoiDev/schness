@@ -50,6 +50,21 @@ test('board rows are fixed and every vector piece uses the same box', async () =
   assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
 });
 
+test('state tokens are defined in both themes and no decorative gradient remains', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  const block = (selector) => css.match(new RegExp(`${selector}\\s*{([^}]*)}`))?.[1] ?? '';
+  const light = block(':root');
+  const dark = block(':root\\[data-theme="dark"\\]');
+  for (const token of ['--ok', '--warn', '--danger', '--sunk', '--hairline']) {
+    assert.match(light, new RegExp(`${token}:#`), `${token} missing from the light theme`);
+    assert.match(dark, new RegExp(`${token}:#`), `${token} missing from the dark theme`);
+  }
+  // body::before held the two radial-gradient blobs; the check wash is the only gradient left.
+  assert.doesNotMatch(css, /body::before/);
+  assert.doesNotMatch(css, /\.lobby-page::before/);
+  assert.equal([...css.matchAll(/radial-gradient/g)].length, 1);
+});
+
 test('lobby and game are separate documents with rules and home navigation', async () => {
   const html = await readFile(resolve(root, 'index.html'), 'utf8');
   const game = await readFile(resolve(root, 'game.html'), 'utf8');
