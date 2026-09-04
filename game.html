@@ -30,6 +30,7 @@
         <label for="invite-url">Match link</label>
         <div><input id="invite-url" type="url" readonly><button id="copy-invite" type="button">Copy</button></div>
       </div>
+      <p id="announcement" class="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
       <div class="play-area">
         <section class="player opponent" aria-label="Opponent">
           <div class="player-identity">
@@ -44,7 +45,12 @@
             <div id="opponent-bank" class="bank" aria-labelledby="opponent-bank-label"></div>
           </div>
         </section>
-        <div id="board" class="board" role="grid" aria-label="Schness board"></div>
+        <div id="board" class="board" role="grid" aria-label="Schness board" tabindex="0"
+             aria-describedby="board-help"></div>
+        <p id="board-help" class="visually-hidden">
+          Arrow keys move the cursor, Enter picks up or plays, Escape puts the piece back down,
+          1 to 3 pick a reserve piece, a square name jumps there, and question mark lists the shortcuts.
+        </p>
         <section id="turn-card" class="turn-card" aria-live="polite">
           <p class="turn-headline"><span class="turn-dot" aria-hidden="true"></span><strong id="turn-title">Your turn</strong></p>
           <p id="turn-detail" class="turn-detail"></p>
@@ -136,6 +142,19 @@
     </section>
   </main>
 
+  <dialog id="shortcuts-dialog" class="rules-dialog" aria-labelledby="shortcuts-title">
+    <form method="dialog"><button class="dialog-close" aria-label="Close shortcuts">×</button></form>
+    <p class="eyebrow">Keyboard</p>
+    <h2 id="shortcuts-title">Playing without a mouse</h2>
+    <dl class="shortcuts">
+      <dt>↑ ↓ ← →</dt><dd>Move the cursor one square. It wraps at the edges.</dd>
+      <dt>Enter</dt><dd>Pick up the piece under the cursor, or play the move.</dd>
+      <dt>Esc</dt><dd>Put the piece back down.</dd>
+      <dt>1 – 3</dt><dd>Pick a reserve piece, then Enter on an empty square to deploy it.</dd>
+      <dt>a – d then 1 – 4</dt><dd>Type a square name to go straight there.</dd>
+      <dt>?</dt><dd>Show this list.</dd>
+    </dl>
+  </dialog>
   <dialog id="rules-dialog" class="rules-dialog" aria-labelledby="rules-title">
     <form method="dialog"><button class="dialog-close" aria-label="Close rules">×</button></form>
     <p class="eyebrow">Quick reminder</p>

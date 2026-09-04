@@ -5,6 +5,7 @@ import {
 } from './rules.js';
 import { colorName, pieceName, squareName } from './notation.js';
 import { gameText, moveCount, pairMoves, pliesToUndo, recordAction } from './history.js';
+import { isCursorKey, moveCursor, readEntry } from './keyboard.js';
 import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, setupDestinations } from './interaction.js';
 import { applyActionMessage, makeActionMessage } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
@@ -25,6 +26,8 @@ const turnCard = document.querySelector('#turn-card');
 const turnTitle = document.querySelector('#turn-title');
 const turnDetail = document.querySelector('#turn-detail');
 const deselectButton = document.querySelector('#deselect');
+const announcement = document.querySelector('#announcement');
+const shortcutsDialog = document.querySelector('#shortcuts-dialog');
 const reviewCard = document.querySelector('#review-card');
 const reviewTitle = document.querySelector('#review-title');
 const reviewLive = document.querySelector('#review-live');
@@ -88,6 +91,10 @@ let history = [];
 let timeline = [position];
 let reviewPly = null;
 let resigned = null;
+let cursor = 0;
+let keyboardActive = false;
+let pendingFile = null;
+let announceTimer = null;
 let takebackPending = false;
 let pointerDrag = null;
 let suppressClick = false;
@@ -96,6 +103,8 @@ for (let visual = 0; visual < 16; visual += 1) {
   const button = document.createElement('button');
   button.className = 'square';
   button.type = 'button';
+  button.id = `square-${visual}`;
+  button.tabIndex = -1;
   button.dataset.visual = String(visual);
   button.addEventListener('click', () => {
     if (!suppressClick) onSquare(Number(button.dataset.square));
@@ -103,6 +112,11 @@ for (let visual = 0; visual < 16; visual += 1) {
   button.addEventListener('pointerdown', (event) => beginBoardDrag(event, button));
   board.append(button);
 }
+
+// The board keeps a single tab stop; the cursor is tracked here rather than
+// by moving focus, because a square is disabled whenever it is not your turn.
+board.addEventListener('keydown', onBoardKey);
+board.addEventListener('pointerdown', () => setKeyboardActive(false));
 
 window.addEventListener('pointermove', movePointerDrag, { passive: false });
 window.addEventListener('pointerup', endPointerDrag);
@@ -185,6 +199,7 @@ async function startOnlineSearch(gameId) {
     network.onPeerStream(receivePeerStream);
     network.onOpponentLeave(() => {
       disconnected = true;
+      announce('Your opponent left the match.');
       stopMicrophone();
       stopCamera();
       render();
@@ -419,6 +434,7 @@ function receivePeerAction(message) {
     lastAction = message.action;
     selection = null;
     reviewPly = null;
+    announceOpponentAction();
     render();
   } catch (error) {
     disconnected = true;
@@ -444,6 +460,9 @@ function resetState(nextMode, color) {
   reviewPly = null;
   resigned = null;
   takebackPending = false;
+  cursor = 0;
+  pendingFile = null;
+  announcement.textContent = '';
   matchRail.classList.remove('is-open');
   stopMicrophone();
   stopCamera();
@@ -499,6 +518,95 @@ function createWorker() {
     render();
   });
   return next;
+}
+
+function onBoardKey(event) {
+  // A click leaves focus on the square itself, so adopt it as the cursor and
+  // let that button's own activation handle Enter rather than doubling up.
+  const focused = event.target.closest?.('.square');
+  if (focused) cursor = Number(focused.dataset.visual);
+  if (event.key === '?') {
+    shortcutsDialog.showModal();
+    event.preventDefault();
+    return;
+  }
+  if (isCursorKey(event.key)) {
+    setKeyboardActive(true);
+    cursor = moveCursor(cursor, event.key);
+    pendingFile = null;
+    event.preventDefault();
+    // Keep focus and cursor together, so the next Enter acts where the ring is.
+    if (focused) board.focus();
+    render();
+    return;
+  }
+  if (event.key === 'Enter' || event.key === ' ') {
+    if (focused) return;
+    setKeyboardActive(true);
+    event.preventDefault();
+    onSquare(squareAtCursor());
+    return;
+  }
+  if (event.key === 'Escape') {
+    setKeyboardActive(true);
+    pendingFile = null;
+    selection = null;
+    render();
+    return;
+  }
+  const entry = readEntry(pendingFile, event.key);
+  const handled = entry.pending !== null || entry.square !== null || entry.reserve !== null;
+  if (!handled && pendingFile === null) return;
+  setKeyboardActive(true);
+  pendingFile = entry.pending;
+  if (entry.square !== null) cursor = visualOf(entry.square);
+  if (entry.reserve !== null) return selectBank(BANK_PIECES[entry.reserve]);
+  event.preventDefault();
+  render();
+}
+
+function setKeyboardActive(active) {
+  if (keyboardActive === active) return;
+  keyboardActive = active;
+  render();
+}
+
+/** The cursor lives in visual space; this is the same flip a click uses. */
+function visualOf(square) {
+  return humanColor === WHITE ? square : 15 - square;
+}
+
+function squareAtCursor() {
+  return visualOf(cursor);
+}
+
+function announce(text) {
+  announcement.textContent = text;
+  clearTimeout(announceTimer);
+  announceTimer = setTimeout(() => { announcement.textContent = ''; }, 6000);
+}
+
+/** Only the opponent's turn is announced: you know what you just played. */
+function announceOpponentAction() {
+  const entry = history.at(-1);
+  if (!entry) return;
+  const result = getResult(position);
+  if (result?.type === 'win') {
+    announce(`${entry.sentence}. Checkmate — ${result.winner === humanColor ? 'you win' : 'you lose'}.`);
+    return;
+  }
+  if (result?.type === 'draw') {
+    announce(`${entry.sentence}. The game is a draw.`);
+    return;
+  }
+  if (isInCheck(position, humanColor)) {
+    const attacker = attackersOf(position, kingSquare(position, humanColor), opponent(humanColor))[0];
+    const from = attacker === undefined ? ''
+      : ` from the ${position.board[attacker].piece} on ${squareName(attacker)}`;
+    announce(`${entry.sentence}. Your king is in check${from}.`);
+    return;
+  }
+  announce(`${entry.sentence}. Your turn.`);
 }
 
 function onSquare(square) {
@@ -717,7 +825,10 @@ function onBotMessage({ data }) {
     render();
     return;
   }
-  if (data.action && position.turn !== humanColor) commit(data.action);
+  if (data.action && position.turn !== humanColor) {
+    commit(data.action);
+    announceOpponentAction();
+  }
   thinking = false;
   render();
 }
@@ -729,10 +840,15 @@ function render() {
   const shown = displayedPosition();
   const last = actionHighlights(reviewPly === null ? lastAction : history[reviewPly - 1]?.action ?? null);
   board.closest('.play-area').classList.toggle('is-reviewing', reviewPly !== null);
+  board.classList.toggle('keyboard-active', keyboardActive);
+  if (keyboardActive) board.setAttribute('aria-activedescendant', `square-${cursor}`);
+  else board.removeAttribute('aria-activedescendant');
   board.querySelectorAll('.square').forEach((button, visual) => {
     const square = humanColor === WHITE ? visual : 15 - visual;
     const occupant = shown.board[square];
     button.dataset.square = String(square);
+    button.dataset.name = squareName(square);
+    button.classList.toggle('is-cursor', keyboardActive && visual === cursor);
     button.replaceChildren();
     if (occupant) button.append(pieceElement(occupant.owner, occupant.piece));
     button.classList.toggle('selected', selection?.type === 'board' && selection.square === square);

@@ -95,6 +95,13 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="undo"/);
   assert.match(game, /id="resign"/);
   assert.match(game, /id="review-card"[^>]+hidden/);
+  // Keyboard play and the live region.
+  assert.match(game, /id="board"[^>]*tabindex="0"/);
+  assert.match(game, /id="announcement"[^>]+aria-live="polite"/);
+  assert.match(game, /id="shortcuts-dialog"/);
+  assert.match(css, /\.board\.keyboard-active \.square::before\s*{[\s\S]*?attr\(data-name\)/);
+  assert.match(css, /\.game-page \.square\.is-cursor\s*{[\s\S]*?var\(--focus\)/);
+  assert.match(css, /\.announcement:empty\s*{\s*display:\s*none/);
   assert.match(game, /@ marks a deployment from reserve/);
   assert.match(css, /\.moves-row\s*{[\s\S]*?grid-template-columns:\s*30px 1fr 1fr/);
   assert.match(css, /\.moves-head\s*{[\s\S]*?background:\s*var\(--sunk\)/);
@@ -120,6 +127,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(main, /piece-\$\{piece\}/);
   assert.match(main, /function commit\(action\)/);
   assert.match(main, /takeback-request/);
+  assert.match(main, /function onBoardKey/);
+  assert.match(main, /announceOpponentAction/);
   assert.match(main, /createElement\('img'\)/);
   assert.match(main, /element\.draggable = false/);
   assert.match(main, /pieceRect:.*getBoundingClientRect/);
