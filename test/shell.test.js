@@ -72,9 +72,14 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(main, /elementFromPoint/);
   assert.match(main, /getUserMedia\(\{ audio: false, video: true \}\)/);
   assert.match(main, /function toggleChat/);
+  assert.match(main, /mobileChatQuery/);
+  assert.match(main, /unreadMessages/);
   assert.match(css, /\.drag-ghost\s*{/);
   assert.match(css, /transform:\s*translate\(-50%, -50%\)/);
   assert.match(css, /touch-action:\s*none/);
   assert.match(css, /\.game-page \.match-chat\s*{[\s\S]*?grid-column:\s*2;[\s\S]*?grid-row:\s*2;/);
+  assert.match(css, /@media\(max-width:899px\)[\s\S]*?\.game-page \.match-chat\s*{[\s\S]*?position:\s*fixed/);
+  assert.match(css, /\.game-page \.match-chat\.chat-collapsed/);
+  assert.match(css, /max-height:\s*calc\(min\(82dvh, 42rem\) - 3\.2rem\)/);
   assert.doesNotMatch(html, />4 × 4 chess</);
 });
