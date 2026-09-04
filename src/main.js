@@ -129,6 +129,7 @@ async function startOnlineSearch(gameId) {
     if (mode !== 'online') return;
     network = joinMatchmaking(gameId);
     network.onMatch(({ color }) => beginOnlineMatch(color));
+    network.onRoomFull(showRoomFull);
     network.onGame(receivePeerAction);
     network.onChat(receiveChatMessage);
     network.onPeerStream(receivePeerStream);
@@ -142,6 +143,16 @@ async function startOnlineSearch(gameId) {
   } catch (error) {
     networkNote.textContent = `Could not start online play: ${error.message}`;
   }
+}
+
+function showRoomFull() {
+  stopNetwork();
+  invite.hidden = true;
+  networkNote.classList.add('room-full');
+  const title = Object.assign(document.createElement('strong'), { textContent: 'Game already started' });
+  const note = Object.assign(document.createElement('span'), { textContent: 'Two players are already using this match link.' });
+  const home = Object.assign(document.createElement('a'), { href: './', textContent: 'Back home', className: 'reset' });
+  networkNote.replaceChildren(title, note, home);
 }
 
 function beginOnlineMatch(color) {
