@@ -16,6 +16,7 @@
       <a class="brand" href="./" aria-label="Schness home"><span class="brand-mark">S</span><span><h1>Schness</h1></span></a>
       <div class="header-actions">
         <button class="text-button theme-button" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
+        <button class="text-button" type="button" data-open-sound>Sound</button>
         <button class="text-button rules-button" type="button" data-open-rules>Rules</button>
       </div>
     </header>
@@ -75,6 +76,7 @@
             <span id="opponent-bank-label" class="reserve-label">Black reserve · 3</span>
             <div id="opponent-bank" class="bank" aria-labelledby="opponent-bank-label"></div>
           </div>
+          <p id="opponent-clock" class="clock" hidden></p>
         </section>
         <p id="connection-strip" class="connection-strip" hidden>
           <span class="conn-dot" aria-hidden="true"></span>
@@ -123,6 +125,7 @@
             <span id="human-bank-label" class="reserve-label">Your reserve · tap to deploy</span>
             <div id="human-bank" class="bank" aria-labelledby="human-bank-label"></div>
           </div>
+          <p id="human-clock" class="clock" hidden></p>
         </section>
       </div>
       <aside id="match-rail" class="match-rail">
@@ -192,6 +195,26 @@
     </section>
   </main>
 
+  <dialog id="sound-dialog" class="rules-dialog" aria-labelledby="sound-title">
+    <div class="dialog-grab" aria-hidden="true"></div>
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">Feedback</p>
+        <h2 id="sound-title">Sound and haptics</h2>
+      </div>
+      <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close sound settings">✕</button></form>
+    </div>
+    <div class="dialog-body">
+      <p class="cue-note">All off until you ask for them. Reduced motion is about motion, so it does not decide this.</p>
+      <div class="cues">
+        <label><input id="cue-move" type="checkbox" data-cue="move"><span><strong>Move</strong><small>A soft wooden knock.</small></span></label>
+        <label><input id="cue-capture" type="checkbox" data-cue="capture"><span><strong>Capture</strong><small>Sharper click, as the piece lands in a reserve.</small></span></label>
+        <label><input id="cue-deploy" type="checkbox" data-cue="deploy"><span><strong>Deploy</strong><small>Distinct from a move, so you hear a drop coming.</small></span></label>
+        <label><input id="cue-check" type="checkbox" data-cue="check"><span><strong>Check</strong><small>A low tone, played once.</small></span></label>
+        <label><input id="cue-haptics" type="checkbox" data-cue="haptics"><span><strong>Haptics</strong><small>A light tap when a piece lands, on phones that support it.</small></span></label>
+      </div>
+    </div>
+  </dialog>
   <dialog id="shortcuts-dialog" class="rules-dialog" aria-labelledby="shortcuts-title">
     <div class="dialog-grab" aria-hidden="true"></div>
     <div class="dialog-head">

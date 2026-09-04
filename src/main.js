@@ -12,7 +12,12 @@ import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
 import { actionHighlights } from './board-ui.js';
 import { movedEnough } from './drag.js';
-import { rulesSeen, setRulesSeen } from './settings.js';
+import {
+  botDifficulty, clockMode, difficultyDepth, rulesSeen, setRulesSeen,
+  setSoundSettings, soundSettings,
+} from './settings.js';
+import { addIncrement, createClock, flagged, formatClock, isLow, isTimed, spend } from './clock.js';
+import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
 
 initTheme();
@@ -35,6 +40,9 @@ const resultDetail = document.querySelector('#result-detail');
 const resultPrimary = document.querySelector('#result-primary');
 const resultSecondary = document.querySelector('#result-secondary');
 const resultHome = document.querySelector('#result-home');
+const humanClock = document.querySelector('#human-clock');
+const opponentClock = document.querySelector('#opponent-clock');
+const soundDialog = document.querySelector('#sound-dialog');
 const announcement = document.querySelector('#announcement');
 const shortcutsDialog = document.querySelector('#shortcuts-dialog');
 const reviewCard = document.querySelector('#review-card');
@@ -127,6 +135,11 @@ let takebackPending = false;
 let agreedDraw = false;
 let drawOffered = false;
 let resultDismissed = false;
+let clock = createClock(clockMode());
+let clockSince = null;
+let clockTimer = null;
+let sound = soundSettings();
+const soundBoard = createSoundBoard(() => sound);
 let pointerDrag = null;
 let suppressClick = false;
 
@@ -170,6 +183,16 @@ moveForward.addEventListener('click', () => stepReview(1));
 undoButton.addEventListener('click', undoTurn);
 resignButton.addEventListener('click', resign);
 resultHome.addEventListener('click', () => window.location.assign('./'));
+document.querySelectorAll('[data-open-sound]').forEach((button) =>
+  button.addEventListener('click', () => soundDialog.showModal()));
+soundDialog.querySelectorAll('[data-cue]').forEach((input) => {
+  input.checked = sound[input.dataset.cue] === true;
+  input.addEventListener('change', () => {
+    sound = setSoundSettings({ ...sound, [input.dataset.cue]: input.checked });
+    // Play the cue back so the switch is self-explanatory, and it is a gesture.
+    if (input.checked && input.dataset.cue !== 'haptics') soundBoard.play(input.dataset.cue);
+  });
+});
 copyGame.addEventListener('click', copyGameText);
 movesToggle.addEventListener('click', () => {
   const open = matchRail.classList.toggle('is-open');
@@ -356,6 +379,13 @@ function beginOnlineMatch(color) {
   agreedDraw = false;
   drawOffered = false;
   resultDismissed = false;
+  clock = createClock(clockMode());
+  // White owns the clock choice; Black adopts whatever White announces.
+  if (color === WHITE) {
+    try { network.sendControl({ kind: 'clock', mode: clock.mode }); } catch { /* Untimed for both. */ }
+  }
+  clockSince = isTimed(clock) ? Date.now() : null;
+  startClockTicking();
   selection = null;
   disconnected = false;
   appendChatSeparator();
@@ -606,6 +636,9 @@ function resetState(nextMode, color) {
   agreedDraw = false;
   drawOffered = false;
   resultDismissed = false;
+  clock = createClock(clockMode());
+  clockSince = null;
+  stopClockTicking();
   cursor = 0;
   pendingFile = null;
   announcement.textContent = '';
@@ -645,6 +678,8 @@ async function copyInviteLink() {
 function showMatch() {
   board.closest('.play-area').hidden = false;
   showCard(null);
+  clockSince = isTimed(clock) ? Date.now() : null;
+  startClockTicking();
   render();
 }
 
@@ -652,6 +687,7 @@ function stopNetwork() {
   clearTimeout(searchTimer);
   searchTimer = null;
   stopReconnectCountdown();
+  stopClockTicking();
   stopMicrophone();
   stopCamera();
   network?.leave();
@@ -915,6 +951,13 @@ function acceptDraw() {
 }
 
 function receiveControl(payload) {
+  if (payload?.kind === 'clock' && humanColor !== WHITE) {
+    clock = createClock(payload.mode);
+    clockSince = isTimed(clock) ? Date.now() : null;
+    startClockTicking();
+    renderClocks();
+    return;
+  }
   if (payload?.kind === 'draw-offer') {
     appendChatEvent(`${opponentLabel} offered a draw`, [
       { label: 'Accept', run: () => { network.sendControl({ kind: 'draw-accept' }); acceptDraw(); } },
@@ -991,25 +1034,89 @@ function play(action) {
   if (message) sendGameMessage(message);
   render();
   if (mode === 'bot' && !getResult(position) && position.turn !== humanColor) requestBotMove();
+  if (flagged(clock)) stopClockTicking();
 }
 
 /** Applies an action and records it, so history and position never diverge. */
 function commit(action) {
   const before = position;
+  const mover = before.turn;
+  const captured = action.type === 'move' && Boolean(before.board[action.to]);
   position = applyAction(before, action);
   history = recordAction(history, before, action, position);
   timeline.push(position);
   lastAction = action;
   selection = null;
   reviewPly = null;
+  chargeClock(mover);
+  playCue(action, captured);
+}
+
+function playCue(action, captured) {
+  if (captured) soundBoard.play('capture');
+  else if (action.type === 'drop') soundBoard.play('deploy');
+  else soundBoard.play('move');
+  soundBoard.vibrate();
+  if (isInCheck(position, position.turn)) soundBoard.play('check');
+}
+
+/**
+ * Each side runs the clock locally off the moves it sees, so the two stay in
+ * step without a shared timer to negotiate.
+ */
+function chargeClock(mover) {
+  if (!isTimed(clock)) return;
+  if (clockSince !== null) clock = spend(clock, mover, Date.now() - clockSince);
+  clock = addIncrement(clock, mover);
+  clockSince = position.phase === 'play' && !getResult(position) ? Date.now() : null;
+  renderClocks();
+}
+
+function startClockTicking() {
+  stopClockTicking();
+  if (!isTimed(clock)) return;
+  clockTimer = setInterval(() => {
+    if (clockSince === null) return;
+    const running = position.turn;
+    const left = clock[running] - (Date.now() - clockSince) / 1000;
+    if (left <= 0) {
+      clock = spend(clock, running, Date.now() - clockSince);
+      clockSince = null;
+      resigned = running;
+      announce(`${running === humanColor ? 'You' : opponentLabel} ran out of time.`);
+      render();
+      return;
+    }
+    renderClocks();
+  }, 250);
+}
+
+function stopClockTicking() {
+  if (clockTimer) clearInterval(clockTimer);
+  clockTimer = null;
+}
+
+function renderClocks() {
+  const timed = isTimed(clock);
+  humanClock.hidden = !timed;
+  opponentClock.hidden = !timed;
+  if (!timed) return;
+  const enemy = opponent(humanColor);
+  const running = clockSince === null ? null : position.turn;
+  for (const [element, owner] of [[humanClock, humanColor], [opponentClock, enemy]]) {
+    const spent = running === owner ? (Date.now() - clockSince) / 1000 : 0;
+    const left = Math.max(0, clock[owner] - spent);
+    element.textContent = formatClock(left);
+    element.classList.toggle('is-low', running === owner && isLow(left));
+  }
 }
 
 function requestBotMove() {
   thinking = true;
   const request = ++botRequest;
   render();
-  // Depth three stays responsive on phones; the worker keeps even slower devices fluid.
-  worker.postMessage({ position, depth: 3, request });
+  // The worker keeps slower devices fluid even at the deeper setting.
+  worker.postMessage({ position, depth: difficultyDepth(botDifficulty()), request });
 }
 
 function onBotMessage({ data }) {
@@ -1071,6 +1178,7 @@ function render() {
   renderTurnCard(result);
   renderMoves();
   renderResult();
+  renderClocks();
   renderConnection();
   updateCommunicationUi();
 }

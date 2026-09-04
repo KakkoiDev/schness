@@ -89,6 +89,12 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(css, /\.dialog-body\s*{[\s\S]*?grid-template-columns:\s*180px minmax\(0, 1fr\)/);
   assert.match(css, /\.dialog-foot\s*{[\s\S]*?background:\s*var\(--sunk\)/);
   assert.match(css, /\.rules-strip\s*{[\s\S]*?gap:\s*1px;[\s\S]*?background:\s*var\(--line\)/);
+  // Strength and clock are chosen before the match, on the lobby.
+  assert.equal([...html.matchAll(/name="difficulty"/g)].length, 3);
+  assert.match(html, /value="steady" checked/);
+  assert.equal([...html.matchAll(/name="clock"/g)].length, 4);
+  assert.match(html, /value="untimed" checked/);
+  assert.match(css, /\.segmented\s*{[\s\S]*?grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/);
   assert.doesNotMatch(css, /\.rules-card/);
   assert.doesNotMatch(html, /id="board"/);
   assert.match(game, /id="board"/);
@@ -124,6 +130,14 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /class="board-frame"/);
   assert.match(game, /id="result-overlay"[^>]+hidden/);
   assert.match(game, /id="result-headline"/);
+  // Clocks in the player rows, and sound behind its own switch.
+  assert.match(game, /id="human-clock"[^>]+hidden/);
+  assert.match(game, /id="opponent-clock"[^>]+hidden/);
+  assert.match(game, /id="sound-dialog"/);
+  assert.equal([...game.matchAll(/data-cue="/g)].length, 5);
+  assert.match(game, /data-open-sound/);
+  assert.match(css, /\.clock\s*{[\s\S]*?font-variant-numeric:\s*tabular-nums/);
+  assert.match(css, /\.clock\.is-low\s*{\s*font-weight:\s*600/);
   assert.match(css, /\.result-overlay\s*{[\s\S]*?background:\s*rgb\(24 32 28 \/ \.32\)/);
   assert.match(css, /\.result-card h2\s*{[\s\S]*?letter-spacing:\s*-\.045em/);
   // The one motion exception, inside the existing reduced-motion block.
@@ -167,6 +181,12 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(main, /function commit\(action\)/);
   assert.match(main, /takeback-request/);
   assert.match(main, /function offerDraw/);
+  assert.match(main, /difficultyDepth\(botDifficulty\(\)\)/);
+  assert.match(main, /soundBoard\.play/);
+  const soundModule = await readFile(resolve(root, 'src/sound.js'), 'utf8');
+  // The context is built in one place, and only once something plays.
+  assert.equal([...soundModule.matchAll(/new AudioContextClass\(\)/g)].length, 1);
+  assert.ok(soundModule.indexOf('new AudioContextClass()') > soundModule.indexOf('function ensureContext'));
   assert.match(main, /offered a draw · declined/);
   assert.match(main, /function onBoardKey/);
   assert.match(main, /announceOpponentAction/);

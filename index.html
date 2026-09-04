@@ -30,6 +30,31 @@
         <button id="play-bot" class="mode dark" type="button"><strong>Play the bot</strong><small>Starts instantly, works offline</small></button>
         <button id="play-online" class="mode" type="button"><strong>Create an online game</strong><small>Get a link to send a friend</small></button>
       </div>
+      <fieldset class="strengths">
+        <legend>Bot strength</legend>
+        <label>
+          <input type="radio" name="difficulty" value="learning">
+          <span><strong>Learning</strong><small>Plays legal moves and takes free material. Will miss your threats.</small></span>
+        </label>
+        <label>
+          <input type="radio" name="difficulty" value="steady" checked>
+          <span><strong>Steady</strong><small>Looks two moves ahead and values reserve pieces. A fair first opponent.</small></span>
+        </label>
+        <label>
+          <input type="radio" name="difficulty" value="sharp">
+          <span><strong>Sharp</strong><small>Searches deeper and deploys to create threats. Punishes loose kings.</small></span>
+        </label>
+      </fieldset>
+
+      <fieldset class="clock-choice">
+        <legend>Clock</legend>
+        <div class="segmented">
+          <label><input type="radio" name="clock" value="untimed" checked><span>Untimed</span></label>
+          <label><input type="radio" name="clock" value="3+2"><span>3+2</span></label>
+          <label><input type="radio" name="clock" value="5+0"><span>5+0</span></label>
+          <label><input type="radio" name="clock" value="10+0"><span>10+0</span></label>
+        </div>
+      </fieldset>
     </section>
 
     <section class="rules-strip" aria-label="What makes Schness different">
