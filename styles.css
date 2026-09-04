@@ -168,3 +168,84 @@
 .game-page .bank-piece:first-child:nth-last-child(2) {
   grid-column: 2;
 }
+
+.chat-toggle,
+.media-toggle {
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+  background: transparent;
+  color: var(--muted);
+  padding: .42rem .65rem;
+  cursor: pointer;
+  font-size: .76rem;
+  font-weight: 700;
+}
+
+.media-actions {
+  display: flex;
+  gap: .4rem;
+  margin-top: .8rem;
+}
+
+.media-toggle::before {
+  content: "";
+  display: inline-block;
+  width: .45rem;
+  aspect-ratio: 1;
+  margin-right: .42rem;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.media-toggle.is-on {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--inverse);
+}
+
+.media-toggle.is-on::before {
+  background: #65d58a;
+}
+
+.video-stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  margin-top: .7rem;
+  border-radius: .65rem;
+  background: #101210;
+}
+
+.video-stage #peer-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-stage #local-video {
+  position: absolute;
+  right: .55rem;
+  bottom: .55rem;
+  width: 28%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgb(255 255 255 / .55);
+  border-radius: .4rem;
+  background: #202420;
+  object-fit: cover;
+}
+
+@media(min-width:900px) {
+  .game-page .play-area {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .game-page .match-chat {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+    margin-top: 0;
+    position: sticky;
+    top: 1rem;
+  }
+}
