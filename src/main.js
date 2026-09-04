@@ -6,10 +6,6 @@ import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, s
 import { applyActionMessage, makeActionMessage } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
-import {
-  communicationPacket, parseCommunicationPacket,
-} from './communication.js';
-import { initSettings } from './settings.js';
 import { actionHighlights } from './board-ui.js';
 import { movedEnough } from './drag.js';
 import { initTheme } from './theme.js';
@@ -34,13 +30,18 @@ const chatLog = document.querySelector('#chat-log');
 const chatForm = document.querySelector('#chat-form');
 const chatMessage = document.querySelector('#chat-message');
 const chatNote = document.querySelector('#chat-note');
+const chatBody = document.querySelector('#chat-body');
+const chatToggle = document.querySelector('#chat-toggle');
 const quickChat = document.querySelector('#quick-chat');
 const voiceStatus = document.querySelector('#voice-status');
 const voiceToggle = document.querySelector('#voice-toggle');
+const videoToggle = document.querySelector('#video-toggle');
+const videoStage = document.querySelector('#video-stage');
+const localVideo = document.querySelector('#local-video');
+const peerVideo = document.querySelector('#peer-video');
 const hearOpponent = document.querySelector('#hear-opponent');
 const peerAudio = document.querySelector('#peer-audio');
 const route = gameRoute(window.location.search);
-const communicationSettings = initSettings(onCommunicationSettingsChange);
 
 let position = createInitialPosition();
 let humanColor = WHITE;
@@ -52,9 +53,11 @@ let worker = createWorker();
 let network = null;
 let searchTimer = null;
 let disconnected = false;
-let peerCommunication = null;
 let microphoneStream = null;
 let microphoneStarting = false;
+let cameraStream = null;
+let cameraStarting = false;
+let chatEnabled = true;
 let lastAction = null;
 let pointerDrag = null;
 let suppressClick = false;
@@ -78,11 +81,13 @@ window.addEventListener('pointercancel', cancelPointerDrag);
 resetButton.addEventListener('click', startNewGame);
 copyInvite.addEventListener('click', copyInviteLink);
 chatForm.addEventListener('submit', sendChatMessage);
+chatToggle.addEventListener('click', toggleChat);
 quickChat.addEventListener('click', (event) => {
   const text = event.target.closest('[data-quick-message]')?.dataset.quickMessage;
   if (text) sendChatText(text);
 });
 voiceToggle.addEventListener('click', toggleMicrophone);
+videoToggle.addEventListener('click', toggleCamera);
 hearOpponent.addEventListener('click', () => {
   peerAudio.play().then(() => {
     hearOpponent.hidden = true;
@@ -119,11 +124,11 @@ async function startOnlineSearch(gameId) {
     network.onMatch(({ color }) => beginOnlineMatch(color));
     network.onGame(receivePeerAction);
     network.onChat(receiveChatMessage);
-    network.onPreferences(receiveCommunicationPreferences);
     network.onPeerStream(receivePeerStream);
     network.onOpponentLeave(() => {
       disconnected = true;
       stopMicrophone();
+      stopCamera();
       render();
     });
     network.onError((message) => { networkNote.textContent = message; });
@@ -143,7 +148,6 @@ function beginOnlineMatch(color) {
   invite.hidden = true;
   board.closest('.play-area').hidden = false;
   matchChat.hidden = false;
-  network.sendPreferences(communicationPacket(communicationSettings));
   updateCommunicationUi();
   render();
 }
@@ -167,7 +171,6 @@ function sendChatText(text) {
 }
 
 function receiveChatMessage(payload) {
-  if (!communicationSettings.text || !peerCommunication?.text) return;
   try {
     const message = parseChatMessage(payload);
     appendChatMessage(message.text, 'Opponent');
@@ -176,61 +179,33 @@ function receiveChatMessage(payload) {
   }
 }
 
-function receiveCommunicationPreferences(payload) {
-  try {
-    peerCommunication = parseCommunicationPacket(payload);
-    if (!peerCommunication.voice) stopMicrophone();
-    updateCommunicationUi();
-    startVoiceIfReady();
-  } catch {
-    // Ignore malformed capability announcements.
-  }
-}
-
-function onCommunicationSettingsChange() {
-  if (mode === 'online' && network?.matched) {
-    network.sendPreferences(communicationPacket(communicationSettings));
-  }
-  if (!communicationSettings.voice) stopMicrophone();
-  updateCommunicationUi();
-  startVoiceIfReady();
-}
-
 function canTextChat() {
-  return mode === 'online' && !disconnected && network?.matched && communicationSettings.text && peerCommunication?.text;
+  return mode === 'online' && !disconnected && network?.matched && chatEnabled;
 }
 
 function updateCommunicationUi() {
-  const anyLocalCommunication = communicationSettings.text || communicationSettings.voice;
-  matchChat.hidden = mode !== 'online' || !anyLocalCommunication;
-  chatLog.hidden = !communicationSettings.text;
-  quickChat.hidden = !communicationSettings.text;
-  chatForm.hidden = !communicationSettings.text;
+  matchChat.hidden = mode !== 'online';
+  chatBody.hidden = !chatEnabled;
+  chatToggle.textContent = chatEnabled ? 'Hide chat' : 'Show chat';
+  chatToggle.setAttribute('aria-expanded', String(chatEnabled));
   const textReady = canTextChat();
   chatMessage.disabled = !textReady;
   chatForm.querySelector('button').disabled = !textReady;
   quickChat.querySelectorAll('button').forEach((button) => { button.disabled = !textReady; });
-  chatMessage.placeholder = peerCommunication && !peerCommunication.text
-    ? 'Opponent has text chat off' : 'Message your opponent…';
-  chatNote.textContent = communicationSettings.text && communicationSettings.voice
-    ? 'Text and voice · peer-to-peer · not saved' : communicationSettings.voice
-      ? 'Voice · peer-to-peer · not saved' : 'Text · peer-to-peer · not saved';
-  voiceStatus.hidden = !communicationSettings.voice;
-  if (communicationSettings.voice && !peerCommunication) voiceStatus.textContent = 'Waiting for voice preference…';
-  else if (communicationSettings.voice && !peerCommunication.voice) voiceStatus.textContent = 'Opponent has voice chat off.';
+  chatMessage.placeholder = 'Message your opponent…';
+  chatNote.textContent = 'Peer-to-peer · not saved';
 }
 
-async function startVoiceIfReady() {
-  if (!communicationSettings.voice || !peerCommunication?.voice || microphoneStream || microphoneStarting || disconnected) return;
+async function startMicrophone() {
+  if (microphoneStream || microphoneStarting || disconnected || !network?.matched) return;
   microphoneStarting = true;
   voiceStatus.textContent = 'Requesting microphone access…';
   try {
     microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
     if (disconnected || mode !== 'online') return stopMicrophone();
     network.addStream(microphoneStream);
-    voiceStatus.textContent = 'Voice connected.';
-    voiceToggle.hidden = false;
-    setMicrophoneState(true);
+    voiceStatus.textContent = 'Audio is on.';
+    setMediaButton(voiceToggle, true, 'Audio');
   } catch (error) {
     voiceStatus.textContent = error.name === 'NotAllowedError'
       ? 'Microphone permission was not granted.' : 'Could not start the microphone.';
@@ -240,28 +215,55 @@ async function startVoiceIfReady() {
 }
 
 function receivePeerStream(stream) {
-  if (!communicationSettings.voice || !peerCommunication?.voice) return;
-  peerAudio.srcObject = stream;
-  peerAudio.play().then(() => { hearOpponent.hidden = true; }).catch(() => {
-    hearOpponent.hidden = false;
-    voiceStatus.textContent = 'Tap “Hear opponent” to start incoming audio.';
-  });
+  if (stream.getAudioTracks().length) {
+    peerAudio.srcObject = stream;
+    peerAudio.play().then(() => { hearOpponent.hidden = true; }).catch(() => {
+      hearOpponent.hidden = false;
+      voiceStatus.textContent = 'Tap “Hear audio” to listen.';
+    });
+  }
+  if (stream.getVideoTracks().length) {
+    peerVideo.srcObject = stream;
+    videoStage.hidden = false;
+    peerVideo.play().catch(() => {});
+    stream.getVideoTracks()[0].addEventListener('ended', () => {
+      peerVideo.srcObject = null;
+      videoStage.hidden = !cameraStream;
+    }, { once: true });
+  }
 }
 
 function toggleMicrophone() {
-  const track = microphoneStream?.getAudioTracks()[0];
-  if (!track) return;
-  track.enabled = !track.enabled;
-  setMicrophoneState(track.enabled);
-  voiceStatus.textContent = track.enabled ? 'Voice connected.' : 'Your microphone is muted.';
+  if (microphoneStream) stopMicrophone();
+  else startMicrophone();
 }
 
-function setMicrophoneState(enabled) {
-  voiceToggle.textContent = enabled ? 'Mic on' : 'Mic muted';
-  voiceToggle.classList.toggle('mic-on', enabled);
-  voiceToggle.classList.toggle('mic-muted', !enabled);
-  voiceToggle.setAttribute('aria-pressed', String(enabled));
-  voiceToggle.setAttribute('aria-label', enabled ? 'Microphone is on; click to mute' : 'Microphone is muted; click to unmute');
+async function toggleCamera() {
+  if (cameraStream) return stopCamera();
+  if (cameraStarting || disconnected || !network?.matched) return;
+  cameraStarting = true;
+  voiceStatus.textContent = 'Requesting camera access…';
+  try {
+    cameraStream = await navigator.mediaDevices.getUserMedia({ audio: false, video: true });
+    if (disconnected || mode !== 'online') return stopCamera();
+    localVideo.srcObject = cameraStream;
+    videoStage.hidden = false;
+    await localVideo.play().catch(() => {});
+    network.addStream(cameraStream);
+    setMediaButton(videoToggle, true, 'Video');
+    voiceStatus.textContent = 'Video is on.';
+  } catch (error) {
+    voiceStatus.textContent = error.name === 'NotAllowedError'
+      ? 'Camera permission was not granted.' : 'Could not start the camera.';
+  } finally {
+    cameraStarting = false;
+  }
+}
+
+function setMediaButton(button, enabled, label) {
+  button.textContent = `${label} ${enabled ? 'on' : 'off'}`;
+  button.classList.toggle('is-on', enabled);
+  button.setAttribute('aria-pressed', String(enabled));
 }
 
 function stopMicrophone() {
@@ -269,9 +271,29 @@ function stopMicrophone() {
   network?.removeStream(microphoneStream);
   microphoneStream.getTracks().forEach((track) => track.stop());
   microphoneStream = null;
-  peerAudio.srcObject = null;
-  voiceToggle.hidden = true;
-  hearOpponent.hidden = true;
+  setMediaButton(voiceToggle, false, 'Audio');
+  voiceStatus.textContent = 'Audio is off.';
+}
+
+function stopCamera() {
+  if (!cameraStream) return;
+  network?.removeStream(cameraStream);
+  cameraStream.getTracks().forEach((track) => track.stop());
+  cameraStream = null;
+  localVideo.srcObject = null;
+  setMediaButton(videoToggle, false, 'Video');
+  videoStage.hidden = !peerVideo.srcObject;
+  voiceStatus.textContent = 'Video is off.';
+}
+
+function toggleChat() {
+  chatEnabled = !chatEnabled;
+  peerAudio.muted = !chatEnabled;
+  if (!chatEnabled) {
+    stopMicrophone();
+    stopCamera();
+  }
+  updateCommunicationUi();
 }
 
 function appendChatMessage(text, author) {
@@ -309,9 +331,10 @@ function resetState(nextMode, color) {
   selection = null;
   thinking = false;
   disconnected = false;
-  peerCommunication = null;
+  chatEnabled = true;
   lastAction = null;
   stopMicrophone();
+  stopCamera();
   worker.terminate();
   worker = createWorker();
   networkNote.hidden = true;
@@ -319,6 +342,10 @@ function resetState(nextMode, color) {
   matchChat.hidden = true;
   chatLog.replaceChildren(Object.assign(document.createElement('p'), { className: 'chat-empty', textContent: 'No messages yet.' }));
   chatMessage.value = '';
+  peerAudio.srcObject = null;
+  peerVideo.srcObject = null;
+  localVideo.srcObject = null;
+  videoStage.hidden = true;
   board.closest('.play-area').hidden = false;
 }
 
@@ -346,6 +373,7 @@ function stopNetwork() {
   clearTimeout(searchTimer);
   searchTimer = null;
   stopMicrophone();
+  stopCamera();
   network?.leave();
   network = null;
 }

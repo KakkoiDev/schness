@@ -16,7 +16,6 @@
       <div><h1>Schness</h1></div>
       <div class="header-actions">
         <button class="text-button theme-button" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
-        <button class="text-button settings-button" type="button" data-open-settings>Settings</button>
         <button class="text-button rules-button" type="button" data-open-rules>Rules</button>
       </div>
     </header>
@@ -79,17 +78,6 @@
         <li>Repeating the same position three times is a draw.</li>
       </ul>
     </section>
-  </dialog>
-  <dialog id="settings-dialog" class="settings-dialog" aria-labelledby="settings-title">
-    <form method="dialog"><button class="dialog-close" aria-label="Close settings">×</button></form>
-    <p class="eyebrow">Your preferences</p>
-    <h2 id="settings-title">Settings</h2>
-    <fieldset class="communication-settings">
-      <legend>Online communication</legend>
-      <label><span><strong>Text chat</strong><small>Free messages and quick replies</small></span><input id="text-chat-setting" type="checkbox"></label>
-      <label><span><strong>Voice chat</strong><small>Talk casually over the board</small></span><input id="voice-chat-setting" type="checkbox"></label>
-      <p>Both are off by default. Your choice is remembered only on this device.</p>
-    </fieldset>
   </dialog>
   <script type="module" src="./src/lobby.js"></script>
 </body>

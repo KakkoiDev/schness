@@ -1,13 +1,11 @@
 import { gameUrl } from './navigation.js';
 import { initTheme } from './theme.js';
-import { initSettings } from './settings.js';
 
 initTheme();
 
 const botButton = document.querySelector('#play-bot');
 const onlineButton = document.querySelector('#play-online');
 const rulesDialog = document.querySelector('#rules-dialog');
-initSettings();
 
 botButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot')));
 onlineButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online')));
