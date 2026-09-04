@@ -23,7 +23,8 @@ test('manifest describes a standalone app with a local icon', async () => {
 
 test('the black knight has a light lower-edge outline', async () => {
   const knight = await readFile(resolve(root, 'assets/pieces/bN.svg'), 'utf8');
-  assert.match(knight, /stroke="#f2f2f2"[^>]+stroke-width="14"/);
+  assert.match(knight, /M600 706\.9h40\.3[^>]+stroke="#f2f2f2"[^>]+stroke-width="10"/);
+  assert.doesNotMatch(knight, /275\.5 673\.8/);
 });
 
 test('board rows are fixed and every vector piece uses the same box', async () => {
