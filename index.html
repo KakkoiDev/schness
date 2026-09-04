@@ -22,62 +22,83 @@
 
     <section id="menu" class="menu" aria-labelledby="play-title">
       <div class="lobby-intro">
+        <p class="eyebrow">Compact chess · 4 × 4</p>
         <h2 id="play-title">Play Schness</h2>
-        <p>Move a piece or deploy one from your reserve. Captured pieces return.</p>
+        <p>Move a piece, or deploy one from your reserve. Every capture comes back.</p>
       </div>
       <div class="mode-buttons">
-        <button id="play-bot" class="mode" type="button"><strong>Play the bot</strong><small>Works anywhere, even offline</small></button>
-        <button id="play-online" class="mode dark" type="button"><strong>Create an online game</strong><small>Get a unique link for another player</small></button>
+        <button id="play-bot" class="mode dark" type="button"><strong>Play the bot</strong><small>Starts instantly, works offline</small></button>
+        <button id="play-online" class="mode" type="button"><strong>Create an online game</strong><small>Get a link to send a friend</small></button>
       </div>
-      <button class="rules-card" type="button" data-open-rules><strong>How to play</strong><span>Read the rules</span></button>
     </section>
+
+    <section class="rules-strip" aria-label="What makes Schness different">
+      <article>
+        <p class="strip-number">1</p>
+        <h3>Place the kings</h3>
+        <p>White sets their king anywhere on the home row, then Black does the same.</p>
+      </article>
+      <article>
+        <p class="strip-number">2</p>
+        <h3>Move or deploy</h3>
+        <p>Each turn: move a piece by normal chess rules, or drop one from your reserve onto an empty square.</p>
+      </article>
+      <article>
+        <p class="strip-number">3</p>
+        <h3>Nothing is lost</h3>
+        <p>A captured piece joins its owner’s reserve, so the board keeps refilling until checkmate.</p>
+      </article>
+    </section>
+    <button class="rules-full" type="button" data-open-rules>Read the full rules</button>
 
   </main>
 
   <dialog id="rules-dialog" class="rules-dialog" aria-labelledby="rules-title">
-    <form method="dialog"><button class="dialog-close" aria-label="Close rules">×</button></form>
-    <p class="eyebrow">The complete game</p>
-    <h2 id="rules-title">How to play Schness</h2>
-    <section>
-      <h3>1. Your army</h3>
-      <ul>
-        <li>The board is a 4 × 4 grid.</li>
-        <li>Each player owns one king, one rook, one bishop, and one knight.</li>
-        <li>The board begins completely empty.</li>
-      </ul>
-    </section>
-    <section>
-      <h3>2. Place the kings</h3>
-      <ul>
-        <li>White places their king first, anywhere on White’s home row.</li>
-        <li>Black then places their king anywhere on Black’s home row.</li>
-      </ul>
-    </section>
-    <section>
-      <h3>3. Take a turn</h3>
-      <ul>
-        <li>Either move one of your pieces already on the board, using normal chess movement, or deploy one piece from your reserve.</li>
-        <li>A reserve piece may be deployed on any empty square.</li>
-        <li>A deployment may never immediately check the opposing king.</li>
-        <li>You must always answer check and may never leave your own king in check.</li>
-      </ul>
-    </section>
-    <section>
-      <h3>4. Capture and reuse</h3>
-      <ul>
-        <li>Capture pieces as in chess.</li>
-        <li>A captured piece returns to its original owner’s reserve.</li>
-        <li>Its owner may deploy it again on a later turn.</li>
-      </ul>
-    </section>
-    <section>
-      <h3>5. End the game</h3>
-      <ul>
-        <li>Checkmate wins the game.</li>
-        <li>Stalemate is a draw.</li>
-        <li>Repeating the same position three times is a draw.</li>
-      </ul>
-    </section>
+    <div class="dialog-grab" aria-hidden="true"></div>
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">How to play</p>
+        <h2 id="rules-title">Schness in four rules</h2>
+      </div>
+      <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close rules">✕</button></form>
+    </div>
+    <div class="dialog-body">
+      <ol class="rules-list">
+        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span></li>
+        <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span></li>
+        <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square.</span></li>
+        <li><strong>Captures come back</strong><span>A piece you capture goes into your own reserve and can be deployed later, so material never leaves the game. Win by checkmate.</span></li>
+      </ol>
+      <figure class="rules-example">
+        <div class="rules-board" aria-hidden="true">
+          <span class="rules-cell"></span>
+          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bK.svg" alt=""></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bN.svg" alt=""></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell rules-drop"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wR.svg" alt=""></span>
+          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wK.svg" alt=""></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+        </div>
+        <figcaption>White holds a captured bishop. The dashed ring is c2, one of the empty squares it can drop onto.</figcaption>
+      </figure>
+      <section class="rules-gotchas">
+        <h3>Two things that trip people up</h3>
+        <p>A deployed piece may not put the enemy king in check on the turn it lands. And a piece dropped on the far row is not promoted; there are no pawns.</p>
+      </section>
+    </div>
+    <div class="dialog-foot">
+      <label class="rules-optout"><input id="rules-optout" type="checkbox"><span>Don’t show this before a match</span></label>
+      <form method="dialog"><button class="rules-confirm" type="submit">Got it</button></form>
+    </div>
   </dialog>
   <script type="module" src="./src/lobby.js"></script>
 </body>

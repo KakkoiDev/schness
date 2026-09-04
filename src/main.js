@@ -12,6 +12,7 @@ import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
 import { actionHighlights } from './board-ui.js';
 import { movedEnough } from './drag.js';
+import { rulesSeen, setRulesSeen } from './settings.js';
 import { initTheme } from './theme.js';
 
 initTheme();
@@ -49,6 +50,7 @@ const inviteUrl = document.querySelector('#invite-url');
 const copyInvite = document.querySelector('#copy-invite');
 const resetButton = document.querySelector('#reset');
 const rulesDialog = document.querySelector('#rules-dialog');
+const rulesOptOut = document.querySelector('#rules-optout');
 const matchChat = document.querySelector('#match-chat');
 const chatLog = document.querySelector('#chat-log');
 const chatForm = document.querySelector('#chat-form');
@@ -166,6 +168,13 @@ hearOpponent.addEventListener('click', () => {
 });
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
+rulesOptOut.checked = rulesSeen();
+rulesOptOut.addEventListener('change', () => setRulesSeen(rulesOptOut.checked));
+// Shown once before a first match, then only from the Rules button.
+if (!rulesSeen()) {
+  rulesDialog.addEventListener('close', () => setRulesSeen(true), { once: true });
+  rulesDialog.showModal();
+}
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
 if (route?.mode === 'bot') startBotMatch();
 else if (route?.mode === 'online') startOnlineSearch(route.gameId);

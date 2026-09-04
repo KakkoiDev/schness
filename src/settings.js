@@ -17,3 +17,20 @@ export function initSettings(onChange = () => {}) {
 
   return settings;
 }
+
+const RULES_KEY = 'schness-rules-seen';
+
+/** Whether the rules have already been shown before a match. */
+export function rulesSeen(storage = globalThis.localStorage) {
+  try {
+    return storage?.getItem(RULES_KEY) === 'true';
+  } catch {
+    // Treat unreadable storage as unseen; showing the rules twice beats never.
+    return false;
+  }
+}
+
+export function setRulesSeen(seen, storage = globalThis.localStorage) {
+  try { storage?.setItem(RULES_KEY, String(seen === true)); } catch { /* Keep playing. */ }
+  return seen === true;
+}
