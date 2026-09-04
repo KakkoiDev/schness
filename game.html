@@ -31,15 +31,37 @@
         <div><input id="invite-url" type="url" readonly><button id="copy-invite" type="button">Copy</button></div>
       </div>
       <div class="play-area">
-        <section class="player opponent" aria-label="Opponent pieces">
-          <div><p class="label">Opponent</p><strong id="opponent-name">Bot</strong></div>
-          <div id="opponent-bank" class="bank" aria-label="Opponent reserve"></div>
+        <section class="player opponent" aria-label="Opponent">
+          <div class="player-identity">
+            <span class="player-dot" aria-hidden="true"></span>
+            <span class="player-lines">
+              <span class="eyebrow">Opponent</span>
+              <strong id="opponent-name">Bot · Black</strong>
+            </span>
+          </div>
+          <div class="reserve">
+            <span id="opponent-bank-label" class="reserve-label">Black reserve · 3</span>
+            <div id="opponent-bank" class="bank" aria-labelledby="opponent-bank-label"></div>
+          </div>
         </section>
-        <p id="status" class="status" aria-live="polite"><span></span></p>
         <div id="board" class="board" role="grid" aria-label="Schness board"></div>
-        <section class="player you" aria-label="Your pieces">
-          <div><p class="label">Player</p><strong id="human-name">You · White</strong></div>
-          <div id="human-bank" class="bank" aria-label="Your reserve"></div>
+        <section id="turn-card" class="turn-card" aria-live="polite">
+          <p class="turn-headline"><span class="turn-dot" aria-hidden="true"></span><strong id="turn-title">Your turn</strong></p>
+          <p id="turn-detail" class="turn-detail"></p>
+          <button id="deselect" class="turn-action" type="button" hidden>Deselect</button>
+        </section>
+        <section class="player you" aria-label="You">
+          <div class="player-identity">
+            <span class="player-dot" aria-hidden="true"></span>
+            <span class="player-lines">
+              <span class="eyebrow">You</span>
+              <strong id="human-name">White</strong>
+            </span>
+          </div>
+          <div class="reserve">
+            <span id="human-bank-label" class="reserve-label">Your reserve · tap to deploy</span>
+            <div id="human-bank" class="bank" aria-labelledby="human-bank-label"></div>
+          </div>
         </section>
       </div>
       <section id="match-chat" class="match-chat" aria-labelledby="chat-title" hidden>

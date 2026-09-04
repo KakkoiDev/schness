@@ -1,7 +1,9 @@
 import {
-  BLACK, BISHOP, KING, KNIGHT, ROOK, WHITE,
-  applyAction, createInitialPosition, getResult, isInCheck, legalActions, opponent,
+  BANK_PIECES, BLACK, BISHOP, KING, KNIGHT, ROOK, WHITE,
+  applyAction, attackersOf, createInitialPosition, getResult, isInCheck, kingSquare,
+  legalActions, opponent,
 } from './rules.js';
+import { colorName, pieceName, squareName } from './notation.js';
 import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, setupDestinations } from './interaction.js';
 import { applyActionMessage, makeActionMessage } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
@@ -18,7 +20,12 @@ const humanBank = document.querySelector('#human-bank');
 const opponentBank = document.querySelector('#opponent-bank');
 const humanName = document.querySelector('#human-name');
 const opponentName = document.querySelector('#opponent-name');
-const status = document.querySelector('#status');
+const turnCard = document.querySelector('#turn-card');
+const turnTitle = document.querySelector('#turn-title');
+const turnDetail = document.querySelector('#turn-detail');
+const deselectButton = document.querySelector('#deselect');
+const opponentBankLabel = document.querySelector('#opponent-bank-label');
+const humanBankLabel = document.querySelector('#human-bank-label');
 const networkNote = document.querySelector('#network-note');
 const invite = document.querySelector('#invite');
 const inviteUrl = document.querySelector('#invite-url');
@@ -61,6 +68,8 @@ let cameraStarting = false;
 let chatEnabled = !mobileChatQuery.matches;
 let unreadMessages = 0;
 let lastAction = null;
+let opponentLabel = 'Bot';
+let failure = null;
 let pointerDrag = null;
 let suppressClick = false;
 
@@ -86,6 +95,10 @@ mobileChatQuery.addEventListener('change', ({ matches }) => {
 });
 
 resetButton.addEventListener('click', startNewGame);
+deselectButton.addEventListener('click', () => {
+  selection = null;
+  render();
+});
 copyInvite.addEventListener('click', copyInviteLink);
 chatForm.addEventListener('submit', sendChatMessage);
 chatToggle.addEventListener('click', toggleChat);
@@ -111,7 +124,7 @@ else window.location.replace('./');
 function startBotMatch() {
   stopNetwork();
   resetState('bot', WHITE);
-  opponentName.textContent = 'Bot';
+  opponentLabel = 'Bot';
   showMatch();
 }
 
@@ -161,7 +174,7 @@ function beginOnlineMatch(color) {
   position = createInitialPosition();
   selection = null;
   disconnected = false;
-  opponentName.textContent = 'Online player';
+  opponentLabel = 'Online player';
   networkNote.hidden = true;
   invite.hidden = true;
   board.closest('.play-area').hidden = false;
@@ -344,7 +357,7 @@ function receivePeerAction(message) {
     render();
   } catch (error) {
     disconnected = true;
-    status.textContent = `Game stopped: ${error.message}`;
+    failure = { title: 'Game stopped', detail: error.message };
     render();
   }
 }
@@ -360,6 +373,7 @@ function resetState(nextMode, color) {
   chatEnabled = !mobileChatQuery.matches;
   unreadMessages = 0;
   lastAction = null;
+  failure = null;
   stopMicrophone();
   stopCamera();
   worker.terminate();
@@ -410,7 +424,8 @@ function createWorker() {
   next.addEventListener('message', onBotMessage);
   next.addEventListener('error', () => {
     thinking = false;
-    status.textContent = 'The bot hit an error. Start a new game to try again.';
+    failure = { title: 'Bot error', detail: 'The bot hit an error. Start a new game to try again.' };
+    render();
   });
   return next;
 }
@@ -521,7 +536,8 @@ function onBotMessage({ data }) {
   if (!thinking || data.request !== botRequest) return;
   if (data.error) {
     thinking = false;
-    status.textContent = `Bot error: ${data.error}`;
+    failure = { title: 'Bot error', detail: data.error };
+    render();
     return;
   }
   if (data.action && position.turn !== humanColor) {
@@ -557,17 +573,40 @@ function render() {
   });
   renderBank(opponentBank, opponent(humanColor), false);
   renderBank(humanBank, humanColor, true);
-  humanName.textContent = humanColor === WHITE ? 'You · White' : 'You · Black';
+  const enemy = opponent(humanColor);
+  opponentName.textContent = `${opponentLabel} · ${colorName(enemy)}`;
+  humanName.textContent = colorName(humanColor);
+  opponentBankLabel.textContent = `${colorName(enemy)} reserve · ${position.banks[enemy].length}`;
+  humanBankLabel.textContent = position.banks[humanColor].length
+    ? 'Your reserve · tap to deploy' : 'Your reserve · empty';
   humanBank.closest('.player').classList.toggle('active-player', position.turn === humanColor && !result);
   opponentBank.closest('.player').classList.toggle('active-player', position.turn !== humanColor && !result);
-  status.textContent = statusMessage(result);
+  renderTurnCard(result);
   updateCommunicationUi();
 }
 
+function renderTurnCard(result) {
+  const { title, detail, waiting } = turnCardContent(result);
+  turnTitle.textContent = title;
+  turnDetail.textContent = detail;
+  turnCard.classList.toggle('is-waiting', waiting);
+  deselectButton.hidden = !selection || !canHumanAct();
+}
+
+/**
+ * A reserve never holds two of the same piece, so the three slots keep fixed
+ * positions and a missing piece leaves a dashed gap instead of closing up.
+ */
 function renderBank(container, owner, interactive) {
-  container.replaceChildren();
-  const pieces = position.banks[owner];
-  for (const piece of pieces) {
+  const held = position.banks[owner];
+  container.replaceChildren(...BANK_PIECES.map((piece) => {
+    if (!held.includes(piece)) {
+      const slot = document.createElement('span');
+      slot.className = 'bank-slot';
+      slot.setAttribute('role', 'img');
+      slot.setAttribute('aria-label', `Empty ${piece} slot`);
+      return slot;
+    }
     const button = document.createElement('button');
     button.className = 'bank-piece';
     button.type = 'button';
@@ -581,14 +620,8 @@ function renderBank(container, owner, interactive) {
       button.addEventListener('click', () => { if (!suppressClick) selectBank(piece); });
       button.addEventListener('pointerdown', (event) => beginBankDrag(event, piece));
     }
-    container.append(button);
-  }
-  if (!pieces.length) {
-    const empty = document.createElement('span');
-    empty.className = 'bank-empty';
-    empty.textContent = 'No pieces in reserve';
-    container.append(empty);
-  }
+    return button;
+  }));
 }
 
 function pieceElement(owner, piece) {
@@ -601,14 +634,59 @@ function pieceElement(owner, piece) {
   return element;
 }
 
-function statusMessage(result) {
-  if (disconnected) return 'Opponent left the game.';
-  if (result?.type === 'win') return result.winner === humanColor ? 'Checkmate — you win.' : 'Checkmate — opponent wins.';
-  if (result?.reason === 'stalemate') return 'Draw by stalemate.';
-  if (result?.reason === 'threefold-repetition') return 'Draw by threefold repetition.';
-  if (thinking) return position.phase === 'place-black-king' ? 'Bot is placing its king…' : 'Bot is thinking…';
-  if (position.turn !== humanColor) return 'Opponent’s turn.';
-  if (position.phase !== 'play') return 'Place your king on your home row.';
-  if (isInCheck(position, humanColor)) return 'Your king is in check — move, capture, or deploy a reserve piece to block.';
-  return selection?.type === 'bank' ? `Place your ${selection.piece}.` : 'Your turn — move or deploy a piece.';
+/** Every playable state names both legal action types: move, or deploy. */
+function turnCardContent(result) {
+  if (failure) return { ...failure, waiting: true };
+  if (disconnected) {
+    return { title: 'Opponent left', detail: 'The board is yours. Start a new game when you are ready.', waiting: true };
+  }
+  if (result?.type === 'win') {
+    return {
+      title: 'Checkmate',
+      detail: result.winner === humanColor ? 'You win.' : 'Your opponent wins.',
+      waiting: true,
+    };
+  }
+  if (result?.reason === 'stalemate') {
+    return { title: 'Draw', detail: 'Stalemate — no legal move, and no check.', waiting: true };
+  }
+  if (result?.reason === 'threefold-repetition') {
+    return { title: 'Draw', detail: 'The same position came up three times.', waiting: true };
+  }
+  if (thinking) {
+    return {
+      title: position.phase === 'place-black-king' ? 'Bot is placing its king' : 'Bot is thinking',
+      detail: 'It is choosing from the same moves and deployments you have.',
+      waiting: true,
+    };
+  }
+  if (position.turn !== humanColor) {
+    return { title: 'Opponent’s turn', detail: 'Waiting for their move.', waiting: true };
+  }
+  if (position.phase !== 'play') {
+    return {
+      title: 'Place your king',
+      detail: 'Pick any marked square on your home row. White places first, then Black.',
+      waiting: false,
+    };
+  }
+  return { title: 'Your turn', detail: playDetail(), waiting: false };
+}
+
+function playDetail() {
+  if (isInCheck(position, humanColor)) {
+    const attacker = attackersOf(position, kingSquare(position, humanColor), opponent(humanColor))[0];
+    const from = attacker === undefined ? ''
+      : ` from the ${position.board[attacker].piece} on ${squareName(attacker)}`;
+    return `Your king is in check${from}. Move it, capture the attacker, or deploy a piece to block.`;
+  }
+  if (selection?.type === 'board') {
+    return `${pieceName(position.board[selection.square]?.piece)} on ${squareName(selection.square)} is selected. ` +
+      'Move it to a marked square, or pick a reserve piece to deploy instead.';
+  }
+  if (selection?.type === 'bank') {
+    return `${pieceName(selection.piece)} from your reserve is selected. ` +
+      'Drop it on a marked empty square, or pick a piece on the board to move instead.';
+  }
+  return 'Move a piece by normal chess rules, or deploy one from your reserve onto an empty square.';
 }

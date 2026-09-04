@@ -39,12 +39,15 @@ test('board rows are fixed and every vector piece uses the same box', async () =
   assert.match(css, /\.piece-black\s*{/);
   assert.match(css, /\[hidden\]\s*{\s*display:\s*none\s*!important;/);
   assert.match(css, /\.piece,[\s\S]*?\.bank-piece \.piece-king\s*{[\s\S]*?width:\s*78%;[\s\S]*?height:\s*78%;[\s\S]*?object-fit:\s*contain;/);
-  assert.match(css, /\.game-page \.bank-piece\s*{[\s\S]*?width:\s*var\(--piece-cell\)/);
+  assert.match(css, /\.bank-piece,\s*\n\.bank-slot\s*{[\s\S]*?width:\s*50px/);
+  assert.match(css, /\.bank-slot\s*{[\s\S]*?border:\s*1px dashed var\(--line\)/);
+  assert.match(css, /\.bank-piece\.selected\s*{[\s\S]*?border-color:\s*var\(--ink\)/);
   assert.match(css, /\.game-page \.bank-piece:disabled,[\s\S]*?opacity:\s*1/);
   assert.match(css, /--mobile-board-size:\s*min\([^;]+66svh/);
-  assert.match(css, /grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.player\s*{[\s\S]*?justify-content:\s*space-between/);
   assert.match(css, /\.game-page \.player strong,[\s\S]*?white-space:\s*nowrap/);
-  assert.match(css, /\.game-page \.bank-piece:first-child:nth-last-child\(1\)/);
+  assert.doesNotMatch(css, /--piece-cell/);
+  assert.doesNotMatch(css, /\.bank-empty/);
   assert.doesNotMatch(css, /\.fallback\s*{[^}]*margin:\s*-/);
   assert.match(css, /\.square\.last-from, \.square\.last-to/);
   assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
@@ -74,6 +77,17 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.ok((html.match(/<ul>/g) ?? []).length >= 5);
   assert.doesNotMatch(html, /id="board"/);
   assert.match(game, /id="board"/);
+  assert.match(game, /id="turn-card"[^>]+aria-live="polite"/);
+  assert.match(game, /id="turn-title"/);
+  assert.match(game, /id="deselect"/);
+  assert.match(game, /id="opponent-bank-label"[^>]*>Black reserve/);
+  assert.match(game, /id="human-bank-label"[^>]*>Your reserve · tap to deploy</);
+  assert.match(game, /class="player-dot"/);
+  // The turn card replaced the bare status line.
+  assert.doesNotMatch(game, /id="status"/);
+  assert.match(css, /\.turn-card\s*{[\s\S]*?border-radius:\s*9px/);
+  assert.match(css, /grid-template-columns:\s*minmax\(0,1fr\) 312px/);
+  assert.match(css, /\.game-page \.play-area\s*{\s*display:\s*contents/);
   assert.match(game, /id="back-to-menu"[^>]+href="\.\/"/);
   assert.match(game, /src="\.\/src\/main\.js"/);
   assert.doesNotMatch(game, /id="alternate-mode"/);
@@ -105,7 +119,7 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(css, /\.drag-ghost\s*{/);
   assert.match(css, /transform:\s*translate\(-50%, -50%\)/);
   assert.match(css, /touch-action:\s*none/);
-  assert.match(css, /\.game-page \.match-chat\s*{[\s\S]*?grid-column:\s*2;[\s\S]*?grid-row:\s*2;/);
+  assert.match(css, /\.game-page \.match-chat\s*{[\s\S]*?grid-column:\s*2;[\s\S]*?grid-row:\s*5;/);
   assert.match(css, /@media\(max-width:899px\)[\s\S]*?\.game-page \.match-chat\s*{[\s\S]*?position:\s*fixed/);
   assert.match(css, /\.game-page \.match-chat\.chat-collapsed/);
   assert.match(css, /max-height:\s*calc\(min\(82dvh, 42rem\) - 3\.2rem\)/);

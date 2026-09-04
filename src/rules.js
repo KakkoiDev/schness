@@ -111,6 +111,29 @@ export function isSquareAttacked(position, square, byPlayer) {
   return false;
 }
 
+/**
+ * Every square holding a piece of byPlayer that attacks the given square.
+ * isSquareAttacked stays separate because the bot's search calls it for its
+ * early exit and does not need the full list.
+ */
+export function attackersOf(position, square, byPlayer) {
+  assertSquare(square);
+  const attackers = [];
+  for (let from = 0; from < position.board.length; from += 1) {
+    const occupant = position.board[from];
+    if (!occupant || occupant.owner !== byPlayer) continue;
+    if (attackSquares(position, from, occupant.piece).includes(square)) attackers.push(from);
+  }
+  return attackers;
+}
+
+export function kingSquare(position, player) {
+  const square = position.board.findIndex(
+    (occupant) => occupant?.owner === player && occupant.piece === KING,
+  );
+  return square === -1 ? null : square;
+}
+
 export function isInCheck(position, player) {
   const king = position.board.findIndex(
     (occupant) => occupant?.owner === player && occupant.piece === KING,
