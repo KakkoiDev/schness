@@ -21,10 +21,15 @@ test('manifest describes a standalone app with a local icon', async () => {
   assert.ok(manifest.icons.every((icon) => icon.src.startsWith('./')));
 });
 
-test('the black knight has a light lower-edge outline', async () => {
+test('the black knight carries no stray corner-bracket stroke', async () => {
   const knight = await readFile(resolve(root, 'assets/pieces/bN.svg'), 'utf8');
-  assert.match(knight, /M600 706\.9h40\.3[^>]+stroke="#f2f2f2"[^>]+stroke-width="10"/);
+  // A third path used to stroke a white rounded bracket that floated clear of the silhouette.
+  assert.doesNotMatch(knight, /M600 706\.9/);
+  assert.doesNotMatch(knight, /stroke="#f2f2f2"/);
   assert.doesNotMatch(knight, /275\.5 673\.8/);
+  // Only the body and its light interior detail remain.
+  assert.equal([...knight.matchAll(/<path\b/g)].length, 2);
+  assert.match(knight, /<path fill="#f2f2f2" d="M177\.4 578\.1/);
 });
 
 test('board rows are fixed and every vector piece uses the same box', async () => {
