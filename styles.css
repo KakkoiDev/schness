@@ -451,3 +451,258 @@
     flex: 0 0 auto;
   }
 }
+
+/* Right rail: the move list, then the Undo / Resign pair. */
+.match-rail {
+  display: grid;
+  gap: 12px;
+}
+
+.moves {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+}
+
+.moves-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+}
+
+.moves-header strong {
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.moves-hint {
+  margin-right: auto;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.stepper {
+  display: flex;
+  gap: 2px;
+}
+
+.step {
+  width: 26px;
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--muted);
+  padding: 0;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.step:hover:not(:disabled) {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.step:disabled {
+  cursor: default;
+  opacity: .4;
+}
+
+#moves-body {
+  max-height: 14rem;
+  overflow-y: auto;
+}
+
+.moves-row {
+  display: grid;
+  grid-template-columns: 30px 1fr 1fr;
+  gap: 8px;
+  padding: 4px 14px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.moves-head {
+  border-block: 1px solid var(--hairline);
+  background: var(--sunk);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.moves-row > span:first-child {
+  color: var(--muted);
+}
+
+.move-cell {
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  padding: 1px 3px;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.move-cell:hover {
+  background: var(--sunk);
+}
+
+.move-cell.is-current {
+  background: var(--sunk);
+  font-weight: 600;
+}
+
+.last-move {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  border-top: 1px solid var(--hairline);
+  background: var(--sunk);
+  padding: 10px 14px;
+  font-size: 12.5px;
+}
+
+.last-move-dot {
+  flex: none;
+  width: 6px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.moves-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 1px solid var(--hairline);
+  padding: 8px 12px;
+}
+
+.moves-legend {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.moves-link {
+  margin-left: auto;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rail-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.rail-button {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  padding: 11px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rail-button:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+
+.rail-button:disabled {
+  cursor: default;
+  opacity: .45;
+}
+
+/* A reviewed board must never be mistakable for a live one. */
+.play-area.is-reviewing .reserve {
+  opacity: .45;
+}
+
+.chat-event {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  border-radius: 999px;
+  background: var(--paper);
+  padding: 6px 12px;
+  font-size: 11.5px;
+  text-align: center;
+}
+
+.chat-event::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.chat-event button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  padding: 3px 9px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+@media(min-width:900px) {
+  .game-page .match-rail {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  #moves-toggle {
+    display: none;
+  }
+}
+
+/* Mobile keeps only the last-move strip until the Moves link opens the list. */
+@media(max-width:899px) {
+  .match-rail {
+    width: min(100%, 37rem);
+    margin: 10px auto 0;
+  }
+
+  .moves-header,
+  .moves-table,
+  .moves-footer {
+    display: none;
+  }
+
+  .match-rail.is-open .moves-header {
+    display: flex;
+  }
+
+  .match-rail.is-open .moves-table {
+    display: block;
+  }
+
+  .match-rail.is-open .moves-footer {
+    display: flex;
+  }
+
+  .rail-button {
+    padding: 13px 12px;
+  }
+}

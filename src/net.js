@@ -24,7 +24,8 @@ export function joinMatchmaking(gameId) {
   const [sendGame, onGame] = room.makeAction('game');
   const [sendChatPacket, onChatPacket] = room.makeAction('chat');
   const [sendPreferencesPacket, onPreferencesPacket] = room.makeAction('prefs');
-  const matchHandlers = [], fullHandlers = [], gameHandlers = [], chatHandlers = [], preferenceHandlers = [], streamHandlers = [], leaveHandlers = [], errorHandlers = [];
+  const [sendControlPacket, onControlPacket] = room.makeAction('control');
+  const matchHandlers = [], fullHandlers = [], gameHandlers = [], chatHandlers = [], preferenceHandlers = [], controlHandlers = [], streamHandlers = [], leaveHandlers = [], errorHandlers = [];
   const peers = new Map();
   let phase = 'waiting', target = null, opponentId = null, pendingTimer = null, lastPreferences = null;
 
@@ -88,6 +89,9 @@ export function joinMatchmaking(gameId) {
   onChatPacket((payload, id) => {
     if (phase === 'matched' && id === opponentId) chatHandlers.forEach((handler) => handler(payload));
   });
+  onControlPacket((payload, id) => {
+    if (phase === 'matched' && id === opponentId) controlHandlers.forEach((handler) => handler(payload));
+  });
   onPreferencesPacket((payload, id) => {
     if (phase === 'matched' && id === opponentId) {
       lastPreferences = payload;
@@ -147,6 +151,7 @@ export function joinMatchmaking(gameId) {
       preferenceHandlers.push(handler);
       if (lastPreferences) queueMicrotask(() => handler(lastPreferences));
     },
+    onControl: (handler) => controlHandlers.push(handler),
     onPeerStream: (handler) => streamHandlers.push(handler),
     onOpponentLeave: (handler) => leaveHandlers.push(handler),
     onError: (handler) => errorHandlers.push(handler),
@@ -161,6 +166,11 @@ export function joinMatchmaking(gameId) {
     sendPreferences(payload) {
       if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
       sendPreferencesPacket(payload, opponentId);
+    },
+    /** Out-of-band match control: take-back requests and resignations. */
+    sendControl(payload) {
+      if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
+      sendControlPacket(payload, opponentId);
     },
     addStream(stream) {
       if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');

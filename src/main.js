@@ -4,6 +4,7 @@ import {
   legalActions, opponent,
 } from './rules.js';
 import { colorName, pieceName, squareName } from './notation.js';
+import { gameText, moveCount, pairMoves, pliesToUndo, recordAction } from './history.js';
 import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, setupDestinations } from './interaction.js';
 import { applyActionMessage, makeActionMessage } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
@@ -24,6 +25,19 @@ const turnCard = document.querySelector('#turn-card');
 const turnTitle = document.querySelector('#turn-title');
 const turnDetail = document.querySelector('#turn-detail');
 const deselectButton = document.querySelector('#deselect');
+const reviewCard = document.querySelector('#review-card');
+const reviewTitle = document.querySelector('#review-title');
+const reviewLive = document.querySelector('#review-live');
+const matchRail = document.querySelector('#match-rail');
+const movesBody = document.querySelector('#moves-body');
+const movesToggle = document.querySelector('#moves-toggle');
+const lastMoveText = document.querySelector('#last-move-text');
+const copyGame = document.querySelector('#copy-game');
+const undoButton = document.querySelector('#undo');
+const resignButton = document.querySelector('#resign');
+const moveFirst = document.querySelector('#move-first');
+const moveBack = document.querySelector('#move-back');
+const moveForward = document.querySelector('#move-forward');
 const opponentBankLabel = document.querySelector('#opponent-bank-label');
 const humanBankLabel = document.querySelector('#human-bank-label');
 const networkNote = document.querySelector('#network-note');
@@ -70,6 +84,11 @@ let unreadMessages = 0;
 let lastAction = null;
 let opponentLabel = 'Bot';
 let failure = null;
+let history = [];
+let timeline = [position];
+let reviewPly = null;
+let resigned = null;
+let takebackPending = false;
 let pointerDrag = null;
 let suppressClick = false;
 
@@ -98,6 +117,23 @@ resetButton.addEventListener('click', startNewGame);
 deselectButton.addEventListener('click', () => {
   selection = null;
   render();
+});
+reviewLive.addEventListener('click', () => goToPly(null));
+moveFirst.addEventListener('click', () => goToPly(0));
+moveBack.addEventListener('click', () => stepReview(-1));
+moveForward.addEventListener('click', () => stepReview(1));
+undoButton.addEventListener('click', undoTurn);
+resignButton.addEventListener('click', resign);
+copyGame.addEventListener('click', copyGameText);
+movesToggle.addEventListener('click', () => {
+  const open = matchRail.classList.toggle('is-open');
+  movesToggle.setAttribute('aria-expanded', String(open));
+});
+// The board owns the arrow keys, so reviewing is bound to the panel itself.
+matchRail.addEventListener('keydown', (event) => {
+  if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+  event.preventDefault();
+  stepReview(event.key === 'ArrowUp' ? -1 : 1);
 });
 copyInvite.addEventListener('click', copyInviteLink);
 chatForm.addEventListener('submit', sendChatMessage);
@@ -145,6 +181,7 @@ async function startOnlineSearch(gameId) {
     network.onRoomFull(showRoomFull);
     network.onGame(receivePeerAction);
     network.onChat(receiveChatMessage);
+    network.onControl(receiveControl);
     network.onPeerStream(receivePeerStream);
     network.onOpponentLeave(() => {
       disconnected = true;
@@ -172,6 +209,11 @@ function beginOnlineMatch(color) {
   clearTimeout(searchTimer);
   humanColor = color;
   position = createInitialPosition();
+  history = [];
+  timeline = [position];
+  reviewPly = null;
+  resigned = null;
+  takebackPending = false;
   selection = null;
   disconnected = false;
   opponentLabel = 'Online player';
@@ -348,12 +390,35 @@ function appendChatMessage(text, author) {
   chatLog.scrollTop = chatLog.scrollHeight;
 }
 
+function appendChatEvent(text, actions = []) {
+  chatLog.querySelector('.chat-empty')?.remove();
+  const row = document.createElement('p');
+  row.className = 'chat-event';
+  row.append(document.createTextNode(text));
+  for (const { label, run } of actions) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = label;
+    button.addEventListener('click', () => {
+      row.querySelectorAll('button').forEach((other) => other.remove());
+      run();
+    });
+    row.append(button);
+  }
+  chatLog.append(row);
+  chatLog.scrollTop = chatLog.scrollHeight;
+}
+
 function receivePeerAction(message) {
   if (mode !== 'online' || disconnected || position.turn === humanColor) return;
   try {
-    position = applyActionMessage(position, message);
+    const before = position;
+    position = applyActionMessage(before, message);
+    history = recordAction(history, before, message.action, position);
+    timeline.push(position);
     lastAction = message.action;
     selection = null;
+    reviewPly = null;
     render();
   } catch (error) {
     disconnected = true;
@@ -374,6 +439,12 @@ function resetState(nextMode, color) {
   unreadMessages = 0;
   lastAction = null;
   failure = null;
+  history = [];
+  timeline = [position];
+  reviewPly = null;
+  resigned = null;
+  takebackPending = false;
+  matchRail.classList.remove('is-open');
   stopMicrophone();
   stopCamera();
   worker.terminate();
@@ -511,17 +582,123 @@ function cancelPointerDrag() {
 }
 
 function canHumanAct() {
-  return !thinking && !disconnected && position.turn === humanColor && !getResult(position);
+  return !thinking && !disconnected && !resigned && reviewPly === null &&
+    position.turn === humanColor && !getResult(position);
+}
+
+function displayedPosition() {
+  return reviewPly === null ? position : timeline[reviewPly];
+}
+
+function goToPly(ply) {
+  reviewPly = ply === null || ply >= history.length ? null : Math.max(0, ply);
+  selection = null;
+  render();
+}
+
+function stepReview(delta) {
+  goToPly((reviewPly ?? history.length) + delta);
+}
+
+function undoTurn() {
+  if (mode === 'online') return requestTakeback();
+  takeBack(humanColor);
+}
+
+/** Walks the board back to that player's turn: against the bot, a full turn. */
+function takeBack(player) {
+  const taken = pliesToUndo(history, timeline, player);
+  if (!taken) return;
+  history = history.slice(0, history.length - taken);
+  timeline = timeline.slice(0, timeline.length - taken);
+  position = timeline[timeline.length - 1];
+  lastAction = history.at(-1)?.action ?? null;
+  selection = null;
+  reviewPly = null;
+  thinking = false;
+  takebackPending = false;
+  // Any reply already in flight from the worker no longer applies.
+  botRequest += 1;
+  render();
+}
+
+function requestTakeback() {
+  if (takebackPending || !network?.matched || !pliesToUndo(history, timeline, humanColor)) return;
+  takebackPending = true;
+  try {
+    network.sendControl({ kind: 'takeback-request', ply: history.length });
+    appendChatEvent('You asked to take back your move');
+  } catch {
+    takebackPending = false;
+  }
+  render();
+}
+
+function receiveControl(payload) {
+  if (payload?.kind === 'resign') {
+    resigned = opponent(humanColor);
+    render();
+    return;
+  }
+  if (payload?.kind === 'takeback-request') {
+    const asker = opponent(humanColor);
+    appendChatEvent(`${opponentLabel} asked to take back move ${moveCount(history)}`, [
+      { label: 'Allow', run: () => { network.sendControl({ kind: 'takeback-allow' }); takeBack(asker); } },
+      { label: 'No', run: () => network.sendControl({ kind: 'takeback-decline' }) },
+    ]);
+    return;
+  }
+  if (payload?.kind === 'takeback-allow' && takebackPending) {
+    takeBack(humanColor);
+    appendChatEvent('Take-back allowed');
+    return;
+  }
+  if (payload?.kind === 'takeback-decline' && takebackPending) {
+    takebackPending = false;
+    appendChatEvent('Take-back declined');
+    render();
+  }
+}
+
+function resign() {
+  if (resigned || getResult(position) || !history.length) return;
+  resigned = humanColor;
+  if (mode === 'online' && network?.matched) {
+    try { network.sendControl({ kind: 'resign' }); } catch { /* Nothing left to tell them. */ }
+  }
+  selection = null;
+  reviewPly = null;
+  render();
+}
+
+async function copyGameText() {
+  const text = gameText(history);
+  if (!text) return;
+  try {
+    await navigator.clipboard.writeText(text);
+    copyGame.textContent = 'Copied';
+  } catch {
+    copyGame.textContent = 'Copy failed';
+  }
 }
 
 function play(action) {
   const message = mode === 'online' ? makeActionMessage(position, action) : null;
-  position = applyAction(position, action);
-  lastAction = action;
-  selection = null;
+  commit(action);
   if (message) network.sendGame(message);
   render();
   if (mode === 'bot' && !getResult(position) && position.turn !== humanColor) requestBotMove();
+}
+
+/** Applies an action and records it, so history and position never diverge. */
+function commit(action) {
+  const before = position;
+  position = applyAction(before, action);
+  history = recordAction(history, before, action, position);
+  timeline.push(position);
+  lastAction = action;
+  selection = null;
+  reviewPly = null;
 }
 
 function requestBotMove() {
@@ -540,10 +717,7 @@ function onBotMessage({ data }) {
     render();
     return;
   }
-  if (data.action && position.turn !== humanColor) {
-    position = applyAction(position, data.action);
-    lastAction = data.action;
-  }
+  if (data.action && position.turn !== humanColor) commit(data.action);
   thinking = false;
   render();
 }
@@ -552,10 +726,12 @@ function render() {
   const placingKing = position.phase !== 'play' && canHumanAct();
   const targets = placingKing ? setupDestinations(position) : destinations(position, selection);
   const result = getResult(position);
-  const last = actionHighlights(lastAction);
+  const shown = displayedPosition();
+  const last = actionHighlights(reviewPly === null ? lastAction : history[reviewPly - 1]?.action ?? null);
+  board.closest('.play-area').classList.toggle('is-reviewing', reviewPly !== null);
   board.querySelectorAll('.square').forEach((button, visual) => {
     const square = humanColor === WHITE ? visual : 15 - visual;
-    const occupant = position.board[square];
+    const occupant = shown.board[square];
     button.dataset.square = String(square);
     button.replaceChildren();
     if (occupant) button.append(pieceElement(occupant.owner, occupant.piece));
@@ -563,7 +739,7 @@ function render() {
     button.classList.toggle('target', targets.has(square));
     button.classList.toggle('placement', placingKing && targets.has(square));
     button.classList.toggle('capture', targets.has(square) && Boolean(occupant));
-    button.classList.toggle('in-check', occupant?.piece === KING && isInCheck(position, occupant.owner));
+    button.classList.toggle('in-check', occupant?.piece === KING && isInCheck(shown, occupant.owner));
     button.classList.toggle('last-from', square === last.from);
     button.classList.toggle('last-to', square === last.to);
     button.classList.toggle('drag-source', pointerDrag?.active && pointerDrag.sourceSquare === square);
@@ -571,17 +747,18 @@ function render() {
     button.setAttribute('aria-label', occupant
       ? `${occupant.owner} ${occupant.piece}, square ${square + 1}` : `Empty square ${square + 1}`);
   });
-  renderBank(opponentBank, opponent(humanColor), false);
-  renderBank(humanBank, humanColor, true);
+  renderBank(opponentBank, opponent(humanColor), false, shown);
+  renderBank(humanBank, humanColor, true, shown);
   const enemy = opponent(humanColor);
   opponentName.textContent = `${opponentLabel} · ${colorName(enemy)}`;
   humanName.textContent = colorName(humanColor);
-  opponentBankLabel.textContent = `${colorName(enemy)} reserve · ${position.banks[enemy].length}`;
-  humanBankLabel.textContent = position.banks[humanColor].length
+  opponentBankLabel.textContent = `${colorName(enemy)} reserve · ${shown.banks[enemy].length}`;
+  humanBankLabel.textContent = shown.banks[humanColor].length
     ? 'Your reserve · tap to deploy' : 'Your reserve · empty';
   humanBank.closest('.player').classList.toggle('active-player', position.turn === humanColor && !result);
   opponentBank.closest('.player').classList.toggle('active-player', position.turn !== humanColor && !result);
   renderTurnCard(result);
+  renderMoves();
   updateCommunicationUi();
 }
 
@@ -590,15 +767,60 @@ function renderTurnCard(result) {
   turnTitle.textContent = title;
   turnDetail.textContent = detail;
   turnCard.classList.toggle('is-waiting', waiting);
+  turnCard.hidden = reviewPly !== null;
+  reviewCard.hidden = reviewPly === null;
+  reviewTitle.textContent = reviewPly === 0
+    ? 'Reviewing · before the first move'
+    : `Reviewing · move ${Math.ceil((reviewPly ?? 0) / 2)} of ${moveCount(history)}`;
   deselectButton.hidden = !selection || !canHumanAct();
+}
+
+function renderMoves() {
+  const shownPly = reviewPly ?? history.length;
+  movesBody.replaceChildren(...pairMoves(history).map(({ number, white, black }) => {
+    const row = document.createElement('div');
+    row.className = 'moves-row';
+    row.setAttribute('role', 'row');
+    const label = document.createElement('span');
+    label.setAttribute('role', 'cell');
+    label.textContent = `${number}.`;
+    row.append(label, moveCell(white, shownPly), moveCell(black, shownPly));
+    return row;
+  }));
+  lastMoveText.textContent = shownPly === 0
+    ? 'Start of the game' : `Last: ${history[shownPly - 1].sentence}`;
+  moveFirst.disabled = !history.length || shownPly === 0;
+  moveBack.disabled = shownPly === 0;
+  moveForward.disabled = reviewPly === null;
+  undoButton.disabled = disconnected || Boolean(resigned) || takebackPending ||
+    !pliesToUndo(history, timeline, humanColor);
+  undoButton.textContent = mode === 'online' ? 'Ask to undo' : 'Undo';
+  resignButton.disabled = !history.length || Boolean(resigned) || Boolean(getResult(position));
+}
+
+function moveCell(entry, shownPly) {
+  const cell = document.createElement('span');
+  cell.setAttribute('role', 'cell');
+  if (!entry) return cell;
+  const button = document.createElement('button');
+  button.className = 'move-cell';
+  button.type = 'button';
+  button.textContent = entry.notation;
+  // The plain-language note rides along rather than crowding the three columns.
+  button.title = entry.note;
+  button.setAttribute('aria-label', `${entry.notation}. ${entry.note}`);
+  button.classList.toggle('is-current', entry.ply === shownPly);
+  button.addEventListener('click', () => goToPly(entry.ply));
+  cell.append(button);
+  return cell;
 }
 
 /**
  * A reserve never holds two of the same piece, so the three slots keep fixed
  * positions and a missing piece leaves a dashed gap instead of closing up.
  */
-function renderBank(container, owner, interactive) {
-  const held = position.banks[owner];
+function renderBank(container, owner, interactive, shown) {
+  const held = shown.banks[owner];
   container.replaceChildren(...BANK_PIECES.map((piece) => {
     if (!held.includes(piece)) {
       const slot = document.createElement('span');
@@ -639,6 +861,13 @@ function turnCardContent(result) {
   if (failure) return { ...failure, waiting: true };
   if (disconnected) {
     return { title: 'Opponent left', detail: 'The board is yours. Start a new game when you are ready.', waiting: true };
+  }
+  if (resigned) {
+    return {
+      title: resigned === humanColor ? 'You resigned' : `${opponentLabel} resigned`,
+      detail: `The match ended on move ${moveCount(history)}. You can still walk back through it.`,
+      waiting: true,
+    };
   }
   if (result?.type === 'win') {
     return {

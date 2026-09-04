@@ -88,6 +88,20 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(css, /\.turn-card\s*{[\s\S]*?border-radius:\s*9px/);
   assert.match(css, /grid-template-columns:\s*minmax\(0,1fr\) 312px/);
   assert.match(css, /\.game-page \.play-area\s*{\s*display:\s*contents/);
+  // Move list, last-move line and the Undo / Resign pair.
+  assert.match(game, /id="moves-body"/);
+  assert.match(game, /id="move-first"[^>]+aria-label="Back to the first move"/);
+  assert.match(game, /id="last-move-text"/);
+  assert.match(game, /id="undo"/);
+  assert.match(game, /id="resign"/);
+  assert.match(game, /id="review-card"[^>]+hidden/);
+  assert.match(game, /@ marks a deployment from reserve/);
+  assert.match(css, /\.moves-row\s*{[\s\S]*?grid-template-columns:\s*30px 1fr 1fr/);
+  assert.match(css, /\.moves-head\s*{[\s\S]*?background:\s*var\(--sunk\)/);
+  assert.match(css, /\.last-move\s*{[\s\S]*?background:\s*var\(--sunk\)/);
+  assert.match(css, /\.play-area\.is-reviewing \.reserve\s*{[\s\S]*?opacity/);
+  const history = await readFile(resolve(root, 'src/history.js'), 'utf8');
+  assert.match(history, /resultingKey/);
   assert.match(game, /id="back-to-menu"[^>]+href="\.\/"/);
   assert.match(game, /src="\.\/src\/main\.js"/);
   assert.doesNotMatch(game, /id="alternate-mode"/);
@@ -104,6 +118,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="video-toggle"[^>]+aria-pressed="false"[^>]*>Video off</);
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
   assert.match(main, /piece-\$\{piece\}/);
+  assert.match(main, /function commit\(action\)/);
+  assert.match(main, /takeback-request/);
   assert.match(main, /createElement\('img'\)/);
   assert.match(main, /element\.draggable = false/);
   assert.match(main, /pieceRect:.*getBoundingClientRect/);

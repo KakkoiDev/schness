@@ -50,6 +50,11 @@
           <p id="turn-detail" class="turn-detail"></p>
           <button id="deselect" class="turn-action" type="button" hidden>Deselect</button>
         </section>
+        <section id="review-card" class="turn-card review-card" hidden>
+          <p class="turn-headline"><span class="turn-dot" aria-hidden="true"></span><strong id="review-title">Reviewing</strong></p>
+          <p class="turn-detail">A reviewed board is not the live one. Nothing you do here counts.</p>
+          <button id="review-live" class="turn-action" type="button">Back to live</button>
+        </section>
         <section class="player you" aria-label="You">
           <div class="player-identity">
             <span class="player-dot" aria-hidden="true"></span>
@@ -64,6 +69,38 @@
           </div>
         </section>
       </div>
+      <aside id="match-rail" class="match-rail">
+        <section class="moves">
+          <div class="moves-header">
+            <strong id="moves-title">Moves</strong>
+            <span class="moves-hint">↑ / ↓ to review</span>
+            <div class="stepper" role="group" aria-label="Review moves">
+              <button id="move-first" class="step" type="button" aria-label="Back to the first move">⏮</button>
+              <button id="move-back" class="step" type="button" aria-label="Step back one move">◀</button>
+              <button id="move-forward" class="step" type="button" aria-label="Step forward one move">▶</button>
+            </div>
+          </div>
+          <div class="moves-table" role="table" aria-labelledby="moves-title">
+            <div class="moves-row moves-head" role="row">
+              <span role="columnheader">#</span><span role="columnheader">White</span><span role="columnheader">Black</span>
+            </div>
+            <div id="moves-body" role="rowgroup"></div>
+          </div>
+          <p id="last-move" class="last-move">
+            <span class="last-move-dot" aria-hidden="true"></span>
+            <span id="last-move-text">No moves yet</span>
+            <button id="moves-toggle" class="moves-link" type="button" aria-expanded="false">Moves</button>
+          </p>
+          <div class="moves-footer">
+            <span class="moves-legend">@ marks a deployment from reserve</span>
+            <button id="copy-game" class="moves-link" type="button">Copy game</button>
+          </div>
+        </section>
+        <div class="rail-actions">
+          <button id="undo" class="rail-button" type="button">Undo</button>
+          <button id="resign" class="rail-button" type="button">Resign</button>
+        </div>
+      </aside>
       <section id="match-chat" class="match-chat" aria-labelledby="chat-title" hidden>
         <div class="chat-heading">
           <div><h2 id="chat-title">At the table</h2><small id="chat-note">Peer-to-peer · not saved</small></div>
