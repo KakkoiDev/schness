@@ -1,5 +1,5 @@
 import { joinRoom as trysteroJoin, selfId } from '../vendor/trystero/nostr.js';
-import { chooseHostCandidate, colorsForPair } from './matchmaking.js';
+import { chooseHostCandidate, colorsForPair, roomIsFull } from './matchmaking.js';
 
 export const RELAYS = [
   'wss://relay.snort.social',
@@ -24,7 +24,7 @@ export function joinMatchmaking(gameId) {
   const [sendGame, onGame] = room.makeAction('game');
   const [sendChatPacket, onChatPacket] = room.makeAction('chat');
   const [sendPreferencesPacket, onPreferencesPacket] = room.makeAction('prefs');
-  const matchHandlers = [], gameHandlers = [], chatHandlers = [], preferenceHandlers = [], streamHandlers = [], leaveHandlers = [], errorHandlers = [];
+  const matchHandlers = [], fullHandlers = [], gameHandlers = [], chatHandlers = [], preferenceHandlers = [], streamHandlers = [], leaveHandlers = [], errorHandlers = [];
   const peers = new Map();
   let phase = 'waiting', target = null, opponentId = null, pendingTimer = null, lastPreferences = null;
 
@@ -44,6 +44,11 @@ export function joinMatchmaking(gameId) {
   onHello((data, id) => {
     if (!validPacket(data)) return;
     peers.set(id, { waiting: data.waiting === true });
+    if (phase === 'waiting' && roomIsFull(peers)) {
+      phase = 'full';
+      fullHandlers.forEach((handler) => handler());
+      return;
+    }
     seek();
   });
   onOffer((data, id) => {
@@ -135,6 +140,7 @@ export function joinMatchmaking(gameId) {
   return {
     selfId,
     onMatch: (handler) => matchHandlers.push(handler),
+    onRoomFull: (handler) => fullHandlers.push(handler),
     onGame: (handler) => gameHandlers.push(handler),
     onChat: (handler) => chatHandlers.push(handler),
     onPreferences(handler) {

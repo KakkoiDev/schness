@@ -77,6 +77,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(main, /elementFromPoint/);
   assert.match(main, /getUserMedia\(\{ audio: false, video: true \}\)/);
   assert.match(main, /function toggleChat/);
+  assert.match(main, /network\.onRoomFull\(showRoomFull\)/);
+  assert.match(main, /Game already started/);
   assert.match(main, /mobileChatQuery/);
   assert.match(main, /unreadMessages/);
   assert.match(css, /\.drag-ghost\s*{/);

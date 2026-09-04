@@ -169,6 +169,21 @@
   grid-column: 2;
 }
 
+.network-note.room-full {
+  align-content: center;
+  gap: .55rem;
+}
+
+.network-note.room-full strong {
+  color: var(--ink);
+  font-size: 1.15rem;
+}
+
+.network-note.room-full .reset {
+  margin-top: .35rem;
+  text-decoration: none;
+}
+
 .chat-toggle,
 .media-toggle {
   border: 1px solid var(--line);
