@@ -116,6 +116,8 @@ let keyboardActive = false;
 let pendingFile = null;
 let announceTimer = null;
 let takebackPending = false;
+let agreedDraw = false;
+let drawOffered = false;
 let pointerDrag = null;
 let suppressClick = false;
 
@@ -185,6 +187,7 @@ window.addEventListener('offline', onConnectionChange);
 chatForm.addEventListener('submit', sendChatMessage);
 chatToggle.addEventListener('click', toggleChat);
 quickChat.addEventListener('click', (event) => {
+  if (event.target.closest('[data-quick-action="draw"]')) return offerDraw();
   const text = event.target.closest('[data-quick-message]')?.dataset.quickMessage;
   if (text) sendChatText(text);
 });
@@ -340,8 +343,11 @@ function beginOnlineMatch(color) {
   reviewPly = null;
   resigned = null;
   takebackPending = false;
+  agreedDraw = false;
+  drawOffered = false;
   selection = null;
   disconnected = false;
+  appendChatSeparator();
   opponentLabel = 'Online player';
   showCard(null);
   board.closest('.play-area').hidden = false;
@@ -397,6 +403,8 @@ function updateCommunicationUi() {
   chatMessage.disabled = !textReady;
   chatForm.querySelector('button').disabled = !textReady;
   quickChat.querySelectorAll('button').forEach((button) => { button.disabled = !textReady; });
+  const drawButton = quickChat.querySelector('[data-quick-action="draw"]');
+  if (drawButton) drawButton.disabled = !textReady || drawOffered || agreedDraw || Boolean(getResult(position));
   chatMessage.placeholder = 'Message your opponent…';
   chatNote.textContent = 'Peer-to-peer · not saved';
 }
@@ -506,13 +514,27 @@ function appendChatMessage(text, author) {
   chatLog.querySelector('.chat-empty')?.remove();
   const row = document.createElement('p');
   row.className = `chat-message ${author === 'You' ? 'chat-own' : 'chat-peer'}`;
-  const name = document.createElement('strong');
-  name.textContent = author;
-  const body = document.createElement('span');
-  body.textContent = text;
-  row.append(name, body);
+  const bubble = document.createElement('span');
+  bubble.className = 'chat-bubble';
+  bubble.textContent = text;
+  const meta = document.createElement('span');
+  meta.className = 'chat-meta';
+  meta.textContent = `${author} · ${clockTime()}`;
+  row.append(bubble, meta);
   chatLog.append(row);
   chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+function appendChatSeparator() {
+  chatLog.querySelector('.chat-empty')?.remove();
+  const row = document.createElement('p');
+  row.className = 'chat-separator';
+  row.textContent = `Match started · ${clockTime()}`;
+  chatLog.append(row);
+}
+
+function clockTime() {
+  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
 function appendChatEvent(text, actions = []) {
@@ -570,6 +592,8 @@ function resetState(nextMode, color) {
   reviewPly = null;
   resigned = null;
   takebackPending = false;
+  agreedDraw = false;
+  drawOffered = false;
   cursor = 0;
   pendingFile = null;
   announcement.textContent = '';
@@ -803,7 +827,7 @@ function cancelPointerDrag() {
 }
 
 function canHumanAct() {
-  return !thinking && !disconnected && !resigned && reviewPly === null &&
+  return !thinking && !disconnected && !resigned && !agreedDraw && reviewPly === null &&
     position.turn === humanColor && !getResult(position);
 }
 
@@ -855,9 +879,54 @@ function requestTakeback() {
   render();
 }
 
+/** A draw offer is a game event, so it lives in the stream, not a dialog. */
+function offerDraw() {
+  if (drawOffered || agreedDraw || !network?.matched || getResult(position)) return;
+  drawOffered = true;
+  try {
+    network.sendControl({ kind: 'draw-offer' });
+    appendChatEvent('You offered a draw');
+  } catch {
+    drawOffered = false;
+  }
+  updateCommunicationUi();
+}
+
+function acceptDraw() {
+  agreedDraw = true;
+  drawOffered = false;
+  selection = null;
+  reviewPly = null;
+  appendChatEvent('Draw agreed');
+  announce('The match is a draw by agreement.');
+  render();
+}
+
 function receiveControl(payload) {
+  if (payload?.kind === 'draw-offer') {
+    appendChatEvent(`${opponentLabel} offered a draw`, [
+      { label: 'Accept', run: () => { network.sendControl({ kind: 'draw-accept' }); acceptDraw(); } },
+      {
+        label: 'Decline',
+        run: () => {
+          network.sendControl({ kind: 'draw-decline' });
+          appendChatEvent(`${opponentLabel} offered a draw · declined`);
+        },
+      },
+    ]);
+    return;
+  }
+  if (payload?.kind === 'draw-accept' && drawOffered) return acceptDraw();
+  if (payload?.kind === 'draw-decline' && drawOffered) {
+    drawOffered = false;
+    appendChatEvent('You offered a draw · declined');
+    updateCommunicationUi();
+    return;
+  }
   if (payload?.kind === 'resign') {
     resigned = opponent(humanColor);
+    appendChatEvent(`${opponentLabel} resigned`);
+    announce(`${opponentLabel} resigned.`);
     render();
     return;
   }
@@ -886,6 +955,7 @@ function resign() {
   resigned = humanColor;
   if (mode === 'online' && network?.matched) {
     try { network.sendControl({ kind: 'resign' }); } catch { /* Nothing left to tell them. */ }
+    appendChatEvent('You resigned');
   }
   selection = null;
   reviewPly = null;
@@ -1091,6 +1161,9 @@ function turnCardContent(result) {
   if (failure) return { ...failure, waiting: true };
   if (disconnected) {
     return { title: 'Opponent left', detail: 'The board is yours. Start a new game when you are ready.', waiting: true };
+  }
+  if (agreedDraw) {
+    return { title: 'Draw', detail: 'You and your opponent agreed to a draw.', waiting: true };
   }
   if (resigned) {
     return {
