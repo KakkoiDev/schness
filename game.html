@@ -81,8 +81,22 @@
           <span id="connection-label"></span>
           <span id="connection-note"></span>
         </p>
-        <div id="board" class="board" role="grid" aria-label="Schness board" tabindex="0"
-             aria-describedby="board-help"></div>
+        <div class="board-frame">
+          <div id="board" class="board" role="grid" aria-label="Schness board" tabindex="0"
+               aria-describedby="board-help"></div>
+          <div id="result-overlay" class="result-overlay" hidden>
+            <section class="result-card" role="group" aria-labelledby="result-headline">
+              <p id="result-eyebrow" class="eyebrow"></p>
+              <h2 id="result-headline"></h2>
+              <p id="result-detail" class="result-detail"></p>
+              <div class="card-actions">
+                <button id="result-primary" class="card-primary" type="button"></button>
+                <button id="result-secondary" class="card-secondary" type="button"></button>
+              </div>
+              <button id="result-home" class="card-link" type="button">Back home</button>
+            </section>
+          </div>
+        </div>
         <p id="board-help" class="visually-hidden">
           Arrow keys move the cursor, Enter picks up or plays, Escape puts the piece back down,
           1 to 3 pick a reserve piece, a square name jumps there, and question mark lists the shortcuts.

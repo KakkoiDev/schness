@@ -7,7 +7,7 @@ import { colorName, pieceName, squareName } from './notation.js';
 import { gameText, moveCount, pairMoves, pliesToUndo, recordAction } from './history.js';
 import { isCursorKey, moveCursor, readEntry } from './keyboard.js';
 import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, setupDestinations } from './interaction.js';
-import { applyActionMessage, makeActionMessage } from './game-message.js';
+import { applyActionMessage, makeActionMessage, outcomeSummary } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
 import { actionHighlights } from './board-ui.js';
@@ -27,6 +27,14 @@ const turnCard = document.querySelector('#turn-card');
 const turnTitle = document.querySelector('#turn-title');
 const turnDetail = document.querySelector('#turn-detail');
 const deselectButton = document.querySelector('#deselect');
+const resultOverlay = document.querySelector('#result-overlay');
+const resultCard = resultOverlay.querySelector('.result-card');
+const resultEyebrow = document.querySelector('#result-eyebrow');
+const resultHeadline = document.querySelector('#result-headline');
+const resultDetail = document.querySelector('#result-detail');
+const resultPrimary = document.querySelector('#result-primary');
+const resultSecondary = document.querySelector('#result-secondary');
+const resultHome = document.querySelector('#result-home');
 const announcement = document.querySelector('#announcement');
 const shortcutsDialog = document.querySelector('#shortcuts-dialog');
 const reviewCard = document.querySelector('#review-card');
@@ -118,6 +126,7 @@ let announceTimer = null;
 let takebackPending = false;
 let agreedDraw = false;
 let drawOffered = false;
+let resultDismissed = false;
 let pointerDrag = null;
 let suppressClick = false;
 
@@ -160,6 +169,7 @@ moveBack.addEventListener('click', () => stepReview(-1));
 moveForward.addEventListener('click', () => stepReview(1));
 undoButton.addEventListener('click', undoTurn);
 resignButton.addEventListener('click', resign);
+resultHome.addEventListener('click', () => window.location.assign('./'));
 copyGame.addEventListener('click', copyGameText);
 movesToggle.addEventListener('click', () => {
   const open = matchRail.classList.toggle('is-open');
@@ -345,6 +355,7 @@ function beginOnlineMatch(color) {
   takebackPending = false;
   agreedDraw = false;
   drawOffered = false;
+  resultDismissed = false;
   selection = null;
   disconnected = false;
   appendChatSeparator();
@@ -594,6 +605,7 @@ function resetState(nextMode, color) {
   takebackPending = false;
   agreedDraw = false;
   drawOffered = false;
+  resultDismissed = false;
   cursor = 0;
   pendingFile = null;
   announcement.textContent = '';
@@ -1058,6 +1070,7 @@ function render() {
   opponentBank.closest('.player').classList.toggle('active-player', position.turn !== humanColor && !result);
   renderTurnCard(result);
   renderMoves();
+  renderResult();
   renderConnection();
   updateCommunicationUi();
 }
@@ -1073,6 +1086,33 @@ function renderTurnCard(result) {
     ? 'Reviewing · before the first move'
     : `Reviewing · move ${Math.ceil((reviewPly ?? 0) / 2)} of ${moveCount(history)}`;
   deselectButton.hidden = !selection || !canHumanAct();
+}
+
+/** One sentence, generated from the finished position, over the live board. */
+function renderResult() {
+  const summary = outcomeSummary({
+    position, timeline, history, humanColor, resigned, agreedDraw, opponentName: opponentLabel,
+  });
+  if (!summary || resultDismissed || reviewPly !== null) {
+    resultOverlay.hidden = true;
+    return;
+  }
+  resultOverlay.hidden = false;
+  resultCard.classList.toggle('is-win', summary.tone === 'win');
+  resultEyebrow.textContent = summary.eyebrow;
+  resultHeadline.textContent = summary.headline;
+  resultDetail.textContent = summary.detail;
+
+  const rematch = mode === 'online' ? 'Invite for a rematch' : 'Play again';
+  const lost = summary.tone !== 'win' && summary.eyebrow === 'Checkmate';
+  resultPrimary.textContent = lost ? rematch.replace('Play again', 'Rematch') : rematch;
+  resultPrimary.onclick = startNewGame;
+  // A loss points at the turn where something else was still possible.
+  resultSecondary.textContent = lost && history.length > 1 ? 'See that move' : 'Review moves';
+  resultSecondary.onclick = () => {
+    resultDismissed = true;
+    goToPly(lost && history.length > 1 ? Math.max(0, history.length - 2) : 0);
+  };
 }
 
 function renderMoves() {

@@ -120,6 +120,14 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="card-expired"/);
   assert.match(game, /id="claim-win"[^>]*>Claim the win</);
   assert.match(game, /id="connection-strip"/);
+  // The result card sits over the board, never over the screen.
+  assert.match(game, /class="board-frame"/);
+  assert.match(game, /id="result-overlay"[^>]+hidden/);
+  assert.match(game, /id="result-headline"/);
+  assert.match(css, /\.result-overlay\s*{[\s\S]*?background:\s*rgb\(24 32 28 \/ \.32\)/);
+  assert.match(css, /\.result-card h2\s*{[\s\S]*?letter-spacing:\s*-\.045em/);
+  // The one motion exception, inside the existing reduced-motion block.
+  assert.match(css, /@media\(prefers-reduced-motion:no-preference\)\{[^@]*result-in 160ms/);
   assert.doesNotMatch(game, /id="network-note"/);
   assert.match(css, /\.network-card\s*{[\s\S]*?width:\s*min\(420px, 100%\)/);
   assert.match(css, /\.link-row\s*{[\s\S]*?padding:\s*6px 6px 6px 14px/);
