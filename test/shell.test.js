@@ -21,6 +21,11 @@ test('manifest describes a standalone app with a local icon', async () => {
   assert.ok(manifest.icons.every((icon) => icon.src.startsWith('./')));
 });
 
+test('the black knight has a light lower-edge outline', async () => {
+  const knight = await readFile(resolve(root, 'assets/pieces/bN.svg'), 'utf8');
+  assert.match(knight, /stroke="#f2f2f2"[^>]+stroke-width="14"/);
+});
+
 test('board rows are fixed and every vector piece uses the same box', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   assert.match(css, /grid-template-rows:\s*repeat\(4, minmax\(0, 1fr\)\)/);
