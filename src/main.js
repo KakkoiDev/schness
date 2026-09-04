@@ -42,6 +42,7 @@ const peerVideo = document.querySelector('#peer-video');
 const hearOpponent = document.querySelector('#hear-opponent');
 const peerAudio = document.querySelector('#peer-audio');
 const route = gameRoute(window.location.search);
+const mobileChatQuery = window.matchMedia('(max-width: 899px)');
 
 let position = createInitialPosition();
 let humanColor = WHITE;
@@ -57,7 +58,8 @@ let microphoneStream = null;
 let microphoneStarting = false;
 let cameraStream = null;
 let cameraStarting = false;
-let chatEnabled = true;
+let chatEnabled = !mobileChatQuery.matches;
+let unreadMessages = 0;
 let lastAction = null;
 let pointerDrag = null;
 let suppressClick = false;
@@ -77,6 +79,11 @@ for (let visual = 0; visual < 16; visual += 1) {
 window.addEventListener('pointermove', movePointerDrag, { passive: false });
 window.addEventListener('pointerup', endPointerDrag);
 window.addEventListener('pointercancel', cancelPointerDrag);
+mobileChatQuery.addEventListener('change', ({ matches }) => {
+  chatEnabled = !matches;
+  unreadMessages = 0;
+  updateCommunicationUi();
+});
 
 resetButton.addEventListener('click', startNewGame);
 copyInvite.addEventListener('click', copyInviteLink);
@@ -174,6 +181,10 @@ function receiveChatMessage(payload) {
   try {
     const message = parseChatMessage(payload);
     appendChatMessage(message.text, 'Opponent');
+    if (!chatEnabled) {
+      unreadMessages += 1;
+      updateCommunicationUi();
+    }
   } catch {
     // Ignore malformed peer messages without interrupting the match.
   }
@@ -186,7 +197,10 @@ function canTextChat() {
 function updateCommunicationUi() {
   matchChat.hidden = mode !== 'online';
   chatBody.hidden = !chatEnabled;
-  chatToggle.textContent = chatEnabled ? 'Hide chat' : 'Show chat';
+  matchChat.classList.toggle('chat-collapsed', mobileChatQuery.matches && !chatEnabled);
+  chatToggle.textContent = chatEnabled
+    ? (mobileChatQuery.matches ? 'Close' : 'Hide chat')
+    : `Chat${unreadMessages ? ` (${unreadMessages})` : ''}`;
   chatToggle.setAttribute('aria-expanded', String(chatEnabled));
   const textReady = canTextChat();
   chatMessage.disabled = !textReady;
@@ -288,6 +302,7 @@ function stopCamera() {
 
 function toggleChat() {
   chatEnabled = !chatEnabled;
+  if (chatEnabled) unreadMessages = 0;
   peerAudio.muted = !chatEnabled;
   if (!chatEnabled) {
     stopMicrophone();
@@ -331,7 +346,8 @@ function resetState(nextMode, color) {
   selection = null;
   thinking = false;
   disconnected = false;
-  chatEnabled = true;
+  chatEnabled = !mobileChatQuery.matches;
+  unreadMessages = 0;
   lastAction = null;
   stopMicrophone();
   stopCamera();

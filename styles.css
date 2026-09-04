@@ -249,3 +249,73 @@
     top: 1rem;
   }
 }
+
+@media(max-width:899px) {
+  .game-page .match-chat {
+    position: fixed;
+    z-index: 50;
+    right: .6rem;
+    bottom: max(.6rem, env(safe-area-inset-bottom));
+    left: .6rem;
+    width: auto;
+    max-height: min(82dvh, 42rem);
+    overflow: hidden;
+    margin: 0;
+    padding: .75rem;
+    border-color: rgb(127 127 127 / .28);
+    border-radius: .9rem;
+    box-shadow: 0 .8rem 2.4rem rgb(0 0 0 / .28);
+  }
+
+  .game-page .match-chat.chat-collapsed {
+    right: .6rem;
+    left: auto;
+    width: auto;
+    min-width: 9.5rem;
+    padding: .55rem .65rem;
+  }
+
+  .game-page .match-chat.chat-collapsed .chat-heading > div {
+    display: none;
+  }
+
+  .game-page .match-chat.chat-collapsed .chat-heading {
+    justify-content: flex-end;
+  }
+
+  .game-page .match-chat.chat-collapsed .chat-toggle {
+    width: 100%;
+    border-color: transparent;
+    background: var(--ink);
+    color: var(--inverse);
+  }
+
+  .game-page #chat-body {
+    display: flex;
+    max-height: calc(min(82dvh, 42rem) - 3.2rem);
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .game-page #chat-body[hidden] {
+    display: none;
+  }
+
+  .game-page .chat-log {
+    min-height: 5rem;
+    max-height: none;
+    flex: 1 1 auto;
+    overscroll-behavior: contain;
+  }
+
+  .game-page .video-stage {
+    flex: 0 1 30dvh;
+    min-height: 8rem;
+  }
+
+  .game-page .chat-form,
+  .game-page .quick-chat,
+  .game-page .media-actions {
+    flex: 0 0 auto;
+  }
+}
