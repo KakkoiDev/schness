@@ -114,6 +114,19 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="board"[^>]*tabindex="0"/);
   assert.match(game, /id="announcement"[^>]+aria-live="polite"/);
   assert.match(game, /id="shortcuts-dialog"/);
+  // Connection states: three cards plus the in-match strip.
+  assert.match(game, /id="card-waiting"/);
+  assert.match(game, /id="card-reconnect"/);
+  assert.match(game, /id="card-expired"/);
+  assert.match(game, /id="claim-win"[^>]*>Claim the win</);
+  assert.match(game, /id="connection-strip"/);
+  assert.doesNotMatch(game, /id="network-note"/);
+  assert.match(css, /\.network-card\s*{[\s\S]*?width:\s*min\(420px, 100%\)/);
+  assert.match(css, /\.link-row\s*{[\s\S]*?padding:\s*6px 6px 6px 14px/);
+  assert.match(css, /\.pulse i:nth-child\(2\)\s*{\s*opacity:\s*\.45/);
+  assert.match(css, /\.progress i\s*{[\s\S]*?background:\s*var\(--warn\)/);
+  assert.match(css, /\.connection-strip\.is-danger \.conn-dot/);
+  assert.doesNotMatch(css, /\.network-note/);
   assert.match(css, /\.board\.keyboard-active \.square::before\s*{[\s\S]*?attr\(data-name\)/);
   assert.match(css, /\.game-page \.square\.is-cursor\s*{[\s\S]*?var\(--focus\)/);
   assert.match(css, /\.announcement:empty\s*{\s*display:\s*none/);
@@ -153,7 +166,11 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(main, /getUserMedia\(\{ audio: false, video: true \}\)/);
   assert.match(main, /function toggleChat/);
   assert.match(main, /network\.onRoomFull\(showRoomFull\)/);
-  assert.match(main, /Game already started/);
+  // A used or stale link is now the expired-link card, not a line of muted text.
+  assert.match(main, /function showCard/);
+  assert.match(main, /function renderConnection/);
+  assert.match(main, /function flushOutbox/);
+  assert.doesNotMatch(main, /networkNote/);
   assert.match(main, /mobileChatQuery/);
   assert.match(main, /unreadMessages/);
   assert.match(css, /\.drag-ghost\s*{/);

@@ -25,11 +25,42 @@
         <a id="back-to-menu" class="text-button" href="./">← Home</a>
         <button id="reset" class="reset" type="button">New game</button>
       </div>
-      <div id="network-note" class="network-note" hidden></div>
-      <div id="invite" class="invite" hidden>
-        <label for="invite-url">Match link</label>
-        <div><input id="invite-url" type="url" readonly><button id="copy-invite" type="button">Copy</button></div>
-      </div>
+      <section id="network-card" class="network-card" hidden>
+        <div id="card-waiting" class="card-state" hidden>
+          <p class="eyebrow">Waiting for opponent</p>
+          <h2>Send this link</h2>
+          <p class="card-body">The match starts the moment they open it. You’ll play White.</p>
+          <div class="link-row">
+            <input id="invite-url" type="url" readonly aria-label="Match link">
+            <button id="copy-invite" type="button">Copy</button>
+          </div>
+          <div class="card-foot">
+            <span class="pulse" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span>Listening for a second player</span>
+            <button id="cancel-search" class="card-link" type="button">Cancel</button>
+          </div>
+        </div>
+        <div id="card-reconnect" class="card-state" hidden>
+          <p class="eyebrow"><span class="state-dot is-warn" aria-hidden="true"></span>Reconnecting</p>
+          <h2>Opponent lost connection</h2>
+          <p class="card-body">The board is saved. If they don’t return within the countdown, the match is yours.</p>
+          <div class="progress"><i id="reconnect-bar"></i></div>
+          <p class="progress-legend"><span>Waiting</span><span id="reconnect-left">1:00 left</span></p>
+          <div class="card-actions">
+            <button id="claim-win" class="card-primary" type="button">Claim the win</button>
+            <button id="keep-waiting" class="card-secondary" type="button">Keep waiting</button>
+          </div>
+        </div>
+        <div id="card-expired" class="card-state" hidden>
+          <p class="eyebrow"><span class="state-dot is-danger" aria-hidden="true"></span>Link expired</p>
+          <h2>This game is no longer open</h2>
+          <p class="card-body">The invite was already used or has gone stale. Start a fresh one, or play the bot while you wait.</p>
+          <div class="card-actions">
+            <button id="new-online" class="card-primary" type="button">New online game</button>
+            <button id="bot-instead" class="card-secondary" type="button">Play the bot</button>
+          </div>
+        </div>
+      </section>
       <p id="announcement" class="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
       <div class="play-area">
         <section class="player opponent" aria-label="Opponent">
@@ -45,6 +76,11 @@
             <div id="opponent-bank" class="bank" aria-labelledby="opponent-bank-label"></div>
           </div>
         </section>
+        <p id="connection-strip" class="connection-strip" hidden>
+          <span class="conn-dot" aria-hidden="true"></span>
+          <span id="connection-label"></span>
+          <span id="connection-note"></span>
+        </p>
         <div id="board" class="board" role="grid" aria-label="Schness board" tabindex="0"
              aria-describedby="board-help"></div>
         <p id="board-help" class="visually-hidden">

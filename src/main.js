@@ -44,10 +44,24 @@ const moveBack = document.querySelector('#move-back');
 const moveForward = document.querySelector('#move-forward');
 const opponentBankLabel = document.querySelector('#opponent-bank-label');
 const humanBankLabel = document.querySelector('#human-bank-label');
-const networkNote = document.querySelector('#network-note');
-const invite = document.querySelector('#invite');
+const networkCard = document.querySelector('#network-card');
+const cardStates = {
+  waiting: document.querySelector('#card-waiting'),
+  reconnect: document.querySelector('#card-reconnect'),
+  expired: document.querySelector('#card-expired'),
+};
 const inviteUrl = document.querySelector('#invite-url');
 const copyInvite = document.querySelector('#copy-invite');
+const cancelSearch = document.querySelector('#cancel-search');
+const reconnectBar = document.querySelector('#reconnect-bar');
+const reconnectLeft = document.querySelector('#reconnect-left');
+const claimWin = document.querySelector('#claim-win');
+const keepWaiting = document.querySelector('#keep-waiting');
+const newOnline = document.querySelector('#new-online');
+const botInstead = document.querySelector('#bot-instead');
+const connectionStrip = document.querySelector('#connection-strip');
+const connectionLabel = document.querySelector('#connection-label');
+const connectionNote = document.querySelector('#connection-note');
 const resetButton = document.querySelector('#reset');
 const rulesDialog = document.querySelector('#rules-dialog');
 const rulesOptOut = document.querySelector('#rules-optout');
@@ -93,6 +107,10 @@ let history = [];
 let timeline = [position];
 let reviewPly = null;
 let resigned = null;
+let outbox = [];
+let sendFailed = false;
+let reconnectDeadline = null;
+let reconnectTimer = null;
 let cursor = 0;
 let keyboardActive = false;
 let pendingFile = null;
@@ -152,6 +170,18 @@ matchRail.addEventListener('keydown', (event) => {
   stepReview(event.key === 'ArrowUp' ? -1 : 1);
 });
 copyInvite.addEventListener('click', copyInviteLink);
+cancelSearch.addEventListener('click', () => window.location.assign('./'));
+newOnline.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online', createGameId())));
+botInstead.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot', createGameId())));
+claimWin.addEventListener('click', () => {
+  stopReconnectCountdown();
+  resigned = opponent(humanColor);
+  showCard(null);
+  render();
+});
+keepWaiting.addEventListener('click', () => startReconnectCountdown());
+window.addEventListener('online', onConnectionChange);
+window.addEventListener('offline', onConnectionChange);
 chatForm.addEventListener('submit', sendChatMessage);
 chatToggle.addEventListener('click', toggleChat);
 quickChat.addEventListener('click', (event) => {
@@ -180,6 +210,83 @@ if (route?.mode === 'bot') startBotMatch();
 else if (route?.mode === 'online') startOnlineSearch(route.gameId);
 else window.location.replace('./');
 
+function showCard(state) {
+  for (const [name, element] of Object.entries(cardStates)) element.hidden = name !== state;
+  networkCard.hidden = state === null;
+}
+
+/**
+ * The strip reports your own connection. Their trouble is a card, so the two
+ * never get mistaken for each other.
+ */
+function renderConnection() {
+  if (mode !== 'online' || !network?.matched || disconnected) {
+    connectionStrip.hidden = true;
+    return;
+  }
+  const offline = !navigator.onLine;
+  connectionStrip.hidden = false;
+  connectionStrip.classList.toggle('is-danger', offline);
+  connectionStrip.classList.toggle('is-warn', !offline && sendFailed);
+  connectionLabel.textContent = offline
+    ? 'Offline · moves will send when you’re back'
+    : sendFailed ? 'Your connection is unstable' : `Connected · ${opponentLabel} is on the board`;
+  connectionNote.textContent = !offline && sendFailed ? 'Retrying' : '';
+}
+
+function onConnectionChange() {
+  if (navigator.onLine) {
+    flushOutbox();
+    if (mode === 'online') announce('You are back online.');
+  } else if (mode === 'online') {
+    announce('You are offline. Moves will send when you are back.');
+  }
+  renderConnection();
+}
+
+/** Moves are queued rather than dropped, which is what the strip promises. */
+function sendGameMessage(message) {
+  outbox.push(message);
+  flushOutbox();
+}
+
+function flushOutbox() {
+  while (outbox.length && network?.matched) {
+    try {
+      network.sendGame(outbox[0]);
+      outbox.shift();
+      sendFailed = false;
+    } catch {
+      sendFailed = true;
+      break;
+    }
+  }
+  renderConnection();
+}
+
+function startReconnectCountdown(seconds = 60) {
+  stopReconnectCountdown();
+  reconnectDeadline = Date.now() + seconds * 1000;
+  reconnectTimer = setInterval(tickReconnect, 1000);
+  tickReconnect();
+}
+
+function stopReconnectCountdown() {
+  if (reconnectTimer) clearInterval(reconnectTimer);
+  reconnectTimer = null;
+  reconnectDeadline = null;
+}
+
+function tickReconnect() {
+  const total = 60_000;
+  const left = Math.max(0, reconnectDeadline - Date.now());
+  reconnectBar.style.width = `${Math.round(((total - left) / total) * 100)}%`;
+  const secondsLeft = Math.ceil(left / 1000);
+  reconnectLeft.textContent = `${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')} left`;
+  // The countdown never awards the game; the player decides.
+  if (left === 0) stopReconnectCountdown();
+}
+
 function startBotMatch() {
   stopNetwork();
   resetState('bot', WHITE);
@@ -192,10 +299,8 @@ async function startOnlineSearch(gameId) {
   stopNetwork();
   resetState('online', WHITE);
   board.closest('.play-area').hidden = true;
-  networkNote.hidden = false;
-  networkNote.textContent = 'Waiting for the other player…';
-  invite.hidden = false;
   inviteUrl.value = window.location.href;
+  showCard('waiting');
   try {
     const { joinMatchmaking } = await import('./net.js');
     if (mode !== 'online') return;
@@ -208,25 +313,22 @@ async function startOnlineSearch(gameId) {
     network.onPeerStream(receivePeerStream);
     network.onOpponentLeave(() => {
       disconnected = true;
-      announce('Your opponent left the match.');
+      announce('Your opponent lost connection.');
       stopMicrophone();
       stopCamera();
+      showCard('reconnect');
+      startReconnectCountdown();
       render();
     });
-    network.onError((message) => { networkNote.textContent = message; });
+    network.onError(announce);
   } catch (error) {
-    networkNote.textContent = `Could not start online play: ${error.message}`;
+    announce(`Could not start online play: ${error.message}`);
   }
 }
 
 function showRoomFull() {
   stopNetwork();
-  invite.hidden = true;
-  networkNote.classList.add('room-full');
-  const title = Object.assign(document.createElement('strong'), { textContent: 'Game already started' });
-  const note = Object.assign(document.createElement('span'), { textContent: 'Two players are already using this match link.' });
-  const home = Object.assign(document.createElement('a'), { href: './', textContent: 'Back home', className: 'reset' });
-  networkNote.replaceChildren(title, note, home);
+  showCard('expired');
 }
 
 function beginOnlineMatch(color) {
@@ -241,8 +343,7 @@ function beginOnlineMatch(color) {
   selection = null;
   disconnected = false;
   opponentLabel = 'Online player';
-  networkNote.hidden = true;
-  invite.hidden = true;
+  showCard(null);
   board.closest('.play-area').hidden = false;
   matchChat.hidden = false;
   updateCommunicationUi();
@@ -477,8 +578,10 @@ function resetState(nextMode, color) {
   stopCamera();
   worker.terminate();
   worker = createWorker();
-  networkNote.hidden = true;
-  invite.hidden = true;
+  showCard(null);
+  outbox = [];
+  sendFailed = false;
+  stopReconnectCountdown();
   matchChat.hidden = true;
   chatLog.replaceChildren(Object.assign(document.createElement('p'), { className: 'chat-empty', textContent: 'No messages yet.' }));
   chatMessage.value = '';
@@ -505,13 +608,14 @@ async function copyInviteLink() {
 
 function showMatch() {
   board.closest('.play-area').hidden = false;
-  networkNote.hidden = true;
+  showCard(null);
   render();
 }
 
 function stopNetwork() {
   clearTimeout(searchTimer);
   searchTimer = null;
+  stopReconnectCountdown();
   stopMicrophone();
   stopCamera();
   network?.leave();
@@ -802,7 +906,7 @@ async function copyGameText() {
 function play(action) {
   const message = mode === 'online' ? makeActionMessage(position, action) : null;
   commit(action);
-  if (message) network.sendGame(message);
+  if (message) sendGameMessage(message);
   render();
   if (mode === 'bot' && !getResult(position) && position.turn !== humanColor) requestBotMove();
 }
@@ -884,6 +988,7 @@ function render() {
   opponentBank.closest('.player').classList.toggle('active-player', position.turn !== humanColor && !result);
   renderTurnCard(result);
   renderMoves();
+  renderConnection();
   updateCommunicationUi();
 }
 
