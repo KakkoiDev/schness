@@ -16,7 +16,9 @@ import {
   botDifficulty, clockMode, difficultyDepth,
   setSoundSettings, soundSettings,
 } from './settings.js';
-import { addIncrement, createClock, flagged, formatClock, isLow, isTimed, spend } from './clock.js';
+import {
+  SYNC_TOLERANCE, addIncrement, adoptReport, clockReport, createClock, flagged, formatClock, isLow, isTimed, spend,
+} from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
 
@@ -671,7 +673,7 @@ function appendChatEvent(text, actions = []) {
 }
 
 function receivePeerAction(message) {
-  if (mode !== 'online' || disconnected || position.turn === humanColor) return;
+  if (mode !== 'online' || disconnected || matchOver() || position.turn === humanColor) return;
   try {
     const before = position;
     // The engine's own object for the action, not the peer's: the message
@@ -685,6 +687,7 @@ function receivePeerAction(message) {
     lastAction = action;
     selection = null;
     reviewPly = null;
+    chargeClock(before.turn, message.clock);
     announceOpponentAction();
     render();
   } catch (error) {
@@ -1077,6 +1080,18 @@ function receiveControl(payload) {
     updateCommunicationUi();
     return;
   }
+  if (payload?.kind === 'flag') {
+    if (!isTimed(clock) || matchOver()) return;
+    // Their own flag is theirs to call. A claim that *we* flagged is checked
+    // against our own clock, which is the authority on our time.
+    const side = payload.side === humanColor ? humanColor : opponent(humanColor);
+    if (side === humanColor) {
+      const spent = clockSince === null || position.turn !== humanColor ? 0 : (Date.now() - clockSince) / 1000;
+      if (clock[humanColor] - spent > SYNC_TOLERANCE) return;
+    }
+    declareFlag(side);
+    return;
+  }
   if (payload?.kind === 'resign') {
     resigned = opponent(humanColor);
     appendChatEvent(`${opponentLabel} resigned`);
@@ -1130,7 +1145,9 @@ async function copyGameText() {
 function play(action) {
   const message = mode === 'online' ? makeActionMessage(position, action) : null;
   commit(action);
-  if (message) sendGameMessage(message);
+  // Built before the move so an illegal one throws before anything changes;
+  // the clocks are read after it, because that is the account the peer adopts.
+  if (message) sendGameMessage({ ...message, clock: clockReport(clock) });
   render();
   if (mode === 'bot' && !getResult(position) && position.turn !== humanColor) requestBotMove();
   if (flagged(clock)) stopClockTicking();
@@ -1160,14 +1177,24 @@ function playCue(action, captured) {
 }
 
 /**
- * Each side runs the clock locally off the moves it sees, so the two stay in
- * step without a shared timer to negotiate.
+ * One clock, kept by two players. Whoever just moved is charged for the time
+ * since the clock last changed hands, on both screens — and the mover's move
+ * carries its own account of its clock, which the receiver adopts within
+ * `SYNC_TOLERANCE`. Without the report the receiver's view of the mover ran
+ * behind by one network trip per move; without the tolerance the mover could
+ * report anything. Before this, the receiving side charged nobody at all: each
+ * player's own clock paid for both sides' thinking, and the opponent's clock
+ * on screen jumped back up on every move.
+ *
+ * The clock runs from the first king placement — both placements are timed,
+ * on both screens — and stops only when the match is over.
  */
-function chargeClock(mover) {
+function chargeClock(mover, report = null) {
   if (!isTimed(clock)) return;
   if (clockSince !== null) clock = spend(clock, mover, Date.now() - clockSince);
   clock = addIncrement(clock, mover);
-  clockSince = position.phase === 'play' && !getResult(position) ? Date.now() : null;
+  clock = adoptReport(clock, mover, report);
+  clockSince = getResult(position) ? null : Date.now();
   renderClocks();
 }
 
@@ -1178,17 +1205,30 @@ function startClockTicking() {
     if (clockSince === null) return;
     const running = position.turn;
     const left = clock[running] - (Date.now() - clockSince) / 1000;
-    if (left <= 0) {
-      clock = spend(clock, running, Date.now() - clockSince);
-      clockSince = null;
-      resigned = running;
-      lostOnTime = true;
-      announce(`${running === humanColor ? 'You' : opponentLabel} ran out of time.`);
-      render();
+    // Your own flag is yours to call, at once. The opponent's clock on this
+    // screen runs a network trip behind theirs, so their own screen calls it
+    // first and tells us; calling it here after the tolerance is the fallback
+    // for a peer that never does.
+    const grace = mode === 'online' && running !== humanColor ? SYNC_TOLERANCE : 0;
+    if (left <= -grace) {
+      declareFlag(running);
+      if (mode === 'online' && network?.matched) {
+        try { network.sendControl({ kind: 'flag', side: running }); } catch { /* They will call it themselves. */ }
+      }
       return;
     }
     renderClocks();
   }, 250);
+}
+
+/** The match ends on time for `side`, however we learned it. */
+function declareFlag(side) {
+  clock = { ...clock, [side]: 0 };
+  clockSince = null;
+  resigned = side;
+  lostOnTime = true;
+  announce(`${side === humanColor ? 'You' : opponentLabel} ran out of time.`);
+  render();
 }
 
 function stopClockTicking() {

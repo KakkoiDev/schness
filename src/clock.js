@@ -9,6 +9,13 @@ export const CLOCK_PRESETS = Object.freeze([
 
 export const LOW_TIME = 30;
 
+/**
+ * How far apart, in seconds, two players' views of one clock are allowed to
+ * be before one is disbelieved. It covers one move's network latency with
+ * room to spare; a peer cannot gain more than this per move by lying.
+ */
+export const SYNC_TOLERANCE = 3;
+
 export function clockPreset(id) {
   return CLOCK_PRESETS.find((preset) => preset.id === id) ?? CLOCK_PRESETS[0];
 }
@@ -44,6 +51,30 @@ export function flagged(clock) {
   if (clock[WHITE] <= 0) return WHITE;
   if (clock[BLACK] <= 0) return BLACK;
   return null;
+}
+
+/** What a move carries: the mover's own account of both clocks after the move. */
+export function clockReport(clock) {
+  if (!isTimed(clock)) return null;
+  return { [WHITE]: clock[WHITE], [BLACK]: clock[BLACK] };
+}
+
+export function isClockReport(value) {
+  return Boolean(value) && typeof value === 'object' &&
+    [WHITE, BLACK].every((side) => Number.isFinite(value[side]) && value[side] >= 0);
+}
+
+/**
+ * Adopt the mover's account of its own clock, within tolerance of what the
+ * receiver has already worked out for it. Each side is the authority on its
+ * own time — it alone knows when it pressed the clock — so the receiver takes
+ * the mover's number unless it is implausibly generous, and never touches its
+ * own side. A report that is missing or malformed leaves the local view alone,
+ * which is also what keeps a player on an older build in the game.
+ */
+export function adoptReport(clock, mover, report) {
+  if (!isTimed(clock) || !isClockReport(report)) return clock;
+  return { ...clock, [mover]: Math.min(report[mover], clock[mover] + SYNC_TOLERANCE) };
 }
 
 export function isLow(seconds) {

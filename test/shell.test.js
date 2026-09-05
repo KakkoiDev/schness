@@ -454,6 +454,22 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.doesNotMatch(html, />4 × 4 chess</);
 });
 
+test('a move carries the clock, the receiver settles it, and a flag is a message', async () => {
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  // The receiving side used to charge nobody: the mover's clock was only ever
+  // spent on the mover's own screen, for the whole time between its own moves.
+  assert.match(main, /chargeClock\(before\.turn, message\.clock\);/);
+  assert.match(main, /sendGameMessage\(\{ \.\.\.message, clock: clockReport\(clock\) \}\);/);
+  assert.match(main, /clock = adoptReport\(clock, mover, report\);/);
+  // A flag is told to the other side, and a claim about our own time is
+  // checked against our own clock before it is believed.
+  assert.match(main, /network\.sendControl\(\{ kind: 'flag', side: running \}\)/);
+  assert.match(main, /payload\?\.kind === 'flag'/);
+  assert.match(main, /if \(clock\[humanColor\] - spent > SYNC_TOLERANCE\) return;/);
+  // And a move that arrives after the match ended is not applied over it.
+  assert.match(main, /if \(mode !== 'online' \|\| disconnected \|\| matchOver\(\) \|\| position\.turn === humanColor\) return;/);
+});
+
 test('a deploy reaches players who already have the app cached', async () => {
   const sw = await readFile(resolve(root, 'sw.js'), 'utf8');
   // Cache-first with no revalidation meant a deploy that did not bump CACHE

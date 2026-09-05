@@ -218,6 +218,31 @@ The rules dialog opens from the Rules button and nowhere else. It used to open m
 board the first time you played, which contradicted "starts instantly" and left the board
 unclickable. The lobby's three-rule strip and the turn card carry first-run guidance instead.
 
+### The clock is one clock, kept by two players
+
+`main.js` `chargeClock`, `src/clock.js` `adoptReport`. Whoever just moved is charged, on both screens,
+for the time since the clock last changed hands; and the move itself carries the mover's own account
+of both clocks (`clock` on the action message), which the receiver adopts for the mover's side only,
+capped at its own view plus `SYNC_TOLERANCE` (3s). Each side is the authority on its own time — it
+alone knows when it pressed the clock — and the cap is what a lying peer is limited to gaining per
+move. A message without the field (an older cached build) or with a malformed one leaves the local
+view alone, so mixed builds still play.
+
+A flag is a message too. Your own clock reaching zero is yours to call, at once, and it is sent as
+`control { kind: 'flag', side }`. The opponent's clock on your screen runs one network trip behind
+theirs, so their screen calls it first; yours calls it only after the tolerance, as the fallback for a
+peer that never does. A claim that *you* flagged is checked against your own clock before it is
+believed. A move that arrives after the match has ended is ignored rather than applied over it.
+
+Both king placements are timed, on both screens. The clock stops only when the match is over.
+
+Before this the receiving side charged nobody: `receivePeerAction` never touched the clock, so each
+player's own clock paid for both sides' thinking between their own moves, and the opponent's clock on
+screen jumped back up on every move. The earlier note in this file that the two sides "drift by
+one-way latency per move" understated it. Guarded by `test/clock.test.js`, which replays the protocol
+over eighty plies at 250ms latency and asserts the two views never part by more than the tolerance,
+and by `test/shell.test.js`. **Not verified with two real peers** — nothing in this sandbox can be.
+
 ### The end of a match is announced by focus, not by the toast
 
 When the overlay arrives, focus moves to `.result-card` — `tabindex="-1"`, named by its headline and
@@ -342,15 +367,11 @@ Honest list of what is not done and what cannot be checked from a sandbox:
   shows the rich install dialog both need hardware.
 - **Sound design.** There are cues and they are off until asked for, but nothing here is composed;
   it is the largest remaining gap in game feel and it cannot be judged from a sandbox.
-- **The clocks in an online match are two clocks, not one.** Each side charges the mover from the
-  moment it *sees* the previous move, so the receiver's view of the opponent's clock runs ahead by
-  one-way latency on every move — 50ms × 60 plies is three seconds, enough to flip a flag. The flag
-  itself is decided locally and never sent: one side can see a time loss while the other plays on,
-  and the move it then sends is applied over the finished game. The fix is for a move to carry the
-  mover's remaining time and for the receiver to adopt it; nothing here does that yet.
-- **A takeback does not refund clock time**, on purpose, and until this change it also charged the
-  next player for the time the other side had spent thinking. It now restarts the mover's clock at
-  the moment of the takeback.
+- **The online clock has never run between two real peers.** The protocol is in "The clock is one
+  clock" and is exercised by a replay in the suite; a real match on a real network is what would
+  confirm it.
+- **A takeback does not refund clock time**, on purpose. It restarts the mover's clock at the moment
+  of the takeback.
 - **Sharp plays itself to a draw.** Sixteen self-play games at depth 4 from every king placement:
   fourteen ended in threefold repetition, mean 27 moves. At depth 3, none did (7–6 with three games
   past 100 moves). The search scores a draw as 0 and equal material as roughly 0, so it shuffles.
@@ -363,6 +384,8 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- A move carries the mover's clocks and the receiver adopts them within a tolerance; a flag is a
+  message; both king placements are timed. The receiving side used to charge nobody.
 - A time loss is reported as a time loss, not a resignation; the clock stops when the opponent
   drops; a takeback restarts the mover's clock and the bot worker; both pages carry a CSP.
 - Occupants are frozen shared values, which enforces what step 3 of the search work assumed and
