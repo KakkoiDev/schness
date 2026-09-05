@@ -1,6 +1,20 @@
 import { getRelaySockets, joinRoom as trysteroJoin, selfId } from '../vendor/trystero/nostr.js';
 import { chooseHostCandidate, colorsForPair, roomIsFull } from './matchmaking.js';
 
+/**
+ * Two players find each other only on a relay they both dial, and trystero
+ * dials every url in this list rather than a sample of it, so the list is a
+ * shared rendezvous rather than a preference. That has two consequences.
+ *
+ * Entries are only ever added. Removing one strands a player still running a
+ * cached older build on a relay the newer build no longer dials, and the
+ * service worker means old builds outlive a deploy by a visit or two.
+ *
+ * And the list wants to be longer than feels necessary. These are volunteer
+ * relays that come and go; matchmaking survives until the last one stops
+ * answering, so every extra name is another whole outage that goes unnoticed.
+ * The additions come from trystero's own maintained default list.
+ */
 export const RELAYS = [
   'wss://relay.snort.social',
   'wss://nostr.sathoarder.com',
@@ -8,6 +22,10 @@ export const RELAYS = [
   'wss://relay.primal.net',
   'wss://nostr.mom',
   'wss://offchain.pub',
+  'wss://eu.purplerelay.com',
+  'wss://nostr.data.haus',
+  'wss://relay.fountain.fm',
+  'wss://relay.nostromo.social',
 ];
 
 const APP_ID = 'schness-v2';
