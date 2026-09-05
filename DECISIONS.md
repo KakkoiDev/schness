@@ -55,6 +55,10 @@ backwards for a long time while the lobby stated it correctly, on the same site.
 grew and the capturer's did not, and only then checks the pages agree. If the engine ever changes,
 that test tells you the prose needs rewriting too.
 
+The capture animation states the same rule: the taken piece flies to **its owner's** tray, so your
+capture visibly travels away from you. Sending it to the capturer would teach the wrong game, and a
+test pins the destination to `victim.owner`.
+
 ---
 
 ## Invariants
@@ -95,8 +99,8 @@ without that a dead pool looks exactly like a friend who has not clicked the lin
 Everything that moves sits behind `prefers-reduced-motion: no-preference`, or is neutralised in the
 `reduce` block. That includes transforms added later — two slipped past once.
 
-The piece-move animation flies **a copy** parked on `.board-frame`, and hides the real piece with a
-class on its **square**. Animating the piece element itself does not work: renders come thick and
+Both board animations fly **a copy** parked on `.board-frame`; the move also hides the real piece
+with a class on its **square**. Animating the piece element itself does not work: renders come thick and
 fast — the bot starting to think triggers one — and the next render throws the element away
 mid-flight. It looks like it works (the class appears, `animate()` returns an object) and nothing
 moves. Guarded by `test/shell.test.js`.
@@ -176,8 +180,8 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 - **No real device has run this.** Every layout judgement is Chromium at a phone viewport.
 - **Install behaviour is structural only** — whether iOS launches standalone and whether Android
   shows the rich install dialog both need hardware.
-- **Game feel beyond piece movement.** Captures still resolve without weight; the endgame is a card
-  rather than a moment.
+- **Game feel beyond the board.** The endgame is a card rather than a moment, and there is no sound
+  design worth the name.
 
 ---
 
@@ -185,6 +189,7 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- A captured piece flies to its owner's reserve, teaching the rule the dialog used to get backwards.
 - Manifest gains screenshots, shortcuts and `id`; iOS standalone metas added; the lobby offers
   installation in place, only while there is a prompt to accept.
 - Service worker revalidates and `CACHE` is bumped per shell change; the lobby self-reloads once on

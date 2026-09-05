@@ -105,19 +105,32 @@ test('state tokens are defined in both themes and no decorative gradient remains
   assert.equal([...css.matchAll(/radial-gradient/g)].length, 1);
 });
 
-test('a moving piece travels outside the part of the board that gets rebuilt', async () => {
+test('board motion animates a copy, never the piece itself', async () => {
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
-  const slide = main.slice(main.indexOf('function slideLastMove'));
-  const body = slide.slice(0, slide.indexOf('\n}\n'));
-  // Animating the piece element itself does not survive: renders come thick
-  // and fast (the bot starting to think triggers one) and the next one throws
-  // that element away mid-flight, so the move snaps instead of moving.
-  assert.match(body, /frame\.append\(ghost\)/, 'the travelling copy must live outside the squares');
-  assert.doesNotMatch(body, /\bto\.append\(|from\.append\(/, 'a square is rebuilt; nothing may be animated inside one');
+  const ghost = main.slice(main.indexOf('function releaseGhost'));
+  const body = ghost.slice(0, ghost.indexOf('\n}\n'));
+  // Animating a piece element does not survive: renders come thick and fast
+  // (the bot starting to think triggers one) and the next one throws that
+  // element away mid-flight, so the move snaps instead of moving.
+  assert.match(body, /frame\.append\(ghost\)/, 'the copy must live outside the squares');
+  assert.doesNotMatch(main, /\b(to|from|square)\.append\(ghost\)/, 'nothing may be animated inside a square');
   // Motion is opt-out everywhere else in this app; it is here too.
-  assert.match(body, /reducedMotion\.matches/);
+  const gate = main.slice(main.indexOf('function animateLastAction'));
+  assert.match(gate.slice(0, gate.indexOf('\n}\n')), /reducedMotion\.matches/);
   // And the hiding sits on the square, which a render leaves alone.
-  assert.match(body, /to\.classList\.add\('is-sliding'\)/);
+  assert.match(main, /to\.classList\.add\('is-sliding'\)/);
+});
+
+test('a captured piece flies to the reserve of whoever owned it', async () => {
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  const fly = main.slice(main.indexOf('function returnCapturedPiece'));
+  const body = fly.slice(0, fly.indexOf('\n}\n'));
+  // The animation states the rule the dialog once had backwards: your capture
+  // travels away from you, into your opponent's tray. Sending it to the
+  // capturer would teach the wrong game.
+  assert.match(body, /victim\.owner === humanColor \? humanBank : opponentBank/);
+  // A deployment takes nothing off the board, so nothing flies.
+  assert.match(body, /last\.from === null/);
 });
 
 test('the sheet gates its motion, including the transforms added later', async () => {

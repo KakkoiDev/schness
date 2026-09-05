@@ -1196,7 +1196,7 @@ function render() {
     button.setAttribute('aria-label', occupant
       ? `${occupant.owner} ${occupant.piece}, square ${square + 1}` : `Empty square ${square + 1}`);
   });
-  slideLastMove(last, shown);
+  animateLastAction(last, shown);
   renderBank(opponentBank, opponent(humanColor), false, shown);
   renderBank(humanBank, humanColor, true, shown);
   const enemy = opponent(humanColor);
@@ -1331,53 +1331,99 @@ function renderBank(container, owner, interactive, shown) {
 }
 
 /**
- * A piece that teleports between squares reads as a redraw; the same move over
- * 150ms reads as a move.
- *
- * The board is rebuilt on every render and renders come thick and fast — the
- * bot starting to think triggers one — so animating the piece element itself
- * does not survive: the next render throws that element away mid-flight and
- * the move snaps. What travels instead is a copy, parked over the board and
- * outside the part that gets rebuilt. The real piece is hidden by a class on
- * its square, and a square element is not replaced by a render, so the hiding
- * holds however many times the board redraws underneath.
- *
- * Guarded three ways, because a render happens for many reasons other than a
- * move: only on the live board, only when the history actually grew, and never
- * for a deploy, which arrives from a reserve rather than from a square.
+ * Motion on the board is always a copy of a piece, never the piece itself. The
+ * board is rebuilt on every render — and renders come thick and fast, the bot
+ * starting to think triggers one — so anything animating inside a square gets
+ * thrown away mid-flight. It looks like it works and nothing moves. The copy
+ * is parked on the frame, which a render leaves alone.
  */
-function slideLastMove(last, shown) {
-  const grew = history.length > animatedPlies;
-  animatedPlies = history.length;
-  if (!grew || reviewPly !== null || last.from === null || last.to === null) return;
-  if (reducedMotion.matches) return;
-
-  const from = board.querySelector(`#square-${visualOf(last.from)}`);
-  const to = board.querySelector(`#square-${visualOf(last.to)}`);
-  const occupant = shown.board[last.to];
-  const frame = board.closest('.board-frame');
-  if (!from || !to || !occupant || !frame) return;
-
+function releaseGhost(owner, piece, start, frame) {
   const origin = frame.getBoundingClientRect();
-  const start = from.getBoundingClientRect();
-  const end = to.getBoundingClientRect();
-
   const ghost = document.createElement('div');
   ghost.className = 'square piece-ghost';
   ghost.style.width = `${start.width}px`;
   ghost.style.height = `${start.height}px`;
   ghost.style.left = `${start.left - origin.left}px`;
   ghost.style.top = `${start.top - origin.top}px`;
-  ghost.append(pieceElement(occupant.owner, occupant.piece));
+  ghost.append(pieceElement(owner, piece));
   frame.append(ghost);
+  return ghost;
+}
 
-  to.classList.add('is-sliding');
-  const travel = ghost.animate(
-    [{ transform: 'none' }, { transform: `translate(${end.left - start.left}px, ${end.top - start.top}px)` }],
-    { duration: 150, easing: 'cubic-bezier(.2,.7,.3,1)' },
+function flyGhost(ghost, dx, dy, { duration, easing, shrink = false }) {
+  const landed = { transform: `translate(${dx}px, ${dy}px)${shrink ? ' scale(.42)' : ''}` };
+  if (shrink) landed.opacity = '0';
+  const travel = ghost.animate([{ transform: 'none', opacity: '1' }, landed], { duration, easing });
+  const clear = () => ghost.remove();
+  travel.finished.then(clear, clear);
+  return travel;
+}
+
+/** Where a piece sits before this ply, which is the only place to learn what
+ * was standing on the square that just got taken. */
+function positionBeforeLastPly() {
+  return timeline[history.length - 1];
+}
+
+/**
+ * The rule the game is built on and the one people get backwards: a captured
+ * piece goes to the reserve of whoever owned it, not whoever took it. Showing
+ * it travel there teaches that in a way the rules dialog spent months failing
+ * to. Your capture flies away from you, to your opponent's tray.
+ */
+function returnCapturedPiece(last, frame) {
+  if (last.from === null) return;                    // a deployment takes nothing
+  const victim = positionBeforeLastPly()?.board[last.to];
+  if (!victim) return;
+  const square = board.querySelector(`#square-${visualOf(last.to)}`);
+  const bank = victim.owner === humanColor ? humanBank : opponentBank;
+  if (!square || !bank) return;
+
+  const start = square.getBoundingClientRect();
+  const end = bank.getBoundingClientRect();
+  const ghost = releaseGhost(victim.owner, victim.piece, start, frame);
+  flyGhost(
+    ghost,
+    (end.left + end.width / 2) - (start.left + start.width / 2),
+    (end.top + end.height / 2) - (start.top + start.height / 2),
+    { duration: 300, easing: 'cubic-bezier(.4,0,.2,1)', shrink: true },
   );
-  const land = () => { ghost.remove(); to.classList.remove('is-sliding'); };
-  travel.finished.then(land, land);
+}
+
+/** A piece that teleports reads as a redraw; the same move over 150ms reads
+ * as a move. The real piece waits under a class on its square — a square
+ * survives a render, so the hiding holds however often the board redraws. */
+function slideMovedPiece(last, shown, frame) {
+  if (last.from === null) return;
+  const from = board.querySelector(`#square-${visualOf(last.from)}`);
+  const to = board.querySelector(`#square-${visualOf(last.to)}`);
+  const occupant = shown.board[last.to];
+  if (!from || !to || !occupant) return;
+
+  const start = from.getBoundingClientRect();
+  const end = to.getBoundingClientRect();
+  const ghost = releaseGhost(occupant.owner, occupant.piece, start, frame);
+  to.classList.add('is-sliding');
+  flyGhost(ghost, end.left - start.left, end.top - start.top,
+    { duration: 150, easing: 'cubic-bezier(.2,.7,.3,1)' })
+    .finished.then(() => to.classList.remove('is-sliding'),
+                   () => to.classList.remove('is-sliding'));
+}
+
+/**
+ * Guarded three ways, because a render happens for many reasons other than a
+ * move: only on the live board, only when the history actually grew, and never
+ * when motion is unwelcome.
+ */
+function animateLastAction(last, shown) {
+  const grew = history.length > animatedPlies;
+  animatedPlies = history.length;
+  if (!grew || reviewPly !== null || last.to === null) return;
+  if (reducedMotion.matches) return;
+  const frame = board.closest('.board-frame');
+  if (!frame) return;
+  returnCapturedPiece(last, frame);
+  slideMovedPiece(last, shown, frame);
 }
 
 function pieceElement(owner, piece) {
