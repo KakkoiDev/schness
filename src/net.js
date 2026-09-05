@@ -1,4 +1,4 @@
-import { joinRoom as trysteroJoin, selfId } from '../vendor/trystero/nostr.js';
+import { getRelaySockets, joinRoom as trysteroJoin, selfId } from '../vendor/trystero/nostr.js';
 import { chooseHostCandidate, colorsForPair, roomIsFull } from './matchmaking.js';
 
 export const RELAYS = [
@@ -12,6 +12,18 @@ export const RELAYS = [
 
 const APP_ID = 'schness-v2';
 const PROTOCOL = 1;
+const SOCKET_OPEN = 1;
+
+/**
+ * How many of the relays we asked for are actually answering. Trystero opens
+ * them in the background and never reports a failure, so without this a player
+ * whose network blocks the relays waits on "listening" until they give up.
+ */
+export function relayReach(sockets = getRelaySockets()) {
+  const open = Object.values(sockets ?? {})
+    .filter((socket) => socket?.readyState === SOCKET_OPEN).length;
+  return { total: RELAYS.length, open };
+}
 
 export function joinMatchmaking(gameId) {
   if (!/^[0-9a-f-]{36}$/i.test(gameId)) throw new Error('Invalid match id');

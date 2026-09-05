@@ -36,10 +36,15 @@
             <button id="copy-invite" type="button">Copy</button>
           </div>
           <div class="card-foot">
-            <span class="pulse" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span>Listening for a second player</span>
+            <span id="search-pulse" class="pulse" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span id="search-status" role="status">Listening for a second player</span>
             <button id="cancel-search" class="card-link" type="button">Cancel</button>
           </div>
+          <p id="search-stalled" class="card-note" hidden>
+            No relay is answering, so the link cannot reach anyone yet. It will
+            connect on its own if the network comes back.
+            <button id="stalled-bot" class="card-link" type="button">Play the bot instead</button>
+          </p>
         </div>
         <div id="card-reconnect" class="card-state" hidden>
           <p class="eyebrow"><span class="state-dot is-warn" aria-hidden="true"></span>Reconnecting</p>
