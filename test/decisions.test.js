@@ -38,3 +38,26 @@ test('agents are told to keep the record current', async () => {
   assert.match(claude, /DECISIONS\.md/);
   assert.match(claude, /same commit/i, 'the instruction has to say when, or it will not happen');
 });
+
+/**
+ * `applyLegalAction` and `legalActionsUnchecked` skip the validation that makes
+ * a move arriving from a peer safe. They exist for one caller — the search,
+ * which produced the position itself. A comment saying so is not a guard: the
+ * next agent reaching for something faster on the network path would find
+ * exactly these, and nothing would object.
+ */
+test('only the bot may use the engine entry points that skip validation', async () => {
+  const files = (await readdir(resolve(root, 'src'))).filter((file) => file.endsWith('.js'));
+  const allowed = new Set(['rules.js', 'bot.js']);
+  for (const file of files) {
+    if (allowed.has(file)) continue;
+    const source = await read(`src/${file}`);
+    for (const shortcut of ['applyLegalAction', 'legalActionsUnchecked']) {
+      assert.ok(!source.includes(shortcut),
+        `src/${file} uses ${shortcut}, which skips validation — use applyAction/legalActions instead`);
+    }
+  }
+  // And the peer path in particular, which is where it would actually matter.
+  const peers = await read('src/game-message.js');
+  assert.match(peers, /applyAction\(/);
+});

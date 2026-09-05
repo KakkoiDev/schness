@@ -250,8 +250,9 @@ Three things were wrong, all of them in the hottest loop in the app:
    string-matches the action against it. That is exactly right for a move arriving from a peer — the
    list is the security boundary there — and pure waste one line after the search generated the move
    itself. Hence `applyLegalAction`, and `legalActionsUnchecked` for the same reason on
-   `validatePosition`. **Only the bot may use either.** Anything holding a position that came from
-   outside this engine goes through the guarded entry points.
+   `validatePosition`. **Only the bot may use either** — `test/decisions.test.js` fails if any other
+   module so much as names them, because a comment is not a guard and the next agent reaching for
+   something faster on the network path would find exactly these.
 2. **The repetition map was copied per candidate move.** It grows by one entry every ply, so cloning
    it thirty-odd times per node made the bot slower the longer the game ran — for a map the legality
    filter never reads. `clonePosition` now shares it when the copy is a throwaway.
