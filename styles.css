@@ -1231,6 +1231,20 @@
   font-size: 12.5px;
 }
 
+/* Shown only when no relay answers, so it never nags a normal wait. */
+.card-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* Inline, so the way out sits in the sentence rather than above it. */
+.card-note .card-link {
+  margin-left: 6px;
+}
+
 /* A static activity indicator: three dots, no motion. */
 .pulse {
   display: flex;

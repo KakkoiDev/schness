@@ -69,6 +69,10 @@ const cardStates = {
 const inviteUrl = document.querySelector('#invite-url');
 const copyInvite = document.querySelector('#copy-invite');
 const cancelSearch = document.querySelector('#cancel-search');
+const searchStatus = document.querySelector('#search-status');
+const searchPulse = document.querySelector('#search-pulse');
+const searchStalled = document.querySelector('#search-stalled');
+const stalledBot = document.querySelector('#stalled-bot');
 const reconnectBar = document.querySelector('#reconnect-bar');
 const reconnectLeft = document.querySelector('#reconnect-left');
 const claimWin = document.querySelector('#claim-win');
@@ -207,6 +211,7 @@ copyInvite.addEventListener('click', copyInviteLink);
 cancelSearch.addEventListener('click', () => window.location.assign('./'));
 newOnline.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online', createGameId())));
 botInstead.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot', createGameId())));
+stalledBot.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot', createGameId())));
 claimWin.addEventListener('click', () => {
   stopReconnectCountdown();
   resigned = opponent(humanColor);
@@ -333,7 +338,7 @@ async function startOnlineSearch(gameId) {
   inviteUrl.value = window.location.href;
   showCard('waiting');
   try {
-    const { joinMatchmaking } = await import('./net.js');
+    const { joinMatchmaking, relayReach } = await import('./net.js');
     if (mode !== 'online') return;
     network = joinMatchmaking(gameId);
     network.onMatch(({ color }) => beginOnlineMatch(color));
@@ -352,9 +357,31 @@ async function startOnlineSearch(gameId) {
       render();
     });
     network.onError(announce);
+    watchRelayReach(relayReach);
   } catch (error) {
     announce(`Could not start online play: ${error.message}`);
   }
+}
+
+/**
+ * Trystero opens its relays in the background and never reports a failure, so
+ * a blocked or dead relay list looked exactly like a friend who had not
+ * clicked the link yet. Poll instead, after enough grace for a normal connect.
+ */
+function watchRelayReach(relayReach) {
+  const startedAt = Date.now();
+  const grace = 6000;
+  const paint = () => {
+    const stalled = relayReach().open === 0 && Date.now() - startedAt > grace;
+    searchStatus.textContent = stalled
+      ? 'Not connected to the matchmaking network'
+      : 'Listening for a second player';
+    searchPulse.hidden = stalled;
+    searchStalled.hidden = !stalled;
+  };
+  clearInterval(searchTimer);
+  paint();
+  searchTimer = setInterval(paint, 2500);
 }
 
 function showRoomFull() {
@@ -363,7 +390,7 @@ function showRoomFull() {
 }
 
 function beginOnlineMatch(color) {
-  clearTimeout(searchTimer);
+  clearInterval(searchTimer);
   humanColor = color;
   position = createInitialPosition();
   history = [];
@@ -679,7 +706,7 @@ function showMatch() {
 }
 
 function stopNetwork() {
-  clearTimeout(searchTimer);
+  clearInterval(searchTimer);
   searchTimer = null;
   stopReconnectCountdown();
   stopClockTicking();
