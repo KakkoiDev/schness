@@ -370,3 +370,26 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(css, /max-height:\s*calc\(min\(82dvh, 42rem\) - 3\.2rem\)/);
   assert.doesNotMatch(html, />4 × 4 chess</);
 });
+
+test('a deploy reaches players who already have the app cached', async () => {
+  const sw = await readFile(resolve(root, 'sw.js'), 'utf8');
+  // Cache-first with no revalidation meant a deploy that did not bump CACHE
+  // was invisible: sw.js stayed byte-identical, no update ever installed, and
+  // returning players kept the old shell indefinitely. Six deploys did that.
+  assert.doesNotMatch(sw, /cached \|\| fetch\(event\.request\)\)\);/,
+    'the fetch handler is cache-first again, so a missed CACHE bump goes unnoticed');
+  assert.match(sw, /caches\.open\(CACHE\)\.then\(\(cache\) => cache\.put\(/,
+    'nothing refreshes the cache in the background');
+  assert.match(sw, /const CACHE = 'schness-v(\d+)'/);
+});
+
+test('only the lobby reloads itself when a new worker takes over', async () => {
+  const lobby = await readFile(resolve(root, 'src/lobby.js'), 'utf8');
+  const match = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  assert.match(lobby, /controllerchange/);
+  // Guarded, or the very first install would reload a page nobody asked to reload.
+  assert.match(lobby, /wasControlled/);
+  // The match page must never: a reload there throws away the game in progress.
+  assert.doesNotMatch(match, /controllerchange|location\.reload/,
+    'the match page would lose a live board');
+});
