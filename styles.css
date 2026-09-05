@@ -1415,6 +1415,47 @@
     min-height: 44px;
     white-space: nowrap;
   }
+
+  /*
+   * On a phone the board is already as wide as the screen allows, so it cannot
+   * be made bigger — what crowds it is the count of things stacked around it.
+   * Each rule below removes a line of chrome, never a capability. The labels
+   * stay in the accessibility tree; they just stop taking a row on screen.
+   */
+
+  /* "Opponent" / "You" over a named row, on its own side of the board, with a
+   * dot that lights up on turn. The word is the least of those four signals. */
+  .game-page .player .eyebrow,
+  /* "Black reserve · 3" / "Your reserve · tap to deploy": the tiles sit under
+   * their owner's name and count themselves. Kept for aria-labelledby. */
+  .reserve-label,
+  /* The toast repeated what the turn card and the Moves line both already say.
+   * Still announced to screen readers, no longer a third copy on screen. */
+  .game-page .announcement {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  .player {
+    padding: 6px 2px;
+  }
+
+  /*
+   * Usually two words. As a bordered panel it was the second-heaviest shape on
+   * the screen, arguing with the board; as a line it still reads at a glance.
+   * The review card keeps its frame — that one is a warning, not a status.
+   */
+  .turn-card:not(.review-card) {
+    border-color: transparent;
+    background: none;
+    padding: 6px 2px;
+  }
 }
 
 /* The result card never takes the screen: players want to see the mate. */
