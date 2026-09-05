@@ -13,7 +13,7 @@ import { createChatMessage, parseChatMessage } from './chat.js';
 import { actionHighlights } from './board-ui.js';
 import { movedEnough } from './drag.js';
 import {
-  botDifficulty, clockMode, difficultyDepth, rulesSeen, setRulesSeen,
+  botDifficulty, clockMode, difficultyDepth,
   setSoundSettings, soundSettings,
 } from './settings.js';
 import { addIncrement, createClock, flagged, formatClock, isLow, isTimed, spend } from './clock.js';
@@ -80,7 +80,6 @@ const connectionLabel = document.querySelector('#connection-label');
 const connectionNote = document.querySelector('#connection-note');
 const resetButton = document.querySelector('#reset');
 const rulesDialog = document.querySelector('#rules-dialog');
-const rulesOptOut = document.querySelector('#rules-optout');
 const matchChat = document.querySelector('#match-chat');
 const chatLog = document.querySelector('#chat-log');
 const chatForm = document.querySelector('#chat-form');
@@ -234,13 +233,9 @@ hearOpponent.addEventListener('click', () => {
 });
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
-rulesOptOut.checked = rulesSeen();
-rulesOptOut.addEventListener('change', () => setRulesSeen(rulesOptOut.checked));
-// Shown once before a first match, then only from the Rules button.
-if (!rulesSeen()) {
-  rulesDialog.addEventListener('close', () => setRulesSeen(true), { once: true });
-  rulesDialog.showModal();
-}
+// The rules open from the Rules button and nowhere else. A match that opens
+// behind a modal is not the instant start the lobby promises, and the board
+// itself teaches the game: the turn card names the one thing to do next.
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
 if (route?.mode === 'bot') startBotMatch();
 else if (route?.mode === 'online') startOnlineSearch(route.gameId);
@@ -1187,6 +1182,7 @@ function renderTurnCard(result) {
   const { title, detail, waiting } = turnCardContent(result);
   turnTitle.textContent = title;
   turnDetail.textContent = detail;
+  turnDetail.hidden = !detail;
   turnCard.classList.toggle('is-waiting', waiting);
   turnCard.hidden = reviewPly !== null;
   reviewCard.hidden = reviewPly === null;
@@ -1368,5 +1364,7 @@ function playDetail() {
     return `${pieceName(selection.piece)} from your reserve is selected. ` +
       'Drop it on a marked empty square, or pick a piece on the board to move instead.';
   }
-  return 'Move a piece by normal chess rules, or deploy one from your reserve onto an empty square.';
+  // Nothing to say: "Your turn" over a board you can read is the whole message.
+  // The standing rules belong in the rules dialog, not on every single turn.
+  return '';
 }
