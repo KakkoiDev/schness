@@ -68,6 +68,20 @@ test('state tokens are defined in both themes and no decorative gradient remains
   assert.equal([...css.matchAll(/radial-gradient/g)].length, 1);
 });
 
+test('the phone layout hides chrome from the screen, not from screen readers', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  const phone = css.slice(css.lastIndexOf('@media(max-width:899px)'));
+  // One clip rule covers the player eyebrow, the reserve label and the toast.
+  const clipped = phone.match(/([^}]*?)\{[^}]*?clip: rect\(0 0 0 0\)[^}]*?\}/);
+  assert.ok(clipped, 'the phone layout no longer clips its redundant labels');
+  for (const selector of ['.eyebrow', '.reserve-label', '.announcement']) {
+    assert.match(clipped[1], new RegExp(selector.replace('.', '\\.')));
+  }
+  // display:none would drop them from the accessibility tree as well, and the
+  // banks are named by their reserve label through aria-labelledby.
+  assert.doesNotMatch(clipped[0], /display:\s*none/);
+});
+
 test('the rules dialog only ever opens from a button', async () => {
   for (const file of ['src/main.js', 'src/lobby.js']) {
     const source = await readFile(resolve(root, file), 'utf8');
