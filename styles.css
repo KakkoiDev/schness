@@ -1272,7 +1272,7 @@
 }
 
 .pulse i {
-  width: 5px;
+  width: 6px;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--accent);
@@ -1310,20 +1310,20 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .pulse i {
-    animation: listening 1.25s ease-in-out infinite;
+    animation: listening 1.1s ease-in-out infinite;
   }
 
   .pulse i:nth-child(2) {
-    animation-delay: .16s;
+    animation-delay: .14s;
   }
 
   .pulse i:nth-child(3) {
-    animation-delay: .32s;
+    animation-delay: .28s;
   }
 
   @keyframes listening {
-    0%, 70%, 100% { opacity: .3; transform: scale(.72); }
-    35%           { opacity: 1;  transform: scale(1); }
+    0%, 60%, 100% { opacity: .25; transform: translateY(0) scale(.7); }
+    30%           { opacity: 1;   transform: translateY(-5px) scale(1.15); }
   }
 
   /* The countdown is redrawn once a second; without this it steps. */
@@ -1963,6 +1963,29 @@
  * way the disclosure is pointing, not an animation — and only loses the turn.
  */
 @media (prefers-reduced-motion: reduce) {
+  /*
+   * Reduced motion means no movement, not no life. A cross-fade carries no
+   * vestibular risk — it is the substitution Apple's own guidance recommends —
+   * so the one indicator whose entire job is to say "still listening" keeps
+   * saying it. Nothing here translates, scales or rotates.
+   */
+  .pulse i {
+    animation: listening-still 1.5s ease-in-out infinite;
+  }
+
+  .pulse i:nth-child(2) {
+    animation-delay: .18s;
+  }
+
+  .pulse i:nth-child(3) {
+    animation-delay: .36s;
+  }
+
+  @keyframes listening-still {
+    0%, 60%, 100% { opacity: .25; }
+    30%           { opacity: 1; }
+  }
+
   .mode:not(:disabled):hover {
     transform: none;
   }

@@ -194,6 +194,16 @@ test('the outcome is stated once, and the rail belongs to a live match', async (
   assert.match(main, /matchRail\.hidden = board\.closest\('\.play-area'\)\.hidden;/);
 });
 
+test('the chat panel waits for a second player, not just for online mode', async () => {
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  // `mode` is 'online' from the moment the invite card goes up, so
+  // `matchChat.hidden = mode !== 'online'` put a chat button on the waiting
+  // screen on any render that ran there — a reload, or a click that redrew.
+  assert.doesNotMatch(main, /matchChat\.hidden = mode !== 'online'/);
+  assert.match(main, /matchChat\.hidden = !chatAvailable\(\);/);
+  assert.match(main, /function chatAvailable\(\) \{\s*return mode === 'online' && Boolean\(network\?\.matched\);/);
+});
+
 test('the board is bounded by the height of the window, not only its width', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   // A square sized only by width grew taller than a short window: a phone in

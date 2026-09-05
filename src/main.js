@@ -419,7 +419,6 @@ function beginOnlineMatch(color) {
   opponentLabel = 'Online player';
   showCard(null);
   board.closest('.play-area').hidden = false;
-  matchChat.hidden = false;
   updateCommunicationUi();
   render();
 }
@@ -456,11 +455,21 @@ function receiveChatMessage(payload) {
 }
 
 function canTextChat() {
-  return mode === 'online' && !disconnected && network?.matched && chatEnabled;
+  return chatAvailable() && !disconnected && chatEnabled;
+}
+
+/**
+ * There is nobody to talk to until a second player has actually arrived.
+ * `mode` is already 'online' while the invite card is still up, so keying the
+ * panel off mode alone made the chat button appear in the waiting room on any
+ * render that happened to run there — a reload, or a click that redrew.
+ */
+function chatAvailable() {
+  return mode === 'online' && Boolean(network?.matched);
 }
 
 function updateCommunicationUi() {
-  matchChat.hidden = mode !== 'online';
+  matchChat.hidden = !chatAvailable();
   chatBody.hidden = !chatEnabled;
   matchChat.classList.toggle('chat-collapsed', mobileChatQuery.matches && !chatEnabled);
   chatToggle.textContent = chatEnabled

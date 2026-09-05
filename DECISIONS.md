@@ -96,14 +96,24 @@ without that a dead pool looks exactly like a friend who has not clicked the lin
 
 ### Motion is opt-out, and animates outside the rebuilt subtree
 
-Everything that moves sits behind `prefers-reduced-motion: no-preference`, or is neutralised in the
-`reduce` block. That includes transforms added later — two slipped past once.
+Everything that **moves** sits behind `prefers-reduced-motion: no-preference`. That includes
+transforms added later — two slipped past once. Nothing in the `reduce` block translates, scales or
+rotates.
 
-Every indicator that means "something is happening" animates, in the same gated block: the waiting
-dots, the reconnect bar, the turn dot while a move is in flight, and the dot beside whoever is on
-move. Under `reduce` the waiting dots keep the graded opacity the original static indicator had, so
-the fallback is the old design rather than a dead version of the new one. They are also hidden
-outright once no relay answers, so nothing implies progress on a search that has stalled.
+Every indicator that means "something is happening" animates, in that gated block: the waiting dots,
+the reconnect bar, the turn dot while a move is in flight, and the dot beside whoever is on move.
+The waiting dots bounce — `translateY(-5px) scale(1.15)` on 6px dots. They were reported as static
+three separate times while the rule was present and correct, because a 5px dot rising 1.4px reads as
+nothing at a glance; the amplitude is the feature, not a detail to tune down.
+
+Under `reduce` those dots keep animating, but **only their opacity** — a cross-fade carries no
+vestibular risk and is the substitution Apple's own guidance names. Reduced motion means no
+movement, not a dead indicator on the one card whose entire job is to say "still listening". They
+are hidden outright once no relay answers, so nothing implies progress on a search that has stalled.
+
+Verified in Chromium under both settings by sampling computed `opacity` and `transform` over ~1.1s:
+nine distinct transforms under `no-preference`, exactly one under `reduce`. A rule in the sheet is
+not proof the indicator moves.
 
 The turn dot hangs off **`is-pending`, not `is-waiting`** — `is-waiting` is also true at checkmate,
 at a draw and after a resignation, and a finished game must not sit there pulsing as though a move
@@ -166,6 +176,17 @@ turn while a toast and the Moves line said the same thing beside it. It shows co
 king placement, being in check, what is selected — and nothing when there is nothing to add. When
 the result overlay is up it is hidden entirely, or the ending is printed twice.
 
+### Chat belongs to a match, not to a mode
+
+`mode` is already `'online'` from the moment the invite card goes up, so anything keyed off it alone
+is also true in the waiting room. `matchChat.hidden = mode !== 'online'` put a chat panel — a "Chat"
+button, on a phone — on the waiting screen on any render that happened to run there, which is why it
+appeared intermittently rather than always: nothing renders on that screen until something makes it.
+Crossing the 899px chat breakpoint was enough.
+
+There is one predicate now, `chatAvailable()`, and it requires `network?.matched`. Both the panel's
+visibility and `canTextChat()` go through it. Guarded by `test/shell.test.js`.
+
 ---
 
 ## Testing
@@ -209,6 +230,10 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- The chat panel waits for a second player instead of for online mode, so it stops appearing in the
+  waiting room.
+- The waiting dots bounce far enough to be seen, and cross-fade instead of freezing under reduced
+  motion.
 - The accent moved from orange to plum, and accent tints stopped being hardcoded.
 - Every activity indicator animates, including a loader for "Bot is thinking", which had none.
 - The waiting dots and reconnect bar animate; the invite card no longer touches the action row.
