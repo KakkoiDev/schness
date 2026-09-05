@@ -73,6 +73,8 @@ const searchStatus = document.querySelector('#search-status');
 const searchPulse = document.querySelector('#search-pulse');
 const searchStalled = document.querySelector('#search-stalled');
 const stalledBot = document.querySelector('#stalled-bot');
+const searchQuiet = document.querySelector('#search-quiet');
+const quietBot = document.querySelector('#quiet-bot');
 const reconnectBar = document.querySelector('#reconnect-bar');
 const reconnectLeft = document.querySelector('#reconnect-left');
 const claimWin = document.querySelector('#claim-win');
@@ -228,6 +230,7 @@ cancelSearch.addEventListener('click', () => window.location.assign('./'));
 newOnline.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online', createGameId())));
 botInstead.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot', createGameId())));
 stalledBot.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot', createGameId())));
+quietBot.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot', createGameId())));
 claimWin.addEventListener('click', () => {
   stopReconnectCountdown();
   resigned = opponent(humanColor);
@@ -389,13 +392,26 @@ async function startOnlineSearch(gameId) {
 function watchRelayReach(relayReach) {
   const startedAt = Date.now();
   const grace = 6000;
+  // Long enough that a friend opening the link at a normal pace never sees it.
+  const quiet = 45000;
   const paint = () => {
-    const stalled = relayReach().open === 0 && Date.now() - startedAt > grace;
+    const waited = Date.now() - startedAt;
+    const stalled = relayReach().open === 0 && waited > grace;
     searchStatus.textContent = stalled
       ? 'Not connected to the matchmaking network'
       : 'Listening for a second player';
     searchPulse.hidden = stalled;
     searchStalled.hidden = !stalled;
+    /*
+     * The one failure the app cannot see. Peers exchange nothing until
+     * WebRTC connects, and the bundled config has STUN but no TURN, so a
+     * symmetric-NAT pair — mobile carriers, plenty of office networks — never
+     * connects and never will. To both of them it looks exactly like a friend
+     * who has not clicked yet, on relays that are answering fine. This does
+     * not claim to have detected it; it says what is and is not still
+     * possible, after long enough that a normal wait never reaches it.
+     */
+    searchQuiet.hidden = stalled || waited < quiet;
   };
   clearInterval(searchTimer);
   paint();

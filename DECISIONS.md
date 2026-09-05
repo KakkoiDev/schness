@@ -97,6 +97,15 @@ Relay failure is reported to the player: `relayReach()` counts open sockets, and
 says so after six seconds of grace. Trystero never surfaces a transport failure on its own, so
 without that a dead pool looks exactly like a friend who has not clicked the link yet.
 
+**There is a second failure, and the app cannot see it at all.** The bundled trystero carries STUN
+servers and **no TURN**, so a pair behind symmetric NAT — mobile carriers, plenty of office networks
+— will never connect, however long they wait. Peers exchange nothing until WebRTC is up, so neither
+side learns the other is even there: it looks like a friend who has not clicked, on relays that are
+answering fine. A TURN server is the only real fix and it costs money and credentials, so what is
+here instead is honesty: after 45 seconds the waiting card stops implying that patience is the
+answer and names the possibility, with the bot as a way out. It does not claim to have detected
+anything, because it has not. Never show it over the stalled card, which contradicts it.
+
 ### Motion is opt-out, and animates outside the rebuilt subtree
 
 Everything that **moves** sits behind `prefers-reduced-motion: no-preference`. That includes
@@ -284,6 +293,9 @@ checks to every PR and serves nothing anyone visits. There is no Netlify config 
 
 Honest list of what is not done and what cannot be checked from a sandbox:
 
+- **There is no TURN server, so some pairs can never connect.** Not a bug to fix in this repo — it
+  needs infrastructure. It is the largest single limit on "invite a friend" actually working, and
+  nobody has measured how often it bites, because that needs real peers on real networks.
 - **Relay liveness is unverified.** The ten relays are taken on trystero's authority. Prune dead
   ones from the *end* of the list only, and only after checking with real network access.
 - **The reconnect, expired and room-full cards have never been reached.** They have now been forced
@@ -302,6 +314,7 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- A wait that has gone on too long says what it cannot rule out, instead of implying patience.
 - The bot search is 4.3× faster and no longer degrades as a game lengthens; move generation is
   pinned by perft counts.
 - The end of a match arrives — the veil fades, the card rises — instead of being there on the next

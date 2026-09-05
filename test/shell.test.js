@@ -90,6 +90,21 @@ test('board rows are fixed and every vector piece uses the same box', async () =
   assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
 });
 
+test('a wait that has gone on too long says what it cannot rule out', async () => {
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  const html = await readFile(resolve(root, 'game.html'), 'utf8');
+  // The bundled WebRTC config carries STUN and no TURN, so a symmetric-NAT
+  // pair never connects and never will — and peers exchange nothing until
+  // WebRTC is up, so to both of them it looks exactly like a friend who has
+  // not clicked, on relays that answer fine. The card cannot detect it; after
+  // long enough it says so, and offers the way out.
+  assert.match(html, /id="search-quiet"[^>]*class="card-note"[^>]*hidden/);
+  assert.match(html, /id="quiet-bot"/);
+  assert.match(main, /const quiet = 45000;/);
+  // Never over the top of the stalled card, which contradicts it outright.
+  assert.match(main, /searchQuiet\.hidden = stalled \|\| waited < quiet;/);
+});
+
 test('the board is a real grid, and the rules can be scrolled from a keyboard', async () => {
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
