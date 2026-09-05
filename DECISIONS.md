@@ -321,13 +321,12 @@ The perft numbers were later recounted by an implementation written from the rul
 without reference to `rules.js`, and agree through depth 5 (457,568). So they pin what the dialog
 says, not merely what the engine did.
 
-**What the harness cannot see, by design.** Comparing against a frozen copy proves nothing about a
-bug both copies share. The search's transposition cache is one: `search()` stores the value a node
-returned after an alpha-beta cutoff — a bound, not the true value — and reads it back under a
-different window. At depth 4 that changed the chosen move in 2 of 60 sampled positions against the
-same search with the cache disabled. It never shows at depth 3, where no transposition can occur
-within the tree, so Learning and Steady are unaffected; Sharp plays a move its own search would not
-choose about one time in thirty. Not a regression from the speedup, and not fixed here.
+**The transposition table stores bounds correctly.** A node cut off by alpha-beta has produced an
+upper or lower bound, not necessarily an exact value. Cache entries therefore carry `exact`,
+`lower`, or `upper`; a lookup tightens the current search window and returns immediately only
+when the entry is exact or closes that window. The old table treated every cutoff as exact, which
+changed the chosen depth-4 move in sampled positions. `chooseAction(..., { useCache: false })`
+provides a slow reference path, and `test/bot.test.js` checks cached and uncached search agree.
 
 ## Testing
 
@@ -383,6 +382,9 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 ## Log
 
 Newest first. One line per decision that changed how the app behaves.
+
+- Alpha-beta transposition entries distinguish exact values from upper and lower bounds; the cached
+  search is checked against an uncached reference path.
 
 - A move carries the mover's clocks and the receiver adopts them within a tolerance; a flag is a
   message; both king placements are timed. The receiving side used to charge nobody.
