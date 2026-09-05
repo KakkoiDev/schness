@@ -21,6 +21,43 @@ test('manifest describes a standalone app with a local icon', async () => {
   assert.ok(manifest.icons.every((icon) => icon.src.startsWith('./')));
 });
 
+test('every installed icon is a real file at the size it claims', async () => {
+  const manifest = JSON.parse(await readFile(resolve(root, 'manifest.webmanifest'), 'utf8'));
+  for (const icon of manifest.icons) {
+    const file = await readFile(resolve(root, icon.src));
+    if (icon.type !== 'image/png') continue;
+    assert.equal(file.subarray(1, 4).toString(), 'PNG', `${icon.src} is not a png`);
+    const declared = `${file.readUInt32BE(16)}x${file.readUInt32BE(20)}`;
+    assert.equal(declared, icon.sizes, `${icon.src} is ${declared}, declared ${icon.sizes}`);
+  }
+});
+
+test('the maskable icon is its own artwork, with room to be masked', async () => {
+  const manifest = JSON.parse(await readFile(resolve(root, 'manifest.webmanifest'), 'utf8'));
+  const maskable = manifest.icons.filter((icon) => icon.purpose?.split(' ').includes('maskable'));
+  assert.equal(maskable.length, 1, 'exactly one icon should be the maskable one');
+  // Android masks this to a circle or a squircle. Art drawn to the edge — the
+  // same file as the plain icon — gets its corners cut off, so the maskable
+  // one is drawn smaller inside a safe zone and is a different file.
+  const others = manifest.icons.filter((icon) => !icon.purpose?.split(' ').includes('maskable'));
+  for (const icon of others) {
+    assert.notEqual(icon.src, maskable[0].src, `${icon.src} is served as both plain and maskable`);
+  }
+  assert.ok(others.length, 'nothing is left to use where masking is not applied');
+});
+
+test('iOS gets a png to put on the home screen', async () => {
+  // Without this Safari screenshots the page and uses that as the icon.
+  for (const file of ['index.html', 'game.html']) {
+    const html = await readFile(resolve(root, file), 'utf8');
+    const link = html.match(/<link rel="apple-touch-icon" href="([^"]+)"/);
+    assert.ok(link, `${file} has no apple-touch-icon`);
+    const png = await readFile(resolve(root, link[1]));
+    assert.equal(png.subarray(1, 4).toString(), 'PNG');
+    assert.equal(png.readUInt32BE(16), 180, 'apple-touch-icon should be 180x180');
+  }
+});
+
 test('the black knight carries no stray corner-bracket stroke', async () => {
   const knight = await readFile(resolve(root, 'assets/pieces/bN.svg'), 'utf8');
   // A third path used to stroke a white rounded bracket that floated clear of the silhouette.
