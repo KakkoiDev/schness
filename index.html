@@ -18,6 +18,10 @@
   <meta property="og:image:alt" content="A four-by-four Schness board with two kings, a rook and a knight.">
   <meta name="twitter:card" content="summary_large_image">
 
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Schness">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
@@ -29,6 +33,7 @@
       <div><h1>Schness</h1></div>
       <div class="header-actions">
         <button class="text-button theme-button" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
+        <button id="install" class="text-button" type="button" hidden>Install</button>
         <button class="text-button rules-button" type="button" data-open-rules>Rules</button>
       </div>
     </header>

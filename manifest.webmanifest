@@ -1,36 +1,50 @@
 {
+  "id": "./",
   "name": "Schness",
   "short_name": "Schness",
   "description": "Compact chess on a 4×4 board.",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["games"],
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f3efe6",
   "theme_color": "#f3efe6",
   "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "./assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
     {
-      "src": "./icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "src": "./assets/shot-narrow.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "A match in progress, with the king in check"
     },
     {
-      "src": "./assets/icon-192.png",
-      "sizes": "192x192",
+      "src": "./assets/shot-wide.png",
+      "sizes": "1280x800",
       "type": "image/png",
-      "purpose": "any"
+      "form_factor": "wide",
+      "label": "A match in progress on a wide screen"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Play the bot",
+      "short_name": "Bot",
+      "description": "Start a match against the bot straight away",
+      "url": "./?play=bot"
     },
     {
-      "src": "./assets/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./assets/icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "name": "Create an online game",
+      "short_name": "Online",
+      "description": "Get a link to send a friend",
+      "url": "./?play=online"
     }
   ]
 }
