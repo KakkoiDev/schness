@@ -220,9 +220,21 @@ test('everything tappable on a phone is a 44px target', async () => {
 
 test('the outcome is stated once, and the rail belongs to a live match', async () => {
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  const html = await readFile(resolve(root, 'game.html'), 'utf8');
   // The overlay says how it ended over the board; the turn card said it again
   // underneath, word for word.
-  assert.match(main, /resultOverlay\.hidden = false;[\s\S]{0,240}?turnCard\.hidden = true;/);
+  assert.match(main, /resultOverlay\.hidden = false;[\s\S]{0,280}?turnCard\.hidden = true;/);
+  // Focus is what tells a screen reader the game ended, and it moves only on
+  // the frame the card arrives — renderResult runs on every render. Before
+  // this, an ending nobody's move delivered (a resignation, your own mate)
+  // was announced by nothing at all and left focus on a covered square.
+  assert.match(html, /class="result-card"[^>]*tabindex="-1"[^>]*aria-labelledby="result-headline"[^>]*aria-describedby="result-detail"/);
+  assert.match(main, /const arriving = resultOverlay\.hidden;/);
+  assert.match(main, /if \(!arriving \|\| resultAnnounced\) return;/);
+  assert.match(main, /resultCard\.focus\(\{ preventScroll: true \}\);/);
+  // And not through the live region: on a wide screen that is a visible pill,
+  // which would print the ending a second time on screen.
+  assert.doesNotMatch(main, /announce\(`\$\{summary\.headline\}/);
   // Nothing to undo or resign while a match is still being set up.
   assert.match(main, /matchRail\.hidden = board\.closest\('\.play-area'\)\.hidden;/);
 });

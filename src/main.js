@@ -139,6 +139,7 @@ let takebackPending = false;
 let agreedDraw = false;
 let drawOffered = false;
 let resultDismissed = false;
+let resultAnnounced = false;
 let clock = createClock(clockMode());
 let clockSince = null;
 let clockTimer = null;
@@ -419,6 +420,7 @@ function beginOnlineMatch(color) {
   agreedDraw = false;
   drawOffered = false;
   resultDismissed = false;
+  resultAnnounced = false;
   clock = createClock(clockMode());
   // White owns the clock choice; Black adopts whatever White announces.
   if (color === WHITE) {
@@ -686,6 +688,7 @@ function resetState(nextMode, color) {
   agreedDraw = false;
   drawOffered = false;
   resultDismissed = false;
+  resultAnnounced = false;
   clock = createClock(clockMode());
   clockSince = null;
   stopClockTicking();
@@ -1271,8 +1274,10 @@ function renderResult() {
   });
   if (!summary || resultDismissed || reviewPly !== null) {
     resultOverlay.hidden = true;
+    resultAnnounced = false;
     return;
   }
+  const arriving = resultOverlay.hidden;
   resultOverlay.hidden = false;
   // The overlay says how it ended, over the board. Leaving the turn card up
   // printed the same two sentences again, directly underneath it.
@@ -1292,6 +1297,24 @@ function renderResult() {
     resultDismissed = true;
     goToPly(lost && history.length > 1 ? Math.max(0, history.length - 2) : 0);
   };
+
+  /*
+   * Only on the frame it arrives — renderResult runs on every render, and a
+   * card that grabs focus or re-announces itself each time is worse than one
+   * that does neither. `announceOpponentAction` covers an ending the opponent
+   * delivered; when you are the one who mates, nothing said so at all, and
+   * focus stayed on a square the overlay had just covered and disabled.
+   */
+  if (!arriving || resultAnnounced) return;
+  resultAnnounced = true;
+  /*
+   * Focus is the announcement. The card is named by its headline and
+   * described by its detail, so landing on it reads the ending out — and
+   * unlike the live region it does not also print those two sentences into
+   * the toast, which on a wide screen is a visible pill. The outcome is
+   * stated once; see the invariant of that name.
+   */
+  resultCard.focus({ preventScroll: true });
 }
 
 function renderMoves() {

@@ -33,9 +33,12 @@ rebuilding: `render()` reruns on every state change and calls `replaceChildren()
 squares. **Anything that must survive a render cannot live inside a square.** That is not a style
 preference — see the motion invariant below.
 
-The bot runs in a Web Worker (`bot-worker.js`). Measured at the hardest setting: zero long tasks on
-the main thread. Keep it that way; a chess bot on the UI thread is how a game starts dropping frames
-on camera.
+The bot runs in a Web Worker (`bot-worker.js`). Keep it there; a chess bot on the UI thread is how a
+game starts dropping frames on camera. Measured at the hardest setting **with the CPU throttled 4×**,
+which is the honest number for a mid-range phone: two long tasks during boot (57ms and 64ms, before
+first paint, nothing interactive yet) and about one ~58ms task during play, which the weakest
+setting does not produce. Unthrottled there are none — that is the figure this file used to quote,
+and it flattered the app. First paint 148ms, DOM ready 225ms, 174KB over 37 requests, all throttled.
 
 ---
 
@@ -191,6 +194,19 @@ The reserve banks are named through `aria-labelledby` on those labels, and the t
 The rules dialog opens from the Rules button and nowhere else. It used to open modally over the
 board the first time you played, which contradicted "starts instantly" and left the board
 unclickable. The lobby's three-rule strip and the turn card carry first-run guidance instead.
+
+### The end of a match is announced by focus, not by the toast
+
+When the overlay arrives, focus moves to `.result-card` — `tabindex="-1"`, named by its headline and
+described by its detail — so a screen reader reads the ending out. Only on the frame it arrives:
+`renderResult` runs on every render, and a card that grabs focus each time is worse than one that
+never does.
+
+It is deliberately **not** `announce()`. The live region is a visible pill on a wide screen, so
+routing the ending through it would print those two sentences a second time — see "the outcome is
+stated once". Before this, an ending that no opponent move delivered (you resigning, or you being
+the one who mates) was announced by nothing at all and left focus on a square the overlay had just
+covered and disabled. `announceOpponentAction` only ever covered the other half.
 
 ### The turn card says what is true now
 
