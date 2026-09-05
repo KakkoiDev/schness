@@ -25,7 +25,25 @@ test('reach survives the shapes trystero can hand back before it connects', () =
 });
 
 test('the relay list is plural, so one dead relay is not one dead app', () => {
-  assert.ok(RELAYS.length >= 3);
+  // Matchmaking survives until the last relay stops answering.
+  assert.ok(RELAYS.length >= 8, 'the relay pool has shrunk below a safe margin');
   assert.equal(new Set(RELAYS).size, RELAYS.length, 'a relay is listed twice');
-  for (const url of RELAYS) assert.match(url, /^wss:\/\//);
+  for (const url of RELAYS) assert.match(url, /^wss:\/\/[a-z0-9.-]+(\/\S*)?$/i);
+});
+
+test('no relay is ever dropped from the rendezvous list', () => {
+  // A player on a cached older build still dials these. Removing one strands
+  // them on a relay the newer build no longer joins, and the service worker
+  // keeps old builds alive for a visit or two after a deploy. Add, never cut.
+  const published = [
+    'wss://relay.snort.social',
+    'wss://nostr.sathoarder.com',
+    'wss://nostr.vulpem.com',
+    'wss://relay.primal.net',
+    'wss://nostr.mom',
+    'wss://offchain.pub',
+  ];
+  for (const url of published) {
+    assert.ok(RELAYS.includes(url), `${url} was removed; older builds still dial it`);
+  }
 });
