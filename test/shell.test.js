@@ -90,6 +90,31 @@ test('board rows are fixed and every vector piece uses the same box', async () =
   assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
 });
 
+test('the board is a real grid, and the rules can be scrolled from a keyboard', async () => {
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  // `role="grid"` over sixteen bare buttons is a critical axe violation and
+  // gives a screen reader no row or column position. The rows are real
+  // elements, not `display: contents` — browsers have dropped those from the
+  // accessibility tree, which is the failure that looks like it works.
+  assert.match(main, /row\.setAttribute\('role', 'row'\)/);
+  assert.match(main, /button\.setAttribute\('role', 'gridcell'\)/);
+  assert.match(css, /\.board-row\{display:grid;grid-template-columns:repeat\(4, minmax\(0, 1fr\)\)/);
+  assert.doesNotMatch(css, /\.board-row\{[^}]*display:contents/);
+  // The checkerboard is per row now; the flat nth-child(8n+…) run cannot work
+  // once the squares are nested, and would silently paint the board plain.
+  assert.match(css, /\.board-row:nth-child\(odd\) \.square:nth-child\(even\)/);
+  assert.match(css, /\.board-row:nth-child\(even\) \.square:nth-child\(odd\)/);
+  assert.doesNotMatch(css, /\.square:nth-child\(8n\+2\)/);
+
+  // A scrolling region no keyboard can reach holds the rules hostage to a
+  // mouse. Both copies of the dialog, since the pages carry one each.
+  for (const page of ['game.html', 'index.html']) {
+    const html = await readFile(resolve(root, page), 'utf8');
+    assert.match(html, /<div class="dialog-body" tabindex="0" role="group" aria-label="[^"]+">/, page);
+  }
+});
+
 test('state tokens are defined in both themes and no decorative gradient remains', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   const block = (selector) => css.match(new RegExp(`${selector}\\s*{([^}]*)}`))?.[1] ?? '';

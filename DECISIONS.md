@@ -161,6 +161,22 @@ sheet: Copy on the invite card was 31px, its link field 14, Cancel 37, and a res
 measure computed heights in Chromium when you add a control. Reserve tiles may shrink in width on a
 short screen to buy the board height; the target height is not negotiable.
 
+### The board is a grid all the way down
+
+`#board` is `role="grid"`, so it holds four `role="row"` elements holding four `role="gridcell"`
+buttons each. It was sixteen bare buttons under the grid role for a long time — a critical axe
+violation, and a screen reader got no row or column position out of it. `aria-activedescendant`
+needs the composite role, so dropping `role="grid"` was not the way out.
+
+The rows are **real layout elements**, `display: grid` with four columns inside a four-row board.
+`display: contents` would have been the smaller diff and browsers have dropped such elements from
+the accessibility tree — the exact class of change that passes a source check and helps nobody.
+
+The consequence to know: the checkerboard cannot use a flat `nth-child(8n+…)` run any more. It is
+`.board-row:nth-child(odd) .square:nth-child(even)` and its mirror. Get that wrong and the board
+paints plain, so a test pins both. Verified in Chromium: sixteen equal cells in four rows, the same
+eight squares dark as before, and the accessibility tree reporting grid → row → gridcell.
+
 ### Hide from the screen, not from the accessibility tree
 
 The phone layout clips redundant labels (`position:absolute` + `clip`) rather than `display:none`.
@@ -234,6 +250,8 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- The board exposes real rows and cells, and the rules dialog scrolls from a keyboard.
+- Every control on the invite card, and reserve tiles on a small phone, reach the 44px target.
 - The chat panel waits for a second player instead of for online mode, so it stops appearing in the
   waiting room.
 - The waiting dots bounce far enough to be seen, and cross-fade instead of freezing under reduced

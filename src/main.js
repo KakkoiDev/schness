@@ -148,18 +148,31 @@ let animatedPlies = 0;
 let pointerDrag = null;
 let suppressClick = false;
 
-for (let visual = 0; visual < 16; visual += 1) {
-  const button = document.createElement('button');
-  button.className = 'square';
-  button.type = 'button';
-  button.id = `square-${visual}`;
-  button.tabIndex = -1;
-  button.dataset.visual = String(visual);
-  button.addEventListener('click', () => {
-    if (!suppressClick) onSquare(Number(button.dataset.square));
-  });
-  button.addEventListener('pointerdown', (event) => beginBoardDrag(event, button));
-  board.append(button);
+// A `role="grid"` whose children are not rows is not a grid — axe calls it a
+// critical violation, and a screen reader gets no row or column position out
+// of it. The rows are real elements laying out four cells each, not
+// `display: contents` wrappers, which browsers have dropped from the
+// accessibility tree before.
+for (let rank = 0; rank < 4; rank += 1) {
+  const row = document.createElement('div');
+  row.className = 'board-row';
+  row.setAttribute('role', 'row');
+  for (let file = 0; file < 4; file += 1) {
+    const visual = rank * 4 + file;
+    const button = document.createElement('button');
+    button.className = 'square';
+    button.type = 'button';
+    button.id = `square-${visual}`;
+    button.tabIndex = -1;
+    button.setAttribute('role', 'gridcell');
+    button.dataset.visual = String(visual);
+    button.addEventListener('click', () => {
+      if (!suppressClick) onSquare(Number(button.dataset.square));
+    });
+    button.addEventListener('pointerdown', (event) => beginBoardDrag(event, button));
+    row.append(button);
+  }
+  board.append(row);
 }
 
 // The board keeps a single tab stop; the cursor is tracked here rather than
