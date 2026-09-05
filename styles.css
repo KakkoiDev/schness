@@ -1553,10 +1553,35 @@
     min-height: 44px;
   }
 
+  /*
+   * The invite card is the whole online flow, and every control on it was
+   * under the rule: Copy 31px, the link field 14, Cancel 37. Measured in the
+   * browser — the stylesheet test above names selectors, so it had nothing to
+   * say about these. The field grows with the button so the row stays level,
+   * and tapping anywhere in it selects the link.
+   */
+  .link-row input,
+  .link-row button {
+    min-height: 44px;
+  }
+
+  /*
+   * Deploying from the reserve is half the game, so a reserve tile is a target
+   * like any other. The short-screen block shrinks these to buy the board
+   * height, which took them to 38px on a 320x640 phone; the width may shrink,
+   * the target may not.
+   */
+  .bank-piece {
+    min-height: 44px;
+  }
+
   /* Inline inside a sentence, so it grows its hit area without a line box
      tall enough to shove the surrounding text apart. */
   .card-link {
-    padding-block: 11px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-block: 0;
   }
 }
 
@@ -1673,6 +1698,8 @@
   display: flex;
   align-items: baseline;
   gap: .6rem;
+  /* 42px before, which is under the rule by the width of a hair. */
+  min-height: 44px;
   padding: .85rem 1.2rem;
   color: var(--muted);
   font-size: 13px;

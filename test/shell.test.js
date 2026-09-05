@@ -180,9 +180,17 @@ test('everything tappable on a phone is a 44px target', async () => {
   // Measured before this rule: header buttons 33px, New game 37, Moves 43x14.
   const targets = phone.split('}').filter((rule) => rule.includes('min-height: 44px')).join('\n');
   assert.ok(targets, 'the phone layout no longer guarantees a 44px tap target');
-  for (const selector of ['.text-button', '.reset', '.rail-button', '.moves-link']) {
+  // The second round came from measuring in a browser rather than reading the
+  // sheet: Copy on the invite card was 31px, its link field 14, Cancel 37 and
+  // a reserve tile 38 on a 320px phone. This test names selectors, so it had
+  // nothing to say about any of them — hence the list, which is the only thing
+  // it can actually hold.
+  for (const selector of ['.text-button', '.reset', '.rail-button', '.moves-link',
+    '.link-row input', '.link-row button', '.card-link', '.bank-piece']) {
     assert.ok(targets.includes(selector), `${selector} is not held to a 44px target`);
   }
+  // Every control on the whole invite card, since that is the online flow.
+  assert.doesNotMatch(phone, /\.card-link \{\s*padding-block: 11px;/);
 });
 
 test('the outcome is stated once, and the rail belongs to a live match', async () => {

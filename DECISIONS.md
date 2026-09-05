@@ -155,7 +155,11 @@ theme's colour and nobody noticed while both themes were orange — the moment t
 would have been glaring. Guarded by `test/contrast.test.js`.
 
 Everything tappable is ≥44px tall on a phone. Before that rule the header buttons were 33px and the
-Moves toggle was 43×14.
+Moves toggle was 43×14. A second round came from measuring in a browser rather than reading the
+sheet: Copy on the invite card was 31px, its link field 14, Cancel 37, and a reserve tile 38 on a
+320px phone. `test/shell.test.js` can only name selectors, so **it will not catch the next one** —
+measure computed heights in Chromium when you add a control. Reserve tiles may shrink in width on a
+short screen to buy the board height; the target height is not negotiable.
 
 ### Hide from the screen, not from the accessibility tree
 
