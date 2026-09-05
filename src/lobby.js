@@ -1,4 +1,4 @@
-import { gameUrl } from './navigation.js';
+import { gameUrl, launchIntent } from './navigation.js';
 import { botDifficulty, clockMode, setBotDifficulty, setClockMode } from './settings.js';
 import { initTheme } from './theme.js';
 
@@ -7,6 +7,8 @@ initTheme();
 const botButton = document.querySelector('#play-bot');
 const onlineButton = document.querySelector('#play-online');
 const rulesDialog = document.querySelector('#rules-dialog');
+const installButton = document.querySelector('#install');
+let installPrompt = null;
 
 botButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot')));
 onlineButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online')));
@@ -15,6 +17,25 @@ document.querySelectorAll('[data-open-rules]').forEach((button) =>
 initChoice('difficulty', botDifficulty(), setBotDifficulty);
 initChoice('clock', clockMode(), setClockMode);
 renderSetupSummary();
+// Chrome offers installation through a menu most people never open. Taking
+// the event lets the lobby offer it in place; the button exists only while
+// there is something to accept, so it never sits there as dead furniture.
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  installPrompt = event;
+  installButton.hidden = false;
+});
+installButton.addEventListener('click', async () => {
+  if (!installPrompt) return;
+  installButton.hidden = true;
+  installPrompt.prompt();
+  await installPrompt.userChoice;
+  installPrompt = null;
+});
+window.addEventListener('appinstalled', () => {
+  installPrompt = null;
+  installButton.hidden = true;
+});
 window.addEventListener('online', updateOnlineAvailability);
 window.addEventListener('offline', updateOnlineAvailability);
 if ('serviceWorker' in navigator) {
@@ -32,6 +53,16 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
 }
 updateOnlineAvailability();
+openShortcut();
+
+/** Long-pressing the installed icon lands here with what to start. */
+function openShortcut() {
+  const intent = launchIntent(window.location.search);
+  if (!intent) return;
+  if (intent === 'online' && !navigator.onLine) return;
+  // replace, so Back leaves the app rather than bouncing off the shortcut.
+  window.location.replace(gameUrl(window.location.href, intent));
+}
 
 function updateOnlineAvailability() {
   onlineButton.disabled = !navigator.onLine;

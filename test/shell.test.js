@@ -393,3 +393,41 @@ test('only the lobby reloads itself when a new worker takes over', async () => {
   assert.doesNotMatch(match, /controllerchange|location\.reload/,
     'the match page would lose a live board');
 });
+
+test('the manifest carries what an install dialog asks for', async () => {
+  const manifest = JSON.parse(await readFile(resolve(root, 'manifest.webmanifest'), 'utf8'));
+  for (const field of ['id', 'lang', 'dir', 'categories', 'screenshots', 'shortcuts']) {
+    assert.ok(manifest[field], `the manifest has no ${field}`);
+  }
+  // Without a screenshot for each form factor, Android falls back to the
+  // minimal install prompt instead of the richer one.
+  const factors = manifest.screenshots.map((shot) => shot.form_factor);
+  assert.ok(factors.includes('narrow') && factors.includes('wide'), `only ${factors}`);
+  for (const shot of manifest.screenshots) {
+    const png = await readFile(resolve(root, shot.src));
+    assert.equal(`${png.readUInt32BE(16)}x${png.readUInt32BE(20)}`, shot.sizes, `${shot.src}`);
+  }
+  // Landscape on a phone is a supported layout, so nothing may lock rotation.
+  assert.equal(manifest.orientation, undefined, 'the app plays in both orientations');
+});
+
+test('every shortcut lands somewhere the lobby understands', async () => {
+  const manifest = JSON.parse(await readFile(resolve(root, 'manifest.webmanifest'), 'utf8'));
+  const { launchIntent } = await import('../src/navigation.js');
+  assert.ok(manifest.shortcuts.length);
+  for (const shortcut of manifest.shortcuts) {
+    assert.ok(shortcut.url.startsWith('./'), `${shortcut.url} leaves the manifest scope`);
+    const intent = launchIntent(new URL(shortcut.url, 'https://schness.com/').search);
+    assert.ok(intent, `${shortcut.url} does not start anything`);
+  }
+});
+
+test('adding to a home screen opens the app, not a browser tab', async () => {
+  for (const page of ['index.html', 'game.html']) {
+    const html = await readFile(resolve(root, page), 'utf8');
+    // Without these iOS launches the shortcut inside Safari's chrome.
+    assert.match(html, /<meta name="apple-mobile-web-app-capable" content="yes">/, page);
+    assert.match(html, /<meta name="mobile-web-app-capable" content="yes">/, page);
+    assert.match(html, /<meta name="apple-mobile-web-app-title" content="Schness">/, page);
+  }
+});

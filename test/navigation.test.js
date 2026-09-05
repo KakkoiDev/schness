@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createGameId, gameRoute, gameUrl } from '../src/navigation.js';
+import { createGameId, gameRoute, gameUrl, launchIntent } from '../src/navigation.js';
 
 test('every generated match id is a UUID v4', () => {
   const ids = new Set(Array.from({ length: 64 }, () => createGameId()));
@@ -21,4 +21,15 @@ test('the lobby ignores malformed or unsupported game routes', () => {
   assert.equal(gameRoute(''), null);
   assert.equal(gameRoute('?game=not-a-uuid&mode=online'), null);
   assert.equal(gameRoute('?game=7e42a0a1-710c-4d91-b753-4a18d7fec92f&mode=other'), null);
+});
+
+test('a manifest shortcut says which match to open', () => {
+  assert.equal(launchIntent('?play=bot'), 'bot');
+  assert.equal(launchIntent('?play=online'), 'online');
+});
+
+test('the lobby ignores a launch it does not offer', () => {
+  for (const search of ['', '?play=', '?play=chess', '?play=bot%20', '?mode=bot', '?play=BOT']) {
+    assert.equal(launchIntent(search), null, `${search} should not launch anything`);
+  }
 });

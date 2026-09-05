@@ -26,3 +26,12 @@ export function gameUrl(base, mode, gameId = createGameId()) {
   url.searchParams.set('mode', mode);
   return url.href;
 }
+
+/**
+ * A manifest shortcut cannot mint a match id, and game.html refuses a route
+ * without one, so the shortcuts land on the lobby and say what to open.
+ */
+export function launchIntent(search) {
+  const play = new URLSearchParams(search).get('play');
+  return ['bot', 'online'].includes(play) ? play : null;
+}
