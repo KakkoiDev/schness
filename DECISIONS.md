@@ -35,10 +35,10 @@ preference — see the motion invariant below.
 
 The bot runs in a Web Worker (`bot-worker.js`). Keep it there; a chess bot on the UI thread is how a
 game starts dropping frames on camera. Measured at the hardest setting **with the CPU throttled 4×**,
-which is the honest number for a mid-range phone: two long tasks during boot (57ms and 64ms, before
-first paint, nothing interactive yet) and about one ~58ms task during play, which the weakest
-setting does not produce. Unthrottled there are none — that is the figure this file used to quote,
-and it flattered the app. First paint 148ms, DOM ready 225ms, 174KB over 37 requests, all throttled.
+which is the honest number for a mid-range phone: two long tasks during boot (~52ms each, before
+first paint, nothing interactive yet) and none at all during play. First paint 148ms, DOM ready
+225ms, 174KB over 37 requests, all throttled. Unthrottled there are none anywhere — that alone is
+the figure this file used to quote, and it flattered the app.
 
 ---
 
@@ -228,6 +228,38 @@ visibility and `canTextChat()` go through it. Guarded by `test/shell.test.js`.
 
 ---
 
+## The search, and why the engine has two of some functions
+
+A 30-ply self-play at the hardest depth took **43.6 seconds** and one single move took **11.2** — on
+a server CPU, so several times that on a phone, behind nothing but a pulsing dot. It also got worse
+the longer a game ran. It is 10.1 seconds now, and the worst move 3.6, with the late game 8.9×
+faster than it was. None of it changed how the bot plays.
+
+Three things were wrong, all of them in the hottest loop in the app:
+
+1. **The search re-validated its own moves.** `applyAction` re-derives the whole legal move list and
+   string-matches the action against it. That is exactly right for a move arriving from a peer — the
+   list is the security boundary there — and pure waste one line after the search generated the move
+   itself. Hence `applyLegalAction`, and `legalActionsUnchecked` for the same reason on
+   `validatePosition`. **Only the bot may use either.** Anything holding a position that came from
+   outside this engine goes through the guarded entry points.
+2. **The repetition map was copied per candidate move.** It grows by one entry every ply, so cloning
+   it thirty-odd times per node made the bot slower the longer the game ran — for a map the legality
+   filter never reads. `clonePosition` now shares it when the copy is a throwaway.
+3. **Legality cloned an entire position to ask a question about the board.** It is `boardAfter` plus
+   `boardInCheck` now — one `slice` and shared occupant objects, because occupants are replaced and
+   never mutated anywhere in this engine. `attacksSquare` answers on the first hit instead of
+   building an array to call `.includes` on it.
+
+**How this was made safe, and how to make the next one safe.** Every step was checked two ways: an
+equivalence harness comparing the live engine against a frozen copy over 21,215 positions from 400
+seeded games (zero mismatches), and a fingerprint of the 30 moves a self-play chooses, which did not
+move once across all three changes. `test/rules.test.js` now carries the durable half of that: perft
+counts to depth 4 (4 / 16 / 558 / 17,896) and a test that the unguarded shortcuts agree with the
+guarded entry points to depth 3. **Nothing else in the suite would catch an engine that quietly
+plays a different game.** If you change the rules on purpose, recompute the perft numbers and say so
+here.
+
 ## Testing
 
 Pure modules get real unit tests. DOM behaviour that cannot be unit-tested is guarded by asserting
@@ -270,6 +302,8 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- The bot search is 4.3× faster and no longer degrades as a game lengthens; move generation is
+  pinned by perft counts.
 - The end of a match arrives — the veil fades, the card rises — instead of being there on the next
   frame.
 - The board exposes real rows and cells, and the rules dialog scrolls from a keyboard.

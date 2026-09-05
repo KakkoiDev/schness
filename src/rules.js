@@ -11,6 +11,9 @@ const PLAYERS = new Set([WHITE, BLACK]);
 const PIECES = new Set([KING, ...BANK_PIECES]);
 const ORTHOGONAL = [[-1, 0], [1, 0], [0, -1], [0, 1]];
 const DIAGONAL = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
+// Built once: `[...ORTHOGONAL, ...DIAGONAL]` inline allocated a new array on
+// every king attack lookup, and that runs once per candidate move per node.
+const KING_STEPS = [...ORTHOGONAL, ...DIAGONAL];
 const KNIGHT_STEPS = [
   [-2, -1], [-2, 1], [-1, -2], [-1, 2],
   [1, -2], [1, 2], [2, -1], [2, 1],
@@ -50,9 +53,26 @@ export function createPosition({ board, banks, turn = WHITE, phase = 'play', rep
   return position;
 }
 
+/**
+ * The exported entry point: validates, then generates. Everything outside the
+ * engine comes through here, including a move arriving from a peer.
+ */
 export function legalActions(position) {
   validatePosition(position);
+  return generateLegalActions(position);
+}
 
+/**
+ * The same generation without the guard, for a caller that produced the
+ * position itself — the bot's search, which visits tens of thousands of
+ * positions this engine just built and re-validated every one of them.
+ * Never call this on anything that came from outside the engine.
+ */
+export function legalActionsUnchecked(position) {
+  return generateLegalActions(position);
+}
+
+function generateLegalActions(position) {
   if (position.phase === 'place-white-king') {
     return homeRank(WHITE)
       .filter((to) => !position.board[to])
@@ -71,7 +91,7 @@ export function legalActions(position) {
   for (let from = 0; from < position.board.length; from += 1) {
     const occupant = position.board[from];
     if (!occupant || occupant.owner !== player) continue;
-    for (const to of pseudoMoves(position, from, occupant.piece, player)) {
+    for (const to of pseudoMoves(position.board, from, occupant.piece, player)) {
       if (position.board[to]?.piece === KING) continue;
       candidates.push({ type: 'move', from, to });
     }
@@ -83,11 +103,17 @@ export function legalActions(position) {
     }
   }
 
+  /*
+   * Legality is a question about the board alone, so this builds only the
+   * board the action would leave behind. It used to clone the whole position
+   * — sixteen occupant spreads, both banks and the repetition map — once per
+   * candidate, thirty-odd times per search node, to answer it.
+   */
   return candidates.filter((action) => {
-    const next = applyUnchecked(position, action, false);
-    if (isInCheck(next, player)) return false;
+    const next = boardAfter(position, action);
+    if (boardInCheck(next, player)) return false;
     // A drop can defend our king, but it may never give check itself.
-    if (action.type === 'drop' && isInCheck(next, enemy)) return false;
+    if (action.type === 'drop' && boardInCheck(next, enemy)) return false;
     return true;
   });
 }
@@ -101,12 +127,66 @@ export function applyAction(position, action) {
   return applyUnchecked(position, action, true);
 }
 
+/**
+ * Apply an action already known to be legal for this exact position — it must
+ * have come from `legalActions(position)` and nothing may have changed since.
+ *
+ * `applyAction` re-derives the entire legal move list and string-matches the
+ * action against it. That is exactly right for a move arriving from a peer,
+ * where the list is the security boundary, and it is pure waste inside a
+ * search that generated the move itself one line earlier: it doubled move
+ * generation at every node and allocated an `actionKey` string per candidate.
+ * Only the bot should use this.
+ */
+export function applyLegalAction(position, action) {
+  return applyUnchecked(position, action, true);
+}
+
 export function isSquareAttacked(position, square, byPlayer) {
   assertSquare(square);
-  for (let from = 0; from < position.board.length; from += 1) {
-    const occupant = position.board[from];
+  return boardAttacks(position.board, square, byPlayer);
+}
+
+function boardAttacks(board, square, byPlayer) {
+  for (let from = 0; from < board.length; from += 1) {
+    const occupant = board[from];
     if (!occupant || occupant.owner !== byPlayer) continue;
-    if (attackSquares(position, from, occupant.piece).includes(square)) return true;
+    if (attacksSquare(board, from, occupant.piece, square)) return true;
+  }
+  return false;
+}
+
+/**
+ * `attackSquares(...).includes(target)` with the array never built. Same
+ * geometry, same ray rule — a ray reaches an occupied square and stops there
+ * — but it answers on the first hit and allocates nothing. This is the single
+ * hottest question in the engine: the legality filter asks it for every
+ * enemy piece, for every candidate move, at every node of the search.
+ */
+function attacksSquare(board, from, piece, target) {
+  const [row, column] = coordinates(from);
+  if (piece === KNIGHT) return stepHits(row, column, KNIGHT_STEPS, target);
+  if (piece === KING) return stepHits(row, column, KING_STEPS, target);
+  if (piece === ROOK) return rayHits(board, row, column, ORTHOGONAL, target);
+  if (piece === BISHOP) return rayHits(board, row, column, DIAGONAL, target);
+  return false;
+}
+
+function stepHits(row, column, steps, target) {
+  for (const [dr, dc] of steps) {
+    if (squareAt(row + dr, column + dc) === target) return true;
+  }
+  return false;
+}
+
+function rayHits(board, row, column, directions, target) {
+  for (const [dr, dc] of directions) {
+    for (let distance = 1; distance < BOARD_SIZE; distance += 1) {
+      const square = squareAt(row + dr * distance, column + dc * distance);
+      if (square === null) break;
+      if (square === target) return true;
+      if (board[square]) break;
+    }
   }
   return false;
 }
@@ -122,7 +202,7 @@ export function attackersOf(position, square, byPlayer) {
   for (let from = 0; from < position.board.length; from += 1) {
     const occupant = position.board[from];
     if (!occupant || occupant.owner !== byPlayer) continue;
-    if (attackSquares(position, from, occupant.piece).includes(square)) attackers.push(from);
+    if (attackSquares(position.board, from, occupant.piece).includes(square)) attackers.push(from);
   }
   return attackers;
 }
@@ -135,10 +215,19 @@ export function kingSquare(position, player) {
 }
 
 export function isInCheck(position, player) {
-  const king = position.board.findIndex(
-    (occupant) => occupant?.owner === player && occupant.piece === KING,
-  );
-  return king !== -1 && isSquareAttacked(position, king, opponent(player));
+  return boardInCheck(position.board, player);
+}
+
+function boardInCheck(board, player) {
+  // A plain loop, not findIndex: this is called twice per candidate move and
+  // the callback allocation showed up as the largest single cost in a profile.
+  for (let square = 0; square < board.length; square += 1) {
+    const occupant = board[square];
+    if (occupant && occupant.owner === player && occupant.piece === KING) {
+      return boardAttacks(board, square, opponent(player));
+    }
+  }
+  return false;
 }
 
 export function positionKey(position) {
@@ -174,7 +263,7 @@ export function actionKey(action) {
 }
 
 function applyUnchecked(position, action, countRepetition) {
-  const next = clonePosition(position);
+  const next = clonePosition(position, countRepetition);
   const player = position.turn;
 
   if (action.type === 'place-king') {
@@ -207,14 +296,14 @@ function applyUnchecked(position, action, countRepetition) {
   return next;
 }
 
-function pseudoMoves(position, from, piece, owner) {
-  return attackSquares(position, from, piece).filter((to) => {
-    const occupant = position.board[to];
+function pseudoMoves(board, from, piece, owner) {
+  return attackSquares(board, from, piece).filter((to) => {
+    const occupant = board[to];
     return !occupant || occupant.owner !== owner;
   });
 }
 
-function attackSquares(position, from, piece) {
+function attackSquares(board, from, piece) {
   const [row, column] = coordinates(from);
   if (piece === KNIGHT) {
     return KNIGHT_STEPS
@@ -222,23 +311,23 @@ function attackSquares(position, from, piece) {
       .filter((square) => square !== null);
   }
   if (piece === KING) {
-    return [...ORTHOGONAL, ...DIAGONAL]
+    return KING_STEPS
       .map(([dr, dc]) => squareAt(row + dr, column + dc))
       .filter((square) => square !== null);
   }
-  if (piece === ROOK) return raySquares(position, row, column, ORTHOGONAL);
-  if (piece === BISHOP) return raySquares(position, row, column, DIAGONAL);
+  if (piece === ROOK) return raySquares(board, row, column, ORTHOGONAL);
+  if (piece === BISHOP) return raySquares(board, row, column, DIAGONAL);
   return [];
 }
 
-function raySquares(position, row, column, directions) {
+function raySquares(board, row, column, directions) {
   const squares = [];
   for (const [dr, dc] of directions) {
     for (let distance = 1; distance < BOARD_SIZE; distance += 1) {
       const square = squareAt(row + dr * distance, column + dc * distance);
       if (square === null) break;
       squares.push(square);
-      if (position.board[square]) break;
+      if (board[square]) break;
     }
   }
   return squares;
@@ -254,11 +343,37 @@ function squareAt(row, column) {
   return row * BOARD_SIZE + column;
 }
 
+/**
+ * The board an action would leave behind, shared occupant objects and all —
+ * read-only, and only ever handed to `boardInCheck`. Occupants are replaced
+ * rather than mutated everywhere in this engine, so sharing them is safe.
+ */
+function boardAfter(position, action) {
+  const board = position.board.slice();
+  if (action.type === 'move') {
+    board[action.to] = board[action.from];
+    board[action.from] = null;
+  } else if (action.type === 'drop') {
+    board[action.to] = { owner: position.turn, piece: action.piece };
+  } else {
+    board[action.to] = { owner: position.turn, piece: KING };
+  }
+  return board;
+}
+
 function coordinates(square) {
   return [Math.floor(square / BOARD_SIZE), square % BOARD_SIZE];
 }
 
-function clonePosition(position) {
+/**
+ * `countRepetition: false` means the caller is about to read the board and
+ * throw the position away — the legality filter, which does this once per
+ * candidate move. The repetition map is shared rather than copied there: it
+ * grows by one entry every ply, so copying it thirty times per search node
+ * made the bot slower the longer the game ran, for no reason at all. A
+ * position produced that way is read-only; nothing may write to its map.
+ */
+function clonePosition(position, copyRepetitions = true) {
   return {
     board: position.board.map((occupant) => occupant ? { ...occupant } : null),
     banks: {
@@ -267,7 +382,7 @@ function clonePosition(position) {
     },
     turn: position.turn,
     phase: position.phase,
-    repetitions: { ...position.repetitions },
+    repetitions: copyRepetitions ? { ...position.repetitions } : position.repetitions,
   };
 }
 

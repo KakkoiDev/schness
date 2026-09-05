@@ -9,11 +9,13 @@ import {
   WHITE,
   actionKey,
   applyAction,
+  applyLegalAction,
   createInitialPosition,
   createPosition,
   getResult,
   isInCheck,
   legalActions,
+  legalActionsUnchecked,
   positionKey,
 } from '../src/rules.js';
 
@@ -193,4 +195,50 @@ test('the third occurrence of a complete position is a draw', () => {
   const key = positionKey(game);
   game.repetitions[key] = 3;
   assert.deepEqual(getResult(game), { type: 'draw', reason: 'threefold-repetition' });
+});
+
+/*
+ * Move generation, counted exhaustively to a fixed depth. These numbers are
+ * the engine's fingerprint: any change to legality, to how a capture refills
+ * a reserve, or to where a king may be placed moves at least one of them.
+ *
+ * They were pinned while making the search 4.3x faster, where the whole risk
+ * was that a hot-path rewrite would quietly play a different game. Nothing
+ * else in the suite would have caught that. If you change the rules on
+ * purpose, recompute them and say so in DECISIONS.md; if one moves and you
+ * did not mean it, you have a bug.
+ */
+function perft(position, depth) {
+  const actions = legalActions(position);
+  if (depth === 1) return actions.length;
+  let total = 0;
+  for (const action of actions) total += perft(applyAction(position, action), depth - 1);
+  return total;
+}
+
+test('move generation counts exactly what it has always counted', () => {
+  const start = createInitialPosition();
+  assert.equal(perft(start, 1), 4);
+  assert.equal(perft(start, 2), 16);
+  assert.equal(perft(start, 3), 558);
+  assert.equal(perft(start, 4), 17896);
+});
+
+test('the search shortcuts agree with the validating entry points', () => {
+  // The bot skips validation and re-derivation on paths where it produced the
+  // position itself. Skipping them may not change a single answer.
+  const walk = (node, depth) => {
+    const guarded = legalActions(node);
+    const direct = legalActionsUnchecked(node);
+    assert.deepEqual(direct.map(actionKey).sort(), guarded.map(actionKey).sort());
+    if (depth === 0) return;
+    for (const action of guarded) {
+      const viaChecked = applyAction(node, action);
+      const viaDirect = applyLegalAction(node, action);
+      assert.equal(positionKey(viaDirect), positionKey(viaChecked));
+      assert.deepEqual(viaDirect.repetitions, viaChecked.repetitions);
+      walk(viaChecked, depth - 1);
+    }
+  };
+  walk(createInitialPosition(), 3);
 });

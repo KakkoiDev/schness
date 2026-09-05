@@ -5,10 +5,10 @@ import {
   KNIGHT,
   ROOK,
   WHITE,
-  applyAction,
+  applyLegalAction,
   getResult,
   isInCheck,
-  legalActions,
+  legalActionsUnchecked,
   positionKey,
 } from './rules.js';
 
@@ -17,7 +17,7 @@ const MATE = 1_000_000;
 
 /** Deterministic alpha-beta search. A Web Worker can call this without UI coupling. */
 export function chooseAction(position, { depth = 4 } = {}) {
-  const actions = orderActions(position, legalActions(position));
+  const actions = orderActions(position, legalActionsUnchecked(position));
   if (!actions.length) return null;
   const player = position.turn;
   const cache = new Map();
@@ -25,7 +25,7 @@ export function chooseAction(position, { depth = 4 } = {}) {
   let bestScore = -Infinity;
 
   for (const action of actions) {
-    const score = search(applyAction(position, action), depth - 1, -Infinity, Infinity, player, cache);
+    const score = search(applyLegalAction(position, action), depth - 1, -Infinity, Infinity, player, cache);
     if (score > bestScore) {
       bestScore = score;
       bestAction = action;
@@ -47,8 +47,8 @@ function search(position, depth, alpha, beta, maximizingPlayer, cache) {
 
   const maximizing = position.turn === maximizingPlayer;
   let value = maximizing ? -Infinity : Infinity;
-  for (const action of orderActions(position, legalActions(position))) {
-    const child = search(applyAction(position, action), depth - 1, alpha, beta, maximizingPlayer, cache);
+  for (const action of orderActions(position, legalActionsUnchecked(position))) {
+    const child = search(applyLegalAction(position, action), depth - 1, alpha, beta, maximizingPlayer, cache);
     if (maximizing) {
       value = Math.max(value, child);
       alpha = Math.max(alpha, value);
@@ -70,8 +70,8 @@ function evaluate(position, player) {
     const deployed = VALUES[occupant.piece] + (occupant.piece === KING ? 0 : 20);
     score += occupant.owner === player ? deployed : -deployed;
   }
-  score += (legalActions({ ...position, turn: player }).length -
-            legalActions({ ...position, turn: enemy }).length) * 2;
+  score += (legalActionsUnchecked({ ...position, turn: player }).length -
+            legalActionsUnchecked({ ...position, turn: enemy }).length) * 2;
   if (isInCheck(position, enemy)) score += 30;
   if (isInCheck(position, player)) score -= 30;
   return score;
