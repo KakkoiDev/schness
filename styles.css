@@ -1874,3 +1874,34 @@
     margin-inline: 0;
   }
 }
+
+/*
+ * While a copy of the piece is in flight the real one waits, hidden. The class
+ * sits on the square rather than the piece because a render replaces the piece
+ * and leaves the square alone.
+ */
+.square.is-sliding .piece {
+  visibility: hidden;
+}
+
+.piece-ghost {
+  position: absolute;
+  z-index: 4;
+  background: none;
+  pointer-events: none;
+}
+
+/*
+ * The rest of the sheet gates motion behind no-preference; these two predate
+ * that and slipped past it. The caret keeps its flipped state — that is which
+ * way the disclosure is pointing, not an animation — and only loses the turn.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .mode:not(:disabled):hover {
+    transform: none;
+  }
+
+  .setup > summary::after {
+    transition: none;
+  }
+}

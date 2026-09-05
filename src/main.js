@@ -102,6 +102,7 @@ const hearOpponent = document.querySelector('#hear-opponent');
 const peerAudio = document.querySelector('#peer-audio');
 const route = gameRoute(window.location.search);
 const mobileChatQuery = window.matchMedia('(max-width: 899px)');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 let position = createInitialPosition();
 let humanColor = WHITE;
@@ -143,6 +144,7 @@ let clockSince = null;
 let clockTimer = null;
 let sound = soundSettings();
 const soundBoard = createSoundBoard(() => sound);
+let animatedPlies = 0;
 let pointerDrag = null;
 let suppressClick = false;
 
@@ -398,6 +400,7 @@ function beginOnlineMatch(color) {
   history = [];
   timeline = [position];
   reviewPly = null;
+  animatedPlies = 0;
   resigned = null;
   takebackPending = false;
   agreedDraw = false;
@@ -655,6 +658,7 @@ function resetState(nextMode, color) {
   history = [];
   timeline = [position];
   reviewPly = null;
+  animatedPlies = 0;
   resigned = null;
   takebackPending = false;
   agreedDraw = false;
@@ -1192,6 +1196,7 @@ function render() {
     button.setAttribute('aria-label', occupant
       ? `${occupant.owner} ${occupant.piece}, square ${square + 1}` : `Empty square ${square + 1}`);
   });
+  slideLastMove(last, shown);
   renderBank(opponentBank, opponent(humanColor), false, shown);
   renderBank(humanBank, humanColor, true, shown);
   const enemy = opponent(humanColor);
@@ -1323,6 +1328,56 @@ function renderBank(container, owner, interactive, shown) {
     }
     return button;
   }));
+}
+
+/**
+ * A piece that teleports between squares reads as a redraw; the same move over
+ * 150ms reads as a move.
+ *
+ * The board is rebuilt on every render and renders come thick and fast — the
+ * bot starting to think triggers one — so animating the piece element itself
+ * does not survive: the next render throws that element away mid-flight and
+ * the move snaps. What travels instead is a copy, parked over the board and
+ * outside the part that gets rebuilt. The real piece is hidden by a class on
+ * its square, and a square element is not replaced by a render, so the hiding
+ * holds however many times the board redraws underneath.
+ *
+ * Guarded three ways, because a render happens for many reasons other than a
+ * move: only on the live board, only when the history actually grew, and never
+ * for a deploy, which arrives from a reserve rather than from a square.
+ */
+function slideLastMove(last, shown) {
+  const grew = history.length > animatedPlies;
+  animatedPlies = history.length;
+  if (!grew || reviewPly !== null || last.from === null || last.to === null) return;
+  if (reducedMotion.matches) return;
+
+  const from = board.querySelector(`#square-${visualOf(last.from)}`);
+  const to = board.querySelector(`#square-${visualOf(last.to)}`);
+  const occupant = shown.board[last.to];
+  const frame = board.closest('.board-frame');
+  if (!from || !to || !occupant || !frame) return;
+
+  const origin = frame.getBoundingClientRect();
+  const start = from.getBoundingClientRect();
+  const end = to.getBoundingClientRect();
+
+  const ghost = document.createElement('div');
+  ghost.className = 'square piece-ghost';
+  ghost.style.width = `${start.width}px`;
+  ghost.style.height = `${start.height}px`;
+  ghost.style.left = `${start.left - origin.left}px`;
+  ghost.style.top = `${start.top - origin.top}px`;
+  ghost.append(pieceElement(occupant.owner, occupant.piece));
+  frame.append(ghost);
+
+  to.classList.add('is-sliding');
+  const travel = ghost.animate(
+    [{ transform: 'none' }, { transform: `translate(${end.left - start.left}px, ${end.top - start.top}px)` }],
+    { duration: 150, easing: 'cubic-bezier(.2,.7,.3,1)' },
+  );
+  const land = () => { ghost.remove(); to.classList.remove('is-sliding'); };
+  travel.finished.then(land, land);
 }
 
 function pieceElement(owner, piece) {

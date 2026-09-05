@@ -105,6 +105,31 @@ test('state tokens are defined in both themes and no decorative gradient remains
   assert.equal([...css.matchAll(/radial-gradient/g)].length, 1);
 });
 
+test('a moving piece travels outside the part of the board that gets rebuilt', async () => {
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  const slide = main.slice(main.indexOf('function slideLastMove'));
+  const body = slide.slice(0, slide.indexOf('\n}\n'));
+  // Animating the piece element itself does not survive: renders come thick
+  // and fast (the bot starting to think triggers one) and the next one throws
+  // that element away mid-flight, so the move snaps instead of moving.
+  assert.match(body, /frame\.append\(ghost\)/, 'the travelling copy must live outside the squares');
+  assert.doesNotMatch(body, /\bto\.append\(|from\.append\(/, 'a square is rebuilt; nothing may be animated inside one');
+  // Motion is opt-out everywhere else in this app; it is here too.
+  assert.match(body, /reducedMotion\.matches/);
+  // And the hiding sits on the square, which a render leaves alone.
+  assert.match(body, /to\.classList\.add\('is-sliding'\)/);
+});
+
+test('the sheet gates its motion, including the transforms added later', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  assert.match(css, /\.square\.is-sliding \.piece \{[^}]*visibility: hidden/);
+  const reduce = css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)'));
+  assert.ok(reduce, 'nothing honours a reduced-motion preference');
+  // Two transforms predated the no-preference block and slipped past it.
+  assert.match(reduce, /\.mode:not\(:disabled\):hover \{[^}]*transform: none/);
+  assert.match(reduce, /\.setup > summary::after \{[^}]*transition: none/);
+});
+
 test('a shared link brings its own preview', async () => {
   // The invite page is the link people actually paste, so it needs a card of
   // its own — worded as an invitation rather than as the front page.
