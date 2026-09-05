@@ -68,6 +68,37 @@ test('state tokens are defined in both themes and no decorative gradient remains
   assert.equal([...css.matchAll(/radial-gradient/g)].length, 1);
 });
 
+test('a shared link brings its own preview', async () => {
+  // The invite page is the link people actually paste, so it needs a card of
+  // its own — worded as an invitation rather than as the front page.
+  for (const file of ['index.html', 'game.html']) {
+    const html = await readFile(resolve(root, file), 'utf8');
+    assert.match(html, /<meta property="og:title"/, `${file} has no og:title`);
+    assert.match(html, /<meta property="og:description"/, `${file} has no og:description`);
+    assert.match(html, /<meta name="twitter:card" content="summary_large_image">/, `${file}`);
+    // Scrapers do not resolve relative urls, so the image must be absolute.
+    const image = html.match(/<meta property="og:image" content="([^"]+)"/);
+    assert.ok(image, `${file} has no og:image`);
+    assert.match(image[1], /^https:\/\//, `${file} og:image is not absolute`);
+  }
+  const lobby = await readFile(resolve(root, 'index.html'), 'utf8');
+  const invite = await readFile(resolve(root, 'game.html'), 'utf8');
+  const titleOf = (html) => html.match(/<meta property="og:title" content="([^"]+)"/)[1];
+  assert.notEqual(titleOf(lobby), titleOf(invite), 'the invite reuses the front page card');
+});
+
+test('the social card exists at the size it claims', async () => {
+  const png = await readFile(resolve(root, 'assets/social-card.png'));
+  assert.equal(png.subarray(1, 4).toString(), 'PNG');
+  // IHDR carries the real dimensions; the meta tags must not drift from them.
+  const width = png.readUInt32BE(16), height = png.readUInt32BE(20);
+  const html = await readFile(resolve(root, 'index.html'), 'utf8');
+  assert.equal(String(width), html.match(/og:image:width" content="(\d+)"/)[1]);
+  assert.equal(String(height), html.match(/og:image:height" content="(\d+)"/)[1]);
+  // Below 600px wide, the large-image card silently degrades to a thumbnail.
+  assert.ok(width >= 600 && height >= 315, `${width}x${height} is too small to render large`);
+});
+
 test('everything tappable on a phone is a 44px target', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   const phone = css.slice(css.lastIndexOf('@media(max-width:899px)'));
