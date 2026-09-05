@@ -1458,6 +1458,20 @@
   }
 }
 
+/*
+ * The board is a square sized only by width, which on a short window made it
+ * taller than the screen — in landscape on a phone you saw a rank and a half
+ * and had to scroll to find your own king. Cap it by the height available as
+ * well, and keep the rows that flank it on the board's own width so the
+ * column still reads as one object.
+ */
+.board-frame,
+.game-page .player,
+.game-page .turn-card {
+  width: min(100%, calc(100svh - 14rem));
+  margin-inline: auto;
+}
+
 /* The result card never takes the screen: players want to see the mate. */
 .board-frame {
   position: relative;
@@ -1767,5 +1781,60 @@
 
   .segmented span {
     min-height: 44px;
+  }
+}
+
+/*
+ * A phone held sideways has width to spare and almost no height. Stacking the
+ * panels under the board there costs the one axis that is scarce, so the board
+ * takes the left column sized by height, and everything else sits beside it.
+ * Same content, same order for a screen reader — only the arrangement moves.
+ */
+@media (orientation: landscape) and (max-height: 620px) {
+  /* Every row above the board costs it the axis that is already scarce. */
+  .game-page {
+    padding-top: max(.5rem, env(safe-area-inset-top));
+  }
+
+  .game-page header {
+    margin-bottom: .4rem;
+  }
+
+  .game-page #match {
+    display: grid;
+    /* A definite first track: sizing it from the board's own width instead
+       would be circular, and the board collapses. */
+    grid-template-columns: min(58vw, calc(100svh - 4.5rem)) minmax(190px, 1fr);
+    column-gap: 18px;
+    align-items: start;
+  }
+
+  .game-page .play-area {
+    display: contents;
+  }
+
+  .game-page .network-card,
+  .game-page .announcement {
+    grid-column: 1 / -1;
+  }
+
+  /* Pinned to row 1: the side stack is earlier in the DOM, so left to
+     auto-placement the board starts a row below it and loses the height. */
+  .game-page .board-frame {
+    grid-column: 1;
+    grid-row: 1 / span 6;
+    width: 100%;
+  }
+
+  /* Home / New game join the side stack rather than pushing the board down. */
+  .game-page .match-actions,
+  .game-page .player,
+  .game-page .turn-card,
+  .game-page .match-rail {
+    grid-column: 2;
+    /* Fill the side column: the shared board width and the centring that go
+       with it belong to the stacked layout, not to this one. */
+    width: auto;
+    margin-inline: 0;
   }
 }

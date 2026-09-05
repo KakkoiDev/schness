@@ -68,6 +68,20 @@ test('state tokens are defined in both themes and no decorative gradient remains
   assert.equal([...css.matchAll(/radial-gradient/g)].length, 1);
 });
 
+test('the board is bounded by the height of the window, not only its width', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  // A square sized only by width grew taller than a short window: a phone in
+  // landscape showed a rank and a half and hid the player's own king.
+  const cap = css.match(/\.board-frame,[^{]*\{[^}]*?width: min\(100%, calc\(100svh[^)]*\)\)/);
+  assert.ok(cap, 'the board no longer caps its width by the viewport height');
+  // Landscape puts the board beside the panels instead of above them, so the
+  // scarce axis is not spent on rows the board could have used.
+  const landscape = css.match(/@media \(orientation: landscape\)[^{]*\{[\s\S]*$/);
+  assert.ok(landscape, 'the landscape layout is gone');
+  assert.match(landscape[0], /grid-template-columns: min\([^)]*100svh[^)]*\)/);
+  assert.match(landscape[0], /\.game-page \.board-frame \{[^}]*grid-column: 1/);
+});
+
 test('the phone layout hides chrome from the screen, not from screen readers', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   const phone = css.slice(css.lastIndexOf('@media(max-width:899px)'));
