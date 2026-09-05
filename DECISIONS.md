@@ -99,10 +99,17 @@ without that a dead pool looks exactly like a friend who has not clicked the lin
 Everything that moves sits behind `prefers-reduced-motion: no-preference`, or is neutralised in the
 `reduce` block. That includes transforms added later — two slipped past once.
 
-The waiting dots and the reconnect bar animate too, in the same gated block. Under `reduce` the dots
-keep the graded opacity the original static indicator had, so the fallback is the old design rather
-than a dead version of the new one. The dots are hidden outright once no relay answers, so they
-never imply progress on a search that has stalled.
+Every indicator that means "something is happening" animates, in the same gated block: the waiting
+dots, the reconnect bar, the turn dot while a move is in flight, and the dot beside whoever is on
+move. Under `reduce` the waiting dots keep the graded opacity the original static indicator had, so
+the fallback is the old design rather than a dead version of the new one. They are also hidden
+outright once no relay answers, so nothing implies progress on a search that has stalled.
+
+The turn dot hangs off **`is-pending`, not `is-waiting`** — `is-waiting` is also true at checkmate,
+at a draw and after a resignation, and a finished game must not sit there pulsing as though a move
+is coming. For the same reason `matchOver()` decides `active-player`: checking only `getResult` left
+the on-move marker lit after a resignation or a lost opponent, which was invisible while the marker
+was a still dot and wrong the moment it started to pulse.
 
 Both board animations fly **a copy** parked on `.board-frame`; the move also hides the real piece
 with a class on its **square**. Animating the piece element itself does not work: renders come thick and
@@ -194,6 +201,7 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- Every activity indicator animates, including a loader for "Bot is thinking", which had none.
 - The waiting dots and reconnect bar animate; the invite card no longer touches the action row.
 - A captured piece flies to its owner's reserve, teaching the rule the dialog used to get backwards.
 - Manifest gains screenshots, shortcuts and `id`; iOS standalone metas added; the lobby offers

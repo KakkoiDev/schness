@@ -902,6 +902,16 @@ function cancelPointerDrag() {
   render();
 }
 
+/**
+ * Nobody is on move once the match has ended, however it ended. Checking only
+ * getResult left the on-move marker lit after a resignation, a draw or a lost
+ * opponent — invisible while the marker was a still dot, wrong as soon as it
+ * started pulsing.
+ */
+function matchOver(result = getResult(position)) {
+  return Boolean(result) || Boolean(resigned) || agreedDraw || disconnected;
+}
+
 function canHumanAct() {
   return !thinking && !disconnected && !resigned && !agreedDraw && reviewPly === null &&
     position.turn === humanColor && !getResult(position);
@@ -1205,8 +1215,8 @@ function render() {
   opponentBankLabel.textContent = `${colorName(enemy)} reserve · ${shown.banks[enemy].length}`;
   humanBankLabel.textContent = shown.banks[humanColor].length
     ? 'Your reserve · tap to deploy' : 'Your reserve · empty';
-  humanBank.closest('.player').classList.toggle('active-player', position.turn === humanColor && !result);
-  opponentBank.closest('.player').classList.toggle('active-player', position.turn !== humanColor && !result);
+  humanBank.closest('.player').classList.toggle('active-player', position.turn === humanColor && !matchOver(result));
+  opponentBank.closest('.player').classList.toggle('active-player', position.turn !== humanColor && !matchOver(result));
   renderTurnCard(result);
   renderMoves();
   renderResult();
@@ -1216,11 +1226,14 @@ function render() {
 }
 
 function renderTurnCard(result) {
-  const { title, detail, waiting } = turnCardContent(result);
+  const { title, detail, waiting, pending } = turnCardContent(result);
   turnTitle.textContent = title;
   turnDetail.textContent = detail;
   turnDetail.hidden = !detail;
   turnCard.classList.toggle('is-waiting', waiting);
+  // Distinct from is-waiting, which is also true once the game is over: this
+  // one means a turn is genuinely in flight, and is what the dot animates on.
+  turnCard.classList.toggle('is-pending', Boolean(pending));
   turnCard.hidden = reviewPly !== null;
   reviewCard.hidden = reviewPly === null;
   reviewTitle.textContent = reviewPly === 0
@@ -1470,10 +1483,11 @@ function turnCardContent(result) {
       title: position.phase === 'place-black-king' ? 'Bot is placing its king' : 'Bot is thinking',
       detail: 'It is choosing from the same moves and deployments you have.',
       waiting: true,
+      pending: true,
     };
   }
   if (position.turn !== humanColor) {
-    return { title: 'Opponent’s turn', detail: 'Waiting for their move.', waiting: true };
+    return { title: 'Opponent’s turn', detail: 'Waiting for their move.', waiting: true, pending: true };
   }
   if (position.phase !== 'play') {
     return {

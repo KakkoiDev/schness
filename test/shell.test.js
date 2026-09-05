@@ -444,3 +444,17 @@ test('adding to a home screen opens the app, not a browser tab', async () => {
     assert.match(html, /<meta name="apple-mobile-web-app-title" content="Schness">/, page);
   }
 });
+
+test('only a turn still in flight animates, never a finished game', async () => {
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  // is-waiting is also true at checkmate, a draw and a resignation, so the
+  // loader hangs off is-pending instead: a finished game must not sit there
+  // pulsing as though a move is coming.
+  assert.match(css, /\.turn-card\.is-pending \.turn-dot \{[^}]*animation/);
+  assert.doesNotMatch(css, /\.turn-card\.is-waiting \.turn-dot \{[^}]*animation/);
+  assert.match(main, /classList\.toggle\('is-pending'/);
+  // And nobody is marked on-move once the match has ended, however it ended.
+  assert.match(main, /function matchOver\(/);
+  assert.match(main, /active-player', position\.turn === humanColor && !matchOver/);
+});
