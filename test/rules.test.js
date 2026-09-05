@@ -16,6 +16,7 @@ import {
   isInCheck,
   legalActions,
   legalActionsUnchecked,
+  occupantOf,
   positionKey,
 } from '../src/rules.js';
 
@@ -222,6 +223,24 @@ test('move generation counts exactly what it has always counted', () => {
   assert.equal(perft(start, 2), 16);
   assert.equal(perft(start, 3), 558);
   assert.equal(perft(start, 4), 17896);
+});
+
+test('occupants are frozen shared values, so sharing a board can never leak a write', () => {
+  // `boardAfter` and `clonePosition` copy arrays, not occupants. That is only
+  // safe while nothing ever mutates an occupant, and a comment saying so is
+  // not a guard. Every occupant is one of eight frozen values instead: two
+  // boards holding a white rook hold the same object, and a write throws.
+  const start = applyAction(createInitialPosition(), { type: 'place-king', to: 13 });
+  const next = applyAction(start, { type: 'place-king', to: 2 });
+  assert.equal(next.board[13], start.board[13], 'a clone should share the occupant, not copy it');
+  assert.equal(next.board[13], occupantOf(WHITE, KING));
+  assert.ok(Object.isFrozen(next.board[13]));
+  assert.throws(() => { next.board[13].piece = ROOK; }, TypeError);
+  const fromOutside = createPosition({
+    board: [piece(WHITE, KING), ...Array(14).fill(null), piece(BLACK, KING)],
+    banks: { [WHITE]: [], [BLACK]: [] },
+  });
+  assert.equal(fromOutside.board[0], occupantOf(WHITE, KING), 'createPosition canonicalises what it is given');
 });
 
 test('the search shortcuts agree with the validating entry points', () => {

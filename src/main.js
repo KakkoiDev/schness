@@ -1,6 +1,6 @@
 import {
   BANK_PIECES, BLACK, BISHOP, KING, KNIGHT, ROOK, WHITE,
-  applyAction, attackersOf, createInitialPosition, getResult, isInCheck, kingSquare,
+  actionKey, applyAction, attackersOf, createInitialPosition, getResult, isInCheck, kingSquare,
   legalActions, opponent,
 } from './rules.js';
 import { colorName, pieceName, squareName } from './notation.js';
@@ -129,6 +129,7 @@ let history = [];
 let timeline = [position];
 let reviewPly = null;
 let resigned = null;
+let lostOnTime = false;
 let outbox = [];
 let sendFailed = false;
 let reconnectDeadline = null;
@@ -370,6 +371,10 @@ async function startOnlineSearch(gameId) {
     network.onPeerStream(receivePeerStream);
     network.onOpponentLeave(() => {
       disconnected = true;
+      // Nobody can move now, so nobody's clock may run: before this, a timed
+      // game whose opponent dropped on your turn ended with you flagged.
+      stopClockTicking();
+      clockSince = null;
       announce('Your opponent lost connection.');
       stopMicrophone();
       stopCamera();
@@ -432,6 +437,7 @@ function beginOnlineMatch(color) {
   reviewPly = null;
   animatedPlies = 0;
   resigned = null;
+  lostOnTime = false;
   takebackPending = false;
   agreedDraw = false;
   drawOffered = false;
@@ -668,10 +674,15 @@ function receivePeerAction(message) {
   if (mode !== 'online' || disconnected || position.turn === humanColor) return;
   try {
     const before = position;
+    // The engine's own object for the action, not the peer's: the message
+    // matched a legal action by key, so `"5"` would have passed for `5` and
+    // then failed every `===` against a square from here on.
+    const wanted = actionKey(message.action);
+    const action = legalActions(before).find((candidate) => actionKey(candidate) === wanted);
     position = applyActionMessage(before, message);
-    history = recordAction(history, before, message.action, position);
+    history = recordAction(history, before, action, position);
     timeline.push(position);
-    lastAction = message.action;
+    lastAction = action;
     selection = null;
     reviewPly = null;
     announceOpponentAction();
@@ -700,6 +711,7 @@ function resetState(nextMode, color) {
   reviewPly = null;
   animatedPlies = 0;
   resigned = null;
+  lostOnTime = false;
   takebackPending = false;
   agreedDraw = false;
   drawOffered = false;
@@ -989,8 +1001,16 @@ function takeBack(player) {
   reviewPly = null;
   thinking = false;
   takebackPending = false;
-  // Any reply already in flight from the worker no longer applies.
+  // Any reply already in flight from the worker no longer applies — and the
+  // worker itself is still searching the position we just left, so the next
+  // request would queue behind it. Start clean.
   botRequest += 1;
+  if (mode === 'bot') {
+    worker.terminate();
+    worker = createWorker();
+  }
+  // The side now on move starts its clock from here; nothing is refunded.
+  if (clockSince !== null) clockSince = Date.now();
   render();
 }
 
@@ -1162,6 +1182,7 @@ function startClockTicking() {
       clock = spend(clock, running, Date.now() - clockSince);
       clockSince = null;
       resigned = running;
+      lostOnTime = true;
       announce(`${running === humanColor ? 'You' : opponentLabel} ran out of time.`);
       render();
       return;
@@ -1286,7 +1307,7 @@ function renderTurnCard(result) {
 /** One sentence, generated from the finished position, over the live board. */
 function renderResult() {
   const summary = outcomeSummary({
-    position, timeline, history, humanColor, resigned, agreedDraw, opponentName: opponentLabel,
+    position, timeline, history, humanColor, resigned, onTime: lostOnTime, agreedDraw, opponentName: opponentLabel,
   });
   if (!summary || resultDismissed || reviewPly !== null) {
     resultOverlay.hidden = true;
@@ -1518,6 +1539,13 @@ function turnCardContent(result) {
   }
   if (agreedDraw) {
     return { title: 'Draw', detail: 'You and your opponent agreed to a draw.', waiting: true };
+  }
+  if (resigned && lostOnTime) {
+    return {
+      title: resigned === humanColor ? 'You ran out of time' : `${opponentLabel} ran out of time`,
+      detail: `The match ended on move ${moveCount(history)}. You can still walk back through it.`,
+      waiting: true,
+    };
   }
   if (resigned) {
     return {
