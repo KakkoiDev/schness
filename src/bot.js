@@ -16,11 +16,11 @@ const VALUES = { [KING]: 0, [ROOK]: 500, [BISHOP]: 320, [KNIGHT]: 300 };
 const MATE = 1_000_000;
 
 /** Deterministic alpha-beta search. A Web Worker can call this without UI coupling. */
-export function chooseAction(position, { depth = 4 } = {}) {
+export function chooseAction(position, { depth = 4, useCache = true } = {}) {
   const actions = orderActions(position, legalActionsUnchecked(position));
   if (!actions.length) return null;
   const player = position.turn;
-  const cache = new Map();
+  const cache = useCache ? new Map() : null;
   let bestAction = actions[0];
   let bestScore = -Infinity;
 
@@ -43,7 +43,15 @@ function search(position, depth, alpha, beta, maximizingPlayer, cache) {
   if (depth <= 0) return evaluate(position, maximizingPlayer);
 
   const key = `${positionKey(position)}|${depth}|${maximizingPlayer}`;
-  if (cache.has(key)) return cache.get(key);
+  const alphaStart = alpha;
+  const betaStart = beta;
+  const cached = cache?.get(key);
+  if (cached) {
+    if (cached.type === 'exact') return cached.value;
+    if (cached.type === 'lower') alpha = Math.max(alpha, cached.value);
+    else beta = Math.min(beta, cached.value);
+    if (alpha >= beta) return cached.value;
+  }
 
   const maximizing = position.turn === maximizingPlayer;
   let value = maximizing ? -Infinity : Infinity;
@@ -58,7 +66,10 @@ function search(position, depth, alpha, beta, maximizingPlayer, cache) {
     }
     if (beta <= alpha) break;
   }
-  cache.set(key, value);
+  if (cache) {
+    const type = value <= alphaStart ? 'upper' : value >= betaStart ? 'lower' : 'exact';
+    cache.set(key, { value, type });
+  }
   return value;
 }
 

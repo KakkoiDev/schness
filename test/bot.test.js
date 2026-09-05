@@ -34,3 +34,19 @@ test('the bot returns null when the game has no legal action', () => {
   const game = createPosition({ board, banks: { [WHITE]: [], [BLACK]: [] }, turn: WHITE });
   assert.equal(chooseAction(game, { depth: 2 }), null);
 });
+
+
+test('the transposition cache preserves the uncached alpha-beta result', () => {
+  const board = Array(16).fill(null);
+  board[15] = { owner: WHITE, piece: KING };
+  board[0] = { owner: BLACK, piece: KING };
+  const game = createPosition({
+    board,
+    banks: { [WHITE]: [ROOK], [BLACK]: [ROOK] },
+    turn: WHITE,
+  });
+  assert.equal(
+    actionKey(chooseAction(game, { depth: 4 })),
+    actionKey(chooseAction(game, { depth: 4, useCache: false })),
+  );
+});
