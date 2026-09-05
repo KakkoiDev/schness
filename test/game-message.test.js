@@ -98,6 +98,23 @@ test('a resignation reports the move it ended on', () => {
   assert.match(summary.detail, /You can still walk back through it/);
 });
 
+test('losing on the clock is not reported as resigning', () => {
+  // The clock flag reuses the resignation state machine; the words must not.
+  const mine = outcomeSummary({
+    position: createInitialPosition(), history: [], humanColor: 'white',
+    resigned: 'white', onTime: true,
+  });
+  assert.equal(mine.eyebrow, 'Time');
+  assert.equal(mine.headline, 'You ran out of time');
+  assert.doesNotMatch(mine.headline + mine.detail, /resign/i);
+  const theirs = outcomeSummary({
+    position: createInitialPosition(), history: [], humanColor: 'white',
+    resigned: 'black', onTime: true, opponentName: 'Mira',
+  });
+  assert.equal(theirs.headline, 'Mira ran out of time');
+  assert.equal(theirs.tone, 'win');
+});
+
 test('an agreed draw is distinct from a stalemate', () => {
   const summary = outcomeSummary({
     position: createInitialPosition(), history: [], humanColor: 'white', agreedDraw: true,

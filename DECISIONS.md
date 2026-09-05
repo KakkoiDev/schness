@@ -142,6 +142,20 @@ fast — the bot starting to think triggers one — and the next render throws t
 mid-flight. It looks like it works (the class appears, `animate()` returns an object) and nothing
 moves. Guarded by `test/shell.test.js`.
 
+### Both pages carry a Content-Security-Policy
+
+GitHub Pages cannot set headers, so it is a `<meta http-equiv>` on `index.html` and `game.html`, and
+the two must agree. `default-src 'self'` with `connect-src 'self' wss:` for the relays (a scheme, not
+hostnames — the relay list is append-only), `worker-src 'self'` for the bot, `media-src` for peer
+streams, no `unsafe-inline` anywhere. The app never needed inline anything: there is no `innerHTML`,
+no inline `<script>`, no inline handler, and `test/security.test.js` fails the moment one appears.
+
+Verified in Chromium: a bot game plays under it with the service worker active and the module worker
+answering, the lobby and the waiting card render, and the console reports no violation. **The online
+path is verified by the spec, not by a match** — WebSockets are governed by `connect-src`, WebRTC by
+nothing in CSP — because this sandbox cannot reach a relay. If online play ever fails with a CSP
+message in the console, that is the first place to look.
+
 ### The board is bounded by the window, not just its width
 
 `.board` is a square sized by width. On a short window that made it taller than the screen — a phone
@@ -204,6 +218,31 @@ The rules dialog opens from the Rules button and nowhere else. It used to open m
 board the first time you played, which contradicted "starts instantly" and left the board
 unclickable. The lobby's three-rule strip and the turn card carry first-run guidance instead.
 
+### The clock is one clock, kept by two players
+
+`main.js` `chargeClock`, `src/clock.js` `adoptReport`. Whoever just moved is charged, on both screens,
+for the time since the clock last changed hands; and the move itself carries the mover's own account
+of both clocks (`clock` on the action message), which the receiver adopts for the mover's side only,
+capped at its own view plus `SYNC_TOLERANCE` (3s). Each side is the authority on its own time — it
+alone knows when it pressed the clock — and the cap is what a lying peer is limited to gaining per
+move. A message without the field (an older cached build) or with a malformed one leaves the local
+view alone, so mixed builds still play.
+
+A flag is a message too. Your own clock reaching zero is yours to call, at once, and it is sent as
+`control { kind: 'flag', side }`. The opponent's clock on your screen runs one network trip behind
+theirs, so their screen calls it first; yours calls it only after the tolerance, as the fallback for a
+peer that never does. A claim that *you* flagged is checked against your own clock before it is
+believed. A move that arrives after the match has ended is ignored rather than applied over it.
+
+Both king placements are timed, on both screens. The clock stops only when the match is over.
+
+Before this the receiving side charged nobody: `receivePeerAction` never touched the clock, so each
+player's own clock paid for both sides' thinking between their own moves, and the opponent's clock on
+screen jumped back up on every move. The earlier note in this file that the two sides "drift by
+one-way latency per move" understated it. Guarded by `test/clock.test.js`, which replays the protocol
+over eighty plies at 250ms latency and asserts the two views never part by more than the tolerance,
+and by `test/shell.test.js`. **Not verified with two real peers** — nothing in this sandbox can be.
+
 ### The end of a match is announced by focus, not by the toast
 
 When the overlay arrives, focus moves to `.result-card` — `tabindex="-1"`, named by its headline and
@@ -255,11 +294,19 @@ Three things were wrong, all of them in the hottest loop in the app:
    something faster on the network path would find exactly these.
 2. **The repetition map was copied per candidate move.** It grows by one entry every ply, so cloning
    it thirty-odd times per node made the bot slower the longer the game ran — for a map the legality
-   filter never reads. `clonePosition` now shares it when the copy is a throwaway.
+   filter never reads. This step was then made redundant by step 3, which removed those clones
+   altogether, and the "share it when the copy is a throwaway" path it introduced was dead code
+   until it was deleted. **What remains: `applyLegalAction` still copies the map once per node**, so
+   the search still slows as a game lengthens — measured at 1.9× the time with a 150-entry map
+   against an empty one, at depth 4. The Log line that said it no longer degrades was wrong.
 3. **Legality cloned an entire position to ask a question about the board.** It is `boardAfter` plus
-   `boardInCheck` now — one `slice` and shared occupant objects, because occupants are replaced and
-   never mutated anywhere in this engine. `attacksSquare` answers on the first hit instead of
-   building an array to call `.includes` on it.
+   `boardInCheck` now — one `slice` of the board. That is safe because **occupants are frozen shared
+   values**: exactly eight exist (`occupantOf`), every board points at them, and a write throws.
+   It was a comment ("occupants are replaced, never mutated, everywhere in this engine") first; the
+   comment was true and unenforced, and enforcing it also let `clonePosition` stop spreading sixteen
+   objects per node, which is another 1.2× on the search. `test/rules.test.js` pins the identity
+   sharing and the throw. `attacksSquare` answers on the first hit instead of building an array to
+   call `.includes` on it.
 
 **How this was made safe, and how to make the next one safe.** Every step was checked two ways: an
 equivalence harness comparing the live engine against a frozen copy over 21,215 positions from 400
@@ -269,6 +316,18 @@ counts to depth 4 (4 / 16 / 558 / 17,896) and a test that the unguarded shortcut
 guarded entry points to depth 3. **Nothing else in the suite would catch an engine that quietly
 plays a different game.** If you change the rules on purpose, recompute the perft numbers and say so
 here.
+
+The perft numbers were later recounted by an implementation written from the rules dialog alone,
+without reference to `rules.js`, and agree through depth 5 (457,568). So they pin what the dialog
+says, not merely what the engine did.
+
+**What the harness cannot see, by design.** Comparing against a frozen copy proves nothing about a
+bug both copies share. The search's transposition cache is one: `search()` stores the value a node
+returned after an alpha-beta cutoff — a bound, not the true value — and reads it back under a
+different window. At depth 4 that changed the chosen move in 2 of 60 sampled positions against the
+same search with the cache disabled. It never shows at depth 3, where no transposition can occur
+within the tree, so Learning and Steady are unaffected; Sharp plays a move its own search would not
+choose about one time in thirty. Not a regression from the speedup, and not fixed here.
 
 ## Testing
 
@@ -308,6 +367,16 @@ Honest list of what is not done and what cannot be checked from a sandbox:
   shows the rich install dialog both need hardware.
 - **Sound design.** There are cues and they are off until asked for, but nothing here is composed;
   it is the largest remaining gap in game feel and it cannot be judged from a sandbox.
+- **The online clock has never run between two real peers.** The protocol is in "The clock is one
+  clock" and is exercised by a replay in the suite; a real match on a real network is what would
+  confirm it.
+- **A takeback does not refund clock time**, on purpose. It restarts the mover's clock at the moment
+  of the takeback.
+- **Sharp plays itself to a draw.** Sixteen self-play games at depth 4 from every king placement:
+  fourteen ended in threefold repetition, mean 27 moves. At depth 3, none did (7–6 with three games
+  past 100 moves). The search scores a draw as 0 and equal material as roughly 0, so it shuffles.
+  A contempt term, or scoring repetition below the static evaluation, would change how the hardest
+  opponent feels more than any further speed-up.
 
 ---
 
@@ -315,9 +384,15 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- A move carries the mover's clocks and the receiver adopts them within a tolerance; a flag is a
+  message; both king placements are timed. The receiving side used to charge nobody.
+- A time loss is reported as a time loss, not a resignation; the clock stops when the opponent
+  drops; a takeback restarts the mover's clock and the bot worker; both pages carry a CSP.
+- Occupants are frozen shared values, which enforces what step 3 of the search work assumed and
+  takes another fifth off the search.
 - A wait that has gone on too long says what it cannot rule out, instead of implying patience.
-- The bot search is 4.3× faster and no longer degrades as a game lengthens; move generation is
-  pinned by perft counts.
+- The bot search is 4.3× faster; move generation is pinned by perft counts. (It still slows as a
+  game lengthens — see "The search".)
 - The end of a match arrives — the veil fades, the card rises — instead of being there on the next
   frame.
 - The board exposes real rows and cells, and the rules dialog scrolls from a keyboard.

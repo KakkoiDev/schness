@@ -29,12 +29,23 @@ export function applyActionMessage(position, message) {
  */
 export function outcomeSummary({
   position, timeline = [], history = [], humanColor,
-  resigned = null, agreedDraw = false, opponentName = 'Your opponent',
+  resigned = null, onTime = false, agreedDraw = false, opponentName = 'Your opponent',
 }) {
   if (agreedDraw) {
     return {
       eyebrow: 'Draw', headline: 'Draw agreed', tone: 'neutral',
       detail: `Neither side pressed on. The match ended on move ${moveCount(history)}.`,
+    };
+  }
+  if (resigned && onTime) {
+    // The clock, not a choice, ended it. Calling that a resignation misreports
+    // the game to the player who lost it and to the one who won it.
+    const mine = resigned === humanColor;
+    return {
+      eyebrow: 'Time',
+      headline: mine ? 'You ran out of time' : `${opponentName} ran out of time`,
+      tone: mine ? 'neutral' : 'win',
+      detail: `${mine ? 'Your' : 'Their'} clock hit zero on move ${moveCount(history)}. You can still walk back through it.`,
     };
   }
   if (resigned) {

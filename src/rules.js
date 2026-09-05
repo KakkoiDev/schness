@@ -20,6 +20,22 @@ const KNIGHT_STEPS = [
 ];
 const PIECE_CODE = { [KING]: 'K', [ROOK]: 'R', [BISHOP]: 'B', [KNIGHT]: 'N' };
 
+/*
+ * An occupant is a value, not an object with a life of its own. Exactly eight
+ * exist — one per owner and piece — and they are frozen, so every board shares
+ * them and a write to one throws (`'use strict'` is implicit in a module).
+ * That is what makes it safe for `boardAfter` and `clonePosition` to share
+ * occupants between boards: the invariant is enforced, not described.
+ */
+const OCCUPANTS = {};
+for (const owner of PLAYERS) {
+  for (const piece of PIECES) OCCUPANTS[`${owner}:${piece}`] = Object.freeze({ owner, piece });
+}
+
+export function occupantOf(owner, piece) {
+  return OCCUPANTS[`${owner}:${piece}`];
+}
+
 export function opponent(player) {
   return player === WHITE ? BLACK : WHITE;
 }
@@ -40,7 +56,7 @@ export function createInitialPosition() {
 /** Create a checked position for tests, saved games, and network snapshots. */
 export function createPosition({ board, banks, turn = WHITE, phase = 'play', repetitions = {} }) {
   const position = {
-    board: board.map((occupant) => occupant ? { ...occupant } : null),
+    board: board.map((occupant) => occupant ? occupantOf(occupant.owner, occupant.piece) : null),
     banks: {
       [WHITE]: [...banks[WHITE]],
       [BLACK]: [...banks[BLACK]],
@@ -263,11 +279,11 @@ export function actionKey(action) {
 }
 
 function applyUnchecked(position, action, countRepetition) {
-  const next = clonePosition(position, countRepetition);
+  const next = clonePosition(position);
   const player = position.turn;
 
   if (action.type === 'place-king') {
-    next.board[action.to] = { owner: player, piece: KING };
+    next.board[action.to] = occupantOf(player, KING);
     if (position.phase === 'place-white-king') {
       next.phase = 'place-black-king';
       next.turn = BLACK;
@@ -285,7 +301,7 @@ function applyUnchecked(position, action, countRepetition) {
   } else if (action.type === 'drop') {
     const bankIndex = next.banks[player].indexOf(action.piece);
     next.banks[player].splice(bankIndex, 1);
-    next.board[action.to] = { owner: player, piece: action.piece };
+    next.board[action.to] = occupantOf(player, action.piece);
     next.turn = opponent(player);
   }
 
@@ -344,9 +360,9 @@ function squareAt(row, column) {
 }
 
 /**
- * The board an action would leave behind, shared occupant objects and all —
- * read-only, and only ever handed to `boardInCheck`. Occupants are replaced
- * rather than mutated everywhere in this engine, so sharing them is safe.
+ * The board an action would leave behind — read-only, and only ever handed to
+ * `boardInCheck`. Occupants are frozen shared values (see `OCCUPANTS`), so
+ * copying the array is copying the board.
  */
 function boardAfter(position, action) {
   const board = position.board.slice();
@@ -354,9 +370,9 @@ function boardAfter(position, action) {
     board[action.to] = board[action.from];
     board[action.from] = null;
   } else if (action.type === 'drop') {
-    board[action.to] = { owner: position.turn, piece: action.piece };
+    board[action.to] = occupantOf(position.turn, action.piece);
   } else {
-    board[action.to] = { owner: position.turn, piece: KING };
+    board[action.to] = occupantOf(position.turn, KING);
   }
   return board;
 }
@@ -366,23 +382,23 @@ function coordinates(square) {
 }
 
 /**
- * `countRepetition: false` means the caller is about to read the board and
- * throw the position away — the legality filter, which does this once per
- * candidate move. The repetition map is shared rather than copied there: it
- * grows by one entry every ply, so copying it thirty times per search node
- * made the bot slower the longer the game ran, for no reason at all. A
- * position produced that way is read-only; nothing may write to its map.
+ * The repetition map is copied here, once per applied action, and it grows by
+ * one entry per ply: a search late in a long game pays for that at every
+ * node. Measured at 1.9× the time of the same search with an empty map once
+ * the map holds 150 entries. Nothing shares it any more — the legality filter
+ * stopped cloning positions at all — so this is the remaining length-dependent
+ * cost in the engine, and it is documented in DECISIONS.md rather than fixed.
  */
-function clonePosition(position, copyRepetitions = true) {
+function clonePosition(position) {
   return {
-    board: position.board.map((occupant) => occupant ? { ...occupant } : null),
+    board: position.board.slice(),
     banks: {
       [WHITE]: [...position.banks[WHITE]],
       [BLACK]: [...position.banks[BLACK]],
     },
     turn: position.turn,
     phase: position.phase,
-    repetitions: copyRepetitions ? { ...position.repetitions } : position.repetitions,
+    repetitions: { ...position.repetitions },
   };
 }
 
