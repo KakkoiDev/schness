@@ -1353,6 +1353,32 @@
     0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
     50%      { box-shadow: 0 0 0 9px color-mix(in srgb, var(--accent) 4%, transparent); }
   }
+
+  /*
+   * The end of a match was a card that was simply there on the next frame.
+   * It is the one moment in a game worth a beat, so the veil fades and the
+   * card arrives from below. It sits on `.board-frame`, not inside a square,
+   * so no render throws it away mid-flight — and `[hidden]` is
+   * `display: none`, so the animation runs on the frame it stops being
+   * hidden and not again until it is dismissed and comes back.
+   */
+  .result-overlay:not([hidden]) {
+    animation: result-veil 220ms ease-out both;
+  }
+
+  .result-overlay:not([hidden]) .result-card {
+    animation: result-rise 320ms cubic-bezier(.2, .8, .25, 1) both;
+  }
+
+  @keyframes result-veil {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes result-rise {
+    from { opacity: 0; transform: translateY(16px) scale(.97); }
+    to   { opacity: 1; transform: none; }
+  }
 }
 
 .progress-legend {

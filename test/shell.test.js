@@ -488,6 +488,17 @@ test('adding to a home screen opens the app, not a browser tab', async () => {
   }
 });
 
+test('the end of a match arrives, rather than simply being there', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  const gated = css.slice(css.indexOf('@media (prefers-reduced-motion: no-preference)'));
+  const entrance = gated.slice(0, gated.indexOf('\n}\n'));
+  // Gated like everything else that moves, and keyed off :not([hidden]) so it
+  // plays on the frame the overlay appears and not on every render after.
+  assert.match(entrance, /\.result-overlay:not\(\[hidden\]\) \{[^}]*animation: result-veil/);
+  assert.match(entrance, /\.result-overlay:not\(\[hidden\]\) \.result-card \{[^}]*animation: result-rise/);
+  assert.match(entrance, /@keyframes result-rise \{[^}]*translateY\(16px\)/);
+});
+
 test('only a turn still in flight animates, never a finished game', async () => {
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');

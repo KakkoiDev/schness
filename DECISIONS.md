@@ -102,6 +102,9 @@ rotates.
 
 Every indicator that means "something is happening" animates, in that gated block: the waiting dots,
 the reconnect bar, the turn dot while a move is in flight, and the dot beside whoever is on move.
+The result overlay is in there too — the veil fades and the card rises, because the end of a match
+is the one moment in a game worth a beat. It hangs off `:not([hidden])`, so it plays on the frame
+the overlay appears and not again on every render after.
 The waiting dots bounce — `translateY(-5px) scale(1.15)` on 6px dots. They were reported as static
 three separate times while the rule was present and correct, because a 5px dot rising 1.4px reads as
 nothing at a glance; the amplitude is the feature, not a detail to tune down.
@@ -235,14 +238,15 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 - **Relay liveness is unverified.** The ten relays are taken on trystero's authority. Prune dead
   ones from the *end* of the list only, and only after checking with real network access.
-- **The reconnect, expired and room-full cards have never been seen.** They need two real peers on
-  live relays.
+- **The reconnect, expired and room-full cards have never been reached.** They have now been forced
+  visible in Chromium and read at a phone size, so the layout and copy are known good; the paths
+  that raise them still need two real peers on live relays.
 - **Chat and voice are untested** for the same reason.
 - **No real device has run this.** Every layout judgement is Chromium at a phone viewport.
 - **Install behaviour is structural only** — whether iOS launches standalone and whether Android
   shows the rich install dialog both need hardware.
-- **Game feel beyond the board.** The endgame is a card rather than a moment, and there is no sound
-  design worth the name.
+- **Sound design.** There are cues and they are off until asked for, but nothing here is composed;
+  it is the largest remaining gap in game feel and it cannot be judged from a sandbox.
 
 ---
 
@@ -250,6 +254,8 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- The end of a match arrives — the veil fades, the card rises — instead of being there on the next
+  frame.
 - The board exposes real rows and cells, and the rules dialog scrolls from a keyboard.
 - Every control on the invite card, and reserve tiles on a small phone, reach the 44px target.
 - The chat panel waits for a second player instead of for online mode, so it stops appearing in the
