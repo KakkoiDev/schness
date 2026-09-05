@@ -65,3 +65,21 @@ test('a comfortable margin, not a hairline pass', async () => {
   assert.ok(ratio(tokens.muted, tokens.paper) >= 4.6);
   assert.ok(ratio(tokens['accent-text'], tokens.paper) >= 4.6);
 });
+
+test('nothing hardcodes the accent, in either theme', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  // Six rings and shadows once baked in the light accent as an rgb() literal,
+  // so dark mode drew the wrong hue. It went unnoticed only because both
+  // themes were the same colour family at the time.
+  for (const selector of [':root {', ':root[data-theme="dark"]']) {
+    const tokens = await theme(selector);
+    const { accent } = tokens;
+    const [r, g, b] = [1, 3, 5].map((i) => Number.parseInt(accent.slice(i, i + 2), 16));
+    const literal = new RegExp(`rgb\\(\\s*${r}[ ,]+${g}[ ,]+${b}`);
+    assert.doesNotMatch(css, literal, `${accent} is written out as rgb() somewhere instead of var(--accent)`);
+    // The hex itself may appear only where the token is defined.
+    assert.equal([...css.matchAll(new RegExp(accent, 'gi'))].length,
+      [...css.matchAll(new RegExp(`--accent(-text)?:${accent}`, 'gi'))].length,
+      `${accent} is used outside the token definitions`);
+  }
+});

@@ -133,8 +133,16 @@ surface in both themes, with a floor at **4.6** rather than 4.5. The floor is de
 once sat at 4.4954:1, printed as "4.50" in any two-decimal report, and failed while looking like it
 passed.
 
-`--accent` stays bright for dots, fills and focus rings. **`--accent-text` is the one for text** —
-the bright accent scores ~3.2:1 on light backgrounds.
+`--accent` is the fill for dots, rings and selection; **`--accent-text` is the one for text**,
+because a fill colour bright enough to read as a dot rarely clears 4.5:1 as type. The accent is plum
+(`#7d3f6d` light, `#c98ab8` dark). It was orange, which read as somebody else's brand rather than
+this app's, and it is chosen to sit opposite the sage board while staying clear of `--danger`
+(burnt red), `--warn` (amber) and `--focus` (blue), all of which have to remain tellable apart.
+
+**Never hardcode the accent.** Tints go through `color-mix(in srgb, var(--accent) N%, transparent)`.
+Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark mode drew the light
+theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
+would have been glaring. Guarded by `test/contrast.test.js`.
 
 Everything tappable is ≥44px tall on a phone. Before that rule the header buttons were 33px and the
 Moves toggle was 43×14.
@@ -201,6 +209,7 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- The accent moved from orange to plum, and accent tints stopped being hardcoded.
 - Every activity indicator animates, including a loader for "Bot is thinking", which had none.
 - The waiting dots and reconnect bar animate; the invite card no longer touches the action row.
 - A captured piece flies to its owner's reserve, teaching the rule the dialog used to get backwards.
