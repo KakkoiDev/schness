@@ -335,6 +335,8 @@ async function startOnlineSearch(gameId) {
   stopNetwork();
   resetState('online', WHITE);
   board.closest('.play-area').hidden = true;
+  // resetState already rendered, so the rail needs telling directly here.
+  matchRail.hidden = true;
   inviteUrl.value = window.location.href;
   showCard('waiting');
   try {
@@ -1164,6 +1166,9 @@ function render() {
   const shown = displayedPosition();
   const last = actionHighlights(reviewPly === null ? lastAction : history[reviewPly - 1]?.action ?? null);
   board.closest('.play-area').classList.toggle('is-reviewing', reviewPly !== null);
+  // Undo and Resign are about a match; while one is being set up there is
+  // nothing to undo or resign, so the rail follows the board on or off screen.
+  matchRail.hidden = board.closest('.play-area').hidden;
   board.classList.toggle('keyboard-active', keyboardActive);
   if (keyboardActive) board.setAttribute('aria-activedescendant', `square-${cursor}`);
   else board.removeAttribute('aria-activedescendant');
@@ -1229,6 +1234,9 @@ function renderResult() {
     return;
   }
   resultOverlay.hidden = false;
+  // The overlay says how it ended, over the board. Leaving the turn card up
+  // printed the same two sentences again, directly underneath it.
+  turnCard.hidden = true;
   resultCard.classList.toggle('is-win', summary.tone === 'win');
   resultEyebrow.textContent = summary.eyebrow;
   resultHeadline.textContent = summary.headline;

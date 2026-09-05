@@ -68,6 +68,26 @@ test('state tokens are defined in both themes and no decorative gradient remains
   assert.equal([...css.matchAll(/radial-gradient/g)].length, 1);
 });
 
+test('everything tappable on a phone is a 44px target', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  const phone = css.slice(css.lastIndexOf('@media(max-width:899px)'));
+  // Measured before this rule: header buttons 33px, New game 37, Moves 43x14.
+  const targets = phone.split('}').filter((rule) => rule.includes('min-height: 44px')).join('\n');
+  assert.ok(targets, 'the phone layout no longer guarantees a 44px tap target');
+  for (const selector of ['.text-button', '.reset', '.rail-button', '.moves-link']) {
+    assert.ok(targets.includes(selector), `${selector} is not held to a 44px target`);
+  }
+});
+
+test('the outcome is stated once, and the rail belongs to a live match', async () => {
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  // The overlay says how it ended over the board; the turn card said it again
+  // underneath, word for word.
+  assert.match(main, /resultOverlay\.hidden = false;[\s\S]{0,240}?turnCard\.hidden = true;/);
+  // Nothing to undo or resign while a match is still being set up.
+  assert.match(main, /matchRail\.hidden = board\.closest\('\.play-area'\)\.hidden;/);
+});
+
 test('the board is bounded by the height of the window, not only its width', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   // A square sized only by width grew taller than a short window: a phone in
