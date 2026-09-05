@@ -555,3 +555,10 @@ test('only a turn still in flight animates, never a finished game', async () => 
   assert.match(main, /function matchOver\(/);
   assert.match(main, /active-player', position\.turn === humanColor && !matchOver/);
 });
+
+
+test('turn copy cannot resize the play layout', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  assert.match(css, /\.game-page \.turn-card:not\(\.review-card\)\s*\{[^}]*min-height:\s*6\.375rem;[^}]*margin-bottom:\s*1rem;/);
+  assert.match(css, /@media \(max-width: 760px\)[\s\S]*?\.game-page \.turn-card:not\(\.review-card\)\s*\{[^}]*min-height:\s*4\.75rem;[^}]*margin-bottom:\s*\.875rem;/);
+});

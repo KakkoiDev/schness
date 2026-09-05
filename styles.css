@@ -2047,3 +2047,20 @@
     transition: none;
   }
 }
+
+
+/*
+ * Turn copy ranges from a two-line instruction to just “Your turn”. Reserve
+ * the longest normal state so changing turns never moves the board.
+ */
+.game-page .turn-card:not(.review-card) {
+  min-height: 6.375rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 760px) {
+  .game-page .turn-card:not(.review-card) {
+    min-height: 4.75rem;
+    margin-bottom: .875rem;
+  }
+}

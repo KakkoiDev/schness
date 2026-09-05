@@ -256,6 +256,16 @@ stated once". Before this, an ending that no opponent move delivered (you resign
 the one who mates) was announced by nothing at all and left focus on a square the overlay had just
 covered and disabled. `announceOpponentAction` only ever covered the other half.
 
+### The turn card does not move the board
+
+Its copy ranges from a wrapped king-placement instruction to the two words “Your turn”. The detail
+line is hidden when there is nothing useful to add, but the card reserves the height of the longest
+normal state so that change does not pull the board up and down. The mobile minimum is smaller than
+the desktop one because its unframed treatment has less padding. Both keep explicit space below the
+card. The review card is excluded: it is a different component that replaces the turn status.
+
+Guarded by `test/shell.test.js`.
+
 ### The turn card says what is true now
 
 It carries state, not standing instructions. It used to repeat the rules of the game every single
@@ -382,6 +392,8 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 ## Log
 
 Newest first. One line per decision that changed how the app behaves.
+
+- The turn card reserves a responsive height and bottom margin, so changing copy cannot move the board.
 
 - Alpha-beta transposition entries distinguish exact values from upper and lower bounds; the cached
   search is checked against an uncached reference path.
