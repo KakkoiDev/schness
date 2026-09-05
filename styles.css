@@ -1135,6 +1135,9 @@
 
 /* Network cards: every state says what happened and what to do next. */
 .network-card {
+  /* The action row above ends in a pill, and at 2px apart the two read as one
+     crowded block. This is the only screen where the gap is free: no board. */
+  margin-top: clamp(16px, 2.5vh, 28px);
   justify-self: center;
   width: min(420px, 100%);
   border: 1px solid var(--line);
@@ -1240,12 +1243,28 @@
   text-wrap: pretty;
 }
 
-/* Inline, so the way out sits in the sentence rather than above it. */
-.card-note .card-link {
-  margin-left: 6px;
+/*
+ * The way out sits under the sentence, not inside it. Inline it needed vertical
+ * padding to reach a 44px target, and that padding stretched the line box —
+ * the sentence above it gained a visible gap before its last line.
+ */
+.card-note {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-/* A static activity indicator: three dots, no motion. */
+.card-note .card-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-left: 0;
+  padding-block: 0;
+}
+
+/* Three dots. They carry "still listening", so they move — but only when
+ * motion is welcome, and the pulse is hidden outright once no relay answers,
+ * so it never animates over a search that has actually stalled. */
 .pulse {
   display: flex;
   flex: none;
@@ -1287,6 +1306,30 @@
   height: 100%;
   border-radius: 999px;
   background: var(--warn);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pulse i {
+    animation: listening 1.25s ease-in-out infinite;
+  }
+
+  .pulse i:nth-child(2) {
+    animation-delay: .16s;
+  }
+
+  .pulse i:nth-child(3) {
+    animation-delay: .32s;
+  }
+
+  @keyframes listening {
+    0%, 70%, 100% { opacity: .3; transform: scale(.72); }
+    35%           { opacity: 1;  transform: scale(1); }
+  }
+
+  /* The countdown is redrawn once a second; without this it steps. */
+  .progress i {
+    transition: width 1s linear;
+  }
 }
 
 .progress-legend {

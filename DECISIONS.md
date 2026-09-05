@@ -99,6 +99,11 @@ without that a dead pool looks exactly like a friend who has not clicked the lin
 Everything that moves sits behind `prefers-reduced-motion: no-preference`, or is neutralised in the
 `reduce` block. That includes transforms added later — two slipped past once.
 
+The waiting dots and the reconnect bar animate too, in the same gated block. Under `reduce` the dots
+keep the graded opacity the original static indicator had, so the fallback is the old design rather
+than a dead version of the new one. The dots are hidden outright once no relay answers, so they
+never imply progress on a search that has stalled.
+
 Both board animations fly **a copy** parked on `.board-frame`; the move also hides the real piece
 with a class on its **square**. Animating the piece element itself does not work: renders come thick and
 fast — the bot starting to think triggers one — and the next render throws the element away
@@ -189,6 +194,7 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- The waiting dots and reconnect bar animate; the invite card no longer touches the action row.
 - A captured piece flies to its owner's reserve, teaching the rule the dialog used to get backwards.
 - Manifest gains screenshots, shortcuts and `id`; iOS standalone metas added; the lobby offers
   installation in place, only while there is a prompt to accept.
