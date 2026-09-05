@@ -68,6 +68,15 @@ test('state tokens are defined in both themes and no decorative gradient remains
   assert.equal([...css.matchAll(/radial-gradient/g)].length, 1);
 });
 
+test('the rules dialog only ever opens from a button', async () => {
+  for (const file of ['src/main.js', 'src/lobby.js']) {
+    const source = await readFile(resolve(root, file), 'utf8');
+    // A match that opens behind a modal is not the instant start we promise.
+    assert.doesNotMatch(source, /^\s*rulesDialog\.showModal\(\)/m, `${file} auto-opens the rules`);
+    assert.match(source, /data-open-rules/, `${file} lost the Rules button binding`);
+  }
+});
+
 test('lobby and game are separate documents with rules and home navigation', async () => {
   const html = await readFile(resolve(root, 'index.html'), 'utf8');
   const game = await readFile(resolve(root, 'game.html'), 'utf8');
@@ -77,8 +86,9 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(html, /Schness in four rules/);
   assert.equal([...html.matchAll(/<li><strong>/g)].length, 4);
   assert.match(html, /Two things that trip people up/);
-  assert.match(html, /id="rules-optout"/);
   assert.match(html, /class="rules-confirm"[^>]*>Got it</);
+  // Nothing opens the rules for you, so there is no "don't show this" to offer.
+  assert.doesNotMatch(html, /id="rules-optout"/);
   assert.match(html, /class="dialog-grab"/);
   // The three rules are the lobby's pitch, and the bot is the primary action.
   assert.equal([...html.matchAll(/class="strip-number"/g)].length, 3);
@@ -89,7 +99,11 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(css, /\.dialog-body\s*{[\s\S]*?grid-template-columns:\s*180px minmax\(0, 1fr\)/);
   assert.match(css, /\.dialog-foot\s*{[\s\S]*?background:\s*var\(--sunk\)/);
   assert.match(css, /\.rules-strip\s*{[\s\S]*?gap:\s*1px;[\s\S]*?background:\s*var\(--line\)/);
-  // Strength and clock are chosen before the match, on the lobby.
+  // Strength and clock are chosen before the match, on the lobby — folded away
+  // behind a disclosure whose summary still names the pair you would play.
+  assert.match(html, /<details class="setup">/);
+  assert.match(html, /id="setup-summary"/);
+  assert.doesNotMatch(html, /<details class="setup" open>/);
   assert.equal([...html.matchAll(/name="difficulty"/g)].length, 3);
   assert.match(html, /value="steady" checked/);
   assert.equal([...html.matchAll(/name="clock"/g)].length, 4);

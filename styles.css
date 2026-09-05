@@ -1504,6 +1504,52 @@
   }
 }
 
+/* Setup stays folded away: the pitch and the two ways to play come first. */
+.setup {
+  margin-top: 1.6rem;
+  border: 1px solid var(--line);
+  border-radius: .9rem;
+  background: var(--surface);
+}
+
+.setup > summary {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  padding: .85rem 1.2rem;
+  color: var(--muted);
+  font-size: 13px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.setup > summary::-webkit-details-marker {
+  display: none;
+}
+
+.setup > summary::after {
+  content: "▾";
+  transition: transform 140ms ease;
+}
+
+.setup[open] > summary::after {
+  transform: rotate(180deg);
+}
+
+.setup-current {
+  margin-left: auto;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.setup-body {
+  padding: 0 1.2rem 1.2rem;
+}
+
+.setup-body .strengths {
+  margin-top: 0;
+}
+
 /* Bot strength and clock, chosen before the match. */
 .strengths,
 .clock-choice {
