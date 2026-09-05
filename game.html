@@ -16,6 +16,7 @@
       <a class="brand" href="./" aria-label="Schness home"><span class="brand-mark">S</span><span><h1>Schness</h1></span></a>
       <div class="header-actions">
         <button class="text-button theme-button" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
+        <button class="text-button" type="button" data-open-sound>Sound</button>
         <button class="text-button rules-button" type="button" data-open-rules>Rules</button>
       </div>
     </header>
@@ -25,23 +26,140 @@
         <a id="back-to-menu" class="text-button" href="./">← Home</a>
         <button id="reset" class="reset" type="button">New game</button>
       </div>
-      <div id="network-note" class="network-note" hidden></div>
-      <div id="invite" class="invite" hidden>
-        <label for="invite-url">Match link</label>
-        <div><input id="invite-url" type="url" readonly><button id="copy-invite" type="button">Copy</button></div>
-      </div>
+      <section id="network-card" class="network-card" hidden>
+        <div id="card-waiting" class="card-state" hidden>
+          <p class="eyebrow">Waiting for opponent</p>
+          <h2>Send this link</h2>
+          <p class="card-body">The match starts the moment they open it. You’ll play White.</p>
+          <div class="link-row">
+            <input id="invite-url" type="url" readonly aria-label="Match link">
+            <button id="copy-invite" type="button">Copy</button>
+          </div>
+          <div class="card-foot">
+            <span class="pulse" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span>Listening for a second player</span>
+            <button id="cancel-search" class="card-link" type="button">Cancel</button>
+          </div>
+        </div>
+        <div id="card-reconnect" class="card-state" hidden>
+          <p class="eyebrow"><span class="state-dot is-warn" aria-hidden="true"></span>Reconnecting</p>
+          <h2>Opponent lost connection</h2>
+          <p class="card-body">The board is saved. If they don’t return within the countdown, the match is yours.</p>
+          <div class="progress"><i id="reconnect-bar"></i></div>
+          <p class="progress-legend"><span>Waiting</span><span id="reconnect-left">1:00 left</span></p>
+          <div class="card-actions">
+            <button id="claim-win" class="card-primary" type="button">Claim the win</button>
+            <button id="keep-waiting" class="card-secondary" type="button">Keep waiting</button>
+          </div>
+        </div>
+        <div id="card-expired" class="card-state" hidden>
+          <p class="eyebrow"><span class="state-dot is-danger" aria-hidden="true"></span>Link expired</p>
+          <h2>This game is no longer open</h2>
+          <p class="card-body">The invite was already used or has gone stale. Start a fresh one, or play the bot while you wait.</p>
+          <div class="card-actions">
+            <button id="new-online" class="card-primary" type="button">New online game</button>
+            <button id="bot-instead" class="card-secondary" type="button">Play the bot</button>
+          </div>
+        </div>
+      </section>
+      <p id="announcement" class="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
       <div class="play-area">
-        <section class="player opponent" aria-label="Opponent pieces">
-          <div><p class="label">Opponent</p><strong id="opponent-name">Bot</strong></div>
-          <div id="opponent-bank" class="bank" aria-label="Opponent reserve"></div>
+        <section class="player opponent" aria-label="Opponent">
+          <div class="player-identity">
+            <span class="player-dot" aria-hidden="true"></span>
+            <span class="player-lines">
+              <span class="eyebrow">Opponent</span>
+              <strong id="opponent-name">Bot · Black</strong>
+            </span>
+          </div>
+          <div class="reserve">
+            <span id="opponent-bank-label" class="reserve-label">Black reserve · 3</span>
+            <div id="opponent-bank" class="bank" aria-labelledby="opponent-bank-label"></div>
+          </div>
+          <p id="opponent-clock" class="clock" hidden></p>
         </section>
-        <p id="status" class="status" aria-live="polite"><span></span></p>
-        <div id="board" class="board" role="grid" aria-label="Schness board"></div>
-        <section class="player you" aria-label="Your pieces">
-          <div><p class="label">Player</p><strong id="human-name">You · White</strong></div>
-          <div id="human-bank" class="bank" aria-label="Your reserve"></div>
+        <p id="connection-strip" class="connection-strip" hidden>
+          <span class="conn-dot" aria-hidden="true"></span>
+          <span id="connection-label"></span>
+          <span id="connection-note"></span>
+        </p>
+        <div class="board-frame">
+          <div id="board" class="board" role="grid" aria-label="Schness board" tabindex="0"
+               aria-describedby="board-help"></div>
+          <div id="result-overlay" class="result-overlay" hidden>
+            <section class="result-card" role="group" aria-labelledby="result-headline">
+              <p id="result-eyebrow" class="eyebrow"></p>
+              <h2 id="result-headline"></h2>
+              <p id="result-detail" class="result-detail"></p>
+              <div class="card-actions">
+                <button id="result-primary" class="card-primary" type="button"></button>
+                <button id="result-secondary" class="card-secondary" type="button"></button>
+              </div>
+              <button id="result-home" class="card-link" type="button">Back home</button>
+            </section>
+          </div>
+        </div>
+        <p id="board-help" class="visually-hidden">
+          Arrow keys move the cursor, Enter picks up or plays, Escape puts the piece back down,
+          1 to 3 pick a reserve piece, a square name jumps there, and question mark lists the shortcuts.
+        </p>
+        <section id="turn-card" class="turn-card" aria-live="polite">
+          <p class="turn-headline"><span class="turn-dot" aria-hidden="true"></span><strong id="turn-title">Your turn</strong></p>
+          <p id="turn-detail" class="turn-detail"></p>
+          <button id="deselect" class="turn-action" type="button" hidden>Deselect</button>
+        </section>
+        <section id="review-card" class="turn-card review-card" hidden>
+          <p class="turn-headline"><span class="turn-dot" aria-hidden="true"></span><strong id="review-title">Reviewing</strong></p>
+          <p class="turn-detail">A reviewed board is not the live one. Nothing you do here counts.</p>
+          <button id="review-live" class="turn-action" type="button">Back to live</button>
+        </section>
+        <section class="player you" aria-label="You">
+          <div class="player-identity">
+            <span class="player-dot" aria-hidden="true"></span>
+            <span class="player-lines">
+              <span class="eyebrow">You</span>
+              <strong id="human-name">White</strong>
+            </span>
+          </div>
+          <div class="reserve">
+            <span id="human-bank-label" class="reserve-label">Your reserve · tap to deploy</span>
+            <div id="human-bank" class="bank" aria-labelledby="human-bank-label"></div>
+          </div>
+          <p id="human-clock" class="clock" hidden></p>
         </section>
       </div>
+      <aside id="match-rail" class="match-rail">
+        <section class="moves">
+          <div class="moves-header">
+            <strong id="moves-title">Moves</strong>
+            <span class="moves-hint">↑ / ↓ to review</span>
+            <div class="stepper" role="group" aria-label="Review moves">
+              <button id="move-first" class="step" type="button" aria-label="Back to the first move">⏮</button>
+              <button id="move-back" class="step" type="button" aria-label="Step back one move">◀</button>
+              <button id="move-forward" class="step" type="button" aria-label="Step forward one move">▶</button>
+            </div>
+          </div>
+          <div class="moves-table" role="table" aria-labelledby="moves-title">
+            <div class="moves-row moves-head" role="row">
+              <span role="columnheader">#</span><span role="columnheader">White</span><span role="columnheader">Black</span>
+            </div>
+            <div id="moves-body" role="rowgroup"></div>
+          </div>
+          <p id="last-move" class="last-move">
+            <span class="last-move-dot" aria-hidden="true"></span>
+            <span id="last-move-text">No moves yet</span>
+            <button id="moves-toggle" class="moves-link" type="button" aria-expanded="false">Moves</button>
+          </p>
+          <div class="moves-footer">
+            <span class="moves-legend">@ marks a deployment from reserve</span>
+            <button id="copy-game" class="moves-link" type="button">Copy game</button>
+          </div>
+        </section>
+        <div class="rail-actions">
+          <button id="undo" class="rail-button" type="button">Undo</button>
+          <button id="resign" class="rail-button" type="button">Resign</button>
+        </div>
+      </aside>
       <section id="match-chat" class="match-chat" aria-labelledby="chat-title" hidden>
         <div class="chat-heading">
           <div><h2 id="chat-title">At the table</h2><small id="chat-note">Peer-to-peer · not saved</small></div>
@@ -62,9 +180,9 @@
             <p class="chat-empty">No messages yet.</p>
           </div>
           <div id="quick-chat" class="quick-chat" aria-label="Quick messages">
-            <button type="button" data-quick-message="Good game!">Good game</button>
-            <button type="button" data-quick-message="Nice move!">Nice move</button>
-            <button type="button" data-quick-message="Bye!">Bye</button>
+            <button type="button" data-quick-message="Good move">Good move</button>
+            <button type="button" data-quick-message="One sec">One sec</button>
+            <button id="offer-draw" type="button" data-quick-action="draw">Offer draw</button>
           </div>
           <form id="chat-form" class="chat-form">
             <label class="visually-hidden" for="chat-message">Message your opponent</label>
@@ -77,13 +195,92 @@
     </section>
   </main>
 
+  <dialog id="sound-dialog" class="rules-dialog" aria-labelledby="sound-title">
+    <div class="dialog-grab" aria-hidden="true"></div>
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">Feedback</p>
+        <h2 id="sound-title">Sound and haptics</h2>
+      </div>
+      <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close sound settings">✕</button></form>
+    </div>
+    <div class="dialog-body">
+      <p class="cue-note">All off until you ask for them. Reduced motion is about motion, so it does not decide this.</p>
+      <div class="cues">
+        <label><input id="cue-move" type="checkbox" data-cue="move"><span><strong>Move</strong><small>A soft wooden knock.</small></span></label>
+        <label><input id="cue-capture" type="checkbox" data-cue="capture"><span><strong>Capture</strong><small>Sharper click, as the piece lands in a reserve.</small></span></label>
+        <label><input id="cue-deploy" type="checkbox" data-cue="deploy"><span><strong>Deploy</strong><small>Distinct from a move, so you hear a drop coming.</small></span></label>
+        <label><input id="cue-check" type="checkbox" data-cue="check"><span><strong>Check</strong><small>A low tone, played once.</small></span></label>
+        <label><input id="cue-haptics" type="checkbox" data-cue="haptics"><span><strong>Haptics</strong><small>A light tap when a piece lands, on phones that support it.</small></span></label>
+      </div>
+    </div>
+  </dialog>
+  <dialog id="shortcuts-dialog" class="rules-dialog" aria-labelledby="shortcuts-title">
+    <div class="dialog-grab" aria-hidden="true"></div>
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">Keyboard</p>
+        <h2 id="shortcuts-title">Playing without a mouse</h2>
+      </div>
+      <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close shortcuts">✕</button></form>
+    </div>
+    <div class="dialog-body">
+    <dl class="shortcuts">
+      <dt>↑ ↓ ← →</dt><dd>Move the cursor one square. It wraps at the edges.</dd>
+      <dt>Enter</dt><dd>Pick up the piece under the cursor, or play the move.</dd>
+      <dt>Esc</dt><dd>Put the piece back down.</dd>
+      <dt>1 – 3</dt><dd>Pick a reserve piece, then Enter on an empty square to deploy it.</dd>
+      <dt>a – d then 1 – 4</dt><dd>Type a square name to go straight there.</dd>
+      <dt>?</dt><dd>Show this list.</dd>
+    </dl>
+    </div>
+  </dialog>
   <dialog id="rules-dialog" class="rules-dialog" aria-labelledby="rules-title">
-    <form method="dialog"><button class="dialog-close" aria-label="Close rules">×</button></form>
-    <p class="eyebrow">Quick reminder</p>
-    <h2 id="rules-title">How to play Schness</h2>
-    <section><h3>Place</h3><ul><li>Place your king on any highlighted square of your home row.</li><li>Deploy reserve pieces on empty squares, but a deployment may not give check.</li></ul></section>
-    <section><h3>Play</h3><ul><li>Move pieces using normal chess movement.</li><li>If checked, move, capture, or deploy a reserve piece to block the attack.</li><li>Captured pieces return to their original owner’s reserve.</li></ul></section>
-    <section><h3>Finish</h3><ul><li>Checkmate wins.</li><li>Stalemate and threefold repetition are draws.</li></ul></section>
+    <div class="dialog-grab" aria-hidden="true"></div>
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">How to play</p>
+        <h2 id="rules-title">Schness in four rules</h2>
+      </div>
+      <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close rules">✕</button></form>
+    </div>
+    <div class="dialog-body">
+      <ol class="rules-list">
+        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span></li>
+        <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span></li>
+        <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square.</span></li>
+        <li><strong>Captures come back</strong><span>A piece you capture goes into your own reserve and can be deployed later, so material never leaves the game. Win by checkmate.</span></li>
+      </ol>
+      <figure class="rules-example">
+        <div class="rules-board" aria-hidden="true">
+          <span class="rules-cell"></span>
+          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bK.svg" alt=""></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bN.svg" alt=""></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell rules-drop"></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wR.svg" alt=""></span>
+          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wK.svg" alt=""></span>
+          <span class="rules-cell"></span>
+          <span class="rules-cell"></span>
+        </div>
+        <figcaption>White holds a captured bishop. The dashed ring is c2, one of the empty squares it can drop onto.</figcaption>
+      </figure>
+      <section class="rules-gotchas">
+        <h3>Two things that trip people up</h3>
+        <p>A deployed piece may not put the enemy king in check on the turn it lands. And a piece dropped on the far row is not promoted; there are no pawns.</p>
+      </section>
+    </div>
+    <div class="dialog-foot">
+      <label class="rules-optout"><input id="rules-optout" type="checkbox"><span>Don’t show this before a match</span></label>
+      <form method="dialog"><button class="rules-confirm" type="submit">Got it</button></form>
+    </div>
   </dialog>
   <script type="module" src="./src/main.js"></script>
 </body>

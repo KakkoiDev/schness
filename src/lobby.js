@@ -1,4 +1,5 @@
 import { gameUrl } from './navigation.js';
+import { botDifficulty, clockMode, rulesSeen, setBotDifficulty, setClockMode, setRulesSeen } from './settings.js';
 import { initTheme } from './theme.js';
 
 initTheme();
@@ -6,11 +7,16 @@ initTheme();
 const botButton = document.querySelector('#play-bot');
 const onlineButton = document.querySelector('#play-online');
 const rulesDialog = document.querySelector('#rules-dialog');
+const rulesOptOut = document.querySelector('#rules-optout');
 
 botButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot')));
 onlineButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online')));
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
+rulesOptOut.checked = rulesSeen();
+rulesOptOut.addEventListener('change', () => setRulesSeen(rulesOptOut.checked));
+initChoice('difficulty', botDifficulty(), setBotDifficulty);
+initChoice('clock', clockMode(), setClockMode);
 window.addEventListener('online', updateOnlineAvailability);
 window.addEventListener('offline', updateOnlineAvailability);
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
@@ -19,5 +25,14 @@ updateOnlineAvailability();
 function updateOnlineAvailability() {
   onlineButton.disabled = !navigator.onLine;
   onlineButton.querySelector('small').textContent = navigator.onLine
-    ? 'Get a unique link for another player' : 'Unavailable while offline';
+    ? 'Get a link to send a friend' : 'Unavailable while offline';
+}
+
+/** Radio groups that persist the moment they change, before any match starts. */
+function initChoice(name, saved, save) {
+  const inputs = document.querySelectorAll(`input[name="${name}"]`);
+  for (const input of inputs) {
+    input.checked = input.value === saved;
+    input.addEventListener('change', () => { if (input.checked) save(input.value); });
+  }
 }
