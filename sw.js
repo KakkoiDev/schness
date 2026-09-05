@@ -1,4 +1,7 @@
-const CACHE = 'schness-v28';
+// Bumped whenever anything in SHELL changes. The fetch handler below no longer
+// depends on remembering to do it — it revalidates in the background — but a
+// bump is still the only thing that refreshes every client on the same visit.
+const CACHE = 'schness-v29';
 const SHELL = [
   './',
   './index.html',
@@ -62,5 +65,21 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(fetch(event.request).catch(() => caches.match(fallback)));
     return;
   }
-  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
+  event.respondWith(caches.match(event.request).then((cached) => {
+    // Stale-while-revalidate. Cache-first alone meant that a deploy which did
+    // not bump CACHE was invisible: sw.js was byte-identical, so no update
+    // ever installed, and every returning player kept the old shell forever.
+    // Now the cached copy still answers immediately — offline included — and
+    // the next visit has the new one.
+    const network = fetch(event.request).then((response) => {
+      if (response.ok && response.type === 'basic') {
+        const copy = response.clone();
+        caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+      }
+      return response;
+    });
+    if (!cached) return network;
+    event.waitUntil(network.catch(() => { /* offline: the cached copy stands */ }));
+    return cached;
+  }));
 });

@@ -17,7 +17,20 @@ initChoice('clock', clockMode(), setClockMode);
 renderSetupSummary();
 window.addEventListener('online', updateOnlineAvailability);
 window.addEventListener('offline', updateOnlineAvailability);
-if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+if ('serviceWorker' in navigator) {
+  // A worker taking over mid-page means everything this page loaded is from
+  // the build before it. Reloading once picks the new shell up immediately
+  // instead of on the visit after. Only here: the match page would be
+  // throwing away a game in progress, and it will be current next time.
+  const wasControlled = Boolean(navigator.serviceWorker.controller);
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!wasControlled || reloaded) return;
+    reloaded = true;
+    window.location.reload();
+  });
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+}
 updateOnlineAvailability();
 
 function updateOnlineAvailability() {
