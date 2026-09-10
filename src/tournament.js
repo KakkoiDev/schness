@@ -4,7 +4,19 @@ import { recordAction } from './history.js';
 import { squareName } from './notation.js';
 import { LEVEL_DEPTH } from './watch.js';
 
-export const TOURNAMENT_SCHEMA = 1;
+export const TOURNAMENT_SCHEMA = 2;
+export const TOURNAMENT_RULES = Object.freeze([
+  'The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.',
+  'On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.',
+  'A drop may not give check; a normal move may give check.',
+  'A captured rook, bishop, or knight returns to its original owner’s reserve.',
+  'Normal king safety and checkmate apply; stalemate and threefold repetition are draws.',
+]);
+export const TOURNAMENT_AI = Object.freeze({
+  learning: Object.freeze({ version: 1, depth: 2, behavior: 'Shallow alpha-beta; seeded random choice among equally scored moves.' }),
+  steady: Object.freeze({ version: 1, depth: 3, behavior: 'Medium alpha-beta; seeded random choice among equally scored moves.' }),
+  sharp: Object.freeze({ version: 2, depth: 4, behavior: 'Deep alpha-beta; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score.' }),
+});
 export const RESEARCH_MATCHUPS = Object.freeze([
   Object.freeze({ white: 'sharp', black: 'sharp' }),
   Object.freeze({ white: 'sharp', black: 'steady' }),
@@ -61,7 +73,11 @@ export function playTournamentGame({ index, seed, white = 'sharp', black = 'shar
   let result = getResult(position);
   while (!result && history.length < maxPlies) {
     const level = position.turn === WHITE ? white : black;
-    const action = chooseAction(position, { depth: LEVEL_DEPTH[level], random });
+    const action = chooseAction(position, {
+      depth: LEVEL_DEPTH[level],
+      random,
+      repetitionAversion: level === 'sharp',
+    });
     if (!action) break;
     const before = position;
     position = applyAction(position, action);
@@ -75,6 +91,10 @@ export function playTournamentGame({ index, seed, white = 'sharp', black = 'shar
     index,
     seed: gameSeed,
     levels: { white, black },
+    engines: {
+      white: { level: white, ...TOURNAMENT_AI[white] },
+      black: { level: black, ...TOURNAMENT_AI[black] },
+    },
     startingKings: { white: squareName(kings.white), black: squareName(kings.black) },
     result,
     plies: history.length,

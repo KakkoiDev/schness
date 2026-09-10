@@ -46,6 +46,9 @@ Research tournaments are intentionally an Actions-only batch process. A complete
 all 16 king placements for Sharp–Sharp and for Sharp against each lower level in both colors. The
 default 13 sets produce 1,040 games. Workers parallelize inside one job so the run exposes exactly
 one final artifact instead of a collection of implementation-detail shard archives.
+Every artifact records the played rules and exact AI profiles in its manifest, per-game records,
+and analysis guide. Sharp v2 changes only equal-score tie-breaking: it prefers the least-repeated
+immediate result, preserving a draw whenever every non-repeating alternative has a worse score.
 
 The spectator buffer is deliberately rolling and bounded. It starts only after the user requests a
 move, stays ten plies ahead when possible, and stops at a terminal result or when the page closes.
@@ -392,17 +395,19 @@ Honest list of what is not done and what cannot be checked from a sandbox:
   confirm it.
 - **A takeback does not refund clock time**, on purpose. It restarts the mover's clock at the moment
   of the takeback.
-- **Sharp plays itself to a draw.** Sixteen self-play games at depth 4 from every king placement:
-  fourteen ended in threefold repetition, mean 27 moves. At depth 3, none did (7–6 with three games
-  past 100 moves). The search scores a draw as 0 and equal material as roughly 0, so it shuffles.
-  A contempt term, or scoring repetition below the static evaluation, would change how the hardest
-  opponent feels more than any further speed-up.
+- **Sharp v2 repetition behavior needs measurement.** Sharp v1 drew 187 of 208 full-tournament
+  self-play games, so v2 now breaks equal-score ties toward the least-repeated immediate result.
+  Tournament run 2 must establish whether this reduces repetition without converting draws into
+  losses. A general contempt score remains deliberately unimplemented.
 
 ---
 
 ## Log
 
 Newest first. One line per decision that changed how the app behaves.
+
+- Sharp v2 avoids repetition only as an equal-score tie-break, and tournament schema 2 records the
+  rules plus exact AI profiles; experiments and rejected alternatives live in `DEVLOG.md`.
 
 - The turn card reserves a responsive height and bottom margin, so changing copy cannot move the board.
 

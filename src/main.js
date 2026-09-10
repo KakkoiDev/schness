@@ -1256,7 +1256,13 @@ function requestBotMove() {
   const request = ++botRequest;
   render();
   // The worker keeps slower devices fluid even at the deeper setting.
-  worker.postMessage({ position, depth: difficultyDepth(botDifficulty()), request });
+  const difficulty = botDifficulty();
+  worker.postMessage({
+    position,
+    depth: difficultyDepth(difficulty),
+    repetitionAversion: difficulty === 'sharp',
+    request,
+  });
 }
 
 function onBotMessage({ data }) {

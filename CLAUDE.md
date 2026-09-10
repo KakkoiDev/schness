@@ -6,6 +6,11 @@ It holds the architecture, the invariants, and why each one exists. Several rule
 look like arbitrary style and are load-bearing — the service-worker cache version, the append-only
 relay list, where an animation is allowed to live. `DECISIONS.md` tells you which is which.
 
+Read [`DEVLOG.md`](DEVLOG.md) before revisiting product direction or tuning an experiment. Add an
+entry in the same commit whenever you run an experiment, tune an AI, choose between meaningful
+alternatives, or change direction. Record the question, rejected alternatives and why, evidence,
+decision, and next measurement—not merely a changelog line.
+
 ## Keep `DECISIONS.md` current — in the same commit
 
 A change that makes anything in `DECISIONS.md` untrue is not finished until that file is updated

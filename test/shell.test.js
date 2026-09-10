@@ -442,7 +442,9 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(main, /function commit\(action\)/);
   assert.match(main, /takeback-request/);
   assert.match(main, /function offerDraw/);
-  assert.match(main, /difficultyDepth\(botDifficulty\(\)\)/);
+  assert.match(main, /const difficulty = botDifficulty\(\)/);
+  assert.match(main, /difficultyDepth\(difficulty\)/);
+  assert.match(main, /repetitionAversion: difficulty === 'sharp'/);
   assert.match(main, /soundBoard\.play/);
   const soundModule = await readFile(resolve(root, 'src/sound.js'), 'utf8');
   // The context is built in one place, and only once something plays.

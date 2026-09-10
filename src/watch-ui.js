@@ -110,7 +110,12 @@ function fillBuffer() {
   request += 1;
   render();
   const level = position.turn === WHITE ? whiteLevel.value : blackLevel.value;
-  worker.postMessage({ position, depth: levelDepth(level), request });
+  worker.postMessage({
+    position,
+    depth: levelDepth(level),
+    repetitionAversion: level === 'sharp',
+    request,
+  });
 }
 
 function restart() {
