@@ -1,6 +1,6 @@
 import { BLACK, WHITE, createInitialPosition, getResult } from './rules.js';
 import { initTheme } from './theme.js';
-import { advanceReview, applySpectatorAction, levelDepth, resultLabel, sideName } from './watch.js';
+import { advanceReview, applySpectatorAction, bufferNeeded, levelDepth, resultLabel, sideName } from './watch.js';
 
 initTheme();
 if ('serviceWorker' in navigator) {
@@ -25,6 +25,9 @@ let request = 0;
 let thinking = false;
 let autoplay = false;
 let timer = null;
+let pendingAdvance = false;
+let started = false;
+const BUFFER_AHEAD = 10;
 
 for (let row = 0; row < 4; row += 1) {
   const rowElement = document.createElement('div');
@@ -71,21 +74,38 @@ worker.addEventListener('message', ({ data }) => {
   const applied = applySpectatorAction(current, history, data.action);
   history = applied.history;
   timeline.push(applied.position);
-  reviewIndex = history.length;
   render();
-  if (autoplay && !getResult(applied.position)) timer = setTimeout(advance, 1000);
+  if (pendingAdvance) {
+    pendingAdvance = false;
+    showNextPosition();
+  }
+  fillBuffer();
 });
 
 function advance() {
-  if (thinking) return;
   if (reviewIndex < history.length) {
-    reviewIndex += 1;
-    render();
-    if (autoplay) timer = setTimeout(advance, 1000);
+    showNextPosition();
     return;
   }
+  if (getResult(timeline.at(-1))) return pause();
+  pendingAdvance = true;
+  started = true;
+  fillBuffer();
+}
+
+function showNextPosition() {
+  reviewIndex += 1;
+  render();
+  fillBuffer();
+  if (autoplay && (reviewIndex < history.length || !getResult(timeline.at(-1)))) {
+    clearTimeout(timer);
+    timer = setTimeout(advance, 1000);
+  }
+}
+
+function fillBuffer() {
   const position = timeline.at(-1);
-  if (getResult(position)) return pause();
+  if (!started || thinking || !bufferNeeded(reviewIndex, history.length, Boolean(getResult(position)), BUFFER_AHEAD)) return;
   thinking = true;
   request += 1;
   render();
@@ -100,6 +120,8 @@ function restart() {
   timeline = [createInitialPosition()];
   history = [];
   reviewIndex = 0;
+  pendingAdvance = false;
+  started = false;
   render();
 }
 
@@ -137,7 +159,8 @@ function render() {
     item.addEventListener('click', () => { pause(); reviewIndex = index + 1; render(); });
     return item;
   }));
-  if (reviewIndex < history.length) status.textContent = `Reviewing move ${reviewIndex} of ${history.length}`;
+  const ready = history.length - reviewIndex;
+  if (reviewIndex < history.length) status.textContent = `Move ${reviewIndex} · ${ready} ready ahead`;
   else if (result) status.textContent = resultLabel(result);
   else if (thinking) status.textContent = `${sideName(position.turn)} is thinking…`;
   else status.textContent = `${sideName(position.turn)} to move`;
@@ -156,8 +179,8 @@ function renderReserve(selector, pieces, owner) {
 }
 
 function renderControls() {
-  previousButton.disabled = reviewIndex === 0 || thinking;
-  nextButton.disabled = thinking || Boolean(getResult(timeline.at(-1)) && reviewIndex === history.length);
+  previousButton.disabled = reviewIndex === 0;
+  nextButton.disabled = pendingAdvance || Boolean(getResult(timeline.at(-1)) && reviewIndex === history.length);
   whiteLevel.disabled = history.length > 0 || thinking;
   blackLevel.disabled = history.length > 0 || thinking;
 }
