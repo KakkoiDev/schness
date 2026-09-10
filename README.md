@@ -40,6 +40,9 @@ games, compare corner and inner king placements, identify recurring winning sequ
 follow-up experiments. Keep the workflow run URL when requesting analysis so the exact artifact is
 unambiguous.
 
+The first full 1,040-game experiment and its strategic findings are recorded in
+**[AI tournament report — run 1](docs/tournament-report-2026-09-10.md)**.
+
 ## Development
 
 Schness uses browser-native JavaScript modules and has no build step. The rules and bot are independent
