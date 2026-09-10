@@ -20,14 +20,16 @@ to think. Previous and the move transcript let you review any completed position
 
 Large experiments deliberately do **not** run in the browser. Open the
 **[AI tournament workflow](../../actions/workflows/tournament.yml)**, choose **Run workflow**, and
-set the number of games, both AI levels, and a reproducible seed. The default is 1,000 Sharp versus
-Sharp games. The workflow uses parallel Node workers and publishes exactly one downloadable GitHub
+set the number of complete research sets and a reproducible seed. Each 80-game set covers every one
+of the 16 king placements for Sharp–Sharp, Sharp–Steady, Steady–Sharp, Sharp–Learning, and
+Learning–Sharp. The default is 13 sets (**1,040 games**), so lower levels always face Sharp with
+colors reversed. The workflow uses parallel Node workers and publishes exactly one downloadable GitHub
 artifact, named `schness-tournament-<run>`; GitHub delivers it as a ZIP.
 
 The ZIP is designed for human or AI analysis:
 
 - `manifest.json` — experiment settings and overall result totals
-- `summary.csv` — outcomes grouped by both starting king squares
+- `summary.csv` — outcomes grouped by both AI levels and both starting king squares
 - `games.jsonl` — one self-contained, reproducible game per line, including every action
 - `ANALYZE.md` — schema guidance and suggested strategic questions
 

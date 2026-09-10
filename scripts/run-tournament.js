@@ -2,13 +2,16 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { availableParallelism } from 'node:os';
 import { resolve } from 'node:path';
 import { isMainThread, parentPort, workerData, Worker } from 'node:worker_threads';
-import { playTournamentGame, resultKey } from '../src/tournament.js';
+import { buildResearchPlan, playTournamentGame, resultKey } from '../src/tournament.js';
 
 async function playShard(options) {
   const records = [];
   const counts = {};
-  for (let index = options.shard; index < options.games; index += options.shards) {
-    const game = playTournamentGame({ index, seed: options.seed, white: options.white, black: options.black, maxPlies: options.maxPlies });
+  const plan = buildResearchPlan(options.repetitions);
+  for (let planIndex = options.shard; planIndex < plan.length; planIndex += options.shards) {
+    const experiment = plan[planIndex];
+    const game = playTournamentGame({ index: experiment.index, seed: options.seed, white: experiment.white, black: experiment.black, maxPlies: options.maxPlies });
+    game.repetition = experiment.repetition;
     records.push(JSON.stringify(game));
     const key = resultKey(game.result);
     counts[key] = (counts[key] ?? 0) + 1;
@@ -25,15 +28,15 @@ if (!isMainThread) {
   parentPort.postMessage({ completed });
 } else {
   const parsed = args(process.argv.slice(2));
-  const games = positive(parsed.games, 1000);
+  const repetitions = positive(parsed.repetitions, 13);
+  const games = buildResearchPlan(repetitions).length;
   const workers = Math.min(games, positive(parsed.workers, Math.min(4, availableParallelism())));
   const shared = {
     games,
+    repetitions,
     shards: workers,
     output: resolve(parsed.output ?? 'tournament-shards'),
     seed: Number(parsed.seed ?? 20260910),
-    white: parsed.white ?? 'sharp',
-    black: parsed.black ?? 'sharp',
     maxPlies: positive(parsed.maxPlies, 200),
   };
   const jobs = Array.from({ length: workers }, (_, shard) => new Promise((resolveJob, reject) => {

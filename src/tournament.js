@@ -5,6 +5,27 @@ import { squareName } from './notation.js';
 import { LEVEL_DEPTH } from './watch.js';
 
 export const TOURNAMENT_SCHEMA = 1;
+export const RESEARCH_MATCHUPS = Object.freeze([
+  Object.freeze({ white: 'sharp', black: 'sharp' }),
+  Object.freeze({ white: 'sharp', black: 'steady' }),
+  Object.freeze({ white: 'steady', black: 'sharp' }),
+  Object.freeze({ white: 'sharp', black: 'learning' }),
+  Object.freeze({ white: 'learning', black: 'sharp' }),
+]);
+
+/** Every matchup receives all 16 king placements before the next repeat. */
+export function buildResearchPlan(repetitions = 13) {
+  if (!Number.isInteger(repetitions) || repetitions < 1) throw new TypeError('repetitions must be a positive integer');
+  const plan = [];
+  for (let repetition = 0; repetition < repetitions; repetition += 1) {
+    for (const levels of RESEARCH_MATCHUPS) {
+      for (let opening = 0; opening < 16; opening += 1) {
+        plan.push({ index: plan.length, repetition, opening, ...levels });
+      }
+    }
+  }
+  return plan;
+}
 
 export function seededRandom(seed) {
   let state = Number(seed) >>> 0;

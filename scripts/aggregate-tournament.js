@@ -19,22 +19,22 @@ const totals = {};
 for (const game of games) {
   const result = resultKey(game.result);
   totals[result] = (totals[result] ?? 0) + 1;
-  const key = `${game.startingKings.white}|${game.startingKings.black}`;
-  const group = groups.get(key) ?? { whiteKing: game.startingKings.white, blackKing: game.startingKings.black, games: 0, plies: 0 };
+  const key = `${game.levels.white}|${game.levels.black}|${game.startingKings.white}|${game.startingKings.black}`;
+  const group = groups.get(key) ?? { whiteLevel: game.levels.white, blackLevel: game.levels.black, whiteKing: game.startingKings.white, blackKing: game.startingKings.black, games: 0, plies: 0 };
   group.games += 1;
   group.plies += game.plies;
   group[result] = (group[result] ?? 0) + 1;
   groups.set(key, group);
 }
 const resultColumns = [...new Set(games.map((game) => resultKey(game.result)))].sort();
-const header = ['white_king', 'black_king', 'games', 'average_plies', ...resultColumns];
-const rows = [...groups.values()].sort((a, b) => `${a.whiteKing}${a.blackKing}`.localeCompare(`${b.whiteKing}${b.blackKing}`));
-const csv = [header.join(','), ...rows.map((row) => [row.whiteKing, row.blackKing, row.games, (row.plies / row.games).toFixed(2), ...resultColumns.map((key) => row[key] ?? 0)].join(','))].join('\n');
+const header = ['white_level', 'black_level', 'white_king', 'black_king', 'games', 'average_plies', ...resultColumns];
+const rows = [...groups.values()].sort((a, b) => `${a.whiteLevel}${a.blackLevel}${a.whiteKing}${a.blackKing}`.localeCompare(`${b.whiteLevel}${b.blackLevel}${b.whiteKing}${b.blackKing}`));
+const csv = [header.join(','), ...rows.map((row) => [row.whiteLevel, row.blackLevel, row.whiteKing, row.blackKing, row.games, (row.plies / row.games).toFixed(2), ...resultColumns.map((key) => row[key] ?? 0)].join(','))].join('\n');
 const manifest = {
   schema: 1,
   generatedAt: new Date().toISOString(),
   games: games.length,
-  levels: games[0].levels,
+  matchups: [...new Set(games.map((game) => `${game.levels.white}-${game.levels.black}`))],
   totals,
   files: {
     'games.jsonl': 'One complete, self-contained game per line.',
@@ -43,7 +43,7 @@ const manifest = {
     'ANALYZE.md': 'Field guide and suggested questions for an AI analyst.',
   },
 };
-const guide = `# Schness tournament dataset\n\nThis ZIP contains ${games.length} reproducible games: ${games[0].levels.white} White versus ${games[0].levels.black} Black.\n\n## Start here\n\n1. Read \`manifest.json\`.\n2. Use \`summary.csv\` to compare king placements.\n3. Stream \`games.jsonl\`; each line is one complete game with its seed, actions, notation, result, and final position.\n\n## Questions to test\n\n- Do corner kings win more often than inner kings after controlling for color?\n- Which first deployments correlate with wins?\n- Which actions precede a decisive checkmate?\n- How often does Sharp repeat rather than convert an advantage?\n- Are apparent patterns stable across all opposing king placements?\n\nDo not call a correlation a rule. Re-run targeted matchups with new seeds before proposing strategy.\n`;
+const guide = `# Schness tournament dataset\n\nThis ZIP contains ${games.length} reproducible games across the canonical Sharp-vs-Sharp and Sharp-vs-lower-strength matchups in both colors.\n\n## Start here\n\n1. Read \`manifest.json\`.\n2. Use \`summary.csv\` to compare AI levels and king placements.\n3. Stream \`games.jsonl\`; each line is one complete game with its seed, actions, notation, result, and final position.\n\n## Questions to test\n\n- Do corner kings win more often than inner kings after controlling for color and AI level?\n- Which first deployments correlate with wins?\n- Which actions precede a decisive checkmate?\n- How much does Sharp gain against each lower level after switching colors?\n- Are apparent patterns stable across all opposing king placements?\n\nDo not call a correlation a rule. Re-run targeted matchups with new seeds before proposing strategy.\n`;
 await Promise.all([
   writeFile(resolve(output, 'games.jsonl'), `${games.map(JSON.stringify).join('\n')}\n`),
   writeFile(resolve(output, 'summary.csv'), `${csv}\n`),

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { playTournamentGame, seededRandom, startingKings } from '../src/tournament.js';
+import { buildResearchPlan, playTournamentGame, seededRandom, startingKings } from '../src/tournament.js';
 
 test('the tournament PRNG and transcripts are reproducible', () => {
   const one = seededRandom(42);
@@ -14,6 +14,17 @@ test('the sixteen opening combinations are balanced before repeating', () => {
   const combinations = new Set(Array.from({ length: 16 }, (_, index) => JSON.stringify(startingKings(index))));
   assert.equal(combinations.size, 16);
   assert.deepEqual(startingKings(16), startingKings(0));
+});
+
+test('a research set balances levels, colors, and all king placements', () => {
+  const plan = buildResearchPlan(1);
+  assert.equal(plan.length, 80);
+  for (const matchup of ['sharp-sharp', 'sharp-steady', 'steady-sharp', 'sharp-learning', 'learning-sharp']) {
+    const games = plan.filter((game) => `${game.white}-${game.black}` === matchup);
+    assert.equal(games.length, 16, matchup);
+    assert.deepEqual(games.map((game) => game.opening), Array.from({ length: 16 }, (_, index) => index));
+  }
+  assert.equal(buildResearchPlan(13).length, 1040);
 });
 
 test('a tournament transcript is self-contained and bounded', () => {
