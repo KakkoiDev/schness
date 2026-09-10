@@ -3,23 +3,11 @@ name: AI tournament
 on:
   workflow_dispatch:
     inputs:
-      games:
-        description: Number of games
+      repetitions:
+        description: Complete 80-game sets (13 = 1,040 games)
         required: true
-        default: '1000'
+        default: '13'
         type: string
-      white:
-        description: White AI
-        required: true
-        default: sharp
-        type: choice
-        options: [learning, steady, sharp]
-      black:
-        description: Black AI
-        required: true
-        default: sharp
-        type: choice
-        options: [learning, steady, sharp]
       seed:
         description: Reproducible base seed
         required: true
@@ -40,9 +28,7 @@ jobs:
       - name: Play tournament outside the browser
         run: >-
           node scripts/run-tournament.js
-          --games ${{ inputs.games }}
-          --white ${{ inputs.white }}
-          --black ${{ inputs.black }}
+          --repetitions ${{ inputs.repetitions }}
           --seed ${{ inputs.seed }}
           --workers 4
           --output tournament-shards

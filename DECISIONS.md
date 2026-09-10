@@ -42,6 +42,11 @@ first paint, nothing interactive yet) and none at all during play. First paint 1
 225ms, 174KB over 37 requests, all throttled. Unthrottled there are none anywhere — that alone is
 the figure this file used to quote, and it flattered the app.
 
+Research tournaments are intentionally an Actions-only batch process. A complete set is 80 games:
+all 16 king placements for Sharp–Sharp and for Sharp against each lower level in both colors. The
+default 13 sets produce 1,040 games. Workers parallelize inside one job so the run exposes exactly
+one final artifact instead of a collection of implementation-detail shard archives.
+
 ---
 
 ## The rule people get wrong
