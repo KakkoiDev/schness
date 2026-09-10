@@ -8,6 +8,26 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-09-11 — Tournament run 2: evaluate Sharp v2
+
+**Question.** Does repetition-aware equal-score tie-breaking reduce dull draws without increasing
+Sharp's losses?
+
+**Result.** Across the same seeded 1,040-game schedule, threefold draws fell from 467 to 430 and
+total draws from 48.8% to 46.2%. Sharp–Sharp draws fell from 89.9% to 87.5%. Against Learning and
+Steady combined, Sharp's wins rose from 483 to 504, losses from 28 to 30, and score from 77.34% to
+78.49%. The extra two losses mean the strict “without increasing losses” test was not met, although
+the score improvement and small loss delta are consistent with a practical improvement.
+
+**Decision.** Retain Sharp v2 as the current default because it produces more wins and fewer
+repetitions while preserving the rule that a saving repetition remains preferable to a loss. Do not
+change Schness's rules. Do not yet call v2 categorically stronger.
+
+**Next measurement.** Run multiple independent seeds and direct Sharp v1–v2 matches with colors and
+all king starts reversed. Treat non-repeating 200-ply draws as a separate engine-conversion problem.
+
+See the [full run-2 report](docs/tournament-report-2026-09-11-sharp-v2.md).
+
 ## 2026-09-10 — Sharp v2: repetition aversion
 
 **Question.** Is the 89.9% draw rate in Sharp–Sharp evidence that Schness is intrinsically dull, or
