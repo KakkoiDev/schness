@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildResearchPlan, playTournamentGame, seededRandom, startingKings } from '../src/tournament.js';
+import {
+  TOURNAMENT_AI,
+  TOURNAMENT_RULES,
+  buildResearchPlan,
+  playTournamentGame,
+  seededRandom,
+  startingKings,
+} from '../src/tournament.js';
 import { bufferNeeded } from '../src/watch.js';
 
 test('the tournament PRNG and transcripts are reproducible', () => {
@@ -38,10 +45,21 @@ test('the spectator maintains a bounded ten-move rolling buffer', () => {
 
 test('a tournament transcript is self-contained and bounded', () => {
   const game = playTournamentGame({ index: 5, seed: 7, white: 'learning', black: 'steady', maxPlies: 6 });
-  assert.equal(game.schema, 1);
+  assert.equal(game.schema, 2);
   assert.equal(game.transcript.length, 6);
   assert.equal(game.result.reason, 'ply-limit');
   assert.deepEqual(game.startingKings, { white: 'b1', black: 'b4' });
   assert.ok(game.transcript.every((entry) => entry.action && entry.notation && entry.resultingKey));
   assert.equal(game.finalPosition.board.length, 16);
+  assert.equal(game.engines.white.version, 1);
+  assert.equal(game.engines.black.depth, 3);
+});
+
+test('tournament metadata records the rules and Sharp v2 behavior', () => {
+  assert.ok(TOURNAMENT_RULES.some((rule) => rule.includes('threefold repetition')));
+  assert.deepEqual(TOURNAMENT_AI.sharp, {
+    version: 2,
+    depth: 4,
+    behavior: 'Deep alpha-beta; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score.',
+  });
 });

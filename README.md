@@ -11,6 +11,9 @@ Contributing agents and humans: read [`DECISIONS.md`](DECISIONS.md) before chang
 records the architecture and the invariants that are load-bearing, and it is kept current in the
 same commit as the change that affects it.
 
+Experiments, rejected alternatives, evidence, and changes in direction are recorded chronologically
+in [`DEVLOG.md`](DEVLOG.md).
+
 ## AI games and research
 
 Open **[Watch two AIs](https://schness.com/watch.html)** to watch a browser game. White and Black
@@ -19,6 +22,9 @@ Worker keeps a rolling buffer of up to ten future moves. Advancing consumes one 
 computing its replacement, so review is usually instant without simulating an unbounded game in the
 background. Auto displays one buffered move per second. Previous and the transcript revisit any
 computed position; generation stops at checkmate or a draw, or when the page is closed.
+
+Sharp v2 uses depth-four alpha-beta and avoids an already repeated resulting position when another
+move has the same minimax score. It still accepts a repetition when that is better than losing.
 
 Large experiments deliberately do **not** run in the browser. Open the
 **[AI tournament workflow](../../actions/workflows/tournament.yml)**, choose **Run workflow**, and

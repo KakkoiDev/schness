@@ -1,0 +1,54 @@
+# Schness development log
+
+This is the chronological record of experiments and product direction. Each meaningful experiment
+records the question, alternatives, decision, evidence, and next step. `DECISIONS.md` remains the
+authority for current architecture and invariants; this file explains how and why those decisions
+were reached.
+
+Future contributors must add an entry in the same commit when they run an experiment, change product
+direction, tune an AI, or accept/reject a meaningful alternative.
+
+## 2026-09-10 — Sharp v2: repetition aversion
+
+**Question.** Is the 89.9% draw rate in Sharp–Sharp evidence that Schness is intrinsically dull, or
+that Sharp v1 voluntarily repeats positions it evaluates the same as alternatives?
+
+**Evidence.** Tournament run 1 produced 1,040 games: 276 White wins, 256 Black wins, 467 threefold
+draws, and 41 ply-limit draws. Sharp–Sharp drew 187 of 208 games. See the
+[full run-1 report](docs/tournament-report-2026-09-10.md).
+
+**Alternatives considered.**
+
+- Change the game rules to suppress draws. Rejected before testing the bot: ordinary engine chess
+  also has a high identical-engine draw rate, and changing a novel game's rules to compensate for
+  one search policy would confound the experiment.
+- Give every draw a negative score (“contempt”). Deferred: this can make Sharp reject a guaranteed
+  draw for a genuinely worse position and would change objective playing strength.
+- Prefer a less-repeated result only when candidate moves have the same minimax score. Chosen: it
+  changes tie-breaking, not the primary evaluation, so a repetition that saves a loss remains valid.
+
+**Decision.** Sharp v2 keeps depth-four alpha-beta, the existing evaluation and seeded random tie
+breaking. Among moves with the same search score, it first minimizes the occurrence count of the
+immediate resulting position. Learning v1 and Steady v1 remain unchanged as controls.
+
+**Reproducibility.** Tournament schema 2 records the rules and both players' exact level, version,
+depth, and behavior in the artifact manifest and every game. `ANALYZE.md` repeats these notes for
+human and AI readers.
+
+**Next measurement.** Rerun the same 1,040-game plan and seed. Compare Sharp–Sharp repetition draws,
+decisive-game rate, game length, and Sharp's score against both lower levels with run 1. Do not call
+Sharp v2 better if it merely converts draws into losses.
+
+## 2026-09-10 — Tournament run 1: establish a baseline
+
+**Question.** How strong is each AI level, is there a meaningful first-player advantage, is a corner
+king generally best, and what produces checkmate?
+
+**Decision.** Use an Actions-only experiment rather than the browser, covering all 16 king-start
+pairs and both colors against lower levels. This keeps phones responsive and produces one complete,
+reproducible dataset for external analysis.
+
+**Result.** Sharp clearly outperformed Steady and Learning, overall color advantage was small, 77.4%
+of mates were delivered by rooks, and a universal corner-king advantage was not supported. High
+Sharp–Sharp repetition motivated Sharp v2. Full numbers and caveats are in the
+[run-1 report](docs/tournament-report-2026-09-10.md).

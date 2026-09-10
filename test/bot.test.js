@@ -7,8 +7,10 @@ import {
   ROOK,
   WHITE,
   actionKey,
+  applyAction,
   createPosition,
   legalActions,
+  positionKey,
 } from '../src/rules.js';
 
 test('the bot always returns a legal action', () => {
@@ -48,5 +50,25 @@ test('the transposition cache preserves the uncached alpha-beta result', () => {
   assert.equal(
     actionKey(chooseAction(game, { depth: 4 })),
     actionKey(chooseAction(game, { depth: 4, useCache: false })),
+  );
+});
+
+test('repetition aversion breaks an equal score toward the less repeated position', () => {
+  const board = Array(16).fill(null);
+  board[12] = { owner: WHITE, piece: KING };
+  board[3] = { owner: BLACK, piece: KING };
+  let game = createPosition({
+    board,
+    banks: { [WHITE]: [ROOK, 'bishop', 'knight'], [BLACK]: [ROOK, 'bishop', 'knight'] },
+    turn: WHITE,
+  });
+  const repeated = chooseAction(game, { depth: 2, random: () => 1 });
+  const repeatedKey = positionKey(applyAction(game, repeated));
+  game = createPosition({ ...game, repetitions: { [repeatedKey]: 1 } });
+
+  assert.equal(actionKey(chooseAction(game, { depth: 2, random: () => 1 })), actionKey(repeated));
+  assert.notEqual(
+    actionKey(chooseAction(game, { depth: 2, random: () => 1, repetitionAversion: true })),
+    actionKey(repeated),
   );
 });
