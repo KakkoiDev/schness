@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' wss:; media-src 'self' blob: mediastream:; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111814" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Schness">
+  <title>Watch AIs · Schness</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./assets/icon-180.png">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="watch-page">
+  <main class="game">
+    <header>
+      <a class="brand" href="./" aria-label="Schness home"><span class="brand-mark" aria-hidden="true">S</span><h1>Schness</h1></a>
+      <button class="text-button theme-button" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
+    </header>
+    <div class="watch-heading">
+      <div><p class="eyebrow">AI laboratory</p><h2>Watch them play</h2></div>
+      <a class="text-button" href="./">← Home</a>
+    </div>
+    <section class="watch-layout" aria-label="AI versus AI game">
+      <div class="watch-stage">
+        <div class="watch-player"><label>Black <select id="black-level"><option value="learning">Learning</option><option value="steady">Steady</option><option value="sharp" selected>Sharp</option></select></label><div id="black-reserve" class="watch-reserve" aria-label="Black reserve"></div></div>
+        <div id="watch-board" class="board" role="grid" aria-label="Schness board"></div>
+        <div class="watch-player"><label>White <select id="white-level"><option value="learning">Learning</option><option value="steady">Steady</option><option value="sharp" selected>Sharp</option></select></label><div id="white-reserve" class="watch-reserve" aria-label="White reserve"></div></div>
+      </div>
+      <aside class="watch-panel">
+        <p id="watch-status" class="watch-status" aria-live="polite">White to move</p>
+        <div class="watch-controls">
+          <button id="watch-previous" type="button">Previous</button>
+          <button id="watch-next" type="button">Next move</button>
+          <button id="watch-auto" type="button" aria-pressed="false">Auto · 1s</button>
+          <button id="watch-restart" type="button">Restart</button>
+        </div>
+        <div id="watch-moves" class="watch-moves" aria-label="Move transcript"></div>
+      </aside>
+    </section>
+  </main>
+  <script type="module" src="./src/watch-ui.js"></script>
+</body>
+</html>

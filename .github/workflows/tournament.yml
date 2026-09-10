@@ -1,0 +1,57 @@
+name: AI tournament
+
+on:
+  workflow_dispatch:
+    inputs:
+      games:
+        description: Number of games
+        required: true
+        default: '1000'
+        type: string
+      white:
+        description: White AI
+        required: true
+        default: sharp
+        type: choice
+        options: [learning, steady, sharp]
+      black:
+        description: Black AI
+        required: true
+        default: sharp
+        type: choice
+        options: [learning, steady, sharp]
+      seed:
+        description: Reproducible base seed
+        required: true
+        default: '20260910'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  tournament:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Play tournament outside the browser
+        run: >-
+          node scripts/run-tournament.js
+          --games ${{ inputs.games }}
+          --white ${{ inputs.white }}
+          --black ${{ inputs.black }}
+          --seed ${{ inputs.seed }}
+          --workers 4
+          --output tournament-shards
+      - name: Build AI-readable bundle
+        run: node scripts/aggregate-tournament.js tournament-shards tournament-results
+      - name: Upload the single downloadable ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: schness-tournament-${{ github.run_number }}
+          path: tournament-results/
+          retention-days: 30
+          if-no-files-found: error

@@ -1,11 +1,12 @@
 // Bumped whenever anything in SHELL changes. The fetch handler below no longer
 // depends on remembering to do it — it revalidates in the background — but a
 // bump is still the only thing that refreshes every client on the same visit.
-const CACHE = 'schness-v45';
+const CACHE = 'schness-v46';
 const SHELL = [
   './',
   './index.html',
   './game.html',
+  './watch.html',
   './styles.css',
   './manifest.webmanifest',
   './icon.svg',
@@ -38,6 +39,9 @@ const SHELL = [
   './src/net.js',
   './src/bot.js',
   './src/bot-worker.js',
+  './src/watch.js',
+  './src/watch-ui.js',
+  './src/tournament.js',
   './vendor/trystero/nostr.js',
   './vendor/trystero/node-crypto.js',
   './vendor/trystero/node-chunk.js',
@@ -61,7 +65,8 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
   if (event.request.mode === 'navigate') {
-    const fallback = url.pathname.endsWith('/game.html') ? './game.html' : './index.html';
+    const fallback = url.pathname.endsWith('/game.html') ? './game.html'
+      : url.pathname.endsWith('/watch.html') ? './watch.html' : './index.html';
     event.respondWith(fetch(event.request).catch(() => caches.match(fallback)));
     return;
   }

@@ -16,19 +16,24 @@ const VALUES = { [KING]: 0, [ROOK]: 500, [BISHOP]: 320, [KNIGHT]: 300 };
 const MATE = 1_000_000;
 
 /** Deterministic alpha-beta search. A Web Worker can call this without UI coupling. */
-export function chooseAction(position, { depth = 4, useCache = true } = {}) {
+export function chooseAction(position, { depth = 4, useCache = true, random = null } = {}) {
   const actions = orderActions(position, legalActionsUnchecked(position));
   if (!actions.length) return null;
   const player = position.turn;
   const cache = useCache ? new Map() : null;
   let bestAction = actions[0];
   let bestScore = -Infinity;
+  let equallyBest = 0;
 
   for (const action of actions) {
     const score = search(applyLegalAction(position, action), depth - 1, -Infinity, Infinity, player, cache);
     if (score > bestScore) {
       bestScore = score;
       bestAction = action;
+      equallyBest = 1;
+    } else if (score === bestScore && typeof random === 'function') {
+      equallyBest += 1;
+      if (random() < 1 / equallyBest) bestAction = action;
     }
   }
   return bestAction;

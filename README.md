@@ -11,6 +11,31 @@ Contributing agents and humans: read [`DECISIONS.md`](DECISIONS.md) before chang
 records the architecture and the invariants that are load-bearing, and it is kept current in the
 same commit as the change that affects it.
 
+## AI games and research
+
+Open **[Watch two AIs](https://schness.com/watch.html)** to watch a browser game. White and Black
+each have Learning, Steady, and Sharp levels. **Next move** asks only the current AI to think and
+then shows that move; **Auto · 1s** shows a move, waits one second, and only then asks the next AI
+to think. Previous and the move transcript let you review any completed position.
+
+Large experiments deliberately do **not** run in the browser. Open the
+**[AI tournament workflow](../../actions/workflows/tournament.yml)**, choose **Run workflow**, and
+set the number of games, both AI levels, and a reproducible seed. The default is 1,000 Sharp versus
+Sharp games. The workflow uses parallel Node workers and publishes exactly one downloadable GitHub
+artifact, named `schness-tournament-<run>`; GitHub delivers it as a ZIP.
+
+The ZIP is designed for human or AI analysis:
+
+- `manifest.json` — experiment settings and overall result totals
+- `summary.csv` — outcomes grouped by both starting king squares
+- `games.jsonl` — one self-contained, reproducible game per line, including every action
+- `ANALYZE.md` — schema guidance and suggested strategic questions
+
+An AI with access to the repository can download that workflow artifact, unzip it, inspect all
+games, compare corner and inner king placements, identify recurring winning sequences, and propose
+follow-up experiments. Keep the workflow run URL when requesting analysis so the exact artifact is
+unambiguous.
+
 ## Development
 
 Schness uses browser-native JavaScript modules and has no build step. The rules and bot are independent
