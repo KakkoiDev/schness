@@ -19,8 +19,8 @@ Three documents, deliberately separate:
 
 - **`index.html` + `src/lobby.js`** — the lobby. Chooses a mode and a setup, then navigates away.
 - **`game.html` + `src/main.js`** — one match. Everything about playing lives here.
-- **`watch.html` + `src/watch-ui.js`** — an AI-vs-AI spectator. It asks the worker for one move at a
-  time, so manual review and the one-second autoplay rhythm never precompute a hidden game.
+- **`watch.html` + `src/watch-ui.js`** — an AI-vs-AI spectator. It keeps at most ten worker-computed
+  moves ahead of the displayed position; advancing consumes one and triggers one replacement.
 
 `src/` splits into three layers, and the split is the main thing to preserve:
 
@@ -46,6 +46,10 @@ Research tournaments are intentionally an Actions-only batch process. A complete
 all 16 king placements for Sharp–Sharp and for Sharp against each lower level in both colors. The
 default 13 sets produce 1,040 games. Workers parallelize inside one job so the run exposes exactly
 one final artifact instead of a collection of implementation-detail shard archives.
+
+The spectator buffer is deliberately rolling and bounded. It starts only after the user requests a
+move, stays ten plies ahead when possible, and stops at a terminal result or when the page closes.
+This hides normal search latency without turning every casual visit into a full background match.
 
 ---
 

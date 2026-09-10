@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { buildResearchPlan, playTournamentGame, seededRandom, startingKings } from '../src/tournament.js';
+import { bufferNeeded } from '../src/watch.js';
 
 test('the tournament PRNG and transcripts are reproducible', () => {
   const one = seededRandom(42);
@@ -25,6 +26,14 @@ test('a research set balances levels, colors, and all king placements', () => {
     assert.deepEqual(games.map((game) => game.opening), Array.from({ length: 16 }, (_, index) => index));
   }
   assert.equal(buildResearchPlan(13).length, 1040);
+});
+
+test('the spectator maintains a bounded ten-move rolling buffer', () => {
+  assert.equal(bufferNeeded(0, 0), 10);
+  assert.equal(bufferNeeded(3, 10), 3);
+  assert.equal(bufferNeeded(4, 14), 0);
+  assert.equal(bufferNeeded(4, 20), 0);
+  assert.equal(bufferNeeded(4, 5, true), 0);
 });
 
 test('a tournament transcript is self-contained and bounded', () => {

@@ -27,6 +27,8 @@ test('AI viewing stays in the browser and tournaments stay in one Actions artifa
   assert.match(watch, /id="watch-next"/);
   assert.match(watch, /id="watch-auto"/);
   assert.match(viewer, /setTimeout\(advance, 1000\)/);
+  assert.match(viewer, /const BUFFER_AHEAD = 10/);
+  assert.match(viewer, /bufferNeeded\(reviewIndex, history\.length/);
   assert.doesNotMatch(lobby, /tournament/i);
   assert.equal([...workflow.matchAll(/actions\/upload-artifact@/g)].length, 1);
   assert.doesNotMatch(workflow, /strategy:\s*\n\s*matrix:/);

@@ -14,9 +14,11 @@ same commit as the change that affects it.
 ## AI games and research
 
 Open **[Watch two AIs](https://schness.com/watch.html)** to watch a browser game. White and Black
-each have Learning, Steady, and Sharp levels. **Next move** asks only the current AI to think and
-then shows that move; **Auto · 1s** shows a move, waits one second, and only then asks the next AI
-to think. Previous and the move transcript let you review any completed position.
+each have Learning, Steady, and Sharp levels. After the first **Next move** or **Auto · 1s**, a Web
+Worker keeps a rolling buffer of up to ten future moves. Advancing consumes one position and starts
+computing its replacement, so review is usually instant without simulating an unbounded game in the
+background. Auto displays one buffered move per second. Previous and the transcript revisit any
+computed position; generation stops at checkmate or a draw, or when the page is closed.
 
 Large experiments deliberately do **not** run in the browser. Open the
 **[AI tournament workflow](../../actions/workflows/tournament.yml)**, choose **Run workflow**, and
