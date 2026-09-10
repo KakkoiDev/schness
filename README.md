@@ -47,7 +47,10 @@ follow-up experiments. Keep the workflow run URL when requesting analysis so the
 unambiguous.
 
 The first full 1,040-game experiment and its strategic findings are recorded in
-**[AI tournament report — run 1](docs/tournament-report-2026-09-10.md)**.
+**[AI tournament report — run 1](docs/tournament-report-2026-09-10.md)**. The controlled rerun with
+repetition-aware Sharp v2 is documented in **[AI tournament report — run 2](docs/tournament-report-2026-09-11-sharp-v2.md)**:
+threefold draws fell by 37 and Sharp's score against lower levels rose by 1.15 percentage points,
+though its losses also rose from 28 to 30.
 
 ## Development
 
