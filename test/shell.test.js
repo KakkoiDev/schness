@@ -14,6 +14,27 @@ test('every service-worker shell entry exists', async () => {
   await Promise.all(paths.map((path) => access(resolve(root, path))));
 });
 
+test('AI viewing stays in the browser and tournaments stay in one Actions artifact', async () => {
+  const [lobby, watch, viewer, workflow, readme] = await Promise.all([
+    readFile(resolve(root, 'index.html'), 'utf8'),
+    readFile(resolve(root, 'watch.html'), 'utf8'),
+    readFile(resolve(root, 'src/watch-ui.js'), 'utf8'),
+    readFile(resolve(root, '.github/workflows/tournament.yml'), 'utf8'),
+    readFile(resolve(root, 'README.md'), 'utf8'),
+  ]);
+  assert.match(lobby, /id="watch-ais"/);
+  assert.match(watch, /id="watch-previous"/);
+  assert.match(watch, /id="watch-next"/);
+  assert.match(watch, /id="watch-auto"/);
+  assert.match(viewer, /setTimeout\(advance, 1000\)/);
+  assert.doesNotMatch(lobby, /tournament/i);
+  assert.equal([...workflow.matchAll(/actions\/upload-artifact@/g)].length, 1);
+  assert.doesNotMatch(workflow, /strategy:\s*\n\s*matrix:/);
+  assert.match(readme, /AI tournament workflow/);
+  assert.match(readme, /exactly one downloadable GitHub/);
+  assert.match(readme, /games\.jsonl/);
+});
+
 test('manifest describes a standalone app with a local icon', async () => {
   const manifest = JSON.parse(await readFile(resolve(root, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.display, 'standalone');
@@ -48,7 +69,7 @@ test('the maskable icon is its own artwork, with room to be masked', async () =>
 
 test('iOS gets a png to put on the home screen', async () => {
   // Without this Safari screenshots the page and uses that as the icon.
-  for (const file of ['index.html', 'game.html']) {
+  for (const file of ['index.html', 'game.html', 'watch.html']) {
     const html = await readFile(resolve(root, file), 'utf8');
     const link = html.match(/<link rel="apple-touch-icon" href="([^"]+)"/);
     assert.ok(link, `${file} has no apple-touch-icon`);
@@ -522,7 +543,7 @@ test('every shortcut lands somewhere the lobby understands', async () => {
 });
 
 test('adding to a home screen opens the app, not a browser tab', async () => {
-  for (const page of ['index.html', 'game.html']) {
+  for (const page of ['index.html', 'game.html', 'watch.html']) {
     const html = await readFile(resolve(root, page), 'utf8');
     // Without these iOS launches the shortcut inside Safari's chrome.
     assert.match(html, /<meta name="apple-mobile-web-app-capable" content="yes">/, page);

@@ -6,12 +6,14 @@ initTheme();
 
 const botButton = document.querySelector('#play-bot');
 const onlineButton = document.querySelector('#play-online');
+const watchButton = document.querySelector('#watch-ais');
 const rulesDialog = document.querySelector('#rules-dialog');
 const installButton = document.querySelector('#install');
 let installPrompt = null;
 
 botButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot')));
 onlineButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online')));
+watchButton.addEventListener('click', () => window.location.assign('./watch.html'));
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
 initChoice('difficulty', botDifficulty(), setBotDifficulty);

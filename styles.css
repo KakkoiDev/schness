@@ -2058,6 +2058,48 @@
   margin-bottom: 1rem;
 }
 
+/* AI spectator: the board remains the visual focus while playback controls
+   and the transcript form a compact inspection rail. */
+.watch-page .game { width:min(100%,70rem) }
+.watch-page header { margin-bottom:1.25rem }
+.watch-heading { display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.25rem }
+.watch-heading h2 { margin:.2rem 0 0;font-size:clamp(2rem,6vw,3.5rem) }
+.watch-layout { display:grid;grid-template-columns:minmax(0,37rem) minmax(15rem,19rem);gap:clamp(1.25rem,4vw,3rem);align-items:start;justify-content:center }
+.watch-stage { min-width:0 }
+.watch-player { display:flex;min-height:4.25rem;align-items:center;justify-content:space-between;gap:1rem;padding:.5rem .15rem }
+.watch-player label { display:flex;align-items:center;gap:.6rem;font-size:.82rem;font-weight:700 }
+.watch-player select { border:1px solid var(--line);border-radius:.5rem;background:var(--surface);color:var(--ink);padding:.42rem .55rem }
+.watch-reserve { display:flex;min-width:10.5rem;min-height:3.25rem;align-items:center;justify-content:flex-end;gap:.25rem }
+.watch-reserve .piece { width:3.1rem;height:3.1rem;object-fit:contain }
+.watch-page .board { border:1px solid rgb(24 32 28/.32);border-radius:.3rem;box-shadow:none }
+.watch-page .square { cursor:default }
+.watch-page .square .piece { width:78%;height:78%;object-fit:contain }
+.watch-panel { display:grid;gap:1rem;border:1px solid var(--line);border-radius:.75rem;background:var(--surface);padding:1rem }
+.watch-status { min-height:2.8rem;margin:0;font-weight:700;line-height:1.4 }
+.watch-controls { display:grid;grid-template-columns:1fr 1fr;gap:.5rem }
+.watch-controls button { min-height:2.75rem;border:1px solid var(--line);border-radius:.55rem;background:var(--paper);color:var(--ink);cursor:pointer }
+.watch-controls button:disabled { opacity:.4;cursor:default }
+.watch-controls #watch-auto[aria-pressed="true"] { border-color:var(--ink);background:var(--ink);color:var(--inverse) }
+.watch-moves { display:grid;max-height:24rem;overflow:auto;border-top:1px solid var(--line);padding-top:.75rem }
+.watch-moves:empty::before { content:"Choose Next move or Auto to begin.";color:var(--muted);font-size:.8rem;line-height:1.5 }
+.watch-moves button { border:0;border-radius:.35rem;background:transparent;color:var(--muted);padding:.35rem .45rem;text-align:left;cursor:pointer }
+.watch-moves button.current { background:var(--sunk);color:var(--ink);font-weight:700 }
+
+@media(max-width:760px) {
+  .watch-page .game { padding-inline:.75rem }
+  .watch-page header { margin-bottom:.5rem }
+  .watch-heading { margin-bottom:.5rem }
+  .watch-heading h2 { font-size:2rem }
+  .watch-layout { grid-template-columns:1fr;gap:.75rem }
+  .watch-stage { width:min(100%,calc(100svh - 15rem));margin:auto }
+  .watch-player { min-height:3.25rem;padding:.2rem 0 }
+  .watch-reserve { min-width:8rem;min-height:2.75rem }
+  .watch-reserve .piece { width:2.55rem;height:2.55rem }
+  .watch-panel { gap:.65rem;padding:.75rem }
+  .watch-status { min-height:auto }
+  .watch-moves { max-height:8rem }
+}
+
 @media (max-width: 760px) {
   .game-page .turn-card:not(.review-card) {
     min-height: 4.75rem;

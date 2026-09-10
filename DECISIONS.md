@@ -15,18 +15,20 @@ changes this file in the same commit. See `CLAUDE.md`.
 Static site, no build step, no server. Browser-native ES modules loaded directly by two HTML pages.
 `npm test` runs `node --test`; there is nothing to compile.
 
-Two documents, deliberately separate:
+Three documents, deliberately separate:
 
 - **`index.html` + `src/lobby.js`** — the lobby. Chooses a mode and a setup, then navigates away.
 - **`game.html` + `src/main.js`** — one match. Everything about playing lives here.
+- **`watch.html` + `src/watch-ui.js`** — an AI-vs-AI spectator. It asks the worker for one move at a
+  time, so manual review and the one-second autoplay rhythm never precompute a hidden game.
 
 `src/` splits into three layers, and the split is the main thing to preserve:
 
 | layer | modules | property |
 |---|---|---|
-| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `board-ui` `drag` `theme` | No DOM, no network. Directly unit-tested. |
+| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `board-ui` `drag` `theme` `watch` `tournament` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `trystero`) | WebRTC over public Nostr relays. |
-| **DOM glue** | `main` `lobby` `sound` `bot-worker` | Touches the document. Thin by intention. |
+| **DOM glue** | `main` `lobby` `sound` `bot-worker` `watch-ui` | Touches the document. Thin by intention. |
 
 `main.js` is the exception at ~1500 lines and is the one place worth being careful in. It renders by
 rebuilding: `render()` reruns on every state change and calls `replaceChildren()` on all sixteen

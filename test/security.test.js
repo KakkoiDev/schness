@@ -23,9 +23,9 @@ test('nothing in the app builds DOM from a string', async () => {
   }
 });
 
-test('both pages carry the same Content-Security-Policy, and nothing inline', async () => {
+test('all pages carry the same Content-Security-Policy, and nothing inline', async () => {
   const policies = [];
-  for (const page of ['index.html', 'game.html']) {
+  for (const page of ['index.html', 'game.html', 'watch.html']) {
     const html = await read(page);
     const meta = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/);
     assert.ok(meta, `${page} ships no CSP`);
@@ -35,7 +35,7 @@ test('both pages carry the same Content-Security-Policy, and nothing inline', as
     assert.doesNotMatch(html, /\son[a-z]+="/i, `${page} has an inline event handler`);
     assert.doesNotMatch(html, /<style[\s>]/, `${page} has an inline stylesheet`);
   }
-  assert.equal(policies[0], policies[1], 'the two pages disagree about the policy');
+  assert.ok(policies.every((policy) => policy === policies[0]), 'the pages disagree about the policy');
   const policy = policies[0];
   // What the app needs and nothing else: modules and the worker from here, the
   // relays over wss (the list is append-only, so a scheme, not hostnames),
