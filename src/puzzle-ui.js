@@ -3,11 +3,12 @@ import { recordAction } from './history.js';
 import { actionAt, actionsForSelection, bankSelection, boardSelection } from './interaction.js';
 import { decodeAction } from './library.js';
 import { decodePuzzlePosition } from './puzzle.js';
+import { movedEnough } from './drag.js';
+import { pieceElement, renderReserve } from './piece-ui.js';
 import { initTheme } from './theme.js';
 
 initTheme();
 const $ = (selector) => document.querySelector(selector);
-const PIECE_CODE = { king: 'K', rook: 'R', bishop: 'B', knight: 'N' };
 let corpus;
 let queue = [];
 let puzzle;
@@ -19,10 +20,15 @@ let lineIndex = 0;
 let history = [];
 let finished = false;
 let replyTimer;
+let pointerDrag;
+let suppressClick = false;
 
 $('#puzzle-level').addEventListener('change', resetQueue);
 $('#puzzle-next').addEventListener('click', nextPuzzle);
 $('#puzzle-reveal').addEventListener('click', reveal);
+document.addEventListener('pointermove', movePointerDrag, { passive: false });
+document.addEventListener('pointerup', endPointerDrag);
+document.addEventListener('pointercancel', cancelPointerDrag);
 load();
 
 async function load() {
@@ -33,7 +39,7 @@ async function load() {
     resetQueue();
   } catch (error) {
     $('#puzzle-prompt').textContent = 'Puzzles are still being generated';
-    $('#puzzle-status').textContent = error.message;
+    feedback('wrong', error.message);
   }
 }
 
@@ -43,7 +49,7 @@ function resetQueue() {
   queue = shuffle(corpus.puzzles.filter((item) => level === 'all' || item.mate === Number(level)));
   if (!queue.length) {
     $('#puzzle-prompt').textContent = `No mate-in-${level} puzzles were found`;
-    $('#puzzle-status').textContent = 'Choose another difficulty.';
+    feedback('wrong', 'Choose another difficulty.');
     $('#puzzle-progress').textContent = '';
     return;
   }
@@ -63,7 +69,7 @@ function nextPuzzle() {
   finished = false;
   buildBoard();
   $('#puzzle-prompt').textContent = `${attacker === WHITE ? 'White' : 'Black'} to move · mate in ${puzzle.mate}`;
-  $('#puzzle-status').textContent = 'Find the forced checkmate.';
+  feedback('ready', 'Find the forced checkmate.');
   $('#puzzle-progress').textContent = `${queue.length + 1} puzzles left in this shuffle`;
   $('#puzzle-sources').replaceChildren(...puzzle.sources.slice(0, 30).map(([game, ply]) => textElement(`Game #${game}, after ply ${ply}`)));
   render();
@@ -82,8 +88,10 @@ function buildBoard() {
       square.type = 'button';
       square.className = 'square';
       square.dataset.index = index;
+      square.dataset.square = index;
       square.setAttribute('role', 'gridcell');
       square.addEventListener('click', () => chooseSquare(index));
+      square.addEventListener('pointerdown', (event) => beginBoardDrag(event, index, square));
       row.append(square);
     }
     board.append(row);
@@ -91,6 +99,7 @@ function buildBoard() {
 }
 
 function chooseSquare(square) {
+  if (suppressClick) return;
   if (finished || position.turn !== attacker) return;
   const action = actionAt(position, selection, square);
   if (action) return tryAction(action);
@@ -100,6 +109,7 @@ function chooseSquare(square) {
 }
 
 function chooseReserve(piece) {
+  if (suppressClick) return;
   if (finished || position.turn !== attacker) return;
   selection = selection?.type === 'bank' && selection.piece === piece ? null : bankSelection(piece);
   render();
@@ -110,21 +120,21 @@ function tryAction(action) {
   const expected = chosenLine && decodeAction(chosenLine[lineIndex]);
   if (!expected || actionKey(expected) !== actionKey(action)) {
     selection = null;
-    $('#puzzle-status').textContent = 'That does not force checkmate. Try another move.';
+    feedback('wrong', 'That does not force checkmate. Try another move.');
     $('#puzzle-board').classList.remove('puzzle-wrong');
     requestAnimationFrame(() => $('#puzzle-board').classList.add('puzzle-wrong'));
     return render();
   }
   apply(action);
   if (getResult(position)) return complete();
-  $('#puzzle-status').textContent = 'Correct. The opponent replies…';
+  feedback('correct', 'Correct. The opponent replies…');
   replyTimer = setTimeout(playReply, 550);
 }
 
 function playReply() {
   if (!chosenLine || lineIndex >= chosenLine.length) return;
   apply(decodeAction(chosenLine[lineIndex]));
-  $('#puzzle-status').textContent = `Continue the mate in ${puzzle.mate}.`;
+  feedback('correct', `Correct defense. Continue the mate in ${puzzle.mate}.`);
 }
 
 function apply(action) {
@@ -138,7 +148,7 @@ function apply(action) {
 
 function complete() {
   finished = true;
-  $('#puzzle-status').textContent = 'Checkmate. Solved.';
+  feedback('solved', 'Checkmate — puzzle solved.');
   render();
 }
 
@@ -149,7 +159,7 @@ function reveal() {
   clearTimeout(replyTimer);
   const step = () => {
     if (lineIndex >= chosenLine.length || getResult(position)) {
-      $('#puzzle-status').textContent = 'Solution shown.';
+      feedback('revealed', 'Solution shown. Try the next puzzle when ready.');
       return;
     }
     apply(decodeAction(chosenLine[lineIndex]));
@@ -171,29 +181,90 @@ function render() {
     square.classList.toggle('capture', targets.has(index) && Boolean(occupant));
     square.classList.toggle('last-from', last?.from === index);
     square.classList.toggle('last-to', last?.to === index);
+    square.classList.toggle('drag-source', pointerDrag?.active && pointerDrag.selection?.square === index);
     square.disabled = finished || position.turn !== attacker;
   }
-  $('#puzzle-player').textContent = `${attacker === WHITE ? 'White' : 'Black'} · You`;
-  $('#puzzle-opponent').textContent = `${attacker === WHITE ? 'Black' : 'White'} · Defense`;
-  $('#puzzle-reserve').replaceChildren(...position.banks[attacker].map((piece) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'watch-bank-piece';
-    button.append(pieceElement(attacker, piece));
-    button.disabled = finished || position.turn !== attacker;
-    button.classList.toggle('selected', selection?.type === 'bank' && selection.piece === piece);
-    button.addEventListener('click', () => chooseReserve(piece));
-    return button;
-  }));
+  const defender = attacker === WHITE ? BLACK : WHITE;
+  renderSeat('top', defender, 'Defense', false);
+  renderSeat('bottom', attacker, 'You', true);
   $('#puzzle-line').replaceChildren(...history.map((entry) => textElement(`${entry.ply}. ${entry.notation}`)));
 }
 
-function pieceElement(owner, piece) {
-  const image = document.createElement('img');
-  image.className = `piece piece-${owner}`;
-  image.src = `./assets/pieces/${owner === WHITE ? 'w' : 'b'}${PIECE_CODE[piece]}.svg`;
-  image.alt = `${owner} ${piece}`;
-  return image;
+function renderSeat(place, owner, name, interactive) {
+  $(`#puzzle-${place}-player`).textContent = `${owner === WHITE ? 'White' : 'Black'} · ${name}`;
+  $(`#puzzle-${place}-label`).textContent = `${owner === attacker ? 'Your' : 'Their'} reserve · ${position.banks[owner].length}`;
+  renderReserve($(`#puzzle-${place}-reserve`), position.banks[owner], owner, {
+    interactive,
+    selected: selection?.type === 'bank' ? selection.piece : null,
+    dragging: pointerDrag?.active ? pointerDrag.selection?.piece : null,
+    disabled: finished || position.turn !== attacker,
+    onSelect: chooseReserve,
+    onPointerDown: beginBankDrag,
+  });
+}
+
+function feedback(state, message) {
+  const card = $('#puzzle-feedback');
+  card.dataset.state = state;
+  $('#puzzle-feedback-icon').textContent = { ready: '●', correct: '✓', solved: '✓', wrong: '×', revealed: '→' }[state];
+  $('#puzzle-status').textContent = message;
+}
+
+function beginBoardDrag(event, square, button) {
+  const occupant = position.board[square];
+  if (!event.isPrimary || finished || position.turn !== attacker || occupant?.owner !== attacker) return;
+  pointerDrag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
+    pieceRect: button.querySelector('.piece')?.getBoundingClientRect(), selection: boardSelection(square),
+    owner: attacker, piece: occupant.piece };
+}
+
+function beginBankDrag(event, piece, button) {
+  if (!event.isPrimary || finished || position.turn !== attacker) return;
+  pointerDrag = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
+    pieceRect: button.querySelector('.piece')?.getBoundingClientRect(), selection: bankSelection(piece),
+    owner: attacker, piece };
+}
+
+function movePointerDrag(event) {
+  if (!pointerDrag || event.pointerId !== pointerDrag.pointerId) return;
+  if (!pointerDrag.active && movedEnough(pointerDrag, event)) {
+    pointerDrag.active = true;
+    selection = pointerDrag.selection;
+    pointerDrag.ghost = pieceElement(pointerDrag.owner, pointerDrag.piece);
+    pointerDrag.ghost.classList.add('drag-ghost');
+    if (pointerDrag.pieceRect) {
+      pointerDrag.ghost.style.width = `${pointerDrag.pieceRect.width}px`;
+      pointerDrag.ghost.style.height = `${pointerDrag.pieceRect.height}px`;
+    }
+    document.body.append(pointerDrag.ghost);
+    render();
+  }
+  if (!pointerDrag.active) return;
+  event.preventDefault();
+  pointerDrag.ghost.style.left = `${event.clientX}px`;
+  pointerDrag.ghost.style.top = `${event.clientY}px`;
+}
+
+function endPointerDrag(event) {
+  if (!pointerDrag || event.pointerId !== pointerDrag.pointerId) return;
+  const drag = pointerDrag;
+  pointerDrag = null;
+  drag.ghost?.remove();
+  if (!drag.active) return;
+  const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('.square');
+  const action = target ? actionAt(position, drag.selection, Number(target.dataset.square)) : null;
+  event.preventDefault();
+  suppressClick = true;
+  setTimeout(() => { suppressClick = false; }, 0);
+  if (action) tryAction(action);
+  else { selection = null; render(); }
+}
+
+function cancelPointerDrag() {
+  pointerDrag?.ghost?.remove();
+  pointerDrag = null;
+  selection = null;
+  render();
 }
 
 function textElement(text) {

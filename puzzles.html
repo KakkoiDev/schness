@@ -18,15 +18,15 @@
     <div class="puzzle-heading"><div><p class="eyebrow">Tactics</p><h2>Find the checkmate</h2></div><a class="text-button" href="./">← Home</a></div>
     <section class="puzzle-layout">
       <div class="puzzle-stage">
-        <div id="puzzle-opponent" class="replay-player"></div>
+        <div class="replay-seat"><div id="puzzle-top-player" class="replay-player"></div><div class="reserve"><span id="puzzle-top-label" class="reserve-label"></span><div id="puzzle-top-reserve" class="bank"></div></div></div>
         <div id="puzzle-board" class="board" role="grid" aria-label="Checkmate puzzle board"></div>
-        <div class="puzzle-you"><div id="puzzle-player" class="replay-player"></div><div id="puzzle-reserve" class="watch-reserve"></div></div>
+        <div class="replay-seat"><div id="puzzle-bottom-player" class="replay-player"></div><div class="reserve"><span id="puzzle-bottom-label" class="reserve-label"></span><div id="puzzle-bottom-reserve" class="bank"></div></div></div>
       </div>
       <aside class="puzzle-panel">
         <label class="puzzle-level">Difficulty <select id="puzzle-level"><option value="all">All · random</option><option value="1">Mate in 1</option><option value="2">Mate in 2</option><option value="3">Mate in 3</option><option value="4">Mate in 4</option></select></label>
         <p id="puzzle-progress" class="eyebrow"></p>
         <h3 id="puzzle-prompt">Loading verified puzzles…</h3>
-        <p id="puzzle-status" class="puzzle-status" aria-live="polite"></p>
+        <div id="puzzle-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span id="puzzle-feedback-icon" aria-hidden="true">●</span><p id="puzzle-status">Find the forced checkmate.</p></div>
         <div class="puzzle-actions"><button id="puzzle-next" type="button">Next puzzle</button><button id="puzzle-reveal" type="button">Show solution</button></div>
         <div id="puzzle-line" class="watch-moves" aria-label="Played line"></div>
         <details><summary>Source positions</summary><div id="puzzle-sources" class="replay-sources"></div></details>

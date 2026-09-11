@@ -1,13 +1,13 @@
 import { applyAction, BLACK, createInitialPosition, WHITE } from './rules.js';
 import { recordAction } from './history.js';
 import { decodeAction, matchesFilters, profilePairs, resultLabel } from './library.js';
+import { pieceElement, renderReserve } from './piece-ui.js';
 import { initTheme } from './theme.js';
 
 initTheme();
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
 
 const $ = (selector) => document.querySelector(selector);
-const PIECE_CODE = { king: 'K', rook: 'R', bishop: 'B', knight: 'N' };
 const PAGE_SIZE = 60;
 let library;
 let filtered = [];
@@ -55,6 +55,10 @@ function bindControls() {
     if (autoplay) next(); else clearTimeout(timer);
   });
   $('#replay-dialog').addEventListener('close', pause);
+  $('#replay-play-here').addEventListener('click', () => {
+    sessionStorage.setItem('schness-arena-position', JSON.stringify(timeline[ply]));
+    window.location.assign('./watch.html?position=library');
+  });
 }
 
 function applyFilters() {
@@ -165,11 +169,7 @@ function renderReplay() {
     square.classList.toggle('last-to', last?.to === index);
     const occupant = position.board[index];
     if (!occupant) continue;
-    const image = document.createElement('img');
-    image.className = `piece piece-${occupant.owner}`;
-    image.src = `./assets/pieces/${occupant.owner === WHITE ? 'w' : 'b'}${PIECE_CODE[occupant.piece]}.svg`;
-    image.alt = `${occupant.owner} ${occupant.piece}`;
-    square.append(image);
+    square.append(pieceElement(occupant.owner, occupant.piece));
   }
   renderPlayer('#replay-white', 'White', position.banks[WHITE]);
   renderPlayer('#replay-black', 'Black', position.banks[BLACK]);
@@ -177,6 +177,7 @@ function renderReplay() {
   $('#replay-first').disabled = ply === 0;
   $('#replay-previous').disabled = ply === 0;
   $('#replay-next').disabled = ply === history.length;
+  $('#replay-play-here').disabled = position.phase !== 'play';
   for (const [index, button] of [...$('#replay-moves').children].entries()) button.classList.toggle('current', index + 1 === ply);
   $('#replay-moves').querySelector('.current')?.scrollIntoView({ block: 'nearest' });
 }
@@ -185,5 +186,8 @@ function renderPlayer(selector, label, reserve) {
   const pairs = profilePairs(currentGame).map((pair) => pair.split(' vs '));
   const index = label === 'White' ? 0 : 1;
   const engines = [...new Set(pairs.map((pair) => pair[index]))].join(' / ');
-  $(selector).textContent = `${label} · ${engines} · reserve: ${reserve.length ? reserve.map((piece) => piece[0].toUpperCase()).join(' ') : 'empty'}`;
+  $(selector).textContent = `${label} · ${engines}`;
+  const owner = label === 'White' ? WHITE : BLACK;
+  $(`#replay-${owner}-label`).textContent = `${label} reserve · ${reserve.length}`;
+  renderReserve($(`#replay-${owner}-reserve`), reserve, owner);
 }

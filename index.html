@@ -75,17 +75,31 @@
         <p class="strip-number">1</p>
         <h3>Place the kings</h3>
         <p>White sets their king anywhere on the home row, then Black does the same.</p>
+        <button class="rule-demo-trigger" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings"><span>Try it →</span></button>
       </article>
       <article>
         <p class="strip-number">2</p>
         <h3>Move or deploy</h3>
         <p>Each turn: move a piece by normal chess rules, or drop one from your reserve onto an empty square.</p>
+        <button class="rule-demo-trigger" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying"><span>Try it →</span></button>
       </article>
       <article>
         <p class="strip-number">3</p>
         <h3>Nothing is lost</h3>
         <p>A captured piece joins its owner’s reserve, so the board keeps refilling until checkmate.</p>
+        <button class="rule-demo-trigger" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece"><span>Try it →</span></button>
       </article>
+    </section>
+    <section id="rules-demo" class="rules-demo" aria-labelledby="demo-title" hidden>
+      <div class="demo-heading"><div><p class="eyebrow">Playable rule</p><h2 id="demo-title">Place the kings</h2></div><button id="demo-close" class="text-button" type="button">Close</button></div>
+      <div class="demo-layout">
+        <div class="demo-stage">
+          <div class="replay-seat"><div id="demo-black-player" class="replay-player">Black · Machine</div><div class="reserve"><span id="demo-black-label" class="reserve-label">Black reserve</span><div id="demo-black-reserve" class="bank"></div></div></div>
+          <div id="demo-board" class="board" role="grid" aria-label="Playable rules demonstration"></div>
+          <div class="replay-seat"><div id="demo-white-player" class="replay-player">White · You</div><div class="reserve"><span id="demo-white-label" class="reserve-label">Your reserve</span><div id="demo-white-reserve" class="bank"></div></div></div>
+        </div>
+        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
+      </div>
     </section>
     <button class="rules-full" type="button" data-open-rules>Read the full rules</button>
 

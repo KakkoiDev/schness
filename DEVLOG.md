@@ -8,6 +8,21 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-09-11 — Every board should teach the same interaction language
+
+**Problem.** Live matches supported touch/mouse dragging and fixed three-slot reserves, but puzzles
+only accepted taps and recorded games reduced reserves to letters in a sentence. The landing-page
+rules were accurate but passive. A player had to relearn the interface in every context.
+
+**Decision.** Use the same piece assets, fixed reserve slots, selection marks, legal targets, and
+pointer-following drag ghost wherever a position is playable. Read-only archive positions show the
+same two reserve trays and can branch into Bot Arena with **Play from here**. Puzzle feedback uses an
+explicit neutral/green/red state rather than relying on a sentence changing in place.
+
+**Tutorial.** The three landing-page rule cards now open legal engine positions. The player can tap
+or drag a real action and a depth-two worker replies. This keeps the tutorial instant and truthful;
+it is a small playable game, not a video that can drift away from the rules.
+
 ## 2026-09-11 — Exact puzzle extraction belongs in Actions
 
 **Question.** Can Sharp identify mate-in-one through mate-in-four positions by walking all recorded

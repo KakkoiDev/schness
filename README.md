@@ -115,6 +115,8 @@ Current implementation:
 - Landscape and portrait layouts, with the board bounded by the window on both
 - WCAG AA contrast in both themes, measured in the test suite
 - 1,526 exact, source-linked checkmate puzzles with selectable or mixed difficulty
+- Tap-and-drag play across matches, Bot Arena, puzzles, and playable rule demonstrations
+- Full visual reserve trays on live, puzzle, tutorial, and recorded-game boards
 
 ## Roadmap
 

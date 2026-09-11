@@ -51,8 +51,35 @@ test('checkmate puzzles are filtered, randomized, and played from verified data'
   assert.match(ui, /fetch\('\.\/data\/puzzles\.json'\)/);
   assert.match(ui, /crypto\.getRandomValues/);
   assert.match(ui, /puzzle\.solutions\.find/);
+  assert.match(ui, /beginBoardDrag/);
+  assert.match(ui, /beginBankDrag/);
+  assert.match(page, /id="puzzle-top-reserve"/);
+  assert.match(page, /id="puzzle-bottom-reserve"/);
+  assert.match(page, /class="puzzle-feedback"[^>]+data-state="ready"/);
   assert.match(workflow, /--shards 64/);
   assert.match(workflow, /needs: extract/);
+});
+
+test('rules are playable and recorded positions can branch into the full arena', async () => {
+  const [lobby, tutorial, library, libraryUi, arena] = await Promise.all([
+    readFile(resolve(root, 'index.html'), 'utf8'),
+    readFile(resolve(root, 'src/tutorial.js'), 'utf8'),
+    readFile(resolve(root, 'library.html'), 'utf8'),
+    readFile(resolve(root, 'src/library-ui.js'), 'utf8'),
+    readFile(resolve(root, 'src/watch-ui.js'), 'utf8'),
+  ]);
+  assert.equal((lobby.match(/class="rule-demo-trigger"/g) ?? []).length, 3);
+  assert.match(lobby, /id="rules-demo"[^>]+hidden/);
+  assert.match(tutorial, /new Worker\('\.\/src\/bot-worker\.js'/);
+  assert.match(tutorial, /beginBoardDrag/);
+  assert.match(tutorial, /beginBankDrag/);
+  assert.match(library, /id="replay-black-reserve"/);
+  assert.match(library, /id="replay-white-reserve"/);
+  assert.match(library, /id="replay-play-here"/);
+  assert.match(libraryUi, /schness-arena-position/);
+  assert.match(arena, /loadImportedPosition/);
+  assert.match(arena, /beginBoardDrag/);
+  assert.match(arena, /beginBankDrag/);
 });
 
 test('manifest describes a standalone app with a local icon', async () => {
