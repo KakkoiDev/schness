@@ -37,3 +37,12 @@ test('core and variable game language has Japanese coverage', () => {
   assert.equal(translateText('Your reserve · 2', 'ja'), 'あなたの持ち駒・2');
   assert.equal(translateText('Create an online game', 'en'), 'Create an online game');
 });
+
+test('common live network, media, tutorial, and move states are translated', () => {
+  assert.equal(translateText('Your connection is unstable', 'ja'), '接続が不安定です');
+  assert.equal(translateText('Microphone permission was not granted.', 'ja'), 'マイクの使用が許可されませんでした。');
+  assert.equal(translateText('Move your rook to one of the highlighted squares.', 'ja'), 'ルークを光っているマスのいずれかへ動かしてください。');
+  assert.equal(translateText('White deployed a knight on b2', 'ja'), '白がナイトをb2に配置');
+  assert.equal(translateText('Rook on b2 is selected. Your turn.', 'ja'), 'ルーク（b2）を選択中。あなたの手番です。');
+  assert.equal(translateText('1:00 left', 'ja'), '1:00 残り');
+});
