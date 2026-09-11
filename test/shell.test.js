@@ -14,7 +14,7 @@ test('every service-worker shell entry exists', async () => {
   await Promise.all(paths.map((path) => access(resolve(root, path))));
 });
 
-test('AI viewing stays in the browser and tournaments stay in one Actions artifact', async () => {
+test('AI viewing stays in the browser and tournaments publish one artifact plus a durable release', async () => {
   const [lobby, watch, viewer, workflow, readme] = await Promise.all([
     readFile(resolve(root, 'index.html'), 'utf8'),
     readFile(resolve(root, 'watch.html'), 'utf8'),
@@ -32,6 +32,8 @@ test('AI viewing stays in the browser and tournaments stay in one Actions artifa
   assert.match(viewer, /buildEditedPosition/);
   assert.doesNotMatch(lobby, /tournament/i);
   assert.equal([...workflow.matchAll(/actions\/upload-artifact@/g)].length, 1);
+  assert.match(workflow, /gh release (?:create|upload)/);
+  assert.match(workflow, /contents: write/);
   assert.doesNotMatch(workflow, /strategy:\s*\n\s*matrix:/);
   assert.match(readme, /AI tournament workflow/);
   assert.match(readme, /exactly one downloadable GitHub/);
@@ -46,8 +48,9 @@ test('checkmate puzzles are filtered, randomized, and played from verified data'
     readFile(resolve(root, '.github/workflows/puzzles.yml'), 'utf8'),
   ]);
   assert.match(lobby, /id="solve-puzzles"/);
-  assert.match(page, /value="all">All · random/);
-  for (const level of [1, 2, 3, 4]) assert.match(page, new RegExp(`value="${level}">Mate in ${level}`));
+  for (const level of [1, 2, 3, 4]) assert.match(page, new RegExp(`name="puzzle-level" value="${level}"`));
+  assert.match(page, /id="puzzle-hide-depth"/);
+  assert.match(page, /id="puzzle-auto-next"/);
   assert.match(ui, /fetch\('\.\/data\/puzzles\.json'\)/);
   assert.match(ui, /crypto\.getRandomValues/);
   assert.match(ui, /puzzle\.solutions\.find/);
@@ -58,6 +61,7 @@ test('checkmate puzzles are filtered, randomized, and played from verified data'
   assert.match(page, /class="puzzle-feedback"[^>]+data-state="ready"/);
   assert.match(workflow, /--shards 64/);
   assert.match(workflow, /needs: extract/);
+  assert.match(workflow, /gh release (?:create|upload)/);
 });
 
 test('rules are playable and recorded positions can branch into the full arena', async () => {
@@ -73,6 +77,8 @@ test('rules are playable and recorded positions can branch into the full arena',
   assert.match(tutorial, /new Worker\('\.\/src\/bot-worker\.js'/);
   assert.match(tutorial, /beginBoardDrag/);
   assert.match(tutorial, /beginBankDrag/);
+  assert.match(lobby, /id="replay-tutorial"/);
+  assert.match(tutorial, /schness-tutorial-seen/);
   assert.match(library, /id="replay-black-reserve"/);
   assert.match(library, /id="replay-white-reserve"/);
   assert.match(library, /id="replay-play-here"/);

@@ -12,7 +12,7 @@ on:
       - .github/workflows/puzzles.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   extract:
@@ -49,8 +49,21 @@ jobs:
           path: puzzle-shards
           merge-multiple: true
       - run: node scripts/aggregate-puzzles.js puzzle-shards puzzle-results
+      - name: Package durable release asset
+        run: (cd puzzle-results && zip -qr ../schness-checkmate-puzzles-${{ github.run_number }}.zip .)
       - uses: actions/upload-artifact@v4
         with:
           name: schness-checkmate-puzzles
           path: puzzle-results/
           retention-days: 30
+      - name: Publish permanent puzzle-corpus release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: puzzle-corpus-${{ github.run_number }}
+          ASSET: schness-checkmate-puzzles-${{ github.run_number }}.zip
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" "$ASSET" --clobber
+          else
+            gh release create "$RELEASE_TAG" "$ASSET" --title "Puzzle corpus ${{ github.run_number }}" --notes "Permanent verified checkmate-puzzle corpus. Source workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}."
+          fi

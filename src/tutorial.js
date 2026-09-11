@@ -26,6 +26,7 @@ export function initTutorial() {
 
   buildBoard();
   document.querySelectorAll('.rule-demo-trigger').forEach((button) => button.addEventListener('click', () => open(button.dataset.lesson)));
+  document.querySelector('#replay-tutorial')?.addEventListener('click', () => open('kings'));
   $('#demo-close').addEventListener('click', () => { root.hidden = true; cancel(); });
   $('#demo-restart').addEventListener('click', () => open(lesson, false));
   worker.addEventListener('message', ({ data }) => {
@@ -38,6 +39,7 @@ export function initTutorial() {
   document.addEventListener('pointermove', moveDrag, { passive: false });
   document.addEventListener('pointerup', endDrag);
   document.addEventListener('pointercancel', cancelDrag);
+  if (!tutorialSeen()) setTimeout(() => open('kings'), 0);
 
   function open(next, scroll = true) {
     cancel();
@@ -45,6 +47,7 @@ export function initTutorial() {
     position = lessonPosition(lesson);
     selection = null;
     root.hidden = false;
+    rememberTutorial();
     $('#demo-title').textContent = LESSONS[lesson].title;
     $('#demo-instruction').textContent = LESSONS[lesson].instruction;
     setFeedback('ready', lesson === 'kings' ? 'Place your king on the highlighted row.' : 'Your turn — tap or drag a piece.');
@@ -191,6 +194,14 @@ export function initTutorial() {
   }
 
   function cancelDrag() { drag?.ghost?.remove(); drag = null; }
+}
+
+function tutorialSeen() {
+  try { return localStorage.getItem('schness-tutorial-seen') === '1'; } catch { return false; }
+}
+
+function rememberTutorial() {
+  try { localStorage.setItem('schness-tutorial-seen', '1'); } catch { /* Private storage must not block learning. */ }
 }
 
 export function lessonPosition(lesson) {

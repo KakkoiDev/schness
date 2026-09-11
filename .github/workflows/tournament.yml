@@ -15,7 +15,7 @@ on:
         type: string
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   tournament:
@@ -34,6 +34,8 @@ jobs:
           --output tournament-shards
       - name: Build AI-readable bundle
         run: node scripts/aggregate-tournament.js tournament-shards tournament-results
+      - name: Package durable release asset
+        run: (cd tournament-results && zip -qr ../schness-tournament-${{ github.run_number }}.zip .)
       - name: Upload the single downloadable ZIP
         uses: actions/upload-artifact@v4
         with:
@@ -41,3 +43,14 @@ jobs:
           path: tournament-results/
           retention-days: 30
           if-no-files-found: error
+      - name: Publish permanent research release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: tournament-run-${{ github.run_number }}
+          ASSET: schness-tournament-${{ github.run_number }}.zip
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" "$ASSET" --clobber
+          else
+            gh release create "$RELEASE_TAG" "$ASSET" --title "Tournament ${{ github.run_number }}" --notes "Permanent Schness tournament archive. Source workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}. Seed: ${{ inputs.seed }}. Complete 80-game sets: ${{ inputs.repetitions }}."
+          fi
