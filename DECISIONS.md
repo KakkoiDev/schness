@@ -26,9 +26,9 @@ Three documents, deliberately separate:
 
 | layer | modules | property |
 |---|---|---|
-| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `board-ui` `drag` `theme` `watch` `tournament` | No DOM, no network. Directly unit-tested. |
+| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `board-ui` `drag` `theme` `watch` `tournament` `library` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `trystero`) | WebRTC over public Nostr relays. |
-| **DOM glue** | `main` `lobby` `sound` `bot-worker` `watch-ui` | Touches the document. Thin by intention. |
+| **DOM glue** | `main` `lobby` `sound` `bot-worker` `watch-ui` `library-ui` | Touches the document. Thin by intention. |
 
 `main.js` is the exception at ~1500 lines and is the one place worth being careful in. It renders by
 rebuilding: `render()` reruns on every state change and calls `replaceChildren()` on all sixteen

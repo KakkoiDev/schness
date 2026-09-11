@@ -2106,3 +2106,69 @@
     margin-bottom: .875rem;
   }
 }
+
+/* Recorded games: dense enough to scan, quiet enough to keep the game itself
+   as the focus. The replay opens over the catalogue so mobile never has to
+   scroll back and forth between a list and a board. */
+.library-page .game { width:min(100%,76rem) }
+.library-heading { display:flex;align-items:end;justify-content:space-between;gap:1rem;margin:0 0 1.25rem }
+.library-heading h2 { margin:.15rem 0;font-size:clamp(2.2rem,6vw,4rem) }
+.library-heading p:last-child { margin:.35rem 0 0;color:var(--muted) }
+.library-stats { display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;border:1px solid var(--line);border-radius:.75rem;background:var(--surface) }
+.library-stats div { display:grid;gap:.15rem;padding:1rem;border-right:1px solid var(--line) }
+.library-stats div:last-child { border:0 }
+.library-stats strong { font-size:1.45rem }
+.library-stats span { color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em }
+.library-filters { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.65rem;margin:1rem 0 }
+.library-filters label { display:grid;gap:.3rem;color:var(--muted);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em }
+.library-filters select { min-width:0;border:1px solid var(--line);border-radius:.5rem;background:var(--surface);color:var(--ink);padding:.65rem }
+.filter-count { margin:.75rem 0;color:var(--muted);font-size:.8rem }
+.game-library-list { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem }
+.library-game { display:grid;gap:.3rem;min-width:0;border:1px solid var(--line);border-radius:.65rem;background:var(--surface);color:var(--ink);padding:.85rem;text-align:left;cursor:pointer }
+.library-game:hover { border-color:var(--muted);transform:translateY(-1px) }
+.library-game-id { color:var(--muted);font-size:.7rem;font-weight:700;letter-spacing:.08em }
+.library-game strong,.library-game span,.library-game small { overflow:hidden;text-overflow:ellipsis;white-space:nowrap }
+.library-game span { font-size:.78rem }
+.library-game small { color:var(--muted) }
+.library-more { display:block;min-width:10rem;margin:1rem auto;border:1px solid var(--line);border-radius:2rem;background:var(--surface);color:var(--ink);padding:.7rem 1rem;cursor:pointer }
+.replay-dialog { width:min(94vw,68rem);max-width:none;max-height:94svh;border:1px solid var(--line);border-radius:1rem;background:var(--paper);color:var(--ink);padding:1.2rem }
+.replay-dialog::backdrop { background:rgb(8 12 10/.7);backdrop-filter:blur(4px) }
+.replay-head { display:flex;align-items:start;justify-content:space-between;gap:1rem;margin-bottom:1rem }
+.replay-head h2 { margin:.1rem 0;font-size:2rem }
+.replay-head p:last-child { margin:.25rem 0;color:var(--muted) }
+.replay-layout { display:grid;grid-template-columns:minmax(0,35rem) minmax(16rem,1fr);gap:1.25rem;align-items:start }
+.replay-stage { min-width:0 }
+.replay-player { min-height:2.5rem;display:flex;align-items:center;color:var(--muted);font-size:.78rem;font-weight:700 }
+.replay-stage .board { border:1px solid rgb(24 32 28/.32);border-radius:.3rem;box-shadow:none }
+.replay-stage .square { cursor:default }
+.replay-stage .square .piece { width:78%;height:78%;object-fit:contain }
+.replay-panel { display:grid;gap:.75rem;min-width:0 }
+.replay-panel .watch-moves { max-height:19rem }
+.replay-panel details { border-top:1px solid var(--line);padding-top:.75rem;color:var(--muted);font-size:.76rem }
+.replay-panel summary { color:var(--ink);cursor:pointer;font-weight:700 }
+.replay-sources { max-height:8rem;overflow:auto }
+.replay-sources p { margin:.45rem 0 }
+
+@media(max-width:760px) {
+  .library-page .game { padding-inline:.75rem }
+  .library-page header { margin-bottom:.5rem }
+  .library-heading { align-items:start;margin-bottom:.75rem }
+  .library-heading h2 { font-size:2.3rem }
+  .library-heading .text-button { display:none }
+  .library-stats { grid-template-columns:1fr 1fr }
+  .library-stats div:nth-child(2) { border-right:0 }
+  .library-stats div:nth-child(-n+2) { border-bottom:1px solid var(--line) }
+  .library-filters { grid-template-columns:1fr 1fr }
+  .game-library-list { grid-template-columns:1fr }
+  .replay-dialog { inset:0;width:100%;height:100%;max-height:none;border:0;border-radius:0;padding:max(.75rem,env(safe-area-inset-top)) .75rem max(.75rem,env(safe-area-inset-bottom)) }
+  .replay-head { margin-bottom:.25rem }
+  .replay-head h2 { font-size:1.5rem }
+  .replay-layout { grid-template-columns:1fr;gap:.4rem }
+  .replay-stage { width:min(100%,calc(100svh - 18rem));margin:auto }
+  .replay-player { min-height:1.8rem;font-size:.7rem }
+  .replay-panel { gap:.4rem }
+  .replay-panel .watch-status { min-height:2.5rem;font-size:.8rem }
+  .replay-panel .watch-moves { display:flex;max-height:3.25rem;overflow-x:auto;overflow-y:hidden;padding-top:.35rem }
+  .replay-panel .watch-moves button { flex:0 0 auto }
+  .replay-panel details { display:none }
+}

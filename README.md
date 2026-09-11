@@ -52,6 +52,15 @@ repetition-aware Sharp v2 is documented in **[AI tournament report — run 2](do
 threefold draws fell by 37 and Sharp's score against lower levels rose by 1.15 percentage points,
 though its losses also rose from 28 to 30.
 
+The public **[game library](https://schness.com/library.html)** deduplicates both tournament runs by
+their complete action sequence: 2,080 records become 1,099 unique replayable games. Each game keeps
+all of its experiment provenance, including exact White and Black AI versions, result, length, and
+starting kings. Rebuild it from downloaded artifacts with:
+
+```sh
+npm run library:build -- --input 1:1:path/to/run1/games.jsonl --input 2:2:path/to/run2/games.jsonl
+```
+
 ## Development
 
 Schness uses browser-native JavaScript modules and has no build step. The rules and bot are independent

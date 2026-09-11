@@ -8,6 +8,24 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-09-11 — Unique, replayable tournament library
+
+**Question.** How can the two 1,040-game experiments become a study corpus without presenting the
+same played game multiple times or losing which engine produced it?
+
+**Decision.** Define game identity as the complete ordered action sequence, including both initial
+king placements. Engine identity is deliberately excluded from the uniqueness key: the same played
+line is one game even if Sharp v1 and Sharp v2 both produced it. Every original occurrence remains
+attached as provenance with run number, game index, and both exact AI versions.
+
+**Result.** The 2,080 records collapse to 1,099 unique games; 981 repeated records are removed. A
+static 1.1 MB compact dataset ships with GitHub Pages and can be filtered by either AI, result, and
+Sharp version. Every line can be replayed one ply at a time or automatically at one ply per second.
+
+**Why static.** The corpus changes only when an experiment runs. Prebuilding it keeps filtering and
+replay instant, works offline, and adds no database or server. The checked-in builder makes the
+transformation reproducible from future tournament artifacts.
+
 ## 2026-09-11 — Tournament run 2: evaluate Sharp v2
 
 **Question.** Does repetition-aware equal-score tie-breaking reduce dull draws without increasing

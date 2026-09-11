@@ -71,7 +71,7 @@ test('the maskable icon is its own artwork, with room to be masked', async () =>
 
 test('iOS gets a png to put on the home screen', async () => {
   // Without this Safari screenshots the page and uses that as the icon.
-  for (const file of ['index.html', 'game.html', 'watch.html']) {
+  for (const file of ['index.html', 'game.html', 'watch.html', 'library.html']) {
     const html = await readFile(resolve(root, file), 'utf8');
     const link = html.match(/<link rel="apple-touch-icon" href="([^"]+)"/);
     assert.ok(link, `${file} has no apple-touch-icon`);
