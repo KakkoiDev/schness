@@ -145,6 +145,22 @@ all king starts reversed. Treat non-repeating 200-ply draws as a separate engine
 
 See the [full run-2 report](docs/tournament-report-2026-09-11-sharp-v2.md).
 
+## 2026-09-11 — Japanese live-state coverage audit
+
+**Problem.** The first bilingual release translated the static pages, but several messages that only
+appear during a live match remained in English. Japanese also needs more horizontal room in the
+smallest game header than English does.
+
+**Decision.** Keep one shared interface and expand the translation boundary instead of creating
+separate Japanese templates. Cover connection recovery, media permission failures, draw and
+takeback requests, rematches, tutorial prompts, selection help, clocks, reserves, and move-history
+sentences. Below 361 px, retain the S product mark but hide the repeated Schness wordmark on the
+game page so language, theme, and rules controls remain usable without wrapping.
+
+**Verification.** Added regression coverage for live network, media, tutorial, move-history,
+selection, and clock text. The service-worker cache was advanced so installed copies receive the
+corrected interface.
+
 ## 2026-09-10 — Sharp v2: repetition aversion
 
 **Question.** Is the 89.9% draw rate in Sharp–Sharp evidence that Schness is intrinsically dull, or
