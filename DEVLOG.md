@@ -147,6 +147,14 @@ See the [full run-2 report](docs/tournament-report-2026-09-11-sharp-v2.md).
 
 ## 2026-09-11 — Japanese live-state coverage audit
 
+### Production startup regression
+
+The initial language switch used one selector list for the action group, navigation, and header
+fallback. DOM query order selected the ancestor header, then `insertBefore` rejected its nested theme
+button as a reference child. That exception stopped lobby initialization, leaving every front-page
+button inert and the language control absent. The lookup now performs explicit fallbacks and a
+regression test protects the required action-group target. The PWA cache was advanced immediately.
+
 **Problem.** The first bilingual release translated the static pages, but several messages that only
 appear during a live match remained in English. Japanese also needs more horizontal room in the
 smallest game header than English does.
