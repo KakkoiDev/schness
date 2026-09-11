@@ -46,33 +46,16 @@
         <p>Move a piece, or deploy one from your reserve. Every capture comes back.</p>
       </div>
       <div class="mode-buttons">
-        <button id="play-bot" class="mode dark" type="button"><strong>Play the bot</strong><small>Starts instantly, works offline</small></button>
+        <button id="bot-arena" class="mode dark" type="button"><strong>Bot arena</strong><small>Play, watch, take over, or edit a position</small></button>
         <button id="play-online" class="mode" type="button"><strong>Create an online game</strong><small>Get a link to send a friend</small></button>
-        <button id="watch-ais" class="mode" type="button"><strong>Watch two AIs</strong><small>Step through a game or play it automatically</small></button>
         <button id="browse-games" class="mode" type="button"><strong>Browse recorded games</strong><small>Study 1,099 unique AI games</small></button>
       </div>
       <details class="setup">
         <summary>
-          <span>Game setup</span>
-          <span id="setup-summary" class="setup-current">Steady bot · Untimed</span>
+          <span>Online game setup</span>
+          <span id="setup-summary" class="setup-current">Untimed</span>
         </summary>
         <div class="setup-body">
-          <fieldset class="strengths">
-            <legend>Bot strength</legend>
-            <label>
-              <input type="radio" name="difficulty" value="learning">
-              <span><strong>Learning</strong><small>Plays legal moves and takes free material. Will miss your threats.</small></span>
-            </label>
-            <label>
-              <input type="radio" name="difficulty" value="steady" checked>
-              <span><strong>Steady</strong><small>Looks two moves ahead and values reserve pieces. A fair first opponent.</small></span>
-            </label>
-            <label>
-              <input type="radio" name="difficulty" value="sharp">
-              <span><strong>Sharp</strong><small>Searches deeper and deploys to create threats. Punishes loose kings.</small></span>
-            </label>
-          </fieldset>
-
           <fieldset class="clock-choice">
             <legend>Clock</legend>
             <div class="segmented">

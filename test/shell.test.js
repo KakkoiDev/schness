@@ -22,13 +22,14 @@ test('AI viewing stays in the browser and tournaments stay in one Actions artifa
     readFile(resolve(root, '.github/workflows/tournament.yml'), 'utf8'),
     readFile(resolve(root, 'README.md'), 'utf8'),
   ]);
-  assert.match(lobby, /id="watch-ais"/);
+  assert.match(lobby, /id="bot-arena"/);
   assert.match(watch, /id="watch-previous"/);
   assert.match(watch, /id="watch-next"/);
   assert.match(watch, /id="watch-auto"/);
-  assert.match(viewer, /setTimeout\(advance, 1000\)/);
-  assert.match(viewer, /const BUFFER_AHEAD = 10/);
-  assert.match(viewer, /bufferNeeded\(reviewIndex, history\.length/);
+  assert.match(watch, /id="watch-branch"/);
+  assert.match(watch, /id="watch-edit"/);
+  assert.match(viewer, /controllerSearch\(controller\(position\.turn\)\)/);
+  assert.match(viewer, /buildEditedPosition/);
   assert.doesNotMatch(lobby, /tournament/i);
   assert.equal([...workflow.matchAll(/actions\/upload-artifact@/g)].length, 1);
   assert.doesNotMatch(workflow, /strategy:\s*\n\s*matrix:/);
@@ -340,19 +341,18 @@ test('lobby and game are separate documents with rules and home navigation', asy
   // The three rules are the lobby's pitch, and the bot is the primary action.
   assert.equal([...html.matchAll(/class="strip-number"/g)].length, 3);
   assert.match(html, /class="rules-full"[^>]*>Read the full rules</);
-  assert.match(html, /id="play-bot" class="mode dark"/);
+  assert.match(html, /id="bot-arena" class="mode dark"/);
   assert.match(html, /id="play-online" class="mode"/);
   assert.match(css, /\.rules-dialog\[open\]\s*{\s*display:\s*flex/);
   assert.match(css, /\.dialog-body\s*{[\s\S]*?grid-template-columns:\s*180px minmax\(0, 1fr\)/);
   assert.match(css, /\.dialog-foot\s*{[\s\S]*?background:\s*var\(--sunk\)/);
   assert.match(css, /\.rules-strip\s*{[\s\S]*?gap:\s*1px;[\s\S]*?background:\s*var\(--line\)/);
-  // Strength and clock are chosen before the match, on the lobby — folded away
-  // behind a disclosure whose summary still names the pair you would play.
+  // Bot seats are chosen inside the arena where they can change mid-game.
+  // Only the online clock remains in the lobby disclosure.
   assert.match(html, /<details class="setup">/);
   assert.match(html, /id="setup-summary"/);
   assert.doesNotMatch(html, /<details class="setup" open>/);
-  assert.equal([...html.matchAll(/name="difficulty"/g)].length, 3);
-  assert.match(html, /value="steady" checked/);
+  assert.doesNotMatch(html, /name="difficulty"/);
   assert.equal([...html.matchAll(/name="clock"/g)].length, 4);
   assert.match(html, /value="untimed" checked/);
   assert.match(css, /\.segmented\s*{[\s\S]*?grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\)/);
