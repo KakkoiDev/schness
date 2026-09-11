@@ -1,24 +1,21 @@
 import { gameUrl, launchIntent } from './navigation.js';
-import { botDifficulty, clockMode, setBotDifficulty, setClockMode } from './settings.js';
+import { clockMode, setClockMode } from './settings.js';
 import { initTheme } from './theme.js';
 
 initTheme();
 
-const botButton = document.querySelector('#play-bot');
+const arenaButton = document.querySelector('#bot-arena');
 const onlineButton = document.querySelector('#play-online');
-const watchButton = document.querySelector('#watch-ais');
 const libraryButton = document.querySelector('#browse-games');
 const rulesDialog = document.querySelector('#rules-dialog');
 const installButton = document.querySelector('#install');
 let installPrompt = null;
 
-botButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot')));
+arenaButton.addEventListener('click', () => window.location.assign('./watch.html'));
 onlineButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online')));
-watchButton.addEventListener('click', () => window.location.assign('./watch.html'));
 libraryButton.addEventListener('click', () => window.location.assign('./library.html'));
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
-initChoice('difficulty', botDifficulty(), setBotDifficulty);
 initChoice('clock', clockMode(), setClockMode);
 renderSetupSummary();
 // Chrome offers installation through a menu most people never open. Taking
@@ -94,8 +91,6 @@ function initChoice(name, saved, save) {
 function renderSetupSummary() {
   const summary = document.querySelector('#setup-summary');
   if (!summary) return;
-  const difficulty = botDifficulty();
   const clock = clockMode();
-  const strength = `${difficulty[0].toUpperCase()}${difficulty.slice(1)} bot`;
-  summary.textContent = `${strength} · ${clock === 'untimed' ? 'Untimed' : clock}`;
+  summary.textContent = clock === 'untimed' ? 'Untimed' : clock;
 }

@@ -1,193 +1,337 @@
-import { BLACK, WHITE, createInitialPosition, getResult } from './rules.js';
+import {
+  BANK_PIECES, BLACK, KING, WHITE, applyAction, createInitialPosition, getResult,
+} from './rules.js';
+import { recordAction } from './history.js';
+import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
+import { buildEditedPosition, controllerSearch, putEditorPiece } from './arena.js';
 import { initTheme } from './theme.js';
-import { advanceReview, applySpectatorAction, bufferNeeded, levelDepth, resultLabel, sideName } from './watch.js';
+import { resultLabel, sideName } from './watch.js';
 
 initTheme();
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
-}
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
 
+const $ = (selector) => document.querySelector(selector);
 const PIECE_CODE = { king: 'K', rook: 'R', bishop: 'B', knight: 'N' };
-const board = document.querySelector('#watch-board');
-const status = document.querySelector('#watch-status');
-const previousButton = document.querySelector('#watch-previous');
-const nextButton = document.querySelector('#watch-next');
-const autoButton = document.querySelector('#watch-auto');
-const restartButton = document.querySelector('#watch-restart');
-const whiteLevel = document.querySelector('#white-level');
-const blackLevel = document.querySelector('#black-level');
-const moves = document.querySelector('#watch-moves');
+const board = $('#watch-board');
+const status = $('#watch-status');
+const moves = $('#watch-moves');
 const worker = new Worker('./src/bot-worker.js', { type: 'module' });
 let timeline = [createInitialPosition()];
 let history = [];
 let reviewIndex = 0;
+let selection = null;
 let request = 0;
 let thinking = false;
-let autoplay = false;
-let timer = null;
-let pendingAdvance = false;
-let started = false;
-const BUFFER_AHEAD = 10;
+let aisPaused = false;
+let nextMoveTimer;
+let editorBoard = [];
+let editorPiece = { owner: WHITE, piece: KING };
 
-for (let row = 0; row < 4; row += 1) {
-  const rowElement = document.createElement('div');
-  rowElement.className = 'board-row';
-  rowElement.setAttribute('role', 'row');
-  for (let column = 0; column < 4; column += 1) {
-    const square = document.createElement('div');
-    square.className = 'square';
-    square.setAttribute('role', 'gridcell');
-    square.dataset.index = String(row * 4 + column);
-    rowElement.append(square);
+buildBoard(board, false);
+buildBoard($('#position-board'), true);
+buildEditorTools();
+bindControls();
+render();
+
+function bindControls() {
+  $('#watch-previous').addEventListener('click', () => review(-1));
+  $('#watch-next').addEventListener('click', () => review(1));
+  $('#watch-live').addEventListener('click', goLive);
+  $('#watch-branch').addEventListener('click', branchHere);
+  $('#watch-auto').addEventListener('click', () => {
+    aisPaused = !aisPaused;
+    cancelSearch();
+    render();
+    scheduleBot();
+  });
+  $('#watch-restart').addEventListener('click', restart);
+  $('#watch-edit').addEventListener('click', openEditor);
+  $('#position-close').addEventListener('click', () => $('#position-dialog').close());
+  $('#position-clear').addEventListener('click', () => { editorBoard = Array(16).fill(null); renderEditor(); });
+  $('#position-apply').addEventListener('click', applyEditor);
+  for (const select of [$('#white-level'), $('#black-level')]) {
+    select.addEventListener('change', () => {
+      cancelSearch();
+      selection = null;
+      goLive(false);
+      render();
+      scheduleBot();
+    });
   }
-  board.append(rowElement);
+  worker.addEventListener('message', receiveBotMove);
 }
 
-previousButton.addEventListener('click', () => {
-  pause();
-  reviewIndex = advanceReview(reviewIndex, history.length, -1);
-  render();
-});
-nextButton.addEventListener('click', advance);
-autoButton.addEventListener('click', () => {
-  autoplay = !autoplay;
-  autoButton.textContent = autoplay ? 'Pause' : 'Auto · 1s';
-  autoButton.setAttribute('aria-pressed', String(autoplay));
-  if (autoplay) advance();
-  else clearTimeout(timer);
-});
-restartButton.addEventListener('click', restart);
-whiteLevel.addEventListener('change', restart);
-blackLevel.addEventListener('change', restart);
+function controller(side) {
+  return $(side === WHITE ? '#white-level' : '#black-level').value;
+}
 
-worker.addEventListener('message', ({ data }) => {
+function current() {
+  return timeline[reviewIndex];
+}
+
+function live() {
+  return timeline.at(-1);
+}
+
+function cancelSearch() {
+  request += 1;
+  thinking = false;
+  clearTimeout(nextMoveTimer);
+}
+
+function receiveBotMove({ data }) {
   if (data.request !== request) return;
   thinking = false;
   if (data.error) {
     status.textContent = `AI error: ${data.error}`;
-    autoplay = false;
-    renderControls();
-    return;
+    aisPaused = true;
+    return render();
   }
-  if (!data.action) return render();
-  const current = timeline.at(-1);
-  const applied = applySpectatorAction(current, history, data.action);
-  history = applied.history;
-  timeline.push(applied.position);
-  render();
-  if (pendingAdvance) {
-    pendingAdvance = false;
-    showNextPosition();
-  }
-  fillBuffer();
-});
-
-function advance() {
-  if (reviewIndex < history.length) {
-    showNextPosition();
-    return;
-  }
-  if (getResult(timeline.at(-1))) return pause();
-  pendingAdvance = true;
-  started = true;
-  fillBuffer();
+  if (!data.action || aisPaused || reviewIndex !== history.length || controller(live().turn) === 'human') return render();
+  playAction(data.action, true);
 }
 
-function showNextPosition() {
-  reviewIndex += 1;
-  render();
-  fillBuffer();
-  if (autoplay && (reviewIndex < history.length || !getResult(timeline.at(-1)))) {
-    clearTimeout(timer);
-    timer = setTimeout(advance, 1000);
-  }
-}
-
-function fillBuffer() {
-  const position = timeline.at(-1);
-  if (!started || thinking || !bufferNeeded(reviewIndex, history.length, Boolean(getResult(position)), BUFFER_AHEAD)) return;
+function scheduleBot() {
+  clearTimeout(nextMoveTimer);
+  const position = live();
+  const search = controllerSearch(controller(position.turn));
+  if (aisPaused || thinking || reviewIndex !== history.length || getResult(position) || !search) return render();
   thinking = true;
   request += 1;
   render();
-  const level = position.turn === WHITE ? whiteLevel.value : blackLevel.value;
-  worker.postMessage({
-    position,
-    depth: levelDepth(level),
-    repetitionAversion: level === 'sharp',
-    request,
-  });
+  worker.postMessage({ position, ...search, request });
 }
 
-function restart() {
-  pause();
-  request += 1;
-  thinking = false;
-  timeline = [createInitialPosition()];
-  history = [];
-  reviewIndex = 0;
-  pendingAdvance = false;
-  started = false;
+function playAction(action, botMoved = false) {
+  const before = live();
+  const after = applyAction(before, action);
+  history = recordAction(history, before, action, after);
+  timeline.push(after);
+  reviewIndex = history.length;
+  selection = null;
+  render();
+  if (!getResult(after)) {
+    if (botMoved) nextMoveTimer = setTimeout(scheduleBot, 700);
+    else scheduleBot();
+  }
+}
+
+function chooseSquare(square) {
+  const position = current();
+  if (reviewIndex !== history.length || getResult(position) || controller(position.turn) !== 'human') return;
+  if (position.phase !== 'play') {
+    const action = setupActionAt(position, square);
+    if (action) playAction(action);
+    return;
+  }
+  const action = actionAt(position, selection, square);
+  if (action) return playAction(action);
+  const occupant = position.board[square];
+  selection = occupant?.owner === position.turn ? boardSelection(square) : null;
   render();
 }
 
-function pause() {
-  autoplay = false;
-  clearTimeout(timer);
-  autoButton.textContent = 'Auto · 1s';
-  autoButton.setAttribute('aria-pressed', 'false');
+function chooseReserve(piece) {
+  const position = current();
+  if (reviewIndex !== history.length || getResult(position) || controller(position.turn) !== 'human' || position.phase !== 'play') return;
+  selection = selection?.type === 'bank' && selection.piece === piece ? null : bankSelection(piece);
+  render();
+}
+
+function review(direction) {
+  aisPaused = true;
+  cancelSearch();
+  reviewIndex = Math.max(0, Math.min(history.length, reviewIndex + direction));
+  selection = null;
+  render();
+}
+
+function goLive(resume = true) {
+  reviewIndex = history.length;
+  selection = null;
+  if (resume) aisPaused = false;
+  render();
+  scheduleBot();
+}
+
+function branchHere() {
+  if (reviewIndex === history.length) return;
+  history = history.slice(0, reviewIndex);
+  timeline = timeline.slice(0, reviewIndex + 1);
+  aisPaused = false;
+  selection = null;
+  render();
+  scheduleBot();
+}
+
+function restart() {
+  cancelSearch();
+  timeline = [createInitialPosition()];
+  history = [];
+  reviewIndex = 0;
+  selection = null;
+  aisPaused = false;
+  render();
+  scheduleBot();
+}
+
+function buildBoard(element, editor) {
+  for (let rowIndex = 0; rowIndex < 4; rowIndex += 1) {
+    const row = document.createElement('div');
+    row.className = 'board-row';
+    row.setAttribute('role', 'row');
+    for (let column = 0; column < 4; column += 1) {
+      const square = document.createElement('button');
+      square.type = 'button';
+      square.className = 'square';
+      square.setAttribute('role', 'gridcell');
+      square.dataset.index = rowIndex * 4 + column;
+      square.addEventListener('click', () => editor ? editSquare(Number(square.dataset.index)) : chooseSquare(Number(square.dataset.index)));
+      row.append(square);
+    }
+    element.append(row);
+  }
+}
+
+function pieceElement(owner, piece) {
+  const image = document.createElement('img');
+  image.className = `piece piece-${owner}`;
+  image.src = `./assets/pieces/${owner === WHITE ? 'w' : 'b'}${PIECE_CODE[piece]}.svg`;
+  image.alt = `${owner} ${piece}`;
+  return image;
 }
 
 function render() {
-  const position = timeline[reviewIndex];
+  const position = current();
+  const humanTurn = reviewIndex === history.length && controller(position.turn) === 'human';
+  const legal = selection ? actionsForSelection(position, selection) : [];
+  const targets = new Set(legal.map((action) => action.to));
+  const placements = position.phase === 'play' ? new Set() : setupDestinations(position);
   const last = history[reviewIndex - 1]?.action;
-  const result = getResult(position);
   for (const square of board.querySelectorAll('.square')) {
     const index = Number(square.dataset.index);
-    square.replaceChildren();
+    const occupant = position.board[index];
+    square.replaceChildren(...(occupant ? [pieceElement(occupant.owner, occupant.piece)] : []));
     square.classList.toggle('last-from', last?.from === index);
     square.classList.toggle('last-to', last?.to === index);
-    const occupant = position.board[index];
-    if (!occupant) continue;
-    const image = document.createElement('img');
-    image.className = `piece piece-${occupant.owner}`;
-    image.src = `./assets/pieces/${occupant.owner === WHITE ? 'w' : 'b'}${PIECE_CODE[occupant.piece]}.svg`;
-    image.alt = `${occupant.owner} ${occupant.piece}`;
-    square.append(image);
+    square.classList.toggle('selected', selection?.type === 'board' && selection.square === index);
+    square.classList.toggle('target', targets.has(index));
+    square.classList.toggle('capture', targets.has(index) && Boolean(occupant));
+    square.classList.toggle('placement', placements.has(index) && humanTurn);
+    square.disabled = !humanTurn;
   }
   renderReserve('#white-reserve', position.banks[WHITE], WHITE);
   renderReserve('#black-reserve', position.banks[BLACK], BLACK);
-  moves.replaceChildren(...history.map((entry, index) => {
-    const item = document.createElement('button');
-    item.type = 'button';
-    item.className = index + 1 === reviewIndex ? 'current' : '';
-    item.textContent = `${entry.ply}. ${entry.notation}`;
-    item.addEventListener('click', () => { pause(); reviewIndex = index + 1; render(); });
-    return item;
-  }));
-  const ready = history.length - reviewIndex;
-  if (reviewIndex < history.length) status.textContent = `Move ${reviewIndex} · ${ready} ready ahead`;
+  renderMoves();
+  const result = getResult(position);
+  if (reviewIndex < history.length) status.textContent = `Reviewing ply ${reviewIndex} of ${history.length}`;
   else if (result) status.textContent = resultLabel(result);
-  else if (thinking) status.textContent = `${sideName(position.turn)} is thinking…`;
-  else status.textContent = `${sideName(position.turn)} to move`;
+  else if (thinking) status.textContent = `${sideName(position.turn)} ${controller(position.turn)} is thinking…`;
+  else if (aisPaused && controller(position.turn) !== 'human') status.textContent = `Paused before ${sideName(position.turn)} moves`;
+  else if (position.phase !== 'play') status.textContent = `${sideName(position.turn)}: place your king on the home row`;
+  else status.textContent = `${sideName(position.turn)} to move · ${controller(position.turn) === 'human' ? 'Your seat' : controller(position.turn)}`;
   renderControls();
 }
 
 function renderReserve(selector, pieces, owner) {
-  const element = document.querySelector(selector);
+  const element = $(selector);
   element.replaceChildren(...pieces.map((piece) => {
-    const image = document.createElement('img');
-    image.className = `piece piece-${owner}`;
-    image.src = `./assets/pieces/${owner === WHITE ? 'w' : 'b'}${PIECE_CODE[piece]}.svg`;
-    image.alt = `${owner} ${piece} in reserve`;
-    return image;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'watch-bank-piece';
+    button.append(pieceElement(owner, piece));
+    button.disabled = reviewIndex !== history.length || current().turn !== owner || controller(owner) !== 'human';
+    button.classList.toggle('selected', selection?.type === 'bank' && selection.piece === piece && current().turn === owner);
+    button.addEventListener('click', () => chooseReserve(piece));
+    return button;
   }));
 }
 
-function renderControls() {
-  previousButton.disabled = reviewIndex === 0;
-  nextButton.disabled = pendingAdvance || Boolean(getResult(timeline.at(-1)) && reviewIndex === history.length);
-  whiteLevel.disabled = history.length > 0 || thinking;
-  blackLevel.disabled = history.length > 0 || thinking;
+function renderMoves() {
+  moves.replaceChildren(...history.map((entry, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = index + 1 === reviewIndex ? 'current' : '';
+    button.textContent = `${entry.ply}. ${entry.notation}`;
+    button.addEventListener('click', () => {
+      aisPaused = true;
+      cancelSearch();
+      reviewIndex = index + 1;
+      selection = null;
+      render();
+    });
+    return button;
+  }));
+  moves.querySelector('.current')?.scrollIntoView({ block: 'nearest' });
 }
 
-render();
+function renderControls() {
+  $('#watch-previous').disabled = reviewIndex === 0;
+  $('#watch-next').disabled = reviewIndex === history.length;
+  $('#watch-live').disabled = reviewIndex === history.length;
+  $('#watch-branch').disabled = reviewIndex === history.length;
+  $('#watch-auto').textContent = aisPaused ? 'Resume AIs' : 'Pause AIs';
+  $('#watch-auto').setAttribute('aria-pressed', String(aisPaused));
+}
+
+function buildEditorTools() {
+  const tools = $('#position-tools');
+  for (const owner of [WHITE, BLACK]) {
+    for (const piece of [KING, ...BANK_PIECES]) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.owner = owner;
+      button.dataset.piece = piece;
+      button.append(pieceElement(owner, piece));
+      button.setAttribute('aria-label', `${owner} ${piece}`);
+      button.addEventListener('click', () => { editorPiece = { owner, piece }; renderEditor(); });
+      tools.append(button);
+    }
+  }
+  tools.querySelector('[data-piece="erase"]').addEventListener('click', () => { editorPiece = null; renderEditor(); });
+}
+
+function openEditor() {
+  aisPaused = true;
+  cancelSearch();
+  editorBoard = current().board.map((occupant) => occupant ? { ...occupant } : null);
+  $('#position-turn').value = current().turn;
+  $('#position-error').textContent = '';
+  render();
+  renderEditor();
+  $('#position-dialog').showModal();
+}
+
+function editSquare(square) {
+  editorBoard = putEditorPiece(editorBoard, square, editorPiece);
+  $('#position-error').textContent = '';
+  renderEditor();
+}
+
+function renderEditor() {
+  for (const square of $('#position-board').querySelectorAll('.square')) {
+    const occupant = editorBoard[Number(square.dataset.index)];
+    square.replaceChildren(...(occupant ? [pieceElement(occupant.owner, occupant.piece)] : []));
+  }
+  for (const button of $('#position-tools').querySelectorAll('button')) {
+    const selected = editorPiece === null ? button.dataset.piece === 'erase'
+      : button.dataset.owner === editorPiece.owner && button.dataset.piece === editorPiece.piece;
+    button.classList.toggle('selected', selected);
+  }
+}
+
+function applyEditor() {
+  try {
+    const position = buildEditedPosition(editorBoard, $('#position-turn').value);
+    timeline = [position];
+    history = [];
+    reviewIndex = 0;
+    selection = null;
+    aisPaused = false;
+    $('#position-dialog').close();
+    render();
+    scheduleBot();
+  } catch (error) {
+    $('#position-error').textContent = error.message;
+  }
+}

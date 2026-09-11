@@ -16,12 +16,12 @@ in [`DEVLOG.md`](DEVLOG.md).
 
 ## AI games and research
 
-Open **[Watch two AIs](https://schness.com/watch.html)** to watch a browser game. White and Black
-each have Learning, Steady, and Sharp levels. After the first **Next move** or **Auto · 1s**, a Web
-Worker keeps a rolling buffer of up to ten future moves. Advancing consumes one position and starts
-computing its replacement, so review is usually instant without simulating an unbounded game in the
-background. Auto displays one buffered move per second. Previous and the transcript revisit any
-computed position; generation stops at checkmate or a draw, or when the page is closed.
+Open the **[Bot arena](https://schness.com/watch.html)** for every local AI mode. Each White and Black
+seat can be You, Learning, Steady, or Sharp. That makes the same board support human–AI, AI–AI, and
+local human play. Change the side-to-move seat to You to interrupt an AI and take over. Pause and
+review any earlier ply, then choose **Continue from here** to create a new variation. The position
+editor can start from any valid board; missing non-king pieces are inferred to be in their owner's
+reserve. AI searches stay in a Web Worker.
 
 Sharp v2 uses depth-four alpha-beta and avoids an already repeated resulting position when another
 move has the same minimax score. It still accepts a repetition when that is better than losing.

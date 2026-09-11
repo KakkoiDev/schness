@@ -8,6 +8,24 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-09-11 — One bot arena instead of separate modes
+
+**Question.** How can challenging a bot, watching two bots, taking over mid-game, and starting from
+a chosen position feel like one feature rather than four unrelated screens?
+
+**Decision.** Model White and Black as two independently configurable seats. Each seat can be You,
+Learning, Steady, or Sharp. Changing the side-to-move seat cancels its pending worker request, so a
+human can take over without restarting. Reviewing and branching operate on the same timeline.
+
+**Position editing.** The editor owns exactly one king, rook, bishop, and knight per color. Pieces
+absent from the board are automatically placed in their original owner's reserve. It rejects missing
+or duplicate kings, duplicate pieces, and a position where the player who just moved is left in
+check. A custom position begins a fresh repetition history.
+
+**Why not three modes.** Separate human–bot, bot–bot, and position-play controllers would inevitably
+diverge on rules, history, controls, and bugs. One seat-based controller makes taking over a simple
+configuration change and keeps every move behind the same legal-action boundary.
+
 ## 2026-09-11 — Unique, replayable tournament library
 
 **Question.** How can the two 1,040-game experiments become a study corpus without presenting the
