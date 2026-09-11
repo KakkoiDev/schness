@@ -19,6 +19,11 @@ labels, chat, tutorials, puzzles, the arena, and the game library all pass throu
 breaking, and guarded button wrapping. The language control is deliberately compact so adding it does
 not create a second mobile-header row.
 
+**Mobile correction.** The playable-rule action originally fell into the 20-pixel number column of
+the mobile rule grid. Japanese permits a break between characters, so 「試してみる」 became a vertical
+stack. The action now explicitly occupies the content column and stays on one horizontal line; the
+language control also has a quiet pill border so EN / 日本語 reads as a switch rather than body text.
+
 **Identity.** The earlier landing page omitted the monogram while inner pages sometimes hid it on
 phones, and the installed-app icon used unrelated knight artwork. Schness now uses one unrotated dark
 rounded-square S with a small coral point everywhere: header, favicon, iOS icon, and PWA icons. The

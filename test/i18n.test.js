@@ -25,6 +25,12 @@ test('every visible page header uses the same S product mark', async () => {
   }
 });
 
+test('Japanese tutorial actions stay horizontal in the mobile rule grid', async () => {
+  const css = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
+  assert.match(css, /\.rules-strip \.rule-demo-trigger \{ grid-column:2;[^}]*white-space:nowrap/);
+  assert.doesNotMatch(css, /lang="ja"[^}]*overflow-wrap:anywhere/);
+});
+
 test('core and variable game language has Japanese coverage', () => {
   assert.equal(translateText('Create an online game', 'ja'), 'オンライン対局を作る');
   assert.equal(translateText('White to move · mate in 3', 'ja'), '白の手番・3手詰め');
