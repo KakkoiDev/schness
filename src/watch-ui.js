@@ -7,7 +7,7 @@ import { buildEditedPosition, controllerSearch, putEditorPiece } from './arena.j
 import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve as renderPieceReserve } from './piece-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=58';
+import { initI18n } from './i18n.js?v=62';
 import { resultLabel, sideName } from './watch.js';
 
 initTheme();
@@ -223,8 +223,8 @@ function render() {
   const position = current();
   const humanTurn = reviewIndex === history.length && controller(position.turn) === 'human';
   const legal = selection ? actionsForSelection(position, selection) : [];
-  const targets = new Set(legal.map((action) => action.to));
   const placements = position.phase === 'play' ? new Set() : setupDestinations(position);
+  const targets = position.phase === 'play' ? new Set(legal.map((action) => action.to)) : new Set(placements);
   const last = history[reviewIndex - 1]?.action;
   for (const square of board.querySelectorAll('.square')) {
     const index = Number(square.dataset.index);
