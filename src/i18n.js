@@ -162,7 +162,13 @@ export function initI18n() {
   const locale = language();
   document.documentElement.lang = locale;
   translateTree(document, locale);
-  const header = document.querySelector('header .header-actions, header nav, header');
+  // Prefer the action group explicitly. A selector list containing `header`
+  // returns the ancestor first in document order, even when `.header-actions`
+  // appears first in the selector text. Inserting before a nested theme button
+  // on that ancestor throws and prevents the rest of the page from starting.
+  const header = document.querySelector('header .header-actions')
+    ?? document.querySelector('header nav')
+    ?? document.querySelector('header');
   if (header && !document.querySelector('[data-language-toggle]')) {
     const button = document.createElement('button');
     button.type = 'button';

@@ -46,3 +46,9 @@ test('common live network, media, tutorial, and move states are translated', () 
   assert.equal(translateText('Rook on b2 is selected. Your turn.', 'ja'), 'ルーク（b2）を選択中。あなたの手番です。');
   assert.equal(translateText('1:00 left', 'ja'), '1:00 残り');
 });
+
+test('the language switch is inserted into the same action group as the theme switch', async () => {
+  const source = await readFile(new URL('../src/i18n.js', import.meta.url), 'utf8');
+  assert.match(source, /querySelector\('header \.header-actions'\)\s*\?\?/);
+  assert.doesNotMatch(source, /querySelector\('header \.header-actions, header nav, header'\)/);
+});
