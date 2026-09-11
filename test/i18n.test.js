@@ -46,6 +46,13 @@ test('Japanese tutorial actions stay horizontal in the mobile rule grid', async 
   assert.doesNotMatch(css, /lang="ja"[^}]*overflow-wrap:anywhere/);
 });
 
+test('Japanese mobile navigation stays horizontal and compact', async () => {
+  const css = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
+  assert.match(css, /\.header-actions \.text-button\s*\{[^}]*white-space:\s*nowrap/);
+  assert.match(css, /@media\(max-width:480px\)[\s\S]*?\.lobby-page header\s*\{[\s\S]*?margin-bottom:1\.25rem/);
+  assert.match(css, /@media\(max-width:350px\)[\s\S]*?\.brand h1/);
+});
+
 test('core and variable game language has Japanese coverage', () => {
   assert.equal(translateText('Create an online game', 'ja'), 'オンライン対局を作る');
   assert.equal(translateText('White to move · mate in 3', 'ja'), '白の手番・3手詰め');

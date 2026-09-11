@@ -147,6 +147,16 @@ See the [full run-2 report](docs/tournament-report-2026-09-11-sharp-v2.md).
 
 ## 2026-09-11 — Japanese live-state coverage audit
 
+### Mobile navigation and first-screen hierarchy
+
+The first Japanese production screenshot exposed two design failures: header action labels were
+allowed to wrap character-by-character, and the desktop-scale lobby gap pushed the useful choices
+too far below the fold. The shared mobile header now guarantees one-line controls, reduces the
+wordmark before sacrificing actions, and falls back to the established S mark only on extremely
+narrow screens. The lobby removes the redundant format eyebrow and brings its purpose and first
+actions into the initial viewport. These constraints apply across every page rather than patching
+the Japanese landing page alone.
+
 ### Production startup regression
 
 The initial language switch used one selector list for the action group, navigation, and header
