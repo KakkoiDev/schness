@@ -2296,3 +2296,9 @@
   .demo-panel { gap:.55rem;padding:.75rem }
   .demo-panel > p { font-size:.82rem }
 }
+
+@media(max-width:360px) {
+  .game-page .brand h1 { display:none }
+  .game-page .header-actions { gap:.15rem }
+  .game-page .header-actions .text-button { padding:.45rem .5rem;font-size:.72rem }
+}
