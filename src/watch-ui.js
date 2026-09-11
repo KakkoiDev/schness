@@ -6,8 +6,9 @@ import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActi
 import { buildEditedPosition, controllerSearch, putEditorPiece } from './arena.js';
 import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve as renderPieceReserve } from './piece-ui.js';
+import { createBoard, renderBoard } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=62';
+import { initI18n } from './i18n.js?v=63';
 import { resultLabel, sideName } from './watch.js';
 
 initTheme();
@@ -200,23 +201,10 @@ function restart() {
 }
 
 function buildBoard(element, editor) {
-  for (let rowIndex = 0; rowIndex < 4; rowIndex += 1) {
-    const row = document.createElement('div');
-    row.className = 'board-row';
-    row.setAttribute('role', 'row');
-    for (let column = 0; column < 4; column += 1) {
-      const square = document.createElement('button');
-      square.type = 'button';
-      square.className = 'square';
-      square.setAttribute('role', 'gridcell');
-      square.dataset.index = rowIndex * 4 + column;
-      square.dataset.square = rowIndex * 4 + column;
-      square.addEventListener('click', () => editor ? editSquare(Number(square.dataset.index)) : chooseSquare(Number(square.dataset.index)));
-      if (!editor) square.addEventListener('pointerdown', (event) => beginBoardDrag(event, Number(square.dataset.index), square));
-      row.append(square);
-    }
-    element.append(row);
-  }
+  createBoard(element, {
+    onSquare: (square) => editor ? editSquare(square) : chooseSquare(square),
+    onPointerDown: editor ? undefined : (event, square, button) => beginBoardDrag(event, square, button),
+  });
 }
 
 function render() {
@@ -226,19 +214,11 @@ function render() {
   const placements = position.phase === 'play' ? new Set() : setupDestinations(position);
   const targets = position.phase === 'play' ? new Set(legal.map((action) => action.to)) : new Set(placements);
   const last = history[reviewIndex - 1]?.action;
-  for (const square of board.querySelectorAll('.square')) {
-    const index = Number(square.dataset.index);
-    const occupant = position.board[index];
-    square.replaceChildren(...(occupant ? [pieceElement(occupant.owner, occupant.piece)] : []));
-    square.classList.toggle('last-from', last?.from === index);
-    square.classList.toggle('last-to', last?.to === index);
-    square.classList.toggle('selected', selection?.type === 'board' && selection.square === index);
-    square.classList.toggle('target', targets.has(index));
-    square.classList.toggle('capture', targets.has(index) && Boolean(occupant));
-    square.classList.toggle('placement', placements.has(index) && humanTurn);
-    square.classList.toggle('drag-source', pointerDrag?.active && pointerDrag.selection?.square === index);
-    square.disabled = !humanTurn;
-  }
+  renderBoard(board, position, {
+    last, selected: selection?.type === 'board' ? selection.square : null, targets,
+    placements: humanTurn ? placements : new Set(),
+    dragging: pointerDrag?.active ? pointerDrag.selection?.square : null, disabled: !humanTurn,
+  });
   renderReserve('#white-reserve', position.banks[WHITE], WHITE);
   renderReserve('#black-reserve', position.banks[BLACK], BLACK);
   renderMoves();
@@ -339,7 +319,13 @@ function renderMoves() {
     });
     return button;
   }));
-  moves.querySelector('.current')?.scrollIntoView({ block: 'nearest' });
+  const currentMove = moves.querySelector('.current');
+  if (currentMove) {
+    const top = currentMove.offsetTop;
+    const bottom = top + currentMove.offsetHeight;
+    if (top < moves.scrollTop) moves.scrollTop = top;
+    else if (bottom > moves.scrollTop + moves.clientHeight) moves.scrollTop = bottom - moves.clientHeight;
+  }
 }
 
 function renderControls() {
@@ -386,10 +372,7 @@ function editSquare(square) {
 }
 
 function renderEditor() {
-  for (const square of $('#position-board').querySelectorAll('.square')) {
-    const occupant = editorBoard[Number(square.dataset.index)];
-    square.replaceChildren(...(occupant ? [pieceElement(occupant.owner, occupant.piece)] : []));
-  }
+  renderBoard($('#position-board'), { board: editorBoard });
   for (const button of $('#position-tools').querySelectorAll('button')) {
     const selected = editorPiece === null ? button.dataset.piece === 'erase'
       : button.dataset.owner === editorPiece.owner && button.dataset.piece === editorPiece.piece;

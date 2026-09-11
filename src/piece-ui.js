@@ -14,7 +14,7 @@ export function pieceElement(owner, piece, alt = '') {
 
 /** The same stable rook/bishop/knight tray used by a live match. */
 export function renderReserve(element, held, owner, {
-  interactive = false, selected = null, dragging = null, disabled = false, onSelect, onPointerDown,
+  interactive = false, selected = null, dragging = null, disabled = false, isDisabled, onSelect, onPointerDown,
 } = {}) {
   element.replaceChildren(...BANK_PIECES.map((piece) => {
     if (!held.includes(piece)) {
@@ -33,7 +33,7 @@ export function renderReserve(element, held, owner, {
     button.setAttribute('aria-label', `${owner} ${piece} in reserve`);
     button.classList.toggle('selected', interactive && selected === piece);
     button.classList.toggle('drag-source', dragging === piece);
-    button.disabled = disabled || !interactive;
+    button.disabled = disabled || !interactive || Boolean(isDisabled?.(piece));
     if (interactive) {
       button.addEventListener('click', () => onSelect?.(piece));
       button.addEventListener('pointerdown', (event) => onPointerDown?.(event, piece, button));

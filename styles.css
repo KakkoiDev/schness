@@ -76,6 +76,8 @@
 }
 
 @media(prefers-reduced-motion:no-preference){.square,.bank-piece{transition:outline-color 120ms ease,transform 120ms ease}.bank-piece:not(:disabled):active,.square:not(:disabled):active{transform:scale(.96)}.result-card{animation:result-in 160ms ease both}@keyframes result-in{from{opacity:0;transform:translateY(8px)}}}
+.match-action-buttons{display:flex;align-items:center;gap:.25rem}
+.drag-source .piece{visibility:hidden!important;opacity:0!important}
 
 @media(max-width:760px) {
   .game-page {

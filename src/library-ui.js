@@ -1,9 +1,10 @@
 import { applyAction, BLACK, createInitialPosition, WHITE } from './rules.js';
 import { recordAction } from './history.js';
 import { decodeAction, matchesFilters, profilePairs, resultLabel } from './library.js';
-import { pieceElement, renderReserve } from './piece-ui.js';
+import { renderReserve } from './piece-ui.js';
+import { createBoard, renderBoard } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=62';
+import { initI18n } from './i18n.js?v=63';
 
 initTheme();
 initI18n();
@@ -146,33 +147,13 @@ function pause() {
 }
 
 function buildBoard() {
-  for (let rowIndex = 0; rowIndex < 4; rowIndex += 1) {
-    const row = document.createElement('div');
-    row.className = 'board-row';
-    row.setAttribute('role', 'row');
-    for (let column = 0; column < 4; column += 1) {
-      const square = document.createElement('div');
-      square.className = 'square';
-      square.setAttribute('role', 'gridcell');
-      square.dataset.index = rowIndex * 4 + column;
-      row.append(square);
-    }
-    $('#replay-board').append(row);
-  }
+  createBoard($('#replay-board'), { interactive: false });
 }
 
 function renderReplay() {
   const position = timeline[ply];
   const last = history[ply - 1]?.action;
-  for (const square of $('#replay-board').querySelectorAll('.square')) {
-    const index = Number(square.dataset.index);
-    square.replaceChildren();
-    square.classList.toggle('last-from', last?.from === index);
-    square.classList.toggle('last-to', last?.to === index);
-    const occupant = position.board[index];
-    if (!occupant) continue;
-    square.append(pieceElement(occupant.owner, occupant.piece));
-  }
+  renderBoard($('#replay-board'), position, { last });
   renderPlayer('#replay-white', 'White', position.banks[WHITE]);
   renderPlayer('#replay-black', 'Black', position.banks[BLACK]);
   $('#replay-status').textContent = ply === 0 ? 'Starting position' : ply === history.length ? resultLabel(currentGame.result) : `Ply ${ply} of ${history.length} · ${history[ply - 1].sentence}`;

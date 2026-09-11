@@ -88,6 +88,45 @@ test('rules are playable and recorded positions can branch into the full arena',
   assert.match(arena, /beginBankDrag/);
 });
 
+test('every dynamic board uses the shared board and reserve presentation', async () => {
+  const files = ['main.js', 'tutorial.js', 'watch-ui.js', 'puzzle-ui.js', 'library-ui.js'];
+  for (const file of files) {
+    const source = await readFile(resolve(root, 'src', file), 'utf8');
+    assert.match(source, /createBoard\(/, `${file} does not build the shared board`);
+    assert.match(source, /renderBoard\(/, `${file} does not render the shared board`);
+  }
+  const boardUi = await readFile(resolve(root, 'src/board-ui.js'), 'utf8');
+  assert.match(boardUi, /dataset\.schnessBoard = 'true'/);
+  const pieceUi = await readFile(resolve(root, 'src/piece-ui.js'), 'utf8');
+  assert.match(pieceUi, /BANK_PIECES\.map/);
+  const library = await readFile(resolve(root, 'library.html'), 'utf8');
+  assert.match(library, /id="replay-white-reserve"/);
+  assert.match(library, /id="replay-black-reserve"/);
+});
+
+test('bot color switching starts the bot and arena history cannot move the page', async () => {
+  const [game, main, arena] = await Promise.all([
+    readFile(resolve(root, 'game.html'), 'utf8'),
+    readFile(resolve(root, 'src/main.js'), 'utf8'),
+    readFile(resolve(root, 'src/watch-ui.js'), 'utf8'),
+  ]);
+  assert.match(game, /id="swap-side"[^>]*>Play Black</);
+  assert.match(main, /resetState\('bot', opponent\(humanColor\)\);[\s\S]*?showMatch\(\);[\s\S]*?requestBotMove\(\);/);
+  assert.doesNotMatch(arena, /scrollIntoView/);
+  assert.match(arena, /moves\.scrollTop/);
+});
+
+test('dragging hides the source until a legal commit or cancelled restore', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  assert.match(css, /\.drag-source \.piece\s*\{[^}]*visibility:hidden!important;[^}]*opacity:0!important/);
+  for (const file of ['main.js', 'tutorial.js', 'watch-ui.js', 'puzzle-ui.js']) {
+    const source = await readFile(resolve(root, 'src', file), 'utf8');
+    assert.match(source, /classList\.add\('drag-ghost'\)/, file);
+    assert.match(source, /\.ghost\?\.remove\(\)/, file);
+    assert.match(source, /render\(\)/, file);
+  }
+});
+
 test('manifest describes a standalone app with a local icon', async () => {
   const manifest = JSON.parse(await readFile(resolve(root, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.display, 'standalone');
@@ -181,13 +220,15 @@ test('a wait that has gone on too long says what it cannot rule out', async () =
 
 test('the board is a real grid, and the rules can be scrolled from a keyboard', async () => {
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  const boardUi = await readFile(resolve(root, 'src/board-ui.js'), 'utf8');
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   // `role="grid"` over sixteen bare buttons is a critical axe violation and
   // gives a screen reader no row or column position. The rows are real
   // elements, not `display: contents` — browsers have dropped those from the
   // accessibility tree, which is the failure that looks like it works.
-  assert.match(main, /row\.setAttribute\('role', 'row'\)/);
-  assert.match(main, /button\.setAttribute\('role', 'gridcell'\)/);
+  assert.match(main, /createBoard\(board/);
+  assert.match(boardUi, /row\.setAttribute\('role', 'row'\)/);
+  assert.match(boardUi, /cell\.setAttribute\('role', 'gridcell'\)/);
   assert.match(css, /\.board-row\{display:grid;grid-template-columns:repeat\(4, minmax\(0, 1fr\)\)/);
   assert.doesNotMatch(css, /\.board-row\{[^}]*display:contents/);
   // The checkerboard is per row now; the flat nth-child(8n+…) run cannot work
@@ -488,7 +529,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="voice-toggle"[^>]+aria-pressed="false"[^>]*>Audio off</);
   assert.match(game, /id="video-toggle"[^>]+aria-pressed="false"[^>]*>Video off</);
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
-  assert.match(main, /piece-\$\{piece\}/);
+  const pieceUi = await readFile(resolve(root, 'src/piece-ui.js'), 'utf8');
+  assert.match(pieceUi, /piece-\$\{piece\}/);
   assert.match(main, /function commit\(action\)/);
   assert.match(main, /takeback-request/);
   assert.match(main, /function offerDraw/);
@@ -503,8 +545,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(main, /offered a draw · declined/);
   assert.match(main, /function onBoardKey/);
   assert.match(main, /announceOpponentAction/);
-  assert.match(main, /createElement\('img'\)/);
-  assert.match(main, /element\.draggable = false/);
+  assert.match(pieceUi, /createElement\('img'\)/);
+  assert.match(pieceUi, /image\.draggable = false/);
   assert.match(main, /pieceRect:.*getBoundingClientRect/);
   assert.match(main, /ghost\.style\.width/);
   assert.match(main, /pointerdown/);

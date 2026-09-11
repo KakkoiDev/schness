@@ -25,7 +25,7 @@ const JA = new Map(Object.entries({
   'Captures come back': '取られた駒は戻る', 'Capturing does not remove a piece. It goes to the reserve of the player who owned it, ready to be deployed again, so material never leaves the game. Win by checkmate.': '取られた駒は消えず、元の持ち主の手元へ戻り、再び配置できます。チェックメイトで勝利です。',
   'Two things that trip people up': '間違えやすい2つの点', 'A deployed piece may not put the enemy king in check on the turn it lands. And a piece dropped on the far row is not promoted; there are no pawns.': '配置したその手で相手のキングをチェックすることはできません。敵陣に配置しても成りません。ポーンはありません。',
   'White’s bishop was captured earlier, so it came back to White’s own reserve. The dashed ring is c2, one of the empty squares it can drop onto.': '白のビショップは取られたため、白の持ち駒に戻っています。点線のc2は配置できる空きマスの一つです。',
-  'Home': 'ホーム', 'New game': '新しい対局', 'Waiting for opponent': '対戦相手を待っています', 'Send this link': 'このリンクを送る',
+  'Home': 'ホーム', 'New game': '新しい対局', 'Play Black': '黒で対戦', 'Play White': '白で対戦', 'Waiting for opponent': '対戦相手を待っています', 'Send this link': 'このリンクを送る',
   'The match starts the moment they open it. You’ll play White.': '相手が開くと対局開始です。あなたは白です。', 'Copy': 'コピー', 'Cancel': 'キャンセル',
   'Play the bot instead': 'ボットと対戦', 'Reconnecting': '再接続中', 'Opponent lost connection': '相手との接続が切れました',
   'The board is saved. If they don’t return within the countdown, the match is yours.': '盤面は保存されています。時間内に戻らなければ、あなたの勝ちです。',

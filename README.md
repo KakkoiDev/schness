@@ -8,7 +8,7 @@ A drop may not give check. Captured non-king pieces return to their original own
 checkmate, king safety, and stalemate otherwise work as in chess. Threefold repetition is a draw.
 
 The complete interface is available in English and Japanese. A first visit follows the device
-language; the compact **EN / 日本語** control on every page saves an explicit preference locally.
+language; the compact **EN / 日本** control on every page saves an explicit preference locally.
 Both languages use the same markup and game logic so features cannot silently diverge.
 
 Contributing agents and humans: read [`DECISIONS.md`](DECISIONS.md) before changing anything. It
@@ -91,7 +91,13 @@ of the eventual UI and peer-to-peer transport.
 
 ```sh
 npm test
+npm run test:e2e
 ```
+
+The Playwright suite runs every happy path in desktop Chromium and a mobile viewport: lobby
+settings and navigation, online invitations, tutorial play, playing the bot as either color,
+Bot Arena play/review/edit, library filtering and replay, puzzle settings and solutions, and
+drag cancellation. CI stores the report and traces when a browser story fails.
 
 Serve the repository through any local HTTP server to play during development:
 
@@ -129,6 +135,8 @@ Current implementation:
 - 1,526 exact, source-linked checkmate puzzles with selectable or mixed difficulty
 - Tap-and-drag play across matches, Bot Arena, puzzles, and playable rule demonstrations
 - Full visual reserve trays on live, puzzle, tutorial, and recorded-game boards
+- One shared board/reserve renderer across matches, Bot Arena, editor, tutorial, puzzles, and library replay
+- Desktop and mobile browser E2E tests for all shipped happy paths
 - First-visit interactive tutorial, with a replay control in Settings
 - Permanent GitHub Release archives for tournament and puzzle research bundles
 

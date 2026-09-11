@@ -6,8 +6,9 @@ import { decodePuzzlePosition } from './puzzle.js';
 import { normalizePuzzleLevels, puzzlePool } from './puzzle-settings.js';
 import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve } from './piece-ui.js';
+import { createBoard, renderBoard } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=62';
+import { initI18n } from './i18n.js?v=63';
 
 initTheme();
 initI18n();
@@ -84,26 +85,10 @@ function nextPuzzle() {
 }
 
 function buildBoard() {
-  const indices = Array.from({ length: 16 }, (_, index) => attacker === BLACK ? 15 - index : index);
-  const board = $('#puzzle-board');
-  board.replaceChildren();
-  for (let rowIndex = 0; rowIndex < 4; rowIndex += 1) {
-    const row = document.createElement('div');
-    row.className = 'board-row';
-    row.setAttribute('role', 'row');
-    for (const index of indices.slice(rowIndex * 4, rowIndex * 4 + 4)) {
-      const square = document.createElement('button');
-      square.type = 'button';
-      square.className = 'square';
-      square.dataset.index = index;
-      square.dataset.square = index;
-      square.setAttribute('role', 'gridcell');
-      square.addEventListener('click', () => chooseSquare(index));
-      square.addEventListener('pointerdown', (event) => beginBoardDrag(event, index, square));
-      row.append(square);
-    }
-    board.append(row);
-  }
+  createBoard($('#puzzle-board'), {
+    orientation: attacker, onSquare: chooseSquare,
+    onPointerDown: (event, square, button) => beginBoardDrag(event, square, button),
+  });
 }
 
 function chooseSquare(square) {
@@ -181,18 +166,11 @@ function render() {
   const legal = selection ? actionsForSelection(position, selection) : [];
   const targets = new Set(legal.map((action) => action.to));
   const last = history.at(-1)?.action;
-  for (const square of $('#puzzle-board').querySelectorAll('.square')) {
-    const index = Number(square.dataset.index);
-    const occupant = position.board[index];
-    square.replaceChildren(...(occupant ? [pieceElement(occupant.owner, occupant.piece)] : []));
-    square.classList.toggle('selected', selection?.type === 'board' && selection.square === index);
-    square.classList.toggle('target', targets.has(index));
-    square.classList.toggle('capture', targets.has(index) && Boolean(occupant));
-    square.classList.toggle('last-from', last?.from === index);
-    square.classList.toggle('last-to', last?.to === index);
-    square.classList.toggle('drag-source', pointerDrag?.active && pointerDrag.selection?.square === index);
-    square.disabled = finished || position.turn !== attacker;
-  }
+  renderBoard($('#puzzle-board'), position, {
+    selected: selection?.type === 'board' ? selection.square : null, targets, last,
+    dragging: pointerDrag?.active ? pointerDrag.selection?.square : null,
+    disabled: finished || position.turn !== attacker,
+  });
   const defender = attacker === WHITE ? BLACK : WHITE;
   renderSeat('top', defender, 'Defense', false);
   renderSeat('bottom', attacker, 'You', true);

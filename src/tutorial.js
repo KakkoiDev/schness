@@ -4,6 +4,7 @@ import {
 import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
 import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve } from './piece-ui.js';
+import { createBoard, renderBoard } from './board-ui.js';
 
 const LESSONS = {
   kings: { title: 'Place the kings', instruction: 'Put your king on any highlighted home-row square. Black will place theirs, then the game continues.' },
@@ -65,21 +66,10 @@ export function initTutorial() {
   }
 
   function buildBoard() {
-    for (let row = 0; row < 4; row += 1) {
-      const line = document.createElement('div');
-      line.className = 'board-row';
-      for (let column = 0; column < 4; column += 1) {
-        const square = row * 4 + column;
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'square';
-        button.dataset.square = square;
-        button.addEventListener('click', () => { if (!suppressClick) chooseSquare(square); });
-        button.addEventListener('pointerdown', (event) => beginBoardDrag(event, square, button));
-        line.append(button);
-      }
-      $('#demo-board').append(line);
-    }
+    createBoard($('#demo-board'), {
+      onSquare: (square) => { if (!suppressClick) chooseSquare(square); },
+      onPointerDown: (event, square, button) => beginBoardDrag(event, square, button),
+    });
   }
 
   function chooseSquare(square) {
@@ -115,17 +105,11 @@ export function initTutorial() {
 
   function render() {
     const { targets, placements } = tutorialHighlights(position, selection);
-    for (const square of $('#demo-board').querySelectorAll('.square')) {
-      const index = Number(square.dataset.square);
-      const occupant = position.board[index];
-      square.replaceChildren(...(occupant ? [pieceElement(occupant.owner, occupant.piece)] : []));
-      square.classList.toggle('selected', selection?.type === 'board' && selection.square === index);
-      square.classList.toggle('target', targets.has(index));
-      square.classList.toggle('capture', targets.has(index) && Boolean(occupant));
-      square.classList.toggle('placement', canAct() && placements.has(index));
-      square.classList.toggle('drag-source', drag?.active && drag.selection?.square === index);
-      square.disabled = !canAct();
-    }
+    renderBoard($('#demo-board'), position, {
+      selected: selection?.type === 'board' ? selection.square : null, targets,
+      placements: canAct() ? placements : new Set(),
+      dragging: drag?.active ? drag.selection?.square : null, disabled: !canAct(),
+    });
     renderReserve($('#demo-white-reserve'), position.banks[WHITE], WHITE, {
       interactive: true, selected: selection?.type === 'bank' ? selection.piece : null,
       dragging: drag?.active ? drag.selection?.piece : null,

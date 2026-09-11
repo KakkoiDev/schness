@@ -25,7 +25,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
-  <link rel="stylesheet" href="./styles.css?v=61">
+  <link rel="stylesheet" href="./styles.css?v=63">
 </head>
 <body>
   <main class="game game-page">
@@ -41,7 +41,7 @@
     <section id="match">
       <div class="match-actions">
         <a id="back-to-menu" class="text-button" href="./">← Home</a>
-        <button id="reset" class="reset" type="button">New game</button>
+        <div class="match-action-buttons"><button id="swap-side" class="text-button" type="button" hidden>Play Black</button><button id="reset" class="reset" type="button">New game</button></div>
       </div>
       <section id="network-card" class="network-card" hidden>
         <div id="card-waiting" class="card-state" hidden>
@@ -310,6 +310,6 @@
       <form method="dialog"><button class="rules-confirm" type="submit">Got it</button></form>
     </div>
   </dialog>
-  <script type="module" src="./src/main.js?v=62"></script>
+  <script type="module" src="./src/main.js?v=63"></script>
 </body>
 </html>
