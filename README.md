@@ -12,7 +12,9 @@ records the architecture and the invariants that are load-bearing, and it is kep
 same commit as the change that affects it.
 
 Experiments, rejected alternatives, evidence, and changes in direction are recorded chronologically
-in [`DEVLOG.md`](DEVLOG.md).
+in [`DEVLOG.md`](DEVLOG.md). **Every pull request that changes product direction, tunes an AI, runs
+an experiment, or makes a meaningful UX tradeoff must update that log in the same commit.** Do not
+defer the entry to a later cleanup. A public development-log page is planned; this file is its source.
 
 ## AI games and research
 
@@ -32,7 +34,11 @@ set the number of complete research sets and a reproducible seed. Each 80-game s
 of the 16 king placements for Sharp–Sharp, Sharp–Steady, Steady–Sharp, Sharp–Learning, and
 Learning–Sharp. The default is 13 sets (**1,040 games**), so lower levels always face Sharp with
 colors reversed. The workflow uses parallel Node workers and publishes exactly one downloadable GitHub
-artifact, named `schness-tournament-<run>`; GitHub delivers it as a ZIP.
+artifact, named `schness-tournament-<run>`, for convenient inspection from the run page. Actions
+artifacts are temporary (this workflow retains them for 30 days), so every successful run also
+publishes the same ZIP permanently under **[GitHub Releases](../../releases)** with a
+`tournament-run-<run>` tag. Tournament runs 1 and 2 are backfilled there. The archive workflow can
+preserve any older still-available run on demand.
 
 The ZIP is designed for human or AI analysis:
 
@@ -65,10 +71,12 @@ The **[checkmate-puzzle workflow](../../actions/workflows/puzzles.yml)** reconst
 position in that corpus, walking each game from its final playable position back to the opening. A
 64-shard exact solver proves the shortest forced mate in one through four moves against every legal
 defense. Its final artifact contains the deduplicated puzzle collection and source game/ply metadata;
-phones never perform this exhaustive search.
+phones never perform this exhaustive search. Its result is also stored permanently in GitHub Releases
+under a `puzzle-corpus-<run>` tag.
 
-The verified result is playable in **[Checkmate puzzles](https://schness.com/puzzles.html)**. Choose
-mate in one, two, three, four, or a randomized mixture. The first complete extraction checked 52,371
+The verified result is playable in **[Checkmate puzzles](https://schness.com/puzzles.html)**. Select
+any combination of mate depths, optionally hide the depth, and optionally advance automatically after
+a solution. The first complete extraction checked 52,371
 unique positions and found 1,526 unique puzzles: 537 mate-in-one, 510 mate-in-two, 323 mate-in-three,
 and 156 mate-in-four. Every puzzle retains its source game and ply.
 
@@ -117,6 +125,8 @@ Current implementation:
 - 1,526 exact, source-linked checkmate puzzles with selectable or mixed difficulty
 - Tap-and-drag play across matches, Bot Arena, puzzles, and playable rule demonstrations
 - Full visual reserve trays on live, puzzle, tutorial, and recorded-game boards
+- First-visit interactive tutorial, with a replay control in Settings
+- Permanent GitHub Release archives for tournament and puzzle research bundles
 
 ## Roadmap
 

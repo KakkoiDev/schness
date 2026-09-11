@@ -3,6 +3,7 @@ import { recordAction } from './history.js';
 import { actionAt, actionsForSelection, bankSelection, boardSelection } from './interaction.js';
 import { decodeAction } from './library.js';
 import { decodePuzzlePosition } from './puzzle.js';
+import { normalizePuzzleLevels, puzzlePool } from './puzzle-settings.js';
 import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve } from './piece-ui.js';
 import { initTheme } from './theme.js';
@@ -22,13 +23,17 @@ let finished = false;
 let replyTimer;
 let pointerDrag;
 let suppressClick = false;
+let nextTimer;
 
-$('#puzzle-level').addEventListener('change', resetQueue);
+document.querySelectorAll('[name="puzzle-level"]').forEach((input) => input.addEventListener('change', changeLevels));
+$('#puzzle-hide-depth').addEventListener('change', () => { savePreferences(); renderPrompt(); });
+$('#puzzle-auto-next').addEventListener('change', savePreferences);
 $('#puzzle-next').addEventListener('click', nextPuzzle);
 $('#puzzle-reveal').addEventListener('click', reveal);
 document.addEventListener('pointermove', movePointerDrag, { passive: false });
 document.addEventListener('pointerup', endPointerDrag);
 document.addEventListener('pointercancel', cancelPointerDrag);
+loadPreferences();
 load();
 
 async function load() {
@@ -45,11 +50,11 @@ async function load() {
 
 function resetQueue() {
   if (!corpus) return;
-  const level = $('#puzzle-level').value;
-  queue = shuffle(corpus.puzzles.filter((item) => level === 'all' || item.mate === Number(level)));
+  const levels = selectedLevels();
+  queue = shuffle(puzzlePool(corpus.puzzles, levels));
   if (!queue.length) {
-    $('#puzzle-prompt').textContent = `No mate-in-${level} puzzles were found`;
-    feedback('wrong', 'Choose another difficulty.');
+    $('#puzzle-prompt').textContent = 'Choose at least one puzzle type';
+    feedback('wrong', 'At least one mate depth must stay selected.');
     $('#puzzle-progress').textContent = '';
     return;
   }
@@ -58,6 +63,7 @@ function resetQueue() {
 
 function nextPuzzle() {
   clearTimeout(replyTimer);
+  clearTimeout(nextTimer);
   if (!queue.length) return resetQueue();
   puzzle = queue.pop();
   position = decodePuzzlePosition(puzzle.position);
@@ -68,7 +74,7 @@ function nextPuzzle() {
   history = [];
   finished = false;
   buildBoard();
-  $('#puzzle-prompt').textContent = `${attacker === WHITE ? 'White' : 'Black'} to move · mate in ${puzzle.mate}`;
+  renderPrompt();
   feedback('ready', 'Find the forced checkmate.');
   $('#puzzle-progress').textContent = `${queue.length + 1} puzzles left in this shuffle`;
   $('#puzzle-sources').replaceChildren(...puzzle.sources.slice(0, 30).map(([game, ply]) => textElement(`Game #${game}, after ply ${ply}`)));
@@ -134,7 +140,7 @@ function tryAction(action) {
 function playReply() {
   if (!chosenLine || lineIndex >= chosenLine.length) return;
   apply(decodeAction(chosenLine[lineIndex]));
-  feedback('correct', `Correct defense. Continue the mate in ${puzzle.mate}.`);
+  feedback('correct', $('#puzzle-hide-depth').checked ? 'The defense moved. Keep calculating.' : `The defense moved. Continue the mate in ${puzzle.mate}.`);
 }
 
 function apply(action) {
@@ -148,8 +154,9 @@ function apply(action) {
 
 function complete() {
   finished = true;
-  feedback('solved', 'Checkmate — puzzle solved.');
+  feedback('solved', `Checkmate — mate in ${puzzle.mate} solved.${$('#puzzle-auto-next').checked ? ' Next puzzle coming…' : ''}`);
   render();
+  if ($('#puzzle-auto-next').checked) nextTimer = setTimeout(nextPuzzle, 1200);
 }
 
 function reveal() {
@@ -208,6 +215,45 @@ function feedback(state, message) {
   card.dataset.state = state;
   $('#puzzle-feedback-icon').textContent = { ready: '●', correct: '✓', solved: '✓', wrong: '×', revealed: '→' }[state];
   $('#puzzle-status').textContent = message;
+}
+
+function renderPrompt() {
+  if (!puzzle) return;
+  $('#puzzle-prompt').textContent = `${attacker === WHITE ? 'White' : 'Black'} to move · ${$('#puzzle-hide-depth').checked ? 'find the fastest mate' : `mate in ${puzzle.mate}`}`;
+}
+
+function selectedLevels() {
+  return [...document.querySelectorAll('[name="puzzle-level"]:checked')].map((input) => Number(input.value));
+}
+
+function changeLevels(event) {
+  if (!selectedLevels().length) {
+    event.currentTarget.checked = true;
+    feedback('wrong', 'Keep at least one mate depth selected.');
+    return;
+  }
+  savePreferences();
+  resetQueue();
+}
+
+function loadPreferences() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('schness-puzzle-settings'));
+    if (Array.isArray(saved?.levels) && saved.levels.length) {
+      const levels = normalizePuzzleLevels(saved.levels);
+      document.querySelectorAll('[name="puzzle-level"]').forEach((input) => { input.checked = levels.includes(Number(input.value)); });
+    }
+    $('#puzzle-hide-depth').checked = saved?.hideDepth === true;
+    $('#puzzle-auto-next').checked = saved?.autoNext === true;
+  } catch { /* Invalid local preferences fall back to the visible defaults. */ }
+}
+
+function savePreferences() {
+  try {
+    localStorage.setItem('schness-puzzle-settings', JSON.stringify({
+      levels: selectedLevels(), hideDepth: $('#puzzle-hide-depth').checked, autoNext: $('#puzzle-auto-next').checked,
+    }));
+  } catch { /* The puzzle remains fully usable when storage is unavailable. */ }
 }
 
 function beginBoardDrag(event, square, button) {

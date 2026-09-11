@@ -8,6 +8,27 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-09-11 — Research archives, first-run teaching, and focused puzzle practice
+
+**Research durability.** Actions artifacts are useful while investigating a run but are retained for
+a limited period; Schness's workflows currently request 30 days. Tournament and puzzle pipelines now
+also package their result as versioned GitHub Release assets. Releases become the durable system of
+record, while run artifacts remain the convenient short-lived copy. A small manual archive workflow
+backfills still-available historical tournament runs without rerunning the experiment.
+
+**Onboarding.** A first-time lobby visitor now enters the interactive king-placement lesson
+automatically. Invite links already land directly on `game.html`, so an invited player is never
+blocked by onboarding. Opening the lesson marks it seen locally, and Settings provides an explicit
+way to replay it. The tutorial continues to use legal engine positions and a real worker reply rather
+than a scripted animation that could disagree with the rules.
+
+**Puzzle practice.** Mate depths are independent filters rather than one exclusive choice, so a
+player can mix (for example) mate in one and two. An optional hidden-depth prompt trains position
+reading instead of target-depth guessing. Auto-next advances only after a genuinely solved puzzle,
+not after revealing the answer. On narrow screens, the controls and feedback remain anchored near
+the viewport edge. Drag sources stay fully opaque: the previous opacity rule could be triggered by a
+scroll gesture crossing the drag threshold, making pieces appear gray even when no move occurred.
+
 ## 2026-09-11 — Every board should teach the same interaction language
 
 **Problem.** Live matches supported touch/mouse dragging and fixed three-slot reserves, but puzzles

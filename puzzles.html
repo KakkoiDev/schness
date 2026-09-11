@@ -23,11 +23,15 @@
         <div class="replay-seat"><div id="puzzle-bottom-player" class="replay-player"></div><div class="reserve"><span id="puzzle-bottom-label" class="reserve-label"></span><div id="puzzle-bottom-reserve" class="bank"></div></div></div>
       </div>
       <aside class="puzzle-panel">
-        <label class="puzzle-level">Difficulty <select id="puzzle-level"><option value="all">All · random</option><option value="1">Mate in 1</option><option value="2">Mate in 2</option><option value="3">Mate in 3</option><option value="4">Mate in 4</option></select></label>
+        <details class="puzzle-settings" open>
+          <summary>Puzzle mix</summary>
+          <fieldset class="puzzle-levels"><legend>Include</legend><label><input type="checkbox" name="puzzle-level" value="1" checked><span>Mate 1</span></label><label><input type="checkbox" name="puzzle-level" value="2" checked><span>Mate 2</span></label><label><input type="checkbox" name="puzzle-level" value="3" checked><span>Mate 3</span></label><label><input type="checkbox" name="puzzle-level" value="4" checked><span>Mate 4</span></label></fieldset>
+          <div class="puzzle-toggles"><label><input id="puzzle-hide-depth" type="checkbox"> Hide mate depth</label><label><input id="puzzle-auto-next" type="checkbox"> Auto-next when solved</label></div>
+        </details>
         <p id="puzzle-progress" class="eyebrow"></p>
         <h3 id="puzzle-prompt">Loading verified puzzles…</h3>
         <div id="puzzle-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span id="puzzle-feedback-icon" aria-hidden="true">●</span><p id="puzzle-status">Find the forced checkmate.</p></div>
-        <div class="puzzle-actions"><button id="puzzle-next" type="button">Next puzzle</button><button id="puzzle-reveal" type="button">Show solution</button></div>
+        <div class="puzzle-actions"><button id="puzzle-next" type="button">Next</button><button id="puzzle-reveal" type="button">Solution</button></div>
         <div id="puzzle-line" class="watch-moves" aria-label="Played line"></div>
         <details><summary>Source positions</summary><div id="puzzle-sources" class="replay-sources"></div></details>
       </aside>

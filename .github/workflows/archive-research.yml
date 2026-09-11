@@ -1,0 +1,43 @@
+name: Archive historical research
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Actions run containing the tournament artifact
+        required: true
+        type: string
+      release_number:
+        description: Tournament number used in the release tag and filename
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download the historical tournament artifact
+        uses: actions/download-artifact@v4
+        with:
+          pattern: schness-tournament-*
+          path: archive
+          merge-multiple: true
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Package the research bundle
+        run: (cd archive && zip -qr ../schness-tournament-${{ inputs.release_number }}.zip .)
+      - name: Publish the permanent release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: tournament-run-${{ inputs.release_number }}
+          ASSET: schness-tournament-${{ inputs.release_number }}.zip
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" "$ASSET" --clobber
+          else
+            gh release create "$RELEASE_TAG" "$ASSET" --title "Tournament ${{ inputs.release_number }}" --notes "Permanent Schness tournament archive backfilled from Actions run ${{ inputs.run_id }}."
+          fi
