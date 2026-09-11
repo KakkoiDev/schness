@@ -86,6 +86,21 @@ const JA = new Map(Object.entries({
   'a – d then 1 – 4': 'a〜d、続けて1〜4', 'Type a square name to go straight there.': 'マス名を入力すると直接移動します。', 'Show this list.': 'この一覧を表示します。',
   'Arrow keys move the cursor, Enter picks up or plays, Escape puts the piece back down, 1 to 3 pick a reserve piece, a square name jumps there, and question mark lists the shortcuts.': '矢印キーでカーソルを移動、Enterで選択・着手、Escapeで選択解除。1〜3で持ち駒を選び、マス名で直接移動、?でショートカット一覧を表示します。',
   'unique games': '固有の棋譜', 'original records': '元の対局数', 'decisive': '勝敗あり', 'average plies': '平均プライ',
+  'Bot': 'ボット', 'Online player': 'オンラインプレイヤー', 'Audio': '音声', 'Video': 'ビデオ',
+  'Your browser is still blocking incoming audio.': 'ブラウザが相手の音声の再生をブロックしています。',
+  'Offline · moves will send when you’re back': 'オフライン・再接続後に着手を送信します',
+  'Your connection is unstable': '接続が不安定です', 'Retrying': '再試行中', 'You are back online.': 'オンラインに戻りました。',
+  'You are offline. Moves will send when you are back.': 'オフラインです。再接続後に着手を送信します。',
+  'Your opponent lost connection.': '相手との接続が切れました。', 'Not connected to the matchmaking network': 'マッチング用ネットワークに接続できません',
+  'Microphone permission was not granted.': 'マイクの使用が許可されませんでした。', 'Could not start the microphone.': 'マイクを開始できませんでした。',
+  'Camera permission was not granted.': 'カメラの使用が許可されませんでした。', 'Could not start the camera.': 'カメラを開始できませんでした。',
+  'You asked to take back your move': '待ったをお願いしました', 'You offered a draw': '引き分けを提案しました',
+  'The match is a draw by agreement.': '両者の合意で引き分けになりました。', 'Accept': '承諾', 'Decline': '辞退', 'Allow': '許可',
+  'Invite for a rematch': '再戦に招待', 'Play again': 'もう一度対局', 'Rematch': '再戦',
+  'The demo ended in a draw.': 'デモは引き分けになりました。',
+  'Place your king on one of the highlighted home-row squares.': '光っている自陣のマスにキングを配置してください。',
+  'Move your rook to one of the highlighted squares.': 'ルークを光っているマスのいずれかへ動かしてください。',
+  'Deploy your bishop from the reserve to the highlighted square.': '持ち駒のビショップを光っているマスへ配置してください。',
 }));
 
 const PATTERNS = [
@@ -113,7 +128,23 @@ const PATTERNS = [
   [/^(White|Black) to move · (.*)$/, (_, side, seat) => `${side === 'White' ? '白' : '黒'}の手番・${translateText(seat)}`],
   [/^(White|Black) (.*) is thinking…$/, (_, side, bot) => `${side === 'White' ? '白' : '黒'}の${translateText(bot)}が考えています…`],
   [/^Paused before (White|Black) moves$/, (_, side) => `${side === 'White' ? '白' : '黒'}の手番前で一時停止`],
+  [/^(\d+):(\d{2}) left$/, '$1:$2 残り'],
+  [/^(King|Rook|Bishop|Knight) on ([a-d][1-4]) is selected\. (.*)$/, (_, piece, square, rest) => `${pieceJa(piece)}（${square}）を選択中。${translateText(rest, 'ja')}`],
+  [/^Your king is in check(?: from .*?)?\. Move, capture, or deploy a reserve piece to block it\.$/, 'キングがチェックされています。移動、駒を取る、または持ち駒を配置して防いでください。'],
+  [/^Empty (rook|bishop|knight) reserve slot$/, (_, piece) => `空の${pieceJa(piece)}持ち駒枠`],
+  [/^(white|black) (rook|bishop|knight) in reserve$/, (_, side, piece) => `${side === 'white' ? '白' : '黒'}の持ち駒の${pieceJa(piece)}`],
+  [/^(\d+) matching records$/, '$1件の棋譜'], [/^Run (\d+) · (\d+) source records$/, '実験$1・元データ$2局'],
+  [/^Your king ran out of squares(?: on [a-d][1-4])?\..*$/, 'キングの逃げ場がなくなりました。棋譜を戻って防ぎ方を確認できます。'],
+  [/^(White|Black) has no legal move and is not in check\..*$/, '合法手がなく、チェックもされていないためステイルメイトです。'],
+  [/^Neither side pressed on.*$/, 'どちらも勝ち切れず、手数上限で引き分けになりました。'],
+  [/^(White|Black) deployed a (king|rook|bishop|knight) on ([a-d][1-4])$/, (_, side, piece, square) => `${side === 'White' ? '白' : '黒'}が${pieceJa(piece)}を${square}に配置`],
+  [/^(White|Black) moved a (king|rook|bishop|knight) from ([a-d][1-4]) to ([a-d][1-4])$/, (_, side, piece, from, to) => `${side === 'White' ? '白' : '黒'}の${pieceJa(piece)}が${from}から${to}へ移動`],
+  [/^(White|Black) captured a (king|rook|bishop|knight) on ([a-d][1-4]) with a (king|rook|bishop|knight) from ([a-d][1-4])$/, (_, side, captured, to, piece, from) => `${side === 'White' ? '白' : '黒'}の${pieceJa(piece)}が${from}から${to}へ進み${pieceJa(captured)}を取る`],
 ];
+
+function pieceJa(piece) {
+  return ({ king: 'キング', rook: 'ルーク', bishop: 'ビショップ', knight: 'ナイト' })[String(piece).toLowerCase()] ?? piece;
+}
 
 export function language(storage = localStorage, navigatorLanguage = navigator.language) {
   try { const saved = storage.getItem(STORAGE_KEY); if (SUPPORTED.has(saved)) return saved; } catch {}
