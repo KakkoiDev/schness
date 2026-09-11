@@ -28,7 +28,7 @@ Three documents, deliberately separate:
 |---|---|---|
 | **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `board-ui` `drag` `theme` `watch` `arena` `puzzle` `puzzle-settings` `tournament` `library` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `trystero`) | WebRTC over public Nostr relays. |
-| **DOM glue** | `main` `lobby` `tutorial` `piece-ui` `sound` `bot-worker` `watch-ui` `library-ui` `puzzle-ui` | Touches the document. Thin by intention. |
+| **DOM glue** | `main` `lobby` `tutorial` `piece-ui` `sound` `bot-worker` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
 
 `bot` and `puzzle` are trusted search modules: both consume positions produced by the rules engine
 and may use its unchecked move-generation/apply entry points inside their trees. Network, saved,

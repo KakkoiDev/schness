@@ -93,6 +93,19 @@
   }
 }
 
+/* One quiet product mark everywhere; compact enough to keep mobile headers on one line. */
+.brand-mark { position:relative;display:grid;transform:none;font-family:Arial,sans-serif }
+.brand-mark::after { content:"";position:absolute;right:.32rem;bottom:.32rem;width:.24rem;aspect-ratio:1;border-radius:50%;background:var(--accent) }
+.language-button { color:var(--muted);white-space:nowrap }
+:root[lang="ja"] body { font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif }
+:root[lang="ja"] h1,:root[lang="ja"] h2 { letter-spacing:-.045em }
+:root[lang="ja"] button,:root[lang="ja"] summary,:root[lang="ja"] .mode { line-break:strict;overflow-wrap:anywhere }
+@media(max-width:760px) {
+  .brand-mark { display:grid;width:2rem;border-radius:.5rem;font-size:1rem }
+  .header-actions { gap:0 }
+  .header-actions .text-button { padding-inline:.45rem }
+}
+
 /* Both sides get the same row, so the asymmetry is only in the labels:
    status dot and a two-line identity on the left, reserve on the right. */
 .player {

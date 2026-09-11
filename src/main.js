@@ -21,8 +21,10 @@ import {
 } from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
+import { initI18n } from './i18n.js';
 
 initTheme();
+initI18n();
 
 const PIECE_FILES = { [KING]: 'K', [ROOK]: 'R', [BISHOP]: 'B', [KNIGHT]: 'N' };
 const board = document.querySelector('#board');

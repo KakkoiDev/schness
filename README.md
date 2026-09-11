@@ -7,6 +7,10 @@ between moving a deployed piece and dropping a banked piece onto an empty square
 A drop may not give check. Captured non-king pieces return to their original owner's bank. Check,
 checkmate, king safety, and stalemate otherwise work as in chess. Threefold repetition is a draw.
 
+The complete interface is available in English and Japanese. A first visit follows the device
+language; the compact **EN / 日本語** control on every page saves an explicit preference locally.
+Both languages use the same markup and game logic so features cannot silently diverge.
+
 Contributing agents and humans: read [`DECISIONS.md`](DECISIONS.md) before changing anything. It
 records the architecture and the invariants that are load-bearing, and it is kept current in the
 same commit as the change that affects it.
