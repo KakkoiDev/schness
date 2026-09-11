@@ -4,6 +4,8 @@ import {
 import { recordAction } from './history.js';
 import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
 import { buildEditedPosition, controllerSearch, putEditorPiece } from './arena.js';
+import { movedEnough } from './drag.js';
+import { pieceElement, renderReserve as renderPieceReserve } from './piece-ui.js';
 import { initTheme } from './theme.js';
 import { resultLabel, sideName } from './watch.js';
 
@@ -11,7 +13,6 @@ initTheme();
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
 
 const $ = (selector) => document.querySelector(selector);
-const PIECE_CODE = { king: 'K', rook: 'R', bishop: 'B', knight: 'N' };
 const board = $('#watch-board');
 const status = $('#watch-status');
 const moves = $('#watch-moves');
@@ -26,12 +27,28 @@ let aisPaused = false;
 let nextMoveTimer;
 let editorBoard = [];
 let editorPiece = { owner: WHITE, piece: KING };
+let pointerDrag = null;
+let suppressClick = false;
+
+const imported = loadImportedPosition();
+if (imported) timeline = [imported];
 
 buildBoard(board, false);
 buildBoard($('#position-board'), true);
 buildEditorTools();
 bindControls();
 render();
+
+function loadImportedPosition() {
+  if (new URLSearchParams(location.search).get('position') !== 'library') return null;
+  try {
+    const saved = JSON.parse(sessionStorage.getItem('schness-arena-position'));
+    sessionStorage.removeItem('schness-arena-position');
+    return buildEditedPosition(saved.board, saved.turn);
+  } catch {
+    return null;
+  }
+}
 
 function bindControls() {
   $('#watch-previous').addEventListener('click', () => review(-1));
@@ -59,6 +76,9 @@ function bindControls() {
     });
   }
   worker.addEventListener('message', receiveBotMove);
+  document.addEventListener('pointermove', movePointerDrag, { passive: false });
+  document.addEventListener('pointerup', endPointerDrag);
+  document.addEventListener('pointercancel', cancelPointerDrag);
 }
 
 function controller(side) {
@@ -117,6 +137,7 @@ function playAction(action, botMoved = false) {
 }
 
 function chooseSquare(square) {
+  if (suppressClick) return;
   const position = current();
   if (reviewIndex !== history.length || getResult(position) || controller(position.turn) !== 'human') return;
   if (position.phase !== 'play') {
@@ -132,6 +153,7 @@ function chooseSquare(square) {
 }
 
 function chooseReserve(piece) {
+  if (suppressClick) return;
   const position = current();
   if (reviewIndex !== history.length || getResult(position) || controller(position.turn) !== 'human' || position.phase !== 'play') return;
   selection = selection?.type === 'bank' && selection.piece === piece ? null : bankSelection(piece);
@@ -186,19 +208,13 @@ function buildBoard(element, editor) {
       square.className = 'square';
       square.setAttribute('role', 'gridcell');
       square.dataset.index = rowIndex * 4 + column;
+      square.dataset.square = rowIndex * 4 + column;
       square.addEventListener('click', () => editor ? editSquare(Number(square.dataset.index)) : chooseSquare(Number(square.dataset.index)));
+      if (!editor) square.addEventListener('pointerdown', (event) => beginBoardDrag(event, Number(square.dataset.index), square));
       row.append(square);
     }
     element.append(row);
   }
-}
-
-function pieceElement(owner, piece) {
-  const image = document.createElement('img');
-  image.className = `piece piece-${owner}`;
-  image.src = `./assets/pieces/${owner === WHITE ? 'w' : 'b'}${PIECE_CODE[piece]}.svg`;
-  image.alt = `${owner} ${piece}`;
-  return image;
 }
 
 function render() {
@@ -218,6 +234,7 @@ function render() {
     square.classList.toggle('target', targets.has(index));
     square.classList.toggle('capture', targets.has(index) && Boolean(occupant));
     square.classList.toggle('placement', placements.has(index) && humanTurn);
+    square.classList.toggle('drag-source', pointerDrag?.active && pointerDrag.selection?.square === index);
     square.disabled = !humanTurn;
   }
   renderReserve('#white-reserve', position.banks[WHITE], WHITE);
@@ -235,16 +252,74 @@ function render() {
 
 function renderReserve(selector, pieces, owner) {
   const element = $(selector);
-  element.replaceChildren(...pieces.map((piece) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'watch-bank-piece';
-    button.append(pieceElement(owner, piece));
-    button.disabled = reviewIndex !== history.length || current().turn !== owner || controller(owner) !== 'human';
-    button.classList.toggle('selected', selection?.type === 'bank' && selection.piece === piece && current().turn === owner);
-    button.addEventListener('click', () => chooseReserve(piece));
-    return button;
-  }));
+  const interactive = reviewIndex === history.length && current().turn === owner && controller(owner) === 'human';
+  renderPieceReserve(element, pieces, owner, {
+    interactive,
+    selected: selection?.type === 'bank' && current().turn === owner ? selection.piece : null,
+    dragging: pointerDrag?.active ? pointerDrag.selection?.piece : null,
+    disabled: !interactive,
+    onSelect: chooseReserve,
+    onPointerDown: beginBankDrag,
+  });
+}
+
+function beginBoardDrag(event, square, button) {
+  const position = current();
+  const occupant = position.board[square];
+  if (!event.isPrimary || reviewIndex !== history.length || controller(position.turn) !== 'human' ||
+      position.phase !== 'play' || occupant?.owner !== position.turn || getResult(position)) return;
+  pointerDrag = dragStart(event, boardSelection(square), occupant.owner, occupant.piece, button);
+}
+
+function beginBankDrag(event, piece, button) {
+  const position = current();
+  if (!event.isPrimary || reviewIndex !== history.length || controller(position.turn) !== 'human' ||
+      position.phase !== 'play' || getResult(position)) return;
+  pointerDrag = dragStart(event, bankSelection(piece), position.turn, piece, button);
+}
+
+function dragStart(event, chosen, owner, piece, element) {
+  return { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
+    selection: chosen, owner, piece, pieceRect: element.querySelector('.piece')?.getBoundingClientRect() };
+}
+
+function movePointerDrag(event) {
+  if (!pointerDrag || pointerDrag.pointerId !== event.pointerId) return;
+  if (!pointerDrag.active && movedEnough(pointerDrag, event)) {
+    pointerDrag.active = true;
+    selection = pointerDrag.selection;
+    pointerDrag.ghost = pieceElement(pointerDrag.owner, pointerDrag.piece);
+    pointerDrag.ghost.classList.add('drag-ghost');
+    if (pointerDrag.pieceRect) Object.assign(pointerDrag.ghost.style, {
+      width: `${pointerDrag.pieceRect.width}px`, height: `${pointerDrag.pieceRect.height}px`,
+    });
+    document.body.append(pointerDrag.ghost);
+    render();
+  }
+  if (!pointerDrag.active) return;
+  event.preventDefault();
+  Object.assign(pointerDrag.ghost.style, { left: `${event.clientX}px`, top: `${event.clientY}px` });
+}
+
+function endPointerDrag(event) {
+  if (!pointerDrag || pointerDrag.pointerId !== event.pointerId) return;
+  const ended = pointerDrag;
+  pointerDrag = null;
+  ended.ghost?.remove();
+  if (!ended.active) return;
+  const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('#watch-board .square');
+  const action = target ? actionAt(current(), ended.selection, Number(target.dataset.square)) : null;
+  event.preventDefault();
+  suppressClick = true;
+  setTimeout(() => { suppressClick = false; }, 0);
+  if (action) playAction(action); else { selection = null; render(); }
+}
+
+function cancelPointerDrag() {
+  pointerDrag?.ghost?.remove();
+  pointerDrag = null;
+  selection = null;
+  render();
 }
 
 function renderMoves() {

@@ -1,8 +1,10 @@
 import { gameUrl, launchIntent } from './navigation.js';
 import { clockMode, setClockMode } from './settings.js';
 import { initTheme } from './theme.js';
+import { initTutorial } from './tutorial.js';
 
 initTheme();
+initTutorial();
 
 const arenaButton = document.querySelector('#bot-arena');
 const onlineButton = document.querySelector('#play-online');
