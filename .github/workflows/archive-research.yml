@@ -1,4 +1,4 @@
-name: Archive historical research
+name: Archive historical research\n# Deployment bridge refreshed for the bilingual interface.
 
 on:
   pull_request:
