@@ -24,6 +24,14 @@ practice and avoids making the answer depend on invisible moves before the displ
 **Provenance.** Duplicate positions become one puzzle but retain every source game and ply. Multiple
 winning first moves are preserved, each with a mechanically verified representative continuation.
 
+**Result.** The first complete 64-shard run checked 52,371 unique playable positions reconstructed
+from the 1,099-game library and found 1,526 unique forced mates: 537 in one, 510 in two, 323 in three,
+and 156 in four. Independent integration validation resolved all 1,780 source references back to the
+exact archived position and replayed all 1,735 stored solution lines to checkmate.
+
+**Product decision.** Ship the verified corpus as static PWA data with difficulty filters and a mixed
+random mode. Do not ask clients to rediscover mates or trust the heuristic Sharp evaluator as proof.
+
 ## 2026-09-11 — One bot arena instead of separate modes
 
 **Question.** How can challenging a bot, watching two bots, taking over mid-game, and starting from

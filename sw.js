@@ -1,14 +1,16 @@
 // Bumped whenever anything in SHELL changes. The fetch handler below no longer
 // depends on remembering to do it — it revalidates in the background — but a
 // bump is still the only thing that refreshes every client on the same visit.
-const CACHE = 'schness-v50';
+const CACHE = 'schness-v51';
 const SHELL = [
   './',
   './index.html',
   './game.html',
   './watch.html',
   './library.html',
+  './puzzles.html',
   './data/games.json',
+  './data/puzzles.json',
   './styles.css',
   './manifest.webmanifest',
   './icon.svg',
@@ -46,6 +48,8 @@ const SHELL = [
   './src/watch-ui.js',
   './src/library.js',
   './src/library-ui.js',
+  './src/puzzle.js',
+  './src/puzzle-ui.js',
   './src/tournament.js',
   './vendor/trystero/nostr.js',
   './vendor/trystero/node-crypto.js',
@@ -72,7 +76,8 @@ self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     const fallback = url.pathname.endsWith('/game.html') ? './game.html'
       : url.pathname.endsWith('/watch.html') ? './watch.html'
-        : url.pathname.endsWith('/library.html') ? './library.html' : './index.html';
+        : url.pathname.endsWith('/library.html') ? './library.html'
+          : url.pathname.endsWith('/puzzles.html') ? './puzzles.html' : './index.html';
     event.respondWith(fetch(event.request).catch(() => caches.match(fallback)));
     return;
   }

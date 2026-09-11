@@ -38,6 +38,23 @@ test('AI viewing stays in the browser and tournaments stay in one Actions artifa
   assert.match(readme, /games\.jsonl/);
 });
 
+test('checkmate puzzles are filtered, randomized, and played from verified data', async () => {
+  const [lobby, page, ui, workflow] = await Promise.all([
+    readFile(resolve(root, 'index.html'), 'utf8'),
+    readFile(resolve(root, 'puzzles.html'), 'utf8'),
+    readFile(resolve(root, 'src/puzzle-ui.js'), 'utf8'),
+    readFile(resolve(root, '.github/workflows/puzzles.yml'), 'utf8'),
+  ]);
+  assert.match(lobby, /id="solve-puzzles"/);
+  assert.match(page, /value="all">All · random/);
+  for (const level of [1, 2, 3, 4]) assert.match(page, new RegExp(`value="${level}">Mate in ${level}`));
+  assert.match(ui, /fetch\('\.\/data\/puzzles\.json'\)/);
+  assert.match(ui, /crypto\.getRandomValues/);
+  assert.match(ui, /puzzle\.solutions\.find/);
+  assert.match(workflow, /--shards 64/);
+  assert.match(workflow, /needs: extract/);
+});
+
 test('manifest describes a standalone app with a local icon', async () => {
   const manifest = JSON.parse(await readFile(resolve(root, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.display, 'standalone');
@@ -72,7 +89,7 @@ test('the maskable icon is its own artwork, with room to be masked', async () =>
 
 test('iOS gets a png to put on the home screen', async () => {
   // Without this Safari screenshots the page and uses that as the icon.
-  for (const file of ['index.html', 'game.html', 'watch.html', 'library.html']) {
+  for (const file of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const html = await readFile(resolve(root, file), 'utf8');
     const link = html.match(/<link rel="apple-touch-icon" href="([^"]+)"/);
     assert.ok(link, `${file} has no apple-touch-icon`);

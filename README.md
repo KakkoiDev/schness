@@ -67,6 +67,11 @@ position in that corpus, walking each game from its final playable position back
 defense. Its final artifact contains the deduplicated puzzle collection and source game/ply metadata;
 phones never perform this exhaustive search.
 
+The verified result is playable in **[Checkmate puzzles](https://schness.com/puzzles.html)**. Choose
+mate in one, two, three, four, or a randomized mixture. The first complete extraction checked 52,371
+unique positions and found 1,526 unique puzzles: 537 mate-in-one, 510 mate-in-two, 323 mate-in-three,
+and 156 mate-in-four. Every puzzle retains its source game and ply.
+
 ## Development
 
 Schness uses browser-native JavaScript modules and has no build step. The rules and bot are independent
@@ -109,6 +114,7 @@ Current implementation:
 - Keyboard play and screen-reader announcements
 - Landscape and portrait layouts, with the board bounded by the window on both
 - WCAG AA contrast in both themes, measured in the test suite
+- 1,526 exact, source-linked checkmate puzzles with selectable or mixed difficulty
 
 ## Roadmap
 
