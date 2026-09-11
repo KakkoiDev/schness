@@ -147,6 +147,14 @@ See the [full run-2 report](docs/tournament-report-2026-09-11-sharp-v2.md).
 
 ## 2026-09-11 — Japanese live-state coverage audit
 
+### Tutorial interaction parity
+
+The king-placement tutorial applied the placement wash but omitted the shared target class that
+draws the real game's destination dot. Tutorial setup and Bot Arena setup now treat legal king
+squares as both placements and targets, matching normal play exactly. A regression test locks the
+four initial White home-row markers. The English language control is shortened from `日本語` to
+`日本` to keep the compact navigation rhythm requested for the bilingual interface.
+
 ### Phone navigation: fixed-footprint controls
 
 **Follow-up.** Fixed footprints solved wrapping, but replacing familiar words with a mixed set of
