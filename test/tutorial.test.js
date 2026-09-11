@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { BLACK, WHITE, applyAction, legalActions } from '../src/rules.js';
-import { lessonPosition } from '../src/tutorial.js';
+import { lessonPosition, tutorialHighlights } from '../src/tutorial.js';
 
 test('every tutorial opens as a legal position with White able to act', () => {
   for (const lesson of ['kings', 'deploy', 'capture']) {
@@ -9,6 +9,13 @@ test('every tutorial opens as a legal position with White able to act', () => {
     assert.equal(position.turn, WHITE);
     assert.ok(legalActions(position).length > 0, lesson);
   }
+});
+
+test('king tutorial marks every legal home-row square like the real game', () => {
+  const position = lessonPosition('kings');
+  const { targets, placements } = tutorialHighlights(position);
+  assert.deepEqual([...targets], [12, 13, 14, 15]);
+  assert.deepEqual([...placements], [12, 13, 14, 15]);
 });
 
 test('the capture tutorial demonstrates a piece returning to its owner', () => {

@@ -174,7 +174,7 @@ export function initI18n() {
     button.type = 'button';
     button.className = 'text-button language-button';
     button.dataset.languageToggle = '';
-    button.textContent = locale === 'ja' ? 'EN' : '日本語';
+    button.textContent = locale === 'ja' ? 'EN' : '日本';
     button.setAttribute('aria-label', locale === 'ja' ? '英語に切り替える' : 'Switch to Japanese');
     const theme = header.querySelector('[data-theme-toggle]');
     header.insertBefore(button, theme ?? header.firstChild);
