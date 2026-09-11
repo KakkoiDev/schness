@@ -53,6 +53,17 @@ test('Japanese mobile navigation stays horizontal and compact', async () => {
   assert.match(css, /@media\(max-width:350px\)[\s\S]*?\.brand h1/);
 });
 
+test('phone navigation uses fixed-size language-independent controls', async () => {
+  const css = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
+  assert.match(css, /@media\(max-width:480px\)[\s\S]*?header \.brand h1,[\s\S]*?display:none/);
+  assert.match(css, /header \.header-actions \.text-button\s*\{[\s\S]*?width:44px;[\s\S]*?height:44px;[\s\S]*?font-size:0/);
+  assert.match(css, /header \.rules-button::before\s*\{\s*content:"\?"/);
+  for (const file of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
+    const page = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
+    assert.match(page, /href="\.\/styles\.css\?v=60"/, file);
+  }
+});
+
 test('core and variable game language has Japanese coverage', () => {
   assert.equal(translateText('Create an online game', 'ja'), 'オンライン対局を作る');
   assert.equal(translateText('White to move · mate in 3', 'ja'), '白の手番・3手詰め');

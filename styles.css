@@ -2363,3 +2363,42 @@
   .brand h1,
   .game-page .brand h1 { display:none }
 }
+
+/* Phone header: symbols have a fixed footprint in every language. The full
+   wordmark belongs to wider layouts; the S mark is the established app logo. */
+@media(max-width:480px) {
+  header .brand h1,
+  .game-page header .brand h1 { display:none }
+
+  header .brand { flex:none }
+  header .header-actions { gap:.2rem }
+  header .header-actions .text-button {
+    display:grid;
+    width:44px;
+    min-width:44px;
+    height:44px;
+    min-height:44px;
+    place-items:center;
+    overflow:hidden;
+    border:1px solid transparent;
+    border-radius:999px;
+    padding:0;
+    font-size:0;
+  }
+  header .header-actions .language-button {
+    border-color:var(--line);
+    font-size:.72rem;
+  }
+  header [data-theme-toggle]::before,
+  header .rules-button::before,
+  header [data-open-sound]::before,
+  header #install::before {
+    font-size:1.1rem;
+    line-height:1;
+  }
+  header [data-theme-toggle]::before { content:"☾" }
+  :root[data-theme="dark"] header [data-theme-toggle]::before { content:"☀" }
+  header .rules-button::before { content:"?";font-weight:800 }
+  header [data-open-sound]::before { content:"♪" }
+  header #install::before { content:"＋" }
+}

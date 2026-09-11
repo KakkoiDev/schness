@@ -147,6 +147,15 @@ See the [full run-2 report](docs/tournament-report-2026-09-11-sharp-v2.md).
 
 ## 2026-09-11 — Japanese live-state coverage audit
 
+### Phone navigation: fixed-footprint controls
+
+The first responsive pass still depended on translated label widths and left the stylesheet at its
+old URL, so a phone could either squeeze Japanese controls or keep serving the pre-fix CSS. Mobile
+navigation now uses the established S app mark and four fixed 44px control slots: language, theme,
+sound when present, and rules. Text remains available through each button's accessible name. All
+five documents reference the same versioned stylesheet, forcing existing PWA installations to fetch
+the correction rather than reusing the bad cached asset.
+
 ### Mobile navigation and first-screen hierarchy
 
 The first Japanese production screenshot exposed two design failures: header action labels were
