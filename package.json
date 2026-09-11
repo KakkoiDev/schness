@@ -7,7 +7,9 @@
     "test": "node --test",
     "tournament": "node scripts/run-tournament.js",
     "tournament:aggregate": "node scripts/aggregate-tournament.js",
-    "library:build": "node scripts/build-game-library.js"
+    "library:build": "node scripts/build-game-library.js",
+    "puzzles:extract": "node scripts/extract-puzzle-shard.js",
+    "puzzles:aggregate": "node scripts/aggregate-puzzles.js"
   },
   "engines": {
     "node": ">=20"
