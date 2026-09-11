@@ -17,6 +17,21 @@ test('every page entry point loads the shared bilingual interface', async () => 
   }
 });
 
+test('page entries and their i18n import are cache-busted together', async () => {
+  const entries = [
+    ['index.html', 'lobby'], ['game.html', 'main'], ['watch.html', 'watch-ui'],
+    ['library.html', 'library-ui'], ['puzzles.html', 'puzzle-ui'],
+  ];
+  for (const [pageFile, moduleName] of entries) {
+    const page = await readFile(new URL(`../${pageFile}`, import.meta.url), 'utf8');
+    const module = await readFile(new URL(`../src/${moduleName}.js`, import.meta.url), 'utf8');
+    const pageVersion = page.match(new RegExp(`src="\\./src/${moduleName}\\.js\\?v=(\\d+)"`))?.[1];
+    const importVersion = module.match(/from '\.\/i18n\.js\?v=(\d+)'/)?.[1];
+    assert.ok(pageVersion, pageFile);
+    assert.equal(importVersion, pageVersion, moduleName);
+  }
+});
+
 test('every visible page header uses the same S product mark', async () => {
   for (const file of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const page = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');

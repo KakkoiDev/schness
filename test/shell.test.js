@@ -471,9 +471,9 @@ test('lobby and game are separate documents with rules and home navigation', asy
   const history = await readFile(resolve(root, 'src/history.js'), 'utf8');
   assert.match(history, /resultingKey/);
   assert.match(game, /id="back-to-menu"[^>]+href="\.\/"/);
-  assert.match(game, /src="\.\/src\/main\.js"/);
+  assert.match(game, /src="\.\/src\/main\.js(?:\?v=\d+)?"/);
   assert.doesNotMatch(game, /id="alternate-mode"/);
-  assert.match(html, /src="\.\/src\/lobby\.js"/);
+  assert.match(html, /src="\.\/src\/lobby\.js(?:\?v=\d+)?"/);
   assert.match(html, /<body class="lobby-page">/);
   assert.doesNotMatch(html, /mini-board|Small board|Deep trouble/);
   assert.doesNotMatch(html, /data-open-settings|text-chat-setting|voice-chat-setting/);

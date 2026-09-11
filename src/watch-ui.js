@@ -7,7 +7,7 @@ import { buildEditedPosition, controllerSearch, putEditorPiece } from './arena.j
 import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve as renderPieceReserve } from './piece-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js';
+import { initI18n } from './i18n.js?v=58';
 import { resultLabel, sideName } from './watch.js';
 
 initTheme();
