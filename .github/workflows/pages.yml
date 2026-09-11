@@ -1,11 +1,6 @@
 name: Deploy GitHub Pages
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'
-  pull_request:
-    paths:
-      - .github/workflows/pages.yml
   push:
     branches: [master]
   workflow_dispatch:
