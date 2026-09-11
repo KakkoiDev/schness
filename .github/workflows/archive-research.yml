@@ -20,7 +20,7 @@ on:
         type: string
 
 permissions:
-  actions: read
+  actions: write
   contents: write
 
 jobs:
@@ -85,3 +85,14 @@ jobs:
           else
             gh release create "$RELEASE_TAG" "$ASSET" --title "Tournament ${{ inputs.release_number }}" --notes "Permanent Schness tournament archive backfilled from Actions run ${{ inputs.run_id }}."
           fi
+
+  deploy-current-site:
+    if: github.event_name != 'workflow_dispatch'
+    needs: backfill
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch Pages from master
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh workflow run pages.yml --ref master
