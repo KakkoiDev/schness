@@ -114,9 +114,7 @@ export function initTutorial() {
   function canAct() { return !thinking && position.turn === WHITE && !getResult(position); }
 
   function render() {
-    const legal = selection ? actionsForSelection(position, selection) : [];
-    const targets = new Set(legal.map((action) => action.to));
-    const placements = position.phase === 'play' ? new Set() : setupDestinations(position);
+    const { targets, placements } = tutorialHighlights(position, selection);
     for (const square of $('#demo-board').querySelectorAll('.square')) {
       const index = Number(square.dataset.square);
       const occupant = position.board[index];
@@ -197,6 +195,14 @@ export function initTutorial() {
   }
 
   function cancelDrag() { drag?.ghost?.remove(); drag = null; }
+}
+
+export function tutorialHighlights(position, selection = null) {
+  const placements = position.phase === 'play' ? new Set() : setupDestinations(position);
+  const targets = position.phase === 'play'
+    ? new Set((selection ? actionsForSelection(position, selection) : []).map((action) => action.to))
+    : new Set(placements);
+  return { targets, placements };
 }
 
 function tutorialSeen() {
