@@ -7,6 +7,7 @@ initTheme();
 const arenaButton = document.querySelector('#bot-arena');
 const onlineButton = document.querySelector('#play-online');
 const libraryButton = document.querySelector('#browse-games');
+const puzzlesButton = document.querySelector('#solve-puzzles');
 const rulesDialog = document.querySelector('#rules-dialog');
 const installButton = document.querySelector('#install');
 let installPrompt = null;
@@ -14,6 +15,7 @@ let installPrompt = null;
 arenaButton.addEventListener('click', () => window.location.assign('./watch.html'));
 onlineButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online')));
 libraryButton.addEventListener('click', () => window.location.assign('./library.html'));
+puzzlesButton.addEventListener('click', () => window.location.assign('./puzzles.html'));
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
 initChoice('clock', clockMode(), setClockMode);

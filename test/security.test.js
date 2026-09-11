@@ -25,7 +25,7 @@ test('nothing in the app builds DOM from a string', async () => {
 
 test('all pages carry the same Content-Security-Policy, and nothing inline', async () => {
   const policies = [];
-  for (const page of ['index.html', 'game.html', 'watch.html', 'library.html']) {
+  for (const page of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const html = await read(page);
     const meta = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/);
     assert.ok(meta, `${page} ships no CSP`);

@@ -2102,6 +2102,28 @@
 .position-foot label { display:grid;gap:.25rem;color:var(--muted);font-size:.7rem;font-weight:700;text-transform:uppercase }
 .position-foot select,.position-foot button { min-height:2.75rem;border:1px solid var(--line);border-radius:.5rem;background:var(--surface);color:var(--ink);padding:.5rem .7rem }
 .position-error { min-height:1.5rem;margin:.5rem 0 0;color:var(--danger);font-size:.78rem;text-align:center }
+.puzzle-page .game { width:min(100%,65rem) }
+.puzzle-heading { display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1rem }
+.puzzle-heading h2 { margin:.15rem 0;font-size:clamp(2rem,6vw,3.5rem) }
+.puzzle-layout { display:grid;grid-template-columns:minmax(0,37rem) minmax(16rem,20rem);gap:clamp(1rem,4vw,2.5rem);align-items:start;justify-content:center }
+.puzzle-stage { min-width:0 }
+.puzzle-stage .board { border:1px solid rgb(24 32 28/.32);border-radius:.3rem;box-shadow:none }
+.puzzle-stage .square .piece { width:78%;height:78%;object-fit:contain }
+.puzzle-you { display:flex;min-height:3.5rem;align-items:center;justify-content:space-between;gap:.5rem }
+.puzzle-you .replay-player { flex:1 }
+.puzzle-panel { display:grid;gap:.75rem;border:1px solid var(--line);border-radius:.75rem;background:var(--surface);padding:1rem }
+.puzzle-level { display:grid;gap:.3rem;color:var(--muted);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em }
+.puzzle-level select { min-height:2.75rem;border:1px solid var(--line);border-radius:.5rem;background:var(--paper);color:var(--ink);padding:.5rem }
+.puzzle-panel h3 { margin:0;font-size:1.2rem }
+.puzzle-status { min-height:3rem;margin:0;color:var(--muted);line-height:1.5 }
+.puzzle-actions { display:grid;grid-template-columns:1fr 1fr;gap:.5rem }
+.puzzle-actions button { min-height:2.75rem;border:1px solid var(--line);border-radius:.5rem;background:var(--paper);color:var(--ink);cursor:pointer }
+.puzzle-actions button:first-child { background:var(--ink);color:var(--inverse) }
+.puzzle-panel .watch-moves { max-height:10rem }
+.puzzle-panel .watch-moves p { margin:.2rem 0;padding:.25rem .4rem;color:var(--muted);font-size:.78rem }
+.puzzle-panel details { border-top:1px solid var(--line);padding-top:.6rem;color:var(--muted);font-size:.75rem }
+.puzzle-wrong { animation:puzzle-wrong 180ms ease }
+@keyframes puzzle-wrong { 40% { transform:translateX(-4px) } 75% { transform:translateX(3px) } }
 
 @media(max-width:760px) {
   .watch-page .game { padding-inline:.75rem }
@@ -2119,6 +2141,20 @@
   .watch-moves { max-height:8rem }
   .position-dialog { inset:0;width:100%;height:100%;max-height:none;border:0;border-radius:0;padding:max(.75rem,env(safe-area-inset-top)) .75rem max(.75rem,env(safe-area-inset-bottom)) }
   .position-tools { grid-template-columns:repeat(5,1fr) }
+  .puzzle-page .game { padding-inline:.75rem }
+  .puzzle-page header { margin-bottom:.4rem }
+  .puzzle-heading { margin-bottom:.35rem }
+  .puzzle-heading h2 { font-size:1.8rem }
+  .puzzle-heading .text-button { display:none }
+  .puzzle-layout { grid-template-columns:1fr;gap:.5rem }
+  .puzzle-stage { width:min(100%,calc(100svh - 18rem));margin:auto }
+  .puzzle-stage .replay-player { min-height:1.75rem }
+  .puzzle-you { min-height:2.75rem }
+  .puzzle-panel { gap:.45rem;padding:.7rem }
+  .puzzle-status { min-height:2.5rem;font-size:.8rem }
+  .puzzle-panel .watch-moves { display:flex;max-height:2.8rem;overflow-x:auto }
+  .puzzle-panel .watch-moves p { flex:0 0 auto }
+  .puzzle-panel details { display:none }
 }
 
 @media (max-width: 760px) {
