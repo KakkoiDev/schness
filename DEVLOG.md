@@ -149,6 +149,11 @@ See the [full run-2 report](docs/tournament-report-2026-09-11-sharp-v2.md).
 
 ### Phone navigation: fixed-footprint controls
 
+**Follow-up.** Fixed footprints solved wrapping, but replacing familiar words with a mixed set of
+moon, note, plus, and question-mark glyphs made the product feel less considered. The controls now
+use short text again inside compact 44px targets. The S mark still reserves enough horizontal room,
+so Japanese remains on one line without sacrificing clarity for decoration.
+
 The first responsive pass still depended on translated label widths and left the stylesheet at its
 old URL, so a phone could either squeeze Japanese controls or keep serving the pre-fix CSS. Mobile
 navigation now uses the established S app mark and four fixed 44px control slots: language, theme,
