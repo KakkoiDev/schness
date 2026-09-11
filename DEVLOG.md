@@ -245,3 +245,25 @@ reproducible dataset for external analysis.
 of mates were delivered by rooks, and a universal corner-king advantage was not supported. High
 Sharp–Sharp repetition motivated Sharp v2. Full numbers and caveats are in the
 [run-1 report](docs/tournament-report-2026-09-10.md).
+## 2026-09-12 — One board contract and browser-level user stories
+
+**Problem.** Match, tutorial, arena, editor, puzzle, and library screens independently built and
+painted sixteen squares. Their CSS happened to be shared, but behavior and accessibility could
+drift; the archive could again lose reserves without the live match noticing. Unit tests also
+proved rules and source patterns without proving that a player could complete the real browser
+flows.
+
+**Decision.** `board-ui.js` now owns board construction, orientation, accessible rows/cells, pieces,
+and visual state. `piece-ui.js` owns the stable three-slot reserve everywhere. All six dynamic board
+surfaces call those primitives, and each exposes the same `data-schness-board` contract. Add a
+Playwright happy-path suite in desktop and mobile Chromium, kept as a separate CI job so browser
+failures retain screenshots and traces without obscuring fast unit failures.
+
+**Interaction follow-ups.** Bot matches can switch the human seat between White and Black. Bot
+Arena keeps its transcript internally scrolled instead of using `scrollIntoView`, which moved the
+entire page away from the board. During a deliberate drag, the real source is hidden while the
+pointer ghost is visible; an invalid release restores it, while a legal release commits the move.
+
+**Why not screenshots alone.** A screenshot can show matching boards while clicks, orientation,
+reserves, or routing are broken. The E2E stories exercise those transitions and assert the shared
+component marker and three reserve slots wherever a complete position is displayed.

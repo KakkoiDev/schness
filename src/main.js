@@ -1,5 +1,5 @@
 import {
-  BANK_PIECES, BLACK, BISHOP, KING, KNIGHT, ROOK, WHITE,
+  BANK_PIECES, BLACK, KING, WHITE,
   actionKey, applyAction, attackersOf, createInitialPosition, getResult, isInCheck, kingSquare,
   legalActions, opponent,
 } from './rules.js';
@@ -10,7 +10,8 @@ import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, s
 import { applyActionMessage, makeActionMessage, outcomeSummary } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
-import { actionHighlights } from './board-ui.js';
+import { actionHighlights, createBoard, renderBoard, setBoardOrientation } from './board-ui.js';
+import { pieceElement, renderReserve } from './piece-ui.js';
 import { movedEnough } from './drag.js';
 import {
   botDifficulty, clockMode, difficultyDepth,
@@ -21,12 +22,11 @@ import {
 } from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=62';
+import { initI18n } from './i18n.js?v=63';
 
 initTheme();
 initI18n();
 
-const PIECE_FILES = { [KING]: 'K', [ROOK]: 'R', [BISHOP]: 'B', [KNIGHT]: 'N' };
 const board = document.querySelector('#board');
 const humanBank = document.querySelector('#human-bank');
 const opponentBank = document.querySelector('#opponent-bank');
@@ -89,6 +89,7 @@ const connectionStrip = document.querySelector('#connection-strip');
 const connectionLabel = document.querySelector('#connection-label');
 const connectionNote = document.querySelector('#connection-note');
 const resetButton = document.querySelector('#reset');
+const swapSideButton = document.querySelector('#swap-side');
 const rulesDialog = document.querySelector('#rules-dialog');
 const matchChat = document.querySelector('#match-chat');
 const chatLog = document.querySelector('#chat-log');
@@ -161,27 +162,11 @@ let suppressClick = false;
 // of it. The rows are real elements laying out four cells each, not
 // `display: contents` wrappers, which browsers have dropped from the
 // accessibility tree before.
-for (let rank = 0; rank < 4; rank += 1) {
-  const row = document.createElement('div');
-  row.className = 'board-row';
-  row.setAttribute('role', 'row');
-  for (let file = 0; file < 4; file += 1) {
-    const visual = rank * 4 + file;
-    const button = document.createElement('button');
-    button.className = 'square';
-    button.type = 'button';
-    button.id = `square-${visual}`;
-    button.tabIndex = -1;
-    button.setAttribute('role', 'gridcell');
-    button.dataset.visual = String(visual);
-    button.addEventListener('click', () => {
-      if (!suppressClick) onSquare(Number(button.dataset.square));
-    });
-    button.addEventListener('pointerdown', (event) => beginBoardDrag(event, button));
-    row.append(button);
-  }
-  board.append(row);
-}
+createBoard(board, {
+  idPrefix: 'square',
+  onSquare: (square) => { if (!suppressClick) onSquare(square); },
+  onPointerDown: (event, square, button) => beginBoardDrag(event, button),
+});
 
 // The board keeps a single tab stop; the cursor is tracked here rather than
 // by moving focus, because a square is disabled whenever it is not your turn.
@@ -198,6 +183,13 @@ mobileChatQuery.addEventListener('change', ({ matches }) => {
 });
 
 resetButton.addEventListener('click', startNewGame);
+swapSideButton.addEventListener('click', () => {
+  if (mode !== 'bot') return;
+  resetState('bot', opponent(humanColor));
+  opponentLabel = 'Bot';
+  showMatch();
+  requestBotMove();
+});
 deselectButton.addEventListener('click', () => {
   selection = null;
   render();
@@ -1289,6 +1281,7 @@ function render() {
   const result = getResult(position);
   const shown = displayedPosition();
   const last = actionHighlights(reviewPly === null ? lastAction : history[reviewPly - 1]?.action ?? null);
+  setBoardOrientation(board, humanColor);
   board.closest('.play-area').classList.toggle('is-reviewing', reviewPly !== null);
   // Undo and Resign are about a match; while one is being set up there is
   // nothing to undo or resign, so the rail follows the board on or off screen.
@@ -1296,26 +1289,17 @@ function render() {
   board.classList.toggle('keyboard-active', keyboardActive);
   if (keyboardActive) board.setAttribute('aria-activedescendant', `square-${cursor}`);
   else board.removeAttribute('aria-activedescendant');
-  board.querySelectorAll('.square').forEach((button, visual) => {
-    const square = humanColor === WHITE ? visual : 15 - visual;
-    const occupant = shown.board[square];
-    button.dataset.square = String(square);
-    button.dataset.name = squareName(square);
-    button.classList.toggle('is-cursor', keyboardActive && visual === cursor);
-    button.replaceChildren();
-    if (occupant) button.append(pieceElement(occupant.owner, occupant.piece));
-    button.classList.toggle('selected', selection?.type === 'board' && selection.square === square);
-    button.classList.toggle('target', targets.has(square));
-    button.classList.toggle('placement', placingKing && targets.has(square));
-    button.classList.toggle('capture', targets.has(square) && Boolean(occupant));
-    button.classList.toggle('in-check', occupant?.piece === KING && isInCheck(shown, occupant.owner));
-    button.classList.toggle('last-from', square === last.from);
-    button.classList.toggle('last-to', square === last.to);
-    button.classList.toggle('drag-source', pointerDrag?.active && pointerDrag.sourceSquare === square);
-    button.disabled = !canHumanAct();
-    button.setAttribute('aria-label', occupant
-      ? `${occupant.owner} ${occupant.piece}, square ${square + 1}` : `Empty square ${square + 1}`);
+  const checked = new Set(shown.board.flatMap((occupant, square) =>
+    occupant?.piece === KING && isInCheck(shown, occupant.owner) ? [square] : []));
+  renderBoard(board, shown, {
+    selected: selection?.type === 'board' ? selection.square : null, targets,
+    placements: placingKing ? targets : new Set(), last, checked,
+    cursor: keyboardActive ? squareAtCursor() : null,
+    dragging: pointerDrag?.active ? pointerDrag.sourceSquare : null, disabled: !canHumanAct(),
+    label: (square, occupant) => occupant
+      ? `${occupant.owner} ${occupant.piece}, square ${square + 1}` : `Empty square ${square + 1}`,
   });
+  for (const button of board.querySelectorAll('.square')) button.dataset.name = squareName(Number(button.dataset.square));
   animateLastAction(last, shown);
   renderBank(opponentBank, opponent(humanColor), false, shown);
   renderBank(humanBank, humanColor, true, shown);
@@ -1333,6 +1317,8 @@ function render() {
   renderClocks();
   renderConnection();
   updateCommunicationUi();
+  swapSideButton.hidden = mode !== 'bot';
+  swapSideButton.textContent = humanColor === WHITE ? 'Play Black' : 'Play White';
 }
 
 function renderTurnCard(result) {
@@ -1448,29 +1434,14 @@ function moveCell(entry, shownPly) {
  */
 function renderBank(container, owner, interactive, shown) {
   const held = shown.banks[owner];
-  container.replaceChildren(...BANK_PIECES.map((piece) => {
-    if (!held.includes(piece)) {
-      const slot = document.createElement('span');
-      slot.className = 'bank-slot';
-      slot.setAttribute('role', 'img');
-      slot.setAttribute('aria-label', `Empty ${piece} slot`);
-      return slot;
-    }
-    const button = document.createElement('button');
-    button.className = 'bank-piece';
-    button.type = 'button';
-    button.append(pieceElement(owner, piece));
-    button.setAttribute('aria-label', `${owner} ${piece} in reserve`);
-    button.classList.toggle('selected', interactive && selection?.type === 'bank' && selection.piece === piece);
-    button.classList.toggle('drag-source', pointerDrag?.active && pointerDrag.sourcePiece === piece);
-    button.disabled = !interactive || !canHumanAct() || position.phase !== 'play' ||
-      !legalActions(position).some((action) => action.type === 'drop' && action.piece === piece);
-    if (interactive) {
-      button.addEventListener('click', () => { if (!suppressClick) selectBank(piece); });
-      button.addEventListener('pointerdown', (event) => beginBankDrag(event, piece));
-    }
-    return button;
-  }));
+  renderReserve(container, held, owner, {
+    interactive,
+    selected: selection?.type === 'bank' ? selection.piece : null,
+    dragging: pointerDrag?.active ? pointerDrag.sourcePiece : null,
+    disabled: !interactive || !canHumanAct() || position.phase !== 'play',
+    isDisabled: (piece) => !legalActions(position).some((action) => action.type === 'drop' && action.piece === piece),
+    onSelect: (piece) => { if (!suppressClick) selectBank(piece); }, onPointerDown: beginBankDrag,
+  });
 }
 
 /**
@@ -1567,16 +1538,6 @@ function animateLastAction(last, shown) {
   if (!frame) return;
   returnCapturedPiece(last, frame);
   slideMovedPiece(last, shown, frame);
-}
-
-function pieceElement(owner, piece) {
-  const element = document.createElement('img');
-  element.className = `piece piece-${owner} piece-${piece}`;
-  element.src = `./assets/pieces/${owner === WHITE ? 'w' : 'b'}${PIECE_FILES[piece]}.svg`;
-  element.alt = '';
-  element.draggable = false;
-  element.setAttribute('aria-hidden', 'true');
-  return element;
 }
 
 /** Every playable state names both legal action types: move, or deploy. */

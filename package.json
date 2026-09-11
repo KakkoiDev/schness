@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
+    "test:e2e": "playwright test",
+    "test:e2e:desktop": "playwright test --project=desktop",
     "tournament": "node scripts/run-tournament.js",
     "tournament:aggregate": "node scripts/aggregate-tournament.js",
     "library:build": "node scripts/build-game-library.js",
@@ -13,5 +15,8 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
   }
 }
