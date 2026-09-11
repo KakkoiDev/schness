@@ -5,7 +5,7 @@ const GAME_ID = '00000000-0000-4000-8000-000000000001';
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('schness-tutorial-seen', '1');
-    localStorage.setItem('schness-language', 'en');
+    if (!localStorage.getItem('schness-language')) localStorage.setItem('schness-language', 'en');
   });
 });
 
