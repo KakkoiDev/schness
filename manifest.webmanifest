@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Schness",
   "short_name": "Schness",
-  "description": "Compact chess on a 4×4 board.",
+  "description": "A compact chess variant. English and Japanese supported.",
   "lang": "en",
   "dir": "ltr",
   "categories": ["games"],

@@ -8,6 +8,22 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-09-11 — One bilingual interface and one product mark
+
+**Language.** English and Japanese now share one browser-native interface rather than separate page
+copies that would drift apart. Japanese is selected from the device language on a first visit; an
+explicit EN/日本語 control persists the player’s choice. Static copy, live game status, accessibility
+labels, chat, tutorials, puzzles, the arena, and the game library all pass through the same translator.
+
+**Layout.** Japanese uses native system Gothic fonts, tighter heading tracking, strict Japanese line
+breaking, and guarded button wrapping. The language control is deliberately compact so adding it does
+not create a second mobile-header row.
+
+**Identity.** The earlier landing page omitted the monogram while inner pages sometimes hid it on
+phones, and the installed-app icon used unrelated knight artwork. Schness now uses one unrotated dark
+rounded-square S with a small coral point everywhere: header, favicon, iOS icon, and PWA icons. The
+maskable icon keeps the same mark inside Android’s safe area.
+
 ## 2026-09-11 — Research archives, first-run teaching, and focused puzzle practice
 
 **Research durability.** Actions artifacts are useful while investigating a run but are retained for

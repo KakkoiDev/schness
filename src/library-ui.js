@@ -3,8 +3,10 @@ import { recordAction } from './history.js';
 import { decodeAction, matchesFilters, profilePairs, resultLabel } from './library.js';
 import { pieceElement, renderReserve } from './piece-ui.js';
 import { initTheme } from './theme.js';
+import { initI18n } from './i18n.js';
 
 initTheme();
+initI18n();
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
 
 const $ = (selector) => document.querySelector(selector);

@@ -2,8 +2,10 @@ import { gameUrl, launchIntent } from './navigation.js';
 import { clockMode, setClockMode } from './settings.js';
 import { initTheme } from './theme.js';
 import { initTutorial } from './tutorial.js';
+import { initI18n } from './i18n.js';
 
 initTheme();
+initI18n();
 initTutorial();
 
 const arenaButton = document.querySelector('#bot-arena');

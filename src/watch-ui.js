@@ -7,9 +7,11 @@ import { buildEditedPosition, controllerSearch, putEditorPiece } from './arena.j
 import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve as renderPieceReserve } from './piece-ui.js';
 import { initTheme } from './theme.js';
+import { initI18n } from './i18n.js';
 import { resultLabel, sideName } from './watch.js';
 
 initTheme();
+initI18n();
 if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
 
 const $ = (selector) => document.querySelector(selector);
