@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node --test",
     "tournament": "node scripts/run-tournament.js",
-    "tournament:aggregate": "node scripts/aggregate-tournament.js"
+    "tournament:aggregate": "node scripts/aggregate-tournament.js",
+    "library:build": "node scripts/build-game-library.js"
   },
   "engines": {
     "node": ">=20"

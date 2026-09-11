@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' wss:; media-src 'self' blob: mediastream:; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111814" media="(prefers-color-scheme: dark)">
+  <title>Game library · Schness</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./assets/icon-180.png">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="library-page">
+  <main class="game">
+    <header>
+      <a class="brand" href="./" aria-label="Schness home"><span class="brand-mark" aria-hidden="true">S</span><h1>Schness</h1></a>
+      <button class="text-button theme-button" type="button" data-theme-toggle>Dark</button>
+    </header>
+    <div class="library-heading">
+      <div><p class="eyebrow">AI archive</p><h2>Game library</h2><p id="library-summary">Loading games…</p></div>
+      <a class="text-button" href="./">← Home</a>
+    </div>
+    <section class="library-stats" aria-label="Library statistics">
+      <div><strong id="stat-unique">—</strong><span>unique games</span></div>
+      <div><strong id="stat-records">—</strong><span>original records</span></div>
+      <div><strong id="stat-decisions">—</strong><span>decisive</span></div>
+      <div><strong id="stat-length">—</strong><span>average plies</span></div>
+    </section>
+    <form class="library-filters" aria-label="Filter games">
+      <label>White <select id="filter-white"><option value="">Any AI</option></select></label>
+      <label>Black <select id="filter-black"><option value="">Any AI</option></select></label>
+      <label>Result <select id="filter-result"><option value="">Any result</option><option value="w">White won</option><option value="b">Black won</option><option value="r">Threefold draw</option><option value="p">Ply-limit draw</option><option value="s">Stalemate</option></select></label>
+      <label>Sharp <select id="filter-version"><option value="">Any version</option><option value="Sharp v1">Sharp v1</option><option value="Sharp v2">Sharp v2</option></select></label>
+    </form>
+    <p id="filter-count" class="filter-count" aria-live="polite"></p>
+    <div id="game-list" class="game-library-list"></div>
+    <button id="load-more" class="library-more" type="button" hidden>Show more</button>
+  </main>
+
+  <dialog id="replay-dialog" class="replay-dialog" aria-labelledby="replay-title">
+    <div class="replay-head"><div><p class="eyebrow">Recorded game</p><h2 id="replay-title">Game</h2><p id="replay-meta"></p></div><button id="replay-close" class="dialog-close" type="button" aria-label="Close replay">✕</button></div>
+    <div class="replay-layout">
+      <div class="replay-stage">
+        <div id="replay-black" class="replay-player"></div>
+        <div id="replay-board" class="board" role="grid" aria-label="Recorded Schness position"></div>
+        <div id="replay-white" class="replay-player"></div>
+      </div>
+      <aside class="replay-panel">
+        <p id="replay-status" class="watch-status" aria-live="polite"></p>
+        <div class="watch-controls"><button id="replay-first" type="button">Start</button><button id="replay-previous" type="button">Previous</button><button id="replay-next" type="button">Next</button><button id="replay-auto" type="button" aria-pressed="false">Auto · 1s</button></div>
+        <div id="replay-moves" class="watch-moves" aria-label="Move transcript"></div>
+        <details><summary>Experiment provenance</summary><div id="replay-sources" class="replay-sources"></div></details>
+      </aside>
+    </div>
+  </dialog>
+  <script type="module" src="./src/library-ui.js"></script>
+</body>
+</html>
