@@ -2302,3 +2302,64 @@
   .game-page .header-actions { gap:.15rem }
   .game-page .header-actions .text-button { padding:.45rem .5rem;font-size:.72rem }
 }
+
+/* Mobile navigation is one deliberate row. Japanese labels must never become
+   vertical columns, and the header must not consume the first screen. */
+.brand,
+.header-actions,
+.header-actions .text-button {
+  white-space: nowrap;
+}
+
+.brand { min-width:0;flex:0 1 auto }
+.header-actions { flex:0 0 auto }
+
+@media(max-width:480px) {
+  .game { padding-inline:1rem }
+  header,
+  .game-page header,
+  .watch-page header,
+  .puzzle-page header,
+  .library-page header,
+  .lobby-page header {
+    gap:.5rem;
+    margin-bottom:1.25rem;
+  }
+  .brand { gap:.45rem }
+  .brand h1,
+  .game-page .brand h1 {
+    display:block;
+    overflow:hidden;
+    font-size:1.55rem;
+    line-height:1;
+    letter-spacing:-.055em;
+    text-overflow:ellipsis;
+  }
+  .brand-mark { width:2rem;border-radius:.5rem;font-size:1rem }
+  .header-actions .text-button {
+    min-width:44px;
+    min-height:44px;
+    padding:.4rem .45rem;
+    font-size:.75rem;
+    line-height:1;
+  }
+  .language-button { min-width:44px }
+  .lobby-page .lobby-intro { margin-bottom:1.5rem }
+  .lobby-page .lobby-intro h2 {
+    margin-bottom:.7rem;
+    font-size:clamp(2.15rem,11vw,2.8rem);
+    line-height:1;
+  }
+  .lobby-page .lobby-intro>p {
+    font-size:.94rem;
+    line-height:1.55;
+  }
+  .lobby-page .mode { padding:.9rem 1rem }
+  .lobby-page .mode strong { font-size:1rem }
+  .lobby-page .mode small { font-size:.78rem;line-height:1.45 }
+}
+
+@media(max-width:350px) {
+  .brand h1,
+  .game-page .brand h1 { display:none }
+}
