@@ -27,6 +27,7 @@ jobs:
   backfill:
     if: github.event_name != 'workflow_dispatch'
     strategy:
+      fail-fast: false
       matrix:
         include:
           - release_number: '1'
@@ -48,6 +49,7 @@ jobs:
       - name: Publish the permanent release
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           RELEASE_TAG: tournament-run-${{ matrix.release_number }}
           ASSET: schness-tournament-${{ matrix.release_number }}.zip
         run: |
@@ -74,6 +76,7 @@ jobs:
       - name: Publish the permanent release
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           RELEASE_TAG: tournament-run-${{ inputs.release_number }}
           ASSET: schness-tournament-${{ inputs.release_number }}.zip
         run: |
