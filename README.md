@@ -61,6 +61,12 @@ starting kings. Rebuild it from downloaded artifacts with:
 npm run library:build -- --input 1:1:path/to/run1/games.jsonl --input 2:2:path/to/run2/games.jsonl
 ```
 
+The **[checkmate-puzzle workflow](../../actions/workflows/puzzles.yml)** reconstructs every distinct
+position in that corpus, walking each game from its final playable position back to the opening. A
+64-shard exact solver proves the shortest forced mate in one through four moves against every legal
+defense. Its final artifact contains the deduplicated puzzle collection and source game/ply metadata;
+phones never perform this exhaustive search.
+
 ## Development
 
 Schness uses browser-native JavaScript modules and has no build step. The rules and bot are independent

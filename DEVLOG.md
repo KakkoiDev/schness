@@ -8,6 +8,22 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-09-11 — Exact puzzle extraction belongs in Actions
+
+**Question.** Can Sharp identify mate-in-one through mate-in-four positions by walking all recorded
+games backward without turning a phone into a compute worker?
+
+**Decision.** Use a dedicated exact mate solver rather than the heuristic evaluation used to choose
+ordinary Sharp moves. “Mate in N” counts N moves by the attacking side and must survive every legal
+defense, so mate in four searches up to seven plies. Sixty-four Actions shards scan distinct
+board/reserve/side-to-move states; the browser will consume only the verified compact result.
+
+**Repetition.** Each puzzle starts with a fresh repetition history. This matches chess-composition
+practice and avoids making the answer depend on invisible moves before the displayed position.
+
+**Provenance.** Duplicate positions become one puzzle but retain every source game and ply. Multiple
+winning first moves are preserved, each with a mechanically verified representative continuation.
+
 ## 2026-09-11 — One bot arena instead of separate modes
 
 **Question.** How can challenging a bot, watching two bots, taking over mid-game, and starting from

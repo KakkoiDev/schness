@@ -1,0 +1,56 @@
+name: Build checkmate puzzles
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - data/games.json
+      - src/puzzle.js
+      - scripts/extract-puzzle-shard.js
+      - scripts/aggregate-puzzles.js
+      - .github/workflows/puzzles.yml
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/extract-puzzle-shard.js --shard ${{ matrix.shard }} --shards 64 --output puzzle-shards
+      - uses: actions/upload-artifact@v4
+        with:
+          name: puzzle-shard-${{ matrix.shard }}
+          path: puzzle-shards/
+          retention-days: 7
+
+  aggregate:
+    needs: extract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: puzzle-shard-*
+          path: puzzle-shards
+          merge-multiple: true
+      - run: node scripts/aggregate-puzzles.js puzzle-shards puzzle-results
+      - uses: actions/upload-artifact@v4
+        with:
+          name: schness-checkmate-puzzles
+          path: puzzle-results/
+          retention-days: 30

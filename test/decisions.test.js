@@ -46,9 +46,9 @@ test('agents are told to keep the record current', async () => {
  * next agent reaching for something faster on the network path would find
  * exactly these, and nothing would object.
  */
-test('only the bot may use the engine entry points that skip validation', async () => {
+test('only trusted search modules may use engine entry points that skip validation', async () => {
   const files = (await readdir(resolve(root, 'src'))).filter((file) => file.endsWith('.js'));
-  const allowed = new Set(['rules.js', 'bot.js']);
+  const allowed = new Set(['rules.js', 'bot.js', 'puzzle.js']);
   for (const file of files) {
     if (allowed.has(file)) continue;
     const source = await read(`src/${file}`);
