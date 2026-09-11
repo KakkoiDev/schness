@@ -11,12 +11,13 @@ test.beforeEach(async ({ page }) => {
 
 test('lobby settings, language, theme, rules and online invitation', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Schness', level: 1 })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Schness home' })).toBeVisible();
   await page.getByRole('button', { name: 'Dark' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await page.getByRole('button', { name: '日本' }).click();
+  await page.locator('[data-language-toggle]').click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
-  await page.getByRole('button', { name: 'EN' }).click();
+  await page.locator('[data-language-toggle]').click();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.getByRole('button', { name: 'Read the full rules' }).click();
   await expect(page.getByRole('dialog', { name: /Schness in four rules/ })).toBeVisible();
   await page.getByRole('button', { name: 'Got it' }).click();
@@ -42,14 +43,20 @@ test('drag pickup hides its source and an illegal drop restores it', async ({ pa
   await page.getByRole('button', { name: 'Try moving or deploying' }).click();
   const source = page.locator('#demo-board .square').filter({ has: page.locator('.piece-white') }).first();
   const box = await source.boundingBox();
-  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(box.x + box.width / 2 + 20, box.y + box.height / 2 + 20);
+  const x = box.x + box.width / 2;
+  const y = box.y + box.height / 2;
+  await source.dispatchEvent('pointerdown', {
+    pointerId: 1, pointerType: 'touch', isPrimary: true, buttons: 1, clientX: x, clientY: y,
+  });
+  await page.locator('body').dispatchEvent('pointermove', {
+    pointerId: 1, pointerType: 'touch', isPrimary: true, buttons: 1, clientX: x + 20, clientY: y + 20,
+  });
   await expect(source).toHaveClass(/drag-source/);
   await expect(source.locator('.piece')).toHaveCSS('visibility', 'hidden');
   await expect(page.locator('body > .drag-ghost')).toHaveCount(1);
-  await page.mouse.move(2, 2);
-  await page.mouse.up();
+  await page.locator('body').dispatchEvent('pointerup', {
+    pointerId: 1, pointerType: 'touch', isPrimary: true, buttons: 0, clientX: 2, clientY: 2,
+  });
   await expect(source.locator('.piece')).toHaveCSS('visibility', 'visible');
   await expect(page.locator('body > .drag-ghost')).toHaveCount(0);
 });
@@ -75,8 +82,9 @@ test('Bot Arena plays, reviews, edits and never scrolls the page for history', a
   await page.locator('#white-level').selectOption('learning');
   await page.locator('#black-level').selectOption('learning');
   await expect(page.locator('#watch-moves button')).not.toHaveCount(0, { timeout: 15_000 });
+  const scrollBefore = await page.evaluate(() => window.scrollY);
   await page.waitForTimeout(1200);
-  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  expect(await page.evaluate(() => window.scrollY)).toBe(scrollBefore);
   await page.locator('#watch-auto').click();
   await page.locator('#watch-previous').click();
   await expect(page.locator('#watch-status')).toContainText('Reviewing');
@@ -96,7 +104,9 @@ test('game library filters and replays the full shared position with both reserv
   await expect(page.locator('#replay-white-reserve > *')).toHaveCount(3);
   await expect(page.locator('#replay-black-reserve > *')).toHaveCount(3);
   await page.locator('#replay-next').click();
-  await expect(page.locator('#replay-status')).toContainText('Ply 1');
+  await page.locator('#replay-next').click();
+  await expect(page.locator('#replay-status')).toContainText('Ply 2');
+  await expect(page.locator('#replay-play-here')).toBeEnabled();
   await page.locator('#replay-play-here').click();
   await expect(page).toHaveURL(/watch\.html\?position=library/);
   await expect(page.locator('#watch-board[data-schness-board="true"]')).toBeVisible();

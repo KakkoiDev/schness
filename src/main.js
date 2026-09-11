@@ -618,8 +618,6 @@ function toggleChat() {
     stopCamera();
   }
   updateCommunicationUi();
-  swapSideButton.hidden = mode !== 'bot';
-  swapSideButton.textContent = humanColor === WHITE ? 'Play Black' : 'Play White';
 }
 
 function appendChatMessage(text, author) {
@@ -1319,6 +1317,8 @@ function render() {
   renderClocks();
   renderConnection();
   updateCommunicationUi();
+  swapSideButton.hidden = mode !== 'bot';
+  swapSideButton.textContent = humanColor === WHITE ? 'Play Black' : 'Play White';
 }
 
 function renderTurnCard(result) {
