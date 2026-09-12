@@ -18,8 +18,8 @@ test('advantage is White-positive and does not change its input position', () =>
   assert.deepEqual(mateInOne, before);
 });
 
-test('analysis is opt-in on bot game and library replay, not P2P', async () => {
-  const files = await Promise.all(['game.html', 'library.html', 'src/main.js', 'src/library-ui.js', 'src/analysis-ui.js', 'sw.js'].map((name) => readFile(new URL(`../${name}`, import.meta.url), 'utf8')));
+test('analysis is opt-in on bot game and arena and library replay, not P2P', async () => {
+  const files = await Promise.all(['game.html', 'library.html', 'src/main.js', 'src/library-ui.js', 'src/analysis-ui.js', 'sw.js', 'watch.html', 'src/watch-ui.js'].map((name) => readFile(new URL(`../${name}`, import.meta.url), 'utf8')));
   assert.match(files[0], /id="training-mate" type="checkbox"/);
   assert.match(files[0], /id="training-advantage" type="checkbox"/);
   assert.match(files[1], /id="replay-advantage" type="checkbox"/);
@@ -27,5 +27,20 @@ test('analysis is opt-in on bot game and library replay, not P2P', async () => {
   assert.match(files[4], /worker\?\.terminate\(\)/);
   assert.match(files[4], /Mate search incomplete/);
   assert.match(files[5], /analysis-worker\.js/);
+  assert.match(files[6], /id="watch-training-mate" type="checkbox"/);
+  assert.match(files[6], /id="watch-training-advantage" type="checkbox"/);
+  assert.match(files[7], /trainingAnalysis\.refresh\(\)/);
   assert.ok(createInitialPosition());
+});
+
+test('online clock is chosen before creating a link; tutorial can be opened in-page', async () => {
+  const [home, lobby, tutorial, main] = await Promise.all(['index.html', 'src/lobby.js', 'src/tutorial.js', 'src/main.js'].map((name) => readFile(new URL(`../${name}`, import.meta.url), 'utf8')));
+  assert.match(home, /<dialog id="online-setup"/);
+  assert.match(home, /id="online-setup-form"/);
+  assert.doesNotMatch(home, /id="replay-tutorial"/);
+  assert.match(home, /id="rules-demo"/);
+  assert.match(lobby, /onlineSetup\.showModal\(\)/);
+  assert.match(lobby, /setClockMode\(new FormData\(event\.currentTarget\)/);
+  assert.match(tutorial, /\.rule-demo-trigger/);
+  assert.match(main, /createClock\(nextMode === 'online' \? clockMode\(\) : 'untimed'\)/);
 });

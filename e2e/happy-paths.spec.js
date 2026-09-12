@@ -22,9 +22,28 @@ test('lobby settings, language, theme, rules and online invitation', async ({ pa
   await expect(page.getByRole('dialog', { name: /Schness in four rules/ })).toBeVisible();
   await page.getByRole('button', { name: 'Got it' }).click();
   await page.getByRole('button', { name: /Create an online game/ }).click();
+  await expect(page.getByRole('dialog', { name: 'Choose a time control' })).toBeVisible();
+  await page.locator('#online-setup label:has(input[value="3+2"])').click();
+  await expect(page.locator('#online-setup input[value="3+2"]')).toBeChecked();
+  await page.getByRole('button', { name: 'Create invitation link' }).click();
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('schness-clock'))).toBe('3+2');
   await expect(page).toHaveURL(/game\.html\?game=[0-9a-f-]{36}&mode=online/);
   await expect(page.getByRole('heading', { name: 'Send this link' })).toBeVisible();
   await expect(page.getByLabel('Match link')).toHaveValue(/mode=online/);
+});
+
+test('the homepage opens the arena with visible training controls', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#replay-tutorial')).toHaveCount(0);
+  await page.getByRole('button', { name: /Bot arena/ }).click();
+  await expect(page).toHaveURL(/watch\.html/);
+  await expect(page.locator('#watch-training-mate')).toBeVisible();
+  await expect(page.locator('#watch-training-advantage')).toBeVisible();
+  await page.locator('#watch-training-mate').check();
+  await page.locator('#watch-training-advantage').check();
+  await expect(page.locator('#watch-analysis-bar')).toBeHidden();
+  await page.locator('#watch-board .square.placement').first().click();
+  await expect(page.locator('#watch-analysis-bar')).toBeVisible({ timeout: 20_000 });
 });
 
 test('interactive tutorial uses the shared board and answers a king placement', async ({ page }) => {

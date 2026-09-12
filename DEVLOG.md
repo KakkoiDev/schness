@@ -310,3 +310,12 @@ Sharp preferred line as proof; the bar uses a depth-three bot heuristic because 
 proof is inappropriate as a continuous advantage estimate. Both features default off, exclude
 online human matches, and compute in a disposable worker. An unfinished five-second mate search
 reports inconclusive, not "no mate". This keeps the UI responsive and avoids misleading players.
+# 2026-09-12 — Training entry point and clock setup
+
+Follow-up to the initial training implementation: the homepage's primary bot action opens Bot Arena,
+but training controls existed only on a legacy bot match page, so users could not find them. Exposed
+both opt-in controls next to the Arena board, with the same cancellable worker; preserve the game
+library replay toggle. Moved the online time-control selector from a homepage disclosure to a
+pre-invitation dialog and made bot games untimed regardless of a previously selected online clock.
+Removed the duplicate "Replay interactive tutorial" setting because the homepage's three playable
+rule demonstrations are already reachable there. Added arena and invitation browser-path tests.

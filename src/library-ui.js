@@ -4,7 +4,7 @@ import { decodeAction, matchesFilters, profilePairs, resultLabel } from './libra
 import { renderReserve } from './piece-ui.js';
 import { createBoard, renderBoard } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=69';
+import { initI18n } from './i18n.js?v=70';
 import { attachAnalysis } from './analysis-ui.js';
 
 initTheme();

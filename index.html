@@ -26,7 +26,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
-  <link rel="stylesheet" href="./styles.css?v=68">
+  <link rel="stylesheet" href="./styles.css?v=70">
 </head>
 <body class="lobby-page">
   <main class="game">
@@ -50,25 +50,24 @@
         <button id="browse-games" class="mode" type="button"><strong>Browse recorded games</strong><small>Study 1,099 unique AI games</small></button>
         <button id="solve-puzzles" class="mode" type="button"><strong>Checkmate puzzles</strong><small>Mate in one, two, three, or four</small></button>
       </div>
-      <details class="setup">
-        <summary>
-          <span>Settings</span>
-          <span id="setup-summary" class="setup-current">Untimed</span>
-        </summary>
-        <div class="setup-body">
-          <fieldset class="clock-choice">
-            <legend>Clock</legend>
-            <div class="segmented">
-              <label><input type="radio" name="clock" value="untimed" checked><span>Untimed</span></label>
-              <label><input type="radio" name="clock" value="3+2"><span>3+2</span></label>
-              <label><input type="radio" name="clock" value="5+0"><span>5+0</span></label>
-              <label><input type="radio" name="clock" value="10+0"><span>10+0</span></label>
-            </div>
-          </fieldset>
-          <button id="replay-tutorial" class="setup-action" type="button">Replay interactive tutorial</button>
-        </div>
-      </details>
     </section>
+
+    <dialog id="online-setup" class="online-setup" aria-labelledby="online-setup-title">
+      <form id="online-setup-form">
+        <div class="replay-head"><div><p class="eyebrow">Online match</p><h2 id="online-setup-title">Choose a time control</h2></div><button id="online-setup-close" class="dialog-close" type="button" aria-label="Close online setup">✕</button></div>
+        <fieldset class="clock-choice">
+          <legend>Time per player</legend>
+          <div class="segmented">
+            <label><input type="radio" name="clock" value="untimed" checked><span>Untimed</span></label>
+            <label><input type="radio" name="clock" value="3+2"><span>3+2</span></label>
+            <label><input type="radio" name="clock" value="5+0"><span>5+0</span></label>
+            <label><input type="radio" name="clock" value="10+0"><span>10+0</span></label>
+          </div>
+        </fieldset>
+        <p class="online-setup-note">Choose untimed or a clock before creating the invitation link.</p>
+        <button class="card-primary online-setup-submit" type="submit">Create invitation link</button>
+      </form>
+    </dialog>
 
     <section class="rules-strip" aria-label="What makes Schness different">
       <article>
@@ -151,6 +150,6 @@
       <form method="dialog"><button class="rules-confirm" type="submit">Got it</button></form>
     </div>
   </dialog>
-  <script type="module" src="./src/lobby.js?v=68"></script>
+  <script type="module" src="./src/lobby.js?v=70"></script>
 </body>
 </html>

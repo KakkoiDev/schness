@@ -32,8 +32,8 @@ reserve. AI searches stay in a Web Worker.
 Sharp v2 uses depth-four alpha-beta and avoids an already repeated resulting position when another
 move has the same minimax score. It still accepts a repetition when that is better than losing.
 
-Bot matches offer optional **Training** checkboxes for forced-mate hints (one to four attacking
-moves) and a vertical White-versus-Black advantage bar. Recorded games have a separate optional
+The **Bot Arena** offers optional **Training tools** checkboxes for forced-mate hints (one to four attacking
+moves) and a vertical White-versus-Black advantage bar. Bot-only matches also expose these tools; recorded games have a separate optional
 advantage bar while replaying. Search runs in a disposable Web Worker; a slow mate proof is labeled
 incomplete rather than falsely reporting no mate. The advantage is a depth-three Schness heuristic,
 not chess centipawns or a proven result; these aids never run in human-versus-human games.
@@ -143,7 +143,7 @@ Current implementation:
 - Full visual reserve trays on live, puzzle, tutorial, and recorded-game boards
 - One shared board/reserve renderer across matches, Bot Arena, editor, tutorial, puzzles, and library replay
 - Desktop and mobile browser E2E tests for all shipped happy paths
-- First-visit interactive tutorial, with a replay control in Settings
+- First-visit interactive tutorial, with playable rule demos directly on the homepage
 - Permanent GitHub Release archives for tournament and puzzle research bundles
 
 ## Roadmap
