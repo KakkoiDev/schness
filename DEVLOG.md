@@ -26,6 +26,11 @@ board. The checked square now takes on one solid muted terracotta color per them
 brick edge and label. The CHECK headline remains the primary warning; the square no longer looks
 like an unrelated neon alert or obscures a white or black king.
 
+**Specificity correction.** The checkerboard rule for dark squares had a stronger selector than
+the check-color rule, so the status could announce check while the king's dark square stayed green.
+The live board now applies check color with board-specific precedence. Browser coverage asserts the
+actual rendered background on both square colors in both themes.
+
 ## 2026-09-11 — One bilingual interface and one product mark
 
 **Language.** English and Japanese now share one browser-native interface rather than separate page

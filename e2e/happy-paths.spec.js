@@ -95,16 +95,22 @@ test('checked king has a visible labeled warning on the real game board', async 
   await expect(square).toHaveAttribute('aria-label', /white king.*in check/);
   expect(await square.evaluate((element) => getComputedStyle(element, '::before').content)).toBe('"CHECK"');
   expect(await square.evaluate((element) => getComputedStyle(element).boxShadow)).not.toBe('none');
+  // The checkerboard rule has higher specificity on dark squares. Check both
+  // colors: the original test only sampled a light square and missed the bug.
+  const darkSquare = page.locator('#board .square[data-square="14"]');
+  await darkSquare.evaluate((element) => element.classList.add('in-check'));
   for (const [theme, expected] of [['light', 'rgb(213, 169, 161)'], ['dark', 'rgb(167, 122, 118)']]) {
     await page.locator('html').evaluate((element, value) => { element.dataset.theme = value; }, theme);
-    const colors = await square.evaluate((element) => ({
-      square: getComputedStyle(element).backgroundColor,
-      palette: getComputedStyle(element).getPropertyValue('--check-square').trim(),
-      image: getComputedStyle(element).backgroundImage,
-    }));
-    expect(colors.palette).toBeTruthy();
-    expect(colors.square).toBe(expected);
-    expect(colors.image).toBe('none');
+    for (const checkedSquare of [square, darkSquare]) {
+      const colors = await checkedSquare.evaluate((element) => ({
+        square: getComputedStyle(element).backgroundColor,
+        palette: getComputedStyle(element).getPropertyValue('--check-square').trim(),
+        image: getComputedStyle(element).backgroundImage,
+      }));
+      expect(colors.palette).toBeTruthy();
+      expect(colors.square).toBe(expected);
+      expect(colors.image).toBe('none');
+    }
   }
 });
 
