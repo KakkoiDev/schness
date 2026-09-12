@@ -114,6 +114,25 @@ test('checked king has a visible labeled warning on the real game board', async 
   }
 });
 
+test('a real checked position highlights its king in Bot Arena, not just the status', async ({ page }) => {
+  await page.addInitScript(() => {
+    const board = Array(16).fill(null);
+    board[0] = { owner: 'black', piece: 'king' };
+    board[10] = { owner: 'black', piece: 'rook' };
+    board[14] = { owner: 'white', piece: 'king' };
+    sessionStorage.setItem('schness-arena-position', JSON.stringify({ board, turn: 'white' }));
+  });
+  await page.goto('/watch.html?position=library');
+  await expect(page.locator('#watch-status')).toContainText('CHECK');
+  const king = page.locator('#watch-board .square[data-square="14"]');
+  await expect(king).toHaveClass(/in-check/);
+  await expect(king).toHaveAttribute('aria-label', /white king/);
+  for (const [theme, expected] of [['light', 'rgb(213, 169, 161)'], ['dark', 'rgb(167, 122, 118)']]) {
+    await page.locator('html').evaluate((element, value) => { element.dataset.theme = value; }, theme);
+    expect(await king.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(expected);
+  }
+});
+
 test('Bot Arena plays, reviews, edits and never scrolls the page for history', async ({ page }) => {
   await page.goto('/watch.html');
   const board = page.locator('#watch-board[data-schness-board="true"]');

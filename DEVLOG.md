@@ -31,6 +31,12 @@ the check-color rule, so the status could announce check while the king's dark s
 The live board now applies check color with board-specific precedence. Browser coverage asserts the
 actual rendered background on both square colors in both themes.
 
+**Shared-board correction.** Further testing exposed a second gap: only the live match supplied a
+checked-square set to the shared renderer. Arena, puzzles, and library replay silently used the
+default empty set, so their king square stayed ordinary even for a real checked position. Check
+markers now derive from each displayed position by default, and the same palette applies on every
+board. A browser test opens a genuine checked position in Arena and checks its DOM and rendered color.
+
 ## 2026-09-11 — One bilingual interface and one product mark
 
 **Language.** English and Japanese now share one browser-native interface rather than separate page

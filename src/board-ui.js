@@ -1,4 +1,5 @@
 import { pieceElement } from './piece-ui.js';
+import { isInCheck, KING } from './rules.js';
 
 const SIZE = 4;
 
@@ -50,7 +51,7 @@ export function setBoardOrientation(element, orientation = 'white') {
 
 export function renderBoard(element, position, {
   selected = null, targets = new Set(), placements = new Set(), last = null,
-  dragging = null, disabled = false, checked = new Set(), cursor = null,
+  dragging = null, disabled = false, checked = checkedSquares(position), cursor = null,
   label = defaultLabel,
 } = {}) {
   for (const cell of element.querySelectorAll('.square')) {
@@ -69,6 +70,12 @@ export function renderBoard(element, position, {
     if ('disabled' in cell) cell.disabled = Boolean(disabled);
     cell.setAttribute('aria-label', label(square, occupant));
   }
+}
+
+/** The warning follows the position on every board, including replays and puzzles. */
+export function checkedSquares(position) {
+  return new Set(position.board.flatMap((occupant, square) =>
+    occupant?.piece === KING && isInCheck(position, occupant.owner) ? [square] : []));
 }
 
 export function orientedSquares(orientation = 'white') {

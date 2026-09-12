@@ -1,5 +1,5 @@
 import {
-  BANK_PIECES, BLACK, KING, WHITE, applyAction, createInitialPosition, getResult,
+  BANK_PIECES, BLACK, KING, WHITE, applyAction, createInitialPosition, getResult, isInCheck,
 } from './rules.js';
 import { recordAction } from './history.js';
 import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
@@ -8,7 +8,7 @@ import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve as renderPieceReserve } from './piece-ui.js';
 import { createBoard, renderBoard } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=64';
+import { initI18n } from './i18n.js?v=67';
 import { resultLabel, sideName } from './watch.js';
 
 initTheme();
@@ -228,6 +228,7 @@ function render() {
   else if (thinking) status.textContent = `${sideName(position.turn)} ${controller(position.turn)} is thinking…`;
   else if (aisPaused && controller(position.turn) !== 'human') status.textContent = `Paused before ${sideName(position.turn)} moves`;
   else if (position.phase !== 'play') status.textContent = `${sideName(position.turn)}: place your king on the home row`;
+  else if (controller(position.turn) === 'human' && isInCheck(position, position.turn)) status.textContent = 'CHECK — defend your king';
   else status.textContent = `${sideName(position.turn)} to move · ${controller(position.turn) === 'human' ? 'Your seat' : controller(position.turn)}`;
   renderControls();
 }
