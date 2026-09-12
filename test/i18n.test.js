@@ -66,7 +66,7 @@ test('phone navigation uses compact text controls without decorative icons', asy
   assert.doesNotMatch(css, /header \.rules-button::before\s*\{\s*content/);
   for (const file of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const page = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
-    assert.match(page, /href="\.\/styles\.css\?v=64"/, file);
+    assert.match(page, /href="\.\/styles\.css\?v=65"/, file);
   }
 });
 
