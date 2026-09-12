@@ -75,6 +75,28 @@ test('bot game supports White and Black with the same board and reserves', async
   await expect(board.locator('.square.placement')).toHaveCount(4);
 });
 
+test('checked king has a visible labeled warning on the real game board', async ({ page }) => {
+  await page.goto(`/game.html?game=${GAME_ID}&mode=bot`);
+  const square = page.locator('#board .square[data-square="15"]');
+  await page.evaluate(async () => {
+    const { renderBoard } = await import('./src/board-ui.js');
+    const { createPosition } = await import('./src/rules.js');
+    const board = Array(16).fill(null);
+    board[0] = { owner: 'black', piece: 'king' };
+    board[11] = { owner: 'black', piece: 'rook' };
+    board[15] = { owner: 'white', piece: 'king' };
+    renderBoard(document.querySelector('#board'), createPosition({
+      board, banks: { white: ['rook', 'bishop', 'knight'], black: ['bishop', 'knight'] }, turn: 'white',
+    }), { checked: new Set([15]), label: (index, occupant) => occupant
+      ? `${occupant.owner} ${occupant.piece}, square ${index + 1}${index === 15 ? ', in check' : ''}`
+      : `Empty square ${index + 1}` });
+  });
+  await expect(square).toHaveClass(/in-check/);
+  await expect(square).toHaveAttribute('aria-label', /white king.*in check/);
+  expect(await square.evaluate((element) => getComputedStyle(element, '::before').content)).toBe('"CHECK"');
+  expect(await square.evaluate((element) => getComputedStyle(element).boxShadow)).not.toBe('none');
+});
+
 test('Bot Arena plays, reviews, edits and never scrolls the page for history', async ({ page }) => {
   await page.goto('/watch.html');
   const board = page.locator('#watch-board[data-schness-board="true"]');

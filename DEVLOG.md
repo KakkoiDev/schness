@@ -8,6 +8,19 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-09-12 — Check needs both words and a board marker
+
+**Problem.** The live match already identified check, but the turn headline still read “Your turn”
+and the checked square used a subdued wash. It was easy to overlook, especially on a phone.
+
+**Decision.** Name CHECK explicitly in the turn headline, tint the turn card, and outline and label
+the checked king square. The message also explains that moving, capturing, or a legal reserve drop
+can resolve check. The warning is rendered only for a live, unfinished checked turn; the board
+marker remains visible when reviewing the checked position. Sound stays opt-in.
+
+**Evidence.** Unit coverage locks the headline, card state, accessibility label, and Japanese copy;
+desktop/mobile browser checks exercise the board marker. No chess-rule or legal-action logic changed.
+
 ## 2026-09-11 — One bilingual interface and one product mark
 
 **Language.** English and Japanese now share one browser-native interface rather than separate page

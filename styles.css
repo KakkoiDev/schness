@@ -39,6 +39,31 @@
 .game-page .square.placement{box-shadow:none}
 .game-page .square.placement::after{width:14%;background:rgb(255 255 255/.68)}
 .game-page .square.in-check{background-image:linear-gradient(rgb(190 48 48/.34),rgb(190 48 48/.34))}
+.game-page .square.in-check {
+  background-image: linear-gradient(rgb(190 48 48/.22), rgb(190 48 48/.22));
+  box-shadow: inset 0 0 0 3px #ad342a;
+  z-index: 2;
+}
+.game-page .square.in-check::before {
+  content: "CHECK";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 2;
+  padding: 2px 4px;
+  border-radius: 3px;
+  background: #9e291e;
+  color: #fff;
+  font: 800 clamp(8px, 1.5vw, 10px)/1.1 ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: .03em;
+  pointer-events: none;
+}
+.game-page .turn-card.is-check {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 10%, var(--surface));
+}
+.game-page .turn-card.is-check .turn-headline { color: var(--danger); }
+.game-page .turn-card.is-check .turn-dot { background: var(--danger); }
 .game-page .square.target:not(:disabled):hover{box-shadow:inset 0 0 0 1px rgb(255 255 255/.32)}
 
 .board,.bank-piece{touch-action:none}
