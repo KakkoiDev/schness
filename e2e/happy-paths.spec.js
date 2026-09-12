@@ -23,7 +23,8 @@ test('lobby settings, language, theme, rules and online invitation', async ({ pa
   await page.getByRole('button', { name: 'Got it' }).click();
   await page.getByRole('button', { name: /Create an online game/ }).click();
   await expect(page.getByRole('dialog', { name: 'Choose a time control' })).toBeVisible();
-  await page.locator('#online-setup input[value="3+2"]').check();
+  await page.locator('#online-setup label:has(input[value="3+2"])').click();
+  await expect(page.locator('#online-setup input[value="3+2"]')).toBeChecked();
   await page.getByRole('button', { name: 'Create invitation link' }).click();
   await expect.poll(() => page.evaluate(() => localStorage.getItem('schness-clock'))).toBe('3+2');
   await expect(page).toHaveURL(/game\.html\?game=[0-9a-f-]{36}&mode=online/);
