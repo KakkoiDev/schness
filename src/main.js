@@ -10,8 +10,7 @@ import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, s
 import { applyActionMessage, makeActionMessage, outcomeSummary } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
-import { actionHighlights, checkedSquares, createBoard, renderBoard, setBoardOrientation } from './board-ui.js';
-import { pieceElement, renderReserve } from './piece-ui.js';
+import { actionHighlights, checkedSquares, createBoard, pieceElement, renderBoard, renderReserve, setBoardOrientation } from './board-ui.js';
 import { movedEnough } from './drag.js';
 import {
   botDifficulty, clockMode, difficultyDepth,

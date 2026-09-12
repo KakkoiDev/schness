@@ -5,8 +5,7 @@ import { decodeAction } from './library.js';
 import { decodePuzzlePosition } from './puzzle.js';
 import { normalizePuzzleLevels, puzzlePool } from './puzzle-settings.js';
 import { movedEnough } from './drag.js';
-import { pieceElement, renderReserve } from './piece-ui.js';
-import { createBoard, renderBoard } from './board-ui.js';
+import { createBoard, pieceElement, renderBoard, renderReserve } from './board-ui.js';
 import { initTheme } from './theme.js';
 import { initI18n } from './i18n.js?v=68';
 
