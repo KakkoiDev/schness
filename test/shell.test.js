@@ -24,10 +24,11 @@ test('a checked king has an unmistakable turn warning and board marker', async (
   assert.match(game, /id="turn-card"[^>]+aria-live="polite"/);
   assert.match(controller, /if \(isInCheck\(position, humanColor\)\) \{\s*return \{ title: 'CHECK — defend your king', detail: playDetail\(\), waiting: false, check: true \}/);
   assert.match(controller, /turnCard\.classList\.toggle\('is-check', Boolean\(check\)\)/);
-  assert.match(controller, /checked\.has\(square\) \? ', in check' : ''/);
+  assert.match(controller, /warning \? `, in \$\{warning\}` : ''/);
   assert.match(css, /\.board \.board-row \.square\.in-check::before \{[^}]*content: "CHECK"/);
   assert.match(css, /\.board \.board-row \.square\.in-check \{[^}]*background-color: var\(--check-square\);[^}]*background-image: none/);
-  assert.match(css, /:root\[data-theme="dark"\] \.board \{ --check-square: #[0-9a-f]+; --check-edge: #[0-9a-f]+; \}/);
+  assert.match(css, /:root\[data-theme="dark"\] \.board \{ --check-square: #[0-9a-f]+; --mate-square: #[0-9a-f]+; --check-edge: #[0-9a-f]+; \}/);
+  assert.match(css, /\.board \.board-row \.square\.in-checkmate::before \{[^}]*content: "CHECKMATE"/);
   assert.match(css, /\.game-page \.turn-card\.is-check \{[^}]*border-color: var\(--danger\)/);
   assert.match(translations, /'CHECK — defend your king': '王手！キングを守ってください'/);
 });

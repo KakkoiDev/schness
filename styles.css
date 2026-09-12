@@ -38,8 +38,8 @@
 .game-page .square.capture::after{inset:3px;width:auto;height:auto;border:2px solid rgb(255 255 255/.34);border-radius:1px;background:transparent}
 .game-page .square.placement{box-shadow:none}
 .game-page .square.placement::after{width:14%;background:rgb(255 255 255/.68)}
-.board { --check-square: #d5a9a1; --check-edge: #74423f; }
-:root[data-theme="dark"] .board { --check-square: #a77a76; --check-edge: #633b3a; }
+.board { --check-square: #d5a9a1; --mate-square: #c8958c; --check-edge: #74423f; }
+:root[data-theme="dark"] .board { --check-square: #a77a76; --mate-square: #94605e; --check-edge: #633b3a; }
 .board .board-row .square.in-check {
   background-color: var(--check-square);
   background-image: none;
@@ -59,6 +59,11 @@
   font: 800 clamp(8px, 1.5vw, 10px)/1.1 ui-sans-serif, system-ui, sans-serif;
   letter-spacing: .03em;
   pointer-events: none;
+}
+.board .board-row .square.in-checkmate { background-color: var(--mate-square); }
+.board .board-row .square.in-checkmate::before {
+  content: "CHECKMATE";
+  font-size: clamp(7px, 1.2vw, 9px);
 }
 .game-page .turn-card.is-check {
   border-color: var(--danger);

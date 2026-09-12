@@ -37,6 +37,12 @@ default empty set, so their king square stayed ordinary even for a real checked 
 markers now derive from each displayed position by default, and the same palette applies on every
 board. A browser test opens a genuine checked position in Arena and checks its DOM and rendered color.
 
+**Terminal state.** A checkmated king previously retained the CHECK badge from the last move,
+even while the match result said Checkmate. The shared renderer now uses the engine result to show
+CHECKMATE on the king square, with accessible copy and a deeper terracotta shade. A legal defensive
+drop keeps the badge at CHECK, verified against the exact rules; an archived mating position is
+replayed to the end in desktop/mobile browser tests.
+
 ## 2026-09-11 — One bilingual interface and one product mark
 
 **Language.** English and Japanese now share one browser-native interface rather than separate page

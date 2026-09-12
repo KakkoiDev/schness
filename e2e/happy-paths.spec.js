@@ -170,6 +170,19 @@ test('game library filters and replays the full shared position with both reserv
   await expect(page.locator('#watch-board[data-schness-board="true"]')).toBeVisible();
 });
 
+test('a finished archived mate says CHECKMATE on the king square, never just CHECK', async ({ page }) => {
+  await page.goto('/library.html');
+  await expect(page.locator('.library-game').first()).toBeVisible({ timeout: 15_000 });
+  await page.locator('#filter-result').selectOption('w');
+  await page.locator('.library-game').first().click();
+  await page.locator('#replay-moves button').last().click();
+  await expect(page.locator('#replay-status')).toContainText('White won');
+  const king = page.locator('#replay-board .square.in-checkmate');
+  await expect(king).toHaveCount(1);
+  await expect(king).toHaveAttribute('aria-label', /black king.*in checkmate/);
+  expect(await king.evaluate((element) => getComputedStyle(element, '::before').content)).toBe('"CHECKMATE"');
+});
+
 test('puzzle mix, hidden depth, solution and next puzzle stay playable on mobile', async ({ page }) => {
   await page.goto('/puzzles.html');
   const board = page.locator('#puzzle-board[data-schness-board="true"]');
