@@ -46,6 +46,29 @@ test('the homepage opens the arena with visible training controls', async ({ pag
   await expect(page.locator('#watch-analysis-bar')).toBeVisible({ timeout: 20_000 });
 });
 
+test('training warns the defender of forced mate before they move', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => sessionStorage.setItem('schness-arena-position', JSON.stringify({
+    turn: 'black', board: [
+      { owner: 'black', piece: 'rook' }, { owner: 'black', piece: 'king' }, null, null,
+      { owner: 'black', piece: 'knight' }, null, { owner: 'white', piece: 'rook' }, { owner: 'white', piece: 'bishop' },
+      null, { owner: 'white', piece: 'king' }, { owner: 'black', piece: 'bishop' }, null,
+      null, null, { owner: 'white', piece: 'knight' }, null,
+    ],
+  })));
+  await page.goto('/watch.html?position=library');
+  await page.locator('#black-level').selectOption('human');
+  await page.locator('#watch-training-mate').check();
+  await expect(page.locator('#watch-training-warning')).toContainText('Danger: White can force mate in 1', { timeout: 10_000 });
+  const before = await page.locator('#watch-board').boundingBox();
+  await page.locator('#watch-training-advantage').check();
+  await expect(page.locator('#watch-analysis-bar')).toBeVisible();
+  await expect(page.locator('#watch-analysis-score')).toBeVisible();
+  await expect(page.locator('#watch-analysis-bar .analysis-side')).toHaveText(['B', 'W']);
+  const after = await page.locator('#watch-board').boundingBox();
+  expect(Math.abs(before.width - after.width)).toBeLessThan(1);
+});
+
 test('interactive tutorial uses the shared board and answers a king placement', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Try placing the kings' }).click();

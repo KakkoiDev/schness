@@ -319,3 +319,12 @@ library replay toggle. Moved the online time-control selector from a homepage di
 pre-invitation dialog and made bot games untimed regardless of a previously selected online clock.
 Removed the duplicate "Replay interactive tutorial" setting because the homepage's three playable
 rule demonstrations are already reachable there. Added arena and invitation browser-path tests.
+# 2026-09-12 — Correct defensive mate prediction; simplify evaluation rail
+
+The first mate-warning implementation only asked whether the side-to-move could mate. A player
+whose opponent had a forced mate therefore saw "no mate", even when every available defense lost.
+The proof now tests both sides from the unchanged position, distinguishing an unavoidable opposing
+mate from a mere risky candidate move. On human turns it also lists legal moves that allow an
+opponent mate in one (then two if time permits). A five-second budget still reports inconclusive
+past its proven depth. Reworked the advantage bar into a compact B/W board-height rail; the numeric
+heuristic and its "estimate" label live in the panel, where they cannot overlap either reserve.

@@ -8,6 +8,10 @@ const JA = new Map(Object.entries({
   'Play Schness': 'Schnessで遊ぶ', 'Compact chess · 4 × 4': '小さな盤、大きな一手',
   'Training': 'トレーニング', 'Forced-mate hints (1–4 moves)': '詰みのヒント（1〜4手）', 'White / Black advantage': '白と黒の形勢',
   'Show estimated advantage': '推定形勢を表示',
+  'Checking both sides for forced mates…': '両陣営の詰みを解析中…',
+  'No forced mate within four moves for either side.': 'どちらにも4手以内の確定した詰みは見つかりませんでした。',
+  'White has mate': '白に詰みあり', 'Black has mate': '黒に詰みあり',
+  'Evaluation incomplete': '形勢解析は未完了', 'Analysis unavailable.': '解析を利用できません。',
   'Training tools': '練習ツール', 'Online match': 'オンライン対局', 'Choose a time control': '持ち時間を選択',
   'Time per player': '各プレイヤーの持ち時間', 'Choose untimed or a clock before creating the invitation link.': '招待リンクを作る前に、時間無制限か持ち時間を選んでください。',
   'Create invitation link': '招待リンクを作る', 'Close online setup': '対局設定を閉じる',
@@ -109,6 +113,11 @@ const JA = new Map(Object.entries({
 }));
 
 const PATTERNS = [
+  [/^Danger: (White|Black) can force mate in (\d+) despite every defense\.$/, (_, side, n) => `危険：どの応手でも${side === 'White' ? '白' : '黒'}が${n}手で詰ませられます。`],
+  [/^(White|Black) can force mate in (\d+)\.$/, (_, side, n) => `${side === 'White' ? '白' : '黒'}が${n}手で詰ませられます。`],
+  [/^Caution: (\d+) moves? allow an opponent mate in (\d+): (.*)\.$/, (_, count, depth, actions) => `注意：${count}手は相手の${depth}手詰めを許します：${actions}。`],
+  [/^(White|Black|Even) advantage · ([\d.]+) \(estimate\)$/, (_, side, score) => `${side === 'Even' ? '互角' : `${side === 'White' ? '白' : '黒'}優勢`} · ${score}（推定）`],
+  [/^Mate search incomplete beyond (\d+) moves? \(time limit\)\.$/, (_, n) => `${n}手を超える詰み解析は時間切れで未完了です。`],
   [/^(\d+) puzzles left in this shuffle$/, '$1問残っています'],
   [/^(White|Black) to move · mate in (\d+)$/, (_, side, n) => `${side === 'White' ? '白' : '黒'}の手番・${n}手詰め`],
   [/^(White|Black) to move · find the fastest mate$/, (_, side) => `${side === 'White' ? '白' : '黒'}の手番・最短の詰みを探してください`],

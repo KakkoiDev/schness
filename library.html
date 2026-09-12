@@ -10,7 +10,7 @@
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
-  <link rel="stylesheet" href="./styles.css?v=70">
+  <link rel="stylesheet" href="./styles.css?v=71">
 </head>
 <body class="library-page">
   <main class="game">
@@ -44,11 +44,11 @@
     <div class="replay-layout">
       <div class="replay-stage">
         <div class="replay-seat"><div id="replay-black" class="replay-player"></div><div class="reserve"><span id="replay-black-label" class="reserve-label">Black reserve</span><div id="replay-black-reserve" class="bank"></div></div></div>
-        <div class="board-frame"><div id="replay-bar" class="analysis-bar" role="meter" aria-label="Estimated White advantage" aria-valuemin="-100" aria-valuemax="100" hidden><div id="replay-fill" class="analysis-fill"></div><span id="replay-score" class="analysis-score" aria-live="polite"></span></div><div id="replay-board" class="board" role="grid" aria-label="Recorded Schness position"></div></div>
+        <div class="board-frame"><div id="replay-bar" class="analysis-bar" role="meter" aria-label="Estimated White advantage" aria-valuemin="-100" aria-valuemax="100" hidden><span class="analysis-side analysis-side-black" aria-hidden="true">B</span><div class="analysis-track"><div id="replay-fill" class="analysis-fill"></div><span class="analysis-midline" aria-hidden="true"></span></div><span class="analysis-side analysis-side-white" aria-hidden="true">W</span></div><div id="replay-board" class="board" role="grid" aria-label="Recorded Schness position"></div></div>
         <div class="replay-seat"><div id="replay-white" class="replay-player"></div><div class="reserve"><span id="replay-white-label" class="reserve-label">White reserve</span><div id="replay-white-reserve" class="bank"></div></div></div>
       </div>
       <aside class="replay-panel">
-        <label class="analysis-toggle"><input id="replay-advantage" type="checkbox"> Show estimated advantage</label><p id="replay-warning" hidden></p>
+        <label class="analysis-toggle"><input id="replay-advantage" type="checkbox"> Show estimated advantage</label><p id="replay-score" class="analysis-score" aria-live="polite" hidden></p><p id="replay-warning" hidden></p>
         <p id="replay-status" class="watch-status" aria-live="polite"></p>
         <div class="watch-controls"><button id="replay-first" type="button">Start</button><button id="replay-previous" type="button">Previous</button><button id="replay-next" type="button">Next</button><button id="replay-auto" type="button" aria-pressed="false">Auto · 1s</button><button id="replay-play-here" type="button">Play from here</button></div>
         <div id="replay-moves" class="watch-moves" aria-label="Move transcript"></div>
@@ -56,6 +56,6 @@
       </aside>
     </div>
   </dialog>
-  <script type="module" src="./src/library-ui.js?v=70"></script>
+  <script type="module" src="./src/library-ui.js?v=71"></script>
 </body>
 </html>

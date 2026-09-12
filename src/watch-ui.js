@@ -8,7 +8,8 @@ import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve as renderPieceReserve } from './piece-ui.js';
 import { createBoard, renderBoard } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=70';
+import { initI18n } from './i18n.js?v=71';
+import { attachAnalysis } from './analysis-ui.js?v=71';
 import { attachAnalysis } from './analysis-ui.js';
 import { resultLabel, sideName } from './watch.js';
 
@@ -38,6 +39,7 @@ const trainingAnalysis = attachAnalysis({
   bar: $('#watch-analysis-bar'), fill: $('#watch-analysis-fill'),
   scoreLabel: $('#watch-analysis-score'), warning: $('#watch-training-warning'),
   getPosition: current, enabled: () => current().phase === 'play',
+  showRisks: () => reviewIndex === history.length && controller(current().turn) === 'human',
 });
 let analyzedPosition = null;
 

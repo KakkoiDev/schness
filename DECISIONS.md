@@ -26,14 +26,17 @@ Three documents, deliberately separate:
 
 | layer | modules | property |
 |---|---|---|
-| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `puzzle-settings` `tournament` `library` | No DOM, no network. Directly unit-tested. |
+| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `trystero`) | WebRTC over public Nostr relays. |
 | **DOM glue** | `main` `lobby` `tutorial` `board-ui` `piece-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
 
 Training hints and replay advantage are opt-in and never shown in P2P games. The worker computes
-exact forced mate against every legal reply using `puzzle` separately from a depth-three White-positive
+exact forced mate against every legal reply using `puzzle` and `training` separately from a depth-three White-positive
 `bot` heuristic. A timeout is *inconclusive*, never a proof that no mate exists. Every new position
 terminates the previous analysis worker so stale results cannot overwrite the current board.
+The proof runs for *both* sides from the actual side to move: an opponent threat means **all**
+defender replies fail. On a human turn, candidate moves allowing an opponent mate in one or two
+are also identified and displayed early; they are not mislabeled as an unavoidable forced threat.
 The homepage launches `watch.html` for all standard bot play, so the controls must appear there,
 not solely in the older `game.html?mode=bot` route. The online clock selector appears only during
 online invitation creation; choosing a timed online match cannot silently time a subsequent bot match.

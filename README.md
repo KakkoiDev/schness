@@ -37,6 +37,10 @@ moves) and a vertical White-versus-Black advantage bar. Bot-only matches also ex
 advantage bar while replaying. Search runs in a disposable Web Worker; a slow mate proof is labeled
 incomplete rather than falsely reporting no mate. The advantage is a depth-three Schness heuristic,
 not chess centipawns or a proven result; these aids never run in human-versus-human games.
+Mate training checks *both* sides from the current turn: a danger warning means every legal defense
+still loses, whereas a caution lists specific candidate moves that allow an opponent mate. Mate-in-one
+risks are checked first, then deeper lines if the device can finish them. The B/W rail stays the
+board's height, with a separate numerical estimate in the training panel instead of below the board.
 
 Large experiments deliberately do **not** run in the browser. Open the
 **[AI tournament workflow](../../actions/workflows/tournament.yml)**, choose **Run workflow**, and
