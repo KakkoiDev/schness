@@ -10,7 +10,7 @@ import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, s
 import { applyActionMessage, makeActionMessage, outcomeSummary } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
-import { actionHighlights, createBoard, renderBoard, setBoardOrientation } from './board-ui.js';
+import { actionHighlights, checkedSquares, createBoard, renderBoard, setBoardOrientation } from './board-ui.js';
 import { pieceElement, renderReserve } from './piece-ui.js';
 import { movedEnough } from './drag.js';
 import {
@@ -22,7 +22,7 @@ import {
 } from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=64';
+import { initI18n } from './i18n.js?v=67';
 
 initTheme();
 initI18n();
@@ -1289,8 +1289,7 @@ function render() {
   board.classList.toggle('keyboard-active', keyboardActive);
   if (keyboardActive) board.setAttribute('aria-activedescendant', `square-${cursor}`);
   else board.removeAttribute('aria-activedescendant');
-  const checked = new Set(shown.board.flatMap((occupant, square) =>
-    occupant?.piece === KING && isInCheck(shown, occupant.owner) ? [square] : []));
+  const checked = checkedSquares(shown);
   renderBoard(board, shown, {
     selected: selection?.type === 'board' ? selection.square : null, targets,
     placements: placingKing ? targets : new Set(), last, checked,

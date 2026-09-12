@@ -1,8 +1,8 @@
 import { gameUrl, launchIntent } from './navigation.js';
 import { clockMode, setClockMode } from './settings.js';
 import { initTheme } from './theme.js';
-import { initTutorial } from './tutorial.js?v=64';
-import { initI18n } from './i18n.js?v=64';
+import { initTutorial } from './tutorial.js?v=67';
+import { initI18n } from './i18n.js?v=67';
 
 initTheme();
 initI18n();
