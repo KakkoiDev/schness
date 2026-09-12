@@ -341,3 +341,13 @@ whereas the arena and tournament used depth 2. Established `settings.js` as the
 single profile map (2/3/4), retaining the arena/tournament Learning depth and
 making live bot play consistent. Two worker entry points remain deliberate:
 move searches and longer exact-mate analyses must not block one another.
+
+# 2026-09-12 — Advantage rail geometry
+
+The B/W rail had two nested sets of rounded corners: the dark container and the
+white fill. The fill's curved bottom edge exposed a light-looking sliver of the
+underlying dark track, especially on narrow phones. Keep just one clipped outer
+silhouette; extend the rectangular fill edge to both sides. Make the track fill
+the entire rail and overlay the W/B labels instead of reserving separate blocks
+that create seams. The numeric estimate stays outside the rail in the tools panel.
+Browser tests now assert the clipped geometry and unchanged board width.
