@@ -28,7 +28,12 @@ Three documents, deliberately separate:
 |---|---|---|
 | **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `puzzle-settings` `tournament` `library` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `trystero`) | WebRTC over public Nostr relays. |
-| **DOM glue** | `main` `lobby` `tutorial` `board-ui` `piece-ui` `sound` `bot-worker` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
+| **DOM glue** | `main` `lobby` `tutorial` `board-ui` `piece-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
+
+Training hints and replay advantage are opt-in and never shown in P2P games. The worker computes
+exact forced mate against every legal reply using `puzzle` separately from a depth-three White-positive
+`bot` heuristic. A timeout is *inconclusive*, never a proof that no mate exists. Every new position
+terminates the previous analysis worker so stale results cannot overwrite the current board.
 
 `bot` and `puzzle` are trusted search modules: both consume positions produced by the rules engine
 and may use its unchecked move-generation/apply entry points inside their trees. Network, saved,

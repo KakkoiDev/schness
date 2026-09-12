@@ -22,12 +22,21 @@ import {
 } from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=68';
+import { initI18n } from './i18n.js?v=69';
+import { attachAnalysis } from './analysis-ui.js';
 
 initTheme();
 initI18n();
 
 const board = document.querySelector('#board');
+const trainingPanel = document.querySelector('#training-panel');
+const trainingAnalysis = attachAnalysis({
+  toggles: { mate: document.querySelector('#training-mate'), advantage: document.querySelector('#training-advantage') },
+  bar: document.querySelector('#training-bar'), fill: document.querySelector('#training-fill'),
+  scoreLabel: document.querySelector('#training-score'), warning: document.querySelector('#training-warning'),
+  getPosition: () => displayedPosition(), enabled: () => mode === 'bot' && displayedPosition().phase === 'play',
+});
+let analyzedPosition = null;
 const humanBank = document.querySelector('#human-bank');
 const opponentBank = document.querySelector('#opponent-bank');
 const humanName = document.querySelector('#human-name');
@@ -1276,6 +1285,14 @@ function onBotMessage({ data }) {
 }
 
 function render() {
+  trainingPanel.hidden = mode !== 'bot';
+  if (mode === 'bot' && displayedPosition() !== analyzedPosition) {
+    analyzedPosition = displayedPosition();
+    trainingAnalysis.refresh();
+  } else if (mode !== 'bot' && analyzedPosition !== null) {
+    analyzedPosition = null;
+    trainingAnalysis.refresh();
+  }
   const placingKing = position.phase !== 'play' && canHumanAct();
   const targets = placingKing ? setupDestinations(position) : destinations(position, selection);
   const result = getResult(position);

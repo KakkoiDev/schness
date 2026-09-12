@@ -302,3 +302,11 @@ pointer ghost is visible; an invalid release restores it, while a legal release 
 **Why not screenshots alone.** A screenshot can show matching boards while clicks, orientation,
 reserves, or routing are broken. The E2E stories exercise those transitions and assert the shared
 component marker and three reserve slots wherever a complete position is displayed.
+# 2026-09-12 — Opt-in training analysis
+
+Added independent forced-mate hints for bot training and a White-positive advantage bar in bot
+training and recorded-game replay. Reused the exact puzzle solver for mate rather than treating a
+Sharp preferred line as proof; the bar uses a depth-three bot heuristic because exhaustive mate
+proof is inappropriate as a continuous advantage estimate. Both features default off, exclude
+online human matches, and compute in a disposable worker. An unfinished five-second mate search
+reports inconclusive, not "no mate". This keeps the UI responsive and avoids misleading players.

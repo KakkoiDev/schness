@@ -87,6 +87,11 @@ function search(position, depth, alpha, beta, maximizingPlayer, cache) {
   return value;
 }
 
+/** White-positive heuristic search score, in Schness units (not chess centipawns). */
+export function scorePosition(position, depth = 3) {
+  return search(position, depth, -Infinity, Infinity, WHITE, new Map());
+}
+
 function evaluate(position, player) {
   const enemy = player === WHITE ? BLACK : WHITE;
   let score = 0;
