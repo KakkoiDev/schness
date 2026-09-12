@@ -116,8 +116,7 @@ test('every dynamic board uses the shared board and reserve presentation', async
   }
   const boardUi = await readFile(resolve(root, 'src/board-ui.js'), 'utf8');
   assert.match(boardUi, /dataset\.schnessBoard = 'true'/);
-  const pieceUi = await readFile(resolve(root, 'src/piece-ui.js'), 'utf8');
-  assert.match(pieceUi, /BANK_PIECES\.map/);
+  assert.match(boardUi, /BANK_PIECES\.map/);
   const library = await readFile(resolve(root, 'library.html'), 'utf8');
   assert.match(library, /id="replay-white-reserve"/);
   assert.match(library, /id="replay-black-reserve"/);
@@ -547,8 +546,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="voice-toggle"[^>]+aria-pressed="false"[^>]*>Audio off</);
   assert.match(game, /id="video-toggle"[^>]+aria-pressed="false"[^>]*>Video off</);
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
-  const pieceUi = await readFile(resolve(root, 'src/piece-ui.js'), 'utf8');
-  assert.match(pieceUi, /piece-\$\{piece\}/);
+  const boardUi = await readFile(resolve(root, 'src/board-ui.js'), 'utf8');
+  assert.match(boardUi, /piece-\$\{piece\}/);
   assert.match(main, /function commit\(action\)/);
   assert.match(main, /takeback-request/);
   assert.match(main, /function offerDraw/);
@@ -563,8 +562,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(main, /offered a draw · declined/);
   assert.match(main, /function onBoardKey/);
   assert.match(main, /announceOpponentAction/);
-  assert.match(pieceUi, /createElement\('img'\)/);
-  assert.match(pieceUi, /image\.draggable = false/);
+  assert.match(boardUi, /createElement\('img'\)/);
+  assert.match(boardUi, /image\.draggable = false/);
   assert.match(main, /pieceRect:.*getBoundingClientRect/);
   assert.match(main, /ghost\.style\.width/);
   assert.match(main, /pointerdown/);

@@ -3,8 +3,7 @@ import {
 } from './rules.js';
 import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
 import { movedEnough } from './drag.js';
-import { pieceElement, renderReserve } from './piece-ui.js';
-import { createBoard, renderBoard } from './board-ui.js';
+import { createBoard, pieceElement, renderBoard, renderReserve } from './board-ui.js';
 
 const LESSONS = {
   kings: { title: 'Place the kings', instruction: 'Put your king on any highlighted home-row square. Black will place theirs, then the game continues.' },

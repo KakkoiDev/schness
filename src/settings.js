@@ -36,6 +36,7 @@ export function setRulesSeen(seen, storage = globalThis.localStorage) {
 }
 
 export const DIFFICULTIES = Object.freeze(['learning', 'steady', 'sharp']);
+export const AI_DEPTHS = Object.freeze({ learning: 2, steady: 3, sharp: 4 });
 const DIFFICULTY_KEY = 'schness-difficulty';
 const CLOCK_KEY = 'schness-clock';
 const SOUND_KEY = 'schness-sound';
@@ -49,9 +50,7 @@ export const DEFAULT_SOUND = Object.freeze({
  * depth number means nothing before you have played a game.
  */
 export function difficultyDepth(difficulty) {
-  if (difficulty === 'learning') return 1;
-  if (difficulty === 'sharp') return 4;
-  return 3;
+  return AI_DEPTHS[difficulty] ?? AI_DEPTHS.steady;
 }
 
 export function botDifficulty(storage = globalThis.localStorage) {

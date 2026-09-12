@@ -28,7 +28,14 @@ Three documents, deliberately separate:
 |---|---|---|
 | **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `trystero`) | WebRTC over public Nostr relays. |
-| **DOM glue** | `main` `lobby` `tutorial` `board-ui` `piece-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
+| **DOM glue** | `main` `lobby` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
+
+Board squares, piece images, and reserve trays have one owner: `board-ui.js`. Game,
+arena, tutorial, puzzle, and library callers supply their positions and interaction
+callbacks but must not duplicate the board markup or SVG mapping. Search strengths
+have one source of truth in `settings.js` (`AI_DEPTHS`); the arena and tournament use
+the same depths as live bot play. Keep move-search and analysis worker entry points
+separate so long mate proofs never block moves; both reuse the same `bot.js` search.
 
 Training hints and replay advantage are opt-in and never shown in P2P games. The worker computes
 exact forced mate against every legal reply using `puzzle` and `training` separately from a depth-three White-positive

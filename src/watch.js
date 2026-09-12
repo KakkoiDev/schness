@@ -1,10 +1,12 @@
 import { BLACK, WHITE, applyAction, getResult } from './rules.js';
 import { recordAction } from './history.js';
+import { AI_DEPTHS, difficultyDepth } from './settings.js';
 
-export const LEVEL_DEPTH = Object.freeze({ learning: 2, steady: 3, sharp: 4 });
+// Compatibility export for tournament manifests; settings owns the only profile map.
+export const LEVEL_DEPTH = AI_DEPTHS;
 
 export function levelDepth(level) {
-  return LEVEL_DEPTH[level] ?? LEVEL_DEPTH.steady;
+  return difficultyDepth(level);
 }
 
 export function advanceReview(index, length, direction) {

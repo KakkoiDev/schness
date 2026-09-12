@@ -330,3 +330,14 @@ past its proven depth. Reworked the advantage bar into a compact B/W board-heigh
 heuristic and its "estimate" label live in the panel, where they cannot overlap either reserve.
 Browser CI also caught a duplicate import that prevented Bot Arena from starting; added syntax
 checks for every training entry module so this kind of failure is caught before browser tests.
+
+# 2026-09-12 — Consolidate board and bot-profile ownership
+
+Audited the UI and engine import paths. Five dynamic board callers already share
+`board-ui.js`, but piece SVG creation and reserve trays lived in `piece-ui.js`.
+Moved those primitives into `board-ui.js` and removed the extra module; adjusted
+the offline cache and source-contract tests. Live bot play used Learning depth 1,
+whereas the arena and tournament used depth 2. Established `settings.js` as the
+single profile map (2/3/4), retaining the arena/tournament Learning depth and
+making live bot play consistent. Two worker entry points remain deliberate:
+move searches and longer exact-mate analyses must not block one another.

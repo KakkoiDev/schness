@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { controllerSearch } from '../src/arena.js';
+import { LEVEL_DEPTH, levelDepth } from '../src/watch.js';
+import { TOURNAMENT_AI } from '../src/tournament.js';
 import {
-  DEFAULT_SOUND, botDifficulty, clockMode, difficultyDepth, normalizeSound,
+  AI_DEPTHS, DEFAULT_SOUND, botDifficulty, clockMode, difficultyDepth, normalizeSound,
   rulesSeen, setBotDifficulty, setClockMode, setRulesSeen, setSoundSettings,
   soundSettings,
 } from '../src/settings.js';
@@ -39,6 +42,16 @@ test('strength maps to a search depth, with learning shallowest', () => {
   assert.ok(difficultyDepth('learning') < difficultyDepth('steady'));
   assert.ok(difficultyDepth('steady') < difficultyDepth('sharp'));
   assert.equal(difficultyDepth(undefined), difficultyDepth('steady'));
+});
+
+test('live, spectator, editor, and tournament agree on each AI depth', () => {
+  assert.equal(LEVEL_DEPTH, AI_DEPTHS);
+  for (const [name, depth] of Object.entries(AI_DEPTHS)) {
+    assert.equal(difficultyDepth(name), depth);
+    assert.equal(levelDepth(name), depth);
+    assert.equal(controllerSearch(name).depth, depth);
+    assert.equal(TOURNAMENT_AI[name].depth, depth);
+  }
 });
 
 test('the clock defaults to untimed', () => {

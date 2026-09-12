@@ -1,8 +1,7 @@
 import { applyAction, BLACK, createInitialPosition, WHITE } from './rules.js';
 import { recordAction } from './history.js';
 import { decodeAction, matchesFilters, profilePairs, resultLabel } from './library.js';
-import { renderReserve } from './piece-ui.js';
-import { createBoard, renderBoard } from './board-ui.js';
+import { createBoard, renderBoard, renderReserve } from './board-ui.js';
 import { initTheme } from './theme.js';
 import { initI18n } from './i18n.js?v=71';
 import { attachAnalysis } from './analysis-ui.js?v=71';

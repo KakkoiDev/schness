@@ -146,6 +146,7 @@ Current implementation:
 - Tap-and-drag play across matches, Bot Arena, puzzles, and playable rule demonstrations
 - Full visual reserve trays on live, puzzle, tutorial, and recorded-game boards
 - One shared board/reserve renderer across matches, Bot Arena, editor, tutorial, puzzles, and library replay
+- One shared AI-strength profile across live bot play, Bot Arena, and tournaments (Learning/Steady/Sharp: depth 2/3/4)
 - Desktop and mobile browser E2E tests for all shipped happy paths
 - First-visit interactive tutorial, with playable rule demos directly on the homepage
 - Permanent GitHub Release archives for tournament and puzzle research bundles
