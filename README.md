@@ -32,6 +32,12 @@ reserve. AI searches stay in a Web Worker.
 Sharp v2 uses depth-four alpha-beta and avoids an already repeated resulting position when another
 move has the same minimax score. It still accepts a repetition when that is better than losing.
 
+Bot matches offer optional **Training** checkboxes for forced-mate hints (one to four attacking
+moves) and a vertical White-versus-Black advantage bar. Recorded games have a separate optional
+advantage bar while replaying. Search runs in a disposable Web Worker; a slow mate proof is labeled
+incomplete rather than falsely reporting no mate. The advantage is a depth-three Schness heuristic,
+not chess centipawns or a proven result; these aids never run in human-versus-human games.
+
 Large experiments deliberately do **not** run in the browser. Open the
 **[AI tournament workflow](../../actions/workflows/tournament.yml)**, choose **Run workflow**, and
 set the number of complete research sets and a reproducible seed. Each 80-game set covers every one

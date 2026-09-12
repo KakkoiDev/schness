@@ -4,7 +4,8 @@ import { decodeAction, matchesFilters, profilePairs, resultLabel } from './libra
 import { renderReserve } from './piece-ui.js';
 import { createBoard, renderBoard } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=68';
+import { initI18n } from './i18n.js?v=69';
+import { attachAnalysis } from './analysis-ui.js';
 
 initTheme();
 initI18n();
@@ -21,6 +22,11 @@ let history = [];
 let ply = 0;
 let autoplay = false;
 let timer;
+const replayAnalysis = attachAnalysis({
+  toggles: { advantage: $('#replay-advantage') }, bar: $('#replay-bar'), fill: $('#replay-fill'),
+  scoreLabel: $('#replay-score'), warning: $('#replay-warning'),
+  getPosition: () => timeline[ply], enabled: () => Boolean(currentGame && timeline[ply]?.phase === 'play'),
+});
 
 buildBoard();
 bindControls();
@@ -57,7 +63,7 @@ function bindControls() {
     $('#replay-auto').setAttribute('aria-pressed', String(autoplay));
     if (autoplay) next(); else clearTimeout(timer);
   });
-  $('#replay-dialog').addEventListener('close', pause);
+  $('#replay-dialog').addEventListener('close', () => { pause(); replayAnalysis.stop(); });
   $('#replay-play-here').addEventListener('click', () => {
     sessionStorage.setItem('schness-arena-position', JSON.stringify(timeline[ply]));
     window.location.assign('./watch.html?position=library');
@@ -151,6 +157,7 @@ function buildBoard() {
 }
 
 function renderReplay() {
+  replayAnalysis.refresh();
   const position = timeline[ply];
   const last = history[ply - 1]?.action;
   renderBoard($('#replay-board'), position, { last });

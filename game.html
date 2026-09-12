@@ -113,6 +113,7 @@
           <span id="connection-note"></span>
         </p>
         <div class="board-frame">
+          <div id="training-bar" class="analysis-bar" role="meter" aria-label="Estimated White advantage" aria-valuemin="-100" aria-valuemax="100" hidden><div id="training-fill" class="analysis-fill"></div><span id="training-score" class="analysis-score" aria-live="polite"></span></div>
           <div id="board" class="board" role="grid" aria-label="Schness board" tabindex="0"
                aria-describedby="board-help"></div>
           <div id="result-overlay" class="result-overlay" hidden>
@@ -128,6 +129,12 @@
             </section>
           </div>
         </div>
+        <section id="training-panel" class="analysis-panel" hidden>
+          <strong>Training</strong>
+          <label><input id="training-mate" type="checkbox"> Forced-mate hints (1–4 moves)</label>
+          <label><input id="training-advantage" type="checkbox"> White / Black advantage</label>
+          <p id="training-warning" role="status" aria-live="polite" hidden></p>
+        </section>
         <p id="board-help" class="visually-hidden">
           Arrow keys move the cursor, Enter picks up or plays, Escape puts the piece back down,
           1 to 3 pick a reserve piece, a square name jumps there, and question mark lists the shortcuts.
@@ -310,6 +317,6 @@
       <form method="dialog"><button class="rules-confirm" type="submit">Got it</button></form>
     </div>
   </dialog>
-  <script type="module" src="./src/main.js?v=68"></script>
+  <script type="module" src="./src/main.js?v=69"></script>
 </body>
 </html>

@@ -75,6 +75,38 @@ test('bot game supports White and Black with the same board and reserves', async
   await expect(board.locator('.square.placement')).toHaveCount(4);
 });
 
+test('bot training toggles mate search and the estimated advantage independently', async ({ page }) => {
+  await page.goto(`/game.html?game=${GAME_ID}&mode=bot`);
+  await expect(page.locator('#training-panel')).toBeVisible();
+  await expect(page.locator('#training-bar')).toBeHidden();
+  await page.locator('#training-advantage').check();
+  // The opening king-placement phase is intentionally not an evaluable position.
+  await expect(page.locator('#training-bar')).toBeHidden();
+  await page.locator('#board .square.placement').first().click();
+  await expect(page.locator('#training-bar')).toBeVisible({ timeout: 20_000 });
+  await page.locator('#training-mate').check();
+  await expect(page.locator('#training-warning')).toBeVisible();
+  await page.locator('#training-advantage').uncheck();
+  await expect(page.locator('#training-bar')).toBeHidden();
+});
+
+test('online matches do not expose training assistance', async ({ page }) => {
+  await page.goto(`/game.html?game=${GAME_ID}&mode=online`);
+  await expect(page.locator('#training-panel')).toBeHidden();
+});
+
+test('recorded game analysis is opt-in and tracks replay', async ({ page }) => {
+  await page.goto('/library.html');
+  await page.locator('.library-game').first().click();
+  await page.locator('#replay-next').click();
+  await page.locator('#replay-next').click();
+  await page.locator('#replay-advantage').check();
+  await expect(page.locator('#replay-bar')).toBeVisible();
+  await expect(page.locator('#replay-score')).not.toHaveText('Analyzing…', { timeout: 20_000 });
+  await page.locator('#replay-advantage').uncheck();
+  await expect(page.locator('#replay-bar')).toBeHidden();
+});
+
 test('checked king has a visible labeled warning on the real game board', async ({ page }) => {
   await page.goto(`/game.html?game=${GAME_ID}&mode=bot`);
   const square = page.locator('#board .square[data-square="15"]');
