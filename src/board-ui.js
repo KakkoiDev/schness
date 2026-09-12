@@ -1,5 +1,5 @@
 import { pieceElement } from './piece-ui.js';
-import { isInCheck, KING } from './rules.js';
+import { getResult, isInCheck, KING, kingSquare } from './rules.js';
 
 const SIZE = 4;
 
@@ -52,6 +52,7 @@ export function setBoardOrientation(element, orientation = 'white') {
 export function renderBoard(element, position, {
   selected = null, targets = new Set(), placements = new Set(), last = null,
   dragging = null, disabled = false, checked = checkedSquares(position), cursor = null,
+  mate = checked.size ? checkmateSquare(position) : null,
   label = defaultLabel,
 } = {}) {
   for (const cell of element.querySelectorAll('.square')) {
@@ -63,12 +64,14 @@ export function renderBoard(element, position, {
     cell.classList.toggle('placement', placements.has(square));
     cell.classList.toggle('capture', targets.has(square) && Boolean(occupant));
     cell.classList.toggle('in-check', checked.has(square));
+    cell.classList.toggle('in-checkmate', mate === square);
     cell.classList.toggle('last-from', last?.from === square);
     cell.classList.toggle('last-to', last?.to === square);
     cell.classList.toggle('drag-source', dragging === square);
     cell.classList.toggle('is-cursor', cursor === square);
     if ('disabled' in cell) cell.disabled = Boolean(disabled);
-    cell.setAttribute('aria-label', label(square, occupant));
+    cell.setAttribute('aria-label', label(square, occupant,
+      mate === square ? 'checkmate' : checked.has(square) ? 'check' : null));
   }
 }
 
@@ -78,13 +81,20 @@ export function checkedSquares(position) {
     occupant?.piece === KING && isInCheck(position, occupant.owner) ? [square] : []));
 }
 
+export function checkmateSquare(position) {
+  // An in-progress position editor may not have two kings or banks yet.
+  if (position.phase !== 'play' || !position.banks) return null;
+  return getResult(position)?.reason === 'checkmate' ? kingSquare(position, position.turn) : null;
+}
+
 export function orientedSquares(orientation = 'white') {
   const squares = Array.from({ length: SIZE * SIZE }, (_, square) => square);
   return orientation === 'black' ? squares.reverse() : squares;
 }
 
-function defaultLabel(square, occupant) {
-  return occupant ? `${occupant.owner} ${occupant.piece}, square ${square + 1}` : `Empty square ${square + 1}`;
+function defaultLabel(square, occupant, warning) {
+  return occupant ? `${occupant.owner} ${occupant.piece}, square ${square + 1}${warning ? `, in ${warning}` : ''}`
+    : `Empty square ${square + 1}`;
 }
 
 export function actionHighlights(action) {

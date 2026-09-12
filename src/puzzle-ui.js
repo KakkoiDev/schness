@@ -8,7 +8,7 @@ import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve } from './piece-ui.js';
 import { createBoard, renderBoard } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=67';
+import { initI18n } from './i18n.js?v=68';
 
 initTheme();
 initI18n();

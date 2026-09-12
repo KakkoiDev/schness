@@ -22,7 +22,7 @@ import {
 } from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=67';
+import { initI18n } from './i18n.js?v=68';
 
 initTheme();
 initI18n();
@@ -1295,8 +1295,9 @@ function render() {
     placements: placingKing ? targets : new Set(), last, checked,
     cursor: keyboardActive ? squareAtCursor() : null,
     dragging: pointerDrag?.active ? pointerDrag.sourceSquare : null, disabled: !canHumanAct(),
-    label: (square, occupant) => occupant
-      ? `${occupant.owner} ${occupant.piece}, square ${square + 1}${checked.has(square) ? ', in check' : ''}`
+    mate: result?.reason === 'checkmate' && reviewPly === null ? kingSquare(shown, shown.turn) : undefined,
+    label: (square, occupant, warning) => occupant
+      ? `${occupant.owner} ${occupant.piece}, square ${square + 1}${warning ? `, in ${warning}` : ''}`
       : `Empty square ${square + 1}`,
   });
   for (const button of board.querySelectorAll('.square')) button.dataset.name = squareName(Number(button.dataset.square));
