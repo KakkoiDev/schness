@@ -328,3 +328,5 @@ mate from a mere risky candidate move. On human turns it also lists legal moves 
 opponent mate in one (then two if time permits). A five-second budget still reports inconclusive
 past its proven depth. Reworked the advantage bar into a compact B/W board-height rail; the numeric
 heuristic and its "estimate" label live in the panel, where they cannot overlap either reserve.
+Browser CI also caught a duplicate import that prevented Bot Arena from starting; added syntax
+checks for every training entry module so this kind of failure is caught before browser tests.

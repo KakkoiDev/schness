@@ -10,7 +10,6 @@ import { createBoard, renderBoard } from './board-ui.js';
 import { initTheme } from './theme.js';
 import { initI18n } from './i18n.js?v=71';
 import { attachAnalysis } from './analysis-ui.js?v=71';
-import { attachAnalysis } from './analysis-ui.js';
 import { resultLabel, sideName } from './watch.js';
 
 initTheme();

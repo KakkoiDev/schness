@@ -5,8 +5,16 @@ import { forcedMate, decodePuzzlePosition } from '../src/puzzle.js';
 import { applyAction, createInitialPosition, legalActions } from '../src/rules.js';
 import { mateOutlookAtDepth, movesAllowingMate } from '../src/training.js';
 import { readFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 const mateInOne = decodePuzzlePosition({ b: [6,5,0,0,8,0,2,7,0,1,0,0,0,0,4,0], t: 'w' });
+
+test('training entry modules parse before a browser attempts to start them', () => {
+  for (const file of ['main', 'watch-ui', 'library-ui', 'analysis-ui', 'analysis-worker', 'training']) {
+    execFileSync(process.execPath, ['--check', fileURLToPath(new URL(`../src/${file}.js`, import.meta.url))]);
+  }
+});
 
 test('training reports an exact forced mate, not just a promising move', () => {
   assert.equal(forcedMate(mateInOne, 1)?.moves, 1);
