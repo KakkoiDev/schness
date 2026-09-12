@@ -31,7 +31,7 @@ const JA = new Map(Object.entries({
   'The board is saved. If they don’t return within the countdown, the match is yours.': '盤面は保存されています。時間内に戻らなければ、あなたの勝ちです。',
   'Waiting': '待機中', 'Claim the win': '勝利を確定', 'Keep waiting': '待ち続ける', 'Link expired': 'リンクは期限切れです',
   'This game is no longer open': 'この対局には参加できません', 'New online game': '新しいオンライン対局', 'Play the bot': 'ボットと対戦',
-  'Back home': 'ホームへ戻る', 'Your turn': 'あなたの手番', 'Deselect': '選択解除', 'Reviewing': '棋譜を確認中',
+  'Back home': 'ホームへ戻る', 'Your turn': 'あなたの手番', 'CHECK — defend your king': '王手！キングを守ってください', 'Deselect': '選択解除', 'Reviewing': '棋譜を確認中',
   'A reviewed board is not the live one. Nothing you do here counts.': '確認中の盤面は現在の局面ではありません。ここでの操作は対局に反映されません。',
   'Back to live': '現在の局面へ', 'Moves': '棋譜', 'Copy game': '棋譜をコピー', 'Undo': '待った', 'Resign': '投了',
   'At the table': '対局チャット', 'Peer-to-peer · not saved': 'P2P通信・保存されません', 'Hide chat': 'チャットを隠す',

@@ -14,6 +14,22 @@ test('every service-worker shell entry exists', async () => {
   await Promise.all(paths.map((path) => access(resolve(root, path))));
 });
 
+test('a checked king has an unmistakable turn warning and board marker', async () => {
+  const [game, controller, css, translations] = await Promise.all([
+    readFile(resolve(root, 'game.html'), 'utf8'),
+    readFile(resolve(root, 'src/main.js'), 'utf8'),
+    readFile(resolve(root, 'styles.css'), 'utf8'),
+    readFile(resolve(root, 'src/i18n.js'), 'utf8'),
+  ]);
+  assert.match(game, /id="turn-card"[^>]+aria-live="polite"/);
+  assert.match(controller, /if \(isInCheck\(position, humanColor\)\) \{\s*return \{ title: 'CHECK — defend your king', detail: playDetail\(\), waiting: false, check: true \}/);
+  assert.match(controller, /turnCard\.classList\.toggle\('is-check', Boolean\(check\)\)/);
+  assert.match(controller, /checked\.has\(square\) \? ', in check' : ''/);
+  assert.match(css, /\.game-page \.square\.in-check::before \{[^}]*content: "CHECK"/);
+  assert.match(css, /\.game-page \.turn-card\.is-check \{[^}]*border-color: var\(--danger\)/);
+  assert.match(translations, /'CHECK — defend your king': '王手！キングを守ってください'/);
+});
+
 test('AI viewing stays in the browser and tournaments publish one artifact plus a durable release', async () => {
   const [lobby, watch, viewer, workflow, readme] = await Promise.all([
     readFile(resolve(root, 'index.html'), 'utf8'),

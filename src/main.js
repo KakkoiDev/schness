@@ -22,7 +22,7 @@ import {
 } from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=63';
+import { initI18n } from './i18n.js?v=64';
 
 initTheme();
 initI18n();
@@ -1297,7 +1297,8 @@ function render() {
     cursor: keyboardActive ? squareAtCursor() : null,
     dragging: pointerDrag?.active ? pointerDrag.sourceSquare : null, disabled: !canHumanAct(),
     label: (square, occupant) => occupant
-      ? `${occupant.owner} ${occupant.piece}, square ${square + 1}` : `Empty square ${square + 1}`,
+      ? `${occupant.owner} ${occupant.piece}, square ${square + 1}${checked.has(square) ? ', in check' : ''}`
+      : `Empty square ${square + 1}`,
   });
   for (const button of board.querySelectorAll('.square')) button.dataset.name = squareName(Number(button.dataset.square));
   animateLastAction(last, shown);
@@ -1322,11 +1323,12 @@ function render() {
 }
 
 function renderTurnCard(result) {
-  const { title, detail, waiting, pending } = turnCardContent(result);
+  const { title, detail, waiting, pending, check } = turnCardContent(result);
   turnTitle.textContent = title;
   turnDetail.textContent = detail;
   turnDetail.hidden = !detail;
   turnCard.classList.toggle('is-waiting', waiting);
+  turnCard.classList.toggle('is-check', Boolean(check));
   // Distinct from is-waiting, which is also true once the game is over: this
   // one means a turn is genuinely in flight, and is what the dot animates on.
   turnCard.classList.toggle('is-pending', Boolean(pending));
@@ -1593,6 +1595,9 @@ function turnCardContent(result) {
       detail: 'Pick any marked square on your home row. White places first, then Black.',
       waiting: false,
     };
+  }
+  if (isInCheck(position, humanColor)) {
+    return { title: 'CHECK — defend your king', detail: playDetail(), waiting: false, check: true };
   }
   return { title: 'Your turn', detail: playDetail(), waiting: false };
 }
