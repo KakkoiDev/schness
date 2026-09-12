@@ -21,6 +21,11 @@ marker remains visible when reviewing the checked position. Sound stays opt-in.
 **Evidence.** Unit coverage locks the headline, card state, accessibility label, and Japanese copy;
 desktop/mobile browser checks exercise the board marker. No chess-rule or legal-action logic changed.
 
+**Palette follow-up.** The vivid red overlay and outline stood apart from the warm green-gray
+board. The checked square now takes on one solid muted terracotta color per theme, with a quiet
+brick edge and label. The CHECK headline remains the primary warning; the square no longer looks
+like an unrelated neon alert or obscures a white or black king.
+
 ## 2026-09-11 — One bilingual interface and one product mark
 
 **Language.** English and Japanese now share one browser-native interface rather than separate page
