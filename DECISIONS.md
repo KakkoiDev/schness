@@ -47,6 +47,9 @@ are also identified and displayed early; they are not mislabeled as an unavoidab
 The homepage launches `watch.html` for all standard bot play, so the controls must appear there,
 not solely in the older `game.html?mode=bot` route. The online clock selector appears only during
 online invitation creation; choosing a timed online match cannot silently time a subsequent bot match.
+The B/W advantage rail uses one clipped outer radius and a square-edged inner fill:
+rounding both exposes background seams on narrow screens. Its labels overlay the
+ends rather than consuming track height; numeric estimates remain in the panel.
 
 `bot` and `puzzle` are trusted search modules: both consume positions produced by the rules engine
 and may use its unchecked move-generation/apply entry points inside their trees. Network, saved,

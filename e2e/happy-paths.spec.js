@@ -65,6 +65,23 @@ test('training warns the defender of forced mate before they move', async ({ pag
   await expect(page.locator('#watch-analysis-bar')).toBeVisible();
   await expect(page.locator('#watch-analysis-score')).toBeVisible();
   await expect(page.locator('#watch-analysis-bar .analysis-side')).toHaveText(['B', 'W']);
+  const rail = await page.locator('#watch-analysis-bar').evaluate((element) => {
+    const bar = getComputedStyle(element);
+    const fill = getComputedStyle(element.querySelector('.analysis-fill'));
+    const track = element.querySelector('.analysis-track').getBoundingClientRect();
+    const bounds = element.getBoundingClientRect();
+    return {
+      clipped: bar.overflow === 'hidden',
+      fillRadius: fill.borderRadius,
+      trackHeight: track.height,
+      railHeight: bounds.height,
+      mobileWidth: bounds.width,
+    };
+  });
+  expect(rail.clipped).toBe(true);
+  expect(rail.fillRadius).toBe('0px');
+  expect(Math.abs(rail.trackHeight - rail.railHeight)).toBeLessThan(1);
+  expect(rail.mobileWidth).toBeGreaterThanOrEqual(16);
   const after = await page.locator('#watch-board').boundingBox();
   expect(Math.abs(before.width - after.width)).toBeLessThan(1);
 });
