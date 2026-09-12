@@ -22,8 +22,8 @@ import {
 } from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=70';
-import { attachAnalysis } from './analysis-ui.js';
+import { initI18n } from './i18n.js?v=71';
+import { attachAnalysis } from './analysis-ui.js?v=71';
 
 initTheme();
 initI18n();
@@ -35,6 +35,7 @@ const trainingAnalysis = attachAnalysis({
   bar: document.querySelector('#training-bar'), fill: document.querySelector('#training-fill'),
   scoreLabel: document.querySelector('#training-score'), warning: document.querySelector('#training-warning'),
   getPosition: () => displayedPosition(), enabled: () => mode === 'bot' && displayedPosition().phase === 'play',
+  showRisks: () => mode === 'bot' && position.turn === humanColor && reviewPly === null,
 });
 let analyzedPosition = null;
 const humanBank = document.querySelector('#human-bank');
