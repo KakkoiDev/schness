@@ -8,7 +8,8 @@ import { movedEnough } from './drag.js';
 import { pieceElement, renderReserve as renderPieceReserve } from './piece-ui.js';
 import { createBoard, renderBoard } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=68';
+import { initI18n } from './i18n.js?v=70';
+import { attachAnalysis } from './analysis-ui.js';
 import { resultLabel, sideName } from './watch.js';
 
 initTheme();
@@ -32,6 +33,13 @@ let editorBoard = [];
 let editorPiece = { owner: WHITE, piece: KING };
 let pointerDrag = null;
 let suppressClick = false;
+const trainingAnalysis = attachAnalysis({
+  toggles: { mate: $('#watch-training-mate'), advantage: $('#watch-training-advantage') },
+  bar: $('#watch-analysis-bar'), fill: $('#watch-analysis-fill'),
+  scoreLabel: $('#watch-analysis-score'), warning: $('#watch-training-warning'),
+  getPosition: current, enabled: () => current().phase === 'play',
+});
+let analyzedPosition = null;
 
 const imported = loadImportedPosition();
 if (imported) timeline = [imported];
@@ -209,6 +217,10 @@ function buildBoard(element, editor) {
 
 function render() {
   const position = current();
+  if (position !== analyzedPosition) {
+    analyzedPosition = position;
+    trainingAnalysis.refresh();
+  }
   const humanTurn = reviewIndex === history.length && controller(position.turn) === 'human';
   const legal = selection ? actionsForSelection(position, selection) : [];
   const placements = position.phase === 'play' ? new Set() : setupDestinations(position);

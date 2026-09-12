@@ -96,7 +96,7 @@ test('rules are playable and recorded positions can branch into the full arena',
   assert.match(tutorial, /new Worker\('\.\/src\/bot-worker\.js'/);
   assert.match(tutorial, /beginBoardDrag/);
   assert.match(tutorial, /beginBankDrag/);
-  assert.match(lobby, /id="replay-tutorial"/);
+  assert.doesNotMatch(lobby, /id="replay-tutorial"/);
   assert.match(tutorial, /schness-tutorial-seen/);
   assert.match(library, /id="replay-black-reserve"/);
   assert.match(library, /id="replay-white-reserve"/);
@@ -458,10 +458,9 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(css, /\.dialog-foot\s*{[\s\S]*?background:\s*var\(--sunk\)/);
   assert.match(css, /\.rules-strip\s*{[\s\S]*?gap:\s*1px;[\s\S]*?background:\s*var\(--line\)/);
   // Bot seats are chosen inside the arena where they can change mid-game.
-  // Only the online clock remains in the lobby disclosure.
-  assert.match(html, /<details class="setup">/);
-  assert.match(html, /id="setup-summary"/);
-  assert.doesNotMatch(html, /<details class="setup" open>/);
+  // Only the online clock remains in the lobby creation dialog.
+  assert.match(html, /<dialog id="online-setup"/);
+  assert.doesNotMatch(html, /id="setup-summary"/);
   assert.doesNotMatch(html, /name="difficulty"/);
   assert.equal([...html.matchAll(/name="clock"/g)].length, 4);
   assert.match(html, /value="untimed" checked/);

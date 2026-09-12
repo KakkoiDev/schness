@@ -34,6 +34,9 @@ Training hints and replay advantage are opt-in and never shown in P2P games. The
 exact forced mate against every legal reply using `puzzle` separately from a depth-three White-positive
 `bot` heuristic. A timeout is *inconclusive*, never a proof that no mate exists. Every new position
 terminates the previous analysis worker so stale results cannot overwrite the current board.
+The homepage launches `watch.html` for all standard bot play, so the controls must appear there,
+not solely in the older `game.html?mode=bot` route. The online clock selector appears only during
+online invitation creation; choosing a timed online match cannot silently time a subsequent bot match.
 
 `bot` and `puzzle` are trusted search modules: both consume positions produced by the rules engine
 and may use its unchecked move-generation/apply entry points inside their trees. Network, saved,

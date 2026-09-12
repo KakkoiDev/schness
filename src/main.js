@@ -22,7 +22,7 @@ import {
 } from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=69';
+import { initI18n } from './i18n.js?v=70';
 import { attachAnalysis } from './analysis-ui.js';
 
 initTheme();
@@ -723,7 +723,7 @@ function resetState(nextMode, color) {
   drawOffered = false;
   resultDismissed = false;
   resultAnnounced = false;
-  clock = createClock(clockMode());
+  clock = createClock(nextMode === 'online' ? clockMode() : 'untimed');
   clockSince = null;
   stopClockTicking();
   cursor = 0;

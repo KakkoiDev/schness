@@ -27,10 +27,6 @@ export function initTutorial() {
 
   buildBoard();
   document.querySelectorAll('.rule-demo-trigger').forEach((button) => button.addEventListener('click', () => open(button.dataset.lesson)));
-  document.querySelector('#replay-tutorial')?.addEventListener('click', (event) => {
-    event.currentTarget.closest('dialog')?.close();
-    open('kings');
-  });
   $('#demo-close').addEventListener('click', () => { root.hidden = true; cancel(); });
   $('#demo-restart').addEventListener('click', () => open(lesson, false));
   worker.addEventListener('message', ({ data }) => {

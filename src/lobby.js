@@ -1,8 +1,8 @@
 import { gameUrl, launchIntent } from './navigation.js';
 import { clockMode, setClockMode } from './settings.js';
 import { initTheme } from './theme.js';
-import { initTutorial } from './tutorial.js?v=68';
-import { initI18n } from './i18n.js?v=68';
+import { initTutorial } from './tutorial.js?v=70';
+import { initI18n } from './i18n.js?v=70';
 
 initTheme();
 initI18n();
@@ -17,13 +17,21 @@ const installButton = document.querySelector('#install');
 let installPrompt = null;
 
 arenaButton.addEventListener('click', () => window.location.assign('./watch.html'));
-onlineButton.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online')));
+const onlineSetup = document.querySelector('#online-setup');
+onlineButton.addEventListener('click', () => {
+  onlineSetup.querySelector(`input[name="clock"][value="${clockMode()}"]`)?.click();
+  onlineSetup.showModal();
+});
+document.querySelector('#online-setup-close').addEventListener('click', () => onlineSetup.close());
+document.querySelector('#online-setup-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  setClockMode(new FormData(event.currentTarget).get('clock') || 'untimed');
+  window.location.assign(gameUrl(window.location.href, 'online'));
+});
 libraryButton.addEventListener('click', () => window.location.assign('./library.html'));
 puzzlesButton.addEventListener('click', () => window.location.assign('./puzzles.html'));
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
-initChoice('clock', clockMode(), setClockMode);
-renderSetupSummary();
 // Chrome offers installation through a menu most people never open. Taking
 // the event lets the lobby offer it in place; the button exists only while
 // there is something to accept, so it never sits there as dead furniture.
@@ -75,28 +83,4 @@ function updateOnlineAvailability() {
   onlineButton.disabled = !navigator.onLine;
   onlineButton.querySelector('small').textContent = navigator.onLine
     ? 'Get a link to send a friend' : 'Unavailable while offline';
-}
-
-/** Radio groups that persist the moment they change, before any match starts. */
-function initChoice(name, saved, save) {
-  const inputs = document.querySelectorAll(`input[name="${name}"]`);
-  for (const input of inputs) {
-    input.checked = input.value === saved;
-    input.addEventListener('change', () => {
-      if (!input.checked) return;
-      save(input.value);
-      renderSetupSummary();
-    });
-  }
-}
-
-/**
- * Strength and clock live behind a disclosure, so the summary carries the
- * current pair — a collapsed setup still says what you are about to play.
- */
-function renderSetupSummary() {
-  const summary = document.querySelector('#setup-summary');
-  if (!summary) return;
-  const clock = clockMode();
-  summary.textContent = clock === 'untimed' ? 'Untimed' : clock;
 }
