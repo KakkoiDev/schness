@@ -40,13 +40,13 @@
 .game-page .square.placement::after{width:14%;background:rgb(255 255 255/.68)}
 .game-page { --check-square: #d5a9a1; --check-edge: #74423f; }
 :root[data-theme="dark"] .game-page { --check-square: #a77a76; --check-edge: #633b3a; }
-.game-page .square.in-check {
+#board .square.in-check {
   background-color: var(--check-square);
   background-image: none;
   box-shadow: inset 0 0 0 2px var(--check-edge);
   z-index: 2;
 }
-.game-page .square.in-check::before {
+#board .square.in-check::before {
   content: "CHECK";
   position: absolute;
   top: 5px;
