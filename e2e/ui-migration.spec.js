@@ -22,6 +22,17 @@ for (const language of ['en', 'ja']) {
             .map((button) => button.getBoundingClientRect().height),
         }));
         expect(dimensions.content, path).toBeLessThanOrEqual(dimensions.screen + 1);
+        if (path === '/puzzles.html') {
+          const inset = await page.locator('.puzzle-settings').evaluate((card) => {
+            const bounds = card.getBoundingClientRect();
+            const levels = card.querySelector('.puzzle-levels').getBoundingClientRect();
+            return { left: levels.left - bounds.left, right: bounds.right - levels.right,
+              padding: parseFloat(getComputedStyle(card).paddingLeft) };
+          });
+          expect(inset.padding).toBeGreaterThanOrEqual(14);
+          expect(inset.left).toBeGreaterThanOrEqual(14);
+          expect(inset.right).toBeGreaterThanOrEqual(14);
+        }
         for (const height of dimensions.headerTargets) expect(height, path).toBeGreaterThanOrEqual(44);
         const boards = page.locator('[data-schness-board="true"]');
         for (let index = 0; index < await boards.count(); index += 1) {
