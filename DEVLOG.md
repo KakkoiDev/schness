@@ -380,3 +380,10 @@ from 16/14px to 20/16px, cover replay and dialog surfaces, and give selectors en
 specificity to beat legacy nested-panel overrides. Increase the puzzle dock to 12px
 and make checkbox text wrap without shrinking its checkbox. Keep board geometry
 unchanged. Browser tests measure a minimum 16px settings inset in all themes/languages.
+
+# 2026-09-13 — Remove broad tutorial separator bands
+
+Basecoat integration increased the rule-strip gap from 1px to 1rem while retaining
+its brown border-color background. The exposed grid gaps therefore became thick
+bands. Restore the intentional 1px gaps rather than altering card padding. Add
+computed-gap browser checks in both themes, with tutorial activation preserved.

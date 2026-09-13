@@ -485,3 +485,6 @@ Newest first. One line per decision that changed how the app behaves.
 
 Shared card padding is 20px on desktop and 16px on small phones; selectors must
 beat nested legacy panel rules. Chessboard and reserve geometry are excluded.
+
+Homepage rule-strip gaps are 1px: its background supplies hairline dividers, not
+spacing. Increasing its gap exposes broad brown bands between the tutorial cards.

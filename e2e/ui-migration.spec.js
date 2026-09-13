@@ -42,3 +42,15 @@ for (const language of ['en', 'ja']) {
     });
   }
 }
+
+for (const theme of ['light', 'dark']) {
+  test(`tutorial separators stay hairline in ${theme}`, async ({ page }) => {
+    await page.addInitScript((theme) => { localStorage.setItem('schness-theme', theme); localStorage.setItem('schness-tutorial-seen', '1'); }, theme);
+    await page.goto('/');
+    const gaps = await page.locator('.rules-strip').evaluate((strip) => { const style = getComputedStyle(strip); return { row: parseFloat(style.rowGap), column: parseFloat(style.columnGap) }; });
+    expect(gaps.row).toBe(1);
+    expect(gaps.column).toBe(1);
+    await page.locator('[data-lesson="deploy"]').click();
+    await expect(page.locator('#rules-demo')).toBeVisible();
+  });
+}
