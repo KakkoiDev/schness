@@ -493,3 +493,6 @@ An advantage rail is unknown while a new estimate is pending or unavailable: hid
 its fill, clear numeric ARIA state, and discard cancelled worker replies. Tutorial
 links use `--link`, mapped to the contrast-tested `--accent-text` theme token.
 
+
+The homepage tutorial list owns the divider before its adjacent playable demo;
+the demo must not add a second top border.

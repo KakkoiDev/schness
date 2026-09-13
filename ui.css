@@ -146,3 +146,6 @@ dialog h2 { line-height: 1.25; }
 .analysis-bar:not([data-state="ready"]) .analysis-side { color: var(--ink); }
 :root { --link: var(--accent-text); }
 
+
+/* The tutorial list owns the divider before its adjacent playable demo. */
+.lobby-page .rules-strip + .rules-demo { border-top: 0; }
