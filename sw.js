@@ -1,7 +1,7 @@
 // Bumped whenever anything in SHELL changes. The fetch handler below no longer
 // depends on remembering to do it — it revalidates in the background — but a
 // bump is still the only thing that refreshes every client on the same visit.
-const CACHE = 'schness-v79';
+const CACHE = 'schness-v80';
 const SHELL = [
   './',
   './index.html',
@@ -13,6 +13,8 @@ const SHELL = [
   './data/puzzles.json',
   './styles.css',
   './ui.css',
+  './assets/select-chevron.svg',
+  './assets/select-chevron-dark.svg',
   './vendor/basecoat/basecoat-nova.cdn.min.css',
   './manifest.webmanifest',
   './icon.svg',

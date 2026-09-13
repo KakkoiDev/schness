@@ -67,3 +67,39 @@ test('tutorial list and opened demo have only one boundary divider', async ({ pa
   expect(borders.list).toBe('1px');
   expect(borders.demo).toBe('0px');
 });
+
+test('arena selects have inset arrows and reserves clear the board', async ({ page }) => {
+  await page.goto('/watch.html');
+  const select = page.locator('select.select').first();
+  const style = await select.evaluate(el => ({ padding: parseFloat(getComputedStyle(el).paddingRight), position: getComputedStyle(el).backgroundPosition }));
+  expect(style.padding).toBeGreaterThanOrEqual(40);
+  expect(style.position).toContain('16px');
+  const spacing = await page.locator('.watch-stage').evaluate(el => {
+    const seats = el.querySelectorAll('.watch-player');
+    const board = el.querySelector('.board-frame').getBoundingClientRect();
+    return { top: board.top - seats[0].getBoundingClientRect().bottom, bottom: seats[1].getBoundingClientRect().top - board.bottom };
+  });
+  expect(spacing.top).toBeGreaterThanOrEqual(9);
+  expect(spacing.bottom).toBeGreaterThanOrEqual(9);
+});
+
+test('every desktop modal is viewport centered', async ({ page }) => {
+  test.skip(page.viewportSize().width <= 760, 'Desktop placement only');
+  for (const path of ['/', '/watch.html', '/library.html', '/puzzles.html', '/game.html?game=00000000-0000-4000-8000-000000000001&mode=bot']) {
+    await page.goto(path);
+    const ids = await page.locator('dialog').evaluateAll(dialogs => dialogs.map(dialog => dialog.id));
+    for (const id of ids) {
+      const geometry = await page.evaluate(id => {
+        const dialog = document.getElementById(id);
+        document.querySelectorAll('dialog[open]').forEach(open => open.close());
+        dialog.showModal();
+        const r = dialog.getBoundingClientRect();
+        const result = { x: Math.abs(r.left + r.width / 2 - innerWidth / 2), y: Math.abs(r.top + r.height / 2 - innerHeight / 2) };
+        dialog.close();
+        return result;
+      }, id);
+      expect(geometry.x, path + '#' + id).toBeLessThanOrEqual(2);
+      expect(geometry.y, path + '#' + id).toBeLessThanOrEqual(2);
+    }
+  }
+});

@@ -496,3 +496,7 @@ links use `--link`, mapped to the contrast-tested `--accent-text` theme token.
 
 The homepage tutorial list owns the divider before its adjacent playable demo;
 the demo must not add a second top border.
+
+## 2026-09-13 — Shared spacing and modal placement
+
+All desktop dialogs use native fixed viewport centering rather than per-page offsets. Selects retain native interaction but draw a self-hosted inset chevron because browser-native arrows cannot be consistently repositioned. Reserve spacing is applied around shared stage seats, not inside piece icons or board squares.
