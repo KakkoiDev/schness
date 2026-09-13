@@ -363,3 +363,12 @@ AI, P2P, clocks, drag handling and mode-specific layouts. Added language/theme
 overflow and tap-target browser checks. The bundle adds about 223KB before HTTP
 compression; next measurement is real-phone usability and compressed transfer,
 not another UI dependency. Revert the single squash commit if the trial feels worse.
+
+# 2026-09-13 — Give surface cards their own padding
+
+Mobile feedback exposed controls flush with the puzzle mix card's edge. Its parent
+becomes `display:contents`, so parent padding cannot protect it. Give settings,
+statistics, filters, analysis, network/result and spectator/tutorial panels a
+shared internal inset (16px desktop, 14px small phones); increase the puzzle action
+dock inset too. Leave board cells and piece trays unchanged. Test the visible
+settings controls against the actual card bounds rather than just its CSS class.

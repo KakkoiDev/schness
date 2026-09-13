@@ -99,7 +99,11 @@ body .dialog-close.btn { width: 44px; height: 44px; padding: 0; flex: 0 0 44px; 
   background-color: var(--surface);
   box-shadow: none;
 }
-.watch-panel, .demo-panel { padding: 1rem; }
+.watch-panel, .demo-panel, .puzzle-settings, .library-stats,
+.library-filters, .analysis-panel, .network-card, .result-card { padding: 1rem; }
+/* Mobile puzzle-panel is display:contents: its settings need their own inset. */
+.puzzle-settings { box-sizing: border-box; }
+.puzzle-actions { padding: .75rem; }
 .watch-status, .position-help, .online-setup-note { line-height: 1.5; }
 .watch-controls .btn, .puzzle-actions .btn { width: 100%; }
 .watch-moves .btn { min-height: 44px; padding: .4rem .6rem; font-size: .8rem; }
@@ -121,7 +125,9 @@ dialog h2 { line-height: 1.25; }
 @media (max-width: 480px) {
   body .header-actions .btn { font-size: .72rem; padding-inline: .5rem; }
   .lobby-page header { margin-bottom: 2rem; }
-  .watch-panel, .demo-panel { padding: .75rem; }
+  .watch-panel, .demo-panel, .puzzle-settings, .library-stats,
+  .library-filters, .analysis-panel, .network-card, .result-card { padding: .875rem; }
+  .puzzle-page .puzzle-actions { padding: .625rem; }
   .watch-player select.select { max-width: 100%; padding-inline: .375rem; font-size: .8rem; }
   .library-filters select.select { width: 100%; }
   .puzzle-actions .btn { min-height: 48px; }

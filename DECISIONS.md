@@ -21,6 +21,8 @@ shared control/surface styling; `styles.css` retains responsive game layout and
 board/piece states. Native selects and dialogs keep existing behavior; no Basecoat
 JavaScript runtime. Never apply `.btn` to board squares or reserve glyph buttons.
 The audit and rollback scope are in `docs/ui-migration-audit-2026-09-13.md`.
+Surface cards own their internal padding; do not rely on a parent panel's inset
+when responsive layout can turn that parent into `display:contents`.
 
 Three documents, deliberately separate:
 
