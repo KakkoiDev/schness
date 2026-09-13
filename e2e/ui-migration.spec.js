@@ -29,9 +29,9 @@ for (const language of ['en', 'ja']) {
             return { left: levels.left - bounds.left, right: bounds.right - levels.right,
               padding: parseFloat(getComputedStyle(card).paddingLeft) };
           });
-          expect(inset.padding).toBeGreaterThanOrEqual(14);
-          expect(inset.left).toBeGreaterThanOrEqual(14);
-          expect(inset.right).toBeGreaterThanOrEqual(14);
+          expect(inset.padding).toBeGreaterThanOrEqual(16);
+          expect(inset.left).toBeGreaterThanOrEqual(16);
+          expect(inset.right).toBeGreaterThanOrEqual(16);
         }
         for (const height of dimensions.headerTargets) expect(height, path).toBeGreaterThanOrEqual(44);
         const boards = page.locator('[data-schness-board="true"]');
