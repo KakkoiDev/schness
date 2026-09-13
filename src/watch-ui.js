@@ -321,7 +321,8 @@ function renderMoves() {
   moves.replaceChildren(...history.map((entry, index) => {
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = index + 1 === reviewIndex ? 'current' : '';
+    button.className = index + 1 === reviewIndex ? 'btn current' : 'btn';
+    button.dataset.variant = 'ghost';
     button.textContent = `${entry.ply}. ${entry.notation}`;
     button.addEventListener('click', () => {
       aisPaused = true;

@@ -25,23 +25,25 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
-  <link rel="stylesheet" href="./styles.css?v=73">
+  <link rel="stylesheet" href="./vendor/basecoat/basecoat-nova.cdn.min.css">
+  <link rel="stylesheet" href="./styles.css?v=74">
+  <link rel="stylesheet" href="./ui.css?v=74">
 </head>
 <body>
   <main class="game game-page">
     <header>
       <a class="brand" href="./" aria-label="Schness home"><span class="brand-mark" aria-hidden="true">S</span><span><h1>Schness</h1></span></a>
       <div class="header-actions">
-        <button class="text-button theme-button" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
-        <button class="text-button" type="button" data-open-sound>Sound</button>
-        <button class="text-button rules-button" type="button" data-open-rules>Rules</button>
+        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
+        <button class="text-button btn" type="button" data-open-sound data-variant="ghost">Sound</button>
+        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
       </div>
     </header>
 
     <section id="match">
       <div class="match-actions">
         <a id="back-to-menu" class="text-button" href="./">← Home</a>
-        <div class="match-action-buttons"><button id="swap-side" class="text-button" type="button" hidden>Play Black</button><button id="reset" class="reset" type="button">New game</button></div>
+        <div class="match-action-buttons"><button id="swap-side" class="text-button btn" type="button" hidden data-variant="ghost">Play Black</button><button id="reset" class="reset btn" type="button" data-variant="outline">New game</button></div>
       </div>
       <section id="network-card" class="network-card" hidden>
         <div id="card-waiting" class="card-state" hidden>
@@ -49,25 +51,25 @@
           <h2>Send this link</h2>
           <p class="card-body">The match starts the moment they open it. You’ll play White.</p>
           <div class="link-row">
-            <input id="invite-url" type="url" readonly aria-label="Match link">
-            <button id="copy-invite" type="button">Copy</button>
+            <input id="invite-url" type="url" readonly aria-label="Match link" class="input">
+            <button id="copy-invite" type="button" class="btn" data-variant="outline">Copy</button>
           </div>
           <div class="card-foot">
             <span id="search-pulse" class="pulse" aria-hidden="true"><i></i><i></i><i></i></span>
             <span id="search-status" role="status">Listening for a second player</span>
-            <button id="cancel-search" class="card-link" type="button">Cancel</button>
+            <button id="cancel-search" class="card-link btn" type="button" data-variant="ghost">Cancel</button>
           </div>
           <p id="search-stalled" class="card-note" hidden>
             No relay is answering, so the link cannot reach anyone yet. It will
             connect on its own if the network comes back.
-            <button id="stalled-bot" class="card-link" type="button">Play the bot instead</button>
+            <button id="stalled-bot" class="card-link btn" type="button" data-variant="ghost">Play the bot instead</button>
           </p>
           <p id="search-quiet" class="card-note" hidden>
             Still nobody. The link is live and the network is fine, so either
             they haven’t opened it yet — or they have, and the two networks
             can’t reach each other directly. Some mobile and office networks
             block that. Trying another network usually fixes it.
-            <button id="quiet-bot" class="card-link" type="button">Play the bot instead</button>
+            <button id="quiet-bot" class="card-link btn" type="button" data-variant="ghost">Play the bot instead</button>
           </p>
         </div>
         <div id="card-reconnect" class="card-state" hidden>
@@ -77,8 +79,8 @@
           <div class="progress"><i id="reconnect-bar"></i></div>
           <p class="progress-legend"><span>Waiting</span><span id="reconnect-left">1:00 left</span></p>
           <div class="card-actions">
-            <button id="claim-win" class="card-primary" type="button">Claim the win</button>
-            <button id="keep-waiting" class="card-secondary" type="button">Keep waiting</button>
+            <button id="claim-win" class="card-primary btn" type="button" data-variant="primary">Claim the win</button>
+            <button id="keep-waiting" class="card-secondary btn" type="button" data-variant="outline">Keep waiting</button>
           </div>
         </div>
         <div id="card-expired" class="card-state" hidden>
@@ -86,8 +88,8 @@
           <h2>This game is no longer open</h2>
           <p class="card-body">The invite was already used or has gone stale. Start a fresh one, or play the bot while you wait.</p>
           <div class="card-actions">
-            <button id="new-online" class="card-primary" type="button">New online game</button>
-            <button id="bot-instead" class="card-secondary" type="button">Play the bot</button>
+            <button id="new-online" class="card-primary btn" type="button" data-variant="primary">New online game</button>
+            <button id="bot-instead" class="card-secondary btn" type="button" data-variant="outline">Play the bot</button>
           </div>
         </div>
       </section>
@@ -122,10 +124,10 @@
               <h2 id="result-headline"></h2>
               <p id="result-detail" class="result-detail"></p>
               <div class="card-actions">
-                <button id="result-primary" class="card-primary" type="button"></button>
-                <button id="result-secondary" class="card-secondary" type="button"></button>
+                <button id="result-primary" class="card-primary btn" type="button" data-variant="primary"></button>
+                <button id="result-secondary" class="card-secondary btn" type="button" data-variant="outline"></button>
               </div>
-              <button id="result-home" class="card-link" type="button">Back home</button>
+              <button id="result-home" class="card-link btn" type="button" data-variant="ghost">Back home</button>
             </section>
           </div>
         </div>
@@ -143,12 +145,12 @@
         <section id="turn-card" class="turn-card" aria-live="polite">
           <p class="turn-headline"><span class="turn-dot" aria-hidden="true"></span><strong id="turn-title">Your turn</strong></p>
           <p id="turn-detail" class="turn-detail"></p>
-          <button id="deselect" class="turn-action" type="button" hidden>Deselect</button>
+          <button id="deselect" class="turn-action btn" type="button" hidden data-variant="ghost">Deselect</button>
         </section>
         <section id="review-card" class="turn-card review-card" hidden>
           <p class="turn-headline"><span class="turn-dot" aria-hidden="true"></span><strong id="review-title">Reviewing</strong></p>
           <p class="turn-detail">A reviewed board is not the live one. Nothing you do here counts.</p>
-          <button id="review-live" class="turn-action" type="button">Back to live</button>
+          <button id="review-live" class="turn-action btn" type="button" data-variant="ghost">Back to live</button>
         </section>
         <section class="player you" aria-label="You">
           <div class="player-identity">
@@ -171,9 +173,9 @@
             <strong id="moves-title">Moves</strong>
             <span class="moves-hint">↑ / ↓ to review</span>
             <div class="stepper" role="group" aria-label="Review moves">
-              <button id="move-first" class="step" type="button" aria-label="Back to the first move">⏮</button>
-              <button id="move-back" class="step" type="button" aria-label="Step back one move">◀</button>
-              <button id="move-forward" class="step" type="button" aria-label="Step forward one move">▶</button>
+              <button id="move-first" class="step btn" type="button" aria-label="Back to the first move" data-variant="outline">⏮</button>
+              <button id="move-back" class="step btn" type="button" aria-label="Step back one move" data-variant="outline">◀</button>
+              <button id="move-forward" class="step btn" type="button" aria-label="Step forward one move" data-variant="outline">▶</button>
             </div>
           </div>
           <div class="moves-table" role="table" aria-labelledby="moves-title">
@@ -185,28 +187,28 @@
           <p id="last-move" class="last-move">
             <span class="last-move-dot" aria-hidden="true"></span>
             <span id="last-move-text">No moves yet</span>
-            <button id="moves-toggle" class="moves-link" type="button" aria-expanded="false">Moves</button>
+            <button id="moves-toggle" class="moves-link btn" type="button" aria-expanded="false" data-variant="ghost">Moves</button>
           </p>
           <div class="moves-footer">
             <span class="moves-legend">@ marks a deployment from reserve</span>
-            <button id="copy-game" class="moves-link" type="button">Copy game</button>
+            <button id="copy-game" class="moves-link btn" type="button" data-variant="ghost">Copy game</button>
           </div>
         </section>
         <div class="rail-actions">
-          <button id="undo" class="rail-button" type="button">Undo</button>
-          <button id="resign" class="rail-button" type="button">Resign</button>
+          <button id="undo" class="rail-button btn" type="button" data-variant="outline">Undo</button>
+          <button id="resign" class="rail-button btn" type="button" data-variant="outline">Resign</button>
         </div>
       </aside>
       <section id="match-chat" class="match-chat" aria-labelledby="chat-title" hidden>
         <div class="chat-heading">
           <div><h2 id="chat-title">At the table</h2><small id="chat-note">Peer-to-peer · not saved</small></div>
-          <button id="chat-toggle" class="chat-toggle" type="button" aria-expanded="true">Hide chat</button>
+          <button id="chat-toggle" class="chat-toggle btn" type="button" aria-expanded="true" data-variant="outline">Hide chat</button>
         </div>
         <div id="chat-body">
           <div class="media-actions" aria-label="Call controls">
-            <button id="voice-toggle" class="media-toggle" type="button" aria-pressed="false">Audio off</button>
-            <button id="video-toggle" class="media-toggle" type="button" aria-pressed="false">Video off</button>
-            <button id="hear-opponent" class="media-toggle" type="button" hidden>Hear audio</button>
+            <button id="voice-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="outline">Audio off</button>
+            <button id="video-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="outline">Video off</button>
+            <button id="hear-opponent" class="media-toggle btn" type="button" hidden data-variant="outline">Hear audio</button>
           </div>
           <p id="voice-status" class="voice-status" aria-live="polite"></p>
           <div id="video-stage" class="video-stage" hidden>
@@ -217,14 +219,14 @@
             <p class="chat-empty">No messages yet.</p>
           </div>
           <div id="quick-chat" class="quick-chat" aria-label="Quick messages">
-            <button type="button" data-quick-message="Good move">Good move</button>
-            <button type="button" data-quick-message="One sec">One sec</button>
-            <button id="offer-draw" type="button" data-quick-action="draw">Offer draw</button>
+            <button type="button" data-quick-message="Good move" class="btn" data-variant="outline">Good move</button>
+            <button type="button" data-quick-message="One sec" class="btn" data-variant="outline">One sec</button>
+            <button id="offer-draw" type="button" data-quick-action="draw" class="btn" data-variant="outline">Offer draw</button>
           </div>
           <form id="chat-form" class="chat-form">
             <label class="visually-hidden" for="chat-message">Message your opponent</label>
-            <input id="chat-message" maxlength="280" autocomplete="off" placeholder="Message your opponent…">
-            <button type="submit">Send</button>
+            <input id="chat-message" maxlength="280" autocomplete="off" placeholder="Message your opponent…" class="input">
+            <button type="submit" class="btn" data-variant="outline">Send</button>
           </form>
           <audio id="peer-audio" autoplay playsinline></audio>
         </div>
@@ -239,7 +241,7 @@
         <p class="eyebrow">Feedback</p>
         <h2 id="sound-title">Sound and haptics</h2>
       </div>
-      <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close sound settings">✕</button></form>
+      <form method="dialog"><button class="dialog-close btn" type="submit" aria-label="Close sound settings" data-variant="ghost">✕</button></form>
     </div>
     <div class="dialog-body">
       <p class="cue-note">All off until you ask for them. Reduced motion is about motion, so it does not decide this.</p>
@@ -259,7 +261,7 @@
         <p class="eyebrow">Keyboard</p>
         <h2 id="shortcuts-title">Playing without a mouse</h2>
       </div>
-      <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close shortcuts">✕</button></form>
+      <form method="dialog"><button class="dialog-close btn" type="submit" aria-label="Close shortcuts" data-variant="ghost">✕</button></form>
     </div>
     <div class="dialog-body">
     <dl class="shortcuts">
@@ -279,7 +281,7 @@
         <p class="eyebrow">How to play</p>
         <h2 id="rules-title">Schness in four rules</h2>
       </div>
-      <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close rules">✕</button></form>
+      <form method="dialog"><button class="dialog-close btn" type="submit" aria-label="Close rules" data-variant="ghost">✕</button></form>
     </div>
     <div class="dialog-body" tabindex="0" role="group" aria-label="The rules, scrollable">
       <ol class="rules-list">
@@ -315,7 +317,7 @@
       </section>
     </div>
     <div class="dialog-foot">
-      <form method="dialog"><button class="rules-confirm" type="submit">Got it</button></form>
+      <form method="dialog"><button class="rules-confirm btn" type="submit" data-variant="primary">Got it</button></form>
     </div>
   </dialog>
   <script type="module" src="./src/main.js?v=71"></script>

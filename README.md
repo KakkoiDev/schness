@@ -96,6 +96,11 @@ and 156 mate-in-four. Every puzzle retains its source game and ply.
 
 ## Development
 
+UI primitives use locally bundled Basecoat 1.0.2 Nova. Shared control styling is
+in `ui.css`; board and responsive layout styling remains in `styles.css`.
+See the [five-page migration audit](docs/ui-migration-audit-2026-09-13.md) for scope,
+validation and the one-commit rollback plan. No production build step or CDN required.
+
 Schness uses browser-native JavaScript modules and has no build step. The rules and bot are independent
 of the eventual UI and peer-to-peer transport.
 

@@ -1,0 +1,131 @@
+/* Basecoat Nova integration. Layout and all board/piece states remain in styles.css.
+   Existing Schness tokens win over the vendor's defaults in both themes. */
+:root {
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--inverse);
+  --secondary: var(--sunk);
+  --secondary-foreground: var(--ink);
+  --muted-foreground: var(--muted);
+  --accent-foreground: var(--ink);
+  --destructive: var(--danger);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--focus);
+  --radius: .625rem;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* One button vocabulary across all pages; glyphs and board squares never get .btn. */
+body .btn {
+  min-height: 44px;
+  height: auto;
+  padding: .625rem .875rem;
+  border: 1px solid var(--line);
+  border-radius: .5rem;
+  background: var(--surface);
+  color: var(--ink);
+  font: 600 .875rem/1.4 var(--font-sans);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  box-shadow: none;
+  transform: none;
+  transition: background-color 120ms ease, border-color 120ms ease;
+  cursor: pointer;
+}
+body .btn[data-variant="ghost"] { border-color: transparent; background: transparent; }
+body .btn[data-variant="primary"] { background: var(--ink); color: var(--inverse); border-color: var(--ink); }
+body .btn:not(:disabled):hover { background: var(--sunk); border-color: var(--muted); transform: none; }
+body .btn[data-variant="primary"]:not(:disabled):hover { background: var(--ink); opacity: .9; }
+body .btn:disabled { opacity: .5; cursor: default; }
+body .btn:focus-visible, body .input:focus-visible, body select.select:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+body .btn[aria-pressed="true"], body .btn.current {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--inverse);
+}
+body select.select, body .input {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: .5rem;
+  padding: .5rem .75rem;
+  background: var(--surface);
+  color: var(--ink);
+  font: 500 .875rem/1.4 var(--font-sans);
+  box-shadow: none;
+}
+body select.select { appearance: auto; background-image: none; padding-right: .5rem; }
+body input[type="checkbox"], body input[type="radio"] { accent-color: var(--ink); }
+body .header-actions .btn { padding: .5rem .625rem; font-size: .8rem; white-space: nowrap; }
+body .dialog-close.btn { width: 44px; height: 44px; padding: 0; flex: 0 0 44px; }
+
+/* Homepage: restrained hierarchy, not four competing oversized billboards. */
+.lobby-page header { margin-bottom: clamp(2rem,7vh,4rem); }
+.lobby-page .lobby-intro { margin-bottom: 1.75rem; }
+.lobby-page .lobby-intro h2 { font-size: clamp(2rem,6vw,3rem); line-height: 1.15; letter-spacing: -.04em; }
+.lobby-page .mode.btn {
+  display: grid;
+  justify-content: stretch;
+  align-items: start;
+  height: auto;
+  gap: .25rem;
+  padding: 1rem 1.125rem;
+  text-align: left;
+}
+.lobby-page .mode.btn strong { font-size: 1rem; line-height: 1.4; }
+.lobby-page .mode.btn small { color: var(--muted); font-size: .875rem; line-height: 1.5; }
+.lobby-page .mode.dark.btn { background: var(--ink); color: var(--inverse); border-color: var(--ink); }
+.lobby-page .mode.dark.btn small { color: var(--inverse); opacity: .8; }
+.lobby-page .rules-strip { margin-top: 2.5rem; gap: 1rem; }
+.lobby-page .rules-strip article { border-color: var(--line); }
+.lobby-page .rules-strip .btn { justify-self: start; width: auto; min-width: 44px; }
+.lobby-page .rules-full.btn { width: 100%; margin-top: 1.25rem; }
+
+/* Panels share surfaces and spacing without changing each mode's layout. */
+.watch-panel, .puzzle-settings, .library-stats, .library-filters, .analysis-panel,
+.demo-panel, .network-card, .result-card {
+  border-color: var(--line);
+  border-radius: .625rem;
+  background-color: var(--surface);
+  box-shadow: none;
+}
+.watch-panel, .demo-panel { padding: 1rem; }
+.watch-status, .position-help, .online-setup-note { line-height: 1.5; }
+.watch-controls .btn, .puzzle-actions .btn { width: 100%; }
+.watch-moves .btn { min-height: 44px; padding: .4rem .6rem; font-size: .8rem; }
+.library-game.btn { display: grid; justify-content: stretch; height: auto; text-align: left; padding: 1rem; }
+.library-game.btn:hover { transform: none; }
+.library-game.btn small { font-weight: 400; }
+.library-filters label { gap: .375rem; }
+.analysis-panel label, .puzzle-toggles label, .sound-cues label { min-height: 44px; line-height: 1.5; }
+.position-foot { flex-wrap: wrap; gap: .5rem; }
+.chat-form .btn { flex-shrink: 0; }
+.quick-chat .btn, .chat-event .btn { font-size: .8rem; padding: .4rem .65rem; }
+
+/* Keep native dialog keyboard/focus behavior; migrate its visual surface only. */
+dialog { border-color: var(--line); border-radius: .75rem; background: var(--paper); color: var(--ink); }
+dialog::backdrop { background: rgb(8 12 10 / .65); }
+dialog .btn { max-width: 100%; }
+dialog h2 { line-height: 1.25; }
+
+@media (max-width: 480px) {
+  body .header-actions .btn { font-size: .72rem; padding-inline: .5rem; }
+  .lobby-page header { margin-bottom: 2rem; }
+  .watch-panel, .demo-panel { padding: .75rem; }
+  .watch-player select.select { max-width: 100%; padding-inline: .375rem; font-size: .8rem; }
+  .library-filters select.select { width: 100%; }
+  .puzzle-actions .btn { min-height: 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body .btn { transition: none; }
+}

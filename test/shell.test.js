@@ -91,7 +91,7 @@ test('rules are playable and recorded positions can branch into the full arena',
     readFile(resolve(root, 'src/library-ui.js'), 'utf8'),
     readFile(resolve(root, 'src/watch-ui.js'), 'utf8'),
   ]);
-  assert.equal((lobby.match(/class="rule-demo-trigger"/g) ?? []).length, 3);
+  assert.equal((lobby.match(/class="rule-demo-trigger btn"/g) ?? []).length, 3);
   assert.match(lobby, /id="rules-demo"[^>]+hidden/);
   assert.match(tutorial, /new Worker\('\.\/src\/bot-worker\.js'/);
   assert.match(tutorial, /beginBoardDrag/);
@@ -443,15 +443,15 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(html, /Schness in four rules/);
   assert.equal([...html.matchAll(/<li><strong>/g)].length, 4);
   assert.match(html, /Two things that trip people up/);
-  assert.match(html, /class="rules-confirm"[^>]*>Got it</);
+  assert.match(html, /class="rules-confirm btn"[^>]*>Got it</);
   // Nothing opens the rules for you, so there is no "don't show this" to offer.
   assert.doesNotMatch(html, /id="rules-optout"/);
   assert.match(html, /class="dialog-grab"/);
   // The three rules are the lobby's pitch, and the bot is the primary action.
   assert.equal([...html.matchAll(/class="strip-number"/g)].length, 3);
-  assert.match(html, /class="rules-full"[^>]*>Read the full rules</);
-  assert.match(html, /id="bot-arena" class="mode dark"/);
-  assert.match(html, /id="play-online" class="mode"/);
+  assert.match(html, /class="rules-full btn"[^>]*>Read the full rules</);
+  assert.match(html, /id="bot-arena" class="mode dark btn"/);
+  assert.match(html, /id="play-online" class="mode btn"/);
   assert.match(css, /\.rules-dialog\[open\]\s*{\s*display:\s*flex/);
   assert.match(css, /\.dialog-body\s*{[\s\S]*?grid-template-columns:\s*180px minmax\(0, 1fr\)/);
   assert.match(css, /\.dialog-foot\s*{[\s\S]*?background:\s*var\(--sunk\)/);

@@ -664,6 +664,8 @@ function appendChatEvent(text, actions = []) {
   for (const { label, run } of actions) {
     const button = document.createElement('button');
     button.type = 'button';
+    button.className = 'btn';
+    button.dataset.variant = 'outline';
     button.textContent = label;
     button.addEventListener('click', () => {
       row.querySelectorAll('button').forEach((other) => other.remove());

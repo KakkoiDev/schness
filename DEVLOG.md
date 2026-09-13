@@ -351,3 +351,15 @@ silhouette; extend the rectangular fill edge to both sides. Make the track fill
 the entire rail and overlay the W/B labels instead of reserving separate blocks
 that create seams. The numeric estimate stays outside the rail in the tools panel.
 Browser tests now assert the clipped geometry and unchanged board width.
+
+# 2026-09-13 — App-wide Basecoat trial
+
+Question: can a shared component vocabulary make the repeatedly patched interface
+more consistent? Audited all five pages and migrated controls together in one
+reversible PR. Use pinned Basecoat 1.0.2 Nova locally, with Schness theme tokens and
+one integration stylesheet. Rejected a CDN dependency (offline/CSP) and custom
+select/dialog runtimes (unnecessary behavior changes). Preserved boards/reserves,
+AI, P2P, clocks, drag handling and mode-specific layouts. Added language/theme
+overflow and tap-target browser checks. The bundle adds about 223KB before HTTP
+compression; next measurement is real-phone usability and compressed transfer,
+not another UI dependency. Revert the single squash commit if the trial feels worse.

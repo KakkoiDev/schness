@@ -15,6 +15,13 @@ changes this file in the same commit. See `CLAUDE.md`.
 Static site, no build step, no server. Browser-native ES modules loaded directly by two HTML pages.
 `npm test` runs `node --test`; there is nothing to compile.
 
+All five pages use pinned, locally bundled Basecoat 1.0.2 Nova for control primitives.
+`ui.css` maps its semantic tokens to Schness's existing light/dark palette and owns
+shared control/surface styling; `styles.css` retains responsive game layout and
+board/piece states. Native selects and dialogs keep existing behavior; no Basecoat
+JavaScript runtime. Never apply `.btn` to board squares or reserve glyph buttons.
+The audit and rollback scope are in `docs/ui-migration-audit-2026-09-13.md`.
+
 Three documents, deliberately separate:
 
 - **`index.html` + `src/lobby.js`** — the lobby. Chooses a mode and a setup, then navigates away.
@@ -383,8 +390,8 @@ Pure modules get real unit tests. DOM behaviour that cannot be unit-tested is gu
 against the source or the stylesheet — blunt, but it catches the specific regression it names, and
 each such test says which failure it is protecting against.
 
-There is no browser test runner in CI. Interactive verification is done by driving Chromium through
-Playwright by hand during development. **A class appearing is not proof a thing works** — the piece
+Desktop and mobile Playwright stories run in CI, including the UI migration's
+language/theme overflow and tap-target checks. **A class appearing is not proof a thing works** — the piece
 animation passed that bar while doing nothing at all. Measure the effect, not the trigger.
 
 ---
