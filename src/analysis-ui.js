@@ -16,12 +16,18 @@ export function attachAnalysis({ toggles, bar, fill, scoreLabel, warning, getPos
     clearTimeout(queued);
     worker?.terminate();
     worker = null;
+    request += 1;
   }
   function refresh() {
     stop();
     const mate = Boolean(toggles.mate?.checked && enabled());
     const advantage = Boolean(toggles.advantage?.checked && enabled());
     bar.hidden = !advantage;
+    fill.style.height = '50%';
+    bar.dataset.state = advantage ? 'pending' : 'off';
+    bar.setAttribute('aria-busy', String(advantage));
+    bar.removeAttribute('aria-valuenow');
+    bar.setAttribute('aria-valuetext', advantage ? 'Analyzing…' : '');
     scoreLabel.hidden = !advantage;
     warning.hidden = !mate;
     if (!mate && !advantage) return;
@@ -37,10 +43,20 @@ export function attachAnalysis({ toggles, bar, fill, scoreLabel, warning, getPos
     queued = setTimeout(() => {
       worker = new Worker('./src/analysis-worker.js?v=71', { type: 'module' });
       worker.onmessage = ({ data }) => {
-        if (data.request !== current) return;
+        if (data.request !== current || current !== request) return;
         if (data.kind === 'advantage') {
           const score = data.score;
-          const percent = Number.isFinite(score) ? Math.max(8, Math.min(92, 50 + 42 * Math.tanh(score / 550))) : 50;
+          if (!Number.isFinite(score)) {
+            bar.dataset.state = 'unavailable';
+            bar.removeAttribute('aria-valuenow');
+            bar.setAttribute('aria-busy', 'false');
+            bar.setAttribute('aria-valuetext', 'Unavailable');
+            scoreLabel.textContent = 'Unavailable';
+            return;
+          }
+          bar.dataset.state = 'ready';
+          bar.setAttribute('aria-busy', 'false');
+          const percent = Math.max(8, Math.min(92, 50 + 42 * Math.tanh(score / 550)));
           fill.style.height = `${percent}%`;
           bar.setAttribute('aria-valuenow', String(Math.round(percent * 2 - 100)));
           scoreLabel.textContent = Math.abs(score) >= 1_000_000
@@ -66,12 +82,21 @@ export function attachAnalysis({ toggles, bar, fill, scoreLabel, warning, getPos
           warning.textContent = 'Analysis unavailable.';
           warning.dataset.state = 'error';
           scoreLabel.textContent = 'Unavailable';
+          bar.dataset.state = 'unavailable';
+          bar.setAttribute('aria-busy', 'false');
+          bar.removeAttribute('aria-valuenow');
+          bar.setAttribute('aria-valuetext', 'Unavailable');
         }
       };
       worker.onerror = () => {
+        if (current !== request) return;
         warning.textContent = 'Analysis unavailable.';
         warning.dataset.state = 'error';
         scoreLabel.textContent = 'Unavailable';
+        bar.dataset.state = 'unavailable';
+        bar.setAttribute('aria-busy', 'false');
+        bar.removeAttribute('aria-valuenow');
+        bar.setAttribute('aria-valuetext', 'Unavailable');
         stop();
       };
       worker.postMessage({ position, mate, advantage, risks: showRisks(), request: current });
@@ -80,7 +105,12 @@ export function attachAnalysis({ toggles, bar, fill, scoreLabel, warning, getPos
           warning.textContent = `${riskText ? `${riskText} ` : ''}Mate search incomplete beyond ${checkedDepth} move${checkedDepth === 1 ? '' : 's'} (time limit).`;
           warning.dataset.state = riskText ? 'caution' : 'searching';
         }
-        if (advantage && scoreLabel.textContent === 'Analyzing…') scoreLabel.textContent = 'Evaluation incomplete';
+        if (advantage && scoreLabel.textContent === 'Analyzing…') {
+          scoreLabel.textContent = 'Evaluation incomplete';
+          bar.dataset.state = 'unavailable';
+          bar.setAttribute('aria-busy', 'false');
+          bar.setAttribute('aria-valuetext', 'Evaluation incomplete');
+        }
         worker?.terminate(); worker = null;
       }, 5000);
     }, 120);

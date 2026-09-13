@@ -29,10 +29,11 @@ wrong, say what replaced it. A stale record is worse than none, because it is tr
 
 ## Before you finish
 
-- `npm test` passes. It is the only gate; there is no build and no browser runner in CI.
+- `npm test` passes, and desktop/mobile Playwright happy paths pass in CI (`npm run test:e2e`). There is no production build step.
 - **Bump `CACHE` in `sw.js`** if you touched anything listed in its `SHELL`. A deploy that forgets
   this reaches nobody who has opened the site before.
 - Verify the effect, not the trigger. A class appearing, an object being returned, a check going
   green on the wrong rule — all of those have passed here while the feature did nothing.
 - Say plainly what you could not verify. This is a sandbox: there is no real device, no live relay,
   and no second peer.
+

@@ -139,3 +139,10 @@ dialog h2 { line-height: 1.25; }
 @media (prefers-reduced-motion: reduce) {
   body .btn { transition: none; }
 }
+
+/* A pending/failed estimate is unknown, not an even position or a stale score. */
+.analysis-bar:not([data-state="ready"]) { background: var(--line); }
+.analysis-bar:not([data-state="ready"]) .analysis-track { visibility: hidden; }
+.analysis-bar:not([data-state="ready"]) .analysis-side { color: var(--ink); }
+:root { --link: var(--accent-text); }
+
