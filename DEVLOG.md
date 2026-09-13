@@ -403,3 +403,7 @@ CLAUDE.md to require unit and desktop/mobile browser CI, not just unit tests.
 The tutorial list bottom border and adjacent demo top border both drew separators.
 Remove only the adjacent demo's top border, leaving the list divider and all demo
 spacing intact. Browser coverage opens a lesson and checks both border widths.
+
+## 2026-09-13 — Select, reserve, and desktop modal spacing
+
+Inset native-select chevrons by 1rem with locally cached, theme-specific SVGs and reserve text clearance. Added 10px between reserves and boards on arena, replay, puzzles, and tutorial. Restore viewport centering for every desktop native dialog after the Basecoat reset; retain mobile layouts and native focus behavior. Added browser regression checks for these geometry constraints.

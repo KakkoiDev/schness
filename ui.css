@@ -64,7 +64,15 @@ body select.select, body .input {
   font: 500 .875rem/1.4 var(--font-sans);
   box-shadow: none;
 }
-body select.select { appearance: auto; background-image: none; padding-right: .5rem; }
+body select.select {
+  appearance: none;
+  background-image: url('./assets/select-chevron.svg');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: .875rem;
+  padding-right: 2.75rem;
+}
+:root[data-theme="dark"] select.select { background-image: url('./assets/select-chevron-dark.svg'); }
 body input[type="checkbox"], body input[type="radio"] { accent-color: var(--ink); }
 body .header-actions .btn { padding: .5rem .625rem; font-size: .8rem; white-space: nowrap; }
 body .dialog-close.btn { width: 44px; height: 44px; padding: 0; flex: 0 0 44px; }
@@ -132,7 +140,7 @@ dialog h2 { line-height: 1.25; }
   dialog :is(.replay-panel, .dialog-body, .dialog-head, .dialog-foot) { padding: 1rem; }
   .library-stats { padding: 1rem; }
   .puzzle-page .puzzle-actions { padding: .75rem; }
-  .watch-player select.select { max-width: 100%; padding-inline: .375rem; font-size: .8rem; }
+  .watch-player select.select { max-width: 100%; padding-left: .625rem; padding-right: 2.75rem; font-size: .8rem; }
   .library-filters select.select { width: 100%; }
   .puzzle-actions .btn { min-height: 48px; }
 }
@@ -149,3 +157,20 @@ dialog h2 { line-height: 1.25; }
 
 /* The tutorial list owns the divider before its adjacent playable demo. */
 .lobby-page .rules-strip + .rules-demo { border-top: 0; }
+
+/* Shared board surfaces leave room around reserves without resizing pieces. */
+:is(.watch-stage, .replay-stage, .demo-stage, .puzzle-stage) > :is(.watch-player, .replay-seat):first-child { margin-bottom: .625rem; }
+:is(.watch-stage, .replay-stage, .demo-stage, .puzzle-stage) > :is(.watch-player, .replay-seat):last-child { margin-top: .625rem; }
+
+/* Vendor resets must not move native desktop modals into the top-left corner. */
+@media (min-width: 761px) {
+  body dialog {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    max-height: calc(100svh - 3rem);
+    max-width: calc(100vw - 3rem);
+    overflow: auto;
+  }
+}
