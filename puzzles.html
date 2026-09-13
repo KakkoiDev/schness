@@ -10,11 +10,13 @@
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
-  <link rel="stylesheet" href="./styles.css?v=73">
+  <link rel="stylesheet" href="./vendor/basecoat/basecoat-nova.cdn.min.css">
+  <link rel="stylesheet" href="./styles.css?v=74">
+  <link rel="stylesheet" href="./ui.css?v=74">
 </head>
 <body class="puzzle-page">
   <main class="game">
-    <header><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">S</span><h1>Schness</h1></a><div class="header-actions"><button class="text-button theme-button" type="button" data-theme-toggle>Dark</button></div></header>
+    <header><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">S</span><h1>Schness</h1></a><div class="header-actions"><button class="text-button theme-button btn" type="button" data-theme-toggle data-variant="ghost">Dark</button></div></header>
     <div class="puzzle-heading"><div><p class="eyebrow">Tactics</p><h2>Find the checkmate</h2></div><a class="text-button" href="./">← Home</a></div>
     <section class="puzzle-layout">
       <div class="puzzle-stage">
@@ -31,7 +33,7 @@
         <p id="puzzle-progress" class="eyebrow"></p>
         <h3 id="puzzle-prompt">Loading verified puzzles…</h3>
         <div id="puzzle-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span id="puzzle-feedback-icon" aria-hidden="true">●</span><p id="puzzle-status">Find the forced checkmate.</p></div>
-        <div class="puzzle-actions"><button id="puzzle-next" type="button">Next</button><button id="puzzle-reveal" type="button">Solution</button></div>
+        <div class="puzzle-actions"><button id="puzzle-next" type="button" class="btn" data-variant="primary">Next</button><button id="puzzle-reveal" type="button" class="btn" data-variant="outline">Solution</button></div>
         <div id="puzzle-line" class="watch-moves" aria-label="Played line"></div>
         <details><summary>Source positions</summary><div id="puzzle-sources" class="replay-sources"></div></details>
       </aside>

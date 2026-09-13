@@ -186,7 +186,8 @@ export function initI18n() {
   if (header && !document.querySelector('[data-language-toggle]')) {
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = 'text-button language-button';
+    button.className = 'text-button language-button btn';
+    button.dataset.variant = 'ghost';
     button.dataset.languageToggle = '';
     button.textContent = locale === 'ja' ? 'EN' : '日本';
     button.setAttribute('aria-label', locale === 'ja' ? '英語に切り替える' : 'Switch to Japanese');

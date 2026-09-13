@@ -26,16 +26,18 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
-  <link rel="stylesheet" href="./styles.css?v=73">
+  <link rel="stylesheet" href="./vendor/basecoat/basecoat-nova.cdn.min.css">
+  <link rel="stylesheet" href="./styles.css?v=74">
+  <link rel="stylesheet" href="./ui.css?v=74">
 </head>
 <body class="lobby-page">
   <main class="game">
     <header>
       <a class="brand" href="./" aria-label="Schness home"><span class="brand-mark" aria-hidden="true">S</span><h1>Schness</h1></a>
       <div class="header-actions">
-        <button class="text-button theme-button" type="button" data-theme-toggle aria-label="Switch to dark mode">Dark</button>
-        <button id="install" class="text-button" type="button" hidden>Install</button>
-        <button class="text-button rules-button" type="button" data-open-rules>Rules</button>
+        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
+        <button id="install" class="text-button btn" type="button" hidden data-variant="ghost">Install</button>
+        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
       </div>
     </header>
 
@@ -45,16 +47,16 @@
         <p>Move a piece, or deploy one from your reserve. Every capture comes back.</p>
       </div>
       <div class="mode-buttons">
-        <button id="bot-arena" class="mode dark" type="button"><strong>Bot arena</strong><small>Play, watch, take over, or edit a position</small></button>
-        <button id="play-online" class="mode" type="button"><strong>Create an online game</strong><small>Get a link to send a friend</small></button>
-        <button id="browse-games" class="mode" type="button"><strong>Browse recorded games</strong><small>Study 1,099 unique AI games</small></button>
-        <button id="solve-puzzles" class="mode" type="button"><strong>Checkmate puzzles</strong><small>Mate in one, two, three, or four</small></button>
+        <button id="bot-arena" class="mode dark btn" type="button" data-variant="outline"><strong>Bot arena</strong><small>Play, watch, take over, or edit a position</small></button>
+        <button id="play-online" class="mode btn" type="button" data-variant="outline"><strong>Create an online game</strong><small>Get a link to send a friend</small></button>
+        <button id="browse-games" class="mode btn" type="button" data-variant="outline"><strong>Browse recorded games</strong><small>Study 1,099 unique AI games</small></button>
+        <button id="solve-puzzles" class="mode btn" type="button" data-variant="outline"><strong>Checkmate puzzles</strong><small>Mate in one, two, three, or four</small></button>
       </div>
     </section>
 
     <dialog id="online-setup" class="online-setup" aria-labelledby="online-setup-title">
       <form id="online-setup-form">
-        <div class="replay-head"><div><p class="eyebrow">Online match</p><h2 id="online-setup-title">Choose a time control</h2></div><button id="online-setup-close" class="dialog-close" type="button" aria-label="Close online setup">✕</button></div>
+        <div class="replay-head"><div><p class="eyebrow">Online match</p><h2 id="online-setup-title">Choose a time control</h2></div><button id="online-setup-close" class="dialog-close btn" type="button" aria-label="Close online setup" data-variant="ghost">✕</button></div>
         <fieldset class="clock-choice">
           <legend>Time per player</legend>
           <div class="segmented">
@@ -65,7 +67,7 @@
           </div>
         </fieldset>
         <p class="online-setup-note">Choose untimed or a clock before creating the invitation link.</p>
-        <button class="card-primary online-setup-submit" type="submit">Create invitation link</button>
+        <button class="card-primary online-setup-submit btn" type="submit" data-variant="primary">Create invitation link</button>
       </form>
     </dialog>
 
@@ -74,33 +76,33 @@
         <p class="strip-number">1</p>
         <h3>Place the kings</h3>
         <p>White sets their king anywhere on the home row, then Black does the same.</p>
-        <button class="rule-demo-trigger" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings"><span>Try it →</span></button>
+        <button class="rule-demo-trigger btn" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings" data-variant="ghost"><span>Try it →</span></button>
       </article>
       <article>
         <p class="strip-number">2</p>
         <h3>Move or deploy</h3>
         <p>Each turn: move a piece by normal chess rules, or drop one from your reserve onto an empty square.</p>
-        <button class="rule-demo-trigger" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying"><span>Try it →</span></button>
+        <button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button>
       </article>
       <article>
         <p class="strip-number">3</p>
         <h3>Nothing is lost</h3>
         <p>A captured piece joins its owner’s reserve, so the board keeps refilling until checkmate.</p>
-        <button class="rule-demo-trigger" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece"><span>Try it →</span></button>
+        <button class="rule-demo-trigger btn" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece" data-variant="ghost"><span>Try it →</span></button>
       </article>
     </section>
     <section id="rules-demo" class="rules-demo" aria-labelledby="demo-title" hidden>
-      <div class="demo-heading"><div><p class="eyebrow">Playable rule</p><h2 id="demo-title">Place the kings</h2></div><button id="demo-close" class="text-button" type="button">Close</button></div>
+      <div class="demo-heading"><div><p class="eyebrow">Playable rule</p><h2 id="demo-title">Place the kings</h2></div><button id="demo-close" class="text-button btn" type="button" data-variant="ghost">Close</button></div>
       <div class="demo-layout">
         <div class="demo-stage">
           <div class="replay-seat"><div id="demo-black-player" class="replay-player">Black · Machine</div><div class="reserve"><span id="demo-black-label" class="reserve-label">Black reserve</span><div id="demo-black-reserve" class="bank"></div></div></div>
           <div id="demo-board" class="board" role="grid" aria-label="Playable rules demonstration"></div>
           <div class="replay-seat"><div id="demo-white-player" class="replay-player">White · You</div><div class="reserve"><span id="demo-white-label" class="reserve-label">Your reserve</span><div id="demo-white-reserve" class="bank"></div></div></div>
         </div>
-        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
+        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="outline">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
       </div>
     </section>
-    <button class="rules-full" type="button" data-open-rules>Read the full rules</button>
+    <button class="rules-full btn" type="button" data-open-rules data-variant="outline">Read the full rules</button>
 
   </main>
 
@@ -111,7 +113,7 @@
         <p class="eyebrow">How to play</p>
         <h2 id="rules-title">Schness in four rules</h2>
       </div>
-      <form method="dialog"><button class="dialog-close" type="submit" aria-label="Close rules">✕</button></form>
+      <form method="dialog"><button class="dialog-close btn" type="submit" aria-label="Close rules" data-variant="ghost">✕</button></form>
     </div>
     <div class="dialog-body" tabindex="0" role="group" aria-label="The rules, scrollable">
       <ol class="rules-list">
@@ -147,7 +149,7 @@
       </section>
     </div>
     <div class="dialog-foot">
-      <form method="dialog"><button class="rules-confirm" type="submit">Got it</button></form>
+      <form method="dialog"><button class="rules-confirm btn" type="submit" data-variant="primary">Got it</button></form>
     </div>
   </dialog>
   <script type="module" src="./src/lobby.js?v=70"></script>

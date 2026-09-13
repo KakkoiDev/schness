@@ -89,7 +89,8 @@ function renderList() {
 function gameCard(game) {
   const button = document.createElement('button');
   button.type = 'button';
-  button.className = 'library-game';
+  button.className = 'library-game btn';
+  button.dataset.variant = 'outline';
   const pairs = profilePairs(game);
   const engines = pairs.length <= 2 ? pairs.join(' · ') : `${pairs[0]} · +${pairs.length - 1} configurations`;
   const id = document.createElement('span');
@@ -129,6 +130,8 @@ function openReplay(game) {
     const button = document.createElement('button');
     button.type = 'button';
     button.textContent = `${entry.ply}. ${entry.notation}`;
+    button.className = 'btn';
+    button.dataset.variant = 'ghost';
     button.addEventListener('click', () => { pause(); ply = index + 1; renderReplay(); });
     return button;
   }));
