@@ -54,3 +54,16 @@ for (const theme of ['light', 'dark']) {
     await expect(page.locator('#rules-demo')).toBeVisible();
   });
 }
+
+test('tutorial list and opened demo have only one boundary divider', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('schness-tutorial-seen', '1'));
+  await page.goto('/');
+  await page.locator('[data-lesson="deploy"]').click();
+  await expect(page.locator('#rules-demo')).toBeVisible();
+  const borders = await page.evaluate(() => ({
+    list: getComputedStyle(document.querySelector('.rules-strip')).borderBottomWidth,
+    demo: getComputedStyle(document.querySelector('#rules-demo')).borderTopWidth,
+  }));
+  expect(borders.list).toBe('1px');
+  expect(borders.demo).toBe('0px');
+});

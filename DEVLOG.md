@@ -397,3 +397,9 @@ remain unknown rather than even. Add a behavioral worker lifecycle regression
 test. Define tutorial link color through the tested accent-text token and correct
 CLAUDE.md to require unit and desktop/mobile browser CI, not just unit tests.
 
+
+# 2026-09-13 — One divider after the tutorial list
+
+The tutorial list bottom border and adjacent demo top border both drew separators.
+Remove only the adjacent demo's top border, leaving the list divider and all demo
+spacing intact. Browser coverage opens a lesson and checks both border widths.
