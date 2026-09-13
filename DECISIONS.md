@@ -488,3 +488,8 @@ beat nested legacy panel rules. Chessboard and reserve geometry are excluded.
 
 Homepage rule-strip gaps are 1px: its background supplies hairline dividers, not
 spacing. Increasing its gap exposes broad brown bands between the tutorial cards.
+
+An advantage rail is unknown while a new estimate is pending or unavailable: hide
+its fill, clear numeric ARIA state, and discard cancelled worker replies. Tutorial
+links use `--link`, mapped to the contrast-tested `--accent-text` theme token.
+

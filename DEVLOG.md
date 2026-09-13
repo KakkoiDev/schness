@@ -387,3 +387,13 @@ Basecoat integration increased the rule-strip gap from 1px to 1rem while retaini
 its brown border-color background. The exposed grid gaps therefore became thick
 bands. Restore the intentional 1px gaps rather than altering card padding. Add
 computed-gap browser checks in both themes, with tutorial activation preserved.
+
+# 2026-09-13 — Fix stale evaluation and remaining audit notes
+
+A new position previously retained the old advantage fill and ARIA score while
+searching. Clear the number, show an unknown neutral track, restore only a finite
+current-request result, and invalidate replies on cancellation. Errors/timeouts
+remain unknown rather than even. Add a behavioral worker lifecycle regression
+test. Define tutorial link color through the tested accent-text token and correct
+CLAUDE.md to require unit and desktop/mobile browser CI, not just unit tests.
+
