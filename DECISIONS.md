@@ -482,3 +482,6 @@ Newest first. One line per decision that changed how the app behaves.
 - Board capped by viewport height; landscape gets a two-column layout.
 - Phone chrome trimmed to give the board the screen; tap targets raised to 44px.
 - Lobby setup folded behind a disclosure; the rules dialog stopped opening itself.
+
+Shared card padding is 20px on desktop and 16px on small phones; selectors must
+beat nested legacy panel rules. Chessboard and reserve geometry are excluded.

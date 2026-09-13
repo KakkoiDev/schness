@@ -372,3 +372,11 @@ statistics, filters, analysis, network/result and spectator/tutorial panels a
 shared internal inset (16px desktop, 14px small phones); increase the puzzle action
 dock inset too. Leave board cells and piece trays unchanged. Test the visible
 settings controls against the actual card bounds rather than just its CSS class.
+
+# 2026-09-13 — Stronger, more generous panel insets
+
+Follow-up feedback requested more breathing room. Increase shared surface insets
+from 16/14px to 20/16px, cover replay and dialog surfaces, and give selectors enough
+specificity to beat legacy nested-panel overrides. Increase the puzzle dock to 12px
+and make checkbox text wrap without shrinking its checkbox. Keep board geometry
+unchanged. Browser tests measure a minimum 16px settings inset in all themes/languages.
