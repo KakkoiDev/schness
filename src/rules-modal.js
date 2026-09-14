@@ -7,23 +7,25 @@ document.querySelectorAll('[data-open-rules]').forEach(button => button.addEvent
 initTutorial({ autoStart: document.body.classList.contains('lobby-page') });
 
 let coordinates = false;
-try { coordinates = localStorage.getItem('schness-coordinates') === '1'; } catch {}
 const coordinateButtons = [];
 for (const host of document.querySelectorAll('.moves-header, #watch-moves, #replay-moves, .rules-practice')) {
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'btn coordinate-toggle';
-  button.textContent = 'Coordinates';
+  const label = document.createElement('label');
+  label.className = 'coordinate-option';
+  const button = document.createElement('input');
+  button.type = 'checkbox';
+  button.className = 'coordinate-toggle';
+  const text = document.createElement('span');
+  text.textContent = 'Coordinates';
+  label.append(button, text);
   button.addEventListener('click', () => {
-    coordinates = !coordinates;
-    try { localStorage.setItem('schness-coordinates', coordinates ? '1' : '0'); } catch {}
+    coordinates = button.checked;
     updateCoordinates();
   });
-  host.before(button);
+  if (host.matches('.rules-practice')) host.prepend(label); else host.before(label);
   coordinateButtons.push(button);
 }
 function updateCoordinates() {
   document.documentElement.dataset.coordinates = String(coordinates);
-  for (const button of coordinateButtons) button.setAttribute('aria-pressed', String(coordinates));
+  for (const button of coordinateButtons) button.checked = coordinates;
 }
 updateCoordinates();

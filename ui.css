@@ -212,3 +212,6 @@ body .rules-dialog .dialog-body { grid-template-columns:minmax(14rem,.8fr) minma
 /* The explanation and its action are one scannable numbered item. */
 .rules-dialog .rules-list .rule-demo-trigger { grid-column:2; justify-self:start; position:relative; margin: .25rem 0 0; }
 .rules-dialog .rules-list .rule-demo-trigger::before { content:none; display:none; }
+
+.coordinate-option { display:flex; align-items:center; gap:.5rem; min-height:44px; font-size:.8rem; color:var(--muted); }
+.coordinate-option .coordinate-toggle { margin:0; }

@@ -114,12 +114,12 @@ test('drag pickup hides its source and an illegal drop restores it', async ({ pa
   });
   await expect(source).toHaveClass(/drag-source/);
   await expect(source.locator('.piece')).toHaveCSS('visibility', 'hidden');
-  await expect(page.locator('body > .drag-ghost')).toHaveCount(1);
+  await expect(page.locator('.drag-ghost')).toHaveCount(1);
   await page.locator('body').dispatchEvent('pointerup', {
     pointerId: 1, pointerType: 'touch', isPrimary: true, buttons: 0, clientX: 2, clientY: 2,
   });
   await expect(source.locator('.piece')).toHaveCSS('visibility', 'visible');
-  await expect(page.locator('body > .drag-ghost')).toHaveCount(0);
+  await expect(page.locator('.drag-ghost')).toHaveCount(0);
 });
 
 test('bot game supports White and Black with the same board and reserves', async ({ page }) => {
@@ -311,7 +311,9 @@ test('arena has an explicit White or Black human seat and preserves bot strength
 
 test('move history coordinates toggle labels on the board', async ({ page }) => {
   await page.goto('/watch.html');
-  await page.locator('.coordinate-toggle').first().click();
+  await expect(page.locator('.coordinate-toggle').first()).not.toBeChecked();
+  await expect(page.locator('#watch-board .square-coordinate').first()).toBeHidden();
+  await page.locator('.coordinate-toggle').first().check();
   await expect(page.locator('#watch-board .square-coordinate')).toHaveCount(16);
   await expect(page.locator('#watch-board .square-coordinate').first()).toBeVisible();
   await expect(page.locator('#watch-board .square[data-square="12"] .square-coordinate')).toHaveText('a1');
