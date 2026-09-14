@@ -6,6 +6,7 @@ const JA = new Map(Object.entries({
   'Game · Schness': '対局 · Schness', 'Bot arena · Schness': 'ボットアリーナ · Schness', 'Game library · Schness': '棋譜ライブラリ · Schness', 'Checkmate puzzles · Schness': '詰みパズル · Schness',
   'Schness home': 'Schness ホーム', 'Switch to dark mode': 'ダークモードに切り替える', 'Switch to light mode': 'ライトモードに切り替える',
   'Play Schness': 'Schnessで遊ぶ', 'Compact chess · 4 × 4': '小さな盤、大きな一手',
+  'Play as': 'プレイヤーの色', 'Watch both bots': 'ボット同士の対戦を観る',
   'Training': 'トレーニング', 'Forced-mate hints (1–4 moves)': '詰みのヒント（1〜4手）', 'White / Black advantage': '白と黒の形勢',
   'Show estimated advantage': '推定形勢を表示',
   'Checking both sides for forced mates…': '両陣営の詰みを解析中…',

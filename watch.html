@@ -27,6 +27,7 @@
       <div><p class="eyebrow">Play · watch · experiment</p><h2>Bot arena</h2></div>
       <a class="text-button" href="./">← Home</a>
     </div>
+    <label class="watch-seat-choice">Play as <select id="human-side" class="select"><option value="white">White</option><option value="black">Black</option><option value="watch">Watch both bots</option></select></label>
     <section class="watch-layout" aria-label="Schness bot arena">
       <div class="watch-stage">
         <div class="watch-player"><label>Black <select id="black-level" class="select"><option value="human">You</option><option value="learning">Learning</option><option value="steady" selected>Steady</option><option value="sharp">Sharp</option></select></label><div id="black-reserve" class="bank" aria-label="Black reserve"></div></div>
@@ -63,7 +64,7 @@
     <div class="position-foot"><label>Side to move <select id="position-turn" class="select"><option value="white">White</option><option value="black">Black</option></select></label><button id="position-clear" type="button" class="btn" data-variant="outline">Clear board</button><button id="position-apply" type="button" class="btn" data-variant="primary">Start here</button></div>
     <p id="position-error" class="position-error" aria-live="polite"></p>
   </dialog>
-  <script type="module" src="./src/watch-ui.js?v=71"></script>
+  <script type="module" src="./src/watch-ui.js?v=81"></script>
 </body>
 </html>
 

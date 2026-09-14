@@ -407,3 +407,7 @@ spacing intact. Browser coverage opens a lesson and checks both border widths.
 ## 2026-09-13 — Select, reserve, and desktop modal spacing
 
 Inset native-select chevrons by 1rem with locally cached, theme-specific SVGs and reserve text clearance. Added 10px between reserves and boards on arena, replay, puzzles, and tutorial. Restore viewport centering for every desktop native dialog after the Basecoat reset; retain mobile layouts and native focus behavior. Added browser regression checks for these geometry constraints.
+
+## 2026-09-14 — Explicit human color choice
+
+Bot Arena now exposes a Play as White/Black selector (plus watching both bots), instead of requiring users to swap two controller dropdowns. Changing color starts a fresh game, preserving the bot strength. Black waits for White's bot king placement before placing their own king. Added pure seat-selection unit tests and browser coverage for both colors.
