@@ -1,18 +1,15 @@
 import { gameUrl, launchIntent } from './navigation.js';
 import { clockMode, setClockMode } from './settings.js';
 import { initTheme } from './theme.js';
-import { initTutorial } from './tutorial.js?v=70';
 import { initI18n } from './i18n.js?v=70';
 
 initTheme();
 initI18n();
-initTutorial();
 
 const arenaButton = document.querySelector('#bot-arena');
 const onlineButton = document.querySelector('#play-online');
 const libraryButton = document.querySelector('#browse-games');
 const puzzlesButton = document.querySelector('#solve-puzzles');
-const rulesDialog = document.querySelector('#rules-dialog');
 const installButton = document.querySelector('#install');
 let installPrompt = null;
 

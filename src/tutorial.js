@@ -11,7 +11,7 @@ const LESSONS = {
   capture: { title: 'Nothing is lost', instruction: 'Capture the black knight with your rook. Watch it return to Black’s reserve, ready to come back.' },
 };
 
-export function initTutorial() {
+export function initTutorial({ autoStart = true } = {}) {
   const root = document.querySelector('#rules-demo');
   if (!root) return;
   const $ = (selector) => root.querySelector(selector);
@@ -38,20 +38,23 @@ export function initTutorial() {
   document.addEventListener('pointermove', moveDrag, { passive: false });
   document.addEventListener('pointerup', endDrag);
   document.addEventListener('pointercancel', cancelDrag);
-  if (!tutorialSeen()) setTimeout(() => open('kings'), 0);
+  document.querySelector('#rules-dialog')?.addEventListener('close', cancel);
+  if (autoStart && !tutorialSeen()) setTimeout(() => open('kings'), 0);
 
   function open(next, scroll = true) {
     cancel();
     lesson = next;
     position = lessonPosition(lesson);
     selection = null;
+    const dialog = root.closest('dialog');
+    if (dialog && !dialog.open) dialog.showModal();
     root.hidden = false;
     rememberTutorial();
     $('#demo-title').textContent = LESSONS[lesson].title;
     $('#demo-instruction').textContent = LESSONS[lesson].instruction;
     setFeedback('ready', lesson === 'kings' ? 'Place your king on the highlighted row.' : 'Your turn — tap or drag a piece.');
     render();
-    if (scroll) root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (scroll) root.closest('.dialog-body').scrollTop = root.offsetTop;
   }
 
   function cancel() {

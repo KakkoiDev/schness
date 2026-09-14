@@ -42,32 +42,6 @@ for (const language of ['en', 'ja']) {
     });
   }
 }
-
-for (const theme of ['light', 'dark']) {
-  test(`tutorial separators stay hairline in ${theme}`, async ({ page }) => {
-    await page.addInitScript((theme) => { localStorage.setItem('schness-theme', theme); localStorage.setItem('schness-tutorial-seen', '1'); }, theme);
-    await page.goto('/');
-    const gaps = await page.locator('.rules-strip').evaluate((strip) => { const style = getComputedStyle(strip); return { row: parseFloat(style.rowGap), column: parseFloat(style.columnGap) }; });
-    expect(gaps.row).toBe(1);
-    expect(gaps.column).toBe(1);
-    await page.locator('[data-lesson="deploy"]').click();
-    await expect(page.locator('#rules-demo')).toBeVisible();
-  });
-}
-
-test('tutorial list and opened demo have only one boundary divider', async ({ page }) => {
-  await page.addInitScript(() => localStorage.setItem('schness-tutorial-seen', '1'));
-  await page.goto('/');
-  await page.locator('[data-lesson="deploy"]').click();
-  await expect(page.locator('#rules-demo')).toBeVisible();
-  const borders = await page.evaluate(() => ({
-    list: getComputedStyle(document.querySelector('.rules-strip')).borderBottomWidth,
-    demo: getComputedStyle(document.querySelector('#rules-demo')).borderTopWidth,
-  }));
-  expect(borders.list).toBe('1px');
-  expect(borders.demo).toBe('0px');
-});
-
 test('arena selects have inset arrows and reserves clear the board', async ({ page }) => {
   await page.goto('/watch.html');
   const select = page.locator('select.select').first();
@@ -101,5 +75,20 @@ test('every desktop modal is viewport centered', async ({ page }) => {
       expect(geometry.x, path + '#' + id).toBeLessThanOrEqual(2);
       expect(geometry.y, path + '#' + id).toBeLessThanOrEqual(2);
     }
+  }
+});
+
+test('Rules is available everywhere with an interactive board inside the modal', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('schness-tutorial-seen', '1'));
+  for (const path of ['/', '/watch.html', '/library.html', '/puzzles.html', '/game.html?game=00000000-0000-4000-8000-000000000001&mode=bot']) {
+    await page.goto(path);
+    await page.locator('header [data-open-rules]').click();
+    await expect(page.locator('#rules-dialog')).toBeVisible();
+    await page.locator('[data-lesson="kings"]').click();
+    await expect(page.locator('#rules-dialog #demo-board .square.placement')).toHaveCount(4);
+    await page.locator('#demo-board .square.placement').first().click();
+    await expect(page.locator('#demo-board .piece-black')).toHaveCount(1, { timeout: 10000 });
+    await page.locator('.rules-confirm').click();
+    await expect(page.locator('#rules-dialog')).not.toBeVisible();
   }
 });

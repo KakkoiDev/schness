@@ -448,8 +448,9 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.doesNotMatch(html, /id="rules-optout"/);
   assert.match(html, /class="dialog-grab"/);
   // The three rules are the lobby's pitch, and the bot is the primary action.
-  assert.equal([...html.matchAll(/class="strip-number"/g)].length, 3);
-  assert.match(html, /class="rules-full btn"[^>]*>Read the full rules</);
+  assert.doesNotMatch(html, /class="rules-strip"/);
+  assert.equal([...html.matchAll(/data-lesson=/g)].length, 3);
+  assert.match(html, /data-open-rules/);
   assert.match(html, /id="bot-arena" class="mode dark btn"/);
   assert.match(html, /id="play-online" class="mode btn"/);
   assert.match(css, /\.rules-dialog\[open\]\s*{\s*display:\s*flex/);
