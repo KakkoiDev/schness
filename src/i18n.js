@@ -8,6 +8,7 @@ const JA = new Map(Object.entries({
   'Play Schness': 'Schnessで遊ぶ', 'Compact chess · 4 × 4': '小さな盤、大きな一手',
   'Play as': 'プレイヤーの色', 'Watch both bots': 'ボット同士の対戦を観る',
   'Coordinates': '座標',
+  "On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square. A deployed piece may not immediately check the opposing king.": '自分の手番では、盤上の駒を通常のチェスのルールで動かすか、持ち駒を空いているマスに配置します。ただし、配置した手で相手のキングにチェックをかけることはできません。',
   'Training': 'トレーニング', 'Forced-mate hints (1–4 moves)': '詰みのヒント（1〜4手）', 'White / Black advantage': '白と黒の形勢',
   'Show estimated advantage': '推定形勢を表示',
   'Checking both sides for forced mates…': '両陣営の詰みを解析中…',
