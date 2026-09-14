@@ -421,3 +421,5 @@ Move-history surfaces also offer a persistent Coordinates toggle. The shared boa
 ## 2026-09-14 — Immediate tutorial board and contextual rule actions
 
 Opening Rules now immediately initializes the current playable lesson, without a second activation step. Each Try it button sits directly after its explanation in the numbered list. Removed the separate lesson button cluster and hid the redundant close-demo control; closing Rules still cancels tutorial work. Added all-page browser checks for immediate board visibility and button-to-rule associations.
+
+Removed the separate gotchas section; the no-check-on-deployment restriction remains directly in Move or deploy so the simplified modal does not omit a core rule.

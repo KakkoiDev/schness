@@ -442,7 +442,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   // The rules dialog is four numbered rules, a worked board and the gotchas.
   assert.match(html, /Schness in four rules/);
   assert.equal([...html.matchAll(/<li><strong>/g)].length, 4);
-  assert.match(html, /Two things that trip people up/);
+  assert.doesNotMatch(html, /Two things that trip people up/);
+  assert.match(html, /A deployed piece may not immediately check the opposing king/);
   assert.match(html, /class="rules-confirm btn"[^>]*>Got it</);
   // Nothing opens the rules for you, so there is no "don't show this" to offer.
   assert.doesNotMatch(html, /id="rules-optout"/);

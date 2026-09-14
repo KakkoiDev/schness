@@ -52,7 +52,7 @@
       <ol class="rules-list">
         <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span></li>
         <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span><button class="rule-demo-trigger btn" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings" data-variant="ghost"><span>Try it →</span></button></li>
-        <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square.</span><button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button></li>
+        <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square. A deployed piece may not immediately check the opposing king.</span><button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Captures come back</strong><span>Capturing does not remove a piece. It goes to the reserve of the player who owned it, ready to be deployed again, so material never leaves the game. Win by checkmate.</span><button class="rule-demo-trigger btn" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece" data-variant="ghost"><span>Try it →</span></button></li>
       </ol>
       <div class="rules-practice">    <section id="rules-demo" class="rules-demo" aria-labelledby="demo-title" hidden>
@@ -87,10 +87,7 @@
         </div>
         <figcaption>White’s bishop was captured earlier, so it came back to White’s own reserve. The dashed ring is c2, one of the empty squares it can drop onto.</figcaption>
       </figure>
-      <section class="rules-gotchas">
-        <h3>Two things that trip people up</h3>
-        <p>A deployed piece may not put the enemy king in check on the turn it lands. And a piece dropped on the far row is not promoted; there are no pawns.</p>
-      </section>
+
     </div>
     <div class="dialog-foot">
       <form method="dialog"><button class="rules-confirm btn" type="submit" data-variant="primary">Got it</button></form>
