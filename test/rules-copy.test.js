@@ -45,9 +45,9 @@ test('the rules a player reads match the rules the engine plays', async () => {
 
 test('both pages tell the same story about captures', async () => {
   const [lobby, invite] = await Promise.all(
-    ['src/rules-modal.js', 'src/rules-modal.js'].map((page) => readFile(resolve(root, page), 'utf8')),
+    PAGES.map((page) => readFile(resolve(root, page), 'utf8')),
   );
-  const rule = (html) => JSON.parse(html.match(/const markup = (.*);/)[1]).match(/<li><strong>Captures come back<\/strong><span>(.*?)<\/span><\/li>/s)?.[1];
+  const rule = (html) => html.match(/<li><strong>Captures come back<\/strong><span>(.*?)<\/span><\/li>/s)?.[1];
   assert.ok(rule(lobby), 'the lobby lost its capture rule');
   assert.equal(rule(lobby), rule(invite), 'the two pages describe captures differently');
 });

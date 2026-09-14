@@ -510,3 +510,5 @@ Bot Arena now exposes a Play as White/Black selector (plus watching both bots), 
 Removed the homepage tutorial strip. A single shared Rules modal now contains the rules and playable king-placement, deployment and capture lessons, using the existing board and bot worker. Rules is present in every page header. Closing the modal cancels pending tutorial replies without affecting the actual match. First homepage visits can still start learning; invite pages never auto-open it. Browser coverage exercises the tutorial from all five pages.
 
 Move-history surfaces also offer a persistent Coordinates toggle. The shared board renderer draws small top-right algebraic labels; labels follow logical squares, remain pointer-transparent and do not interfere with dragging.
+
+`rules-modal` owns Rules opening, tutorial initialization and synchronized coordinate toggles on all pages. Modal HTML is rendered statically so navigation remains discoverable without JS and no HTML-string injection is needed.
