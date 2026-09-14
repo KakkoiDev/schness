@@ -500,3 +500,7 @@ the demo must not add a second top border.
 ## 2026-09-13 — Shared spacing and modal placement
 
 All desktop dialogs use native fixed viewport centering rather than per-page offsets. Selects retain native interaction but draw a self-hosted inset chevron because browser-native arrows cannot be consistently repositioned. Reserve spacing is applied around shared stage seats, not inside piece icons or board squares.
+
+## 2026-09-14 — Explicit human color choice
+
+Bot Arena now exposes a Play as White/Black selector (plus watching both bots), instead of requiring users to swap two controller dropdowns. Changing color starts a fresh game, preserving the bot strength. Black waits for White's bot king placement before placing their own king. Added pure seat-selection unit tests and browser coverage for both colors.

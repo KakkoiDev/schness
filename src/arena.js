@@ -56,3 +56,11 @@ export function putEditorPiece(board, square, piece) {
 function title(value) {
   return `${value[0].toUpperCase()}${value.slice(1)}`;
 }
+
+/** Move the human seat while preserving the opponent's selected strength. */
+export function humanSeatControllers(side, white, black) {
+  const bot = [white, black].find(value => value !== 'human') ?? 'steady';
+  if (side === WHITE) return { white: 'human', black: normalizeController(bot) };
+  if (side === BLACK) return { white: normalizeController(bot), black: 'human' };
+  return { white: white === 'human' ? bot : white, black: black === 'human' ? bot : black };
+}

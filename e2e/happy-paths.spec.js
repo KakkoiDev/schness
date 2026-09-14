@@ -289,3 +289,20 @@ test('puzzle mix, hidden depth, solution and next puzzle stay playable on mobile
   await page.getByRole('button', { name: 'Next' }).click();
   await expect(page.locator('#puzzle-feedback')).toHaveAttribute('data-state', 'ready');
 });
+
+test('arena has an explicit White or Black human seat and preserves bot strength', async ({ page }) => {
+  await page.goto('/watch.html');
+  await page.locator('#black-level').selectOption('sharp');
+  await page.locator('#human-side').selectOption('black');
+  await expect(page.locator('#black-level')).toHaveValue('human');
+  await expect(page.locator('#white-level')).toHaveValue('sharp');
+  await expect(page.locator('#watch-board .piece-white')).toHaveCount(1, { timeout: 20_000 });
+  await expect(page.locator('#watch-board .square.placement')).toHaveCount(4);
+  await page.locator('#watch-board .square.placement').first().click();
+  await expect(page.locator('#watch-board .piece-black')).toHaveCount(1);
+  await page.locator('#human-side').selectOption('white');
+  await expect(page.locator('#white-level')).toHaveValue('human');
+  await expect(page.locator('#black-level')).toHaveValue('sharp');
+  await expect(page.locator('#watch-board .piece-white')).toHaveCount(0);
+  await expect(page.locator('#watch-board .square.placement')).toHaveCount(4);
+});

@@ -3,11 +3,11 @@ import {
 } from './rules.js';
 import { recordAction } from './history.js';
 import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
-import { buildEditedPosition, controllerSearch, putEditorPiece } from './arena.js';
+import { buildEditedPosition, controllerSearch, humanSeatControllers, putEditorPiece } from './arena.js?v=81';
 import { movedEnough } from './drag.js';
 import { createBoard, pieceElement, renderBoard, renderReserve as renderPieceReserve } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=71';
+import { initI18n } from './i18n.js?v=81';
 import { attachAnalysis } from './analysis-ui.js?v=71';
 import { resultLabel, sideName } from './watch.js';
 
@@ -62,6 +62,12 @@ function loadImportedPosition() {
 }
 
 function bindControls() {
+  $('#human-side').addEventListener('change', () => {
+    const seats = humanSeatControllers($('#human-side').value, controller(WHITE), controller(BLACK));
+    $('#white-level').value = seats.white;
+    $('#black-level').value = seats.black;
+    restart();
+  });
   $('#watch-previous').addEventListener('click', () => review(-1));
   $('#watch-next').addEventListener('click', () => review(1));
   $('#watch-live').addEventListener('click', goLive);
@@ -343,6 +349,7 @@ function renderMoves() {
 }
 
 function renderControls() {
+  $('#human-side').value = controller(WHITE) === 'human' ? WHITE : controller(BLACK) === 'human' ? BLACK : 'watch';
   $('#watch-previous').disabled = reviewIndex === 0;
   $('#watch-next').disabled = reviewIndex === history.length;
   $('#watch-live').disabled = reviewIndex === history.length;
