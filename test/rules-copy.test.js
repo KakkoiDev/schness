@@ -47,7 +47,7 @@ test('both pages tell the same story about captures', async () => {
   const [lobby, invite] = await Promise.all(
     PAGES.map((page) => readFile(resolve(root, page), 'utf8')),
   );
-  const rule = (html) => html.match(/<li><strong>Captures come back<\/strong><span>(.*?)<\/span><\/li>/s)?.[1];
+  const rule = (html) => html.match(/<li><strong>Captures come back<\/strong><span>(.*?)<\/span>[\s\S]*?<\/li>/s)?.[1];
   assert.ok(rule(lobby), 'the lobby lost its capture rule');
   assert.equal(rule(lobby), rule(invite), 'the two pages describe captures differently');
 });

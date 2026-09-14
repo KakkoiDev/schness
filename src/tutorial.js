@@ -39,6 +39,7 @@ export function initTutorial({ autoStart = true } = {}) {
   document.addEventListener('pointerup', endDrag);
   document.addEventListener('pointercancel', cancelDrag);
   document.querySelector('#rules-dialog')?.addEventListener('close', cancel);
+  document.querySelector('#rules-dialog')?.addEventListener('rules-open', () => open(lesson, false));
   if (autoStart && !tutorialSeen()) setTimeout(() => open('kings'), 0);
 
   function open(next, scroll = true) {
@@ -154,7 +155,7 @@ export function initTutorial({ autoStart = true } = {}) {
       drag.ghost = pieceElement(drag.owner, drag.piece);
       drag.ghost.classList.add('drag-ghost');
       if (drag.pieceRect) Object.assign(drag.ghost.style, { width: `${drag.pieceRect.width}px`, height: `${drag.pieceRect.height}px` });
-      document.body.append(drag.ghost);
+      (root.closest('dialog') || document.body).append(drag.ghost);
       render();
     }
     if (!drag.active) return;

@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
   <link rel="stylesheet" href="./vendor/basecoat/basecoat-nova.cdn.min.css">
   <link rel="stylesheet" href="./styles.css?v=74">
-  <link rel="stylesheet" href="./ui.css?v=82">
+  <link rel="stylesheet" href="./ui.css?v=84">
 </head>
 <body class="library-page">
   <main class="game">
@@ -70,14 +70,12 @@
     <div class="dialog-body" tabindex="0" role="group" aria-label="The rules, scrollable">
       <ol class="rules-list">
         <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span></li>
-        <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span></li>
-        <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square.</span></li>
-        <li><strong>Captures come back</strong><span>Capturing does not remove a piece. It goes to the reserve of the player who owned it, ready to be deployed again, so material never leaves the game. Win by checkmate.</span></li>
+        <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span><button class="rule-demo-trigger btn" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings" data-variant="ghost"><span>Try it →</span></button></li>
+        <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square. A deployed piece may not immediately check the opposing king.</span><button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button></li>
+        <li><strong>Captures come back</strong><span>Capturing does not remove a piece. It goes to the reserve of the player who owned it, ready to be deployed again, so material never leaves the game. Win by checkmate.</span><button class="rule-demo-trigger btn" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece" data-variant="ghost"><span>Try it →</span></button></li>
       </ol>
-      <div class="rules-practice"><h3>Try the rules</h3><div class="rules-lessons"><button class="rule-demo-trigger btn" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings" data-variant="ghost"><span>Try it →</span></button>
-<button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button>
-<button class="rule-demo-trigger btn" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece" data-variant="ghost"><span>Try it →</span></button></div>    <section id="rules-demo" class="rules-demo" aria-labelledby="demo-title" hidden>
-      <div class="demo-heading"><div><p class="eyebrow">Playable rule</p><h2 id="demo-title">Place the kings</h2></div><button id="demo-close" class="text-button btn" type="button" data-variant="ghost">Close</button></div>
+      <div class="rules-practice">    <section id="rules-demo" class="rules-demo" aria-labelledby="demo-title" hidden>
+      <div class="demo-heading"><div><p class="eyebrow">Playable rule</p><h2 id="demo-title">Place the kings</h2></div><button id="demo-close" hidden class="text-button btn" type="button" data-variant="ghost">Close</button></div>
       <div class="demo-layout">
         <div class="demo-stage">
           <div class="replay-seat"><div id="demo-black-player" class="replay-player">Black · Machine</div><div class="reserve"><span id="demo-black-label" class="reserve-label">Black reserve</span><div id="demo-black-reserve" class="bank"></div></div></div>
@@ -108,16 +106,13 @@
         </div>
         <figcaption>White’s bishop was captured earlier, so it came back to White’s own reserve. The dashed ring is c2, one of the empty squares it can drop onto.</figcaption>
       </figure>
-      <section class="rules-gotchas">
-        <h3>Two things that trip people up</h3>
-        <p>A deployed piece may not put the enemy king in check on the turn it lands. And a piece dropped on the far row is not promoted; there are no pawns.</p>
-      </section>
+
     </div>
     <div class="dialog-foot">
       <form method="dialog"><button class="rules-confirm btn" type="submit" data-variant="primary">Got it</button></form>
     </div>
   </dialog>
-  <script type="module" src="./src/rules-modal.js?v=82"></script>
+  <script type="module" src="./src/rules-modal.js?v=84"></script>
   <script type="module" src="./src/library-ui.js?v=71"></script>
 </body>
 </html>
