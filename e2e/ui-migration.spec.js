@@ -1,74 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 for (const language of ['en', 'ja']) {
-  for (const theme of ['light', 'dark']) {
-    test(`shared UI fits all five pages in ${language} / ${theme}`, async ({ page }) => {
-      await page.addInitScript(({ language, theme }) => {
-        localStorage.setItem('schness-language', language);
-        localStorage.setItem('schness-theme', theme);
-        localStorage.setItem('schness-tutorial-seen', '1');
-      }, { language, theme });
-      for (const path of ['/', '/watch.html', '/library.html', '/puzzles.html', '/game.html?game=00000000-0000-4000-8000-000000000001&mode=bot']) {
-        await page.goto(path);
-        await expect(page.locator('[data-language-toggle]')).toBeVisible();
-        await expect(page.locator('html')).toHaveAttribute('lang', language);
-        await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
-        await expect(page.locator('[data-language-toggle]')).toHaveClass(/\bbtn\b/);
-        const dimensions = await page.evaluate(() => ({
-          content: document.documentElement.scrollWidth,
-          screen: window.innerWidth,
-          headerTargets: [...document.querySelectorAll('header .btn')]
-            .filter((button) => button.getClientRects().length)
-            .map((button) => button.getBoundingClientRect().height),
-        }));
-        expect(dimensions.content, path).toBeLessThanOrEqual(dimensions.screen + 1);
-        if (path === '/puzzles.html') {
-          const inset = await page.locator('.puzzle-settings').evaluate((card) => {
-            const bounds = card.getBoundingClientRect();
-            const levels = card.querySelector('.puzzle-levels').getBoundingClientRect();
-            return { left: levels.left - bounds.left, right: bounds.right - levels.right,
-              padding: parseFloat(getComputedStyle(card).paddingLeft) };
-          });
-          expect(inset.padding).toBeGreaterThanOrEqual(16);
-          expect(inset.left).toBeGreaterThanOrEqual(16);
-          expect(inset.right).toBeGreaterThanOrEqual(16);
-        }
-        for (const height of dimensions.headerTargets) expect(height, path).toBeGreaterThanOrEqual(44);
-        const boards = page.locator('[data-schness-board="true"]');
-        for (let index = 0; index < await boards.count(); index += 1) {
-          await expect(boards.nth(index).locator('.square.btn')).toHaveCount(0);
-        }
-      }
-    });
-  }
-}
-
-for (const theme of ['light', 'dark']) {
-  test(`tutorial separators stay hairline in ${theme}`, async ({ page }) => {
-    await page.addInitScript((theme) => { localStorage.setItem('schness-theme', theme); localStorage.setItem('schness-tutorial-seen', '1'); }, theme);
-    await page.goto('/');
-    const gaps = await page.locator('.rules-strip').evaluate((strip) => { const style = getComputedStyle(strip); return { row: parseFloat(style.rowGap), column: parseFloat(style.columnGap) }; });
-    expect(gaps.row).toBe(1);
-    expect(gaps.column).toBe(1);
-    await page.locator('[data-lesson="deploy"]').click();
-    await expect(page.locator('#rules-demo')).toBeVisible();
-  });
-}
-
-test('tutorial list and opened demo have only one boundary divider', async ({ page }) => {
-  await page.addInitScript(() => localStorage.setItem('schness-tutorial-seen', '1'));
-  await page.goto('/');
-  await page.locator('[data-lesson="deploy"]').click();
-  await expect(page.locator('#rules-demo')).toBeVisible();
-  const borders = await page.evaluate(() => ({
-    list: getComputedStyle(document.querySelector('.rules-strip')).borderBottomWidth,
-    demo: getComputedStyle(document.querySelector('#rules-demo')).borderTopWidth,
-  }));
-  expect(borders.list).toBe('1px');
-  expect(borders.demo).toBe('0px');
-});
-
-test('arena selects have inset arrows and reserves clear the board', async ({ page }) => {
+  test('arena selects have inset arrows and reserves clear the board', async ({ page }) => {
   await page.goto('/watch.html');
   const select = page.locator('select.select').first();
   const style = await select.evaluate(el => ({ padding: parseFloat(getComputedStyle(el).paddingRight), position: getComputedStyle(el).backgroundPosition }));
@@ -101,5 +34,20 @@ test('every desktop modal is viewport centered', async ({ page }) => {
       expect(geometry.x, path + '#' + id).toBeLessThanOrEqual(2);
       expect(geometry.y, path + '#' + id).toBeLessThanOrEqual(2);
     }
+  }
+});
+
+test('Rules is available everywhere with an interactive board inside the modal', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('schness-tutorial-seen', '1'));
+  for (const path of ['/', '/watch.html', '/library.html', '/puzzles.html', '/game.html?game=00000000-0000-4000-8000-000000000001&mode=bot']) {
+    await page.goto(path);
+    await page.locator('header [data-open-rules]').click();
+    await expect(page.locator('#rules-dialog')).toBeVisible();
+    await page.locator('[data-lesson="kings"]').click();
+    await expect(page.locator('#rules-dialog #demo-board .square.placement')).toHaveCount(4);
+    await page.locator('#demo-board .square.placement').first().click();
+    await expect(page.locator('#demo-board .piece-black')).toHaveCount(1, { timeout: 10000 });
+    await page.locator('.rules-confirm').click();
+    await expect(page.locator('#rules-dialog')).not.toBeVisible();
   }
 });

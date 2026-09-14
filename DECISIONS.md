@@ -504,3 +504,7 @@ All desktop dialogs use native fixed viewport centering rather than per-page off
 ## 2026-09-14 — Explicit human color choice
 
 Bot Arena now exposes a Play as White/Black selector (plus watching both bots), instead of requiring users to swap two controller dropdowns. Changing color starts a fresh game, preserving the bot strength. Black waits for White's bot king placement before placing their own king. Added pure seat-selection unit tests and browser coverage for both colors.
+
+## 2026-09-14 — Rules and practice in one place
+
+Removed the homepage tutorial strip. A single shared Rules modal now contains the rules and playable king-placement, deployment and capture lessons, using the existing board and bot worker. Rules is present in every page header. Closing the modal cancels pending tutorial replies without affecting the actual match. First homepage visits can still start learning; invite pages never auto-open it. Browser coverage exercises the tutorial from all five pages.

@@ -18,7 +18,7 @@ test('lobby settings, language, theme, rules and online invitation', async ({ pa
   await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
   await page.locator('[data-language-toggle]').click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await page.getByRole('button', { name: 'Read the full rules' }).click();
+  await page.getByRole('button', { name: 'Rules', exact: true }).click();
   await expect(page.getByRole('dialog', { name: /Schness in four rules/ })).toBeVisible();
   await page.getByRole('button', { name: 'Got it' }).click();
   await page.getByRole('button', { name: /Create an online game/ }).click();
@@ -88,6 +88,7 @@ test('training warns the defender of forced mate before they move', async ({ pag
 
 test('interactive tutorial uses the shared board and answers a king placement', async ({ page }) => {
   await page.goto('/');
+  await page.locator('[data-open-rules]').click();
   await page.getByRole('button', { name: 'Try placing the kings' }).click();
   const board = page.locator('#demo-board[data-schness-board="true"]');
   await expect(board).toBeVisible();
@@ -99,6 +100,7 @@ test('interactive tutorial uses the shared board and answers a king placement', 
 
 test('drag pickup hides its source and an illegal drop restores it', async ({ page }) => {
   await page.goto('/');
+  await page.locator('[data-open-rules]').click();
   await page.getByRole('button', { name: 'Try moving or deploying' }).click();
   const source = page.locator('#demo-board .square').filter({ has: page.locator('.piece-white') }).first();
   const box = await source.boundingBox();
