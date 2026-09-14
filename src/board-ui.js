@@ -98,7 +98,11 @@ export function renderBoard(element, position, {
   for (const cell of element.querySelectorAll('.square')) {
     const square = Number(cell.dataset.square);
     const occupant = position.board[square];
-    cell.replaceChildren(...(occupant ? [pieceElement(occupant.owner, occupant.piece)] : []));
+    const coordinate = document.createElement('span');
+    coordinate.className = 'square-coordinate';
+    coordinate.setAttribute('aria-hidden', 'true');
+    coordinate.textContent = squareCoordinate(square);
+    cell.replaceChildren(...(occupant ? [pieceElement(occupant.owner, occupant.piece)] : []), coordinate);
     cell.classList.toggle('selected', selected === square);
     cell.classList.toggle('target', targets.has(square));
     cell.classList.toggle('placement', placements.has(square));
@@ -140,4 +144,8 @@ function defaultLabel(square, occupant, warning) {
 export function actionHighlights(action) {
   if (!action || !Number.isInteger(action.to)) return { from: null, to: null };
   return { from: action.type === 'move' && Number.isInteger(action.from) ? action.from : null, to: action.to };
+}
+
+export function squareCoordinate(square) {
+  return String.fromCharCode(97 + square % 4) + (4 - Math.floor(square / 4));
 }

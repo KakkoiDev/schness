@@ -308,3 +308,13 @@ test('arena has an explicit White or Black human seat and preserves bot strength
   await expect(page.locator('#watch-board .piece-white')).toHaveCount(0);
   await expect(page.locator('#watch-board .square.placement')).toHaveCount(4);
 });
+
+test('move history coordinates toggle labels on the board', async ({ page }) => {
+  await page.goto('/watch.html');
+  await page.locator('.coordinate-toggle').first().click();
+  await expect(page.locator('#watch-board .square-coordinate')).toHaveCount(16);
+  await expect(page.locator('#watch-board .square-coordinate').first()).toBeVisible();
+  await expect(page.locator('#watch-board .square[data-square="12"] .square-coordinate')).toHaveText('a1');
+  await page.locator('.coordinate-toggle').first().click();
+  await expect(page.locator('#watch-board .square-coordinate').first()).toBeHidden();
+});

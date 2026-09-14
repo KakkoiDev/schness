@@ -188,3 +188,7 @@ body .rules-dialog { width: min(64rem, calc(100vw - 2rem)); max-height: calc(100
   .rules-practice .demo-layout { grid-template-columns:1fr; }
   .rules-practice .demo-stage { max-width:24rem; }
 }
+
+.square-coordinate { display:none; position:absolute; top:.25rem; right:.3rem; font:600 clamp(.55rem,1.4vw,.7rem)/1 ui-sans-serif,system-ui,sans-serif; color:#18201c; background:rgb(255 253 248 / .78); border-radius:.2rem; padding:.12rem .18rem; pointer-events:none; z-index:4; }
+:root[data-coordinates="true"] .square-coordinate { display:block; }
+.coordinate-toggle { justify-self:start; margin-block:.375rem; }
