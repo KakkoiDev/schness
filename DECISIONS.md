@@ -512,3 +512,7 @@ Removed the homepage tutorial strip. A single shared Rules modal now contains th
 Move-history surfaces also offer a persistent Coordinates toggle. The shared board renderer draws small top-right algebraic labels; labels follow logical squares, remain pointer-transparent and do not interfere with dragging.
 
 `rules-modal` owns Rules opening, tutorial initialization and synchronized coordinate toggles on all pages. Modal HTML is rendered statically so navigation remains discoverable without JS and no HTML-string injection is needed.
+
+## 2026-09-14 — Immediate tutorial board and contextual rule actions
+
+Opening Rules now immediately initializes the current playable lesson, without a second activation step. Each Try it button sits directly after its explanation in the numbered list. Removed the separate lesson button cluster and hid the redundant close-demo control; closing Rules still cancels tutorial work. Added all-page browser checks for immediate board visibility and button-to-rule associations.

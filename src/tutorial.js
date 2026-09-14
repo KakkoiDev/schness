@@ -39,6 +39,7 @@ export function initTutorial({ autoStart = true } = {}) {
   document.addEventListener('pointerup', endDrag);
   document.addEventListener('pointercancel', cancelDrag);
   document.querySelector('#rules-dialog')?.addEventListener('close', cancel);
+  document.querySelector('#rules-dialog')?.addEventListener('rules-open', () => open(lesson, false));
   if (autoStart && !tutorialSeen()) setTimeout(() => open('kings'), 0);
 
   function open(next, scroll = true) {

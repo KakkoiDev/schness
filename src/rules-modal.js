@@ -1,14 +1,15 @@
-import { initTutorial } from './tutorial.js?v=82';
+import { initTutorial } from './tutorial.js?v=84';
 const dialog = document.querySelector('#rules-dialog');
 document.querySelectorAll('[data-open-rules]').forEach(button => button.addEventListener('click', () => {
   if (!dialog.open) dialog.showModal();
+  dialog.dispatchEvent(new Event('rules-open'));
 }));
 initTutorial({ autoStart: document.body.classList.contains('lobby-page') });
 
 let coordinates = false;
 try { coordinates = localStorage.getItem('schness-coordinates') === '1'; } catch {}
 const coordinateButtons = [];
-for (const host of document.querySelectorAll('.moves-header, #watch-moves, #replay-moves, .rules-lessons')) {
+for (const host of document.querySelectorAll('.moves-header, #watch-moves, #replay-moves, .rules-practice')) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'btn coordinate-toggle';
