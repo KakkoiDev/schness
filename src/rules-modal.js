@@ -8,7 +8,7 @@ initTutorial({ autoStart: document.body.classList.contains('lobby-page') });
 
 let coordinates = false;
 const coordinateButtons = [];
-for (const host of document.querySelectorAll('.moves-header, #watch-moves, #replay-moves, .rules-practice')) {
+for (const host of document.querySelectorAll('.moves-header, #watch-moves, #replay-moves')) {
   const label = document.createElement('label');
   label.className = 'coordinate-option';
   const button = document.createElement('input');
@@ -21,7 +21,7 @@ for (const host of document.querySelectorAll('.moves-header, #watch-moves, #repl
     coordinates = button.checked;
     updateCoordinates();
   });
-  if (host.matches('.rules-practice')) host.prepend(label); else host.before(label);
+  host.before(label);
   coordinateButtons.push(button);
 }
 function updateCoordinates() {
