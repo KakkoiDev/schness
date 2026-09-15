@@ -425,3 +425,7 @@ Opening Rules now immediately initializes the current playable lesson, without a
 Removed the separate gotchas section; the no-check-on-deployment restriction remains directly in Move or deploy so the simplified modal does not omit a core rule.
 
 Coordinates now use a checkbox beside move histories and start unchecked on every page. Tutorial drag ghosts are appended inside the native dialog's top layer, preventing them disappearing behind the modal when their source is hidden.
+
+## 2026-09-15 — Tutorial coordinate control removed
+
+The shared Rules tutorial no longer shows a Coordinates checkbox. Coordinate labels remain opt-in beside real move histories in matches, Bot Arena, and library replays; the instructional modal stays focused on learning the rules.

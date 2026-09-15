@@ -85,6 +85,7 @@ test('Rules is available everywhere with an interactive board inside the modal',
     await page.locator('header [data-open-rules]').click();
     await expect(page.locator('#rules-dialog')).toBeVisible();
     await expect(page.locator('#rules-dialog #demo-board')).toBeVisible();
+    await expect(page.locator('#rules-dialog .coordinate-option')).toHaveCount(0);
     await expect(page.locator('#rules-dialog #demo-board .square.placement')).toHaveCount(4);
     await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="kings"]') })).toContainText('Kings go down first');
     await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="deploy"]') })).toContainText('Move or deploy');
