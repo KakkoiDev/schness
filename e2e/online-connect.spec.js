@@ -15,7 +15,7 @@ test('two independent browsers join the same online invite and exchange a move',
         if (message.type() === 'warning' || message.type() === 'error') faults.push(name + ': ' + message.text());
       });
     }
-    const url = new URL('/game.html?game=7eadf00d-1234-4abc-8def-000000000001&mode=online', baseURL);
+    const url = new URL('/game.html?game=' + crypto.randomUUID() + '&mode=online', baseURL);
     await host.goto(url.href);
     await guest.goto(url.href);
     try {
