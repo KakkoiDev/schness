@@ -524,3 +524,7 @@ Coordinates now use a checkbox beside move histories and start unchecked on ever
 ## 2026-09-15 — Coordinates belong to move-history surfaces
 
 Do not expose the coordinate preference in the Rules tutorial. The control is useful when following notation and therefore belongs beside actual move lists, while the tutorial should minimize unrelated controls.
+
+## 2026-09-16 — Repeat peer discovery while waiting
+
+`net.js` periodically broadcasts versioned waiting announcements until matched or closed. A single initial hello cannot be trusted when browser initialization and WebRTC peer callbacks race. Keep discovery retransmission separate from game packets; it must stop when leaving and must never alter an active match. The browser smoke test needs two isolated contexts and the exact same invite URL.

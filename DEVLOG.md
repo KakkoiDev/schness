@@ -429,3 +429,7 @@ Coordinates now use a checkbox beside move histories and start unchecked on ever
 ## 2026-09-15 — Tutorial coordinate control removed
 
 The shared Rules tutorial no longer shows a Coordinates checkbox. Coordinate labels remain opt-in beside real move histories in matches, Bot Arena, and library replays; the instructional modal stays focused on learning the rules.
+
+## 2026-09-16 — Online two-browser discovery recovery
+
+A real Chromium two-context test opened the same invite and exchanged a move, so yesterday's specific failure did not reproduce today. Audited the waiting protocol and found initial `hello` packets had no retry; if lost before the other browser registered an action handler, both pages could keep waiting indefinitely. While unmatched, send a waiting announcement every four seconds and stop on leave. Added a deterministic unit test dropping both initial hellos plus a real two-browser CI test. Relay outages and network paths that cannot establish WebRTC still depend on external infrastructure; this change addresses missed discovery packets.
