@@ -403,7 +403,7 @@ function watchRelayReach(relayReach) {
   const startedAt = Date.now();
   const grace = 6000;
   // Long enough that a friend opening the link at a normal pace never sees it.
-  const quiet = 45000;
+  const quiet = 20000;
   const paint = () => {
     const waited = Date.now() - startedAt;
     const stalled = relayReach().open === 0 && waited > grace;
@@ -414,12 +414,9 @@ function watchRelayReach(relayReach) {
     searchStalled.hidden = !stalled;
     /*
      * The one failure the app cannot see. Peers exchange nothing until
-     * WebRTC connects, and the bundled config has STUN but no TURN, so a
-     * symmetric-NAT pair — mobile carriers, plenty of office networks — never
-     * connects and never will. To both of them it looks exactly like a friend
-     * who has not clicked yet, on relays that are answering fine. This does
-     * not claim to have detected it; it says what is and is not still
-     * possible, after long enough that a normal wait never reaches it.
+     * WebRTC connects. Open relay sockets do not prove that discovery or
+     * the direct connection succeeded. This hint appears after a reasonable
+     * wait; matchmaking keeps retrying in the background.
      */
     searchQuiet.hidden = stalled || waited < quiet;
   };

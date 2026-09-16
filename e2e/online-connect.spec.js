@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('two independent browsers join the same online invite and exchange a move', async ({ browser, baseURL }) => {
+  test.skip(test.info().project.name !== 'desktop', 'One network smoke test avoids duplicate public relay traffic');
   test.setTimeout(120_000);
   const first = await browser.newContext({ serviceWorkers: 'block' });
   const second = await browser.newContext({ serviceWorkers: 'block' });

@@ -433,3 +433,5 @@ The shared Rules tutorial no longer shows a Coordinates checkbox. Coordinate lab
 ## 2026-09-16 — Online two-browser discovery recovery
 
 A real Chromium two-context test opened the same invite and exchanged a move, so yesterday's specific failure did not reproduce today. Audited the waiting protocol and found initial `hello` packets had no retry; if lost before the other browser registered an action handler, both pages could keep waiting indefinitely. While unmatched, send a waiting announcement every four seconds and stop on leave. Added a deterministic unit test dropping both initial hellos plus a real two-browser CI test. Relay outages and network paths that cannot establish WebRTC still depend on external infrastructure; this change addresses missed discovery packets.
+
+After twenty seconds without a peer, the waiting screen now explains the exact-link requirement and that an open relay socket cannot prove successful discovery; matchmaking continues retrying.
