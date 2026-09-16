@@ -231,7 +231,8 @@ test('a wait that has gone on too long says what it cannot rule out', async () =
   // long enough it says so, and offers the way out.
   assert.match(html, /id="search-quiet"[^>]*class="card-note"[^>]*hidden/);
   assert.match(html, /id="quiet-bot"/);
-  assert.match(main, /const quiet = 45000;/);
+  assert.match(main, /const quiet = 20000;/);
+  assert.match(html, /An open relay does not guarantee that discovery/);
   // Never over the top of the stalled card, which contradicts it outright.
   assert.match(main, /searchQuiet\.hidden = stalled \|\| waited < quiet;/);
 });

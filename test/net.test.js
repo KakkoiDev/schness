@@ -47,3 +47,53 @@ test('no relay is ever dropped from the rendezvous list', () => {
     assert.ok(RELAYS.includes(url), `${url} was removed; older builds still dial it`);
   }
 });
+
+test('two browsers recover if their initial hello packets are lost', async () => {
+  const { joinMatchmaking } = await import('../src/net.js');
+  const rooms = new Map();
+  const withheld = new Set(['a', 'b']);
+  function joinRoom(_config, roomId, id) {
+    const handlers = new Map();
+    const room = {
+      onPeerJoin(handler) { this.join = handler; },
+      onPeerLeave(handler) { this.leaveHandler = handler; },
+      onPeerStream() {},
+      makeAction(name) {
+        return [(packet, target) => {
+          if (name === 'hello' && withheld.has(id)) {
+            withheld.delete(id);
+            return;
+          }
+          for (const [peerId, other] of rooms) {
+            if (peerId !== id && (!target || target === peerId))
+              queueMicrotask(() => other.handlers.get(name)?.(packet, id));
+          }
+        }, handler => handlers.set(name, handler)];
+      },
+      leave() { rooms.delete(id); },
+    };
+    room.handlers = handlers;
+    rooms.set(id, room);
+    return room;
+  }
+  const a = joinMatchmaking('00000000-0000-4000-8000-000000000001', {
+    joinRoom: (config, roomId) => joinRoom(config, roomId, 'a'), localId: 'a', helloIntervalMs: 10,
+  });
+  const b = joinMatchmaking('00000000-0000-4000-8000-000000000001', {
+    joinRoom: (config, roomId) => joinRoom(config, roomId, 'b'), localId: 'b', helloIntervalMs: 10,
+  });
+  try {
+    const outcomes = [];
+    a.onMatch(info => outcomes.push(['a', info.color]));
+    b.onMatch(info => outcomes.push(['b', info.color]));
+    rooms.get('a').join('b');
+    rooms.get('b').join('a');
+    await new Promise(resolve => setTimeout(resolve, 80));
+    assert.equal(a.matched, true);
+    assert.equal(b.matched, true);
+    assert.deepEqual(outcomes.sort(), [['a', 'white'], ['b', 'black']]);
+  } finally {
+    a.leave();
+    b.leave();
+  }
+});

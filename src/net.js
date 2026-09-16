@@ -43,9 +43,11 @@ export function relayReach(sockets = getRelaySockets()) {
   return { total: RELAYS.length, open };
 }
 
-export function joinMatchmaking(gameId) {
+export function joinMatchmaking(gameId, {
+  joinRoom = trysteroJoin, localId = selfId, helloIntervalMs = 4000,
+} = {}) {
   if (!/^[0-9a-f-]{36}$/i.test(gameId)) throw new Error('Invalid match id');
-  const room = trysteroJoin({ appId: APP_ID, relayUrls: RELAYS }, `match-${gameId}`);
+  const room = joinRoom({ appId: APP_ID, relayUrls: RELAYS }, `match-${gameId}`);
   const [sendHello, onHello] = room.makeAction('hello');
   const [sendOffer, onOffer] = room.makeAction('offer');
   const [sendAccept, onAccept] = room.makeAction('accept');
@@ -97,7 +99,7 @@ export function joinMatchmaking(gameId) {
     phase = 'matched';
     sendStart({ v: PROTOCOL }, id);
     announceUnavailable();
-    notifyMatch(colorsForPair(selfId, id)[selfId]);
+    notifyMatch(colorsForPair(localId, id)[localId]);
   });
   onStart((data, id) => {
     if (!validPacket(data) || phase !== 'pending-guest' || id !== target) return;
@@ -105,7 +107,7 @@ export function joinMatchmaking(gameId) {
     opponentId = id;
     phase = 'matched';
     announceUnavailable();
-    notifyMatch(colorsForPair(id, selfId)[selfId]);
+    notifyMatch(colorsForPair(id, localId)[localId]);
   });
   onDecline((data, id) => {
     if (!validPacket(data) || id !== target || !phase.startsWith('pending')) return;
@@ -141,7 +143,7 @@ export function joinMatchmaking(gameId) {
   function announceUnavailable() { sendHello({ v: PROTOCOL, waiting: false }); }
   function seek() {
     if (phase !== 'waiting') return;
-    const candidate = chooseHostCandidate(selfId, peers);
+    const candidate = chooseHostCandidate(localId, peers);
     if (!candidate) return;
     phase = 'pending-host';
     target = candidate;
@@ -170,9 +172,13 @@ export function joinMatchmaking(gameId) {
   }
   function notifyMatch(color) { matchHandlers.forEach((handler) => handler({ color, opponentId })); }
 
+  // A hello sent while the other page is still registering its action handler
+  // can disappear. Reannounce while waiting so two open browsers recover
+  // without a refresh, even if both initial hellos were missed.
+  const helloTimer = setInterval(announceWaiting, helloIntervalMs);
   queueMicrotask(announceWaiting);
   return {
-    selfId,
+    selfId: localId,
     onMatch: (handler) => matchHandlers.push(handler),
     onRoomFull: (handler) => fullHandlers.push(handler),
     onGame: (handler) => gameHandlers.push(handler),
@@ -211,6 +217,7 @@ export function joinMatchmaking(gameId) {
     },
     leave() {
       clearPending();
+      clearInterval(helloTimer);
       phase = 'closed';
       room.leave();
     },
