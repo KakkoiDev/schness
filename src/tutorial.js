@@ -11,7 +11,7 @@ const LESSONS = {
   capture: { title: 'Nothing is lost', instruction: 'Capture the black knight with your rook. Watch it return to Black’s reserve, ready to come back.' },
 };
 
-export function initTutorial({ autoStart = true } = {}) {
+export function initTutorial({ autoStart = false } = {}) {
   const root = document.querySelector('#rules-demo');
   if (!root) return;
   const $ = (selector) => root.querySelector(selector);

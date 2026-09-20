@@ -89,7 +89,7 @@ test('training warns the defender of forced mate before they move', async ({ pag
 
 test('interactive tutorial uses the shared board and answers a king placement', async ({ page }) => {
   await page.goto('/');
-  await page.locator('[data-open-rules]').click();
+  await page.locator('header [data-open-rules]').click();
   await page.getByRole('button', { name: 'Try placing the kings' }).click();
   const board = page.locator('#demo-board[data-schness-board="true"]');
   await expect(board).toBeVisible();
@@ -101,7 +101,7 @@ test('interactive tutorial uses the shared board and answers a king placement', 
 
 test('drag pickup hides its source and an illegal drop restores it', async ({ page }) => {
   await page.goto('/');
-  await page.locator('[data-open-rules]').click();
+  await page.locator('header [data-open-rules]').click();
   await page.getByRole('button', { name: 'Try moving or deploying' }).click();
   const source = page.locator('#demo-board .square').filter({ has: page.locator('.piece-white') }).first();
   const box = await source.boundingBox();
@@ -348,4 +348,36 @@ test('move history coordinates toggle labels on the board', async ({ page }) => 
   await expect(page.locator('#watch-board .square[data-square="12"] .square-coordinate')).toHaveText('a1');
   await page.locator('.coordinate-toggle').first().click();
   await expect(page.locator('#watch-board .square-coordinate').first()).toBeHidden();
+});
+
+test('the home page is already a game, and the arena inherits the position', async ({ page }) => {
+  await page.goto('/');
+  const board = page.locator('#lobby-play');
+  if (page.viewportSize().width <= 760) {
+    // Deliberately absent on a phone: it pushes the four actions below the
+    // fold, so the mobile home stays a menu.
+    await expect(board).toBeHidden();
+    return;
+  }
+  await expect(page.locator('#lobby-board .square.placement')).toHaveCount(4);
+  await page.locator('#lobby-board .square.placement').first().click();
+  // Black answers with its own king, from the same worker the match page runs.
+  await expect(page.locator('#lobby-board .piece')).toHaveCount(2, { timeout: 15_000 });
+  await expect(page.locator('#lobby-status')).toHaveText('Your move.');
+  // "Take this position further" has to be true, not a slogan.
+  await page.locator('#bot-arena').click();
+  await expect(page).toHaveURL(/watch\.html\?position=library/);
+  await expect(page.locator('#watch-board .piece')).toHaveCount(2);
+});
+
+test('the rules never open themselves, even on a first visit', async ({ page }) => {
+  await page.context().clearCookies();
+  await page.addInitScript(() => localStorage.removeItem('schness-tutorial-seen'));
+  await page.goto('/');
+  await page.waitForTimeout(1000);
+  // It used to open over the lobby the first time, which now means over a
+  // board with a game already on it.
+  await expect(page.locator('#rules-dialog')).toBeHidden();
+  await page.locator('header [data-open-rules]').click();
+  await expect(page.locator('#rules-dialog')).toBeVisible();
 });

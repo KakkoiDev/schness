@@ -61,7 +61,11 @@ test('AI viewing stays in the browser and tournaments publish one artifact plus 
   assert.match(watch, /id="watch-edit"/);
   assert.match(viewer, /controllerSearch\(controller\(position\.turn\)\)/);
   assert.match(viewer, /buildEditedPosition/);
-  assert.doesNotMatch(lobby, /tournament/i);
+  // Tournaments stay an Actions-only batch process: the lobby must not offer
+  // running one as a mode. A footer link to the published artifacts is not
+  // that — it is where the library's 1,099 games came from.
+  const modes = lobby.slice(lobby.indexOf('mode-buttons'), lobby.indexOf('</section>', lobby.indexOf('mode-buttons')));
+  assert.doesNotMatch(modes, /tournament/i);
   assert.equal([...workflow.matchAll(/actions\/upload-artifact@/g)].length, 1);
   assert.match(workflow, /gh release (?:create|upload)/);
   assert.match(workflow, /contents: write/);
@@ -472,6 +476,14 @@ test('the rules dialog only ever opens from a button', async () => {
     assert.doesNotMatch(source, /^\s*rulesDialog\.showModal\(\)/m, `${file} auto-opens the rules`);
     assert.match(source, /data-open-rules/, `${file} lost the Rules button binding`);
   }
+  // Naming two files was not the rule. The auto-open had moved into
+  // rules-modal.js as `autoStart: lobby-page`, so the lobby opened the dialog
+  // on a first visit for a long time while this test passed — and with a real
+  // board on the lobby it covered a game that had already started.
+  const modal = await readFile(resolve(root, 'src/rules-modal.js'), 'utf8');
+  assert.match(modal, /initTutorial\(\{ autoStart: false \}\)/);
+  const tutorial = await readFile(resolve(root, 'src/tutorial.js'), 'utf8');
+  assert.match(tutorial, /autoStart = false/, 'the default must not open a dialog either');
 });
 
 test('lobby and game are separate documents with rules and home navigation', async () => {
@@ -492,7 +504,7 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.doesNotMatch(html, /class="rules-strip"/);
   assert.equal([...html.matchAll(/data-lesson=/g)].length, 3);
   assert.match(html, /data-open-rules/);
-  assert.match(html, /id="bot-arena" class="mode dark btn"/);
+  assert.match(html, /id="bot-arena" class="mode mode-primary btn"/);
   assert.match(html, /id="play-online" class="mode btn"/);
   assert.match(css, /\.rules-dialog\[open\]\s*{\s*display:\s*flex/);
   assert.match(css, /\.dialog-body\s*{[\s\S]*?grid-template-columns:\s*180px minmax\(0, 1fr\)/);

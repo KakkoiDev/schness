@@ -4,7 +4,11 @@ document.querySelectorAll('[data-open-rules]').forEach(button => button.addEvent
   if (!dialog.open) dialog.showModal();
   dialog.dispatchEvent(new Event('rules-open'));
 }));
-initTutorial({ autoStart: document.body.classList.contains('lobby-page') });
+// Nothing opens the rules for you. The lobby auto-opened them on a first
+// visit through this line, which is the exact thing the invariant was
+// written against — and now that the lobby has a real board under it, the
+// dialog was covering a game that had already started.
+initTutorial({ autoStart: false });
 
 let coordinates = false;
 const coordinateButtons = [];

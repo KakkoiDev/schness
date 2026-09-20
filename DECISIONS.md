@@ -37,7 +37,7 @@ Three documents, deliberately separate:
 |---|---|---|
 | **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `trystero`) | WebRTC over public Nostr relays. |
-| **DOM glue** | `main` `lobby` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
+| **DOM glue** | `main` `lobby` `lobby-board` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
 
 Board squares, piece images, and reserve trays have one owner: `board-ui.js`. Game,
 arena, tutorial, puzzle, and library callers supply their positions and interaction
@@ -248,6 +248,31 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### The home page is a board, not a picture of one
+
+Landing on schness.com means you are already playing: place your king on rank 1 and the game runs.
+A 4×4 game has no setup worth a click, and the lobby's job is to start one, not to describe one.
+
+`src/lobby-board.js` owns no rules and no search. Legality comes from `rules.js` through the same
+`interaction.js` helpers every other surface uses, and Black is the same `bot-worker.js` the match
+page runs — **do not write a second rules or bot implementation for the home page**; that is how two
+surfaces quietly start playing different games.
+
+The Bot arena card inherits whatever is on that board, through the same
+`sessionStorage['schness-arena-position']` handoff the library replay uses. That is what makes "take
+this position further" a true sentence. Without JavaScript the card is still a plain link to the
+arena.
+
+**At phone width the board is `display: none`, on purpose.** It is not a label being hidden from the
+screen — the feature genuinely is not there, because at 390px it pushes the four actions below the
+fold and the mobile home has to stay a menu.
+
+The four destinations are one primary card and three quiet ones in a single bordered group. The
+arrow affordance is back: `.mode::after` had existed for a long time and was switched off by
+`.lobby-page .mode::after{display:none}` on the one page that needs it, so the cards did not look
+pressable. Subtitles are weight 400 — they inherited 640 from `.btn`, so a title and its supporting
+line carried identical emphasis and the eye had nowhere to land.
+
 ### Destinations are links, and the header is one row in one order
 
 **Every page-to-page destination is an `<a href>`.** The only one on the whole site used to be
@@ -379,7 +404,14 @@ The reserve banks are named through `aria-labelledby` on those labels, and the t
 
 The rules dialog opens from the Rules button and nowhere else. It used to open modally over the
 board the first time you played, which contradicted "starts instantly" and left the board
-unclickable. The lobby's three-rule strip and the turn card carry first-run guidance instead.
+unclickable.
+
+**It was doing it again.** The auto-open moved out of `lobby.js` and into `rules-modal.js` as
+`initTutorial({ autoStart: document.body.classList.contains('lobby-page') })`, and the test that
+guards this named two files by hand, so it went on passing while the lobby opened the dialog on
+every first visit. Now that the lobby has a real board, that dialog covered a game that had already
+started. `autoStart` defaults to `false` and the test reads `rules-modal.js` and `tutorial.js` too.
+First-run guidance is the board itself, the turn line under it, and Rules in the header.
 
 ### The clock is one clock, kept by two players
 
@@ -561,6 +593,9 @@ Newest first. One line per decision that changed how the app behaves.
 
 - One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
   them made the module precache work for the first time.
+
+- The lobby is a playable board above four cards, with a footer; the rules stopped opening
+  themselves, which they had quietly resumed doing through `rules-modal.js`.
 
 - Real links everywhere, one `<nav>`, one header order, a wordmark that cannot vanish, and an `h1`
   that names the page rather than the site.

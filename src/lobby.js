@@ -1,10 +1,12 @@
 import { gameUrl, launchIntent } from './navigation.js';
 import { clockMode, setClockMode } from './settings.js';
 import { initTheme } from './theme.js';
+import { initLobbyBoard } from './lobby-board.js';
 import { initI18n } from './i18n.js';
 
 initTheme();
 initI18n();
+initLobbyBoard();
 
 // Three of the four destinations are plain <a href> cards in the markup, so
 // they cmd-click, middle-click, copy-link and crawl like any other link. Only

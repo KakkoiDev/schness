@@ -48,11 +48,28 @@
         <h1 id="play-title">Play Schness</h1>
         <p>Move a piece, or deploy one from your reserve. Every capture comes back.</p>
       </div>
+
+      <!--
+        A board, not a picture of one. A 4x4 game has no setup worth a click, so
+        landing here means you are already playing. Deliberately absent at phone
+        width: there it pushes the four actions below the fold, and the mobile
+        home stays a menu.
+      -->
+      <section id="lobby-play" class="lobby-play" aria-labelledby="lobby-play-title">
+        <h2 id="lobby-play-title" class="visually-hidden">Play against the bot</h2>
+        <div class="lobby-seat"><span class="reserve-label" id="lobby-black-label">Black reserve</span><div id="lobby-black-reserve" class="bank" aria-labelledby="lobby-black-label"></div></div>
+        <div id="lobby-board" class="board" role="grid" aria-label="Schness board"></div>
+        <div class="lobby-seat"><span class="reserve-label" id="lobby-white-label">Your reserve</span><div id="lobby-white-reserve" class="bank" aria-labelledby="lobby-white-label"></div></div>
+        <p class="lobby-foot"><span id="lobby-status" role="status">Place your king on rank 1 and the game runs.</span><button id="lobby-restart" class="text-button btn" type="button" data-variant="ghost">Start again</button></p>
+      </section>
+
       <div class="mode-buttons">
-        <a id="bot-arena" class="mode dark btn" href="./watch.html" data-variant="outline"><strong>Bot arena</strong><small>Play, watch, take over, or edit a position</small></a>
-        <button id="play-online" class="mode btn" type="button" data-variant="outline"><strong>Create an online game</strong><small>Get a link to send a friend</small></button>
-        <a id="browse-games" class="mode btn" href="./library.html" data-variant="outline"><strong>Browse recorded games</strong><small>Study 1,099 unique AI games</small></a>
-        <a id="solve-puzzles" class="mode btn" href="./puzzles.html" data-variant="outline"><strong>Checkmate puzzles</strong><small>Mate in one, two, three, or four</small></a>
+        <a id="bot-arena" class="mode mode-primary btn" href="./watch.html" data-variant="outline"><strong>Bot arena</strong><small>Take this position further — stronger bots, replay, position editor</small></a>
+        <div class="mode-group">
+          <button id="play-online" class="mode btn" type="button" data-variant="outline"><strong>Create an online game</strong><small>Get a link to send a friend</small></button>
+          <a id="browse-games" class="mode btn" href="./library.html" data-variant="outline"><strong>Browse recorded games</strong><small>Study 1,099 unique AI games</small></a>
+          <a id="solve-puzzles" class="mode btn" href="./puzzles.html" data-variant="outline"><strong>Checkmate puzzles</strong><small>Mate in one, two, three, or four</small></a>
+        </div>
       </div>
     </section>
 
@@ -73,9 +90,15 @@
       </form>
     </dialog>
 
-
-
-
+    <footer class="site-foot">
+      <nav aria-label="More">
+        <button class="foot-link btn" type="button" data-open-rules data-variant="ghost">How to play</button>
+        <a href="https://github.com/KakkoiDev/schness">Source</a>
+        <a href="https://github.com/KakkoiDev/schness/releases">Tournament data</a>
+        <a href="https://github.com/KakkoiDev/schness/blob/master/DEVLOG.md">Dev log</a>
+      </nav>
+      <p class="foot-note">Peer-to-peer, no accounts, no tracking.</p>
+    </footer>
 
   </main>
 
