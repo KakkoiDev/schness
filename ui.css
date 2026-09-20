@@ -43,7 +43,16 @@ body .btn[data-variant="ghost"] { border-color: transparent; background: transpa
 body .btn[data-variant="primary"] { background: var(--ink); color: var(--inverse); border-color: var(--ink); }
 body .btn:not(:disabled):hover { background: var(--sunk); border-color: var(--muted); transform: none; }
 body .btn[data-variant="primary"]:not(:disabled):hover { background: var(--ink); opacity: .9; }
-body .btn:disabled { opacity: .5; cursor: default; }
+/* Drawn, not dimmed: opacity on a coloured button produces a different
+   colour on every background it happens to sit on. */
+body .btn:disabled,
+body .btn[data-variant="primary"]:disabled {
+  border-color: var(--line);
+  background: var(--sunk);
+  color: var(--muted);
+  opacity: 1;
+  cursor: default;
+}
 body .btn:focus-visible, body .input:focus-visible, body select.select:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;

@@ -265,17 +265,19 @@ test('a wait that has gone on too long says what it cannot rule out', async () =
   const html = await readFile(resolve(root, 'game.html'), 'utf8');
   // The bundled WebRTC config carries STUN and no TURN, so a symmetric-NAT
   // pair never connects and never will — and peers exchange nothing until
-  // WebRTC is up, so to both of them it looks exactly like a friend who has
-  // not clicked, on relays that answer fine. The card cannot detect it; after
-  // long enough it says so, and offers the way out.
-  assert.match(html, /id="search-quiet"[^>]*class="card-note"[^>]*hidden/);
-  assert.match(html, /id="quiet-bot"/);
-  assert.match(main, /const quiet = 20000;/);
-  assert.match(html, /An open relay does not guarantee that discovery/);
-  // Never over the top of the stalled card, which contradicts it outright.
-  assert.match(main, /searchQuiet\.hidden = stalled \|\| waited < quiet;/);
+  // WebRTC is up, so neither side learns the other is even there. After a long
+  // wait the card stops implying that patience is the answer.
+  // The schedule itself is pure and unit-tested in test/matchmaking.test.js;
+  // what belongs here is that the card is wired to it and nothing else.
+  assert.match(main, /import \{ searchMessage \} from '\.\/matchmaking\.js';/);
+  assert.match(main, /searchStatus\.textContent = searchMessage\(waited, stalled\);/);
+  // One line that rewrites itself, so the card never changes height. It used
+  // to grow two paragraphs, each with its own "Play the bot instead" button.
+  assert.doesNotMatch(html, /id="search-stalled"|id="search-quiet"|id="stalled-bot"|id="quiet-bot"/);
+  assert.equal([...html.matchAll(/Play the bot/g)].length, 2, 'one escape while waiting, one when expired');
+  assert.match(html, /id="waiting-bot"[^>]*>Play the bot while you wait/);
+  assert.match(html, /id="search-status" role="status"/);
 });
-
 test('the board is a real grid, and the rules can be scrolled from a keyboard', async () => {
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
   const boardUi = await readFile(resolve(root, 'src/board-ui.js'), 'utf8');

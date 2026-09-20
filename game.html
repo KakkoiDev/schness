@@ -50,50 +50,59 @@
       </div>
       <section id="network-card" class="network-card" hidden>
         <div id="card-waiting" class="card-state" hidden>
-          <p class="eyebrow">Waiting for opponent</p>
+          <p class="eyebrow"><span class="state-dot is-live" aria-hidden="true"></span>Waiting for opponent</p>
           <h2>Send this link</h2>
-          <p class="card-body">The match starts the moment they open it. You’ll play White.</p>
+          <p class="card-body">The match starts the moment they open it. You play White.</p>
           <div class="link-row">
             <input id="invite-url" type="url" readonly aria-label="Match link" class="input">
-            <button id="copy-invite" type="button" class="btn" data-variant="outline">Copy</button>
+            <button id="copy-invite" type="button" class="card-primary btn" data-variant="primary">Copy</button>
           </div>
+          <!--
+            Peer-to-peer usually means the other player is in the same room on a
+            phone, and copying a URL from a laptop to a phone is the worst step
+            in this flow.
+          -->
+          <figure id="invite-scan" class="invite-scan">
+            <div id="invite-qr" class="invite-qr" role="img" aria-label="The invitation link as a scannable code"></div>
+            <figcaption>Or scan it</figcaption>
+          </figure>
+          <!--
+            From the first second, in one fixed place. A player who has to wait
+            should never have to fail first to find something to do.
+          -->
+          <button id="waiting-bot" class="card-escape btn" type="button" data-variant="ghost">Play the bot while you wait →</button>
           <div class="card-foot">
             <span id="search-pulse" class="pulse" aria-hidden="true"><i></i><i></i><i></i></span>
             <span id="search-status" role="status">Listening for a second player</span>
             <button id="cancel-search" class="card-link btn" type="button" data-variant="ghost">Cancel</button>
           </div>
-          <p id="search-stalled" class="card-note" hidden>
-            No relay is answering, so the link cannot reach anyone yet. It will
-            connect on its own if the network comes back.
-            <button id="stalled-bot" class="card-link btn" type="button" data-variant="ghost">Play the bot instead</button>
-          </p>
-          <p id="search-quiet" class="card-note" hidden>
-            Still waiting for the other browser. Make sure both opened this exact
-            invitation link. An open relay does not guarantee that discovery
-            or the direct connection succeeded. We are retrying automatically;
-            if both pages keep waiting, try another network.
-            <button id="quiet-bot" class="card-link btn" type="button" data-variant="ghost">Play the bot instead</button>
-          </p>
+        </div>
+        <div id="card-joined" class="card-state" hidden>
+          <p class="eyebrow"><span class="state-dot is-ok" aria-hidden="true"></span>Connected</p>
+          <h2 id="joined-headline">Black has joined — your move.</h2>
+          <p class="card-body">Peer-to-peer. Nothing about this match passes through a server.</p>
         </div>
         <div id="card-reconnect" class="card-state" hidden>
           <p class="eyebrow"><span class="state-dot is-warn" aria-hidden="true"></span>Reconnecting</p>
           <h2>Opponent lost connection</h2>
-          <p class="card-body">The board is saved. If they don’t return within the countdown, the match is yours.</p>
+          <p class="card-body">The board is saved. If they do not come back before the clock runs out, the match is yours.</p>
+          <p class="countdown"><strong id="reconnect-left">1:00</strong><span>until forfeit</span></p>
           <div class="progress"><i id="reconnect-bar"></i></div>
-          <p class="progress-legend"><span>Waiting</span><span id="reconnect-left">1:00 left</span></p>
           <div class="card-actions">
-            <button id="claim-win" class="card-primary btn" type="button" data-variant="primary">Claim the win</button>
             <button id="keep-waiting" class="card-secondary btn" type="button" data-variant="outline">Keep waiting</button>
+            <button id="claim-win" class="card-primary btn" type="button" disabled data-variant="primary">Claim the win</button>
           </div>
+          <p id="claim-note" class="card-note">Claiming unlocks at 0:00.</p>
         </div>
         <div id="card-expired" class="card-state" hidden>
           <p class="eyebrow"><span class="state-dot is-danger" aria-hidden="true"></span>Link expired</p>
           <h2>This game is no longer open</h2>
-          <p class="card-body">The invite was already used or has gone stale. Start a fresh one, or play the bot while you wait.</p>
+          <p class="card-body">The invitation was already used, or it sat unopened long enough to go stale. Nothing is lost — a new link takes one tap.</p>
           <div class="card-actions">
-            <button id="new-online" class="card-primary btn" type="button" data-variant="primary">New online game</button>
+            <button id="new-online" class="card-primary btn" type="button" data-variant="primary">New invite</button>
             <button id="bot-instead" class="card-secondary btn" type="button" data-variant="outline">Play the bot</button>
           </div>
+          <a class="card-escape" href="./">Back to the lobby</a>
         </div>
       </section>
       <p id="announcement" class="announcement" role="status" aria-live="polite" aria-atomic="true"></p>

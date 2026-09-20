@@ -381,3 +381,41 @@ test('the rules never open themselves, even on a first visit', async ({ page }) 
   await page.locator('header [data-open-rules]').click();
   await expect(page.locator('#rules-dialog')).toBeVisible();
 });
+
+test('the waiting card carries the link, a scannable code and a way out', async ({ page }) => {
+  await page.goto(`/game.html?game=${GAME_ID}&mode=online`);
+  await expect(page.locator('#card-waiting')).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByLabel('Match link')).toHaveValue(/mode=online/);
+  // Copy is the only primary on this card: it is the one thing to do.
+  await expect(page.locator('#card-waiting .card-primary')).toHaveCount(1);
+  await expect(page.locator('#invite-qr svg')).toBeVisible();
+  // Dark on light, whatever the theme: a themed code is one that does not scan.
+  const ground = await page.locator('#invite-qr').evaluate((element) =>
+    getComputedStyle(element).getPropertyValue('--qr-paper').trim());
+  expect(ground).toBe('#fff');
+  // Present from the first second, so nobody has to fail first to find it.
+  await expect(page.locator('#waiting-bot')).toBeVisible();
+  await expect(page.locator('#search-stalled, #search-quiet')).toHaveCount(0);
+
+  // The status escalates without the card changing height.
+  const card = page.locator('#network-card');
+  const heights = [];
+  for (const [waited, stalled] of [[0, false], [25_000, false], [95_000, false], [30_000, true]]) {
+    await page.evaluate(async ([elapsed, dead]) => {
+      const { searchMessage } = await import('./src/matchmaking.js');
+      document.querySelector('#search-status').textContent = searchMessage(elapsed, dead);
+    }, [waited, stalled]);
+    heights.push(Math.round((await card.boundingBox()).height));
+  }
+  expect(new Set(heights).size, `card heights ${heights.join(' / ')}`).toBe(1);
+});
+
+test('claiming a forfeit is disabled until the countdown reaches zero', async ({ page }) => {
+  await page.goto(`/game.html?game=${GAME_ID}&mode=bot`);
+  // The rule is already that the opponent gets the countdown. A live button
+  // that silently refuses, and one that lets you claim early, both misstate it.
+  await expect(page.locator('#claim-win')).toBeDisabled();
+  await expect(page.locator('#claim-note')).toHaveText('Claiming unlocks at 0:00.');
+  const drawn = await page.locator('#claim-win').evaluate((element) => getComputedStyle(element).opacity);
+  expect(drawn, 'disabled is drawn, not dimmed').toBe('1');
+});

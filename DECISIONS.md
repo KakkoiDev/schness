@@ -35,7 +35,7 @@ Three documents, deliberately separate:
 
 | layer | modules | property |
 |---|---|---|
-| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` | No DOM, no network. Directly unit-tested. |
+| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `trystero`) | WebRTC over public Nostr relays. |
 | **DOM glue** | `main` `lobby` `lobby-board` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
 
@@ -153,6 +153,17 @@ Relay failure is reported to the player: `relayReach()` counts open sockets, and
 says so after six seconds of grace. Trystero never surfaces a transport failure on its own, so
 without that a dead pool looks exactly like a friend who has not clicked the link yet.
 
+**The waiting card is one status line that rewrites itself in place.** `searchMessage(waited,
+stalled)` in `src/matchmaking.js` is the whole schedule, pure and unit-tested: 0:00 listening, 0:20
+nobody has opened it, 1:30 the link check and what cannot be ruled out — and a dead relay pool
+outranks all three, at any point, because saying "nothing here can tell" over a stalled card
+contradicts it. The card reserves the height of the longest message (measured at 390px, where the
+line box is narrowest), so escalating never moves anything. It used to be a status row plus two
+paragraphs that appeared underneath on failure, each carrying its own "Play the bot instead" button:
+three buttons for one job, on a card that grew taller the worse things got. **The bot escape is now
+in one fixed place from the first second** — a player who has to wait should never have to fail
+first to find something to do.
+
 **There is a second failure, and the app cannot see it at all.** The bundled trystero carries STUN
 servers and **no TURN**, so a pair behind symmetric NAT — mobile carriers, plenty of office networks
 — will never connect, however long they wait. Peers exchange nothing until WebRTC is up, so neither
@@ -247,6 +258,29 @@ ember that is now also the focus ring; `--warn` stays amber.
 Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark mode drew the light
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
+
+### The connection states say what is happening and offer a way out
+
+These are the only screens in Schness where nothing is happening and the player cannot do anything
+about it, which makes them the ones most worth getting right.
+
+- **Waiting** — the link is the hero, and Copy is the only primary on the card. A **QR code** of the
+  invite sits under it: peer-to-peer usually means the other player is in the same room on a phone,
+  and copying a URL from a laptop to a phone is the worst step in this flow. `src/qr.js` is a
+  dependency-free encoder (byte mode, level M, versions 1–10) whose output was checked
+  module-for-module against an independent implementation; `test/qr.test.js` carries two golden
+  matrices from that comparison. The code is **always dark on light**, in both themes — a themed
+  code is one that does not scan. **No camera has read one**; nothing in this sandbox has one.
+- **Reconnect** — the countdown is the hero at 38px mono, and **"Claim the win" is drawn disabled
+  until 0:00** with a note saying when it unlocks. The rule is already that the opponent gets the
+  countdown; a live button that silently refuses, and one that lets you claim early, both misstate
+  it.
+- **Expired** — gained a primary action. It was a dead end with nothing to do but go back.
+- **Connected** — a state that did not exist. The card used to simply vanish, with nothing confirming
+  *who* had arrived. One rung, held briefly, naming the opponent and whose move it is.
+
+**Disabled is drawn, not dimmed.** `opacity: .45` on a coloured button produces a different colour on
+every background it happens to sit on.
 
 ### The rules dialog opens at the top, with the board it is teaching whole
 
@@ -614,6 +648,10 @@ Newest first. One line per decision that changed how the app behaves.
 
 - One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
   them made the module precache work for the first time.
+
+- The three connection cards rebuilt, with a QR of the invite, one escalating status line that
+  cannot change the card's height, a success rung that did not exist, and a forfeit claim that is
+  disabled until it is actually claimable.
 
 - The rules dialog opens at the top with its demo board whole, measured rather than eyeballed, and
   rule 1 gained the affordance the other three had.

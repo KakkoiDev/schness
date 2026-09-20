@@ -1171,6 +1171,102 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 .state-dot.is-warn { background: var(--warn); }
 .state-dot.is-danger { background: var(--danger); }
 .state-dot.is-ok { background: var(--ok); }
+.state-dot.is-live { background: var(--accent); }
+
+/*
+ * The link is the hero of this card, and Copy is the only primary on it.
+ */
+.link-row input {
+  font-size: 13px;
+}
+
+.link-row .card-primary {
+  min-height: 38px;
+}
+
+/*
+ * Peer-to-peer usually means the other player is in the same room on a phone,
+ * and copying a URL from a laptop to a phone is the worst step in this flow.
+ */
+.invite-scan {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  margin: 6px 0 0;
+}
+
+.invite-qr {
+  --qr-paper: #fff;
+  --qr-ink: #000;
+  width: 138px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  overflow: hidden;
+  background: var(--qr-paper);
+  line-height: 0;
+}
+
+/* A reader expects dark-on-light; a themed code is a code that does not scan. */
+.invite-qr svg { display: block; width: 100%; height: auto; }
+
+.invite-scan figcaption {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/*
+ * The way out, in one fixed place, from the first second. A player who has to
+ * wait should never have to fail first to find something to do.
+ */
+.card-escape {
+  display: inline-flex;
+  align-items: center;
+  align-self: start;
+  min-height: 44px;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--accent-text);
+  cursor: pointer;
+  font-size: 12.5px;
+  font-weight: 640;
+  text-decoration: none;
+}
+
+.card-escape:hover { text-decoration: underline; }
+
+/*
+ * The card must not change height as the status line rewrites itself, and the
+ * longest message is three lines at this width.
+ */
+#search-status {
+  flex: 1;
+  /*
+   * Reserve the tallest message so escalating never moves the card. Measured
+   * at 390px, where the line box is narrowest and the longest message wraps
+   * to four lines; 1440px has slack it does not need.
+   */
+  min-height: 6.1em;
+}
+
+/* The countdown is the hero of the reconnect card. */
+.countdown {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.countdown strong {
+  font-family: var(--font-mono);
+  font-size: 38px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+}
 
 /* The Copy button is inset in the field rather than butted against it. */
 .link-row {
@@ -1220,7 +1316,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   font-size: 12.5px;
 }
 
-/* Shown only when no relay answers, so it never nags a normal wait. */
+/* Says when the disabled action unlocks, rather than leaving it a mystery. */
 .card-note {
   margin: 10px 0 0;
   color: var(--muted);
@@ -1405,7 +1501,16 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 }
 
 .card-primary:hover {
-  background: #243128;
+  background: #2A332D;
+}
+
+.card-primary:disabled,
+.card-secondary:disabled {
+  border: 1px solid var(--line);
+  background: var(--sunk);
+  color: var(--muted);
+  cursor: default;
+  opacity: 1;
 }
 
 .card-secondary {
