@@ -1,7 +1,7 @@
 import {
   BANK_PIECES, BLACK, KING, WHITE, applyAction, createInitialPosition, getResult, isInCheck,
 } from './rules.js';
-import { recordAction } from './history.js';
+import { pairMoves, recordAction } from './history.js';
 import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
 import { buildEditedPosition, controllerSearch, humanSeatControllers, putEditorPiece } from './arena.js';
 import { movedEnough } from './drag.js';
@@ -66,10 +66,23 @@ function bindControls() {
     const seats = humanSeatControllers($('#human-side').value, controller(WHITE), controller(BLACK));
     $('#white-level').value = seats.white;
     $('#black-level').value = seats.black;
-    restart();
+    /*
+     * Taking a seat mid-game restarts, because the moves so far were somebody
+     * else's. Before the first move there is nothing to throw away — and a
+     * position imported from the library is exactly that case, so choosing a
+     * side used to delete the position you came here to play.
+     */
+    if (history.length) return restart();
+    cancelSearch();
+    selection = null;
+    goLive(false);
+    render();
+    scheduleBot();
   });
+  $('#watch-first').addEventListener('click', () => reviewTo(0));
   $('#watch-previous').addEventListener('click', () => review(-1));
   $('#watch-next').addEventListener('click', () => review(1));
+  $('#watch-last').addEventListener('click', () => reviewTo(history.length));
   $('#watch-live').addEventListener('click', goLive);
   $('#watch-branch').addEventListener('click', branchHere);
   $('#watch-auto').addEventListener('click', () => {
@@ -178,9 +191,13 @@ function chooseReserve(piece) {
 }
 
 function review(direction) {
+  reviewTo(reviewIndex + direction);
+}
+
+function reviewTo(index) {
   aisPaused = true;
   cancelSearch();
-  reviewIndex = Math.max(0, Math.min(history.length, reviewIndex + direction));
+  reviewIndex = Math.max(0, Math.min(history.length, index));
   selection = null;
   render();
 }
@@ -241,13 +258,31 @@ function render() {
   renderReserve('#black-reserve', position.banks[BLACK], BLACK);
   renderMoves();
   const result = getResult(position);
-  if (reviewIndex < history.length) status.textContent = `Reviewing ply ${reviewIndex} of ${history.length}`;
-  else if (result) status.textContent = resultLabel(result);
-  else if (thinking) status.textContent = `${sideName(position.turn)} ${controller(position.turn)} is thinking…`;
-  else if (aisPaused && controller(position.turn) !== 'human') status.textContent = `Paused before ${sideName(position.turn)} moves`;
-  else if (position.phase !== 'play') status.textContent = `${sideName(position.turn)}: place your king on the home row`;
-  else if (controller(position.turn) === 'human' && isInCheck(position, position.turn)) status.textContent = 'CHECK — defend your king';
-  else status.textContent = `${sideName(position.turn)} to move · ${controller(position.turn) === 'human' ? 'Your seat' : controller(position.turn)}`;
+  const yours = controller(position.turn) === 'human';
+  let eyebrow = yours ? 'Your move' : `${sideName(position.turn)} to move`;
+  if (reviewIndex < history.length) {
+    eyebrow = 'Reviewing';
+    status.textContent = `Reviewing ply ${reviewIndex} of ${history.length}`;
+  } else if (result) {
+    eyebrow = 'Game over';
+    status.textContent = resultLabel(result);
+  } else if (thinking) {
+    eyebrow = 'Thinking';
+    status.textContent = `${sideName(position.turn)} ${controller(position.turn)} is thinking…`;
+  } else if (aisPaused && !yours) {
+    eyebrow = 'Paused';
+    status.textContent = `Paused before ${sideName(position.turn)} moves`;
+  } else if (position.phase !== 'play') {
+    eyebrow = yours ? 'Your move' : 'Placing kings';
+    status.textContent = `${sideName(position.turn)}: place your king on the home row`;
+  } else if (yours && isInCheck(position, position.turn)) {
+    eyebrow = 'Check';
+    status.textContent = 'CHECK — defend your king';
+  } else {
+    status.textContent = `${sideName(position.turn)} to move · ${yours ? 'Your seat' : controller(position.turn)}`;
+  }
+  $('#watch-eyebrow').textContent = eyebrow;
+  document.querySelector('.arena-turn').classList.toggle('is-check', eyebrow === 'Check');
   renderControls();
 }
 
@@ -323,23 +358,23 @@ function cancelPointerDrag() {
   render();
 }
 
+/**
+ * Numbered, paired, tabular. It was a flat run of ghost buttons, one per ply,
+ * which is a list of moves rather than a transcript you can follow.
+ */
 function renderMoves() {
-  moves.replaceChildren(...history.map((entry, index) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = index + 1 === reviewIndex ? 'btn current' : 'btn';
-    button.dataset.variant = 'ghost';
-    button.textContent = `${entry.ply}. ${entry.notation}`;
-    button.addEventListener('click', () => {
-      aisPaused = true;
-      cancelSearch();
-      reviewIndex = index + 1;
-      selection = null;
-      render();
-    });
-    return button;
+  const rows = pairMoves(history);
+  moves.replaceChildren(...rows.map((row) => {
+    const line = document.createElement('div');
+    line.className = 'arena-move-row';
+    line.setAttribute('role', 'row');
+    const number = document.createElement('span');
+    number.setAttribute('role', 'cell');
+    number.textContent = String(row.number);
+    line.append(number, moveCell(row.white), moveCell(row.black));
+    return line;
   }));
-  const currentMove = moves.querySelector('.current');
+  const currentMove = moves.querySelector('.is-current');
   if (currentMove) {
     const top = currentMove.offsetTop;
     const bottom = top + currentMove.offsetHeight;
@@ -348,13 +383,36 @@ function renderMoves() {
   }
 }
 
+function moveCell(entry) {
+  if (!entry) {
+    const blank = document.createElement('span');
+    blank.setAttribute('role', 'cell');
+    return blank;
+  }
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.setAttribute('role', 'cell');
+  button.className = entry.ply === reviewIndex ? 'arena-move is-current' : 'arena-move';
+  button.textContent = entry.notation;
+  button.addEventListener('click', () => reviewTo(entry.ply));
+  return button;
+}
+
 function renderControls() {
-  $('#human-side').value = controller(WHITE) === 'human' ? WHITE : controller(BLACK) === 'human' ? BLACK : 'watch';
-  $('#watch-previous').disabled = reviewIndex === 0;
-  $('#watch-next').disabled = reviewIndex === history.length;
-  $('#watch-live').disabled = reviewIndex === history.length;
-  $('#watch-branch').disabled = reviewIndex === history.length;
-  $('#watch-auto').textContent = aisPaused ? 'Resume AIs' : 'Pause AIs';
+  const seat = controller(WHITE) === 'human' ? WHITE : controller(BLACK) === 'human' ? BLACK : 'watch';
+  $('#human-side').value = seat;
+  // A strength control exists for each side that actually has a bot on it.
+  $('#white-strength').hidden = controller(WHITE) === 'human';
+  $('#black-strength').hidden = controller(BLACK) === 'human';
+  const atStart = reviewIndex === 0;
+  const atLive = reviewIndex === history.length;
+  $('#watch-first').disabled = atStart;
+  $('#watch-previous').disabled = atStart;
+  $('#watch-next').disabled = atLive;
+  $('#watch-last').disabled = atLive;
+  $('#watch-live').disabled = atLive;
+  $('#watch-branch').disabled = atLive;
+  $('#watch-auto').textContent = aisPaused ? 'Resume the bots' : 'Pause the bots';
   $('#watch-auto').setAttribute('aria-pressed', String(aisPaused));
 }
 

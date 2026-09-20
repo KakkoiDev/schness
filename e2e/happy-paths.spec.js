@@ -38,6 +38,10 @@ test('the homepage opens the arena with visible training controls', async ({ pag
   // The card is an <a href> now, and "Bot arena" is also a nav link.
   await page.locator('#bot-arena').click();
   await expect(page).toHaveURL(/watch\.html/);
+  // Training tools are one of the quiet items now, so they start folded — but
+  // they are on this page, which is where all standard bot play happens.
+  await expect(page.locator('#watch-training summary')).toBeVisible();
+  await page.locator('#watch-training summary').click();
   await expect(page.locator('#watch-training-mate')).toBeVisible();
   await expect(page.locator('#watch-training-advantage')).toBeVisible();
   await page.locator('#watch-training-mate').check();
@@ -58,7 +62,8 @@ test('training warns the defender of forced mate before they move', async ({ pag
     ],
   })));
   await page.goto('/watch.html?position=library');
-  await page.locator('#black-level').selectOption('human');
+  await page.locator('#human-side').selectOption('black');
+  await page.locator('#watch-training summary').click();
   await page.locator('#watch-training-mate').check();
   await expect(page.locator('#watch-training-warning')).toContainText('Danger: White can force mate in 1', { timeout: 10_000 });
   const before = await page.locator('#watch-board').boundingBox();
@@ -259,6 +264,9 @@ test('Bot Arena plays, reviews, edits and never scrolls the page for history', a
   await page.goto('/watch.html');
   const board = page.locator('#watch-board[data-schness-board="true"]');
   await expect(board).toBeVisible();
+  // Who sits where is one decision; a strength control exists for each side
+  // that actually has a bot on it.
+  await page.locator('#human-side').selectOption('watch');
   await page.locator('#white-level').selectOption('learning');
   await page.locator('#black-level').selectOption('learning');
   await expect(page.locator('#watch-moves button')).not.toHaveCount(0, { timeout: 15_000 });
@@ -268,6 +276,7 @@ test('Bot Arena plays, reviews, edits and never scrolls the page for history', a
   await page.locator('#watch-auto').click();
   await page.locator('#watch-previous').click();
   await expect(page.locator('#watch-status')).toContainText('Reviewing');
+  await expect(page.locator('#watch-eyebrow')).toHaveText('Reviewing');
   await page.locator('#watch-edit').click();
   await expect(page.locator('#position-board[data-schness-board="true"]')).toBeVisible();
   await page.locator('#position-close').click();
@@ -439,4 +448,42 @@ test('an online match never opens with a live microphone or camera', async ({ pa
   await expect(page.locator('#voice-toggle')).toHaveText('Audio off');
   await expect(page.locator('#video-toggle')).toHaveText('Video off');
   await expect(page.locator('#on-air')).toBeHidden();
+});
+
+test('the arena asks one seat question, and shows a strength only where a bot sits', async ({ page }) => {
+  await page.goto('/watch.html');
+  // It used to ask three times: a "Play as" select plus a White seat select
+  // plus a Black seat select, all answering the same question.
+  await expect(page.locator('#human-side')).toHaveValue('white');
+  await expect(page.locator('#white-strength')).toBeHidden();
+  await expect(page.locator('#black-strength')).toBeVisible();
+  await page.locator('#human-side').selectOption('watch');
+  await expect(page.locator('#white-strength')).toBeVisible();
+  await expect(page.locator('#black-strength')).toBeVisible();
+  await page.locator('#human-side').selectOption('black');
+  await expect(page.locator('#white-strength')).toBeVisible();
+  await expect(page.locator('#black-strength')).toBeHidden();
+});
+
+test('the arena splits replay from setup and keeps a transcript you can read', async ({ page }) => {
+  await page.goto('/watch.html');
+  // One primary, a transport group, a transcript, then the quiet list. It was
+  // a flat row of seven equal-weight buttons, two of which wrapped.
+  await expect(page.locator('.watch-panel .arena-primary')).toHaveText('New game');
+  await expect(page.locator('.arena-transport .btn')).toHaveCount(5);
+  await expect(page.locator('#watch-live')).toHaveText('Live');
+  await expect(page.locator('#watch-branch')).toHaveText('Branch from here');
+  for (const control of ['#watch-first', '#watch-previous', '#watch-live', '#watch-branch']) {
+    await expect(page.locator(control)).toBeDisabled();
+  }
+  await page.locator('#human-side').selectOption('watch');
+  await expect(page.locator('.arena-move').first()).toBeVisible({ timeout: 20_000 });
+  const transcript = page.locator('#watch-moves');
+  await expect(transcript.locator('.arena-move-row').first()).toBeVisible();
+  const font = await transcript.evaluate((element) => getComputedStyle(element).fontVariantNumeric);
+  expect(font).toContain('tabular-nums');
+  await page.locator('#watch-first').click();
+  await expect(page.locator('#watch-live')).toBeEnabled();
+  await page.locator('#watch-last').click();
+  await expect(page.locator('#watch-live')).toBeDisabled();
 });

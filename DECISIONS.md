@@ -259,6 +259,22 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### The arena asks one question per decision
+
+- **One seat control.** "You play: White / Black / Neither" — and a strength select for each side that
+  actually has a bot on it. There used to be three controls answering the same question: a "Play as"
+  select plus a White seat select plus a Black seat select.
+- **The turn status sits above the board**, where the eyes already are, in a bordered card with an
+  ember left edge — the one thing on that page asking for attention.
+- **Replay is split from setup.** One primary (New game), a transport group (first / prev / next /
+  last / Live), then a quiet list: edit, branch, pause. It was a flat row of seven equal-weight
+  buttons, two of which wrapped to two lines, with only disabled-dimming to suggest hierarchy.
+  Training tools fold into that quiet list.
+- **The transcript is numbered, paired and tabular**, in `--font-mono` with the current ply marked.
+  It was a flat run of ghost buttons, one per ply.
+- "Live position" is **Live**; "Continue from here" is **Branch from here**. Both hold their Japanese
+  labels on one line at 390px.
+
 ### The connection states say what is happening and offer a way out
 
 These are the only screens in Schness where nothing is happening and the player cannot do anything
@@ -676,6 +692,9 @@ Newest first. One line per decision that changed how the app behaves.
 - One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
   them made the module precache work for the first time.
 
+- The arena asks one seat question, puts the turn status above the board, splits replay from setup,
+  and keeps a transcript you can read.
+
 - The match rail: chat from the first move, mic and camera off until pressed with the reason stated
   before the prompt, an "On air" badge in the rail and the tab title, the link described honestly,
   degradation in the order video → audio → never the clock, and a focus mode.
@@ -765,7 +784,7 @@ All desktop dialogs use native fixed viewport centering rather than per-page off
 
 ## 2026-09-14 — Explicit human color choice
 
-Bot Arena now exposes a Play as White/Black selector (plus watching both bots), instead of requiring users to swap two controller dropdowns. Changing color starts a fresh game, preserving the bot strength. Black waits for White's bot king placement before placing their own king. Added pure seat-selection unit tests and browser coverage for both colors.
+Bot Arena exposes one seat selector — White, Black, or watch two bots — and a strength control for each side that actually has a bot on it. It used to ask the same question three times: a Play as select plus a White seat select plus a Black seat select. Changing seat mid-game starts a fresh game and preserves the bot strength; **before the first move it does not**, because there is nothing to throw away and a position imported from the library is exactly that case. Black waits for White's bot king placement before placing their own king. Added pure seat-selection unit tests and browser coverage for both colors.
 
 ## 2026-09-14 — Rules and practice in one place
 

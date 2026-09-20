@@ -44,7 +44,9 @@ body .btn[data-variant="primary"] { background: var(--ink); color: var(--inverse
 body .btn:not(:disabled):hover { background: var(--sunk); border-color: var(--muted); transform: none; }
 body .btn[data-variant="primary"]:not(:disabled):hover { background: var(--ink); opacity: .9; }
 /* Drawn, not dimmed: opacity on a coloured button produces a different
-   colour on every background it happens to sit on. */
+   colour on every background it happens to sit on. A ghost button keeps its
+   transparency — filling it in would make the disabled one the loudest thing
+   in a quiet list. */
 body .btn:disabled,
 body .btn[data-variant="primary"]:disabled {
   border-color: var(--line);
@@ -52,6 +54,11 @@ body .btn[data-variant="primary"]:disabled {
   color: var(--muted);
   opacity: 1;
   cursor: default;
+}
+body .btn[data-variant="ghost"]:disabled {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
 }
 body .btn:focus-visible, body .input:focus-visible, body select.select:focus-visible {
   outline: 2px solid var(--focus);
@@ -112,7 +119,7 @@ body .dialog-close.btn { width: 44px; height: 44px; padding: 0; flex: 0 0 44px; 
 .lobby-page .rules-full.btn { width: 100%; margin-top: 1.25rem; }
 
 /* Panels share surfaces and spacing without changing each mode's layout. */
-.watch-panel, .puzzle-settings, .library-stats, .library-filters, .analysis-panel,
+.watch-panel, .puzzle-settings, .library-stats, .library-filters, .analysis-panel, .arena-turn,
 .demo-panel, .network-card, .result-card {
   border-color: var(--line);
   border-radius: var(--radius-card);
@@ -129,6 +136,8 @@ dialog :is(.replay-panel, .dialog-body, .dialog-head, .dialog-foot) { padding: 1
 .puzzle-toggles input { flex: 0 0 auto; margin-top: .2rem; }
 .watch-status, .position-help, .online-setup-note { line-height: 1.5; }
 .watch-controls .btn, .puzzle-actions .btn { width: 100%; }
+.arena-quiet .btn, .arena-primary.btn { width: 100%; }
+#watch-training summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 640; }
 .watch-moves .btn { min-height: 44px; padding: .4rem .6rem; font-size: .8rem; }
 .library-game.btn { display: grid; justify-content: stretch; height: auto; text-align: left; padding: 1rem; }
 .library-game.btn:hover { transform: none; }
@@ -170,9 +179,10 @@ dialog h2 { line-height: 1.25; }
 /* The tutorial list owns the divider before its adjacent playable demo. */
 .lobby-page .rules-strip + .rules-demo { border-top: 0; }
 
-/* Shared board surfaces leave room around reserves without resizing pieces. */
-:is(.watch-stage, .replay-stage, .demo-stage, .puzzle-stage) > :is(.watch-player, .replay-seat):first-child { margin-bottom: .625rem; }
-:is(.watch-stage, .replay-stage, .demo-stage, .puzzle-stage) > :is(.watch-player, .replay-seat):last-child { margin-top: .625rem; }
+/* Shared board surfaces leave room around reserves without resizing pieces.
+   Keyed off the seats themselves, not their position: the arena's turn card
+   now sits above the top seat, and :first-child stopped matching. */
+:is(.watch-stage, .replay-stage, .demo-stage, .puzzle-stage) > :is(.watch-player, .replay-seat) { margin-block: .625rem; }
 
 /* Vendor resets must not move native desktop modals into the top-left corner. */
 @media (min-width: 761px) {
