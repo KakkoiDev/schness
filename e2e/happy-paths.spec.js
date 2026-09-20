@@ -419,3 +419,24 @@ test('claiming a forfeit is disabled until the countdown reaches zero', async ({
   const drawn = await page.locator('#claim-win').evaluate((element) => getComputedStyle(element).opacity);
   expect(drawn, 'disabled is drawn, not dimmed').toBe('1');
 });
+
+test('an online match never opens with a live microphone or camera', async ({ page }) => {
+  await page.addInitScript(() => {
+    globalThis.__mediaRequests = [];
+    const ask = async (constraints) => {
+      globalThis.__mediaRequests.push(constraints);
+      throw new DOMException('denied in test', 'NotAllowedError');
+    };
+    Object.defineProperty(navigator, 'mediaDevices', { value: { getUserMedia: ask }, configurable: true });
+  });
+  for (const mode of ['online', 'bot']) {
+    await page.goto(`/game.html?game=${GAME_ID}&mode=${mode}`);
+    await page.waitForTimeout(1500);
+    // Nothing on either path may ask on load. Permission is asked once, when
+    // the button is pressed, and never before.
+    expect(await page.evaluate(() => globalThis.__mediaRequests.length), mode).toBe(0);
+  }
+  await expect(page.locator('#voice-toggle')).toHaveText('Audio off');
+  await expect(page.locator('#video-toggle')).toHaveText('Video off');
+  await expect(page.locator('#on-air')).toBeHidden();
+});

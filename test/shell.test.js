@@ -602,7 +602,9 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="peer-audio"[^>]+autoplay/);
   assert.match(game, /id="peer-video"[^>]+autoplay[^>]+playsinline/);
   assert.match(game, /id="local-video"[^>]+autoplay[^>]+muted[^>]+playsinline/);
-  assert.match(game, /data-quick-message="Good move"/);
+  for (const phrase of ['Good luck', 'Nice move', 'Oops', 'Good game', 'Rematch?']) {
+    assert.match(game, new RegExp(`data-quick-message="\\Q${phrase}\\E"`.replace('\\Q', '').replace('\\E', '').replace('?', '\\?')));
+  }
   assert.match(game, /id="offer-draw"[^>]+data-quick-action="draw"/);
   assert.match(css, /\.chat-own \.chat-bubble\s*{[\s\S]*?border-radius:\s*var\(--radius-card\) var\(--radius-card\) var\(--radius-control\) var\(--radius-card\)/);
   assert.match(css, /\.chat-event\s*{[\s\S]*?border-radius:\s*var\(--radius-pill\)/);
@@ -651,6 +653,27 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(css, /\.game-page \.match-chat\.chat-collapsed/);
   assert.match(css, /max-height:\s*calc\(min\(82dvh, 42rem\) - 3\.2rem\)/);
   assert.doesNotMatch(html, />4 × 4 chess</);
+});
+
+test('the call never outranks the game, and never starts itself', async () => {
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  const html = await readFile(resolve(root, 'game.html'), 'utf8');
+  // The reason goes up before the browser prompt does. A permission dialog
+  // with no reason in front of it is a dialog people decline.
+  assert.match(main, /microphoneStarting = true;\s*await explainMedia\('audio'\);/);
+  assert.match(main, /cameraStarting = true;\s*await explainMedia\('video'\);/);
+  assert.match(main, /async function explainMedia\(kind\) \{\s*voiceStatus\.textContent = MEDIA_REASONS\[kind\];/);
+  // Both off in the markup, so a match cannot open with either running.
+  assert.match(html, /id="voice-toggle"[^>]*aria-pressed="false"[^>]*>Audio off</);
+  assert.match(html, /id="video-toggle"[^>]*aria-pressed="false"[^>]*>Video off</);
+  // Video first, audio second, the clock never.
+  assert.match(main, /const drop = nextDegradation\(\{/);
+  assert.match(main, /if \(drop === 'video'\) \{\s*stopCamera\(\);/);
+  assert.doesNotMatch(main, /nextDegradation[\s\S]{0,400}stopClockTicking/);
+  // Said in the interface, not only in a README.
+  assert.match(html, /Peer-to-peer · not recorded · not stored/);
+  assert.match(main, /connectionText = report \? connectionSummary\(report\) : '';/);
+  assert.match(html, /id="on-air"[^>]*role="status"/);
 });
 
 test('a move carries the clock, the receiver settles it, and a flag is a message', async () => {

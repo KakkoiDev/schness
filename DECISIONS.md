@@ -523,6 +523,33 @@ turn while a toast and the Moves line said the same thing beside it. It shows co
 king placement, being in check, what is selected — and nothing when there is nothing to add. When
 the result overlay is up it is hidden entirely, or the ending is printed twice.
 
+### The call never outranks the game
+
+The rail is a place to talk during a match, not a video app with a board in it.
+
+- **Text chat is on from the first move; mic and camera are off until pressed.** A match must never
+  open with a live microphone. `test/shell.test.js` reads the markup for both toggles, and a
+  Playwright check stubs `getUserMedia` and asserts it is not called on load, in either mode.
+- **Permission is asked once, when the button is pressed, and the reason is on screen before the
+  browser prompt appears** — `explainMedia()` paints `MEDIA_REASONS[kind]` and waits two frames,
+  which is well inside the transient activation the gesture grants. A permission dialog with no
+  reason in front of it is a dialog people decline.
+- **An "On air" badge whenever you are sending**, in the rail and in the tab title. The tab you are
+  not looking at is exactly where "am I still being heard?" comes up. `onAirTitle` is idempotent, so
+  rewriting it on every change never stacks.
+- **The interface says it is peer-to-peer**, and would say the opposite just as plainly.
+  `connectionReport()` in `net.js` reads the selected candidate pair off the real peer connection —
+  relayed or not, and the round-trip time. **The bundled configuration carries STUN and no TURN, so
+  `relayed` cannot currently be true**; the branch exists because adding a TURN server later should
+  not also require remembering to make the strip honest.
+- **Degrade in order: video, then audio, never the clock.** `nextDegradation()` is pure and tested;
+  a test also checks that nothing in that path touches the clock.
+- **Focus mode** collapses the rail to one bar — presence, connection, unread count. On a phone it is
+  the default, because the board keeps the screen.
+
+**None of this has run between two real peers.** Chat, voice and the connection report all need a
+network this sandbox cannot reach.
+
 ### Chat belongs to a match, not to a mode
 
 `mode` is already `'online'` from the moment the invite card goes up, so anything keyed off it alone
@@ -648,6 +675,10 @@ Newest first. One line per decision that changed how the app behaves.
 
 - One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
   them made the module precache work for the first time.
+
+- The match rail: chat from the first move, mic and camera off until pressed with the reason stated
+  before the prompt, an "On air" badge in the rail and the tab title, the link described honestly,
+  degradation in the order video → audio → never the clock, and a focus mode.
 
 - The three connection cards rebuilt, with a QR of the invite, one escalating status line that
   cannot change the card's height, a success rung that did not exist, and a forfeit claim that is

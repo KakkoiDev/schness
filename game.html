@@ -213,10 +213,19 @@
       </aside>
       <section id="match-chat" class="match-chat" aria-labelledby="chat-title" hidden>
         <div class="chat-heading">
-          <div><h2 id="chat-title">At the table</h2><small id="chat-note">Peer-to-peer · not saved</small></div>
+          <div>
+            <h2 id="chat-title">At the table</h2>
+            <small id="chat-note">Peer-to-peer · not recorded · not stored</small>
+            <small id="chat-summary" class="chat-summary"></small>
+          </div>
+          <span id="on-air" class="on-air" role="status" hidden></span>
           <button id="chat-toggle" class="chat-toggle btn" type="button" aria-expanded="true" data-variant="outline">Hide chat</button>
         </div>
         <div id="chat-body">
+          <!--
+            Off until pressed, both of them. A match never opens with a live
+            microphone, and the reason is said before the browser prompt.
+          -->
           <div class="media-actions" aria-label="Call controls">
             <button id="voice-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="outline">Audio off</button>
             <button id="video-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="outline">Video off</button>
@@ -231,8 +240,11 @@
             <p class="chat-empty">No messages yet.</p>
           </div>
           <div id="quick-chat" class="quick-chat" aria-label="Quick messages">
-            <button type="button" data-quick-message="Good move" class="btn" data-variant="outline">Good move</button>
-            <button type="button" data-quick-message="One sec" class="btn" data-variant="outline">One sec</button>
+            <button type="button" data-quick-message="Good luck" class="btn" data-variant="outline">Good luck</button>
+            <button type="button" data-quick-message="Nice move" class="btn" data-variant="outline">Nice move</button>
+            <button type="button" data-quick-message="Oops" class="btn" data-variant="outline">Oops</button>
+            <button type="button" data-quick-message="Good game" class="btn" data-variant="outline">Good game</button>
+            <button type="button" data-quick-message="Rematch?" class="btn" data-variant="outline">Rematch?</button>
             <button id="offer-draw" type="button" data-quick-action="draw" class="btn" data-variant="outline">Offer draw</button>
           </div>
           <form id="chat-form" class="chat-form">
