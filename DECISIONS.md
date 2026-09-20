@@ -294,7 +294,9 @@ The audit runs with `bypassCSP: true`. `addScriptTag` is subject to the page's o
 no `unsafe-inline` — and keeping it that way is the point of `test/security.test.js`, so the policy
 is never relaxed for a test.
 
-Three things it cannot see, checked separately in the same file:
+Lighthouse agrees: **accessibility 100 on all five pages**, run against the real served files.
+
+Three things axe cannot see, checked separately in the same file:
 
 - **Every tab stop shows the focus ring.** The board is the exception by design: it is one tab stop
   with the cursor tracked in JS, and its indicator is the inset ring on the cursor square.

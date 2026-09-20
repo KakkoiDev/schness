@@ -1,25 +1,9 @@
 node_modules/
 playwright-report/
 test-results/
-pw.sandbox.config.js
-shoot.sandbox.mjs
-render-icons.sandbox.mjs
-render-social.sandbox.mjs
-mate.sandbox.mjs
-rules.sandbox.mjs
-header.sandbox.mjs
-lobbyplay.sandbox.mjs
-dialogfit.sandbox.mjs
-cards.sandbox.mjs
-libperf.sandbox.mjs
-states.sandbox.mjs
-seg.sandbox.mjs
-csscheck.sandbox.mjs
-seg2.sandbox.mjs
-labels.sandbox.mjs
-axe.sandbox.mjs
-axe2.sandbox.mjs
-a11y.sandbox.mjs
-a11y2.sandbox.mjs
-coverage.sandbox.mjs
-puz.sandbox.mjs
+
+# Throwaway harnesses for driving Chromium during a design pass: screenshots,
+# measurements, coverage sweeps. Not part of the suite — anything worth keeping
+# belongs in test/ or e2e/.
+*.sandbox.mjs
+*.sandbox.config.js

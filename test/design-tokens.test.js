@@ -147,3 +147,21 @@ test('no rule names a class that no page and no module uses', async () => {
     assert.doesNotMatch(css, new RegExp(`\\.${name}\\b`), `styles.css still styles .${name}`);
   }
 });
+
+test('no typeface is named that the site does not actually have', async () => {
+  const { readdir } = await import('node:fs/promises');
+  const svgs = ['icon.svg', ...(await readdir(resolve(root, 'assets')))
+    .filter((file) => file.endsWith('.svg')).map((file) => `assets/${file}`),
+  ...(await readdir(resolve(root, 'assets/pieces'))).map((file) => `assets/pieces/${file}`)];
+  const files = [...(await sheets()), ...await Promise.all(svgs
+    .map(async (file) => [file, await readFile(resolve(root, file), 'utf8')]))];
+  for (const [name, source] of files) {
+    // Inter never loaded — no @font-face, and the CSP blocks a CDN — so naming
+    // it only ever flattered a mockup. Georgia and Arial went with the Unicode
+    // glyph path and the letterform mark. Comments may still explain why.
+    const code = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/<!--[\s\S]*?-->/g, '');
+    for (const face of ['Inter', 'Georgia', 'Arial']) {
+      assert.doesNotMatch(code, new RegExp(`\\b${face}\\b`), `${name} still names ${face}`);
+    }
+  }
+});

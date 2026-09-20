@@ -262,3 +262,31 @@ test('disabled is drawn, not dimmed', async ({ page }) => {
     expect(style.opacity, control).toBe('1');
   }
 });
+
+test('the board in the rules dialog and the board in a game are the same object', async ({ page }) => {
+  const frameOf = async (selector) => page.locator(selector).evaluate((board) => {
+    const style = getComputedStyle(board);
+    return {
+      border: `${style.borderTopWidth} ${style.borderTopStyle} ${style.borderTopColor}`,
+      radius: style.borderTopLeftRadius,
+      shadow: style.boxShadow,
+      light: getComputedStyle(board).getPropertyValue('--board-light').trim(),
+      dark: getComputedStyle(board).getPropertyValue('--board-dark').trim(),
+    };
+  });
+  await page.goto('/game.html?game=00000000-0000-4000-8000-000000000001&mode=bot');
+  const match = await frameOf('#board');
+  await page.locator('header [data-open-rules]').click();
+  await expect(page.locator('#demo-board')).toBeVisible();
+  const taught = await frameOf('#demo-board');
+  // An 8px frame with a two-layer shadow in the dialog against a 1px hairline
+  // in a match made the most identifying object on the site look like it came
+  // from two different products.
+  expect(taught).toEqual(match);
+  expect(match.shadow).toBe('none');
+
+  for (const [path, selector] of [['/watch.html', '#watch-board'], ['/puzzles.html', '#puzzle-board']]) {
+    await page.goto(path);
+    expect(await frameOf(selector), path).toEqual(match);
+  }
+});
