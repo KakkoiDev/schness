@@ -221,15 +221,43 @@ once sat at 4.4954:1, printed as "4.50" in any two-decimal report, and failed wh
 passed.
 
 `--accent` is the fill for dots, rings and selection; **`--accent-text` is the one for text**,
-because a fill colour bright enough to read as a dot rarely clears 4.5:1 as type. The accent is plum
-(`#7d3f6d` light, `#c98ab8` dark). It was orange, which read as somebody else's brand rather than
-this app's, and it is chosen to sit opposite the sage board while staying clear of `--danger`
-(burnt red), `--warn` (amber) and `--focus` (blue), all of which have to remain tellable apart.
+because a fill colour bright enough to read as a dot rarely clears 4.5:1 as type. The accent is ember
+(`#B23E18` light, `#F0794C` dark) and it clears 4.5:1 as type in both themes, so `--accent-text` is
+currently the same value. **The split stays** — the next accent may not clear it, and the tests read
+the two separately. The plum before it was chosen to sit opposite the sage board and did, but it
+appeared on four pixels of the whole product: a logo dot and one "Try it" link.
+
+**`--focus` is `var(--accent)`, not a colour of its own.** It was `#2563eb`, which related to nothing
+else in the file and disappeared against a moss square — and keyboard play is a first-class path in a
+board game. `--danger` moved to crimson (`#9E2233` / `#FF8D9B`) so it stays tellable apart from an
+ember that is now also the focus ring; `--warn` stays amber.
 
 **Never hardcode the accent.** Tints go through `color-mix(in srgb, var(--accent) N%, transparent)`.
 Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark mode drew the light
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
+
+### The scale is three radii, two elevations and two weights
+
+Seventeen radii and thirty-one shadows is not a scale, it is a history: every decision ever made was
+still in the sheet, and later rules switched earlier ones off rather than replacing them.
+
+- **Radii:** `--radius-control` 6px, `--radius-card` 10px, `--radius-dialog` 16px, plus
+  `--radius-pill` for pills and `50%` for dots. Nothing else.
+- **Elevation:** `--shadow-dialog` for a dialog or a floating panel, `--shadow-lift` (a
+  `drop-shadow()` filter) for a piece in flight. **Everything at rest gets a hairline border and no
+  shadow.** A ring is an `outline`, never a `0 0 0 Npx` box-shadow — those read as elevation in any
+  count of the sheet and behave differently under a border radius.
+- **Weights:** 400 for anything you read, 640 for the things that label it. A third weight is a
+  decision nobody made on purpose.
+- **Type:** one `--font-sans` stack with the Japanese faces *appended*, never swapped in. `Inter` was
+  named first and never loaded — there is no `@font-face` and the CSP blocks a CDN — so it only ever
+  flattered a mockup, while a `[lang="ja"]` rule replaced the whole stack and rendered "Sharp v2" and
+  "3+2" in a different face from the English site. Notation, clocks and ply counts use `--font-mono`
+  with `tabular-nums`.
+
+Guarded by `test/design-tokens.test.js`, which reads every `border-radius`, `box-shadow` and
+`font-weight` in both sheets rather than naming selectors.
 
 Everything tappable is ≥44px tall on a phone. Before that rule the header buttons were 33px and the
 Moves toggle was 43×14. A second round came from measuring in a browser rather than reading the
@@ -439,6 +467,9 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 ## Log
 
 Newest first. One line per decision that changed how the app behaves.
+
+- One token system: ember accent doubling as the focus ring, three radii, two elevations, two
+  weights, one font stack with the Japanese faces appended. `docs/DESIGN-PASS.md` is the brief.
 
 - Sharp v2 avoids repetition only as an equal-score tie-break, and tournament schema 2 records the
   rules plus exact AI profiles; experiments and rejected alternatives live in `DEVLOG.md`.

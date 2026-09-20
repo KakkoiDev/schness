@@ -478,7 +478,7 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /class="player-dot"/);
   // The turn card replaced the bare status line.
   assert.doesNotMatch(game, /id="status"/);
-  assert.match(css, /\.turn-card\s*{[\s\S]*?border-radius:\s*9px/);
+  assert.match(css, /\.turn-card\s*{[\s\S]*?border-radius:\s*var\(--radius-card\)/);
   assert.match(css, /grid-template-columns:\s*minmax\(0,1fr\) 312px/);
   assert.match(css, /\.game-page \.play-area\s*{\s*display:\s*contents/);
   // Move list, last-move line and the Undo / Resign pair.
@@ -509,7 +509,7 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.equal([...game.matchAll(/data-cue="/g)].length, 5);
   assert.match(game, /data-open-sound/);
   assert.match(css, /\.clock\s*{[\s\S]*?font-variant-numeric:\s*tabular-nums/);
-  assert.match(css, /\.clock\.is-low\s*{\s*font-weight:\s*600/);
+  assert.match(css, /\.clock\.is-low\s*{\s*font-weight:\s*640/);
   assert.match(css, /\.result-overlay\s*{[\s\S]*?background:\s*rgb\(24 32 28 \/ \.32\)/);
   assert.match(css, /\.result-card h2\s*{[\s\S]*?letter-spacing:\s*-\.045em/);
   // The one motion exception, inside the existing reduced-motion block.
@@ -544,8 +544,8 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="local-video"[^>]+autoplay[^>]+muted[^>]+playsinline/);
   assert.match(game, /data-quick-message="Good move"/);
   assert.match(game, /id="offer-draw"[^>]+data-quick-action="draw"/);
-  assert.match(css, /\.chat-own \.chat-bubble\s*{[\s\S]*?border-radius:\s*12px 12px 4px 12px/);
-  assert.match(css, /\.chat-event\s*{[\s\S]*?border-radius:\s*999px/);
+  assert.match(css, /\.chat-own \.chat-bubble\s*{[\s\S]*?border-radius:\s*var\(--radius-card\) var\(--radius-card\) var\(--radius-control\) var\(--radius-card\)/);
+  assert.match(css, /\.chat-event\s*{[\s\S]*?border-radius:\s*var\(--radius-pill\)/);
   assert.match(game, /id="voice-toggle"[^>]+aria-pressed="false"[^>]*>Audio off</);
   assert.match(game, /id="video-toggle"[^>]+aria-pressed="false"[^>]*>Video off</);
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
