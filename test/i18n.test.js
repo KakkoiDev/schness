@@ -10,10 +10,14 @@ test('Japanese devices default to Japanese and a saved choice wins', () => {
   assert.equal(language({ getItem: () => 'en' }, 'ja-JP'), 'en');
 });
 
-test('the English interface offers the shorter Japanese language label', async () => {
+test('the language switch names the language, not the country', async () => {
   const source = await readFile(new URL('../src/i18n.js', import.meta.url), 'utf8');
-  assert.match(source, /locale === 'ja' \? 'EN' : '日本'/);
-  assert.doesNotMatch(source, /locale === 'ja' \? 'EN' : '日本語'/);
+  // 日本 is "Japan". It was chosen because it is one character shorter, and it
+  // is the first Japanese a Japanese speaker reads on this site. The header
+  // measures fine with the extra character down to 320px in both languages;
+  // Playwright checks that the wordmark still survives beside it.
+  assert.match(source, /locale === 'ja' \? 'EN' : '日本語'/);
+  assert.doesNotMatch(source, /: '日本'/);
 });
 
 test('every page entry point loads the shared bilingual interface', async () => {
@@ -23,32 +27,51 @@ test('every page entry point loads the shared bilingual interface', async () => 
   }
 });
 
-test('page entries and their i18n import are cache-busted together', async () => {
-  const entries = [
-    ['index.html', 'lobby'], ['game.html', 'main'], ['watch.html', 'watch-ui'],
-    ['library.html', 'library-ui'], ['puzzles.html', 'puzzle-ui'],
-  ];
-  for (const [pageFile, moduleName] of entries) {
-    const page = await readFile(new URL(`../${pageFile}`, import.meta.url), 'utf8');
-    const module = await readFile(new URL(`../src/${moduleName}.js`, import.meta.url), 'utf8');
-    const pageVersion = page.match(new RegExp(`src="\\./src/${moduleName}\\.js\\?v=(\\d+)"`))?.[1];
-    const importVersion = module.match(/from '\.\/i18n\.js\?v=(\d+)'/)?.[1];
-    assert.ok(pageVersion, pageFile);
-    assert.equal(importVersion, pageVersion, moduleName);
+test('nothing carries a hand-maintained cache-busting string', async () => {
+  // There were 31 of them — styles.css?v=74 against ui.css?v=84 against
+  // rules-modal.js?v=84 — each bumped by hand. Bump one and forget another and
+  // a returning visitor gets new CSS against an old module, a bug that
+  // reproduces for nobody. They also defeated the precache they sat beside:
+  // sw.js lists './src/main.js', the page asked for './src/main.js?v=71', and
+  // caches.match does not ignore the search string.
+  //
+  // The service worker owns cache identity now. CACHE is the one number, and
+  // DECISIONS.md already requires it to move with any change to SHELL.
+  const files = ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html',
+    'src/lobby.js', 'src/main.js', 'src/watch-ui.js', 'src/library-ui.js', 'src/puzzle-ui.js',
+    'src/rules-modal.js', 'src/analysis-ui.js'];
+  for (const file of files) {
+    const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
+    assert.doesNotMatch(source, /\?v=\d+/, `${file} still hand-maintains a cache-busting string`);
   }
 });
 
-test('every visible page header uses the same S product mark', async () => {
+test('every visible page header carries the same two-colour mark', async () => {
+  const icon = await readFile(new URL('../icon.svg', import.meta.url), 'utf8');
+  const board = icon.match(/class="board" fill="(#[0-9A-F]{6})"/)[1];
+  const chip = icon.match(/class="chip" fill="(#[0-9A-F]{6})"/)[1];
+  const styles = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
+  // The header and the favicon used to disagree: a #e96f4b dot next to a
+  // #7d3f6d accent. They are one artwork and one pair of colours now.
+  assert.match(styles, new RegExp(`--ink:${board};`, 'i'));
+  assert.match(styles, new RegExp(`--accent:${chip};`, 'i'));
   for (const file of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const page = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
-    assert.match(page, /class="brand-mark"[^>]*>S<\/span>/, file);
+    assert.match(page, /<svg class="brand-glyph" viewBox="-24 0 148 148"/, file);
+    assert.match(page, /<path fill="var\(--ink\)" d="M8 52H48V100H96V140/, file);
+    assert.match(page, /<rect fill="var\(--accent\)" x="52" y="0" width="48" height="48"/, file);
+    assert.doesNotMatch(page, /brand-mark/, `${file} still has the letterform tile`);
     assert.match(page, /class="header-actions"/, file);
   }
 });
 
 test('Japanese tutorial actions stay horizontal in the mobile rule grid', async () => {
   const css = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
-  assert.match(css, /\.rules-strip \.rule-demo-trigger \{ grid-column:2;[^}]*white-space:nowrap/);
+  // The strip is gone; the rule actions live in the Rules dialog now, and the
+  // thing that must hold is the same: a Japanese label stays a horizontal row.
+  const ui = await readFile(new URL('../ui.css', import.meta.url), 'utf8');
+  assert.match(ui, /\.rules-dialog \.rules-list \.rule-demo-trigger \{[^}]*justify-self:start/);
+  assert.match(css, /:root\[lang="ja"\] button,[^{]*\{[^}]*line-break:strict/);
   assert.doesNotMatch(css, /lang="ja"[^}]*overflow-wrap:anywhere/);
 });
 
@@ -56,17 +79,25 @@ test('Japanese mobile navigation stays horizontal and compact', async () => {
   const css = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
   assert.match(css, /\.header-actions \.text-button\s*\{[^}]*white-space:\s*nowrap/);
   assert.match(css, /@media\(max-width:480px\)[\s\S]*?\.lobby-page header\s*\{[\s\S]*?margin-bottom:1\.25rem/);
-  assert.match(css, /@media\(max-width:350px\)[\s\S]*?\.brand h1/);
+  // The header is one row that never wraps, in either language. It used to
+  // reach that by deleting the wordmark below 350px; see Stage 4.
+  assert.match(css, /\.brand,\n\.header-actions,\n\.header-actions \.text-button \{\n  white-space: nowrap;/);
 });
 
 test('phone navigation uses compact text controls without decorative icons', async () => {
   const css = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
-  assert.match(css, /@media\(max-width:480px\)[\s\S]*?header \.brand h1,[\s\S]*?display:none/);
-  assert.match(css, /header \.header-actions \.text-button\s*\{[\s\S]*?width:auto;[\s\S]*?min-width:44px;[\s\S]*?height:44px;[\s\S]*?font-size:\.72rem/);
+  // The phone header used to make room by deleting the wordmark. Nothing may
+  // hide it again: it is the only thing in that row that never shrinks, and
+  // the nav takes a row of its own below 760px instead.
+  assert.doesNotMatch(css, /\.brand[^{}]*\{[^}]*display:\s*none/);
+  assert.doesNotMatch(css, /\.brand-word[^{}]*\{[^}]*display:\s*none/);
+  assert.match(css, /\.brand\{display:flex;flex:0 0 auto/);
+  assert.match(css, /@media\(max-width:760px\)[\s\S]*?\.site-nav \{ *order:3;flex-basis:100%/);
+  // Still text, not glyphs: a decorative icon is a second vocabulary to learn.
   assert.doesNotMatch(css, /header \.rules-button::before\s*\{\s*content/);
   for (const file of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const page = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
-    assert.match(page, /href="\.\/styles\.css\?v=74"/, file);
+    assert.match(page, /href="\.\/styles\.css"/, file);
   }
 });
 

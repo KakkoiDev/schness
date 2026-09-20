@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' wss:; media-src 'self' blob: mediastream:; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111814" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F2EEE4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E1512" media="(prefers-color-scheme: dark)">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Schness">
@@ -14,54 +14,96 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
   <link rel="stylesheet" href="./vendor/basecoat/basecoat-nova.cdn.min.css">
-  <link rel="stylesheet" href="./styles.css?v=74">
-  <link rel="stylesheet" href="./ui.css?v=84">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./ui.css">
 </head>
 <body class="watch-page">
   <main class="game">
     <header>
-      <a class="brand" href="./" aria-label="Schness home"><span class="brand-mark" aria-hidden="true">S</span><h1>Schness</h1></a>
-      <div class="header-actions"><button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button><button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button></div>
+      <a class="brand" href="./" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><span class="brand-word">Schness</span></a>
+      <nav class="site-nav" aria-label="Schness"><a href="./watch.html" aria-current="page">Bot arena</a><a href="./library.html">Library</a><a href="./puzzles.html">Puzzles</a></nav>
+      <div class="header-actions">
+        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
+        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
+        <span class="header-rule" aria-hidden="true"></span>
+      </div>
     </header>
     <div class="watch-heading">
-      <div><p class="eyebrow">Play · watch · experiment</p><h2>Bot arena</h2></div>
-      <a class="text-button" href="./">← Home</a>
+      <div><p class="eyebrow">Play · watch · experiment</p><h1>Bot arena</h1></div>
     </div>
-    <label class="watch-seat-choice">Play as <select id="human-side" class="select"><option value="white">White</option><option value="black">Black</option><option value="watch">Watch both bots</option></select></label>
+    <!--
+      One seat control. There used to be three: a "Play as" select plus a White
+      seat select plus a Black seat select, all answering the same question.
+      A strength control appears for each side that is actually a bot.
+    -->
+    <form class="arena-setup" aria-label="Seats">
+      <label class="arena-seat">You play
+        <select id="human-side" class="select">
+          <option value="white">White</option>
+          <option value="black">Black</option>
+          <option value="watch">Neither · watch two bots</option>
+        </select>
+      </label>
+      <label id="white-strength" class="arena-strength" hidden>White bot
+        <select id="white-level" class="select">
+          <option value="learning">Learning</option>
+          <option value="steady">Steady</option>
+          <option value="sharp">Sharp</option>
+          <option value="human" selected hidden>You</option>
+        </select>
+      </label>
+      <label id="black-strength" class="arena-strength">Black bot
+        <select id="black-level" class="select">
+          <option value="learning">Learning</option>
+          <option value="steady" selected>Steady</option>
+          <option value="sharp">Sharp</option>
+          <option value="human" hidden>You</option>
+        </select>
+      </label>
+    </form>
     <section class="watch-layout" aria-label="Schness bot arena">
       <div class="watch-stage">
-        <div class="watch-player"><label>Black <select id="black-level" class="select"><option value="human">You</option><option value="learning">Learning</option><option value="steady" selected>Steady</option><option value="sharp">Sharp</option></select></label><div id="black-reserve" class="bank" aria-label="Black reserve"></div></div>
+        <!-- Above the board, where the eyes already are. -->
+        <section class="arena-turn" aria-label="Turn status">
+          <p id="watch-eyebrow" class="eyebrow">Your move</p>
+          <p id="watch-status" class="watch-status" aria-live="polite">White to move</p>
+        </section>
+        <div class="watch-player"><span class="reserve-label" id="black-seat-label">Black reserve</span><div id="black-reserve" class="bank" aria-labelledby="black-seat-label"></div></div>
         <div class="board-frame"><div id="watch-analysis-bar" class="analysis-bar" role="meter" aria-label="Estimated White advantage" aria-valuemin="-100" aria-valuemax="100" hidden><span class="analysis-side analysis-side-black" aria-hidden="true">B</span><div class="analysis-track"><div id="watch-analysis-fill" class="analysis-fill"></div><span class="analysis-midline" aria-hidden="true"></span></div><span class="analysis-side analysis-side-white" aria-hidden="true">W</span></div><div id="watch-board" class="board" role="grid" aria-label="Schness board"></div></div>
-        <div class="watch-player"><label>White <select id="white-level" class="select"><option value="human" selected>You</option><option value="learning">Learning</option><option value="steady">Steady</option><option value="sharp">Sharp</option></select></label><div id="white-reserve" class="bank" aria-label="White reserve"></div></div>
+        <div class="watch-player"><span class="reserve-label" id="white-seat-label">White reserve</span><div id="white-reserve" class="bank" aria-labelledby="white-seat-label"></div></div>
       </div>
       <aside class="watch-panel">
-        <section class="analysis-panel" aria-label="Training tools">
-          <strong>Training tools</strong>
+        <button id="watch-restart" type="button" class="btn arena-primary" data-variant="primary">New game</button>
+        <!-- Replay is a transport, not seven equal-weight buttons in a list. -->
+        <div class="arena-transport" role="group" aria-label="Replay">
+          <button id="watch-first" type="button" class="btn" aria-label="Back to the first move" data-variant="secondary">⏮</button>
+          <button id="watch-previous" type="button" class="btn" aria-label="Step back one move" data-variant="secondary">◀</button>
+          <button id="watch-next" type="button" class="btn" aria-label="Step forward one move" data-variant="secondary">▶</button>
+          <button id="watch-last" type="button" class="btn" aria-label="Forward to the last move" data-variant="secondary">⏭</button>
+          <button id="watch-live" type="button" class="btn arena-live" data-variant="secondary">Live</button>
+        </div>
+        <div id="watch-moves" class="arena-moves" data-empty="No moves yet." role="table" aria-label="Move transcript"></div>
+        <div class="arena-quiet">
+          <button id="watch-edit" type="button" class="btn" data-variant="ghost">Edit this position</button>
+          <button id="watch-branch" type="button" class="btn" data-variant="ghost">Branch from here</button>
+          <button id="watch-auto" type="button" aria-pressed="false" class="btn" data-variant="ghost">Pause the bots</button>
+        </div>
+        <details class="analysis-panel" id="watch-training">
+          <summary>Training tools</summary>
           <label><input id="watch-training-mate" type="checkbox"> Forced-mate hints (1–4 moves)</label>
           <label><input id="watch-training-advantage" type="checkbox"> White / Black advantage</label>
           <p id="watch-analysis-score" class="analysis-score" aria-live="polite" hidden></p>
           <p id="watch-training-warning" role="status" aria-live="polite" hidden></p>
-        </section>
-        <p id="watch-status" class="watch-status" aria-live="polite">White to move</p>
-        <div class="watch-controls">
-          <button id="watch-previous" type="button" class="btn" data-variant="outline">Previous</button>
-          <button id="watch-next" type="button" class="btn" data-variant="outline">Next</button>
-          <button id="watch-auto" type="button" aria-pressed="false" class="btn" data-variant="outline">Pause AIs</button>
-          <button id="watch-live" type="button" class="btn" data-variant="outline">Live position</button>
-          <button id="watch-branch" type="button" class="btn" data-variant="outline">Continue from here</button>
-          <button id="watch-edit" type="button" class="btn" data-variant="outline">Edit position</button>
-          <button id="watch-restart" type="button" class="btn" data-variant="outline">New game</button>
-        </div>
-        <div id="watch-moves" class="watch-moves" aria-label="Move transcript"></div>
+        </details>
       </aside>
     </section>
   </main>
   <dialog id="position-dialog" class="position-dialog" aria-labelledby="position-title">
     <div class="replay-head"><div><p class="eyebrow">Position editor</p><h2 id="position-title">Set the board</h2></div><button id="position-close" class="dialog-close btn" type="button" aria-label="Close editor" data-variant="ghost">✕</button></div>
     <p class="position-help">Choose a piece, then a square. Each missing rook, bishop, or knight goes to its owner’s reserve.</p>
-    <div class="position-tools" id="position-tools" aria-label="Pieces"><button type="button" data-piece="erase" class="btn" data-variant="outline">Erase</button></div>
+    <div class="position-tools" id="position-tools" aria-label="Pieces"><button type="button" data-piece="erase" class="btn" data-variant="secondary">Erase</button></div>
     <div id="position-board" class="board position-board" role="grid" aria-label="Position to edit"></div>
-    <div class="position-foot"><label>Side to move <select id="position-turn" class="select"><option value="white">White</option><option value="black">Black</option></select></label><button id="position-clear" type="button" class="btn" data-variant="outline">Clear board</button><button id="position-apply" type="button" class="btn" data-variant="primary">Start here</button></div>
+    <div class="position-foot"><label>Side to move <select id="position-turn" class="select"><option value="white">White</option><option value="black">Black</option></select></label><button id="position-clear" type="button" class="btn" data-variant="secondary">Clear board</button><button id="position-apply" type="button" class="btn" data-variant="primary">Start here</button></div>
     <p id="position-error" class="position-error" aria-live="polite"></p>
   </dialog>
     <dialog id="rules-dialog" class="rules-dialog" aria-labelledby="rules-title">
@@ -75,7 +117,7 @@
     </div>
     <div class="dialog-body" tabindex="0" role="group" aria-label="The rules, scrollable">
       <ol class="rules-list">
-        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span></li>
+        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span><button class="rule-demo-trigger btn" type="button" data-lesson="board" aria-controls="rules-demo" aria-label="Try the board" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span><button class="rule-demo-trigger btn" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square. A deployed piece may not immediately check the opposing king.</span><button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Captures come back</strong><span>Capturing does not remove a piece. It goes to the reserve of the player who owned it, ready to be deployed again, so material never leaves the game. Win by checkmate.</span><button class="rule-demo-trigger btn" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece" data-variant="ghost"><span>Try it →</span></button></li>
@@ -88,38 +130,21 @@
           <div id="demo-board" class="board" role="grid" aria-label="Playable rules demonstration"></div>
           <div class="replay-seat"><div id="demo-white-player" class="replay-player">White · You</div><div class="reserve"><span id="demo-white-label" class="reserve-label">Your reserve</span><div id="demo-white-reserve" class="bank"></div></div></div>
         </div>
-        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="outline">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
+        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="secondary">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
       </div>
     </section></div>
-      <figure class="rules-example">
-        <div class="rules-board" aria-hidden="true">
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bK.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bN.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell rules-drop"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wR.svg" alt=""></span>
-          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wK.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-        </div>
-        <figcaption>White’s bishop was captured earlier, so it came back to White’s own reserve. The dashed ring is c2, one of the empty squares it can drop onto.</figcaption>
-      </figure>
 
     </div>
     <div class="dialog-foot">
-      <form method="dialog"><button class="rules-confirm btn" type="submit" data-variant="primary">Got it</button></form>
+      <p class="dialog-foot-note">You can reopen this from <strong>Rules</strong> in the header at any time.</p>
+      <form method="dialog" class="dialog-foot-actions">
+        <button class="rules-skip btn" type="submit" value="skip" data-variant="ghost">Skip</button>
+        <button class="rules-confirm btn" type="submit" data-variant="primary">Start playing</button>
+      </form>
     </div>
   </dialog>
-  <script type="module" src="./src/rules-modal.js?v=84"></script>
-  <script type="module" src="./src/watch-ui.js?v=81"></script>
+  <script type="module" src="./src/rules-modal.js"></script>
+  <script type="module" src="./src/watch-ui.js"></script>
 </body>
 </html>
 

@@ -19,7 +19,7 @@ const JA = new Map(Object.entries({
   'Time per player': '各プレイヤーの持ち時間', 'Choose untimed or a clock before creating the invitation link.': '招待リンクを作る前に、時間無制限か持ち時間を選んでください。',
   'Create invitation link': '招待リンクを作る', 'Close online setup': '対局設定を閉じる',
   'Move a piece, or deploy one from your reserve. Every capture comes back.': '駒を動かすか、持ち駒を配置。取られた駒はまた戻ってきます。',
-  'Bot arena': 'ボットアリーナ', 'Play, watch, take over, or edit a position': '対戦・観戦・途中参加・局面編集',
+  'Bot arena': 'ボットアリーナ', 'Library': '棋譜', 'Puzzles': '詰みパズル', 'Your match': '対局中', 'The board is 4 × 4': '盤は4×4', 'Play against the bot': 'ボットと対戦', 'Play, watch, take over, or edit a position': '対戦・観戦・途中参加・局面編集',
   'Create an online game': 'オンライン対局を作る', 'Get a link to send a friend': '友だちに送るリンクを作成',
   'Browse recorded games': '棋譜ライブラリ', 'Study 1,099 unique AI games': '1,099局のAI対戦を研究',
   'Checkmate puzzles': '詰みパズル', 'Mate in one, two, three, or four': '1手詰めから4手詰めまで',
@@ -30,7 +30,7 @@ const JA = new Map(Object.entries({
   'Nothing is lost': '駒はなくならない', 'A captured piece joins its owner’s reserve, so the board keeps refilling until checkmate.': '取られた駒は元の持ち主の手元へ戻り、チェックメイトまで何度でも使えます。',
   'Playable rule': 'プレイできるルール', 'Close': '閉じる', 'Your turn.': 'あなたの手番です。', 'Restart this rule': 'やり直す',
   'Continue in Bot Arena →': 'ボットアリーナで続ける →', 'Read the full rules': 'ルールをすべて読む',
-  'How to play': '遊び方', 'Schness in four rules': '4つでわかるSchness', 'Got it': 'わかった',
+  'How to play': '遊び方', 'Schness in four rules': '4つでわかるSchness', 'Got it': 'わかった', 'Start playing': '対局をはじめる', 'Skip': 'スキップ', 'Try the board': '盤を試す',
   'The board is 4 × 4': '盤は4×4', 'Files a–d, ranks 1–4. White moves up the board, Black moves down.': '筋はa〜d、段は1〜4。白は上へ、黒は下へ進みます。',
   'Kings go down first': '最初にキングを置く', 'White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.': '白は1段目、黒は4段目の好きなマスへキングを置きます。その後、白から始めます。',
   'On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square.': '手番では、チェスと同じ動きで盤上の駒を動かすか、持ち駒を空いているマスへ配置します。',
@@ -46,20 +46,52 @@ const JA = new Map(Object.entries({
   'Back home': 'ホームへ戻る', 'Your turn': 'あなたの手番', 'CHECK — defend your king': '王手！キングを守ってください', 'Deselect': '選択解除', 'Reviewing': '棋譜を確認中',
   'A reviewed board is not the live one. Nothing you do here counts.': '確認中の盤面は現在の局面ではありません。ここでの操作は対局に反映されません。',
   'Back to live': '現在の局面へ', 'Moves': '棋譜', 'Copy game': '棋譜をコピー', 'Undo': '待った', 'Resign': '投了',
-  'At the table': '対局チャット', 'Peer-to-peer · not saved': 'P2P通信・保存されません', 'Hide chat': 'チャットを隠す',
+  'Take this position further — stronger bots, replay, position editor': 'この局面を引き継いで続ける — 強いボット・再生・局面編集',
+  'Place your king on rank 1 and the game runs.': '1段目にキングを置けば対局が始まります。', 'Start again': '最初から',
+  'Your move.': 'あなたの手番です。', 'Black is thinking…': '黒が考えています…',
+  'You win by checkmate.': 'チェックメイトであなたの勝ちです。', 'Black wins by checkmate.': 'チェックメイトで黒の勝ちです。',
+  'A draw. Start again, or take it to the arena.': '引き分けです。最初からか、アリーナで続けられます。',
+  'Play against the bot': 'ボットと対戦', 'How to play': '遊び方', 'Source': 'ソース', 'Tournament data': '実験データ', 'Dev log': '開発ログ',
+  'More': 'その他', 'Peer-to-peer, no accounts, no tracking.': 'P2P通信・アカウント不要・追跡なし。',
+  'No moves yet.': 'まだ指し手はありません。', 'Or scan it': 'または読み取る',
+  'The invitation link as a scannable code': '招待リンクの二次元コード',
+  'Play the bot while you wait →': '待ちながらボットと対戦 →',
+  'The match starts the moment they open it. You play White.': '相手がリンクを開いた瞬間に対局が始まります。あなたは白番です。',
+  'Listening for a second player': '相手を待っています',
+  'Still listening — no relay is answering yet': '待機中 — 応答するリレーがありません',
+  'Still listening — no one has opened the link yet': '待機中 — まだ誰もリンクを開いていません',
+  'Nothing yet. Check both browsers opened this exact link, and that neither network blocks a direct connection.': 'まだ接続できません。両方のブラウザが同じリンクを開いているか、直接接続を遮断するネットワークでないかを確認してください。',
+  'Connected': '接続しました', 'Black has joined — your move.': '黒が参加しました — あなたの手番です。',
+  'White has joined — their move.': '白が参加しました — 相手の手番です。',
+  'Peer-to-peer. Nothing about this match passes through a server.': 'P2P通信です。この対局はサーバーを経由しません。',
+  'Opponent lost connection': '相手の接続が切れました',
+  'The board is saved. If they do not come back before the clock runs out, the match is yours.': '盤面は保存されています。時間切れまでに戻らなければ、あなたの勝ちになります。',
+  'until forfeit': '不戦勝まで', 'Keep waiting': '待ち続ける', 'Claim the win': '勝ちを主張', 'Claiming unlocks at 0:00.': '0:00になると主張できます。',
+  'This game is no longer open': 'この対局はもう開けません',
+  'The invitation was already used, or it sat unopened long enough to go stale. Nothing is lost — a new link takes one tap.': '招待は使用済みか、開かれないまま期限切れになりました。新しいリンクはすぐ作れます。',
+  'New invite': '新しい招待', 'Play the bot': 'ボットと対戦', 'Back to the lobby': 'ホームに戻る',
+  'Skip': 'スキップ', 'Start playing': '対局をはじめる',
+  'Peer-to-peer · not recorded · not stored': 'P2P通信・記録も保存もされません',
+  'Focus mode': '集中モード', 'Edit this position': '局面を編集',
+  'At the table': '対局チャット', 'On air · mic': '配信中・マイク', 'On air · camera': '配信中・カメラ', 'On air · mic and camera': '配信中・マイクとカメラ',
+  'Peer-to-peer · direct': 'P2P・直接接続', 'Focus mode': '集中モード', 'Peer-to-peer · not recorded · not stored': 'P2P通信・保存されません', 'Hide chat': 'チャットを隠す',
   'Audio off': '音声オフ', 'Video off': 'ビデオオフ', 'Hear audio': '相手の音声を聞く', 'No messages yet.': 'まだメッセージはありません。',
-  'Good move': 'いい手ですね', 'One sec': 'ちょっと待って', 'Offer draw': '引き分けを提案', 'Message your opponent': '相手にメッセージ', 'Send': '送信',
+  'Good luck': 'よろしくお願いします', 'Nice move': 'いい手ですね', 'Oops': 'しまった', 'Good game': 'ありがとうございました', 'Rematch?': 'もう一局？', 'Offer draw': '引き分けを提案', 'Message your opponent': '相手にメッセージ', 'Send': '送信',
   'Feedback': 'フィードバック', 'Sound and haptics': 'サウンドと振動', 'All off until you ask for them. Reduced motion is about motion, so it does not decide this.': '初期設定ではすべてオフです。必要なものだけ有効にできます。',
   'Move': '移動', 'A soft wooden knock.': '木の駒を置く柔らかな音。', 'Capture': '駒を取る', 'Sharper click, as the piece lands in a reserve.': '取った駒が手元へ戻る、はっきりした音。',
   'Deploy': '配置', 'Distinct from a move, so you hear a drop coming.': '移動と区別できる配置音。', 'Check': 'チェック', 'A low tone, played once.': '低い音を一度鳴らします。',
   'Haptics': '振動', 'A light tap when a piece lands, on phones that support it.': '対応端末で駒を置いたときに軽く振動します。',
   'Keyboard': 'キーボード', 'Playing without a mouse': 'マウスを使わずに遊ぶ',
+  'You play': '担当する側', 'White bot': '白のボット', 'Black bot': '黒のボット', 'Neither · watch two bots': '観戦（ボット同士）',
+  'Live': '現在', 'Branch from here': 'ここから分岐', 'Edit this position': '局面を編集', 'Pause the bots': 'ボットを一時停止', 'Resume the bots': 'ボットを再開',
+  'Your move': 'あなたの手番', 'Reviewing': '再生中', 'Game over': '対局終了', 'Thinking': '思考中', 'Paused': '一時停止', 'Check': '王手', 'Placing kings': 'キングの配置',
+  'White to move': '白の手番', 'Black to move': '黒の手番', 'No moves yet.': 'まだ指し手はありません。',
   'Play · watch · experiment': '対戦・観戦・実験', 'Black': '黒', 'White': '白', 'You': 'あなた', 'Learning': '初級', 'Steady': '中級', 'Sharp': '上級',
   'White to move': '白の手番', 'Previous': '戻る', 'Next': '次へ', 'Pause AIs': 'AIを一時停止', 'Live position': '現在の局面',
   'Continue from here': 'ここから続ける', 'Edit position': '局面を編集', 'Position editor': '局面エディター', 'Set the board': '盤面を設定',
   'Choose a piece, then a square. Each missing rook, bishop, or knight goes to its owner’s reserve.': '駒を選んでからマスを選択します。盤上にないルーク、ビショップ、ナイトは持ち駒になります。',
   'Pieces': '駒', 'Erase': '消す', 'Side to move': '手番', 'Clear board': '盤面をクリア', 'Start here': 'ここから開始',
-  'AI archive': 'AIアーカイブ', 'Game library': '棋譜ライブラリ', 'Loading games…': '棋譜を読み込み中…', 'Library statistics': 'ライブラリ統計',
+  'AI archive': 'AIアーカイブ', 'Sort': '並び替え', 'As recorded': '記録順', 'Shortest first': '短い順', 'Longest first': '長い順', 'Most repeated': '重複が多い順', 'Game library': '棋譜ライブラリ', 'Loading games…': '棋譜を読み込み中…', 'Library statistics': 'ライブラリ統計',
   'Filter games': '棋譜を絞り込む', 'Any AI': 'すべてのAI', 'Result': '結果', 'Any result': 'すべての結果', 'White won': '白の勝ち', 'Black won': '黒の勝ち',
   'Threefold draw': '同一局面3回による引き分け', 'Ply-limit draw': '手数上限による引き分け', 'Stalemate': 'ステイルメイト', 'Any version': 'すべてのバージョン',
   'Show more': 'もっと見る', 'Recorded game': '記録された対局', 'Game': '対局', 'Start': '最初へ', 'Auto · 1s': '自動・1秒', 'Play from here': 'ここから対戦',
@@ -71,9 +103,9 @@ const JA = new Map(Object.entries({
   'Pause': '一時停止', 'Resume AIs': 'AIを再開', 'Starting position': '開始局面', 'Ask to undo': '待ったをお願い', 'Review moves': '棋譜を見る', 'See that move': 'その手を見る',
   'Message your opponent…': '相手にメッセージ…', 'Voice connected.': '音声がつながりました。', 'Audio is on.': '音声はオンです。', 'Audio is off.': '音声はオフです。',
   'Video is on.': 'ビデオはオンです。', 'Video is off.': 'ビデオはオフです。', 'Requesting microphone access…': 'マイクへのアクセスを確認中…', 'Requesting camera access…': 'カメラへのアクセスを確認中…',
-  'Tap “Hear audio” to listen.': '「相手の音声を聞く」を押してください。', 'Peer-to-peer · not saved': 'P2P通信・保存されません',
+  'Tap “Hear audio” to listen.': '「相手の音声を聞く」を押してください。',
   'Opponent left': '相手が退出しました', 'The board is yours. Start a new game when you are ready.': '盤面はそのままです。準備ができたら新しい対局を始めてください。',
-  'Draw': '引き分け', 'You and your opponent agreed to a draw.': '両者の合意で引き分けになりました。', 'Checkmate': 'チェックメイト',
+  'Draw': '引き分け', 'You and your opponent agreed to a draw.': '両者の合意で引き分けになりました。', 'Checkmate': 'チェックメイト', 'CHECK': '王手', 'CHECKMATE': '詰み',
   'You win.': 'あなたの勝ちです。', 'Your opponent wins.': '相手の勝ちです。', 'Stalemate — no legal move, and no check.': 'ステイルメイトです。合法手がなく、チェックもされていません。',
   'The same position came up three times.': '同じ局面が3回現れました。', 'Bot is placing its king': 'ボットがキングを配置中', 'Bot is thinking': 'ボットが考えています',
   'It is choosing from the same moves and deployments you have.': 'あなたと同じ移動と配置の選択肢から考えています。', 'Opponent’s turn': '相手の手番', 'Waiting for their move.': '相手の一手を待っています。',
@@ -192,10 +224,13 @@ export function initI18n() {
     button.className = 'text-button language-button btn';
     button.dataset.variant = 'ghost';
     button.dataset.languageToggle = '';
-    button.textContent = locale === 'ja' ? 'EN' : '日本';
+    // 日本 is "Japan". This is the first Japanese a Japanese speaker reads here.
+    button.textContent = locale === 'ja' ? 'EN' : '日本語';
     button.setAttribute('aria-label', locale === 'ja' ? '英語に切り替える' : 'Switch to Japanese');
-    const theme = header.querySelector('[data-theme-toggle]');
-    header.insertBefore(button, theme ?? header.firstChild);
+    // Last in the row, after the hairline: the language is a different kind of
+    // decision from the two page controls, and the order is the same on all
+    // five pages — brand, page controls, rule, language.
+    header.append(button);
     button.addEventListener('click', () => {
       try { localStorage.setItem(STORAGE_KEY, locale === 'ja' ? 'en' : 'ja'); } catch {}
       location.reload();
@@ -212,21 +247,21 @@ export function initI18n() {
       for (const node of record.addedNodes) translateTree(node, locale);
     }
   }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true,
-    attributeFilter: ['aria-label', 'placeholder', 'title'] });
+    attributeFilter: ['aria-label', 'placeholder', 'title', 'data-label', 'data-empty'] });
   return locale;
 }
 
 function translateTree(root, locale) {
   if (root.nodeType === Node.TEXT_NODE) return translateNode(root, locale);
   if (root.nodeType !== Node.ELEMENT_NODE && root.nodeType !== Node.DOCUMENT_NODE) return;
-  if (root.nodeType === Node.ELEMENT_NODE) for (const attr of ['aria-label', 'placeholder', 'title']) {
+  if (root.nodeType === Node.ELEMENT_NODE) for (const attr of ['aria-label', 'placeholder', 'title', 'data-label', 'data-empty']) {
     const value = root.getAttribute(attr); const translated = translateText(value, locale);
     if (value && translated !== value) root.setAttribute(attr, translated);
   }
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
   let node; while ((node = walker.nextNode())) {
     if (node.nodeType === Node.TEXT_NODE) translateNode(node, locale);
-    else for (const attr of ['aria-label', 'placeholder', 'title']) {
+    else for (const attr of ['aria-label', 'placeholder', 'title', 'data-label', 'data-empty']) {
       const value = node.getAttribute(attr); const translated = translateText(value, locale);
       if (value && translated !== value) node.setAttribute(attr, translated);
     }

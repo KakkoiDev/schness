@@ -8,8 +8,8 @@ test('all five pages share the locally bundled Basecoat and integration sheet', 
   for (const path of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const html = await read(path);
     const vendor = html.indexOf('./vendor/basecoat/basecoat-nova.cdn.min.css');
-    const layout = html.indexOf('./styles.css?v=74');
-    const integration = html.indexOf('./ui.css?v=84');
+    const layout = html.indexOf('./styles.css"');
+    const integration = html.indexOf('./ui.css"');
     assert.ok(vendor >= 0 && layout > vendor && integration > layout, path);
     for (const button of html.match(/<button\b[^>]*>/g) ?? []) {
       assert.match(button, /class="[^"]*\bbtn\b/, `${path}: ${button}`);
@@ -24,7 +24,8 @@ test('all five pages share the locally bundled Basecoat and integration sheet', 
 test('generated UI controls migrate but board and reserve buttons stay untouched', async () => {
   assert.match(await read('src/i18n.js'), /language-button btn/);
   assert.match(await read('src/library-ui.js'), /library-game btn/);
-  assert.match(await read('src/watch-ui.js'), /btn current/);
+  // The arena transcript is a table of cells now, not a run of ghost buttons.
+  assert.match(await read('src/watch-ui.js'), /className = entry\.ply === reviewIndex \? 'arena-move is-current' : 'arena-move'/);
   const board = await read('src/board-ui.js');
   assert.doesNotMatch(board, /className = '[^']*\bbtn\b/);
   const css = await read('ui.css');

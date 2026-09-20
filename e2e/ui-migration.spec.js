@@ -86,7 +86,11 @@ test('Rules is available everywhere with an interactive board inside the modal',
     await expect(page.locator('#rules-dialog')).toBeVisible();
     await expect(page.locator('#rules-dialog #demo-board')).toBeVisible();
     await expect(page.locator('#rules-dialog .coordinate-option')).toHaveCount(0);
-    await expect(page.locator('#rules-dialog #demo-board .square.placement')).toHaveCount(4);
+    // It opens on rule 1's lesson now — the geometry, with both kings on the
+    // board and the square names showing — so there is nothing to place yet.
+    await expect(page.locator('#rules-dialog #demo-board .piece')).toHaveCount(2);
+    await expect(page.locator('#rules-demo')).toHaveAttribute('data-coordinates', 'true');
+    await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="board"]') })).toContainText('The board is 4 × 4');
     await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="kings"]') })).toContainText('Kings go down first');
     await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="deploy"]') })).toContainText('Move or deploy');
     await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="capture"]') })).toContainText('Captures come back');
@@ -96,5 +100,193 @@ test('Rules is available everywhere with an interactive board inside the modal',
     await expect(page.locator('#demo-board .piece-black')).toHaveCount(1, { timeout: 10000 });
     await page.locator('.rules-confirm').click();
     await expect(page.locator('#rules-dialog')).not.toBeVisible();
+  }
+});
+
+const PAGES = ['/', '/watch.html', '/library.html', '/puzzles.html',
+  '/game.html?game=00000000-0000-4000-8000-000000000001&mode=bot'];
+
+for (const language of ['en', 'ja']) {
+  test(`the header is one order and the wordmark never vanishes in ${language}`, async ({ page }) => {
+    await page.addInitScript((value) => localStorage.setItem('schness-language', value), language);
+    const orders = [];
+    for (const path of PAGES) {
+      await page.goto(path);
+      await expect(page.locator('[data-language-toggle]')).toBeVisible();
+      // The brand was the only shrinkable item in a nowrap flex row, so at
+      // 390px the nav won and the wordmark collapsed to zero width — it did
+      // not truncate, it disappeared. Measured, because a rule in the sheet
+      // said it was `flex: 0 1 auto` and that read as fine.
+      const word = page.locator('.brand-word');
+      await expect(word).toBeVisible();
+      const box = await word.boundingBox();
+      expect(box.width, `${path} wordmark width`).toBeGreaterThan(40);
+      orders.push(await page.evaluate(() => [...document.querySelectorAll('header .header-actions > *')]
+        .filter((element) => element.getClientRects().length)
+        .map((element) => element.dataset.openRules !== undefined ? 'rules'
+          : element.dataset.themeToggle !== undefined ? 'theme'
+            : element.dataset.languageToggle !== undefined ? 'language'
+              : element.classList.contains('header-rule') ? 'rule' : 'page-control')
+        .join(' ')));
+    }
+    // Muscle memory broke on every navigation: index went language · theme ·
+    // Rules while watch and library went Rules · language · theme. Sound and
+    // Install are page controls that only exist on one page each, so the
+    // shared skeleton is what has to match: rules, theme, … rule, language.
+    for (const order of orders) {
+      expect(order.startsWith('rules theme')).toBe(true);
+      expect(order.endsWith('rule language')).toBe(true);
+      expect(order.replace(/ ?page-control/g, '')).toBe('rules theme rule language');
+    }
+  });
+}
+
+test('the destinations are real links, not JavaScript navigations', async ({ page }) => {
+  await page.goto('/');
+  // Nothing on this site used to be a link: three of the four lobby cards and
+  // every nav destination went through window.location.assign, so there was no
+  // cmd-click, no copy-link-address, no hover preview and nothing to crawl.
+  for (const [id, href] of [['bot-arena', 'watch.html'], ['browse-games', 'library.html'],
+    ['solve-puzzles', 'puzzles.html']]) {
+    const card = page.locator(`#${id}`);
+    await expect(card).toHaveJSProperty('tagName', 'A');
+    await expect(card).toHaveAttribute('href', `./${href}`);
+  }
+  // The online card opens a dialog, which is what a button is for.
+  await expect(page.locator('#play-online')).toHaveJSProperty('tagName', 'BUTTON');
+  for (const path of PAGES) {
+    await page.goto(path);
+    const nav = page.locator('header nav.site-nav');
+    await expect(nav.locator('a')).toHaveCount(3);
+    for (const href of ['./watch.html', './library.html', './puzzles.html']) {
+      await expect(nav.locator(`a[href="${href}"]`)).toHaveCount(1);
+    }
+  }
+});
+
+test('every page heading names the page, not the site', async ({ page }) => {
+  const titles = {
+    '/': 'Play Schness',
+    '/watch.html': 'Bot arena',
+    '/library.html': 'Game library',
+    '/puzzles.html': 'Find the checkmate',
+    '/game.html?game=00000000-0000-4000-8000-000000000001&mode=bot': 'Your match',
+  };
+  for (const path of PAGES) {
+    await page.goto(path);
+    // Heading navigation used to announce "Schness" five times and never the
+    // page: every h1 was the site name and the real title was an h2.
+    const headings = page.locator('main h1');
+    await expect(headings).toHaveCount(1);
+    await expect(headings).toHaveText(titles[path]);
+  }
+});
+
+test('the rules dialog opens at the top with the board it teaches whole', async ({ page }) => {
+  for (const path of PAGES) {
+    await page.goto(path);
+    await page.locator('header [data-open-rules]').click();
+    await expect(page.locator('#rules-dialog')).toBeVisible();
+    // The first thing a new visitor saw was rule 2's heading clipped at the
+    // top and the demo board cut off at the bottom: the dialog handed itself
+    // over scrolled to the middle of itself.
+    const fit = await page.evaluate(() => {
+      const body = document.querySelector('#rules-dialog .dialog-body');
+      const board = document.querySelector('#demo-board').getBoundingClientRect();
+      const view = body.getBoundingClientRect();
+      return { scrollTop: body.scrollTop, top: board.top - view.top, bottom: view.bottom - board.bottom };
+    });
+    expect(fit.scrollTop, `${path} opens scrolled`).toBe(0);
+    if (page.viewportSize().width > 760) {
+      // Two columns: the rules read on the left while the board they teach is
+      // whole on the right. On a phone there is one column and no width for
+      // both, so the rules come first and the board is a scroll away.
+      expect(fit.top, `${path} demo board clipped at the top`).toBeGreaterThanOrEqual(-1);
+      expect(fit.bottom, `${path} demo board cut off at the bottom`).toBeGreaterThanOrEqual(-1);
+    } else {
+      await expect(page.locator('#rules-dialog .rules-list > li').first()).toBeInViewport();
+    }
+    await expect(page.locator('#rules-dialog .rules-list > li')).toHaveCount(4);
+    await expect(page.locator('#rules-dialog .rule-demo-trigger')).toHaveCount(4);
+    await expect(page.locator('#rules-dialog .dialog-foot')).toContainText('reopen this from');
+    await page.locator('.rules-confirm').click();
+    await expect(page.locator('#rules-dialog')).toBeHidden();
+  }
+});
+
+test('there are four button roles and nothing draws its own rectangle', async ({ page }) => {
+  for (const path of PAGES) {
+    await page.goto(path);
+    const roles = await page.evaluate(() => {
+      const seen = new Set();
+      for (const button of document.querySelectorAll('.btn')) {
+        seen.add(button.dataset.variant || 'secondary');
+      }
+      return [...seen];
+    });
+    for (const role of roles) {
+      expect(['primary', 'secondary', 'ghost', 'icon'], `${path} has role "${role}"`).toContain(role);
+    }
+    // Every .btn resolves to a shared radius; seven near-identical rectangles
+    // each restating one is how they drift apart. A square-cornered button is
+    // allowed only inside a group that carries the radius for it.
+    const odd = await page.evaluate(() => {
+      const root = getComputedStyle(document.documentElement);
+      const allowed = new Set(['--radius-control', '--radius-card', '--radius-pill']
+        .map((token) => root.getPropertyValue(token).trim()));
+      return [...document.querySelectorAll('.btn')]
+        .filter((button) => button.getClientRects().length)
+        .map((button) => {
+          const radius = getComputedStyle(button).borderTopLeftRadius;
+          if (allowed.has(radius)) return null;
+          const grouped = button.parentElement
+            && allowed.has(getComputedStyle(button.parentElement).borderTopLeftRadius);
+          if (radius === '0px' && grouped) return null;
+          return `${button.id || button.textContent.trim().slice(0, 18)} at ${radius}`;
+        })
+        .filter(Boolean);
+    });
+    expect(odd, path).toEqual([]);
+  }
+});
+
+test('disabled is drawn, not dimmed', async ({ page }) => {
+  await page.goto('/watch.html');
+  for (const control of ['#watch-previous', '#watch-live', '#watch-branch']) {
+    const style = await page.locator(control).evaluate((element) => ({
+      opacity: getComputedStyle(element).opacity,
+      background: getComputedStyle(element).backgroundColor,
+    }));
+    // opacity on a coloured button produces a different colour on every
+    // background it happens to sit on.
+    expect(style.opacity, control).toBe('1');
+  }
+});
+
+test('the board in the rules dialog and the board in a game are the same object', async ({ page }) => {
+  const frameOf = async (selector) => page.locator(selector).evaluate((board) => {
+    const style = getComputedStyle(board);
+    return {
+      border: `${style.borderTopWidth} ${style.borderTopStyle} ${style.borderTopColor}`,
+      radius: style.borderTopLeftRadius,
+      shadow: style.boxShadow,
+      light: getComputedStyle(board).getPropertyValue('--board-light').trim(),
+      dark: getComputedStyle(board).getPropertyValue('--board-dark').trim(),
+    };
+  });
+  await page.goto('/game.html?game=00000000-0000-4000-8000-000000000001&mode=bot');
+  const match = await frameOf('#board');
+  await page.locator('header [data-open-rules]').click();
+  await expect(page.locator('#demo-board')).toBeVisible();
+  const taught = await frameOf('#demo-board');
+  // An 8px frame with a two-layer shadow in the dialog against a 1px hairline
+  // in a match made the most identifying object on the site look like it came
+  // from two different products.
+  expect(taught).toEqual(match);
+  expect(match.shadow).toBe('none');
+
+  for (const [path, selector] of [['/watch.html', '#watch-board'], ['/puzzles.html', '#puzzle-board']]) {
+    await page.goto(path);
+    expect(await frameOf(selector), path).toEqual(match);
   }
 });

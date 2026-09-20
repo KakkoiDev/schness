@@ -17,20 +17,28 @@
   --border: var(--line);
   --input: var(--line);
   --ring: var(--focus);
-  --radius: .625rem;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* The vendor's own radius token maps onto ours; --font-sans lives in styles.css. */
+  --radius: var(--radius-card);
 }
 
-/* One button vocabulary across all pages; glyphs and board squares never get .btn. */
+/*
+ * Four button roles, and nothing else in this product draws a rectangle of its
+ * own. There were seven near-identical ones, each restating a border, a
+ * background and a radius that `.btn` already supplied at higher specificity —
+ * so most of them were already having no effect, which is the hard kind of
+ * duplication to notice.
+ *
+ * Secondary is the default. Glyph buttons and board squares never get `.btn`.
+ */
 body .btn {
   min-height: 44px;
   height: auto;
   padding: .625rem .875rem;
   border: 1px solid var(--line);
-  border-radius: .5rem;
+  border-radius: var(--radius-control);
   background: var(--surface);
   color: var(--ink);
-  font: 600 .875rem/1.4 var(--font-sans);
+  font: 640 .875rem/1.4 var(--font-sans);
   white-space: normal;
   overflow-wrap: anywhere;
   text-decoration: none;
@@ -39,14 +47,38 @@ body .btn {
   transition: background-color 120ms ease, border-color 120ms ease;
   cursor: pointer;
 }
-body .btn[data-variant="ghost"] { border-color: transparent; background: transparent; }
+body .btn:not(:disabled):hover { background: var(--sunk); border-color: var(--ink); transform: none; }
+
 body .btn[data-variant="primary"] { background: var(--ink); color: var(--inverse); border-color: var(--ink); }
-body .btn:not(:disabled):hover { background: var(--sunk); border-color: var(--muted); transform: none; }
-body .btn[data-variant="primary"]:not(:disabled):hover { background: var(--ink); opacity: .9; }
-body .btn:disabled { opacity: .5; cursor: default; }
+body .btn[data-variant="primary"]:not(:disabled):hover { background: #2A332D; border-color: #2A332D; opacity: 1; }
+
+body .btn[data-variant="ghost"] { border-color: transparent; background: transparent; }
+body .btn[data-variant="ghost"]:not(:disabled):hover { border-color: transparent; background: var(--sunk); }
+
+/* The fourth role: a square target with a glyph in it, otherwise secondary. */
+body .btn[data-variant="icon"] { width: 44px; min-width: 44px; padding: 0; display: inline-grid; place-items: center; }
+
+/* Drawn, not dimmed: opacity on a coloured button produces a different
+   colour on every background it happens to sit on. A ghost button keeps its
+   transparency — filling it in would make the disabled one the loudest thing
+   in a quiet list. */
+body .btn:disabled,
+body .btn[data-variant="primary"]:disabled {
+  border-color: var(--line);
+  background: var(--sunk);
+  color: var(--muted);
+  opacity: 1;
+  cursor: default;
+}
+body .btn[data-variant="ghost"]:disabled {
+  border-color: transparent;
+  background: transparent;
+  color: var(--muted);
+}
+
 body .btn:focus-visible, body .input:focus-visible, body select.select:focus-visible {
   outline: 2px solid var(--focus);
-  outline-offset: 3px;
+  outline-offset: 2px;
   box-shadow: none;
 }
 body .btn[aria-pressed="true"], body .btn.current {
@@ -57,11 +89,11 @@ body .btn[aria-pressed="true"], body .btn.current {
 body select.select, body .input {
   min-height: 44px;
   border: 1px solid var(--line);
-  border-radius: .5rem;
+  border-radius: var(--radius-control);
   padding: .5rem .75rem;
   background: var(--surface);
   color: var(--ink);
-  font: 500 .875rem/1.4 var(--font-sans);
+  font: 400 .875rem/1.4 var(--font-sans);
   box-shadow: none;
 }
 body select.select {
@@ -79,7 +111,7 @@ body .dialog-close.btn { width: 44px; height: 44px; padding: 0; flex: 0 0 44px; 
 
 /* Homepage: restrained hierarchy, not four competing oversized billboards. */
 .lobby-page header { margin-bottom: clamp(2rem,7vh,4rem); }
-.lobby-page .lobby-intro { margin-bottom: 1.75rem; }
+.lobby-page .lobby-intro { margin-bottom: 1.5rem; }
 .lobby-page .lobby-intro h2 { font-size: clamp(2rem,6vw,3rem); line-height: 1.15; letter-spacing: -.04em; }
 .lobby-page .mode.btn {
   display: grid;
@@ -91,19 +123,22 @@ body .dialog-close.btn { width: 44px; height: 44px; padding: 0; flex: 0 0 44px; 
   text-align: left;
 }
 .lobby-page .mode.btn strong { font-size: 1rem; line-height: 1.4; }
-.lobby-page .mode.btn small { color: var(--muted); font-size: .875rem; line-height: 1.5; }
-.lobby-page .mode.dark.btn { background: var(--ink); color: var(--inverse); border-color: var(--ink); }
-.lobby-page .mode.dark.btn small { color: var(--inverse); opacity: .8; }
+.lobby-page .mode.btn small { color: var(--muted); font-size: .875rem; font-weight: 400; line-height: 1.5; }
+.lobby-page .mode.mode-primary.btn { background: var(--ink); color: var(--inverse); border-color: var(--ink); }
+.lobby-page .mode.mode-primary.btn small { color: var(--inverse); opacity: .8; }
+.lobby-page .mode-group .mode.btn { border: 0; border-radius: 0; background: none; }
+.lobby-page .mode-group .mode.btn + .mode.btn { border-top: 1px solid var(--hairline); }
+.lobby-page .mode-group .mode.btn:not(:disabled):hover { background: var(--sunk); }
 .lobby-page .rules-strip { margin-top: 2.5rem; gap: 1px; background: var(--line); }
 .lobby-page .rules-strip article { border-color: var(--line); }
 .lobby-page .rules-strip .btn { justify-self: start; width: auto; min-width: 44px; }
 .lobby-page .rules-full.btn { width: 100%; margin-top: 1.25rem; }
 
 /* Panels share surfaces and spacing without changing each mode's layout. */
-.watch-panel, .puzzle-settings, .library-stats, .library-filters, .analysis-panel,
+.watch-panel, .puzzle-settings, .library-stats, .library-filters, .analysis-panel, .arena-turn,
 .demo-panel, .network-card, .result-card {
   border-color: var(--line);
-  border-radius: .625rem;
+  border-radius: var(--radius-card);
   background-color: var(--surface);
   box-shadow: none;
 }
@@ -117,8 +152,10 @@ dialog :is(.replay-panel, .dialog-body, .dialog-head, .dialog-foot) { padding: 1
 .puzzle-toggles input { flex: 0 0 auto; margin-top: .2rem; }
 .watch-status, .position-help, .online-setup-note { line-height: 1.5; }
 .watch-controls .btn, .puzzle-actions .btn { width: 100%; }
+.arena-quiet .btn, .arena-primary.btn { width: 100%; }
+#watch-training summary, #training-panel summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 640; }
 .watch-moves .btn { min-height: 44px; padding: .4rem .6rem; font-size: .8rem; }
-.library-game.btn { display: grid; justify-content: stretch; height: auto; text-align: left; padding: 1rem; }
+.library-game.btn { display: grid; grid-template-columns: auto minmax(0,1fr); justify-content: stretch; height: auto; text-align: left; padding: 1rem; }
 .library-game.btn:hover { transform: none; }
 .library-game.btn small { font-weight: 400; }
 .library-filters label { gap: .375rem; }
@@ -128,7 +165,7 @@ dialog :is(.replay-panel, .dialog-body, .dialog-head, .dialog-foot) { padding: 1
 .quick-chat .btn, .chat-event .btn { font-size: .8rem; padding: .4rem .65rem; }
 
 /* Keep native dialog keyboard/focus behavior; migrate its visual surface only. */
-dialog { border-color: var(--line); border-radius: .75rem; background: var(--paper); color: var(--ink); }
+dialog { border-color: var(--line); border-radius: var(--radius-dialog); background: var(--paper); color: var(--ink); }
 dialog::backdrop { background: rgb(8 12 10 / .65); }
 dialog .btn { max-width: 100%; }
 dialog h2 { line-height: 1.25; }
@@ -158,9 +195,10 @@ dialog h2 { line-height: 1.25; }
 /* The tutorial list owns the divider before its adjacent playable demo. */
 .lobby-page .rules-strip + .rules-demo { border-top: 0; }
 
-/* Shared board surfaces leave room around reserves without resizing pieces. */
-:is(.watch-stage, .replay-stage, .demo-stage, .puzzle-stage) > :is(.watch-player, .replay-seat):first-child { margin-bottom: .625rem; }
-:is(.watch-stage, .replay-stage, .demo-stage, .puzzle-stage) > :is(.watch-player, .replay-seat):last-child { margin-top: .625rem; }
+/* Shared board surfaces leave room around reserves without resizing pieces.
+   Keyed off the seats themselves, not their position: the arena's turn card
+   now sits above the top seat, and :first-child stopped matching. */
+:is(.watch-stage, .replay-stage, .demo-stage, .puzzle-stage) > :is(.watch-player, .replay-seat) { margin-block: .625rem; }
 
 /* Vendor resets must not move native desktop modals into the top-left corner. */
 @media (min-width: 761px) {
@@ -175,29 +213,36 @@ dialog h2 { line-height: 1.25; }
   }
 }
 
-/* Read and practice together, within the same native Rules dialog. */
+/*
+ * Read and practise together, in the same native Rules dialog. The demo column
+ * is sized from the height the dialog actually has, not from its own width:
+ * the first thing a new visitor saw used to be rule 2 clipped at the top and
+ * the board it was teaching cut off at the bottom.
+ */
 body .rules-dialog { width: min(64rem, calc(100vw - 2rem)); max-height: calc(100svh - 2rem); }
+.rules-dialog .dialog-body { align-content: start; scroll-behavior: auto; }
 .rules-lessons { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
 .rules-practice { margin:1rem 0; }
 .rules-practice .rules-demo { margin:0; padding-top:.75rem; border:0; }
-.rules-practice .demo-stage { width:100%; }
+/* Sized so the board this dialog is teaching is whole when it opens. */
+.rules-practice .demo-stage { width: min(100%, 22rem, calc(100svh - 25rem)); margin-inline: auto; }
 .rules-practice .demo-layout { grid-template-columns:minmax(0,1fr) minmax(14rem,1fr); }
 .rules-practice .demo-heading h2 { font-size:1.5rem; }
 @media(max-width:760px) {
   body .rules-dialog { inset:0; width:100%; max-height:100svh; height:100svh; border-radius:0; }
   .rules-practice .demo-layout { grid-template-columns:1fr; }
-  .rules-practice .demo-stage { max-width:24rem; }
+  .rules-practice .demo-stage { width: min(100%, 20rem); max-width:24rem; }
 }
 
-.square-coordinate { display:none; position:absolute; top:.25rem; right:.3rem; font:600 clamp(.55rem,1.4vw,.7rem)/1 ui-sans-serif,system-ui,sans-serif; color:#18201c; background:rgb(255 253 248 / .78); border-radius:.2rem; padding:.12rem .18rem; pointer-events:none; z-index:4; }
-:root[data-coordinates="true"] .square-coordinate { display:block; }
+.square-coordinate { display:none; position:absolute; top:.25rem; right:.3rem; font:640 clamp(.55rem,1.4vw,.7rem)/1 var(--font-sans); color:var(--ink); background:color-mix(in srgb, var(--surface) 82%, transparent); border-radius:var(--radius-control); padding:.12rem .18rem; pointer-events:none; z-index:4; }
+:root[data-coordinates="true"] .square-coordinate,
+#rules-demo[data-coordinates="true"] .square-coordinate { display:block; }
 .coordinate-toggle { justify-self:start; margin-block:.375rem; }
 
 /* Keep the rule text and its playable example together on wide screens. */
 body .rules-dialog .dialog-body { grid-template-columns:minmax(14rem,.8fr) minmax(0,1.2fr); }
 .rules-dialog .rules-list { grid-column:1; grid-row:1; }
 .rules-dialog .rules-practice { grid-column:2; grid-row:1; min-width:0; }
-.rules-dialog .rules-example { display:none; }
 .rules-dialog .rules-gotchas { grid-column:1 / -1; }
 .rules-practice .demo-layout { grid-template-columns:1fr; }
 @media(max-width:760px) {

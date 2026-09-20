@@ -215,6 +215,34 @@ export function joinMatchmaking(gameId, {
     removeStream(stream) {
       if (opponentId) room.removeStream(stream, opponentId);
     },
+    /**
+     * What the link actually is, read from the peer connection rather than
+     * assumed: whether the selected candidate pair goes through a relay, and
+     * the round-trip time. The bundled configuration carries STUN and no TURN,
+     * so `relayed` cannot currently be true — the branch exists because the
+     * interface has to stop claiming "nothing passes through a server" the
+     * moment that stops being so, and adding a TURN server should not also
+     * require remembering to make the strip honest.
+     */
+    async connectionReport() {
+      if (phase !== 'matched' || !opponentId) return null;
+      const connection = room.getPeers?.()[opponentId];
+      if (!connection?.getStats) return null;
+      let stats;
+      try { stats = await connection.getStats(); } catch { return null; }
+      let pair = null;
+      stats.forEach((report) => {
+        if (report.type !== 'candidate-pair') return;
+        if (report.selected || (report.state === 'succeeded' && report.nominated)) pair = report;
+      });
+      if (!pair) return null;
+      let remote = null;
+      stats.forEach((report) => { if (report.id === pair.remoteCandidateId) remote = report; });
+      return {
+        relayed: remote?.candidateType === 'relay',
+        latency: Number.isFinite(pair.currentRoundTripTime) ? pair.currentRoundTripTime * 1000 : null,
+      };
+    },
     leave() {
       clearPending();
       clearInterval(helloTimer);

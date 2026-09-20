@@ -4,20 +4,28 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' wss:; media-src 'self' blob: mediastream:; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111814" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F2EEE4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E1512" media="(prefers-color-scheme: dark)">
   <title>Checkmate puzzles · Schness</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
   <link rel="stylesheet" href="./vendor/basecoat/basecoat-nova.cdn.min.css">
-  <link rel="stylesheet" href="./styles.css?v=74">
-  <link rel="stylesheet" href="./ui.css?v=84">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./ui.css">
 </head>
 <body class="puzzle-page">
   <main class="game">
-    <header><a class="brand" href="./"><span class="brand-mark" aria-hidden="true">S</span><h1>Schness</h1></a><div class="header-actions"><button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button><button class="text-button theme-button btn" type="button" data-theme-toggle data-variant="ghost">Dark</button></div></header>
-    <div class="puzzle-heading"><div><p class="eyebrow">Tactics</p><h2>Find the checkmate</h2></div><a class="text-button" href="./">← Home</a></div>
+    <header>
+      <a class="brand" href="./" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><span class="brand-word">Schness</span></a>
+      <nav class="site-nav" aria-label="Schness"><a href="./watch.html">Bot arena</a><a href="./library.html">Library</a><a href="./puzzles.html" aria-current="page">Puzzles</a></nav>
+      <div class="header-actions">
+        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
+        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
+        <span class="header-rule" aria-hidden="true"></span>
+      </div>
+    </header>
+    <div class="puzzle-heading"><div><p class="eyebrow">Tactics</p><h1>Find the checkmate</h1></div></div>
     <section class="puzzle-layout">
       <div class="puzzle-stage">
         <div class="replay-seat"><div id="puzzle-top-player" class="replay-player"></div><div class="reserve"><span id="puzzle-top-label" class="reserve-label"></span><div id="puzzle-top-reserve" class="bank"></div></div></div>
@@ -31,10 +39,10 @@
           <div class="puzzle-toggles"><label><input id="puzzle-hide-depth" type="checkbox"> Hide mate depth</label><label><input id="puzzle-auto-next" type="checkbox"> Auto-next when solved</label></div>
         </details>
         <p id="puzzle-progress" class="eyebrow"></p>
-        <h3 id="puzzle-prompt">Loading verified puzzles…</h3>
+        <h2 id="puzzle-prompt">Loading verified puzzles…</h2>
         <div id="puzzle-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span id="puzzle-feedback-icon" aria-hidden="true">●</span><p id="puzzle-status">Find the forced checkmate.</p></div>
-        <div class="puzzle-actions"><button id="puzzle-next" type="button" class="btn" data-variant="primary">Next</button><button id="puzzle-reveal" type="button" class="btn" data-variant="outline">Solution</button></div>
-        <div id="puzzle-line" class="watch-moves" aria-label="Played line"></div>
+        <div class="puzzle-actions"><button id="puzzle-next" type="button" class="btn" data-variant="primary">Next</button><button id="puzzle-reveal" type="button" class="btn" data-variant="secondary">Solution</button></div>
+        <section id="puzzle-line" class="watch-moves" data-empty="No moves yet." aria-label="Played line"></section>
         <details><summary>Source positions</summary><div id="puzzle-sources" class="replay-sources"></div></details>
       </aside>
     </section>
@@ -50,7 +58,7 @@
     </div>
     <div class="dialog-body" tabindex="0" role="group" aria-label="The rules, scrollable">
       <ol class="rules-list">
-        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span></li>
+        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span><button class="rule-demo-trigger btn" type="button" data-lesson="board" aria-controls="rules-demo" aria-label="Try the board" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span><button class="rule-demo-trigger btn" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square. A deployed piece may not immediately check the opposing king.</span><button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Captures come back</strong><span>Capturing does not remove a piece. It goes to the reserve of the player who owned it, ready to be deployed again, so material never leaves the game. Win by checkmate.</span><button class="rule-demo-trigger btn" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece" data-variant="ghost"><span>Try it →</span></button></li>
@@ -63,38 +71,21 @@
           <div id="demo-board" class="board" role="grid" aria-label="Playable rules demonstration"></div>
           <div class="replay-seat"><div id="demo-white-player" class="replay-player">White · You</div><div class="reserve"><span id="demo-white-label" class="reserve-label">Your reserve</span><div id="demo-white-reserve" class="bank"></div></div></div>
         </div>
-        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="outline">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
+        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="secondary">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
       </div>
     </section></div>
-      <figure class="rules-example">
-        <div class="rules-board" aria-hidden="true">
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bK.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bN.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell rules-drop"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wR.svg" alt=""></span>
-          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wK.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-        </div>
-        <figcaption>White’s bishop was captured earlier, so it came back to White’s own reserve. The dashed ring is c2, one of the empty squares it can drop onto.</figcaption>
-      </figure>
 
     </div>
     <div class="dialog-foot">
-      <form method="dialog"><button class="rules-confirm btn" type="submit" data-variant="primary">Got it</button></form>
+      <p class="dialog-foot-note">You can reopen this from <strong>Rules</strong> in the header at any time.</p>
+      <form method="dialog" class="dialog-foot-actions">
+        <button class="rules-skip btn" type="submit" value="skip" data-variant="ghost">Skip</button>
+        <button class="rules-confirm btn" type="submit" data-variant="primary">Start playing</button>
+      </form>
     </div>
   </dialog>
-  <script type="module" src="./src/rules-modal.js?v=84"></script>
-  <script type="module" src="./src/puzzle-ui.js?v=68"></script>
+  <script type="module" src="./src/rules-modal.js"></script>
+  <script type="module" src="./src/puzzle-ui.js"></script>
 </body>
 </html>
 

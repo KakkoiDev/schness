@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' wss:; media-src 'self' blob: mediastream:; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111814" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F2EEE4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E1512" media="(prefers-color-scheme: dark)">
   <meta name="description" content="Play a match of Schness — compact chess on a 4×4 board.">
   <title>Game · Schness</title>
   <meta property="og:title" content="A game of Schness is waiting for you">
@@ -15,7 +15,7 @@
   <meta property="og:image" content="https://schness.com/assets/social-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="A four-by-four Schness board with two kings, a rook and a knight.">
+  <meta property="og:image:alt" content="The Schness mark — a board with a corner missing and that block sitting outside it — beside the wordmark.">
   <meta name="twitter:card" content="summary_large_image">
 
   <meta name="mobile-web-app-capable" content="yes">
@@ -26,71 +26,83 @@
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
   <link rel="stylesheet" href="./vendor/basecoat/basecoat-nova.cdn.min.css">
-  <link rel="stylesheet" href="./styles.css?v=74">
-  <link rel="stylesheet" href="./ui.css?v=84">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./ui.css">
 </head>
 <body>
   <main class="game game-page">
     <header>
-      <a class="brand" href="./" aria-label="Schness home"><span class="brand-mark" aria-hidden="true">S</span><span><h1>Schness</h1></span></a>
+      <a class="brand" href="./" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><span class="brand-word">Schness</span></a>
+      <nav class="site-nav" aria-label="Schness"><a href="./watch.html">Bot arena</a><a href="./library.html">Library</a><a href="./puzzles.html">Puzzles</a></nav>
       <div class="header-actions">
+        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
         <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
         <button class="text-button btn" type="button" data-open-sound data-variant="ghost">Sound</button>
-        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
+        <span class="header-rule" aria-hidden="true"></span>
       </div>
     </header>
 
     <section id="match">
+      <h1 class="visually-hidden">Your match</h1>
       <div class="match-actions">
         <a id="back-to-menu" class="text-button" href="./">← Home</a>
-        <div class="match-action-buttons"><button id="swap-side" class="text-button btn" type="button" hidden data-variant="ghost">Play Black</button><button id="reset" class="reset btn" type="button" data-variant="outline">New game</button></div>
+        <div class="match-action-buttons"><button id="swap-side" class="text-button btn" type="button" hidden data-variant="ghost">Play Black</button><button id="reset" class="reset btn" type="button" data-variant="secondary">New game</button></div>
       </div>
       <section id="network-card" class="network-card" hidden>
         <div id="card-waiting" class="card-state" hidden>
-          <p class="eyebrow">Waiting for opponent</p>
+          <p class="eyebrow"><span class="state-dot is-live" aria-hidden="true"></span>Waiting for opponent</p>
           <h2>Send this link</h2>
-          <p class="card-body">The match starts the moment they open it. You’ll play White.</p>
+          <p class="card-body">The match starts the moment they open it. You play White.</p>
           <div class="link-row">
             <input id="invite-url" type="url" readonly aria-label="Match link" class="input">
-            <button id="copy-invite" type="button" class="btn" data-variant="outline">Copy</button>
+            <button id="copy-invite" type="button" class="card-primary btn" data-variant="primary">Copy</button>
           </div>
+          <!--
+            Peer-to-peer usually means the other player is in the same room on a
+            phone, and copying a URL from a laptop to a phone is the worst step
+            in this flow.
+          -->
+          <figure id="invite-scan" class="invite-scan">
+            <div id="invite-qr" class="invite-qr" role="img" aria-label="The invitation link as a scannable code"></div>
+            <figcaption>Or scan it</figcaption>
+          </figure>
+          <!--
+            From the first second, in one fixed place. A player who has to wait
+            should never have to fail first to find something to do.
+          -->
+          <button id="waiting-bot" class="card-escape btn" type="button" data-variant="ghost">Play the bot while you wait →</button>
           <div class="card-foot">
             <span id="search-pulse" class="pulse" aria-hidden="true"><i></i><i></i><i></i></span>
             <span id="search-status" role="status">Listening for a second player</span>
             <button id="cancel-search" class="card-link btn" type="button" data-variant="ghost">Cancel</button>
           </div>
-          <p id="search-stalled" class="card-note" hidden>
-            No relay is answering, so the link cannot reach anyone yet. It will
-            connect on its own if the network comes back.
-            <button id="stalled-bot" class="card-link btn" type="button" data-variant="ghost">Play the bot instead</button>
-          </p>
-          <p id="search-quiet" class="card-note" hidden>
-            Still waiting for the other browser. Make sure both opened this exact
-            invitation link. An open relay does not guarantee that discovery
-            or the direct connection succeeded. We are retrying automatically;
-            if both pages keep waiting, try another network.
-            <button id="quiet-bot" class="card-link btn" type="button" data-variant="ghost">Play the bot instead</button>
-          </p>
+        </div>
+        <div id="card-joined" class="card-state" hidden>
+          <p class="eyebrow"><span class="state-dot is-ok" aria-hidden="true"></span>Connected</p>
+          <h2 id="joined-headline">Black has joined — your move.</h2>
+          <p class="card-body">Peer-to-peer. Nothing about this match passes through a server.</p>
         </div>
         <div id="card-reconnect" class="card-state" hidden>
           <p class="eyebrow"><span class="state-dot is-warn" aria-hidden="true"></span>Reconnecting</p>
           <h2>Opponent lost connection</h2>
-          <p class="card-body">The board is saved. If they don’t return within the countdown, the match is yours.</p>
+          <p class="card-body">The board is saved. If they do not come back before the clock runs out, the match is yours.</p>
+          <p class="countdown"><strong id="reconnect-left">1:00</strong><span>until forfeit</span></p>
           <div class="progress"><i id="reconnect-bar"></i></div>
-          <p class="progress-legend"><span>Waiting</span><span id="reconnect-left">1:00 left</span></p>
           <div class="card-actions">
-            <button id="claim-win" class="card-primary btn" type="button" data-variant="primary">Claim the win</button>
-            <button id="keep-waiting" class="card-secondary btn" type="button" data-variant="outline">Keep waiting</button>
+            <button id="keep-waiting" class="card-secondary btn" type="button" data-variant="secondary">Keep waiting</button>
+            <button id="claim-win" class="card-primary btn" type="button" disabled data-variant="primary">Claim the win</button>
           </div>
+          <p id="claim-note" class="card-note">Claiming unlocks at 0:00.</p>
         </div>
         <div id="card-expired" class="card-state" hidden>
           <p class="eyebrow"><span class="state-dot is-danger" aria-hidden="true"></span>Link expired</p>
           <h2>This game is no longer open</h2>
-          <p class="card-body">The invite was already used or has gone stale. Start a fresh one, or play the bot while you wait.</p>
+          <p class="card-body">The invitation was already used, or it sat unopened long enough to go stale. Nothing is lost — a new link takes one tap.</p>
           <div class="card-actions">
-            <button id="new-online" class="card-primary btn" type="button" data-variant="primary">New online game</button>
-            <button id="bot-instead" class="card-secondary btn" type="button" data-variant="outline">Play the bot</button>
+            <button id="new-online" class="card-primary btn" type="button" data-variant="primary">New invite</button>
+            <button id="bot-instead" class="card-secondary btn" type="button" data-variant="secondary">Play the bot</button>
           </div>
+          <a class="card-escape" href="./">Back to the lobby</a>
         </div>
       </section>
       <p id="announcement" class="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -125,19 +137,19 @@
               <p id="result-detail" class="result-detail"></p>
               <div class="card-actions">
                 <button id="result-primary" class="card-primary btn" type="button" data-variant="primary"></button>
-                <button id="result-secondary" class="card-secondary btn" type="button" data-variant="outline"></button>
+                <button id="result-secondary" class="card-secondary btn" type="button" data-variant="secondary"></button>
               </div>
               <button id="result-home" class="card-link btn" type="button" data-variant="ghost">Back home</button>
             </section>
           </div>
         </div>
-        <section id="training-panel" class="analysis-panel" hidden>
-          <strong>Training</strong>
+        <details id="training-panel" class="analysis-panel" hidden>
+          <summary>Training</summary>
           <label><input id="training-mate" type="checkbox"> Forced-mate hints (1–4 moves)</label>
           <label><input id="training-advantage" type="checkbox"> White / Black advantage</label>
           <p id="training-score" class="analysis-score" aria-live="polite" hidden></p>
           <p id="training-warning" role="status" aria-live="polite" hidden></p>
-        </section>
+        </details>
         <p id="board-help" class="visually-hidden">
           Arrow keys move the cursor, Enter picks up or plays, Escape puts the piece back down,
           1 to 3 pick a reserve piece, a square name jumps there, and question mark lists the shortcuts.
@@ -173,9 +185,9 @@
             <strong id="moves-title">Moves</strong>
             <span class="moves-hint">↑ / ↓ to review</span>
             <div class="stepper" role="group" aria-label="Review moves">
-              <button id="move-first" class="step btn" type="button" aria-label="Back to the first move" data-variant="outline">⏮</button>
-              <button id="move-back" class="step btn" type="button" aria-label="Step back one move" data-variant="outline">◀</button>
-              <button id="move-forward" class="step btn" type="button" aria-label="Step forward one move" data-variant="outline">▶</button>
+              <button id="move-first" class="step btn" type="button" aria-label="Back to the first move" data-variant="secondary">⏮</button>
+              <button id="move-back" class="step btn" type="button" aria-label="Step back one move" data-variant="secondary">◀</button>
+              <button id="move-forward" class="step btn" type="button" aria-label="Step forward one move" data-variant="secondary">▶</button>
             </div>
           </div>
           <div class="moves-table" role="table" aria-labelledby="moves-title">
@@ -195,20 +207,29 @@
           </div>
         </section>
         <div class="rail-actions">
-          <button id="undo" class="rail-button btn" type="button" data-variant="outline">Undo</button>
-          <button id="resign" class="rail-button btn" type="button" data-variant="outline">Resign</button>
+          <button id="undo" class="rail-button btn" type="button" data-variant="secondary">Undo</button>
+          <button id="resign" class="rail-button btn" type="button" data-variant="secondary">Resign</button>
         </div>
       </aside>
       <section id="match-chat" class="match-chat" aria-labelledby="chat-title" hidden>
         <div class="chat-heading">
-          <div><h2 id="chat-title">At the table</h2><small id="chat-note">Peer-to-peer · not saved</small></div>
-          <button id="chat-toggle" class="chat-toggle btn" type="button" aria-expanded="true" data-variant="outline">Hide chat</button>
+          <div>
+            <h2 id="chat-title">At the table</h2>
+            <small id="chat-note">Peer-to-peer · not recorded · not stored</small>
+            <small id="chat-summary" class="chat-summary"></small>
+          </div>
+          <span id="on-air" class="on-air" role="status" hidden></span>
+          <button id="chat-toggle" class="chat-toggle btn" type="button" aria-expanded="true" data-variant="secondary">Hide chat</button>
         </div>
         <div id="chat-body">
+          <!--
+            Off until pressed, both of them. A match never opens with a live
+            microphone, and the reason is said before the browser prompt.
+          -->
           <div class="media-actions" aria-label="Call controls">
-            <button id="voice-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="outline">Audio off</button>
-            <button id="video-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="outline">Video off</button>
-            <button id="hear-opponent" class="media-toggle btn" type="button" hidden data-variant="outline">Hear audio</button>
+            <button id="voice-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="secondary">Audio off</button>
+            <button id="video-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="secondary">Video off</button>
+            <button id="hear-opponent" class="media-toggle btn" type="button" hidden data-variant="secondary">Hear audio</button>
           </div>
           <p id="voice-status" class="voice-status" aria-live="polite"></p>
           <div id="video-stage" class="video-stage" hidden>
@@ -219,14 +240,17 @@
             <p class="chat-empty">No messages yet.</p>
           </div>
           <div id="quick-chat" class="quick-chat" aria-label="Quick messages">
-            <button type="button" data-quick-message="Good move" class="btn" data-variant="outline">Good move</button>
-            <button type="button" data-quick-message="One sec" class="btn" data-variant="outline">One sec</button>
-            <button id="offer-draw" type="button" data-quick-action="draw" class="btn" data-variant="outline">Offer draw</button>
+            <button type="button" data-quick-message="Good luck" class="btn" data-variant="secondary">Good luck</button>
+            <button type="button" data-quick-message="Nice move" class="btn" data-variant="secondary">Nice move</button>
+            <button type="button" data-quick-message="Oops" class="btn" data-variant="secondary">Oops</button>
+            <button type="button" data-quick-message="Good game" class="btn" data-variant="secondary">Good game</button>
+            <button type="button" data-quick-message="Rematch?" class="btn" data-variant="secondary">Rematch?</button>
+            <button id="offer-draw" type="button" data-quick-action="draw" class="btn" data-variant="secondary">Offer draw</button>
           </div>
           <form id="chat-form" class="chat-form">
             <label class="visually-hidden" for="chat-message">Message your opponent</label>
             <input id="chat-message" maxlength="280" autocomplete="off" placeholder="Message your opponent…" class="input">
-            <button type="submit" class="btn" data-variant="outline">Send</button>
+            <button type="submit" class="btn" data-variant="secondary">Send</button>
           </form>
           <audio id="peer-audio" autoplay playsinline></audio>
         </div>
@@ -285,7 +309,7 @@
     </div>
     <div class="dialog-body" tabindex="0" role="group" aria-label="The rules, scrollable">
       <ol class="rules-list">
-        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span></li>
+        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span><button class="rule-demo-trigger btn" type="button" data-lesson="board" aria-controls="rules-demo" aria-label="Try the board" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span><button class="rule-demo-trigger btn" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square. A deployed piece may not immediately check the opposing king.</span><button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Captures come back</strong><span>Capturing does not remove a piece. It goes to the reserve of the player who owned it, ready to be deployed again, so material never leaves the game. Win by checkmate.</span><button class="rule-demo-trigger btn" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece" data-variant="ghost"><span>Try it →</span></button></li>
@@ -298,38 +322,21 @@
           <div id="demo-board" class="board" role="grid" aria-label="Playable rules demonstration"></div>
           <div class="replay-seat"><div id="demo-white-player" class="replay-player">White · You</div><div class="reserve"><span id="demo-white-label" class="reserve-label">Your reserve</span><div id="demo-white-reserve" class="bank"></div></div></div>
         </div>
-        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="outline">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
+        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="secondary">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
       </div>
     </section></div>
-      <figure class="rules-example">
-        <div class="rules-board" aria-hidden="true">
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bK.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bN.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell rules-drop"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wR.svg" alt=""></span>
-          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wK.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-        </div>
-        <figcaption>White’s bishop was captured earlier, so it came back to White’s own reserve. The dashed ring is c2, one of the empty squares it can drop onto.</figcaption>
-      </figure>
 
     </div>
     <div class="dialog-foot">
-      <form method="dialog"><button class="rules-confirm btn" type="submit" data-variant="primary">Got it</button></form>
+      <p class="dialog-foot-note">You can reopen this from <strong>Rules</strong> in the header at any time.</p>
+      <form method="dialog" class="dialog-foot-actions">
+        <button class="rules-skip btn" type="submit" value="skip" data-variant="ghost">Skip</button>
+        <button class="rules-confirm btn" type="submit" data-variant="primary">Start playing</button>
+      </form>
     </div>
   </dialog>
-  <script type="module" src="./src/rules-modal.js?v=84"></script>
-  <script type="module" src="./src/main.js?v=71"></script>
+  <script type="module" src="./src/rules-modal.js"></script>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>
 

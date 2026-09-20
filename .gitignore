@@ -1,3 +1,9 @@
 node_modules/
 playwright-report/
 test-results/
+
+# Throwaway harnesses for driving Chromium during a design pass: screenshots,
+# measurements, coverage sweeps. Not part of the suite — anything worth keeping
+# belongs in test/ or e2e/.
+*.sandbox.mjs
+*.sandbox.config.js

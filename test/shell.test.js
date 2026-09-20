@@ -6,6 +6,18 @@ import { dirname, resolve } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
+/** The body of one at-rule, read by balancing braces rather than by slicing. */
+function block(css, opener) {
+  const start = css.indexOf(opener);
+  if (start < 0) return '';
+  let depth = 0;
+  for (let index = css.indexOf('{', start); index < css.length; index += 1) {
+    if (css[index] === '{') depth += 1;
+    else if (css[index] === '}' && (depth -= 1) === 0) return css.slice(start, index + 1);
+  }
+  return css.slice(start);
+}
+
 test('every service-worker shell entry exists', async () => {
   const source = await readFile(resolve(root, 'sw.js'), 'utf8');
   const shell = source.match(/const SHELL = \[([\s\S]*?)\];/)?.[1] ?? '';
@@ -25,10 +37,18 @@ test('a checked king has an unmistakable turn warning and board marker', async (
   assert.match(controller, /if \(isInCheck\(position, humanColor\)\) \{\s*return \{ title: 'CHECK — defend your king', detail: playDetail\(\), waiting: false, check: true \}/);
   assert.match(controller, /turnCard\.classList\.toggle\('is-check', Boolean\(check\)\)/);
   assert.match(controller, /warning \? `, in \$\{warning\}` : ''/);
-  assert.match(css, /\.board \.board-row \.square\.in-check::before \{[^}]*content: "CHECK"/);
+  // The two most important words in the game were literals in a stylesheet,
+  // where i18n cannot reach them, so a Japanese player read English on the
+  // board. They are data attributes the CSS reads.
+  assert.match(css, /\.board \.board-row \.square\[data-state\]::before \{[^}]*content: attr\(data-label\)/);
+  assert.doesNotMatch(css, /content: "CHECK/);
+  const boardUi = await readFile(resolve(root, 'src/board-ui.js'), 'utf8');
+  assert.match(boardUi, /cell\.dataset\.label = state === 'checkmate' \? 'CHECKMATE' : 'CHECK';/);
+  assert.match(translations, /'CHECK': '王手', 'CHECKMATE': '詰み'/);
+  assert.match(translations, /attributeFilter: \['aria-label', 'placeholder', 'title', 'data-label', 'data-empty'\]/);
   assert.match(css, /\.board \.board-row \.square\.in-check \{[^}]*background-color: var\(--check-square\);[^}]*background-image: none/);
   assert.match(css, /:root\[data-theme="dark"\] \.board \{ --check-square: #[0-9a-f]+; --mate-square: #[0-9a-f]+; --check-edge: #[0-9a-f]+; \}/);
-  assert.match(css, /\.board \.board-row \.square\.in-checkmate::before \{[^}]*content: "CHECKMATE"/);
+  assert.match(css, /\.board \.board-row \.square\[data-state="checkmate"\]::before \{[^}]*font-size/);
   assert.match(css, /\.game-page \.turn-card\.is-check \{[^}]*border-color: var\(--danger\)/);
   assert.match(translations, /'CHECK — defend your king': '王手！キングを守ってください'/);
 });
@@ -49,7 +69,11 @@ test('AI viewing stays in the browser and tournaments publish one artifact plus 
   assert.match(watch, /id="watch-edit"/);
   assert.match(viewer, /controllerSearch\(controller\(position\.turn\)\)/);
   assert.match(viewer, /buildEditedPosition/);
-  assert.doesNotMatch(lobby, /tournament/i);
+  // Tournaments stay an Actions-only batch process: the lobby must not offer
+  // running one as a mode. A footer link to the published artifacts is not
+  // that — it is where the library's 1,099 games came from.
+  const modes = lobby.slice(lobby.indexOf('mode-buttons'), lobby.indexOf('</section>', lobby.indexOf('mode-buttons')));
+  assert.doesNotMatch(modes, /tournament/i);
   assert.equal([...workflow.matchAll(/actions\/upload-artifact@/g)].length, 1);
   assert.match(workflow, /gh release (?:create|upload)/);
   assert.match(workflow, /contents: write/);
@@ -91,7 +115,9 @@ test('rules are playable and recorded positions can branch into the full arena',
     readFile(resolve(root, 'src/library-ui.js'), 'utf8'),
     readFile(resolve(root, 'src/watch-ui.js'), 'utf8'),
   ]);
-  assert.equal((lobby.match(/class="rule-demo-trigger btn"/g) ?? []).length, 3);
+  // Four rules, four affordances: rule 1 states a fact, so its lesson is the
+  // geometry — two kings on named squares and a move that shows the direction.
+  assert.equal((lobby.match(/class="rule-demo-trigger btn"/g) ?? []).length, 4);
   assert.match(lobby, /id="rules-demo"[^>]+hidden/);
   assert.match(tutorial, /new Worker\('\.\/src\/bot-worker\.js'/);
   assert.match(tutorial, /beginBoardDrag/);
@@ -200,13 +226,32 @@ test('the black knight carries no stray corner-bracket stroke', async () => {
   assert.match(knight, /<path fill="#f2f2f2" d="M177\.4 578\.1/);
 });
 
+test('the board is drawn one way, on every surface that shows one', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  // It is the most identifying object on the site and it was drawn twice: an
+  // 8px frame, .65rem and a two-layer shadow in the rules dialog; a 1px
+  // hairline, .3rem and none in a match. No page may restate any of the three.
+  assert.match(css, /\.board\{[^}]*border:6px solid var\(--ink\);border-radius:var\(--radius-card\)/);
+  for (const page of ['.game-page', '.watch-page', '.puzzle-stage', '.replay-stage', '.demo-stage']) {
+    const rule = css.match(new RegExp(`\\${page} \\.board\\s*\\{([^}]*)\\}`))?.[1] ?? '';
+    assert.doesNotMatch(rule, /border|radius|shadow/, `${page} redraws the board frame`);
+  }
+  assert.match(css, /--board-light:#E9DCBE/);
+  assert.doesNotMatch(css, /--board-light:#dde2de|--board-light:#b8c0ba/);
+});
+
 test('board rows are fixed and every vector piece uses the same box', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   assert.match(css, /grid-template-rows:\s*repeat\(4, minmax\(0, 1fr\)\)/);
-  assert.match(css, /\.piece-white\s*{/);
-  assert.match(css, /\.piece-black\s*{/);
+  // The Georgia/Unicode glyph path is gone — pieces are <img>, so its
+  // font sizes, --piece-color and text-shadow outlines drew nothing at all.
+  assert.doesNotMatch(css, /--piece-color|--piece-stroke|Georgia/);
   assert.match(css, /\[hidden\]\s*{\s*display:\s*none\s*!important;/);
-  assert.match(css, /\.piece,[\s\S]*?\.bank-piece \.piece-king\s*{[\s\S]*?width:\s*78%;[\s\S]*?height:\s*78%;[\s\S]*?object-fit:\s*contain;/);
+  assert.match(css, /\.piece,[\s\S]*?\.bank-piece \.piece-king\s*{[\s\S]*?width:\s*82%;[\s\S]*?height:\s*82%;[\s\S]*?object-fit:\s*contain;/);
+  // One box, said once. Five per-page copies restated 78% and could drift;
+  // only the shared rule and the drag ghost size a piece now.
+  assert.equal([...css.matchAll(/object-fit:\s*contain/g)].length, 2);
+  assert.doesNotMatch(css, /(width|height):\s*78%/);
   assert.match(css, /\.bank-piece,\s*\n\.bank-slot\s*{[\s\S]*?width:\s*50px/);
   assert.match(css, /\.bank-slot\s*{[\s\S]*?border:\s*1px dashed var\(--line\)/);
   assert.match(css, /\.bank-piece\.selected\s*{[\s\S]*?border-color:\s*var\(--ink\)/);
@@ -218,7 +263,9 @@ test('board rows are fixed and every vector piece uses the same box', async () =
   assert.doesNotMatch(css, /\.bank-empty/);
   assert.doesNotMatch(css, /\.fallback\s*{[^}]*margin:\s*-/);
   assert.match(css, /\.square\.last-from, \.square\.last-to/);
-  assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
+  // The in-check wash was a radial-gradient that `.board .board-row
+  // .square.in-check` then set to `background-image: none` on every board.
+  assert.doesNotMatch(css, /radial-gradient/);
 });
 
 test('a wait that has gone on too long says what it cannot rule out', async () => {
@@ -226,17 +273,19 @@ test('a wait that has gone on too long says what it cannot rule out', async () =
   const html = await readFile(resolve(root, 'game.html'), 'utf8');
   // The bundled WebRTC config carries STUN and no TURN, so a symmetric-NAT
   // pair never connects and never will — and peers exchange nothing until
-  // WebRTC is up, so to both of them it looks exactly like a friend who has
-  // not clicked, on relays that answer fine. The card cannot detect it; after
-  // long enough it says so, and offers the way out.
-  assert.match(html, /id="search-quiet"[^>]*class="card-note"[^>]*hidden/);
-  assert.match(html, /id="quiet-bot"/);
-  assert.match(main, /const quiet = 20000;/);
-  assert.match(html, /An open relay does not guarantee that discovery/);
-  // Never over the top of the stalled card, which contradicts it outright.
-  assert.match(main, /searchQuiet\.hidden = stalled \|\| waited < quiet;/);
+  // WebRTC is up, so neither side learns the other is even there. After a long
+  // wait the card stops implying that patience is the answer.
+  // The schedule itself is pure and unit-tested in test/matchmaking.test.js;
+  // what belongs here is that the card is wired to it and nothing else.
+  assert.match(main, /import \{ searchMessage \} from '\.\/matchmaking\.js';/);
+  assert.match(main, /searchStatus\.textContent = searchMessage\(waited, stalled\);/);
+  // One line that rewrites itself, so the card never changes height. It used
+  // to grow two paragraphs, each with its own "Play the bot instead" button.
+  assert.doesNotMatch(html, /id="search-stalled"|id="search-quiet"|id="stalled-bot"|id="quiet-bot"/);
+  assert.equal([...html.matchAll(/Play the bot/g)].length, 2, 'one escape while waiting, one when expired');
+  assert.match(html, /id="waiting-bot"[^>]*>Play the bot while you wait/);
+  assert.match(html, /id="search-status" role="status"/);
 });
-
 test('the board is a real grid, and the rules can be scrolled from a keyboard', async () => {
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
   const boardUi = await readFile(resolve(root, 'src/board-ui.js'), 'utf8');
@@ -273,10 +322,11 @@ test('state tokens are defined in both themes and no decorative gradient remains
     assert.match(light, new RegExp(`${token}:#`), `${token} missing from the light theme`);
     assert.match(dark, new RegExp(`${token}:#`), `${token} missing from the dark theme`);
   }
-  // body::before held the two radial-gradient blobs; the check wash is the only gradient left.
+  // body::before held the two radial-gradient blobs; the check wash that
+  // replaced them was itself overridden on every board, so there are none.
   assert.doesNotMatch(css, /body::before/);
   assert.doesNotMatch(css, /\.lobby-page::before/);
-  assert.equal([...css.matchAll(/radial-gradient/g)].length, 1);
+  assert.equal([...css.matchAll(/radial-gradient/g)].length, 0);
 });
 
 test('board motion animates a copy, never the piece itself', async () => {
@@ -310,11 +360,16 @@ test('a captured piece flies to the reserve of whoever owned it', async () => {
 test('the sheet gates its motion, including the transforms added later', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   assert.match(css, /\.square\.is-sliding \.piece \{[^}]*visibility: hidden/);
-  const reduce = css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)'));
+  const reduce = block(css, '@media (prefers-reduced-motion: reduce)');
   assert.ok(reduce, 'nothing honours a reduced-motion preference');
   // Two transforms predated the no-preference block and slipped past it.
   assert.match(reduce, /\.mode:not\(:disabled\):hover \{[^}]*transform: none/);
-  assert.match(reduce, /\.setup > summary::after \{[^}]*transition: none/);
+  // Naming the two that slipped is a list, not a rule. Reduced motion means
+  // nothing in this block may translate, scale or rotate — including the next
+  // one somebody adds.
+  for (const [, value] of reduce.matchAll(/(?<![-a-z])transform:\s*([^;}]+)/g)) {
+    assert.match(value.trim(), /^(none|inherit)$/, `the reduce block still sets transform: ${value}`);
+  }
 });
 
 test('a shared link brings its own preview', async () => {
@@ -433,6 +488,14 @@ test('the rules dialog only ever opens from a button', async () => {
     assert.doesNotMatch(source, /^\s*rulesDialog\.showModal\(\)/m, `${file} auto-opens the rules`);
     assert.match(source, /data-open-rules/, `${file} lost the Rules button binding`);
   }
+  // Naming two files was not the rule. The auto-open had moved into
+  // rules-modal.js as `autoStart: lobby-page`, so the lobby opened the dialog
+  // on a first visit for a long time while this test passed — and with a real
+  // board on the lobby it covered a game that had already started.
+  const modal = await readFile(resolve(root, 'src/rules-modal.js'), 'utf8');
+  assert.match(modal, /initTutorial\(\{ autoStart: false \}\)/);
+  const tutorial = await readFile(resolve(root, 'src/tutorial.js'), 'utf8');
+  assert.match(tutorial, /autoStart = false/, 'the default must not open a dialog either');
 });
 
 test('lobby and game are separate documents with rules and home navigation', async () => {
@@ -445,20 +508,25 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.equal([...html.matchAll(/<li><strong>/g)].length, 4);
   assert.doesNotMatch(html, /Two things that trip people up/);
   assert.match(html, /A deployed piece may not immediately check the opposing king/);
-  assert.match(html, /class="rules-confirm btn"[^>]*>Got it</);
+  assert.match(html, /class="rules-confirm btn"[^>]*>Start playing</);
+  // The dialog says where it lives, so closing it is not a one-way door.
+  assert.match(html, /You can reopen this from <strong>Rules<\/strong> in the header/);
+  assert.match(html, /class="rules-skip btn"/);
   // Nothing opens the rules for you, so there is no "don't show this" to offer.
   assert.doesNotMatch(html, /id="rules-optout"/);
   assert.match(html, /class="dialog-grab"/);
   // The three rules are the lobby's pitch, and the bot is the primary action.
   assert.doesNotMatch(html, /class="rules-strip"/);
-  assert.equal([...html.matchAll(/data-lesson=/g)].length, 3);
+  assert.equal([...html.matchAll(/data-lesson=/g)].length, 4);
   assert.match(html, /data-open-rules/);
-  assert.match(html, /id="bot-arena" class="mode dark btn"/);
+  assert.match(html, /id="bot-arena" class="mode mode-primary btn"/);
   assert.match(html, /id="play-online" class="mode btn"/);
   assert.match(css, /\.rules-dialog\[open\]\s*{\s*display:\s*flex/);
   assert.match(css, /\.dialog-body\s*{[\s\S]*?grid-template-columns:\s*180px minmax\(0, 1fr\)/);
   assert.match(css, /\.dialog-foot\s*{[\s\S]*?background:\s*var\(--sunk\)/);
-  assert.match(css, /\.rules-strip\s*{[\s\S]*?gap:\s*1px;[\s\S]*?background:\s*var\(--line\)/);
+  // The strip left the markup; its ninety lines of styling stayed behind for
+  // three commits. A deleted component is deleted in both places or in neither.
+  assert.doesNotMatch(css, /\.rules-strip/);
   // Bot seats are chosen inside the arena where they can change mid-game.
   // Only the online clock remains in the lobby creation dialog.
   assert.match(html, /<dialog id="online-setup"/);
@@ -478,7 +546,7 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /class="player-dot"/);
   // The turn card replaced the bare status line.
   assert.doesNotMatch(game, /id="status"/);
-  assert.match(css, /\.turn-card\s*{[\s\S]*?border-radius:\s*9px/);
+  assert.match(css, /\.turn-card\s*{[\s\S]*?border-radius:\s*var\(--radius-card\)/);
   assert.match(css, /grid-template-columns:\s*minmax\(0,1fr\) 312px/);
   assert.match(css, /\.game-page \.play-area\s*{\s*display:\s*contents/);
   // Move list, last-move line and the Undo / Resign pair.
@@ -509,7 +577,7 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.equal([...game.matchAll(/data-cue="/g)].length, 5);
   assert.match(game, /data-open-sound/);
   assert.match(css, /\.clock\s*{[\s\S]*?font-variant-numeric:\s*tabular-nums/);
-  assert.match(css, /\.clock\.is-low\s*{\s*font-weight:\s*600/);
+  assert.match(css, /\.clock\.is-low\s*{\s*font-weight:\s*640/);
   assert.match(css, /\.result-overlay\s*{[\s\S]*?background:\s*rgb\(24 32 28 \/ \.32\)/);
   assert.match(css, /\.result-card h2\s*{[\s\S]*?letter-spacing:\s*-\.045em/);
   // The one motion exception, inside the existing reduced-motion block.
@@ -542,10 +610,12 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(game, /id="peer-audio"[^>]+autoplay/);
   assert.match(game, /id="peer-video"[^>]+autoplay[^>]+playsinline/);
   assert.match(game, /id="local-video"[^>]+autoplay[^>]+muted[^>]+playsinline/);
-  assert.match(game, /data-quick-message="Good move"/);
+  for (const phrase of ['Good luck', 'Nice move', 'Oops', 'Good game', 'Rematch?']) {
+    assert.match(game, new RegExp(`data-quick-message="\\Q${phrase}\\E"`.replace('\\Q', '').replace('\\E', '').replace('?', '\\?')));
+  }
   assert.match(game, /id="offer-draw"[^>]+data-quick-action="draw"/);
-  assert.match(css, /\.chat-own \.chat-bubble\s*{[\s\S]*?border-radius:\s*12px 12px 4px 12px/);
-  assert.match(css, /\.chat-event\s*{[\s\S]*?border-radius:\s*999px/);
+  assert.match(css, /\.chat-own \.chat-bubble\s*{[\s\S]*?border-radius:\s*var\(--radius-card\) var\(--radius-card\) var\(--radius-control\) var\(--radius-card\)/);
+  assert.match(css, /\.chat-event\s*{[\s\S]*?border-radius:\s*var\(--radius-pill\)/);
   assert.match(game, /id="voice-toggle"[^>]+aria-pressed="false"[^>]*>Audio off</);
   assert.match(game, /id="video-toggle"[^>]+aria-pressed="false"[^>]*>Video off</);
   const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
@@ -584,11 +654,34 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(css, /\.drag-ghost\s*{/);
   assert.match(css, /transform:\s*translate\(-50%, -50%\)/);
   assert.match(css, /touch-action:\s*none/);
-  assert.match(css, /\.game-page \.match-chat\s*{[\s\S]*?grid-column:\s*2;[\s\S]*?grid-row:\s*5;/);
+  // Row 6, from the block that actually wins: an earlier copy of this rule
+  // placed it in row 5 and was overridden in full a thousand lines later.
+  assert.match(css, /\.game-page \.match-chat \{[\s\S]*?grid-column:\s*2;[\s\S]*?grid-row:\s*6;/);
   assert.match(css, /@media\(max-width:899px\)[\s\S]*?\.game-page \.match-chat\s*{[\s\S]*?position:\s*fixed/);
   assert.match(css, /\.game-page \.match-chat\.chat-collapsed/);
   assert.match(css, /max-height:\s*calc\(min\(82dvh, 42rem\) - 3\.2rem\)/);
   assert.doesNotMatch(html, />4 × 4 chess</);
+});
+
+test('the call never outranks the game, and never starts itself', async () => {
+  const main = await readFile(resolve(root, 'src/main.js'), 'utf8');
+  const html = await readFile(resolve(root, 'game.html'), 'utf8');
+  // The reason goes up before the browser prompt does. A permission dialog
+  // with no reason in front of it is a dialog people decline.
+  assert.match(main, /microphoneStarting = true;\s*await explainMedia\('audio'\);/);
+  assert.match(main, /cameraStarting = true;\s*await explainMedia\('video'\);/);
+  assert.match(main, /async function explainMedia\(kind\) \{\s*voiceStatus\.textContent = MEDIA_REASONS\[kind\];/);
+  // Both off in the markup, so a match cannot open with either running.
+  assert.match(html, /id="voice-toggle"[^>]*aria-pressed="false"[^>]*>Audio off</);
+  assert.match(html, /id="video-toggle"[^>]*aria-pressed="false"[^>]*>Video off</);
+  // Video first, audio second, the clock never.
+  assert.match(main, /const drop = nextDegradation\(\{/);
+  assert.match(main, /if \(drop === 'video'\) \{\s*stopCamera\(\);/);
+  assert.doesNotMatch(main, /nextDegradation[\s\S]{0,400}stopClockTicking/);
+  // Said in the interface, not only in a README.
+  assert.match(html, /Peer-to-peer · not recorded · not stored/);
+  assert.match(main, /connectionText = report \? connectionSummary\(report\) : '';/);
+  assert.match(html, /id="on-air"[^>]*role="status"/);
 });
 
 test('a move carries the clock, the receiver settles it, and a flag is a message', async () => {
@@ -605,6 +698,18 @@ test('a move carries the clock, the receiver settles it, and a flag is a message
   assert.match(main, /if \(clock\[humanColor\] - spent > SYNC_TOLERANCE\) return;/);
   // And a move that arrives after the match ended is not applied over it.
   assert.match(main, /if \(mode !== 'online' \|\| disconnected \|\| matchOver\(\) \|\| position\.turn === humanColor\) return;/);
+});
+
+test('every script and stylesheet a page loads is one the shell precaches', async () => {
+  const sw = await readFile(resolve(root, 'sw.js'), 'utf8');
+  const shell = new Set([...(sw.match(/const SHELL = \[([\s\S]*?)\];/)?.[1] ?? '')
+    .matchAll(/'(\.\/.*?)'/g)].map((match) => match[1]));
+  for (const page of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
+    const html = await readFile(resolve(root, page), 'utf8');
+    for (const [, href] of html.matchAll(/(?:href|src)="(\.\/(?:src|vendor)\/[^"]+|\.\/[\w-]+\.css)"/g)) {
+      assert.ok(shell.has(href), `${page} loads ${href}, which SHELL does not precache`);
+    }
+  }
 });
 
 test('a deploy reaches players who already have the app cached', async () => {

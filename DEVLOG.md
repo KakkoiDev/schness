@@ -435,3 +435,69 @@ The shared Rules tutorial no longer shows a Coordinates checkbox. Coordinate lab
 A real Chromium two-context test opened the same invite and exchanged a move, so yesterday's specific failure did not reproduce today. Audited the waiting protocol and found initial `hello` packets had no retry; if lost before the other browser registered an action handler, both pages could keep waiting indefinitely. While unmatched, send a waiting announcement every four seconds and stop on leave. Added a deterministic unit test dropping both initial hellos plus a real two-browser CI test. Relay outages and network paths that cannot establish WebRTC still depend on external infrastructure; this change addresses missed discovery packets.
 
 After twenty seconds without a peer, the waiting screen now explains the exact-link requirement and that an open relay socket cannot prove successful discovery; matchmaking continues retrying.
+
+## 2026-09-20 — Design pass: what was decided, and what is still unproven
+
+**Question.** A fifteen-stage design brief asked for one colour/type/spacing system, a new mark, one
+board treatment, real navigation, a playable home page, rebuilt connection states, an online rail that
+never outranks the game, a simplified arena, a legible library, four button roles, Japanese parity, and
+an accessibility pass. Most of it is straightforward execution. Seven choices were not, and those are
+recorded here rather than left to be rediscovered.
+
+**Pieces stay stock.** The brief said to "decide the palette and make `THIRD_PARTY_NOTICES.md` agree."
+Two ways to agree: recolour the Chessnut pieces to the ember/ink palette and amend the notice, or keep
+them unmodified and say so deliberately. Rejected recolouring: the artwork is the one thing on screen
+not authored here, its licence turns on whether it was modified, and a recolour buys a closer palette
+match at the cost of a claim in a licence file that someone has to keep true forever. `THIRD_PARTY_NOTICES.md`
+now records the stock artwork as a decision, not an oversight. Next measurement: if the ember accent ever
+lands next to a piece and reads as a clash, revisit — nothing on any of the five pages does today.
+
+**A QR encoder, written rather than dropped.** The brief offered the QR code as optional ("drop it if you
+disagree"). Dropping it was real: it is ~300 lines of pure code for one affordance on one card. Kept it
+because the alternative for a phone opening a desktop invite is retyping a URL with a random room id, and
+because a CDN or npm dependency is forbidden by the no-runtime-deps rule, so "use a library" was never on
+the table. `src/qr.js` is byte-mode, EC level M, versions 1–10. **Evidence:** verified module-for-module
+against python `qrcode` for every in-range string at the reference's own mask; three bugs surfaced that no
+amount of eyeballing would have caught — a Reed–Solomon generator polynomial built ascending and indexed
+descending, format information written LSB-first, and the second format copy split 8+7 instead of 7+8 so it
+collided with the dark module. Alignment-pattern centres on the timing row were being skipped, which from
+version 7 onward shifted every subsequent data module. **Unproven:** no camera has ever read one of these.
+The matrices match a reference implementation; that is not the same as a phone decoding a screen. Next
+measurement: point a real phone at the waiting card.
+
+**`aria-pressed` dropped from the theme toggle.** The brief asked for it. Implemented, then removed: the
+button's label is an action ("Switch to dark theme"), and a pressed state on an action label says the
+opposite of what the label says — a screen reader reads "switch to dark theme, pressed" on a light page.
+`aria-pressed` also drew it engaged through `body .btn[aria-pressed="true"]`. Kept the action label and the
+dynamic `aria-label`; this is a deliberate deviation from the brief's wording, not an omission.
+
+**CSS weight: measured, and the sheets stay unsplit.** The brief expected the deletions to take roughly a
+third off. They did not. `styles.css` + `ui.css` went 89,785 → 90,258 bytes: about 4,300 bytes of dead and
+superseded rules came out, and the pass (board states, button roles, the connection cards, the library mini
+board) put slightly more back. Coverage over the five pages matches 454 of 539 selectors, so there is no
+large unused tail to split off. Rejected splitting per-page sheets: it would add five request paths and five
+more entries to the service worker's precache list to save a few kilobytes that are already cached after the
+first visit. Recorded in `DECISIONS.md` with the numbers so the next person does not re-measure to find the
+same answer.
+
+**The arena asks one question, then a second only when it matters.** The brief said one seat control instead
+of three. Strictly one loses the ability to set each bot's strength when watching bot-vs-bot. Landed on one
+seat control, with the per-side strength selects shown only for the sides a bot is playing — one question
+when playing, two when watching, never three.
+
+**Rules before board on a phone.** In the rules dialog at 390px the board and the four rules cannot both be
+above the fold. Rejected board-first: the dialog's job is the rules, the board is the demonstration, and a
+dialog that opens on a board asks people to scroll up to find out what they are looking at. The dialog opens
+at the top and the demo is sized `min(100%, 22rem, calc(100svh - 25rem))` so it is fully visible without
+cropping once reached. **Evidence:** board fully within the viewport at four sizes down to 390×700.
+
+**No dedicated 16px favicon.** The mark's defining feature is a 4-unit gap where the corner block left the
+board. Rejected shipping a simplified 16px variant: the gap survives rasterisation at 16px in Chromium, and
+a second mark is a second thing to keep in sync. **Unproven on a non-retina display** — checked in one
+browser on one machine. Next measurement: look at the tab on a 1x screen.
+
+**What none of this verified.** This is a sandbox: no camera, no second peer, no live relay. The online path
+— chat, voice, the connection report, the three connection states reached by actually waiting — has never run
+between two real browsers on two real networks. `connectionReport()`'s `relayed` branch cannot fire at all,
+because trystero ships STUN and no TURN. `e2e/online-connect.spec.js` fails here, and failed identically at
+baseline, for that reason.

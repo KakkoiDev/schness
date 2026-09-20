@@ -1,0 +1,167 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const sheets = () => Promise.all(['styles.css', 'ui.css']
+  .map(async (name) => [name, await readFile(resolve(root, name), 'utf8')]));
+
+/** Declarations of one property, with the block they sit in, across both sheets. */
+async function declarations(property) {
+  const found = [];
+  for (const [name, css] of await sheets()) {
+    for (const match of css.matchAll(new RegExp(`${property}\\s*:\\s*([^;}]+)`, 'g'))) {
+      found.push({ name, value: match[1].trim() });
+    }
+  }
+  return found;
+}
+
+// Seventeen radii and thirty-one shadows is not a scale, it is a history. The
+// counts below are the scale; a new literal here means a decision nobody made.
+test('every radius is one of the three tokens, the pill, or a shape', async () => {
+  const allowed = new Set([
+    'var(--radius-control)', 'var(--radius-card)', 'var(--radius-dialog)',
+    'var(--radius-pill)', '50%', '0', 'inherit',
+  ]);
+  for (const { name, value } of await declarations('border-radius')) {
+    for (const corner of value.split(/\s+(?![^(]*\))/)) {
+      assert.ok(allowed.has(corner), `${name}: border-radius ${value} uses ${corner}`);
+    }
+  }
+});
+
+test('exactly three radius tokens are defined', async () => {
+  const [, css] = (await sheets())[0];
+  const defined = [...css.matchAll(/--radius-(control|card|dialog):/g)].map((m) => m[1]);
+  assert.deepEqual(defined.sort(), ['card', 'control', 'dialog']);
+});
+
+// Resting surfaces get a hairline border. Only a dialog, a floating panel or a
+// piece in flight is allowed to look like it is off the page.
+test('only two elevations exist, and nothing at rest casts one', async () => {
+  const outer = (await declarations('box-shadow'))
+    .filter(({ value }) => value !== 'none' && !value.startsWith('inset'));
+  for (const { name, value } of outer) {
+    assert.equal(value, 'var(--shadow-dialog)', `${name}: box-shadow ${value} is not the one elevation`);
+  }
+  const [, css] = (await sheets())[0];
+  const tokens = new Set([...css.matchAll(/--shadow-([\w-]+):/g)].map((m) => m[1]));
+  assert.deepEqual([...tokens].sort(), ['dialog', 'lift']);
+});
+
+test('a ring is drawn as an outline, so it never counts as an elevation', async () => {
+  const [, css] = (await sheets())[0];
+  // `0 0 0 Npx` shadows are rings wearing a shadow's clothes; they read as
+  // elevation in any count of the sheet and behave differently under a radius.
+  assert.doesNotMatch(css, /box-shadow:\s*0 0 0 /);
+});
+
+test('the focus ring is the accent, 2px, and offset from what it marks', async () => {
+  const [, css] = (await sheets())[0];
+  assert.match(css, /:focus-visible[^{]*\{\s*outline:\s*2px solid var\(--focus\);\s*outline-offset:\s*2px/);
+  assert.match(css, /:root \{[\s\S]*?--focus:var\(--accent\)/);
+  assert.match(css, /:root\[data-theme="dark"\] \{[\s\S]*?--focus:var\(--accent\)/);
+});
+
+test('two weights, and the type stack is named once', async () => {
+  for (const { name, value } of await declarations('font-weight')) {
+    assert.ok(['400', '640'].includes(value), `${name}: font-weight ${value}`);
+  }
+  const [, styles] = (await sheets())[0];
+  assert.match(styles, /--font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;/);
+  assert.match(styles, /--font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;/);
+  // The Japanese faces are appended to the one stack, never swapped in: a JA
+  // page that changes font-family renders "Sharp v2" in a different face.
+  assert.doesNotMatch(styles, /\[lang="ja"\][^{]*\{[^}]*font-family/);
+});
+
+test('the board squares are far enough apart to count at a glance', async () => {
+  const [, css] = (await sheets())[0];
+  const luminance = (hex) => {
+    const value = Number.parseInt(hex.slice(1), 16);
+    return [value >> 16 & 255, value >> 8 & 255, value & 255]
+      .map((channel) => channel / 255)
+      .map((channel) => channel <= 0.03928 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4)
+      .reduce((total, channel, index) => total + [0.2126, 0.7152, 0.0722][index] * channel, 0);
+  };
+  for (const selector of [':root {', ':root[data-theme="dark"]']) {
+    const block = css.slice(css.indexOf(selector));
+    const light = block.match(/--board-light:(#[0-9a-f]{6})/i)[1];
+    const dark = block.match(/--board-dark:(#[0-9a-f]{6})/i)[1];
+    const [a, b] = [luminance(light), luminance(dark)];
+    const contrast = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+    assert.ok(contrast >= 4, `${selector} board squares are ${contrast.toFixed(2)}:1 apart`);
+  }
+});
+
+/**
+ * Two orphaned declaration blocks survived a deletion pass — the bodies of
+ * rules whose selectors had been removed. A browser recovers by swallowing the
+ * *next* rule, so `.segmented` silently stopped being a grid and the online
+ * time control collapsed into four stacked rows. Nothing in the suite noticed,
+ * because every assertion about it was a regex over the source, and the source
+ * still said what it always had.
+ */
+test('the stylesheets parse: braces balance and nothing is orphaned', async () => {
+  for (const [name, css] of await sheets()) {
+    const stripped = css.replace(/\/\*[\s\S]*?\*\//g, (comment) => comment.replace(/[^\n]/g, ' '));
+    let depth = 0;
+    let line = 1;
+    let block = '';
+    for (const character of stripped) {
+      if (character === '\n') line += 1;
+      else if (character === '{') { depth += 1; block = ''; }
+      else if (character === '}') {
+        depth -= 1;
+        assert.ok(depth >= 0, `${name}: a closing brace with nothing open, at line ${line}`);
+      } else if (depth === 0) block += character;
+      // A colon at the top level, outside a selector, is an orphaned body.
+      if (depth === 0 && character === ';') {
+        assert.ok(!block.includes(':'),
+          `${name}: an orphaned declaration before line ${line}: ${block.trim().slice(0, 60)}`);
+      }
+      if (depth === 0 && character === '{') block = '';
+    }
+    assert.equal(depth, 0, `${name}: ${depth} unclosed blocks`);
+  }
+});
+
+test('no rule names a class that no page and no module uses', async () => {
+  // `.strengths legend` outlived `.strengths` by a whole commit.
+  const [, css] = (await sheets())[0];
+  const { readdir } = await import('node:fs/promises');
+  const markup = await Promise.all(['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']
+    .map((page) => readFile(resolve(root, page), 'utf8')));
+  const modules = await Promise.all((await readdir(resolve(root, 'src')))
+    .filter((file) => file.endsWith('.js'))
+    .map((file) => readFile(resolve(root, 'src', file), 'utf8')));
+  const source = [...markup, ...modules].join('\n');
+  const retired = ['strengths', 'setup-body', 'rules-strip', 'mini-board',
+    'communication-settings', 'settings-dialog', 'rules-example', 'rules-gotchas', 'rules-optout'];
+  for (const name of retired) {
+    assert.ok(!source.includes(`"${name}`) && !source.includes(` ${name}"`),
+      `${name} came back — update this list rather than the assertion`);
+    assert.doesNotMatch(css, new RegExp(`\\.${name}\\b`), `styles.css still styles .${name}`);
+  }
+});
+
+test('no typeface is named that the site does not actually have', async () => {
+  const { readdir } = await import('node:fs/promises');
+  const svgs = ['icon.svg', ...(await readdir(resolve(root, 'assets')))
+    .filter((file) => file.endsWith('.svg')).map((file) => `assets/${file}`),
+  ...(await readdir(resolve(root, 'assets/pieces'))).map((file) => `assets/pieces/${file}`)];
+  const files = [...(await sheets()), ...await Promise.all(svgs
+    .map(async (file) => [file, await readFile(resolve(root, file), 'utf8')]))];
+  for (const [name, source] of files) {
+    // Inter never loaded — no @font-face, and the CSP blocks a CDN — so naming
+    // it only ever flattered a mockup. Georgia and Arial went with the Unicode
+    // glyph path and the letterform mark. Comments may still explain why.
+    const code = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/<!--[\s\S]*?-->/g, '');
+    for (const face of ['Inter', 'Georgia', 'Arial']) {
+      assert.doesNotMatch(code, new RegExp(`\\b${face}\\b`), `${name} still names ${face}`);
+    }
+  }
+});

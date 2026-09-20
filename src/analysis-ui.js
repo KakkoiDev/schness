@@ -41,7 +41,7 @@ export function attachAnalysis({ toggles, bar, fill, scoreLabel, warning, getPos
     let riskText = '';
     // The display must never claim no mate on timeout or worker failure.
     queued = setTimeout(() => {
-      worker = new Worker('./src/analysis-worker.js?v=71', { type: 'module' });
+      worker = new Worker('./src/analysis-worker.js', { type: 'module' });
       worker.onmessage = ({ data }) => {
         if (data.request !== current || current !== request) return;
         if (data.kind === 'advantage') {

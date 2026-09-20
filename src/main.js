@@ -10,6 +10,10 @@ import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, s
 import { applyActionMessage, makeActionMessage, outcomeSummary } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
+import {
+  MEDIA_REASONS, connectionSummary, nextDegradation, onAirLabel, onAirTitle,
+} from './communication.js';
+import { searchMessage } from './matchmaking.js';
 import { actionHighlights, checkedSquares, createBoard, pieceElement, renderBoard, renderReserve, setBoardOrientation } from './board-ui.js';
 import { movedEnough } from './drag.js';
 import {
@@ -21,8 +25,9 @@ import {
 } from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=71';
-import { attachAnalysis } from './analysis-ui.js?v=71';
+import { initI18n } from './i18n.js';
+import { attachAnalysis } from './analysis-ui.js';
+import { qrMatrix } from './qr.js';
 
 initTheme();
 initI18n();
@@ -76,6 +81,7 @@ const humanBankLabel = document.querySelector('#human-bank-label');
 const networkCard = document.querySelector('#network-card');
 const cardStates = {
   waiting: document.querySelector('#card-waiting'),
+  joined: document.querySelector('#card-joined'),
   reconnect: document.querySelector('#card-reconnect'),
   expired: document.querySelector('#card-expired'),
 };
@@ -84,10 +90,17 @@ const copyInvite = document.querySelector('#copy-invite');
 const cancelSearch = document.querySelector('#cancel-search');
 const searchStatus = document.querySelector('#search-status');
 const searchPulse = document.querySelector('#search-pulse');
-const searchStalled = document.querySelector('#search-stalled');
-const stalledBot = document.querySelector('#stalled-bot');
-const searchQuiet = document.querySelector('#search-quiet');
-const quietBot = document.querySelector('#quiet-bot');
+const waitingBot = document.querySelector('#waiting-bot');
+const inviteQr = document.querySelector('#invite-qr');
+const inviteScan = document.querySelector('#invite-scan');
+const claimNote = document.querySelector('#claim-note');
+const joinedHeadline = document.querySelector('#joined-headline');
+const onAir = document.querySelector('#on-air');
+const chatSummary = document.querySelector('#chat-summary');
+const pageTitle = document.title;
+let connectionTimer = null;
+let connectionText = '';
+let joinedTimer = null;
 const reconnectBar = document.querySelector('#reconnect-bar');
 const reconnectLeft = document.querySelector('#reconnect-left');
 const claimWin = document.querySelector('#claim-win');
@@ -235,8 +248,7 @@ copyInvite.addEventListener('click', copyInviteLink);
 cancelSearch.addEventListener('click', () => window.location.assign('./'));
 newOnline.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'online', createGameId())));
 botInstead.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot', createGameId())));
-stalledBot.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot', createGameId())));
-quietBot.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot', createGameId())));
+waitingBot.addEventListener('click', () => window.location.assign(gameUrl(window.location.href, 'bot', createGameId())));
 claimWin.addEventListener('click', () => {
   stopReconnectCountdown();
   resigned = opponent(humanColor);
@@ -292,7 +304,38 @@ function renderConnection() {
   connectionLabel.textContent = offline
     ? 'Offline · moves will send when you’re back'
     : sendFailed ? 'Your connection is unstable' : `Connected · ${opponentLabel} is on the board`;
-  connectionNote.textContent = !offline && sendFailed ? 'Retrying' : '';
+  // There are no accounts and nothing passes through a server, so the strip
+  // says so — and would say the opposite just as plainly.
+  connectionNote.textContent = !offline && sendFailed ? 'Retrying' : connectionText;
+}
+
+/**
+ * The call never outranks the game. When the link is struggling, video goes
+ * first and audio second; the clock is never touched.
+ */
+function degradeCall() {
+  const drop = nextDegradation({
+    video: Boolean(cameraStream), audio: Boolean(microphoneStream), unstable: sendFailed,
+  });
+  if (drop === 'video') {
+    stopCamera();
+    voiceStatus.textContent = 'Video stopped — the connection could not carry it and the game comes first.';
+  } else if (drop === 'audio') {
+    stopMicrophone();
+    voiceStatus.textContent = 'Audio stopped — the connection could not carry it and the game comes first.';
+  }
+}
+
+/** Polls the peer connection for what the link is and how slow it is. */
+function watchConnectionQuality() {
+  clearInterval(connectionTimer);
+  connectionTimer = setInterval(async () => {
+    if (!chatAvailable()) return;
+    const report = await network?.connectionReport?.();
+    connectionText = report ? connectionSummary(report) : '';
+    renderConnection();
+    degradeCall();
+  }, 5000);
 }
 
 function onConnectionChange() {
@@ -343,8 +386,15 @@ function tickReconnect() {
   const left = Math.max(0, reconnectDeadline - Date.now());
   reconnectBar.style.width = `${Math.round(((total - left) / total) * 100)}%`;
   const secondsLeft = Math.ceil(left / 1000);
-  reconnectLeft.textContent = `${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')} left`;
-  // The countdown never awards the game; the player decides.
+  reconnectLeft.textContent = `${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}`;
+  /*
+   * The rule is that the opponent gets the countdown. A live button that
+   * silently refuses and one that lets you claim early both misstate it, so
+   * the button is drawn disabled and says when it unlocks. The countdown still
+   * never awards the game — the player decides, once it is theirs to decide.
+   */
+  claimWin.disabled = left > 0;
+  claimNote.hidden = left === 0;
   if (left === 0) stopReconnectCountdown();
 }
 
@@ -363,6 +413,7 @@ async function startOnlineSearch(gameId) {
   // resetState already rendered, so the rail needs telling directly here.
   matchRail.hidden = true;
   inviteUrl.value = window.location.href;
+  drawInviteCode(window.location.href);
   showCard('waiting');
   try {
     const { joinMatchmaking, relayReach } = await import('./net.js');
@@ -394,35 +445,55 @@ async function startOnlineSearch(gameId) {
   }
 }
 
-/**
- * Trystero opens its relays in the background and never reports a failure, so
- * a blocked or dead relay list looked exactly like a friend who had not
- * clicked the link yet. Poll instead, after enough grace for a normal connect.
- */
 function watchRelayReach(relayReach) {
   const startedAt = Date.now();
+  // Enough grace for a normal connect before a dead pool is called dead.
   const grace = 6000;
-  // Long enough that a friend opening the link at a normal pace never sees it.
-  const quiet = 20000;
   const paint = () => {
     const waited = Date.now() - startedAt;
     const stalled = relayReach().open === 0 && waited > grace;
-    searchStatus.textContent = stalled
-      ? 'Not connected to the matchmaking network'
-      : 'Listening for a second player';
+    searchStatus.textContent = searchMessage(waited, stalled);
     searchPulse.hidden = stalled;
-    searchStalled.hidden = !stalled;
-    /*
-     * The one failure the app cannot see. Peers exchange nothing until
-     * WebRTC connects. Open relay sockets do not prove that discovery or
-     * the direct connection succeeded. This hint appears after a reasonable
-     * wait; matchmaking keeps retrying in the background.
-     */
-    searchQuiet.hidden = stalled || waited < quiet;
   };
   clearInterval(searchTimer);
   paint();
   searchTimer = setInterval(paint, 2500);
+}
+
+/**
+ * The invite as a scannable code. Peer-to-peer usually means the other player
+ * is in the same room on a phone, and copying a URL from a laptop to a phone is
+ * the worst step in this flow. Built as SVG elements rather than markup — there
+ * is no markup built from strings anywhere in this app, and the CSP carries
+ * no unsafe-inline.
+ */
+function drawInviteCode(url) {
+  const matrix = qrMatrix(url);
+  inviteScan.hidden = !matrix;
+  if (!matrix) return;
+  const size = matrix.length;
+  const quiet = 2;
+  const span = size + quiet * 2;
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', `0 0 ${span} ${span}`);
+  svg.setAttribute('shape-rendering', 'crispEdges');
+  const ground = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  ground.setAttribute('width', String(span));
+  ground.setAttribute('height', String(span));
+  ground.setAttribute('fill', 'var(--qr-paper)');
+  svg.append(ground);
+  // One path of rectangles: 37 squared elements is a lot of DOM for a picture.
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  let commands = '';
+  for (let row = 0; row < size; row += 1) {
+    for (let column = 0; column < size; column += 1) {
+      if (matrix[row][column]) commands += `M${column + quiet} ${row + quiet}h1v1h-1z`;
+    }
+  }
+  path.setAttribute('d', commands);
+  path.setAttribute('fill', 'var(--qr-ink)');
+  svg.append(path);
+  inviteQr.replaceChildren(svg);
 }
 
 function showRoomFull() {
@@ -456,7 +527,16 @@ function beginOnlineMatch(color) {
   disconnected = false;
   appendChatSeparator();
   opponentLabel = 'Online player';
-  showCard(null);
+  /*
+   * There was no success state: the card simply vanished, with nothing
+   * confirming who had arrived. One rung, held briefly, then the board.
+   */
+  joinedHeadline.textContent = color === WHITE
+    ? 'Black has joined — your move.' : 'White has joined — their move.';
+  showCard('joined');
+  watchConnectionQuality();
+  clearTimeout(joinedTimer);
+  joinedTimer = setTimeout(() => { if (mode === 'online' && network?.matched) showCard(null); }, 1800);
   board.closest('.play-area').hidden = false;
   updateCommunicationUi();
   render();
@@ -510,11 +590,17 @@ function chatAvailable() {
 function updateCommunicationUi() {
   matchChat.hidden = !chatAvailable();
   chatBody.hidden = !chatEnabled;
-  matchChat.classList.toggle('chat-collapsed', mobileChatQuery.matches && !chatEnabled);
+  /*
+   * Focus mode: the whole rail collapses to one bar — who is there, what the
+   * link is, and how many messages are waiting. On a phone it is the default,
+   * because the board keeps the screen.
+   */
+  matchChat.classList.toggle('chat-collapsed', !chatEnabled);
   chatToggle.textContent = chatEnabled
-    ? (mobileChatQuery.matches ? 'Close' : 'Hide chat')
+    ? (mobileChatQuery.matches ? 'Close' : 'Focus mode')
     : `Chat${unreadMessages ? ` (${unreadMessages})` : ''}`;
   chatToggle.setAttribute('aria-expanded', String(chatEnabled));
+  chatSummary.textContent = chatEnabled ? '' : [opponentLabel, connectionText].filter(Boolean).join(' · ');
   const textReady = canTextChat();
   chatMessage.disabled = !textReady;
   chatForm.querySelector('button').disabled = !textReady;
@@ -528,7 +614,7 @@ function updateCommunicationUi() {
 async function startMicrophone() {
   if (microphoneStream || microphoneStarting || disconnected || !network?.matched) return;
   microphoneStarting = true;
-  voiceStatus.textContent = 'Requesting microphone access…';
+  await explainMedia('audio');
   try {
     microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
     if (disconnected || mode !== 'online') return stopMicrophone();
@@ -571,7 +657,7 @@ async function toggleCamera() {
   if (cameraStream) return stopCamera();
   if (cameraStarting || disconnected || !network?.matched) return;
   cameraStarting = true;
-  voiceStatus.textContent = 'Requesting camera access…';
+  await explainMedia('video');
   try {
     cameraStream = await navigator.mediaDevices.getUserMedia({ audio: false, video: true });
     if (disconnected || mode !== 'online') return stopCamera();
@@ -593,6 +679,29 @@ function setMediaButton(button, enabled, label) {
   button.textContent = `${label} ${enabled ? 'on' : 'off'}`;
   button.classList.toggle('is-on', enabled);
   button.setAttribute('aria-pressed', String(enabled));
+  renderOnAir();
+}
+
+/**
+ * You should never have to wonder whether you are being seen or heard — and
+ * the tab you are not looking at is exactly where that question comes up.
+ */
+function renderOnAir() {
+  const state = { audio: Boolean(microphoneStream), video: Boolean(cameraStream) };
+  const label = onAirLabel(state);
+  onAir.hidden = !label;
+  onAir.textContent = label ?? '';
+  document.title = onAirTitle(pageTitle, state);
+}
+
+/**
+ * The reason goes up before the browser prompt does, and stays up while the
+ * prompt is open. Two frames is enough to paint it and well inside the
+ * transient activation the gesture gives us.
+ */
+async function explainMedia(kind) {
+  voiceStatus.textContent = MEDIA_REASONS[kind];
+  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 }
 
 function stopMicrophone() {
@@ -662,7 +771,7 @@ function appendChatEvent(text, actions = []) {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'btn';
-    button.dataset.variant = 'outline';
+    button.dataset.variant = 'secondary';
     button.textContent = label;
     button.addEventListener('click', () => {
       row.querySelectorAll('button').forEach((other) => other.remove());
@@ -770,6 +879,8 @@ function showMatch() {
 }
 
 function stopNetwork() {
+  clearInterval(connectionTimer);
+  connectionText = '';
   clearInterval(searchTimer);
   searchTimer = null;
   stopReconnectCountdown();

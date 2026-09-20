@@ -41,3 +41,31 @@ export function matchesFilters(game, filters) {
     && (!filters.result || game.result === filters.result)
     && (!filters.version || pairs.some((pair) => pair.includes(filters.version)));
 }
+
+/**
+ * A card that says "Threefold draw" in the same size and weight as the 1,098
+ * cards around it is text, not information. The result is a colour first.
+ */
+export function resultTone(code) {
+  return { w: 'white-won', b: 'black-won' }[code] ?? 'draw';
+}
+
+export const SORTS = Object.freeze(['', 'short', 'long', 'repeated']);
+
+/**
+ * Filters already existed; sort did not, so 1,099 games could only be read in
+ * the order they happened to be recorded. Stable, so an unsorted list keeps
+ * the order the archive gives it.
+ */
+export function sortGames(games, mode) {
+  const by = {
+    short: (a, b) => a.plies - b.plies,
+    long: (a, b) => b.plies - a.plies,
+    repeated: (a, b) => b.sources.length - a.sources.length,
+  }[mode];
+  if (!by) return [...games];
+  return [...games]
+    .map((game, index) => ({ game, index }))
+    .sort((a, b) => by(a.game, b.game) || a.index - b.index)
+    .map(({ game }) => game);
+}

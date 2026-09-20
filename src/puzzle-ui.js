@@ -7,7 +7,7 @@ import { normalizePuzzleLevels, puzzlePool } from './puzzle-settings.js';
 import { movedEnough } from './drag.js';
 import { createBoard, pieceElement, renderBoard, renderReserve } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=68';
+import { initI18n } from './i18n.js';
 
 initTheme();
 initI18n();

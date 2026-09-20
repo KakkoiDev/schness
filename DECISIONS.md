@@ -35,9 +35,9 @@ Three documents, deliberately separate:
 
 | layer | modules | property |
 |---|---|---|
-| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` | No DOM, no network. Directly unit-tested. |
+| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `trystero`) | WebRTC over public Nostr relays. |
-| **DOM glue** | `main` `lobby` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
+| **DOM glue** | `main` `lobby` `lobby-board` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
 
 Board squares, piece images, and reserve trays have one owner: `board-ui.js`. Game,
 arena, tutorial, puzzle, and library callers supply their positions and interaction
@@ -124,6 +124,14 @@ changes, because that is what makes the file differ and triggers a worker update
 - **Bump `CACHE` in the same commit as any change to a file listed in `SHELL`.** Six deploys once
   shipped to production and reached nobody, because `CACHE` sat unchanged and no update ever
   installed. Players kept a build that was hours old and there was no signal anywhere.
+- **`CACHE` is the only cache-busting number.** There used to be 31 more: `styles.css?v=74` against
+  `ui.css?v=84` against `rules-modal.js?v=84`, every file on its own hand-maintained count. Bumping
+  one and forgetting another shipped a returning visitor new CSS against an old module — a bug that
+  reproduces for nobody. They also quietly defeated the precache they sat beside: `SHELL` lists
+  `./src/main.js`, the page asked for `./src/main.js?v=71`, and `caches.match` does not ignore the
+  search string, so every module was fetched and stored a second time under its query string.
+  **Do not reintroduce a `?v=`.** Guarded by `test/i18n.test.js`, and `test/shell.test.js` now also
+  checks that every script and stylesheet a page loads is a path `SHELL` actually precaches.
 - The fetch handler **revalidates in the background**, so a forgotten bump is late by one visit
   rather than invisible forever. Do not return it to plain `cached || fetch(...)`.
 - **Only the lobby reloads itself** when a new worker takes over. The match page must never: a
@@ -145,6 +153,17 @@ Relay failure is reported to the player: `relayReach()` counts open sockets, and
 says so after six seconds of grace. Trystero never surfaces a transport failure on its own, so
 without that a dead pool looks exactly like a friend who has not clicked the link yet.
 
+**The waiting card is one status line that rewrites itself in place.** `searchMessage(waited,
+stalled)` in `src/matchmaking.js` is the whole schedule, pure and unit-tested: 0:00 listening, 0:20
+nobody has opened it, 1:30 the link check and what cannot be ruled out — and a dead relay pool
+outranks all three, at any point, because saying "nothing here can tell" over a stalled card
+contradicts it. The card reserves the height of the longest message (measured at 390px, where the
+line box is narrowest), so escalating never moves anything. It used to be a status row plus two
+paragraphs that appeared underneath on failure, each carrying its own "Play the bot instead" button:
+three buttons for one job, on a card that grew taller the worse things got. **The bot escape is now
+in one fixed place from the first second** — a player who has to wait should never have to fail
+first to find something to do.
+
 **There is a second failure, and the app cannot see it at all.** The bundled trystero carries STUN
 servers and **no TURN**, so a pair behind symmetric NAT — mobile carriers, plenty of office networks
 — will never connect, however long they wait. Peers exchange nothing until WebRTC is up, so neither
@@ -157,8 +176,11 @@ anything, because it has not. Never show it over the stalled card, which contrad
 ### Motion is opt-out, and animates outside the rebuilt subtree
 
 Everything that **moves** sits behind `prefers-reduced-motion: no-preference`. That includes
-transforms added later — two slipped past once. Nothing in the `reduce` block translates, scales or
-rotates.
+transforms added later — three have slipped past now: two hover transforms, and the puzzle shake,
+which translated on a wrong answer with nothing gating it at all. Nothing in the `reduce` block
+translates, scales or rotates, and `test/shell.test.js` now checks that as a rule over the whole
+block rather than by naming the two it knew about. It also reads that block by balancing braces:
+slicing to the end of the file made it quietly assert against rules that are not in the block.
 
 Every indicator that means "something is happening" animates, in that gated block: the waiting dots,
 the reconnect bar, the turn dot while a move is in flight, and the dot beside whoever is on move.
@@ -221,15 +243,305 @@ once sat at 4.4954:1, printed as "4.50" in any two-decimal report, and failed wh
 passed.
 
 `--accent` is the fill for dots, rings and selection; **`--accent-text` is the one for text**,
-because a fill colour bright enough to read as a dot rarely clears 4.5:1 as type. The accent is plum
-(`#7d3f6d` light, `#c98ab8` dark). It was orange, which read as somebody else's brand rather than
-this app's, and it is chosen to sit opposite the sage board while staying clear of `--danger`
-(burnt red), `--warn` (amber) and `--focus` (blue), all of which have to remain tellable apart.
+because a fill colour bright enough to read as a dot rarely clears 4.5:1 as type. The accent is ember
+(`#B23E18` light, `#F0794C` dark) and it clears 4.5:1 as type in both themes, so `--accent-text` is
+currently the same value. **The split stays** — the next accent may not clear it, and the tests read
+the two separately. The plum before it was chosen to sit opposite the sage board and did, but it
+appeared on four pixels of the whole product: a logo dot and one "Try it" link.
+
+**`--focus` is `var(--accent)`, not a colour of its own.** It was `#2563eb`, which related to nothing
+else in the file and disappeared against a moss square — and keyboard play is a first-class path in a
+board game. `--danger` moved to crimson (`#9E2233` / `#FF8D9B`) so it stays tellable apart from an
+ember that is now also the focus ring; `--warn` stays amber.
 
 **Never hardcode the accent.** Tints go through `color-mix(in srgb, var(--accent) N%, transparent)`.
 Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark mode drew the light
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
+
+### The stylesheet did not get a third smaller, and that is the answer
+
+The design pass expected Stage 1's deletions to take about a third off `styles.css`. **They did not.**
+Measured:
+
+| | before | after |
+|---|---|---|
+| `styles.css` | 79,494 | 77,704 |
+| `ui.css` | 10,291 | 12,554 |
+| **total** | **89,785** | **90,258** |
+
+Roughly 4,300 bytes of genuinely dead rules came out, and the pass put more back: a playable lobby
+board, a footer, four rebuilt connection states, the arena's transport and transcript, the library
+card, and the comments this repo asks for on anything load-bearing. The file is smaller in the way
+that matters — a browser-measured sweep across five pages, two widths, two themes and every dialog
+finds 454 of 539 selectors matching, and the 85 that do not are runtime states (`.square.selected`,
+`.chat-bubble`, `.puzzle-feedback[data-state]`) that no static load can reach.
+
+**So: do not split it.** Both sheets load on every page already, they are one HTTP/2 response each,
+and the only thing a split would buy is another place for a rule to be switched off from. `ui.css`
+keeps its own file because it is the Basecoat integration layer with a documented rollback scope,
+not because the weight argues for it.
+
+### Accessibility is audited, not asserted
+
+`e2e/accessibility.spec.js` runs **axe-core** over all five pages in both themes, and over every
+dialog opened the way a person opens it — a dialog reached by calling `showModal()` from a test is
+not the dialog anyone sees, and the position editor in particular has no accessible names until its
+opener renders it. `axe-core` is a devDependency; `@playwright/test` already was one, and the "no
+dependencies" rule is about what ships.
+
+The audit runs with `bypassCSP: true`. `addScriptTag` is subject to the page's own policy, which has
+no `unsafe-inline` — and keeping it that way is the point of `test/security.test.js`, so the policy
+is never relaxed for a test.
+
+Lighthouse agrees: **accessibility 100 on all five pages**, run against the real served files.
+
+Three things axe cannot see, checked separately in the same file:
+
+- **Every tab stop shows the focus ring.** The board is the exception by design: it is one tab stop
+  with the cursor tracked in JS, and its indicator is the inset ring on the cursor square.
+  Verified in Chromium that the keyboard path still places a king and gets a reply after the Stage 3
+  restyle.
+- **A dialog takes focus, gives it back, and closes on Escape.**
+- **The theme toggle says it is a switch, on every page.** `library.html` and `puzzles.html`
+  announced only the word "Dark".
+
+Two real violations came out of the first sweep, both on `puzzles.html`: an `aria-label` on a bare
+`<div>`, which is prohibited without a role, and an `h3` that followed an `h1`.
+
+### The two languages are one product
+
+- **The board's own words are data, not CSS.** `content: "CHECK"` and `content: "CHECKMATE"` sat in
+  the stylesheet, where `i18n.js` cannot reach them, so the two most important words in the game were
+  English on the Japanese site. The squares carry `data-state` and `data-label`, the CSS reads
+  `content: attr(data-label)`, and the observer translates `data-label` alongside `aria-label`.
+- **The switch says 日本語, not 日本.** 日本 is "Japan". It was chosen for being one character
+  shorter, and it is the first Japanese a Japanese speaker reads here. Measured with the extra
+  character: the header still fits, and the wordmark still survives, down to 320px.
+- One font stack with the Japanese faces appended — see the scale section above.
+- Measured at 390px in both languages: every plain control label is one line.
+
+### Four button roles, and nothing else draws a rectangle
+
+`primary`, `secondary` (the default), `ghost`, `icon`. There were seven near-identical rectangles —
+`.card-primary`, `.card-secondary`, `.rail-button`, `.step`, `.rules-confirm`, `.library-more`,
+`.watch-controls button`, `.puzzle-actions button`, and more — each restating a border, a background
+and a radius. **Most of them were already having no effect**, because `body .btn` in `ui.css` beats a
+bare class on specificity, which is the hard kind of duplication to notice: the sheet reads as if it
+is styling something.
+
+`data-variant="outline"` is gone; it meant "secondary", which is the default.
+
+**Disabled is drawn, not dimmed** — except a ghost button, which keeps its transparency. Filling one
+in makes the disabled item the loudest thing in a quiet list.
+
+**Two orphaned declaration blocks came out of this.** Both were bodies whose selectors a deletion
+pass had removed. A browser recovers from one by swallowing the *next* rule, so `.segmented` silently
+stopped being a grid and the online time control had been rendering as four stacked rows. Every
+assertion about it was a regex over the source, and the source still said what it always had.
+`test/design-tokens.test.js` now parses both sheets: braces must balance, and a declaration may not
+appear outside a rule.
+
+### A library card leads with a colour and a shape
+
+1,099 cards that all said "Threefold draw" in the same size and weight are text, not information.
+Each card now leads with a **result swatch** and the **final position**, drawn with the shared board
+at about 13px a square — the size at which you read the *shape* of a position rather than identify
+the pieces, which is the right thing to optimise. The check and checkmate chips are suppressed at
+that size; the tinted square still carries it.
+
+`sortGames` is stable, so "as recorded" keeps the order the archive gives it. Filters already
+existed; sort did not, so the whole archive could only be read in the order it happened to be
+recorded.
+
+The final position is replayed once per game through `applyAction` and remembered, because filtering
+and sorting redraw the same cards. Measured in Chromium: re-sorting and redrawing 60 cards takes
+~53ms, and adding 60 more ~75ms.
+
+Matchups wrap rather than truncating: "Sharp v2 vs Learni…" is not a matchup.
+
+### The arena asks one question per decision
+
+- **One seat control.** "You play: White / Black / Neither" — and a strength select for each side that
+  actually has a bot on it. There used to be three controls answering the same question: a "Play as"
+  select plus a White seat select plus a Black seat select.
+- **The turn status sits above the board**, where the eyes already are, in a bordered card with an
+  ember left edge — the one thing on that page asking for attention.
+- **Replay is split from setup.** One primary (New game), a transport group (first / prev / next /
+  last / Live), then a quiet list: edit, branch, pause. It was a flat row of seven equal-weight
+  buttons, two of which wrapped to two lines, with only disabled-dimming to suggest hierarchy.
+  Training tools fold into that quiet list.
+- **The transcript is numbered, paired and tabular**, in `--font-mono` with the current ply marked.
+  It was a flat run of ghost buttons, one per ply.
+- "Live position" is **Live**; "Continue from here" is **Branch from here**. Both hold their Japanese
+  labels on one line at 390px.
+
+### The connection states say what is happening and offer a way out
+
+These are the only screens in Schness where nothing is happening and the player cannot do anything
+about it, which makes them the ones most worth getting right.
+
+- **Waiting** — the link is the hero, and Copy is the only primary on the card. A **QR code** of the
+  invite sits under it: peer-to-peer usually means the other player is in the same room on a phone,
+  and copying a URL from a laptop to a phone is the worst step in this flow. `src/qr.js` is a
+  dependency-free encoder (byte mode, level M, versions 1–10) whose output was checked
+  module-for-module against an independent implementation; `test/qr.test.js` carries two golden
+  matrices from that comparison. The code is **always dark on light**, in both themes — a themed
+  code is one that does not scan. **No camera has read one**; nothing in this sandbox has one.
+- **Reconnect** — the countdown is the hero at 38px mono, and **"Claim the win" is drawn disabled
+  until 0:00** with a note saying when it unlocks. The rule is already that the opponent gets the
+  countdown; a live button that silently refuses, and one that lets you claim early, both misstate
+  it.
+- **Expired** — gained a primary action. It was a dead end with nothing to do but go back.
+- **Connected** — a state that did not exist. The card used to simply vanish, with nothing confirming
+  *who* had arrived. One rung, held briefly, naming the opponent and whose move it is.
+
+**Disabled is drawn, not dimmed.** `opacity: .45` on a coloured button produces a different colour on
+every background it happens to sit on.
+
+### The rules dialog opens at the top, with the board it is teaching whole
+
+The first thing a new visitor saw was the dialog handed over scrolled to the middle of itself: rule
+2's heading clipped at the top edge and the demo board cut off at the bottom. The rules themselves
+were good; the first impression was half a sentence.
+
+- Opening a lesson scrolls the body to `0`, not to the demo's offset.
+- The demo board is sized by the height the dialog actually has —
+  `min(100%, 22rem, calc(100svh - 25rem))` — and **measured** in Chromium at 1440×900, 1280×720,
+  1440×1200 and 390×844: the board's top and bottom both sit inside the scrolling body on open. A
+  rule that looks like it fits is not proof that it does.
+- Four rules, four "try it" affordances. Rule 1 states a fact, so its lesson is the fact: both kings
+  on named squares, and a move that shows which way each side travels. Square names appear for that
+  lesson and on the demo board only — the site-wide coordinate preference stays beside move lists,
+  which is where following notation actually happens.
+- The footer says where the dialog lives, so closing it is not a one-way door: "You can reopen this
+  from **Rules** in the header at any time", then Skip and Start playing.
+- **On a phone the rules come first and the board is a scroll away.** There is no width for both,
+  and `order: 1` on `.rules-list` — a leftover from the layout where a static figure came last —
+  meant a dialog called "Schness in four rules" opened showing none of them.
+
+### The home page is a board, not a picture of one
+
+Landing on schness.com means you are already playing: place your king on rank 1 and the game runs.
+A 4×4 game has no setup worth a click, and the lobby's job is to start one, not to describe one.
+
+`src/lobby-board.js` owns no rules and no search. Legality comes from `rules.js` through the same
+`interaction.js` helpers every other surface uses, and Black is the same `bot-worker.js` the match
+page runs — **do not write a second rules or bot implementation for the home page**; that is how two
+surfaces quietly start playing different games.
+
+The Bot arena card inherits whatever is on that board, through the same
+`sessionStorage['schness-arena-position']` handoff the library replay uses. That is what makes "take
+this position further" a true sentence. Without JavaScript the card is still a plain link to the
+arena.
+
+**At phone width the board is `display: none`, on purpose.** It is not a label being hidden from the
+screen — the feature genuinely is not there, because at 390px it pushes the four actions below the
+fold and the mobile home has to stay a menu.
+
+The four destinations are one primary card and three quiet ones in a single bordered group. The
+arrow affordance is back: `.mode::after` had existed for a long time and was switched off by
+`.lobby-page .mode::after{display:none}` on the one page that needs it, so the cards did not look
+pressable. Subtitles are weight 400 — they inherited 640 from `.btn`, so a title and its supporting
+line carried identical emphasis and the eye had nowhere to land.
+
+### Destinations are links, and the header is one row in one order
+
+**Every page-to-page destination is an `<a href>`.** The only one on the whole site used to be
+`./watch.html`; `library.html`, `puzzles.html` and `game.html` were reached through
+`window.location.assign()` in `src/lobby.js`, so there was no cmd-click, no middle-click, no
+copy-link-address, no hover preview, screen readers announced "button" where a link belonged, and
+nothing crawled past the lobby. `#play-online` stays a `<button>`: it opens a dialog, and it is the
+one control that has to go dead when the browser goes offline.
+
+One `<nav>`, the same three destinations, on all five pages. Land on the library and there is a way
+onward that is not the back button.
+
+**Header order is brand · page controls · rule · language, everywhere.** It was language · theme ·
+Rules on the lobby and Rules · language · theme on the arena and the library, so muscle memory broke
+on every navigation. The language switch sits after a hairline rule because it is a different kind of
+decision from the two page controls. `src/i18n.js` appends its button rather than inserting it before
+the theme toggle, which is what produced the second order.
+
+**The wordmark never shrinks.** `header` was a nowrap flex row where `.brand` was `flex: 0 1 auto`
+and `.header-actions` was `flex: 0 0 auto`, so at 390px the nav won the row and the brand collapsed
+to **zero width** — it did not truncate, it disappeared, and a phone rule then deleted it outright
+below 480px. The brand is `flex: 0 0 auto` now; below 760px the nav takes a row of its own instead.
+Measured in Chromium at 1440, 390, 360 and 320px in both languages, because the sheet said
+`flex: 0 1 auto` and that reads as fine.
+
+On the match page at phone width the nav is **clipped, not removed** — same mechanism as the reserve
+labels and the toast beside it. A match is the one screen where leaving is not the job, and every row
+above the board costs it the axis that is already scarce.
+
+**The page title is the `h1`; the brand is a link.** Every page's `h1` was "Schness", with the real
+title as an `h2`, so heading navigation announced the site name five times and never the page. The
+match page's `h1` is read but not shown: the board is the page, and a visible title would cost it a
+row on a phone.
+
+### The board is one object, drawn one way
+
+A 6px `--ink` frame, a `--radius-card` corner, and no shadow — on the game page, in the arena, in a
+replay, in a puzzle and inside the rules dialog. It was drawn two ways: an 8px frame, `.65rem` and a
+two-layer shadow on `.board`, against a 1px hairline, `.3rem` and none on `.game-page .board`. It is
+the most identifying object on the site, so the board in the dialog that teaches the game and the
+board you play on cannot look like they come from different products.
+
+`--board-light` / `--board-dark` are the board, full stop. Five page classes used to override them to
+a grey `#dde2de` / `#7f9286` pair 2.5:1 apart, so the token in `:root` described a board that never
+shipped and the one that did read as a placeholder. They are 4.0:1 and 4.2:1 apart now.
+
+Square states are drawn on top of the board, never by repainting it: selected is an inset ring,
+a legal move is a centre dot, a capture is an ember ring, a drop target is a dashed ember outline.
+Check tints the square and adds a chip. `test/shell.test.js` fails if any page restates the frame.
+
+Pieces are `<img>` at **82%** of the square and cast no resting shadow — the artwork carries its own
+outline. The Georgia/Unicode glyph path that preceded the SVGs was still in the sheet, with font
+sizes, `--piece-color` and four-way `text-shadow` outlines that drew nothing at all. The set is
+Chessnut, unmodified, and `THIRD_PARTY_NOTICES.md` says why that is a decision rather than an
+oversight.
+
+### The mark is the rule, drawn
+
+One path and one rect: the board with a 2×2 corner missing, and that block sitting outside it.
+Material leaves the board and comes straight back — the one rule Schness has that no other chess
+variant does — and it is the only thing in the product that says so without words.
+
+- **No letterform.** It was an Arial "S" in a rounded tile, so the installed PWA icon was whatever
+  the OS decided Arial was. The tile only existed to give an edge to a letterform; the mark has its
+  own, so **it never goes back inside a tile**.
+- **The chip stays outside the board.** Tucking it into the notch to save space deletes the point.
+- **No checkerboard inside the frame** — squares turn to mush below 32px.
+- **The header and the favicon are the same two colours.** They used to disagree: a `#e96f4b` dot
+  beside a `#7d3f6d` accent. The header mark is inline SVG using `var(--ink)` and `var(--accent)`;
+  `icon.svg` carries the same two hexes as presentation attributes, with a `prefers-color-scheme`
+  block that only swaps them so an ink board does not vanish on a dark browser tab.
+  `test/i18n.test.js` reads the hexes out of `icon.svg` and checks they are the tokens.
+- Rendered and read at 96, 48, 32 and 16px in Chromium: the 4-unit gap survives at 16px because the
+  chip is offset diagonally from the notch corner, so the dedicated 16px asset the brief allowed for
+  is not needed. **Not checked on a non-retina display** — nothing here can.
+
+### The scale is three radii, two elevations and two weights
+
+Seventeen radii and thirty-one shadows is not a scale, it is a history: every decision ever made was
+still in the sheet, and later rules switched earlier ones off rather than replacing them.
+
+- **Radii:** `--radius-control` 6px, `--radius-card` 10px, `--radius-dialog` 16px, plus
+  `--radius-pill` for pills and `50%` for dots. Nothing else.
+- **Elevation:** `--shadow-dialog` for a dialog or a floating panel, `--shadow-lift` (a
+  `drop-shadow()` filter) for a piece in flight. **Everything at rest gets a hairline border and no
+  shadow.** A ring is an `outline`, never a `0 0 0 Npx` box-shadow — those read as elevation in any
+  count of the sheet and behave differently under a border radius.
+- **Weights:** 400 for anything you read, 640 for the things that label it. A third weight is a
+  decision nobody made on purpose.
+- **Type:** one `--font-sans` stack with the Japanese faces *appended*, never swapped in. `Inter` was
+  named first and never loaded — there is no `@font-face` and the CSP blocks a CDN — so it only ever
+  flattered a mockup, while a `[lang="ja"]` rule replaced the whole stack and rendered "Sharp v2" and
+  "3+2" in a different face from the English site. Notation, clocks and ply counts use `--font-mono`
+  with `tabular-nums`.
+
+Guarded by `test/design-tokens.test.js`, which reads every `border-radius`, `box-shadow` and
+`font-weight` in both sheets rather than naming selectors.
 
 Everything tappable is ≥44px tall on a phone. Before that rule the header buttons were 33px and the
 Moves toggle was 43×14. A second round came from measuring in a browser rather than reading the
@@ -264,7 +576,14 @@ The reserve banks are named through `aria-labelledby` on those labels, and the t
 
 The rules dialog opens from the Rules button and nowhere else. It used to open modally over the
 board the first time you played, which contradicted "starts instantly" and left the board
-unclickable. The lobby's three-rule strip and the turn card carry first-run guidance instead.
+unclickable.
+
+**It was doing it again.** The auto-open moved out of `lobby.js` and into `rules-modal.js` as
+`initTutorial({ autoStart: document.body.classList.contains('lobby-page') })`, and the test that
+guards this named two files by hand, so it went on passing while the lobby opened the dialog on
+every first visit. Now that the lobby has a real board, that dialog covered a game that had already
+started. `autoStart` defaults to `false` and the test reads `rules-modal.js` and `tutorial.js` too.
+First-run guidance is the board itself, the turn line under it, and Rules in the header.
 
 ### The clock is one clock, kept by two players
 
@@ -320,6 +639,33 @@ It carries state, not standing instructions. It used to repeat the rules of the 
 turn while a toast and the Moves line said the same thing beside it. It shows contextual detail —
 king placement, being in check, what is selected — and nothing when there is nothing to add. When
 the result overlay is up it is hidden entirely, or the ending is printed twice.
+
+### The call never outranks the game
+
+The rail is a place to talk during a match, not a video app with a board in it.
+
+- **Text chat is on from the first move; mic and camera are off until pressed.** A match must never
+  open with a live microphone. `test/shell.test.js` reads the markup for both toggles, and a
+  Playwright check stubs `getUserMedia` and asserts it is not called on load, in either mode.
+- **Permission is asked once, when the button is pressed, and the reason is on screen before the
+  browser prompt appears** — `explainMedia()` paints `MEDIA_REASONS[kind]` and waits two frames,
+  which is well inside the transient activation the gesture grants. A permission dialog with no
+  reason in front of it is a dialog people decline.
+- **An "On air" badge whenever you are sending**, in the rail and in the tab title. The tab you are
+  not looking at is exactly where "am I still being heard?" comes up. `onAirTitle` is idempotent, so
+  rewriting it on every change never stacks.
+- **The interface says it is peer-to-peer**, and would say the opposite just as plainly.
+  `connectionReport()` in `net.js` reads the selected candidate pair off the real peer connection —
+  relayed or not, and the round-trip time. **The bundled configuration carries STUN and no TURN, so
+  `relayed` cannot currently be true**; the branch exists because adding a TURN server later should
+  not also require remembering to make the strip honest.
+- **Degrade in order: video, then audio, never the clock.** `nextDegradation()` is pure and tested;
+  a test also checks that nothing in that path touches the clock.
+- **Focus mode** collapses the rail to one bar — presence, connection, unread count. On a phone it is
+  the default, because the board keeps the screen.
+
+**None of this has run between two real peers.** Chat, voice and the connection report all need a
+network this sandbox cannot reach.
 
 ### Chat belongs to a match, not to a mode
 
@@ -440,6 +786,56 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 
 Newest first. One line per decision that changed how the app behaves.
 
+- The lobby's rule strip, setup disclosure, strength radios, settings dialog, the `.mini-board`, the
+  hidden rules figure and `initSettings` are gone from the sheet and the markup, not just switched
+  off; the reduced-motion block is now checked as a rule rather than as a list of two.
+
+- One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
+  them made the module precache work for the first time.
+
+- `puzzles.html` joins the rest of the design: its board no longer sits under the fixed action bar,
+  and its empty states are translatable rather than CSS literals.
+
+- Accessibility is audited by axe-core in CI across five pages, two themes and every dialog, with
+  the focus ring, dialog focus and the theme switch checked separately.
+
+- Check and checkmate are Japanese on the Japanese site, and the language switch names the language
+  rather than the country.
+
+- Four button roles replace seven rectangles, most of which had already stopped having any effect —
+  and two orphaned declaration blocks that had silently broken the online time control.
+
+- Library cards lead with a result swatch and the final position, and the archive can be sorted.
+
+- The arena asks one seat question, puts the turn status above the board, splits replay from setup,
+  and keeps a transcript you can read.
+
+- The match rail: chat from the first move, mic and camera off until pressed with the reason stated
+  before the prompt, an "On air" badge in the rail and the tab title, the link described honestly,
+  degradation in the order video → audio → never the clock, and a focus mode.
+
+- The three connection cards rebuilt, with a QR of the invite, one escalating status line that
+  cannot change the card's height, a success rung that did not exist, and a forfeit claim that is
+  disabled until it is actually claimable.
+
+- The rules dialog opens at the top with its demo board whole, measured rather than eyeballed, and
+  rule 1 gained the affordance the other three had.
+
+- The lobby is a playable board above four cards, with a footer; the rules stopped opening
+  themselves, which they had quietly resumed doing through `rules-modal.js`.
+
+- Real links everywhere, one `<nav>`, one header order, a wordmark that cannot vanish, and an `h1`
+  that names the page rather than the site.
+
+- One board: a 6px ink frame and the real two-tone palette everywhere, square states drawn on top
+  rather than by repainting, pieces at 82%, and the dead Unicode glyph path removed.
+
+- The mark is the board with its corner missing and that block outside it — no letterform, no tile,
+  and the favicon and the header finally agree on two colours.
+
+- One token system: ember accent doubling as the focus ring, three radii, two elevations, two
+  weights, one font stack with the Japanese faces appended. `docs/DESIGN-PASS.md` is the brief.
+
 - Sharp v2 avoids repetition only as an equal-score tie-break, and tournament schema 2 records the
   rules plus exact AI profiles; experiments and rejected alternatives live in `DEVLOG.md`.
 
@@ -503,7 +899,7 @@ All desktop dialogs use native fixed viewport centering rather than per-page off
 
 ## 2026-09-14 — Explicit human color choice
 
-Bot Arena now exposes a Play as White/Black selector (plus watching both bots), instead of requiring users to swap two controller dropdowns. Changing color starts a fresh game, preserving the bot strength. Black waits for White's bot king placement before placing their own king. Added pure seat-selection unit tests and browser coverage for both colors.
+Bot Arena exposes one seat selector — White, Black, or watch two bots — and a strength control for each side that actually has a bot on it. It used to ask the same question three times: a Play as select plus a White seat select plus a Black seat select. Changing seat mid-game starts a fresh game and preserves the bot strength; **before the first move it does not**, because there is nothing to throw away and a position imported from the library is exactly that case. Black waits for White's bot king placement before placing their own king. Added pure seat-selection unit tests and browser coverage for both colors.
 
 ## 2026-09-14 — Rules and practice in one place
 

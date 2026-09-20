@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' wss:; media-src 'self' blob: mediastream:; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111814" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#F2EEE4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0E1512" media="(prefers-color-scheme: dark)">
   <meta name="description" content="Schness — compact chess on a 4×4 board. Every captured piece comes back.">
   <title>Schness</title>
   <meta property="og:title" content="Schness — compact chess on a 4×4 board">
@@ -16,7 +16,7 @@
   <meta property="og:image" content="https://schness.com/assets/social-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="A four-by-four Schness board with two kings, a rook and a knight.">
+  <meta property="og:image:alt" content="The Schness mark — a board with a corner missing and that block sitting outside it — beside the wordmark.">
   <meta name="twitter:card" content="summary_large_image">
 
   <meta name="mobile-web-app-capable" content="yes">
@@ -27,30 +27,49 @@
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
   <link rel="stylesheet" href="./vendor/basecoat/basecoat-nova.cdn.min.css">
-  <link rel="stylesheet" href="./styles.css?v=74">
-  <link rel="stylesheet" href="./ui.css?v=84">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./ui.css">
 </head>
 <body class="lobby-page">
   <main class="game">
     <header>
-      <a class="brand" href="./" aria-label="Schness home"><span class="brand-mark" aria-hidden="true">S</span><h1>Schness</h1></a>
+      <a class="brand" href="./" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><span class="brand-word">Schness</span></a>
+      <nav class="site-nav" aria-label="Schness"><a href="./watch.html">Bot arena</a><a href="./library.html">Library</a><a href="./puzzles.html">Puzzles</a></nav>
       <div class="header-actions">
+        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
         <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
         <button id="install" class="text-button btn" type="button" hidden data-variant="ghost">Install</button>
-        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
+        <span class="header-rule" aria-hidden="true"></span>
       </div>
     </header>
 
     <section id="menu" class="menu" aria-labelledby="play-title">
       <div class="lobby-intro">
-        <h2 id="play-title">Play Schness</h2>
+        <h1 id="play-title">Play Schness</h1>
         <p>Move a piece, or deploy one from your reserve. Every capture comes back.</p>
       </div>
+
+      <!--
+        A board, not a picture of one. A 4x4 game has no setup worth a click, so
+        landing here means you are already playing. Deliberately absent at phone
+        width: there it pushes the four actions below the fold, and the mobile
+        home stays a menu.
+      -->
+      <section id="lobby-play" class="lobby-play" aria-labelledby="lobby-play-title">
+        <h2 id="lobby-play-title" class="visually-hidden">Play against the bot</h2>
+        <div class="lobby-seat"><span class="reserve-label" id="lobby-black-label">Black reserve</span><div id="lobby-black-reserve" class="bank" aria-labelledby="lobby-black-label"></div></div>
+        <div id="lobby-board" class="board" role="grid" aria-label="Schness board"></div>
+        <div class="lobby-seat"><span class="reserve-label" id="lobby-white-label">Your reserve</span><div id="lobby-white-reserve" class="bank" aria-labelledby="lobby-white-label"></div></div>
+        <p class="lobby-foot"><span id="lobby-status" role="status">Place your king on rank 1 and the game runs.</span><button id="lobby-restart" class="text-button btn" type="button" data-variant="ghost">Start again</button></p>
+      </section>
+
       <div class="mode-buttons">
-        <button id="bot-arena" class="mode dark btn" type="button" data-variant="outline"><strong>Bot arena</strong><small>Play, watch, take over, or edit a position</small></button>
-        <button id="play-online" class="mode btn" type="button" data-variant="outline"><strong>Create an online game</strong><small>Get a link to send a friend</small></button>
-        <button id="browse-games" class="mode btn" type="button" data-variant="outline"><strong>Browse recorded games</strong><small>Study 1,099 unique AI games</small></button>
-        <button id="solve-puzzles" class="mode btn" type="button" data-variant="outline"><strong>Checkmate puzzles</strong><small>Mate in one, two, three, or four</small></button>
+        <a id="bot-arena" class="mode mode-primary btn" href="./watch.html" data-variant="secondary"><strong>Bot arena</strong><small>Take this position further — stronger bots, replay, position editor</small></a>
+        <div class="mode-group">
+          <button id="play-online" class="mode btn" type="button" data-variant="secondary"><strong>Create an online game</strong><small>Get a link to send a friend</small></button>
+          <a id="browse-games" class="mode btn" href="./library.html" data-variant="secondary"><strong>Browse recorded games</strong><small>Study 1,099 unique AI games</small></a>
+          <a id="solve-puzzles" class="mode btn" href="./puzzles.html" data-variant="secondary"><strong>Checkmate puzzles</strong><small>Mate in one, two, three, or four</small></a>
+        </div>
       </div>
     </section>
 
@@ -71,9 +90,15 @@
       </form>
     </dialog>
 
-
-
-
+    <footer class="site-foot">
+      <nav aria-label="More">
+        <button class="foot-link btn" type="button" data-open-rules data-variant="ghost">How to play</button>
+        <a href="https://github.com/KakkoiDev/schness">Source</a>
+        <a href="https://github.com/KakkoiDev/schness/releases">Tournament data</a>
+        <a href="https://github.com/KakkoiDev/schness/blob/master/DEVLOG.md">Dev log</a>
+      </nav>
+      <p class="foot-note">Peer-to-peer, no accounts, no tracking.</p>
+    </footer>
 
   </main>
 
@@ -88,7 +113,7 @@
     </div>
     <div class="dialog-body" tabindex="0" role="group" aria-label="The rules, scrollable">
       <ol class="rules-list">
-        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span></li>
+        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span><button class="rule-demo-trigger btn" type="button" data-lesson="board" aria-controls="rules-demo" aria-label="Try the board" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span><button class="rule-demo-trigger btn" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square. A deployed piece may not immediately check the opposing king.</span><button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Captures come back</strong><span>Capturing does not remove a piece. It goes to the reserve of the player who owned it, ready to be deployed again, so material never leaves the game. Win by checkmate.</span><button class="rule-demo-trigger btn" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece" data-variant="ghost"><span>Try it →</span></button></li>
@@ -101,38 +126,21 @@
           <div id="demo-board" class="board" role="grid" aria-label="Playable rules demonstration"></div>
           <div class="replay-seat"><div id="demo-white-player" class="replay-player">White · You</div><div class="reserve"><span id="demo-white-label" class="reserve-label">Your reserve</span><div id="demo-white-reserve" class="bank"></div></div></div>
         </div>
-        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="outline">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
+        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="secondary">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
       </div>
     </section></div>
-      <figure class="rules-example">
-        <div class="rules-board" aria-hidden="true">
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bK.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-black" src="./assets/pieces/bN.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell rules-drop"></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wR.svg" alt=""></span>
-          <span class="rules-cell"><img class="piece piece-white" src="./assets/pieces/wK.svg" alt=""></span>
-          <span class="rules-cell"></span>
-          <span class="rules-cell"></span>
-        </div>
-        <figcaption>White’s bishop was captured earlier, so it came back to White’s own reserve. The dashed ring is c2, one of the empty squares it can drop onto.</figcaption>
-      </figure>
 
     </div>
     <div class="dialog-foot">
-      <form method="dialog"><button class="rules-confirm btn" type="submit" data-variant="primary">Got it</button></form>
+      <p class="dialog-foot-note">You can reopen this from <strong>Rules</strong> in the header at any time.</p>
+      <form method="dialog" class="dialog-foot-actions">
+        <button class="rules-skip btn" type="submit" value="skip" data-variant="ghost">Skip</button>
+        <button class="rules-confirm btn" type="submit" data-variant="primary">Start playing</button>
+      </form>
     </div>
   </dialog>
-  <script type="module" src="./src/rules-modal.js?v=84"></script>
-  <script type="module" src="./src/lobby.js?v=70"></script>
+  <script type="module" src="./src/rules-modal.js"></script>
+  <script type="module" src="./src/lobby.js"></script>
 </body>
 </html>
 

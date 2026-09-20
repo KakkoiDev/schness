@@ -20,7 +20,7 @@ test('lobby settings, language, theme, rules and online invitation', async ({ pa
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.getByRole('button', { name: 'Rules', exact: true }).click();
   await expect(page.getByRole('dialog', { name: /Schness in four rules/ })).toBeVisible();
-  await page.getByRole('button', { name: 'Got it' }).click();
+  await page.getByRole('button', { name: 'Start playing' }).click();
   await page.getByRole('button', { name: /Create an online game/ }).click();
   await expect(page.getByRole('dialog', { name: 'Choose a time control' })).toBeVisible();
   await page.locator('#online-setup label:has(input[value="3+2"])').click();
@@ -35,8 +35,13 @@ test('lobby settings, language, theme, rules and online invitation', async ({ pa
 test('the homepage opens the arena with visible training controls', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('#replay-tutorial')).toHaveCount(0);
-  await page.getByRole('button', { name: /Bot arena/ }).click();
+  // The card is an <a href> now, and "Bot arena" is also a nav link.
+  await page.locator('#bot-arena').click();
   await expect(page).toHaveURL(/watch\.html/);
+  // Training tools are one of the quiet items now, so they start folded — but
+  // they are on this page, which is where all standard bot play happens.
+  await expect(page.locator('#watch-training summary')).toBeVisible();
+  await page.locator('#watch-training summary').click();
   await expect(page.locator('#watch-training-mate')).toBeVisible();
   await expect(page.locator('#watch-training-advantage')).toBeVisible();
   await page.locator('#watch-training-mate').check();
@@ -57,7 +62,8 @@ test('training warns the defender of forced mate before they move', async ({ pag
     ],
   })));
   await page.goto('/watch.html?position=library');
-  await page.locator('#black-level').selectOption('human');
+  await page.locator('#human-side').selectOption('black');
+  await page.locator('#watch-training summary').click();
   await page.locator('#watch-training-mate').check();
   await expect(page.locator('#watch-training-warning')).toContainText('Danger: White can force mate in 1', { timeout: 10_000 });
   const before = await page.locator('#watch-board').boundingBox();
@@ -88,7 +94,7 @@ test('training warns the defender of forced mate before they move', async ({ pag
 
 test('interactive tutorial uses the shared board and answers a king placement', async ({ page }) => {
   await page.goto('/');
-  await page.locator('[data-open-rules]').click();
+  await page.locator('header [data-open-rules]').click();
   await page.getByRole('button', { name: 'Try placing the kings' }).click();
   const board = page.locator('#demo-board[data-schness-board="true"]');
   await expect(board).toBeVisible();
@@ -100,7 +106,7 @@ test('interactive tutorial uses the shared board and answers a king placement', 
 
 test('drag pickup hides its source and an illegal drop restores it', async ({ page }) => {
   await page.goto('/');
-  await page.locator('[data-open-rules]').click();
+  await page.locator('header [data-open-rules]').click();
   await page.getByRole('button', { name: 'Try moving or deploying' }).click();
   const source = page.locator('#demo-board .square').filter({ has: page.locator('.piece-white') }).first();
   const box = await source.boundingBox();
@@ -139,6 +145,9 @@ test('bot game supports White and Black with the same board and reserves', async
 test('bot training toggles mate search and the estimated advantage independently', async ({ page }) => {
   await page.goto(`/game.html?game=${GAME_ID}&mode=bot`);
   await expect(page.locator('#training-panel')).toBeVisible();
+  // Folded, like the arena's: it is opt-in help, not a permanent block above
+  // the board on a screen where rows are the scarce thing.
+  await page.locator('#training-panel summary').click();
   await expect(page.locator('#training-bar')).toBeHidden();
   await page.locator('#training-advantage').check();
   // The opening king-placement phase is intentionally not an evaluable position.
@@ -169,6 +178,7 @@ test('recorded game analysis is opt-in and tracks replay', async ({ page }) => {
 });
 
 test('checked king has a visible labeled warning on the real game board', async ({ page }) => {
+  await installColorProbe(page);
   await page.goto(`/game.html?game=${GAME_ID}&mode=bot`);
   const square = page.locator('#board .square[data-square="15"]');
   await page.evaluate(async () => {
@@ -192,22 +202,44 @@ test('checked king has a visible labeled warning on the real game board', async 
   // colors: the original test only sampled a light square and missed the bug.
   const darkSquare = page.locator('#board .square[data-square="14"]');
   await darkSquare.evaluate((element) => element.classList.add('in-check'));
-  for (const [theme, expected] of [['light', 'rgb(213, 169, 161)'], ['dark', 'rgb(167, 122, 118)']]) {
+  for (const theme of ['light', 'dark']) {
     await page.locator('html').evaluate((element, value) => { element.dataset.theme = value; }, theme);
     for (const checkedSquare of [square, darkSquare]) {
       const colors = await checkedSquare.evaluate((element) => ({
         square: getComputedStyle(element).backgroundColor,
-        palette: getComputedStyle(element).getPropertyValue('--check-square').trim(),
+        // Resolved through the element, so the assertion is "the square is
+        // painted with --check-square" rather than a hex copied into the test.
+        palette: paintedColor(element, '--check-square'),
         image: getComputedStyle(element).backgroundImage,
       }));
       expect(colors.palette).toBeTruthy();
-      expect(colors.square).toBe(expected);
+      expect(colors.square).toBe(colors.palette);
       expect(colors.image).toBe('none');
     }
   }
 });
 
+/**
+ * The rgb() a custom property actually paints, resolved through the element it
+ * is read from. Copying the hex into the test made a token change look like a
+ * regression; this checks the rule ("the checked square is --check-square")
+ * rather than the value.
+ */
+async function installColorProbe(page) {
+  await page.addInitScript(() => {
+    globalThis.paintedColor = (element, property) => {
+      const probe = document.createElement('span');
+      probe.style.color = getComputedStyle(element).getPropertyValue(property).trim();
+      document.body.append(probe);
+      const painted = getComputedStyle(probe).color;
+      probe.remove();
+      return painted;
+    };
+  });
+}
+
 test('a real checked position highlights its king in Bot Arena, not just the status', async ({ page }) => {
+  await installColorProbe(page);
   await page.addInitScript(() => {
     const board = Array(16).fill(null);
     board[0] = { owner: 'black', piece: 'king' };
@@ -220,9 +252,14 @@ test('a real checked position highlights its king in Bot Arena, not just the sta
   const king = page.locator('#watch-board .square[data-square="14"]');
   await expect(king).toHaveClass(/in-check/);
   await expect(king).toHaveAttribute('aria-label', /white king/);
-  for (const [theme, expected] of [['light', 'rgb(213, 169, 161)'], ['dark', 'rgb(167, 122, 118)']]) {
+  for (const theme of ['light', 'dark']) {
     await page.locator('html').evaluate((element, value) => { element.dataset.theme = value; }, theme);
-    expect(await king.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(expected);
+    const colors = await king.evaluate((element) => ({
+      square: getComputedStyle(element).backgroundColor,
+      palette: paintedColor(element, '--check-square'),
+    }));
+    expect(colors.palette).toBeTruthy();
+    expect(colors.square).toBe(colors.palette);
   }
 });
 
@@ -230,6 +267,9 @@ test('Bot Arena plays, reviews, edits and never scrolls the page for history', a
   await page.goto('/watch.html');
   const board = page.locator('#watch-board[data-schness-board="true"]');
   await expect(board).toBeVisible();
+  // Who sits where is one decision; a strength control exists for each side
+  // that actually has a bot on it.
+  await page.locator('#human-side').selectOption('watch');
   await page.locator('#white-level').selectOption('learning');
   await page.locator('#black-level').selectOption('learning');
   await expect(page.locator('#watch-moves button')).not.toHaveCount(0, { timeout: 15_000 });
@@ -239,6 +279,7 @@ test('Bot Arena plays, reviews, edits and never scrolls the page for history', a
   await page.locator('#watch-auto').click();
   await page.locator('#watch-previous').click();
   await expect(page.locator('#watch-status')).toContainText('Reviewing');
+  await expect(page.locator('#watch-eyebrow')).toHaveText('Reviewing');
   await page.locator('#watch-edit').click();
   await expect(page.locator('#position-board[data-schness-board="true"]')).toBeVisible();
   await page.locator('#position-close').click();
@@ -319,4 +360,194 @@ test('move history coordinates toggle labels on the board', async ({ page }) => 
   await expect(page.locator('#watch-board .square[data-square="12"] .square-coordinate')).toHaveText('a1');
   await page.locator('.coordinate-toggle').first().click();
   await expect(page.locator('#watch-board .square-coordinate').first()).toBeHidden();
+});
+
+test('the home page is already a game, and the arena inherits the position', async ({ page }) => {
+  await page.goto('/');
+  const board = page.locator('#lobby-play');
+  if (page.viewportSize().width <= 760) {
+    // Deliberately absent on a phone: it pushes the four actions below the
+    // fold, so the mobile home stays a menu.
+    await expect(board).toBeHidden();
+    return;
+  }
+  await expect(page.locator('#lobby-board .square.placement')).toHaveCount(4);
+  await page.locator('#lobby-board .square.placement').first().click();
+  // Black answers with its own king, from the same worker the match page runs.
+  await expect(page.locator('#lobby-board .piece')).toHaveCount(2, { timeout: 15_000 });
+  await expect(page.locator('#lobby-status')).toHaveText('Your move.');
+  // "Take this position further" has to be true, not a slogan.
+  await page.locator('#bot-arena').click();
+  await expect(page).toHaveURL(/watch\.html\?position=library/);
+  await expect(page.locator('#watch-board .piece')).toHaveCount(2);
+});
+
+test('the rules never open themselves, even on a first visit', async ({ page }) => {
+  await page.context().clearCookies();
+  await page.addInitScript(() => localStorage.removeItem('schness-tutorial-seen'));
+  await page.goto('/');
+  await page.waitForTimeout(1000);
+  // It used to open over the lobby the first time, which now means over a
+  // board with a game already on it.
+  await expect(page.locator('#rules-dialog')).toBeHidden();
+  await page.locator('header [data-open-rules]').click();
+  await expect(page.locator('#rules-dialog')).toBeVisible();
+});
+
+test('the waiting card carries the link, a scannable code and a way out', async ({ page }) => {
+  await page.goto(`/game.html?game=${GAME_ID}&mode=online`);
+  await expect(page.locator('#card-waiting')).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByLabel('Match link')).toHaveValue(/mode=online/);
+  // Copy is the only primary on this card: it is the one thing to do.
+  await expect(page.locator('#card-waiting .card-primary')).toHaveCount(1);
+  await expect(page.locator('#invite-qr svg')).toBeVisible();
+  // Dark on light, whatever the theme: a themed code is one that does not scan.
+  const ground = await page.locator('#invite-qr').evaluate((element) =>
+    getComputedStyle(element).getPropertyValue('--qr-paper').trim());
+  expect(ground).toBe('#fff');
+  // Present from the first second, so nobody has to fail first to find it.
+  await expect(page.locator('#waiting-bot')).toBeVisible();
+  await expect(page.locator('#search-stalled, #search-quiet')).toHaveCount(0);
+
+  // The status escalates without the card changing height.
+  const card = page.locator('#network-card');
+  const heights = [];
+  for (const [waited, stalled] of [[0, false], [25_000, false], [95_000, false], [30_000, true]]) {
+    await page.evaluate(async ([elapsed, dead]) => {
+      const { searchMessage } = await import('./src/matchmaking.js');
+      document.querySelector('#search-status').textContent = searchMessage(elapsed, dead);
+    }, [waited, stalled]);
+    heights.push(Math.round((await card.boundingBox()).height));
+  }
+  expect(new Set(heights).size, `card heights ${heights.join(' / ')}`).toBe(1);
+});
+
+test('claiming a forfeit is disabled until the countdown reaches zero', async ({ page }) => {
+  await page.goto(`/game.html?game=${GAME_ID}&mode=bot`);
+  // The rule is already that the opponent gets the countdown. A live button
+  // that silently refuses, and one that lets you claim early, both misstate it.
+  await expect(page.locator('#claim-win')).toBeDisabled();
+  await expect(page.locator('#claim-note')).toHaveText('Claiming unlocks at 0:00.');
+  const drawn = await page.locator('#claim-win').evaluate((element) => getComputedStyle(element).opacity);
+  expect(drawn, 'disabled is drawn, not dimmed').toBe('1');
+});
+
+test('an online match never opens with a live microphone or camera', async ({ page }) => {
+  await page.addInitScript(() => {
+    globalThis.__mediaRequests = [];
+    const ask = async (constraints) => {
+      globalThis.__mediaRequests.push(constraints);
+      throw new DOMException('denied in test', 'NotAllowedError');
+    };
+    Object.defineProperty(navigator, 'mediaDevices', { value: { getUserMedia: ask }, configurable: true });
+  });
+  for (const mode of ['online', 'bot']) {
+    await page.goto(`/game.html?game=${GAME_ID}&mode=${mode}`);
+    await page.waitForTimeout(1500);
+    // Nothing on either path may ask on load. Permission is asked once, when
+    // the button is pressed, and never before.
+    expect(await page.evaluate(() => globalThis.__mediaRequests.length), mode).toBe(0);
+  }
+  await expect(page.locator('#voice-toggle')).toHaveText('Audio off');
+  await expect(page.locator('#video-toggle')).toHaveText('Video off');
+  await expect(page.locator('#on-air')).toBeHidden();
+});
+
+test('the arena asks one seat question, and shows a strength only where a bot sits', async ({ page }) => {
+  await page.goto('/watch.html');
+  // It used to ask three times: a "Play as" select plus a White seat select
+  // plus a Black seat select, all answering the same question.
+  await expect(page.locator('#human-side')).toHaveValue('white');
+  await expect(page.locator('#white-strength')).toBeHidden();
+  await expect(page.locator('#black-strength')).toBeVisible();
+  await page.locator('#human-side').selectOption('watch');
+  await expect(page.locator('#white-strength')).toBeVisible();
+  await expect(page.locator('#black-strength')).toBeVisible();
+  await page.locator('#human-side').selectOption('black');
+  await expect(page.locator('#white-strength')).toBeVisible();
+  await expect(page.locator('#black-strength')).toBeHidden();
+});
+
+test('the arena splits replay from setup and keeps a transcript you can read', async ({ page }) => {
+  await page.goto('/watch.html');
+  // One primary, a transport group, a transcript, then the quiet list. It was
+  // a flat row of seven equal-weight buttons, two of which wrapped.
+  await expect(page.locator('.watch-panel .arena-primary')).toHaveText('New game');
+  await expect(page.locator('.arena-transport .btn')).toHaveCount(5);
+  await expect(page.locator('#watch-live')).toHaveText('Live');
+  await expect(page.locator('#watch-branch')).toHaveText('Branch from here');
+  for (const control of ['#watch-first', '#watch-previous', '#watch-live', '#watch-branch']) {
+    await expect(page.locator(control)).toBeDisabled();
+  }
+  await page.locator('#human-side').selectOption('watch');
+  await expect(page.locator('.arena-move').first()).toBeVisible({ timeout: 20_000 });
+  const transcript = page.locator('#watch-moves');
+  await expect(transcript.locator('.arena-move-row').first()).toBeVisible();
+  const font = await transcript.evaluate((element) => getComputedStyle(element).fontVariantNumeric);
+  expect(font).toContain('tabular-nums');
+  await page.locator('#watch-first').click();
+  await expect(page.locator('#watch-live')).toBeEnabled();
+  await page.locator('#watch-last').click();
+  await expect(page.locator('#watch-live')).toBeDisabled();
+});
+
+test('library cards lead with a colour and a position, and can be sorted', async ({ page }) => {
+  await page.goto('/library.html');
+  const cards = page.locator('.library-game');
+  await expect(cards.first()).toBeVisible({ timeout: 20_000 });
+  // 1,099 cards that all said the same thing in the same weight were text,
+  // not information.
+  await expect(cards.first().locator('.library-mini .square')).toHaveCount(16);
+  const swatch = await cards.first().evaluate((card) =>
+    getComputedStyle(card).getPropertyValue('--result-swatch').trim());
+  expect(swatch).not.toBe('');
+  // The mini board is the same object as every other board here.
+  const frame = await cards.first().locator('.library-mini').evaluate((board) => ({
+    radius: getComputedStyle(board).borderTopLeftRadius,
+    colour: getComputedStyle(board).borderTopColor,
+  }));
+  const full = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--radius-card').trim());
+  expect(frame.radius).toBe(full);
+
+  // Filters existed; sort did not, so the archive could only be read in the
+  // order it happened to be recorded.
+  const plies = async () => Number((await cards.first().locator('small').textContent()).match(/^(\d+)/)[1]);
+  await page.locator('#sort-games').selectOption('short');
+  const shortest = await plies();
+  await page.locator('#sort-games').selectOption('long');
+  const longest = await plies();
+  expect(longest).toBeGreaterThan(shortest);
+
+  // Matchups wrap rather than truncating mid-word.
+  const clipped = await cards.first().locator('.library-matchup').evaluate((element) =>
+    element.scrollWidth > element.clientWidth + 1);
+  expect(clipped, 'the matchup is clipped').toBe(false);
+});
+
+test('check and checkmate are in Japanese on the Japanese site', async ({ page }) => {
+  await installColorProbe(page);
+  await page.addInitScript(() => localStorage.setItem('schness-language', 'ja'));
+  await page.addInitScript(() => {
+    const board = Array(16).fill(null);
+    board[0] = { owner: 'black', piece: 'king' };
+    board[10] = { owner: 'black', piece: 'rook' };
+    board[14] = { owner: 'white', piece: 'king' };
+    sessionStorage.setItem('schness-arena-position', JSON.stringify({ board, turn: 'white' }));
+  });
+  await page.goto('/watch.html?position=library');
+  const king = page.locator('#watch-board .square[data-square="14"]');
+  await expect(king).toHaveClass(/in-check/);
+  // The word was `content: "CHECK"` in the stylesheet, where i18n cannot reach
+  // it, so this board said CHECK to a Japanese player.
+  await expect(king).toHaveAttribute('data-state', 'check');
+  expect(await king.evaluate((element) => getComputedStyle(element, '::before').content)).toBe('"王手"');
+
+  await page.goto('/library.html');
+  await expect(page.locator('.library-game').first()).toBeVisible({ timeout: 20_000 });
+  await page.locator('#filter-result').selectOption('w');
+  await page.locator('.library-game').first().click();
+  await page.locator('#replay-moves button').last().click();
+  const mated = page.locator('#replay-board .square.in-checkmate');
+  await expect(mated).toHaveCount(1);
+  expect(await mated.evaluate((element) => getComputedStyle(element, '::before').content)).toBe('"詰み"');
 });
