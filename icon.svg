@@ -1,5 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="104" fill="#111814"/>
-  <text x="256" y="359" text-anchor="middle" font-family="Arial,sans-serif" font-size="306" font-weight="800" fill="#f7f4ed">S</text>
-  <circle cx="404" cy="404" r="26" fill="#e96f4b"/>
+<svg viewBox="-24 0 148 148" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schness">
+  <!-- The board with a 2x2 corner missing, and that block outside it: material
+       leaves the board and comes straight back. No letterform, so no font
+       dependency and no tile to give an edge to something that has none.
+       The presentation attributes carry the light theme on their own; the
+       stylesheet only swaps them where a dark tab would swallow the ink. -->
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .board { fill: #EEE9DB }
+      .chip { fill: #F0794C }
+    }
+  </style>
+  <path class="board" fill="#131A16" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/>
+  <rect class="chip" fill="#B23E18" x="52" y="0" width="48" height="48" rx="6"/>
 </svg>

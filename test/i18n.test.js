@@ -38,10 +38,21 @@ test('page entries and their i18n import are cache-busted together', async () =>
   }
 });
 
-test('every visible page header uses the same S product mark', async () => {
+test('every visible page header carries the same two-colour mark', async () => {
+  const icon = await readFile(new URL('../icon.svg', import.meta.url), 'utf8');
+  const board = icon.match(/class="board" fill="(#[0-9A-F]{6})"/)[1];
+  const chip = icon.match(/class="chip" fill="(#[0-9A-F]{6})"/)[1];
+  const styles = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
+  // The header and the favicon used to disagree: a #e96f4b dot next to a
+  // #7d3f6d accent. They are one artwork and one pair of colours now.
+  assert.match(styles, new RegExp(`--ink:${board};`, 'i'));
+  assert.match(styles, new RegExp(`--accent:${chip};`, 'i'));
   for (const file of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const page = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
-    assert.match(page, /class="brand-mark"[^>]*>S<\/span>/, file);
+    assert.match(page, /<svg class="brand-glyph" viewBox="-24 0 148 148"/, file);
+    assert.match(page, /<path fill="var\(--ink\)" d="M8 52H48V100H96V140/, file);
+    assert.match(page, /<rect fill="var\(--accent\)" x="52" y="0" width="48" height="48"/, file);
+    assert.doesNotMatch(page, /brand-mark/, `${file} still has the letterform tile`);
     assert.match(page, /class="header-actions"/, file);
   }
 });

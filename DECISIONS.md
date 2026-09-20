@@ -240,6 +240,26 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### The mark is the rule, drawn
+
+One path and one rect: the board with a 2×2 corner missing, and that block sitting outside it.
+Material leaves the board and comes straight back — the one rule Schness has that no other chess
+variant does — and it is the only thing in the product that says so without words.
+
+- **No letterform.** It was an Arial "S" in a rounded tile, so the installed PWA icon was whatever
+  the OS decided Arial was. The tile only existed to give an edge to a letterform; the mark has its
+  own, so **it never goes back inside a tile**.
+- **The chip stays outside the board.** Tucking it into the notch to save space deletes the point.
+- **No checkerboard inside the frame** — squares turn to mush below 32px.
+- **The header and the favicon are the same two colours.** They used to disagree: a `#e96f4b` dot
+  beside a `#7d3f6d` accent. The header mark is inline SVG using `var(--ink)` and `var(--accent)`;
+  `icon.svg` carries the same two hexes as presentation attributes, with a `prefers-color-scheme`
+  block that only swaps them so an ink board does not vanish on a dark browser tab.
+  `test/i18n.test.js` reads the hexes out of `icon.svg` and checks they are the tokens.
+- Rendered and read at 96, 48, 32 and 16px in Chromium: the 4-unit gap survives at 16px because the
+  chip is offset diagonally from the notch corner, so the dedicated 16px asset the brief allowed for
+  is not needed. **Not checked on a non-retina display** — nothing here can.
+
 ### The scale is three radii, two elevations and two weights
 
 Seventeen radii and thirty-one shadows is not a scale, it is a history: every decision ever made was
@@ -474,6 +494,9 @@ Newest first. One line per decision that changed how the app behaves.
 - The lobby's rule strip, setup disclosure, strength radios, settings dialog, the `.mini-board`, the
   hidden rules figure and `initSettings` are gone from the sheet and the markup, not just switched
   off; the reduced-motion block is now checked as a rule rather than as a list of two.
+
+- The mark is the board with its corner missing and that block outside it — no letterform, no tile,
+  and the favicon and the header finally agree on two colours.
 
 - One token system: ember accent doubling as the focus ring, three radii, two elevations, two
   weights, one font stack with the Japanese faces appended. `docs/DESIGN-PASS.md` is the brief.

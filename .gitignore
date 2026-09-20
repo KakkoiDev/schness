@@ -3,3 +3,5 @@ playwright-report/
 test-results/
 pw.sandbox.config.js
 shoot.sandbox.mjs
+render-icons.sandbox.mjs
+render-social.sandbox.mjs
