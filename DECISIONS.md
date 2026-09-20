@@ -157,8 +157,11 @@ anything, because it has not. Never show it over the stalled card, which contrad
 ### Motion is opt-out, and animates outside the rebuilt subtree
 
 Everything that **moves** sits behind `prefers-reduced-motion: no-preference`. That includes
-transforms added later — two slipped past once. Nothing in the `reduce` block translates, scales or
-rotates.
+transforms added later — three have slipped past now: two hover transforms, and the puzzle shake,
+which translated on a wrong answer with nothing gating it at all. Nothing in the `reduce` block
+translates, scales or rotates, and `test/shell.test.js` now checks that as a rule over the whole
+block rather than by naming the two it knew about. It also reads that block by balancing braces:
+slicing to the end of the file made it quietly assert against rules that are not in the block.
 
 Every indicator that means "something is happening" animates, in that gated block: the waiting dots,
 the reconnect bar, the turn dot while a move is in flight, and the dot beside whoever is on move.
@@ -467,6 +470,10 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 ## Log
 
 Newest first. One line per decision that changed how the app behaves.
+
+- The lobby's rule strip, setup disclosure, strength radios, settings dialog, the `.mini-board`, the
+  hidden rules figure and `initSettings` are gone from the sheet and the markup, not just switched
+  off; the reduced-motion block is now checked as a rule rather than as a list of two.
 
 - One token system: ember accent doubling as the focus ring, three radii, two elevations, two
   weights, one font stack with the Japanese faces appended. `docs/DESIGN-PASS.md` is the brief.

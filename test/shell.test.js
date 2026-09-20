@@ -6,6 +6,18 @@ import { dirname, resolve } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
+/** The body of one at-rule, read by balancing braces rather than by slicing. */
+function block(css, opener) {
+  const start = css.indexOf(opener);
+  if (start < 0) return '';
+  let depth = 0;
+  for (let index = css.indexOf('{', start); index < css.length; index += 1) {
+    if (css[index] === '{') depth += 1;
+    else if (css[index] === '}' && (depth -= 1) === 0) return css.slice(start, index + 1);
+  }
+  return css.slice(start);
+}
+
 test('every service-worker shell entry exists', async () => {
   const source = await readFile(resolve(root, 'sw.js'), 'utf8');
   const shell = source.match(/const SHELL = \[([\s\S]*?)\];/)?.[1] ?? '';
@@ -310,11 +322,16 @@ test('a captured piece flies to the reserve of whoever owned it', async () => {
 test('the sheet gates its motion, including the transforms added later', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   assert.match(css, /\.square\.is-sliding \.piece \{[^}]*visibility: hidden/);
-  const reduce = css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)'));
+  const reduce = block(css, '@media (prefers-reduced-motion: reduce)');
   assert.ok(reduce, 'nothing honours a reduced-motion preference');
   // Two transforms predated the no-preference block and slipped past it.
   assert.match(reduce, /\.mode:not\(:disabled\):hover \{[^}]*transform: none/);
-  assert.match(reduce, /\.setup > summary::after \{[^}]*transition: none/);
+  // Naming the two that slipped is a list, not a rule. Reduced motion means
+  // nothing in this block may translate, scale or rotate — including the next
+  // one somebody adds.
+  for (const [, value] of reduce.matchAll(/(?<![-a-z])transform:\s*([^;}]+)/g)) {
+    assert.match(value.trim(), /^(none|inherit)$/, `the reduce block still sets transform: ${value}`);
+  }
 });
 
 test('a shared link brings its own preview', async () => {
@@ -458,7 +475,9 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(css, /\.rules-dialog\[open\]\s*{\s*display:\s*flex/);
   assert.match(css, /\.dialog-body\s*{[\s\S]*?grid-template-columns:\s*180px minmax\(0, 1fr\)/);
   assert.match(css, /\.dialog-foot\s*{[\s\S]*?background:\s*var\(--sunk\)/);
-  assert.match(css, /\.rules-strip\s*{[\s\S]*?gap:\s*1px;[\s\S]*?background:\s*var\(--line\)/);
+  // The strip left the markup; its ninety lines of styling stayed behind for
+  // three commits. A deleted component is deleted in both places or in neither.
+  assert.doesNotMatch(css, /\.rules-strip/);
   // Bot seats are chosen inside the arena where they can change mid-game.
   // Only the online clock remains in the lobby creation dialog.
   assert.match(html, /<dialog id="online-setup"/);
@@ -584,7 +603,9 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(css, /\.drag-ghost\s*{/);
   assert.match(css, /transform:\s*translate\(-50%, -50%\)/);
   assert.match(css, /touch-action:\s*none/);
-  assert.match(css, /\.game-page \.match-chat\s*{[\s\S]*?grid-column:\s*2;[\s\S]*?grid-row:\s*5;/);
+  // Row 6, from the block that actually wins: an earlier copy of this rule
+  // placed it in row 5 and was overridden in full a thousand lines later.
+  assert.match(css, /\.game-page \.match-chat \{[\s\S]*?grid-column:\s*2;[\s\S]*?grid-row:\s*6;/);
   assert.match(css, /@media\(max-width:899px\)[\s\S]*?\.game-page \.match-chat\s*{[\s\S]*?position:\s*fixed/);
   assert.match(css, /\.game-page \.match-chat\.chat-collapsed/);
   assert.match(css, /max-height:\s*calc\(min\(82dvh, 42rem\) - 3\.2rem\)/);

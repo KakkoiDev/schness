@@ -48,7 +48,11 @@ test('every visible page header uses the same S product mark', async () => {
 
 test('Japanese tutorial actions stay horizontal in the mobile rule grid', async () => {
   const css = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
-  assert.match(css, /\.rules-strip \.rule-demo-trigger \{ grid-column:2;[^}]*white-space:nowrap/);
+  // The strip is gone; the rule actions live in the Rules dialog now, and the
+  // thing that must hold is the same: a Japanese label stays a horizontal row.
+  const ui = await readFile(new URL('../ui.css', import.meta.url), 'utf8');
+  assert.match(ui, /\.rules-dialog \.rules-list \.rule-demo-trigger \{[^}]*justify-self:start/);
+  assert.match(css, /:root\[lang="ja"\] button,[^{]*\{[^}]*line-break:strict/);
   assert.doesNotMatch(css, /lang="ja"[^}]*overflow-wrap:anywhere/);
 });
 
@@ -56,7 +60,9 @@ test('Japanese mobile navigation stays horizontal and compact', async () => {
   const css = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
   assert.match(css, /\.header-actions \.text-button\s*\{[^}]*white-space:\s*nowrap/);
   assert.match(css, /@media\(max-width:480px\)[\s\S]*?\.lobby-page header\s*\{[\s\S]*?margin-bottom:1\.25rem/);
-  assert.match(css, /@media\(max-width:350px\)[\s\S]*?\.brand h1/);
+  // The header is one row that never wraps, in either language. It used to
+  // reach that by deleting the wordmark below 350px; see Stage 4.
+  assert.match(css, /\.brand,\n\.header-actions,\n\.header-actions \.text-button \{\n  white-space: nowrap;/);
 });
 
 test('phone navigation uses compact text controls without decorative icons', async () => {
