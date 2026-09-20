@@ -267,8 +267,8 @@ Measured:
 | | before | after |
 |---|---|---|
 | `styles.css` | 79,494 | 77,704 |
-| `ui.css` | 10,506 | 12,554 |
-| **total** | **90,000** | **90,258** |
+| `ui.css` | 10,291 | 12,554 |
+| **total** | **89,785** | **90,258** |
 
 Roughly 4,300 bytes of genuinely dead rules came out, and the pass put more back: a playable lobby
 board, a footer, four rebuilt connection states, the arena's transport and transcript, the library
