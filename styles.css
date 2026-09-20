@@ -902,7 +902,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 /* Rules dialog: header, scrolling body, sticky footer. */
 .rules-dialog {
   width: min(640px, calc(100% - 2rem));
-  max-height: 560px;
+  max-height: min(560px, calc(100svh - 2rem));
   overflow: hidden;
   border: 0;
   border-radius: var(--radius-dialog);
@@ -1017,10 +1017,27 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   border-top: 1px solid var(--hairline);
   background: var(--sunk);
   padding: 13px 20px;
+}
+
+/* Closing the dialog is not a one-way door, and the footer says where it went. */
+.dialog-foot-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.dialog-foot-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
 }
 
 .rules-confirm {
@@ -1071,9 +1088,13 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
     grid-template-columns: minmax(0, 1fr);
   }
 
+  /*
+   * The rules read first on a phone. `order: 1` pushed the list below the
+   * practice — a leftover from the layout where a static figure came last —
+   * so a dialog called "Schness in four rules" opened showing none of them.
+   */
   .rules-list {
     grid-column: 1;
-    order: 1;
   }
 
   .dialog-foot {
@@ -1081,12 +1102,16 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   }
 
   .rules-confirm {
-    width: 100%;
+    flex: 1 1 auto;
     min-height: 44px;
   }
 
   .rules-dialog form:has(.rules-confirm) {
     width: 100%;
+  }
+
+  .dialog-foot-note {
+    flex-basis: 100%;
   }
 }
 

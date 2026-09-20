@@ -248,6 +248,27 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### The rules dialog opens at the top, with the board it is teaching whole
+
+The first thing a new visitor saw was the dialog handed over scrolled to the middle of itself: rule
+2's heading clipped at the top edge and the demo board cut off at the bottom. The rules themselves
+were good; the first impression was half a sentence.
+
+- Opening a lesson scrolls the body to `0`, not to the demo's offset.
+- The demo board is sized by the height the dialog actually has —
+  `min(100%, 22rem, calc(100svh - 25rem))` — and **measured** in Chromium at 1440×900, 1280×720,
+  1440×1200 and 390×844: the board's top and bottom both sit inside the scrolling body on open. A
+  rule that looks like it fits is not proof that it does.
+- Four rules, four "try it" affordances. Rule 1 states a fact, so its lesson is the fact: both kings
+  on named squares, and a move that shows which way each side travels. Square names appear for that
+  lesson and on the demo board only — the site-wide coordinate preference stays beside move lists,
+  which is where following notation actually happens.
+- The footer says where the dialog lives, so closing it is not a one-way door: "You can reopen this
+  from **Rules** in the header at any time", then Skip and Start playing.
+- **On a phone the rules come first and the board is a scroll away.** There is no width for both,
+  and `order: 1` on `.rules-list` — a leftover from the layout where a static figure came last —
+  meant a dialog called "Schness in four rules" opened showing none of them.
+
 ### The home page is a board, not a picture of one
 
 Landing on schness.com means you are already playing: place your king on rank 1 and the game runs.
@@ -593,6 +614,9 @@ Newest first. One line per decision that changed how the app behaves.
 
 - One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
   them made the module precache work for the first time.
+
+- The rules dialog opens at the top with its demo board whole, measured rather than eyeballed, and
+  rule 1 gained the affordance the other three had.
 
 - The lobby is a playable board above four cards, with a footer; the rules stopped opening
   themselves, which they had quietly resumed doing through `rules-modal.js`.

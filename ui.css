@@ -178,22 +178,30 @@ dialog h2 { line-height: 1.25; }
   }
 }
 
-/* Read and practice together, within the same native Rules dialog. */
+/*
+ * Read and practise together, in the same native Rules dialog. The demo column
+ * is sized from the height the dialog actually has, not from its own width:
+ * the first thing a new visitor saw used to be rule 2 clipped at the top and
+ * the board it was teaching cut off at the bottom.
+ */
 body .rules-dialog { width: min(64rem, calc(100vw - 2rem)); max-height: calc(100svh - 2rem); }
+.rules-dialog .dialog-body { align-content: start; scroll-behavior: auto; }
 .rules-lessons { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
 .rules-practice { margin:1rem 0; }
 .rules-practice .rules-demo { margin:0; padding-top:.75rem; border:0; }
-.rules-practice .demo-stage { width:100%; }
+/* Sized so the board this dialog is teaching is whole when it opens. */
+.rules-practice .demo-stage { width: min(100%, 22rem, calc(100svh - 25rem)); margin-inline: auto; }
 .rules-practice .demo-layout { grid-template-columns:minmax(0,1fr) minmax(14rem,1fr); }
 .rules-practice .demo-heading h2 { font-size:1.5rem; }
 @media(max-width:760px) {
   body .rules-dialog { inset:0; width:100%; max-height:100svh; height:100svh; border-radius:0; }
   .rules-practice .demo-layout { grid-template-columns:1fr; }
-  .rules-practice .demo-stage { max-width:24rem; }
+  .rules-practice .demo-stage { width: min(100%, 20rem); max-width:24rem; }
 }
 
 .square-coordinate { display:none; position:absolute; top:.25rem; right:.3rem; font:640 clamp(.55rem,1.4vw,.7rem)/1 var(--font-sans); color:var(--ink); background:color-mix(in srgb, var(--surface) 82%, transparent); border-radius:var(--radius-control); padding:.12rem .18rem; pointer-events:none; z-index:4; }
-:root[data-coordinates="true"] .square-coordinate { display:block; }
+:root[data-coordinates="true"] .square-coordinate,
+#rules-demo[data-coordinates="true"] .square-coordinate { display:block; }
 .coordinate-toggle { justify-self:start; margin-block:.375rem; }
 
 /* Keep the rule text and its playable example together on wide screens. */

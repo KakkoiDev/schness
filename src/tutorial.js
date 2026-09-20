@@ -6,6 +6,9 @@ import { movedEnough } from './drag.js';
 import { createBoard, pieceElement, renderBoard, renderReserve } from './board-ui.js';
 
 const LESSONS = {
+  // Rule 1 states a fact, so its affordance is the fact: two kings on the
+  // named squares, and a move that shows which way each side travels.
+  board: { title: 'The board is 4 × 4', instruction: 'Files a–d, ranks 1–4. Move your king and watch it travel up the board; Black’s comes down.', coordinates: true },
   kings: { title: 'Place the kings', instruction: 'Put your king on any highlighted home-row square. Black will place theirs, then the game continues.' },
   deploy: { title: 'Move or deploy', instruction: 'Move your king, or pick a reserve piece and deploy it. A deployment may not immediately check Black.' },
   capture: { title: 'Nothing is lost', instruction: 'Capture the black knight with your rook. Watch it return to Black’s reserve, ready to come back.' },
@@ -16,7 +19,7 @@ export function initTutorial({ autoStart = false } = {}) {
   if (!root) return;
   const $ = (selector) => root.querySelector(selector);
   const worker = new Worker('./src/bot-worker.js', { type: 'module' });
-  let lesson = 'kings';
+  let lesson = 'board';
   let position = lessonPosition(lesson);
   let selection = null;
   let thinking = false;
@@ -53,9 +56,16 @@ export function initTutorial({ autoStart = false } = {}) {
     rememberTutorial();
     $('#demo-title').textContent = LESSONS[lesson].title;
     $('#demo-instruction').textContent = LESSONS[lesson].instruction;
+    // Square names belong to the lesson that is about the squares, and to the
+    // demo board only — the site-wide coordinate preference stays where move
+    // lists are, which is where following notation actually happens.
+    root.dataset.coordinates = String(Boolean(LESSONS[lesson].coordinates));
     setFeedback('ready', lesson === 'kings' ? 'Place your king on the highlighted row.' : 'Your turn — tap or drag a piece.');
     render();
-    if (scroll) root.closest('.dialog-body').scrollTop = root.offsetTop;
+    // The dialog used to be handed to a new visitor scrolled to the middle of
+    // itself: rule 2's heading clipped at the top and the demo board cut off
+    // at the bottom. Opening a lesson keeps the reading at the top.
+    if (scroll) root.closest('.dialog-body').scrollTo({ top: 0 });
   }
 
   function cancel() {
@@ -205,8 +215,10 @@ export function lessonPosition(lesson) {
     board[5] = occupantOf(BLACK, 'knight');
     board[9] = occupantOf(WHITE, 'rook');
   }
-  return createPosition({ board, banks: {
-    [WHITE]: lesson === 'capture' ? ['bishop', 'knight'] : ['rook', 'bishop', 'knight'],
-    [BLACK]: lesson === 'capture' ? ['rook', 'bishop'] : ['rook', 'bishop', 'knight'],
-  }, turn: WHITE, phase: 'play' });
+  // Two kings and nothing else: the first lesson is about the geometry, and a
+  // reserve to deploy from would be three rules early.
+  const banks = lesson === 'board' ? { [WHITE]: [], [BLACK]: [] }
+    : lesson === 'capture' ? { [WHITE]: ['bishop', 'knight'], [BLACK]: ['rook', 'bishop'] }
+      : { [WHITE]: ['rook', 'bishop', 'knight'], [BLACK]: ['rook', 'bishop', 'knight'] };
+  return createPosition({ board, banks, turn: WHITE, phase: 'play' });
 }

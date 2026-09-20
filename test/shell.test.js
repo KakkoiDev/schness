@@ -107,7 +107,9 @@ test('rules are playable and recorded positions can branch into the full arena',
     readFile(resolve(root, 'src/library-ui.js'), 'utf8'),
     readFile(resolve(root, 'src/watch-ui.js'), 'utf8'),
   ]);
-  assert.equal((lobby.match(/class="rule-demo-trigger btn"/g) ?? []).length, 3);
+  // Four rules, four affordances: rule 1 states a fact, so its lesson is the
+  // geometry — two kings on named squares and a move that shows the direction.
+  assert.equal((lobby.match(/class="rule-demo-trigger btn"/g) ?? []).length, 4);
   assert.match(lobby, /id="rules-demo"[^>]+hidden/);
   assert.match(tutorial, /new Worker\('\.\/src\/bot-worker\.js'/);
   assert.match(tutorial, /beginBoardDrag/);
@@ -496,13 +498,16 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.equal([...html.matchAll(/<li><strong>/g)].length, 4);
   assert.doesNotMatch(html, /Two things that trip people up/);
   assert.match(html, /A deployed piece may not immediately check the opposing king/);
-  assert.match(html, /class="rules-confirm btn"[^>]*>Got it</);
+  assert.match(html, /class="rules-confirm btn"[^>]*>Start playing</);
+  // The dialog says where it lives, so closing it is not a one-way door.
+  assert.match(html, /You can reopen this from <strong>Rules<\/strong> in the header/);
+  assert.match(html, /class="rules-skip btn"/);
   // Nothing opens the rules for you, so there is no "don't show this" to offer.
   assert.doesNotMatch(html, /id="rules-optout"/);
   assert.match(html, /class="dialog-grab"/);
   // The three rules are the lobby's pitch, and the bot is the primary action.
   assert.doesNotMatch(html, /class="rules-strip"/);
-  assert.equal([...html.matchAll(/data-lesson=/g)].length, 3);
+  assert.equal([...html.matchAll(/data-lesson=/g)].length, 4);
   assert.match(html, /data-open-rules/);
   assert.match(html, /id="bot-arena" class="mode mode-primary btn"/);
   assert.match(html, /id="play-online" class="mode btn"/);

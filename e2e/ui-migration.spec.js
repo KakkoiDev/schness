@@ -86,7 +86,11 @@ test('Rules is available everywhere with an interactive board inside the modal',
     await expect(page.locator('#rules-dialog')).toBeVisible();
     await expect(page.locator('#rules-dialog #demo-board')).toBeVisible();
     await expect(page.locator('#rules-dialog .coordinate-option')).toHaveCount(0);
-    await expect(page.locator('#rules-dialog #demo-board .square.placement')).toHaveCount(4);
+    // It opens on rule 1's lesson now — the geometry, with both kings on the
+    // board and the square names showing — so there is nothing to place yet.
+    await expect(page.locator('#rules-dialog #demo-board .piece')).toHaveCount(2);
+    await expect(page.locator('#rules-demo')).toHaveAttribute('data-coordinates', 'true');
+    await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="board"]') })).toContainText('The board is 4 × 4');
     await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="kings"]') })).toContainText('Kings go down first');
     await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="deploy"]') })).toContainText('Move or deploy');
     await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="capture"]') })).toContainText('Captures come back');
@@ -175,5 +179,37 @@ test('every page heading names the page, not the site', async ({ page }) => {
     const headings = page.locator('main h1');
     await expect(headings).toHaveCount(1);
     await expect(headings).toHaveText(titles[path]);
+  }
+});
+
+test('the rules dialog opens at the top with the board it teaches whole', async ({ page }) => {
+  for (const path of PAGES) {
+    await page.goto(path);
+    await page.locator('header [data-open-rules]').click();
+    await expect(page.locator('#rules-dialog')).toBeVisible();
+    // The first thing a new visitor saw was rule 2's heading clipped at the
+    // top and the demo board cut off at the bottom: the dialog handed itself
+    // over scrolled to the middle of itself.
+    const fit = await page.evaluate(() => {
+      const body = document.querySelector('#rules-dialog .dialog-body');
+      const board = document.querySelector('#demo-board').getBoundingClientRect();
+      const view = body.getBoundingClientRect();
+      return { scrollTop: body.scrollTop, top: board.top - view.top, bottom: view.bottom - board.bottom };
+    });
+    expect(fit.scrollTop, `${path} opens scrolled`).toBe(0);
+    if (page.viewportSize().width > 760) {
+      // Two columns: the rules read on the left while the board they teach is
+      // whole on the right. On a phone there is one column and no width for
+      // both, so the rules come first and the board is a scroll away.
+      expect(fit.top, `${path} demo board clipped at the top`).toBeGreaterThanOrEqual(-1);
+      expect(fit.bottom, `${path} demo board cut off at the bottom`).toBeGreaterThanOrEqual(-1);
+    } else {
+      await expect(page.locator('#rules-dialog .rules-list > li').first()).toBeInViewport();
+    }
+    await expect(page.locator('#rules-dialog .rules-list > li')).toHaveCount(4);
+    await expect(page.locator('#rules-dialog .rule-demo-trigger')).toHaveCount(4);
+    await expect(page.locator('#rules-dialog .dialog-foot')).toContainText('reopen this from');
+    await page.locator('.rules-confirm').click();
+    await expect(page.locator('#rules-dialog')).toBeHidden();
   }
 });

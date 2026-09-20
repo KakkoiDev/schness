@@ -113,7 +113,7 @@
     </div>
     <div class="dialog-body" tabindex="0" role="group" aria-label="The rules, scrollable">
       <ol class="rules-list">
-        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span></li>
+        <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span><button class="rule-demo-trigger btn" type="button" data-lesson="board" aria-controls="rules-demo" aria-label="Try the board" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span><button class="rule-demo-trigger btn" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square. A deployed piece may not immediately check the opposing king.</span><button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Captures come back</strong><span>Capturing does not remove a piece. It goes to the reserve of the player who owned it, ready to be deployed again, so material never leaves the game. Win by checkmate.</span><button class="rule-demo-trigger btn" type="button" data-lesson="capture" aria-controls="rules-demo" aria-label="Try capturing a piece" data-variant="ghost"><span>Try it →</span></button></li>
@@ -132,7 +132,11 @@
 
     </div>
     <div class="dialog-foot">
-      <form method="dialog"><button class="rules-confirm btn" type="submit" data-variant="primary">Got it</button></form>
+      <p class="dialog-foot-note">You can reopen this from <strong>Rules</strong> in the header at any time.</p>
+      <form method="dialog" class="dialog-foot-actions">
+        <button class="rules-skip btn" type="submit" value="skip" data-variant="ghost">Skip</button>
+        <button class="rules-confirm btn" type="submit" data-variant="primary">Start playing</button>
+      </form>
     </div>
   </dialog>
   <script type="module" src="./src/rules-modal.js"></script>
