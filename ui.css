@@ -21,7 +21,15 @@
   --radius: var(--radius-card);
 }
 
-/* One button vocabulary across all pages; glyphs and board squares never get .btn. */
+/*
+ * Four button roles, and nothing else in this product draws a rectangle of its
+ * own. There were seven near-identical ones, each restating a border, a
+ * background and a radius that `.btn` already supplied at higher specificity —
+ * so most of them were already having no effect, which is the hard kind of
+ * duplication to notice.
+ *
+ * Secondary is the default. Glyph buttons and board squares never get `.btn`.
+ */
 body .btn {
   min-height: 44px;
   height: auto;
@@ -39,10 +47,17 @@ body .btn {
   transition: background-color 120ms ease, border-color 120ms ease;
   cursor: pointer;
 }
-body .btn[data-variant="ghost"] { border-color: transparent; background: transparent; }
+body .btn:not(:disabled):hover { background: var(--sunk); border-color: var(--ink); transform: none; }
+
 body .btn[data-variant="primary"] { background: var(--ink); color: var(--inverse); border-color: var(--ink); }
-body .btn:not(:disabled):hover { background: var(--sunk); border-color: var(--muted); transform: none; }
-body .btn[data-variant="primary"]:not(:disabled):hover { background: var(--ink); opacity: .9; }
+body .btn[data-variant="primary"]:not(:disabled):hover { background: #2A332D; border-color: #2A332D; opacity: 1; }
+
+body .btn[data-variant="ghost"] { border-color: transparent; background: transparent; }
+body .btn[data-variant="ghost"]:not(:disabled):hover { border-color: transparent; background: var(--sunk); }
+
+/* The fourth role: a square target with a glyph in it, otherwise secondary. */
+body .btn[data-variant="icon"] { width: 44px; min-width: 44px; padding: 0; display: inline-grid; place-items: center; }
+
 /* Drawn, not dimmed: opacity on a coloured button produces a different
    colour on every background it happens to sit on. A ghost button keeps its
    transparency — filling it in would make the disabled one the loudest thing
@@ -60,6 +75,7 @@ body .btn[data-variant="ghost"]:disabled {
   background: transparent;
   color: var(--muted);
 }
+
 body .btn:focus-visible, body .input:focus-visible, body select.select:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
@@ -137,7 +153,7 @@ dialog :is(.replay-panel, .dialog-body, .dialog-head, .dialog-foot) { padding: 1
 .watch-status, .position-help, .online-setup-note { line-height: 1.5; }
 .watch-controls .btn, .puzzle-actions .btn { width: 100%; }
 .arena-quiet .btn, .arena-primary.btn { width: 100%; }
-#watch-training summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 640; }
+#watch-training summary, #training-panel summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 640; }
 .watch-moves .btn { min-height: 44px; padding: .4rem .6rem; font-size: .8rem; }
 .library-game.btn { display: grid; grid-template-columns: auto minmax(0,1fr); justify-content: stretch; height: auto; text-align: left; padding: 1rem; }
 .library-game.btn:hover { transform: none; }

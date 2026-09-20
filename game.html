@@ -46,7 +46,7 @@
       <h1 class="visually-hidden">Your match</h1>
       <div class="match-actions">
         <a id="back-to-menu" class="text-button" href="./">← Home</a>
-        <div class="match-action-buttons"><button id="swap-side" class="text-button btn" type="button" hidden data-variant="ghost">Play Black</button><button id="reset" class="reset btn" type="button" data-variant="outline">New game</button></div>
+        <div class="match-action-buttons"><button id="swap-side" class="text-button btn" type="button" hidden data-variant="ghost">Play Black</button><button id="reset" class="reset btn" type="button" data-variant="secondary">New game</button></div>
       </div>
       <section id="network-card" class="network-card" hidden>
         <div id="card-waiting" class="card-state" hidden>
@@ -89,7 +89,7 @@
           <p class="countdown"><strong id="reconnect-left">1:00</strong><span>until forfeit</span></p>
           <div class="progress"><i id="reconnect-bar"></i></div>
           <div class="card-actions">
-            <button id="keep-waiting" class="card-secondary btn" type="button" data-variant="outline">Keep waiting</button>
+            <button id="keep-waiting" class="card-secondary btn" type="button" data-variant="secondary">Keep waiting</button>
             <button id="claim-win" class="card-primary btn" type="button" disabled data-variant="primary">Claim the win</button>
           </div>
           <p id="claim-note" class="card-note">Claiming unlocks at 0:00.</p>
@@ -100,7 +100,7 @@
           <p class="card-body">The invitation was already used, or it sat unopened long enough to go stale. Nothing is lost — a new link takes one tap.</p>
           <div class="card-actions">
             <button id="new-online" class="card-primary btn" type="button" data-variant="primary">New invite</button>
-            <button id="bot-instead" class="card-secondary btn" type="button" data-variant="outline">Play the bot</button>
+            <button id="bot-instead" class="card-secondary btn" type="button" data-variant="secondary">Play the bot</button>
           </div>
           <a class="card-escape" href="./">Back to the lobby</a>
         </div>
@@ -137,19 +137,19 @@
               <p id="result-detail" class="result-detail"></p>
               <div class="card-actions">
                 <button id="result-primary" class="card-primary btn" type="button" data-variant="primary"></button>
-                <button id="result-secondary" class="card-secondary btn" type="button" data-variant="outline"></button>
+                <button id="result-secondary" class="card-secondary btn" type="button" data-variant="secondary"></button>
               </div>
               <button id="result-home" class="card-link btn" type="button" data-variant="ghost">Back home</button>
             </section>
           </div>
         </div>
-        <section id="training-panel" class="analysis-panel" hidden>
-          <strong>Training</strong>
+        <details id="training-panel" class="analysis-panel" hidden>
+          <summary>Training</summary>
           <label><input id="training-mate" type="checkbox"> Forced-mate hints (1–4 moves)</label>
           <label><input id="training-advantage" type="checkbox"> White / Black advantage</label>
           <p id="training-score" class="analysis-score" aria-live="polite" hidden></p>
           <p id="training-warning" role="status" aria-live="polite" hidden></p>
-        </section>
+        </details>
         <p id="board-help" class="visually-hidden">
           Arrow keys move the cursor, Enter picks up or plays, Escape puts the piece back down,
           1 to 3 pick a reserve piece, a square name jumps there, and question mark lists the shortcuts.
@@ -185,9 +185,9 @@
             <strong id="moves-title">Moves</strong>
             <span class="moves-hint">↑ / ↓ to review</span>
             <div class="stepper" role="group" aria-label="Review moves">
-              <button id="move-first" class="step btn" type="button" aria-label="Back to the first move" data-variant="outline">⏮</button>
-              <button id="move-back" class="step btn" type="button" aria-label="Step back one move" data-variant="outline">◀</button>
-              <button id="move-forward" class="step btn" type="button" aria-label="Step forward one move" data-variant="outline">▶</button>
+              <button id="move-first" class="step btn" type="button" aria-label="Back to the first move" data-variant="secondary">⏮</button>
+              <button id="move-back" class="step btn" type="button" aria-label="Step back one move" data-variant="secondary">◀</button>
+              <button id="move-forward" class="step btn" type="button" aria-label="Step forward one move" data-variant="secondary">▶</button>
             </div>
           </div>
           <div class="moves-table" role="table" aria-labelledby="moves-title">
@@ -207,8 +207,8 @@
           </div>
         </section>
         <div class="rail-actions">
-          <button id="undo" class="rail-button btn" type="button" data-variant="outline">Undo</button>
-          <button id="resign" class="rail-button btn" type="button" data-variant="outline">Resign</button>
+          <button id="undo" class="rail-button btn" type="button" data-variant="secondary">Undo</button>
+          <button id="resign" class="rail-button btn" type="button" data-variant="secondary">Resign</button>
         </div>
       </aside>
       <section id="match-chat" class="match-chat" aria-labelledby="chat-title" hidden>
@@ -219,7 +219,7 @@
             <small id="chat-summary" class="chat-summary"></small>
           </div>
           <span id="on-air" class="on-air" role="status" hidden></span>
-          <button id="chat-toggle" class="chat-toggle btn" type="button" aria-expanded="true" data-variant="outline">Hide chat</button>
+          <button id="chat-toggle" class="chat-toggle btn" type="button" aria-expanded="true" data-variant="secondary">Hide chat</button>
         </div>
         <div id="chat-body">
           <!--
@@ -227,9 +227,9 @@
             microphone, and the reason is said before the browser prompt.
           -->
           <div class="media-actions" aria-label="Call controls">
-            <button id="voice-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="outline">Audio off</button>
-            <button id="video-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="outline">Video off</button>
-            <button id="hear-opponent" class="media-toggle btn" type="button" hidden data-variant="outline">Hear audio</button>
+            <button id="voice-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="secondary">Audio off</button>
+            <button id="video-toggle" class="media-toggle btn" type="button" aria-pressed="false" data-variant="secondary">Video off</button>
+            <button id="hear-opponent" class="media-toggle btn" type="button" hidden data-variant="secondary">Hear audio</button>
           </div>
           <p id="voice-status" class="voice-status" aria-live="polite"></p>
           <div id="video-stage" class="video-stage" hidden>
@@ -240,17 +240,17 @@
             <p class="chat-empty">No messages yet.</p>
           </div>
           <div id="quick-chat" class="quick-chat" aria-label="Quick messages">
-            <button type="button" data-quick-message="Good luck" class="btn" data-variant="outline">Good luck</button>
-            <button type="button" data-quick-message="Nice move" class="btn" data-variant="outline">Nice move</button>
-            <button type="button" data-quick-message="Oops" class="btn" data-variant="outline">Oops</button>
-            <button type="button" data-quick-message="Good game" class="btn" data-variant="outline">Good game</button>
-            <button type="button" data-quick-message="Rematch?" class="btn" data-variant="outline">Rematch?</button>
-            <button id="offer-draw" type="button" data-quick-action="draw" class="btn" data-variant="outline">Offer draw</button>
+            <button type="button" data-quick-message="Good luck" class="btn" data-variant="secondary">Good luck</button>
+            <button type="button" data-quick-message="Nice move" class="btn" data-variant="secondary">Nice move</button>
+            <button type="button" data-quick-message="Oops" class="btn" data-variant="secondary">Oops</button>
+            <button type="button" data-quick-message="Good game" class="btn" data-variant="secondary">Good game</button>
+            <button type="button" data-quick-message="Rematch?" class="btn" data-variant="secondary">Rematch?</button>
+            <button id="offer-draw" type="button" data-quick-action="draw" class="btn" data-variant="secondary">Offer draw</button>
           </div>
           <form id="chat-form" class="chat-form">
             <label class="visually-hidden" for="chat-message">Message your opponent</label>
             <input id="chat-message" maxlength="280" autocomplete="off" placeholder="Message your opponent…" class="input">
-            <button type="submit" class="btn" data-variant="outline">Send</button>
+            <button type="submit" class="btn" data-variant="secondary">Send</button>
           </form>
           <audio id="peer-audio" autoplay playsinline></audio>
         </div>
@@ -322,7 +322,7 @@
           <div id="demo-board" class="board" role="grid" aria-label="Playable rules demonstration"></div>
           <div class="replay-seat"><div id="demo-white-player" class="replay-player">White · You</div><div class="reserve"><span id="demo-white-label" class="reserve-label">Your reserve</span><div id="demo-white-reserve" class="bank"></div></div></div>
         </div>
-        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="outline">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
+        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="secondary">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
       </div>
     </section></div>
 

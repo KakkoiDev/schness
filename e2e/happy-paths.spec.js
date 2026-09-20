@@ -145,6 +145,9 @@ test('bot game supports White and Black with the same board and reserves', async
 test('bot training toggles mate search and the estimated advantage independently', async ({ page }) => {
   await page.goto(`/game.html?game=${GAME_ID}&mode=bot`);
   await expect(page.locator('#training-panel')).toBeVisible();
+  // Folded, like the arena's: it is opt-in help, not a permanent block above
+  // the board on a screen where rows are the scarce thing.
+  await page.locator('#training-panel summary').click();
   await expect(page.locator('#training-bar')).toBeHidden();
   await page.locator('#training-advantage').check();
   // The opening king-placement phase is intentionally not an evaluable position.

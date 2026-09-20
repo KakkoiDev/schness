@@ -12,3 +12,8 @@ lobbyplay.sandbox.mjs
 dialogfit.sandbox.mjs
 cards.sandbox.mjs
 libperf.sandbox.mjs
+states.sandbox.mjs
+seg.sandbox.mjs
+csscheck.sandbox.mjs
+seg2.sandbox.mjs
+labels.sandbox.mjs

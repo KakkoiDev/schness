@@ -213,3 +213,52 @@ test('the rules dialog opens at the top with the board it teaches whole', async 
     await expect(page.locator('#rules-dialog')).toBeHidden();
   }
 });
+
+test('there are four button roles and nothing draws its own rectangle', async ({ page }) => {
+  for (const path of PAGES) {
+    await page.goto(path);
+    const roles = await page.evaluate(() => {
+      const seen = new Set();
+      for (const button of document.querySelectorAll('.btn')) {
+        seen.add(button.dataset.variant || 'secondary');
+      }
+      return [...seen];
+    });
+    for (const role of roles) {
+      expect(['primary', 'secondary', 'ghost', 'icon'], `${path} has role "${role}"`).toContain(role);
+    }
+    // Every .btn resolves to a shared radius; seven near-identical rectangles
+    // each restating one is how they drift apart. A square-cornered button is
+    // allowed only inside a group that carries the radius for it.
+    const odd = await page.evaluate(() => {
+      const root = getComputedStyle(document.documentElement);
+      const allowed = new Set(['--radius-control', '--radius-card', '--radius-pill']
+        .map((token) => root.getPropertyValue(token).trim()));
+      return [...document.querySelectorAll('.btn')]
+        .filter((button) => button.getClientRects().length)
+        .map((button) => {
+          const radius = getComputedStyle(button).borderTopLeftRadius;
+          if (allowed.has(radius)) return null;
+          const grouped = button.parentElement
+            && allowed.has(getComputedStyle(button.parentElement).borderTopLeftRadius);
+          if (radius === '0px' && grouped) return null;
+          return `${button.id || button.textContent.trim().slice(0, 18)} at ${radius}`;
+        })
+        .filter(Boolean);
+    });
+    expect(odd, path).toEqual([]);
+  }
+});
+
+test('disabled is drawn, not dimmed', async ({ page }) => {
+  await page.goto('/watch.html');
+  for (const control of ['#watch-previous', '#watch-live', '#watch-branch']) {
+    const style = await page.locator(control).evaluate((element) => ({
+      opacity: getComputedStyle(element).opacity,
+      background: getComputedStyle(element).backgroundColor,
+    }));
+    // opacity on a coloured button produces a different colour on every
+    // background it happens to sit on.
+    expect(style.opacity, control).toBe('1');
+  }
+});

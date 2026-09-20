@@ -96,3 +96,54 @@ test('the board squares are far enough apart to count at a glance', async () => 
     assert.ok(contrast >= 4, `${selector} board squares are ${contrast.toFixed(2)}:1 apart`);
   }
 });
+
+/**
+ * Two orphaned declaration blocks survived a deletion pass — the bodies of
+ * rules whose selectors had been removed. A browser recovers by swallowing the
+ * *next* rule, so `.segmented` silently stopped being a grid and the online
+ * time control collapsed into four stacked rows. Nothing in the suite noticed,
+ * because every assertion about it was a regex over the source, and the source
+ * still said what it always had.
+ */
+test('the stylesheets parse: braces balance and nothing is orphaned', async () => {
+  for (const [name, css] of await sheets()) {
+    const stripped = css.replace(/\/\*[\s\S]*?\*\//g, (comment) => comment.replace(/[^\n]/g, ' '));
+    let depth = 0;
+    let line = 1;
+    let block = '';
+    for (const character of stripped) {
+      if (character === '\n') line += 1;
+      else if (character === '{') { depth += 1; block = ''; }
+      else if (character === '}') {
+        depth -= 1;
+        assert.ok(depth >= 0, `${name}: a closing brace with nothing open, at line ${line}`);
+      } else if (depth === 0) block += character;
+      // A colon at the top level, outside a selector, is an orphaned body.
+      if (depth === 0 && character === ';') {
+        assert.ok(!block.includes(':'),
+          `${name}: an orphaned declaration before line ${line}: ${block.trim().slice(0, 60)}`);
+      }
+      if (depth === 0 && character === '{') block = '';
+    }
+    assert.equal(depth, 0, `${name}: ${depth} unclosed blocks`);
+  }
+});
+
+test('no rule names a class that no page and no module uses', async () => {
+  // `.strengths legend` outlived `.strengths` by a whole commit.
+  const [, css] = (await sheets())[0];
+  const { readdir } = await import('node:fs/promises');
+  const markup = await Promise.all(['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']
+    .map((page) => readFile(resolve(root, page), 'utf8')));
+  const modules = await Promise.all((await readdir(resolve(root, 'src')))
+    .filter((file) => file.endsWith('.js'))
+    .map((file) => readFile(resolve(root, 'src', file), 'utf8')));
+  const source = [...markup, ...modules].join('\n');
+  const retired = ['strengths', 'setup-body', 'rules-strip', 'mini-board',
+    'communication-settings', 'settings-dialog', 'rules-example', 'rules-gotchas', 'rules-optout'];
+  for (const name of retired) {
+    assert.ok(!source.includes(`"${name}`) && !source.includes(` ${name}"`),
+      `${name} came back — update this list rather than the assertion`);
+    assert.doesNotMatch(css, new RegExp(`\\.${name}\\b`), `styles.css still styles .${name}`);
+  }
+});

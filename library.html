@@ -43,7 +43,7 @@
     </form>
     <p id="filter-count" class="filter-count" aria-live="polite"></p>
     <div id="game-list" class="game-library-list"></div>
-    <button id="load-more" class="library-more btn" type="button" hidden data-variant="outline">Show more</button>
+    <button id="load-more" class="library-more btn" type="button" hidden data-variant="secondary">Show more</button>
   </main>
 
   <dialog id="replay-dialog" class="replay-dialog" aria-labelledby="replay-title">
@@ -57,7 +57,7 @@
       <aside class="replay-panel">
         <label class="analysis-toggle"><input id="replay-advantage" type="checkbox"> Show estimated advantage</label><p id="replay-score" class="analysis-score" aria-live="polite" hidden></p><p id="replay-warning" hidden></p>
         <p id="replay-status" class="watch-status" aria-live="polite"></p>
-        <div class="watch-controls"><button id="replay-first" type="button" class="btn" data-variant="outline">Start</button><button id="replay-previous" type="button" class="btn" data-variant="outline">Previous</button><button id="replay-next" type="button" class="btn" data-variant="outline">Next</button><button id="replay-auto" type="button" aria-pressed="false" class="btn" data-variant="outline">Auto · 1s</button><button id="replay-play-here" type="button" class="btn" data-variant="outline">Play from here</button></div>
+        <div class="watch-controls"><button id="replay-first" type="button" class="btn" data-variant="secondary">Start</button><button id="replay-previous" type="button" class="btn" data-variant="secondary">Previous</button><button id="replay-next" type="button" class="btn" data-variant="secondary">Next</button><button id="replay-auto" type="button" aria-pressed="false" class="btn" data-variant="secondary">Auto · 1s</button><button id="replay-play-here" type="button" class="btn" data-variant="secondary">Play from here</button></div>
         <div id="replay-moves" class="watch-moves" aria-label="Move transcript"></div>
         <details><summary>Experiment provenance</summary><div id="replay-sources" class="replay-sources"></div></details>
       </aside>
@@ -87,7 +87,7 @@
           <div id="demo-board" class="board" role="grid" aria-label="Playable rules demonstration"></div>
           <div class="replay-seat"><div id="demo-white-player" class="replay-player">White · You</div><div class="reserve"><span id="demo-white-label" class="reserve-label">Your reserve</span><div id="demo-white-reserve" class="bank"></div></div></div>
         </div>
-        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="outline">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
+        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="secondary">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
       </div>
     </section></div>
 

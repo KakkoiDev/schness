@@ -97,7 +97,7 @@ function gameCard(game) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'library-game btn';
-  button.dataset.variant = 'outline';
+  button.dataset.variant = 'secondary';
   button.dataset.result = resultTone(game.result);
 
   const mini = document.createElement('div');

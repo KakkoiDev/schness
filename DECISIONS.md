@@ -259,6 +259,27 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### Four button roles, and nothing else draws a rectangle
+
+`primary`, `secondary` (the default), `ghost`, `icon`. There were seven near-identical rectangles —
+`.card-primary`, `.card-secondary`, `.rail-button`, `.step`, `.rules-confirm`, `.library-more`,
+`.watch-controls button`, `.puzzle-actions button`, and more — each restating a border, a background
+and a radius. **Most of them were already having no effect**, because `body .btn` in `ui.css` beats a
+bare class on specificity, which is the hard kind of duplication to notice: the sheet reads as if it
+is styling something.
+
+`data-variant="outline"` is gone; it meant "secondary", which is the default.
+
+**Disabled is drawn, not dimmed** — except a ghost button, which keeps its transparency. Filling one
+in makes the disabled item the loudest thing in a quiet list.
+
+**Two orphaned declaration blocks came out of this.** Both were bodies whose selectors a deletion
+pass had removed. A browser recovers from one by swallowing the *next* rule, so `.segmented` silently
+stopped being a grid and the online time control had been rendering as four stacked rows. Every
+assertion about it was a regex over the source, and the source still said what it always had.
+`test/design-tokens.test.js` now parses both sheets: braces must balance, and a declaration may not
+appear outside a rule.
+
 ### A library card leads with a colour and a shape
 
 1,099 cards that all said "Threefold draw" in the same size and weight are text, not information.
@@ -709,6 +730,9 @@ Newest first. One line per decision that changed how the app behaves.
 
 - One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
   them made the module precache work for the first time.
+
+- Four button roles replace seven rectangles, most of which had already stopped having any effect —
+  and two orphaned declaration blocks that had silently broken the online time control.
 
 - Library cards lead with a result swatch and the final position, and the archive can be sorted.
 
