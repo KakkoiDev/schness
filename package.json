@@ -11,12 +11,14 @@
     "tournament:aggregate": "node scripts/aggregate-tournament.js",
     "library:build": "node scripts/build-game-library.js",
     "puzzles:extract": "node scripts/extract-puzzle-shard.js",
-    "puzzles:aggregate": "node scripts/aggregate-puzzles.js"
+    "puzzles:aggregate": "node scripts/aggregate-puzzles.js",
+    "test:e2e:a11y": "playwright test e2e/accessibility.spec.js"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
-    "@playwright/test": "^1.63.0"
+    "@playwright/test": "^1.63.0",
+    "axe-core": "^4.10.0"
   }
 }

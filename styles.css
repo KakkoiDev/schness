@@ -2062,7 +2062,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 .puzzle-toggles { display:grid;gap:.55rem;margin-top:.75rem;color:var(--muted);font-size:.78rem }
 .puzzle-toggles label { display:flex;min-height:2rem;align-items:center;gap:.5rem;cursor:pointer }
 .puzzle-toggles input { width:1.05rem;height:1.05rem;accent-color:var(--accent) }
-.puzzle-panel h3 { margin:0;font-size:1.2rem }
+.puzzle-panel h2 { margin:0;font-size:1.2rem }
 .puzzle-feedback { display:grid;grid-template-columns:1.8rem 1fr;min-height:4rem;align-items:center;gap:.65rem;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--paper);padding:.7rem .8rem;color:var(--muted) }
 .puzzle-feedback > span { display:grid;width:1.8rem;aspect-ratio:1;place-items:center;border-radius:50%;background:var(--sunk);color:var(--muted);font-weight:640 }
 .puzzle-feedback p { margin:0;line-height:1.4 }
@@ -2107,7 +2107,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   .puzzle-panel { display:contents }
   .puzzle-settings { order:1 }
   #puzzle-progress { display:none }
-  .puzzle-panel h3 { order:2;margin:.15rem 0;font-size:1rem }
+  .puzzle-panel h2 { order:2;margin:.15rem 0;font-size:1rem }
   .puzzle-stage { order:3;width:min(100%,calc(100svh - 18rem));margin:auto }
   .puzzle-feedback { order:4 }
   .puzzle-stage .replay-player { min-height:1.75rem }

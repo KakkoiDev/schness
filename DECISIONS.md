@@ -259,6 +259,31 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### Accessibility is audited, not asserted
+
+`e2e/accessibility.spec.js` runs **axe-core** over all five pages in both themes, and over every
+dialog opened the way a person opens it — a dialog reached by calling `showModal()` from a test is
+not the dialog anyone sees, and the position editor in particular has no accessible names until its
+opener renders it. `axe-core` is a devDependency; `@playwright/test` already was one, and the "no
+dependencies" rule is about what ships.
+
+The audit runs with `bypassCSP: true`. `addScriptTag` is subject to the page's own policy, which has
+no `unsafe-inline` — and keeping it that way is the point of `test/security.test.js`, so the policy
+is never relaxed for a test.
+
+Three things it cannot see, checked separately in the same file:
+
+- **Every tab stop shows the focus ring.** The board is the exception by design: it is one tab stop
+  with the cursor tracked in JS, and its indicator is the inset ring on the cursor square.
+  Verified in Chromium that the keyboard path still places a king and gets a reply after the Stage 3
+  restyle.
+- **A dialog takes focus, gives it back, and closes on Escape.**
+- **The theme toggle says it is a switch, on every page.** `library.html` and `puzzles.html`
+  announced only the word "Dark".
+
+Two real violations came out of the first sweep, both on `puzzles.html`: an `aria-label` on a bare
+`<div>`, which is prohibited without a role, and an `h3` that followed an `h1`.
+
 ### The two languages are one product
 
 - **The board's own words are data, not CSS.** `content: "CHECK"` and `content: "CHECKMATE"` sat in
@@ -742,6 +767,9 @@ Newest first. One line per decision that changed how the app behaves.
 
 - One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
   them made the module precache work for the first time.
+
+- Accessibility is audited by axe-core in CI across five pages, two themes and every dialog, with
+  the focus ring, dialog focus and the theme switch checked separately.
 
 - Check and checkmate are Japanese on the Japanese site, and the language switch names the language
   rather than the country.
