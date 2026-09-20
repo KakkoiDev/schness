@@ -18,7 +18,7 @@
   <main class="game">
     <header>
       <a class="brand" href="./" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><span class="brand-word">Schness</span></a>
-      <nav class="site-nav" aria-label="Schness"><a href="./watch.html">Bot arena</a><a href="./library.html" aria-current="page">Library</a><a href="./puzzles.html">Puzzles</a></nav>
+      <nav class="site-nav" aria-label="Schness"><a href="./index.html">Play</a><a href="./index.html#online" data-online-link>Online</a><a href="./watch.html">Bot arena</a><a href="./puzzles.html">Puzzles</a><a href="./library.html" aria-current="page">Library</a></nav>
       <div class="header-actions">
         <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
         <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
@@ -46,7 +46,7 @@
     <button id="load-more" class="library-more btn" type="button" hidden data-variant="secondary">Show more</button>
   </main>
 
-  <dialog id="replay-dialog" class="replay-dialog" aria-labelledby="replay-title">
+  <dialog id="replay-dialog" class="replay-dialog is-full" aria-labelledby="replay-title">
     <div class="replay-head"><div><p class="eyebrow">Recorded game</p><h2 id="replay-title">Game</h2><p id="replay-meta"></p></div><button id="replay-close" class="dialog-close btn" type="button" aria-label="Close replay" data-variant="ghost">✕</button></div>
     <div class="replay-layout">
       <div class="replay-stage">
@@ -63,8 +63,7 @@
       </aside>
     </div>
   </dialog>
-    <dialog id="rules-dialog" class="rules-dialog" aria-labelledby="rules-title">
-    <div class="dialog-grab" aria-hidden="true"></div>
+    <dialog id="rules-dialog" class="rules-dialog is-full" aria-labelledby="rules-title">
     <div class="dialog-head">
       <div>
         <p class="eyebrow">How to play</p>
@@ -73,7 +72,7 @@
       <form method="dialog"><button class="dialog-close btn" type="submit" aria-label="Close rules" data-variant="ghost">✕</button></form>
     </div>
     <div class="dialog-body" tabindex="0" role="group" aria-label="The rules, scrollable">
-      <ol class="rules-list">
+      <div class="rules-stepper" hidden><ol class="rules-progress"><li data-step="1"></li><li data-step="2"></li><li data-step="3"></li><li data-step="4"></li></ol><p class="rules-step-count" id="rules-step-count" role="status" aria-live="polite">Rule 1 of 4</p></div><ol class="rules-list">
         <li><strong>The board is 4 × 4</strong><span>Files a–d, ranks 1–4. White moves up the board, Black moves down.</span><button class="rule-demo-trigger btn" type="button" data-lesson="board" aria-controls="rules-demo" aria-label="Try the board" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Kings go down first</strong><span>White places their king anywhere on rank 1, then Black places theirs on rank 4. Play begins with White.</span><button class="rule-demo-trigger btn" type="button" data-lesson="kings" aria-controls="rules-demo" aria-label="Try placing the kings" data-variant="ghost"><span>Try it →</span></button></li>
         <li><strong>Move or deploy</strong><span>On your turn, either move a piece on the board by normal chess rules, or take a piece from your reserve and place it on any empty square. A deployed piece may not immediately check the opposing king.</span><button class="rule-demo-trigger btn" type="button" data-lesson="deploy" aria-controls="rules-demo" aria-label="Try moving or deploying" data-variant="ghost"><span>Try it →</span></button></li>
@@ -82,19 +81,20 @@
       <div class="rules-practice">    <section id="rules-demo" class="rules-demo" aria-labelledby="demo-title" hidden>
       <div class="demo-heading"><div><p class="eyebrow">Playable rule</p><h2 id="demo-title">Place the kings</h2></div><button id="demo-close" hidden class="text-button btn" type="button" data-variant="ghost">Close</button></div>
       <div class="demo-layout">
+        <p id="demo-instruction"></p>
         <div class="demo-stage">
           <div class="replay-seat"><div id="demo-black-player" class="replay-player">Black · Machine</div><div class="reserve"><span id="demo-black-label" class="reserve-label">Black reserve</span><div id="demo-black-reserve" class="bank"></div></div></div>
           <div id="demo-board" class="board" role="grid" aria-label="Playable rules demonstration"></div>
           <div class="replay-seat"><div id="demo-white-player" class="replay-player">White · You</div><div class="reserve"><span id="demo-white-label" class="reserve-label">Your reserve</span><div id="demo-white-reserve" class="bank"></div></div></div>
         </div>
-        <aside class="demo-panel"><p id="demo-instruction"></p><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="secondary">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
+        <aside class="demo-panel"><div id="demo-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">●</span><p>Your turn.</p></div><button id="demo-restart" type="button" class="btn" data-variant="secondary">Restart this rule</button><a class="demo-full-game" href="./watch.html">Continue in Bot Arena →</a></aside>
       </div>
     </section></div>
 
     </div>
     <div class="dialog-foot">
       <p class="dialog-foot-note">You can reopen this from <strong>Rules</strong> in the header at any time.</p>
-      <form method="dialog" class="dialog-foot-actions">
+      <div class="rules-stepper-actions" hidden><button class="rules-back btn" type="button" data-variant="secondary">Back</button><button class="rules-next btn" type="button" data-variant="primary">Next rule</button></div><form method="dialog" class="dialog-foot-actions">
         <button class="rules-skip btn" type="submit" value="skip" data-variant="ghost">Skip</button>
         <button class="rules-confirm btn" type="submit" data-variant="primary">Start playing</button>
       </form>

@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { closeRules, openLesson } from './rules-dialog.js';
 
 const GAME_ID = '00000000-0000-4000-8000-000000000001';
 
@@ -20,7 +21,7 @@ test('lobby settings, language, theme, rules and online invitation', async ({ pa
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.getByRole('button', { name: 'Rules', exact: true }).click();
   await expect(page.getByRole('dialog', { name: /Schness in four rules/ })).toBeVisible();
-  await page.getByRole('button', { name: 'Start playing' }).click();
+  await closeRules(page);
   await page.getByRole('button', { name: /Create an online game/ }).click();
   await expect(page.getByRole('dialog', { name: 'Choose a time control' })).toBeVisible();
   await page.locator('#online-setup label:has(input[value="3+2"])').click();
@@ -94,8 +95,7 @@ test('training warns the defender of forced mate before they move', async ({ pag
 
 test('interactive tutorial uses the shared board and answers a king placement', async ({ page }) => {
   await page.goto('/');
-  await page.locator('header [data-open-rules]').click();
-  await page.getByRole('button', { name: 'Try placing the kings' }).click();
+  await openLesson(page, 'kings');
   const board = page.locator('#demo-board[data-schness-board="true"]');
   await expect(board).toBeVisible();
   await expect(board.locator('.square.placement.target')).toHaveCount(4);
@@ -106,8 +106,7 @@ test('interactive tutorial uses the shared board and answers a king placement', 
 
 test('drag pickup hides its source and an illegal drop restores it', async ({ page }) => {
   await page.goto('/');
-  await page.locator('header [data-open-rules]').click();
-  await page.getByRole('button', { name: 'Try moving or deploying' }).click();
+  await openLesson(page, 'deploy');
   const source = page.locator('#demo-board .square').filter({ has: page.locator('.piece-white') }).first();
   const box = await source.boundingBox();
   const x = box.x + box.width / 2;
@@ -550,4 +549,133 @@ test('check and checkmate are in Japanese on the Japanese site', async ({ page }
   const mated = page.locator('#replay-board .square.in-checkmate');
   await expect(mated).toHaveCount(1);
   expect(await mated.evaluate((element) => getComputedStyle(element, '::before').content)).toBe('"詰み"');
+});
+
+test('the puzzle board keeps its width on a phone, and nothing hides behind the action bar', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'A phone-only layout');
+  // A previous pass capped the stage at calc(100svh - 32rem) to clear the fixed
+  // action bar. It bought nothing — the page scrolls at every mobile height —
+  // and cost the board a third of itself: 332px at 390x844, 188px at 390x700,
+  // 128px at 360x640. The board is the page here; it takes the width it has.
+  for (const height of [844, 800, 700, 640]) {
+    await page.setViewportSize({ width: 390, height });
+    await page.goto('/puzzles.html');
+    await expect(page.locator('#puzzle-board .square').first()).toBeVisible({ timeout: 20_000 });
+
+    const available = await page.locator('.puzzle-page .game').evaluate((game) => {
+      const style = getComputedStyle(game);
+      return game.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+    });
+    const board = await page.locator('#puzzle-board').evaluate((element) => element.getBoundingClientRect().width);
+    expect(board).toBeGreaterThanOrEqual(available - 1);
+
+    // The action bar and the feedback strip are fixed. Scrolled to the end,
+    // nothing in the flow may sit under either of them.
+    for (const state of ['ready', 'wrong']) {
+      await page.locator('#puzzle-feedback').evaluate((feedback, value) => { feedback.dataset.state = value; }, state);
+      await page.evaluate(() => {
+        const root = document.scrollingElement ?? document.documentElement;
+        root.scrollTop = root.scrollHeight;
+      });
+      await expect.poll(() => page.evaluate(() => {
+        const root = document.scrollingElement ?? document.documentElement;
+        return root.scrollHeight - root.clientHeight - root.scrollTop;
+      })).toBeLessThan(2);
+      const overlap = await page.evaluate(() => {
+        const bar = document.querySelector('.puzzle-actions').getBoundingClientRect();
+        const feedback = document.querySelector('#puzzle-feedback');
+        const floating = getComputedStyle(feedback).position === 'fixed';
+        const ceiling = Math.min(bar.top, floating ? feedback.getBoundingClientRect().top : Infinity);
+        let worst = -Infinity;
+        for (const element of document.querySelectorAll('.puzzle-page .game *')) {
+          const style = getComputedStyle(element);
+          if (style.position === 'fixed' || style.visibility === 'hidden') continue;
+          if (element.closest('.puzzle-actions')) continue;
+          if (floating && element.closest('#puzzle-feedback')) continue;
+          const box = element.getBoundingClientRect();
+          if (!box.width || !box.height) continue;
+          worst = Math.max(worst, box.bottom - ceiling);
+        }
+        return worst;
+      });
+      expect(overlap).toBeLessThan(0);
+    }
+  }
+});
+
+test('every dialog is centred, or a deliberate sheet — measured, not eyeballed', async ({ page }, testInfo) => {
+  // #online-setup used to open at x:0, y:0 on a phone: the rule that centres
+  // every dialog was scoped to `@media (min-width: 761px)`, and the four other
+  // dialogs escaped only because each had been given its own full-screen rule.
+  // The gap was invisible in a desktop browser, which is how it shipped.
+  const dialogs = [
+    ['/index.html', '#online-setup', 'sheet'],
+    ['/index.html', '#rules-dialog', 'full'],
+    ['/watch.html', '#position-dialog', 'full'],
+    ['/library.html', '#replay-dialog', 'full'],
+  ];
+  const widths = testInfo.project.name === 'mobile' ? [[390, 844]] : [[768, 1024], [1440, 900]];
+  for (const [width, height] of widths) {
+    await page.setViewportSize({ width, height });
+    for (const [url, selector, shape] of dialogs) {
+      await page.goto(url);
+      await page.locator(selector).evaluate((dialog) => { if (!dialog.open) dialog.showModal(); });
+      const box = await page.locator(selector).evaluate((dialog) => {
+        const rect = dialog.getBoundingClientRect();
+        return {
+          left: Math.round(rect.left), top: Math.round(rect.top),
+          right: Math.round(window.innerWidth - rect.right),
+          bottom: Math.round(window.innerHeight - rect.bottom),
+        };
+      });
+      if (width > 760) {
+        expect(Math.abs(box.left - box.right), `${selector} centred across`).toBeLessThanOrEqual(2);
+        expect(Math.abs(box.top - box.bottom), `${selector} centred down`).toBeLessThanOrEqual(2);
+      } else if (shape === 'sheet') {
+        expect(box, `${selector} is a bottom sheet`).toMatchObject({ left: 0, right: 0, bottom: 0 });
+        expect(box.top, `${selector} leaves the page visible above it`).toBeGreaterThan(0);
+      } else {
+        expect(box, `${selector} fills the screen`).toMatchObject({ left: 0, right: 0, top: 0, bottom: 0 });
+      }
+    }
+  }
+});
+
+test('the rules are a stepper on a phone: one rule, a working Next, no scrolling', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'The stepper is the phone layout');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/index.html');
+  // Nothing opens the rules for you — the stepper lays itself out at load, and
+  // driving a lesson calls showModal(), so that must not happen here.
+  await expect(page.locator('#rules-dialog')).not.toHaveAttribute('open', /.*/);
+
+  await page.locator('header [data-open-rules]').click();
+  const dialog = page.locator('#rules-dialog');
+  await expect(dialog).toHaveClass(/is-stepping/);
+
+  for (const step of [1, 2, 3, 4]) {
+    await expect(page.locator('.rules-list > li:not([hidden])')).toHaveCount(1);
+    await expect(page.locator('#rules-step-count')).toHaveText(`Rule ${step} of 4`);
+    await expect(page.locator('.rules-progress li[data-state="current"]')).toHaveCount(1);
+    if (step === 1) await expect(page.locator('.rules-back')).toBeDisabled();
+    else await expect(page.locator('.rules-back')).toBeEnabled();
+
+    // Read what to do, then see the board you are to do it on.
+    const ordered = await page.evaluate(() => {
+      const instruction = document.querySelector('#demo-instruction').getBoundingClientRect();
+      return instruction.bottom <= document.querySelector('#demo-board').getBoundingClientRect().top;
+    });
+    expect(ordered).toBe(true);
+
+    // The whole step fits at 390x844. This is what the desktop layout reflowed
+    // onto a phone could not do, and scrolling was the only way to change rule.
+    const overflow = await page.locator('.dialog-body').evaluate((body) => body.scrollHeight - body.clientHeight);
+    expect(overflow, `step ${step} fits`).toBeLessThanOrEqual(1);
+
+    const next = page.locator('.rules-next');
+    await expect(next).toHaveText(step === 4 ? 'Start playing' : 'Next rule');
+    await next.click();
+  }
+  // Next on the last rule is the exit, which is why it says so.
+  await expect(dialog).not.toHaveAttribute('open', /.*/);
 });

@@ -203,6 +203,18 @@ in `src/lobby.js`, and there is no `<nav>` element on any of the five pages.
 - Add one shared `<nav>` to all five pages.
 - Style the `<a>` itself as the button — a `<button>` inside an `<a>` swallows the click.
 
+### The nav has no destinations in it
+
+The header holds brand, theme, Install and Rules — **not one destination**. So "play against
+a person" is reachable from exactly one page.
+
+Ship a real `<nav>`: **Play, Online, Bot arena, Puzzles, Library**, as links, on all five
+pages, with the current page marked `aria-current="page"`. Online belongs in it — starting a
+game against a person is a primary destination, not a lobby-only side door.
+
+At <=760px the two app controls (Rules, theme) collapse to icons first; the nav wraps to a
+second row before the wordmark gives up a single pixel. Verify with Japanese labels.
+
 ### One order, everywhere
 
 Ship: **brand, page controls (Rules, theme), rule, language**. *(fixes #08)*
@@ -235,13 +247,56 @@ Deliberately **no board** — the mobile home stays a menu.
 
 ---
 
-## Stage 6 — Rules dialog
+## Stage 6 — Dialogs
 
-- Open **at the top**. Size the demo so the board it is teaching is fully visible.
-  *(fixes #14)*
-- Four rules, numbered, each with a "try it" affordance.
-- The demo board uses the Stage 3 frame.
-- Footer: "You can reopen this from **Rules** in the header at any time", Skip, Start playing.
+### 6a. One dialog component, two sizes — and a real bug
+
+**Measured at 390x844 on the shipped site: `#online-setup` opens in the top-left corner.**
+Not merely off-centre — `x:0, y:0`, with 31px spare to its right and 582px below it.
+
+The declaration that centres **every** dialog is scoped to `@media (min-width: 761px)`. Below
+that nothing centres it and the computed margin falls back to `0`. `.rules-dialog`,
+`.position-dialog` and `.replay-dialog` escape because each was separately given a
+full-height sheet rule. `.online-setup` was given none, so it is the only dialog that falls
+through the gap — and the gap is invisible in a desktop browser, which is why it shipped.
+
+**This is why the invite and rules modals look like different objects: they were never one
+component.** Fix the class, not the instance: centre every dialog at every viewport, and make
+size a class on the element — `is-sheet` (bottom sheet at <=760px) or `is-full` — never a
+per-dialog media query.
+
+- `#online-setup` -> `is-sheet`. A bottom sheet also puts the primary action in the thumb zone.
+- `#rules-dialog`, `#position-dialog`, `#replay-dialog` -> `is-full`, replacing their bespoke
+  media queries.
+
+### 6b. Delete the fake drag handle
+
+`<div class="dialog-grab" aria-hidden="true">` renders a 38x4 rounded bar below 760px, in all
+five HTML files. **No `pointerdown` or `touchstart` handler anywhere in `src/` is bound to
+it** — it is purely decorative, so it promises drag-to-dismiss and delivers nothing. The
+sheets are full-height and already have a close button, so there is nothing to wire up:
+remove the element from all five pages and both CSS blocks.
+
+### 6c. The rules dialog
+
+**Desktop** — open **at the top**; four numbered rules beside the demo; size the demo so the
+board it is teaching is fully visible; the board uses the Stage 3 frame. Footer: "You can
+reopen this from **Rules** in the header at any time", Skip, Start playing. *(fixes #14)*
+
+**Mobile is a different layout, not the desktop one reflowed.** Today the grid collapses to
+one column, the demo board eats ~55% of the viewport, the instruction sits *below* it, and the
+only way to change rule is to scroll — there is no next/prev control at all.
+
+Ship a **stepper**:
+
+- One rule per screen.
+- A four-segment progress bar plus "Rule 3 of 4".
+- **Instruction above the board**, so you read what to do before you see the board.
+- Board capped so the whole step fits without scrolling at 390x844.
+- **`Back` / `Next rule` pinned to a fixed footer.** On rule four, `Next rule` becomes
+  `Start playing`.
+- Keep "Restart this rule" as a quiet action under the board.
+- Announce each step change once via `aria-live="polite"`; move focus to the step heading.
 
 ---
 
@@ -399,6 +454,11 @@ Apply Stages 0-4 and 11 to it, then treat its layout as an open question.
 | — | 31 hand-maintained `?v=` strings | 14 |
 | — | 90KB CSS on every page | 1, 14 |
 | — | `puzzles.html` undesigned | 14 |
+| — | Invite dialog opens top-left on mobile | 6 |
+| — | Two dialog patterns, never one component | 6 |
+| — | `.dialog-grab` promises drag-to-dismiss, does nothing | 6 |
+| — | No way to change rule on mobile | 6 |
+| — | Header nav holds no destinations | 4 |
 
 ---
 

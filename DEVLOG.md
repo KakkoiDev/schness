@@ -501,3 +501,136 @@ browser on one machine. Next measurement: look at the tab on a 1x screen.
 between two real browsers on two real networks. `connectionReport()`'s `relayed` branch cannot fire at all,
 because trystero ships STUN and no TURN. `e2e/online-connect.spec.js` fails here, and failed identically at
 baseline, for that reason.
+
+## 2026-09-21 — The puzzle board was capped by a number that bought nothing
+
+**Problem.** Reported from use: the puzzles board is very small on a phone. It was. Measured in
+Chromium: 332px at 390×844, 288px at 390×800, 188px at 390×700, 128px at 360×640 — against 366px of
+available width. The board is the whole content of that page and it was rendering at a third of the
+screen on a small phone.
+
+**Cause.** My own fix from the design pass. The board sits above a fixed action bar, and it had been
+overlapping it, so I sized the stage `min(100%, calc(100svh - 32rem))` — tying the board's *width*
+to the viewport's *height* minus a 512px constant. It cleared the bar, I measured the clearance
+once, and I shipped it. What I never checked was whether the constraint was buying anything.
+
+**It was not.** The page scrolls at every mobile height — 1,009px of content at 844 tall — so
+capping the board never made the page fit. It only made the board smaller. The whole premise of the
+rule was wrong, not merely its constant.
+
+**Decision.** The board takes the width it has; the fixed bar is cleared by reserving space below
+the content, which is what a fixed bar actually needs. Rejected tuning the constant: a smaller
+subtrahend would still tie width to height for no gain, and would still be wrong at some height I
+had not tested. Rejected making the bar non-fixed: on a phone the action bar in the thumb zone is
+worth more than the few pixels it costs.
+
+**Evidence.** Board now 366px at 390 wide and 336px at 360 wide, constant across all four heights.
+Scrolled to the end, nothing in the flow sits under the bar or the feedback strip at any of them —
+worst case 10px of clearance at 360×640, checked in both feedback states.
+
+**What I should have done the first time.** The design pass verified this by hand and left no test,
+which is exactly why it could regress to a third of its size without anything going red. There is
+now an e2e guard, and I confirmed it fails against the old rule (332px where 366px is required)
+before trusting it.
+
+**Found while fixing it.** Every page's rules dialog carries a `.puzzle-feedback` of its own, and
+the design pass's `position: fixed` rule was written against the class, not the id — so on any
+phone-width page, getting a tutorial answer wrong pulled the lesson's feedback out of its panel and
+parked it at the foot of the screen. Scoped to `#puzzle-feedback`.
+
+**Also.** `e2e/online-connect.spec.js` still probed `#search-stalled` and `#search-quiet` in its
+failure handler; Stage 7 deleted both, so the diagnostic reported `false` for them however the page
+had actually failed. It now reports the status line and which connection card is showing. Exercised
+against the sandbox's blocked relays: it correctly reports "no relay is answering yet" on
+`card-waiting`.
+
+**Next measurement.** Whether the `:has()` rule that widens the bottom padding for the feedback
+strip holds up in browsers without `:has()` support — there, the strip overlaps by ~38px. Every
+target browser has shipped it since 2023; worth a look if analytics ever says otherwise.
+
+## 2026-09-21 — The rules dialog on a phone is a stepper, not a reflow
+
+**Question.** The revised brief asks for one rule per screen on a phone. The existing mobile layout
+was the desktop dialog stacked: four rules in a column, the demo board taking about half the
+viewport, the instruction *below* the board it described, and no next/prev control at all —
+scrolling was the only way to reach rule 2.
+
+**Rejected: keep reflowing, just tighten it.** A single column can hold the rules or the board, not
+both, and no amount of tightening produces a control that does not exist. The reason to read rules
+on a phone is to do the thing they describe; a layout where the instruction arrives after the board
+has that backwards.
+
+**Decision.** A stepper: one rule per screen, a four-segment bar and "Rule 3 of 4", the instruction
+above the board, Back / Next pinned to the foot, and Next becoming "Start playing" on rule four. It
+drives the existing per-rule "Try it" triggers rather than reaching into the tutorial, so there is
+still exactly one thing that knows how to open a lesson.
+
+**The constraint that sized everything.** The brief requires the whole step to fit at 390×844
+without scrolling. Measured, the first attempt overflowed by up to 57px, so: the board is capped at
+`clamp(11rem, calc(100svh - 39rem), 20rem)` (220px there), the panel loses its chrome, and the
+resting feedback strip is hidden — in its "ready" state it says "Your turn — tap or drag a piece",
+which the instruction directly above the board has just said, and it was costing 54px to repeat it.
+The `clamp()` floor is not decoration: an expression with no lower bound is precisely how the
+puzzles board reached 128px, fixed earlier today. Below the floor the step scrolls, which is the
+right trade — a board too small to read is worth nothing.
+
+**Evidence.** All four steps at 390×844: one rule visible, the instruction above the board, and
+`scrollHeight === clientHeight`. Back disabled on rule one, "Start playing" on rule four, and
+pressing it closes the dialog.
+
+**Two bugs found while building it.**
+
+1. The stepper opens a lesson to match the rule you are standing on, and opening a lesson calls
+   `showModal()`. Laying itself out at load therefore *opened the rules for you* — the exact
+   invariant `DECISIONS.md` states, and one I had already tripped over once during the design pass.
+   It is gated on the dialog being open, and the e2e test asserts the dialog is closed on load.
+2. Moving the instruction into the demo's right-hand column collapsed the board to **12px on
+   desktop**. The stage's width was `min(100%, 22rem, …)` and it sits in a `1fr` column: a
+   percentage against a track sized from its own content resolves to zero. The percentage is gone.
+   This one is worth remembering — it did not look like a layout bug, it looked like the board had
+   stopped rendering.
+
+**Test changes.** Four existing tests drove the tutorial by clicking per-rule "Try it" buttons,
+which the stepper hides and presses for you. Rather than loosen them, `e2e/rules-dialog.js` now
+offers `openLesson` and `closeRules`, which drive whichever layout is on screen, so each test still
+asserts what it always did.
+
+**Next measurement.** The stepper's board is 220px at 390×844. Whether that is big enough to learn
+a capture on is a question for someone holding a phone, not for a measurement.
+
+## 2026-09-21 — Online joins the nav, and two lines of the brief I did not follow
+
+**Nav.** The design pass gave the header a `<nav>` with Bot arena, Library and Puzzles. The revised
+brief adds Play and Online, and it is right about why: starting a game against a person was
+reachable from the lobby and nowhere else, which makes a primary thing a side door. The wrinkle is
+that Online's target is a dialog, not a page. Rejected giving it its own page for the sake of being
+a link — the dialog is three radio buttons and a submit. Rejected a `<button>` in the nav, which
+would be the only non-link in a row of links. It is `./index.html#online`: a real link that
+cmd-clicks and copies, navigating from elsewhere and opening in place on the lobby. Closing it
+strips the hash, or a refresh reopens a dialog nobody asked for.
+
+**Measured** at 390, 360 and 320px in both languages: wordmark holds at 102px, no sideways scroll,
+all five items on one row at 390px. At 320px the nav scrolls horizontally, which is what its
+`overflow-x` was already there for.
+
+**Two deviations from the brief, both deliberate, both repeated from last time.**
+
+1. **`aria-pressed` on the theme toggle** (Stage 13). Asked for twice now; still wrong, and I want
+   the reasoning on the record rather than just the decision. The button's visible word is the
+   *action*: it says "Dark" while the page is light. For `aria-pressed` to mean anything it has to
+   describe the control's own state, and WCAG 2.5.3 wants the accessible name to contain the
+   visible label — so the name has to keep flipping with the action word. Work it through and the
+   pressed state is `false` in both directions, because the button always offers the theme that is
+   *not* active. A constant attribute is not information. The alternative is to relabel the control
+   with its current state rather than its action, which is a different button than the one the
+   design asks for. It keeps a dynamic `aria-label` and no `aria-pressed`.
+2. **The 0:20 waiting line** (Stage 7a). The brief's table puts "Still listening — no relay is
+   answering yet" at twenty seconds. That sentence is a claim about the relay pool, and at twenty
+   seconds the app has not detected anything of the kind — the overwhelmingly likely truth is that
+   the friend has not clicked yet. Saying it on a timer would be the interface guessing out loud.
+   The shipped schedule keeps that sentence for when a dead relay pool is actually detected, where
+   it outranks the clock at any elapsed time, and the timed 0:20 line says what is actually known:
+   "no one has opened the link yet".
+
+**Next measurement.** Whether anyone uses Online from a page other than the lobby. If nobody does,
+the nav item is costing a row of space at 320px for nothing.

@@ -416,9 +416,47 @@ were good; the first impression was half a sentence.
   which is where following notation actually happens.
 - The footer says where the dialog lives, so closing it is not a one-way door: "You can reopen this
   from **Rules** in the header at any time", then Skip and Start playing.
-- **On a phone the rules come first and the board is a scroll away.** There is no width for both,
-  and `order: 1` on `.rules-list` — a leftover from the layout where a static figure came last —
-  meant a dialog called "Schness in four rules" opened showing none of them.
+- **On a phone it is a different layout, not this one reflowed.** Stacking the desktop dialog gave
+  four rules in a column, a demo board eating half the viewport, the instruction *below* the board
+  it described, and no control anywhere to change rule — scrolling was the only way through. It is
+  a stepper now: one rule per screen, a four-segment progress bar and "Rule 3 of 4", the instruction
+  above the board, Back / Next pinned to the foot, and "Start playing" as the last step's Next,
+  because on rule four there is no next rule. The step is announced through `role="status"` on the
+  count and focus moves to the rule's heading.
+- **The whole step fits at 390×844 without scrolling**, which is the constraint that sized
+  everything else: the board is capped at `clamp(11rem, calc(100svh - 39rem), 20rem)` — 220px there —
+  the resting feedback strip is hidden because it only repeats the instruction above the board, and
+  the panel loses its chrome. The `clamp()` floor is deliberate: an expression with no lower bound is
+  exactly how the puzzles board reached 128px. Below the floor the step scrolls, which is the right
+  trade. All four steps measured; guarded by an e2e test.
+- **The stepper drives the existing "Try it" triggers rather than reaching into the tutorial**, so
+  one thing still knows how to open a lesson. It must not press one before the dialog is open:
+  opening a lesson calls `showModal()`, and the stepper laying itself out at load would otherwise
+  open the rules for you — the invariant this file states two sections down.
+- The demo stage's width may not be a percentage. It sits in a `1fr` column, and
+  `width: min(100%, …)` against a track sized from its own content resolves to `0`: the board
+  collapsed to 12px on a desktop the moment the instruction moved into that column.
+
+### The nav holds destinations, including Online
+
+The header used to carry brand · theme · Install · Rules — not one destination — and the nav that
+was added in the design pass carried three: Bot arena, Library, Puzzles. Starting a game against a
+person was reachable from the lobby and nowhere else, which made a primary thing a side door.
+
+Ship: **Play · Online · Bot arena · Puzzles · Library**, as links, on all five pages, with
+`aria-current="page"` on the one you are on.
+
+- Online is a destination whose target is a dialog that lives on the lobby. From another page the
+  link navigates to `./index.html#online` and `lobby.js` opens the dialog from the hash; on the
+  lobby it opens in place, with no navigation. Closing it takes the hash back off, so a refresh
+  does not reopen a dialog nobody asked for.
+- Measured at 390, 360 and 320px in both languages: the wordmark holds 102px and the document never
+  scrolls sideways. All five items fit on one row at 390px; at 320px the nav itself scrolls, which
+  is what `overflow-x: auto` on it is for.
+- **The game page is the exception on a phone.** Its nav is clipped to 1px — present for a screen
+  reader and the keyboard, invisible on screen — because during a match the board keeps the screen.
+  So Online is reachable from all five pages, but on one of them, on a phone, not by tapping. The
+  e2e test asserts that contract rather than skipping the page.
 
 ### The home page is a board, not a picture of one
 
@@ -794,13 +832,33 @@ Newest first. One line per decision that changed how the app behaves.
   them made the module precache work for the first time.
 
 - `puzzles.html` joins the rest of the design: its board no longer sits under the fixed action bar,
-  and its empty states are translatable rather than CSS literals.
+  and its empty states are translatable rather than CSS literals. **The board is not capped by
+  viewport height.** An earlier pass sized the stage `min(100%, calc(100svh - 32rem))` to clear that
+  bar, which cost the board a third of itself on a phone (332px at 390x844, 188px at 390x700, 128px
+  at 360x640) and bought nothing — the page scrolls at every mobile height, so the cap never made
+  anything fit. A fixed bar is cleared by reserving space below the content, not by shrinking it.
+  Guarded by an e2e test that asserts the board fills the available width at four heights and that
+  nothing in the flow sits under the bar or the feedback strip.
 
 - Accessibility is audited by axe-core in CI across five pages, two themes and every dialog, with
   the focus ring, dialog focus and the theme switch checked separately.
 
 - Check and checkmate are Japanese on the Japanese site, and the language switch names the language
   rather than the country.
+
+- **A dialog is one component with two sizes, not six instances.** The rule that centres a dialog
+  used to sit inside `@media (min-width: 761px)`, so below that nothing centred anything and the
+  margin fell back to `0`. Four dialogs escaped only because each had separately been given a
+  full-screen rule; `#online-setup` had none, and opened at x:0, y:0 on a phone — measured at
+  390x844 with 31px spare to its right and 554px below. The centring rule is unconditional now, and
+  size is a class on the element: `.is-sheet` (a bottom sheet at ≤760px, primary action in the thumb
+  zone) or `.is-full`. Never a per-dialog media query. Guarded by an e2e test that measures each
+  dialog's box at 390, 768 and 1440px; it was confirmed to fail against the shipped markup.
+
+- **`.dialog-grab` is gone.** A 38x4 bar drawn below 760px in all five pages, with no `pointerdown`
+  or `touchstart` handler bound to it anywhere in `src/`. It promised drag-to-dismiss and did
+  nothing. The sheets are full height and carry a close button, so there was nothing to wire up —
+  the promise was the defect.
 
 - Four button roles replace seven rectangles, most of which had already stopped having any effect —
   and two orphaned declaration blocks that had silently broken the online time control.

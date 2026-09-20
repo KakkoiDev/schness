@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { closeRules, openLesson, stepping } from './rules-dialog.js';
 
 for (const language of ['en', 'ja']) {
   for (const theme of ['light', 'dark']) {
@@ -90,15 +91,15 @@ test('Rules is available everywhere with an interactive board inside the modal',
     // board and the square names showing — so there is nothing to place yet.
     await expect(page.locator('#rules-dialog #demo-board .piece')).toHaveCount(2);
     await expect(page.locator('#rules-demo')).toHaveAttribute('data-coordinates', 'true');
-    await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="board"]') })).toContainText('The board is 4 × 4');
-    await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="kings"]') })).toContainText('Kings go down first');
-    await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="deploy"]') })).toContainText('Move or deploy');
-    await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="capture"]') })).toContainText('Captures come back');
-    await page.locator('[data-lesson="kings"]').click();
+    for (const [lesson, heading] of [['board', 'The board is 4 × 4'], ['kings', 'Kings go down first'],
+      ['deploy', 'Move or deploy'], ['capture', 'Captures come back']]) {
+      await expect(page.locator('.rules-list li').filter({ has: page.locator(`[data-lesson="${lesson}"]`) })).toContainText(heading);
+    }
+    await openLesson(page, 'kings');
     await expect(page.locator('#rules-dialog #demo-board .square.placement')).toHaveCount(4);
     await page.locator('#demo-board .square.placement').first().click();
     await expect(page.locator('#demo-board .piece-black')).toHaveCount(1, { timeout: 10000 });
-    await page.locator('.rules-confirm').click();
+    await closeRules(page);
     await expect(page.locator('#rules-dialog')).not.toBeVisible();
   }
 });
@@ -157,10 +158,39 @@ test('the destinations are real links, not JavaScript navigations', async ({ pag
   for (const path of PAGES) {
     await page.goto(path);
     const nav = page.locator('header nav.site-nav');
-    await expect(nav.locator('a')).toHaveCount(3);
-    for (const href of ['./watch.html', './library.html', './puzzles.html']) {
+    // Play and Online are destinations too. Online especially: starting a game
+    // against a person used to be reachable from the lobby and nowhere else.
+    await expect(nav.locator('a')).toHaveCount(5);
+    for (const href of ['./index.html', './index.html#online', './watch.html', './puzzles.html', './library.html']) {
       await expect(nav.locator(`a[href="${href}"]`)).toHaveCount(1);
     }
+  }
+});
+
+test('Online is a destination from every page, and the lobby opens it in place', async ({ page }, testInfo) => {
+  for (const path of PAGES) {
+    await page.goto(path);
+    // During a match on a phone the board keeps the screen: the game page's
+    // nav is there for a screen reader and the keyboard, clipped to 1px. It is
+    // the one page where Online is not a thing you can tap.
+    const clipped = await page.locator('.site-nav').evaluate((nav) => nav.getBoundingClientRect().width <= 1);
+    if (clipped) {
+      expect(testInfo.project.name).toBe('mobile');
+      expect(path).toContain('/game.html');
+      await expect(page.locator('.site-nav a[data-online-link]')).toHaveAttribute('href', './index.html#online');
+      continue;
+    }
+    await page.locator('.site-nav a[data-online-link]').click();
+    // The lobby replaces the hash in place, so it stays on "/" there.
+    await expect(page).toHaveURL(/(index\.html)?#online$/);
+    await expect(page.locator('#online-setup')).toHaveJSProperty('open', true);
+    // From the lobby it is not a navigation, and closing it takes the hash
+    // back off — otherwise a refresh reopens a dialog nobody asked for.
+    await page.locator('#online-setup-close').click();
+    await expect(page).not.toHaveURL(/#online$/);
+    await page.locator('.site-nav a[data-online-link]').click();
+    await expect(page.locator('#online-setup')).toHaveJSProperty('open', true);
+    await page.locator('#online-setup-close').click();
   }
 });
 
@@ -208,8 +238,15 @@ test('the rules dialog opens at the top with the board it teaches whole', async 
     }
     await expect(page.locator('#rules-dialog .rules-list > li')).toHaveCount(4);
     await expect(page.locator('#rules-dialog .rule-demo-trigger')).toHaveCount(4);
-    await expect(page.locator('#rules-dialog .dialog-foot')).toContainText('reopen this from');
-    await page.locator('.rules-confirm').click();
+    if (await stepping(page)) {
+      // One rule per screen, and the foot carries Back / Next instead of the
+      // note — there is no room for both, and the controls win.
+      await expect(page.locator('#rules-dialog .rules-list > li:not([hidden])')).toHaveCount(1);
+      await expect(page.locator('#rules-step-count')).toHaveText('Rule 1 of 4');
+    } else {
+      await expect(page.locator('#rules-dialog .dialog-foot')).toContainText('reopen this from');
+    }
+    await closeRules(page);
     await expect(page.locator('#rules-dialog')).toBeHidden();
   }
 });

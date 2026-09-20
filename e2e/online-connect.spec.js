@@ -22,10 +22,12 @@ test('two independent browsers join the same online invite and exchange a move',
       await expect(host.locator('#board')).toBeVisible({ timeout: 55_000 });
       await expect(guest.locator('#board')).toBeVisible({ timeout: 10_000 });
     } catch (error) {
+      // One status line now carries the whole escalation; #search-stalled and
+      // #search-quiet were deleted with the second and third paragraphs, and
+      // probing them here only ever reported false.
       const details = await Promise.all([host, guest].map(async page => ({
         status: await page.locator('#search-status').textContent(),
-        stalled: await page.locator('#search-stalled').isVisible(),
-        quiet: await page.locator('#search-quiet').isVisible(),
+        card: await page.locator('#network-card .card-state:not([hidden])').first().getAttribute('id').catch(() => null),
       })));
       throw new Error(JSON.stringify({ details, faults, cause: error.message }));
     }
