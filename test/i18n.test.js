@@ -23,18 +23,22 @@ test('every page entry point loads the shared bilingual interface', async () => 
   }
 });
 
-test('page entries and their i18n import are cache-busted together', async () => {
-  const entries = [
-    ['index.html', 'lobby'], ['game.html', 'main'], ['watch.html', 'watch-ui'],
-    ['library.html', 'library-ui'], ['puzzles.html', 'puzzle-ui'],
-  ];
-  for (const [pageFile, moduleName] of entries) {
-    const page = await readFile(new URL(`../${pageFile}`, import.meta.url), 'utf8');
-    const module = await readFile(new URL(`../src/${moduleName}.js`, import.meta.url), 'utf8');
-    const pageVersion = page.match(new RegExp(`src="\\./src/${moduleName}\\.js\\?v=(\\d+)"`))?.[1];
-    const importVersion = module.match(/from '\.\/i18n\.js\?v=(\d+)'/)?.[1];
-    assert.ok(pageVersion, pageFile);
-    assert.equal(importVersion, pageVersion, moduleName);
+test('nothing carries a hand-maintained cache-busting string', async () => {
+  // There were 31 of them — styles.css?v=74 against ui.css?v=84 against
+  // rules-modal.js?v=84 — each bumped by hand. Bump one and forget another and
+  // a returning visitor gets new CSS against an old module, a bug that
+  // reproduces for nobody. They also defeated the precache they sat beside:
+  // sw.js lists './src/main.js', the page asked for './src/main.js?v=71', and
+  // caches.match does not ignore the search string.
+  //
+  // The service worker owns cache identity now. CACHE is the one number, and
+  // DECISIONS.md already requires it to move with any change to SHELL.
+  const files = ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html',
+    'src/lobby.js', 'src/main.js', 'src/watch-ui.js', 'src/library-ui.js', 'src/puzzle-ui.js',
+    'src/rules-modal.js', 'src/analysis-ui.js'];
+  for (const file of files) {
+    const source = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
+    assert.doesNotMatch(source, /\?v=\d+/, `${file} still hand-maintains a cache-busting string`);
   }
 });
 
@@ -89,7 +93,7 @@ test('phone navigation uses compact text controls without decorative icons', asy
   assert.doesNotMatch(css, /header \.rules-button::before\s*\{\s*content/);
   for (const file of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const page = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
-    assert.match(page, /href="\.\/styles\.css\?v=\d+"/, file);
+    assert.match(page, /href="\.\/styles\.css"/, file);
   }
 });
 

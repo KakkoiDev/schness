@@ -124,6 +124,14 @@ changes, because that is what makes the file differ and triggers a worker update
 - **Bump `CACHE` in the same commit as any change to a file listed in `SHELL`.** Six deploys once
   shipped to production and reached nobody, because `CACHE` sat unchanged and no update ever
   installed. Players kept a build that was hours old and there was no signal anywhere.
+- **`CACHE` is the only cache-busting number.** There used to be 31 more: `styles.css?v=74` against
+  `ui.css?v=84` against `rules-modal.js?v=84`, every file on its own hand-maintained count. Bumping
+  one and forgetting another shipped a returning visitor new CSS against an old module — a bug that
+  reproduces for nobody. They also quietly defeated the precache they sat beside: `SHELL` lists
+  `./src/main.js`, the page asked for `./src/main.js?v=71`, and `caches.match` does not ignore the
+  search string, so every module was fetched and stored a second time under its query string.
+  **Do not reintroduce a `?v=`.** Guarded by `test/i18n.test.js`, and `test/shell.test.js` now also
+  checks that every script and stylesheet a page loads is a path `SHELL` actually precaches.
 - The fetch handler **revalidates in the background**, so a forgotten bump is late by one visit
   rather than invisible forever. Do not return it to plain `cached || fetch(...)`.
 - **Only the lobby reloads itself** when a new worker takes over. The match page must never: a
@@ -550,6 +558,9 @@ Newest first. One line per decision that changed how the app behaves.
 - The lobby's rule strip, setup disclosure, strength radios, settings dialog, the `.mini-board`, the
   hidden rules figure and `initSettings` are gone from the sheet and the markup, not just switched
   off; the reduced-motion block is now checked as a rule rather than as a list of two.
+
+- One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
+  them made the module precache work for the first time.
 
 - Real links everywhere, one `<nav>`, one header order, a wordmark that cannot vanish, and an `h1`
   that names the page rather than the site.

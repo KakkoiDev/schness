@@ -1,4 +1,4 @@
-import { initTutorial } from './tutorial.js?v=84';
+import { initTutorial } from './tutorial.js';
 const dialog = document.querySelector('#rules-dialog');
 document.querySelectorAll('[data-open-rules]').forEach(button => button.addEventListener('click', () => {
   if (!dialog.open) dialog.showModal();

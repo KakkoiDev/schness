@@ -650,6 +650,18 @@ test('a move carries the clock, the receiver settles it, and a flag is a message
   assert.match(main, /if \(mode !== 'online' \|\| disconnected \|\| matchOver\(\) \|\| position\.turn === humanColor\) return;/);
 });
 
+test('every script and stylesheet a page loads is one the shell precaches', async () => {
+  const sw = await readFile(resolve(root, 'sw.js'), 'utf8');
+  const shell = new Set([...(sw.match(/const SHELL = \[([\s\S]*?)\];/)?.[1] ?? '')
+    .matchAll(/'(\.\/.*?)'/g)].map((match) => match[1]));
+  for (const page of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
+    const html = await readFile(resolve(root, page), 'utf8');
+    for (const [, href] of html.matchAll(/(?:href|src)="(\.\/(?:src|vendor)\/[^"]+|\.\/[\w-]+\.css)"/g)) {
+      assert.ok(shell.has(href), `${page} loads ${href}, which SHELL does not precache`);
+    }
+  }
+});
+
 test('a deploy reaches players who already have the app cached', async () => {
   const sw = await readFile(resolve(root, 'sw.js'), 'utf8');
   // Cache-first with no revalidation meant a deploy that did not bump CACHE

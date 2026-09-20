@@ -8,9 +8,8 @@ test('all five pages share the locally bundled Basecoat and integration sheet', 
   for (const path of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const html = await read(path);
     const vendor = html.indexOf('./vendor/basecoat/basecoat-nova.cdn.min.css');
-    // Order, not version: the hand-maintained ?v= numbers are on their way out.
-    const layout = html.indexOf('./styles.css?');
-    const integration = html.indexOf('./ui.css?');
+    const layout = html.indexOf('./styles.css"');
+    const integration = html.indexOf('./ui.css"');
     assert.ok(vendor >= 0 && layout > vendor && integration > layout, path);
     for (const button of html.match(/<button\b[^>]*>/g) ?? []) {
       assert.match(button, /class="[^"]*\bbtn\b/, `${path}: ${button}`);

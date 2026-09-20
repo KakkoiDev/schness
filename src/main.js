@@ -21,8 +21,8 @@ import {
 } from './clock.js';
 import { createSoundBoard } from './sound.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=92';
-import { attachAnalysis } from './analysis-ui.js?v=71';
+import { initI18n } from './i18n.js';
+import { attachAnalysis } from './analysis-ui.js';
 
 initTheme();
 initI18n();

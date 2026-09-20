@@ -3,12 +3,12 @@ import {
 } from './rules.js';
 import { recordAction } from './history.js';
 import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
-import { buildEditedPosition, controllerSearch, humanSeatControllers, putEditorPiece } from './arena.js?v=81';
+import { buildEditedPosition, controllerSearch, humanSeatControllers, putEditorPiece } from './arena.js';
 import { movedEnough } from './drag.js';
 import { createBoard, pieceElement, renderBoard, renderReserve as renderPieceReserve } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=92';
-import { attachAnalysis } from './analysis-ui.js?v=71';
+import { initI18n } from './i18n.js';
+import { attachAnalysis } from './analysis-ui.js';
 import { resultLabel, sideName } from './watch.js';
 
 initTheme();

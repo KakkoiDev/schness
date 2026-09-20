@@ -1,7 +1,7 @@
 import { gameUrl, launchIntent } from './navigation.js';
 import { clockMode, setClockMode } from './settings.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=92';
+import { initI18n } from './i18n.js';
 
 initTheme();
 initI18n();
