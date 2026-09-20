@@ -45,7 +45,7 @@ test('a checked king has an unmistakable turn warning and board marker', async (
   const boardUi = await readFile(resolve(root, 'src/board-ui.js'), 'utf8');
   assert.match(boardUi, /cell\.dataset\.label = state === 'checkmate' \? 'CHECKMATE' : 'CHECK';/);
   assert.match(translations, /'CHECK': '王手', 'CHECKMATE': '詰み'/);
-  assert.match(translations, /attributeFilter: \['aria-label', 'placeholder', 'title', 'data-label'\]/);
+  assert.match(translations, /attributeFilter: \['aria-label', 'placeholder', 'title', 'data-label', 'data-empty'\]/);
   assert.match(css, /\.board \.board-row \.square\.in-check \{[^}]*background-color: var\(--check-square\);[^}]*background-image: none/);
   assert.match(css, /:root\[data-theme="dark"\] \.board \{ --check-square: #[0-9a-f]+; --mate-square: #[0-9a-f]+; --check-edge: #[0-9a-f]+; \}/);
   assert.match(css, /\.board \.board-row \.square\[data-state="checkmate"\]::before \{[^}]*font-size/);

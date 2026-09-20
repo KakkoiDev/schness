@@ -259,6 +259,29 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### The stylesheet did not get a third smaller, and that is the answer
+
+The design pass expected Stage 1's deletions to take about a third off `styles.css`. **They did not.**
+Measured:
+
+| | before | after |
+|---|---|---|
+| `styles.css` | 79,494 | 77,704 |
+| `ui.css` | 10,506 | 12,554 |
+| **total** | **90,000** | **90,258** |
+
+Roughly 4,300 bytes of genuinely dead rules came out, and the pass put more back: a playable lobby
+board, a footer, four rebuilt connection states, the arena's transport and transcript, the library
+card, and the comments this repo asks for on anything load-bearing. The file is smaller in the way
+that matters — a browser-measured sweep across five pages, two widths, two themes and every dialog
+finds 454 of 539 selectors matching, and the 85 that do not are runtime states (`.square.selected`,
+`.chat-bubble`, `.puzzle-feedback[data-state]`) that no static load can reach.
+
+**So: do not split it.** Both sheets load on every page already, they are one HTTP/2 response each,
+and the only thing a split would buy is another place for a rule to be switched off from. `ui.css`
+keeps its own file because it is the Basecoat integration layer with a documented rollback scope,
+not because the weight argues for it.
+
 ### Accessibility is audited, not asserted
 
 `e2e/accessibility.spec.js` runs **axe-core** over all five pages in both themes, and over every
@@ -767,6 +790,9 @@ Newest first. One line per decision that changed how the app behaves.
 
 - One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
   them made the module precache work for the first time.
+
+- `puzzles.html` joins the rest of the design: its board no longer sits under the fixed action bar,
+  and its empty states are translatable rather than CSS literals.
 
 - Accessibility is audited by axe-core in CI across five pages, two themes and every dialog, with
   the focus ring, dialog focus and the theme switch checked separately.

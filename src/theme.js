@@ -31,10 +31,16 @@ export function initTheme(root = document.documentElement) {
       ?.setAttribute('content', theme === 'dark' ? '#0E1512' : '#F2EEE4');
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
       const target = nextTheme(theme);
+      /*
+       * The visible word is the action, not the state: in light mode it says
+       * "Dark", and pressing it makes the page dark. `aria-pressed` on top of
+       * that would say the opposite — a pressed button labelled "Light" reads
+       * as "light is on" when it means "switch to light" — so the switch is
+       * announced by the label instead. Two pages used to announce only the
+       * bare word, with nothing to say it was a control at all.
+       */
       button.textContent = target === 'dark' ? 'Dark' : 'Light';
-      // It is a switch, and it says which way it is set. Two pages announced
-      // only the word "Dark", with nothing to say it was a control at all.
-      button.setAttribute('aria-pressed', String(theme === 'dark'));
+      button.removeAttribute('aria-pressed');
       button.setAttribute('aria-label', `Switch to ${target} mode`);
     });
   }

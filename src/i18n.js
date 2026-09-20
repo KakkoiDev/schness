@@ -46,6 +46,33 @@ const JA = new Map(Object.entries({
   'Back home': 'ホームへ戻る', 'Your turn': 'あなたの手番', 'CHECK — defend your king': '王手！キングを守ってください', 'Deselect': '選択解除', 'Reviewing': '棋譜を確認中',
   'A reviewed board is not the live one. Nothing you do here counts.': '確認中の盤面は現在の局面ではありません。ここでの操作は対局に反映されません。',
   'Back to live': '現在の局面へ', 'Moves': '棋譜', 'Copy game': '棋譜をコピー', 'Undo': '待った', 'Resign': '投了',
+  'Take this position further — stronger bots, replay, position editor': 'この局面を引き継いで続ける — 強いボット・再生・局面編集',
+  'Place your king on rank 1 and the game runs.': '1段目にキングを置けば対局が始まります。', 'Start again': '最初から',
+  'Your move.': 'あなたの手番です。', 'Black is thinking…': '黒が考えています…',
+  'You win by checkmate.': 'チェックメイトであなたの勝ちです。', 'Black wins by checkmate.': 'チェックメイトで黒の勝ちです。',
+  'A draw. Start again, or take it to the arena.': '引き分けです。最初からか、アリーナで続けられます。',
+  'Play against the bot': 'ボットと対戦', 'How to play': '遊び方', 'Source': 'ソース', 'Tournament data': '実験データ', 'Dev log': '開発ログ',
+  'More': 'その他', 'Peer-to-peer, no accounts, no tracking.': 'P2P通信・アカウント不要・追跡なし。',
+  'No moves yet.': 'まだ指し手はありません。', 'Or scan it': 'または読み取る',
+  'The invitation link as a scannable code': '招待リンクの二次元コード',
+  'Play the bot while you wait →': '待ちながらボットと対戦 →',
+  'The match starts the moment they open it. You play White.': '相手がリンクを開いた瞬間に対局が始まります。あなたは白番です。',
+  'Listening for a second player': '相手を待っています',
+  'Still listening — no relay is answering yet': '待機中 — 応答するリレーがありません',
+  'Still listening — no one has opened the link yet': '待機中 — まだ誰もリンクを開いていません',
+  'Nothing yet. Check both browsers opened this exact link, and that neither network blocks a direct connection.': 'まだ接続できません。両方のブラウザが同じリンクを開いているか、直接接続を遮断するネットワークでないかを確認してください。',
+  'Connected': '接続しました', 'Black has joined — your move.': '黒が参加しました — あなたの手番です。',
+  'White has joined — their move.': '白が参加しました — 相手の手番です。',
+  'Peer-to-peer. Nothing about this match passes through a server.': 'P2P通信です。この対局はサーバーを経由しません。',
+  'Opponent lost connection': '相手の接続が切れました',
+  'The board is saved. If they do not come back before the clock runs out, the match is yours.': '盤面は保存されています。時間切れまでに戻らなければ、あなたの勝ちになります。',
+  'until forfeit': '不戦勝まで', 'Keep waiting': '待ち続ける', 'Claim the win': '勝ちを主張', 'Claiming unlocks at 0:00.': '0:00になると主張できます。',
+  'This game is no longer open': 'この対局はもう開けません',
+  'The invitation was already used, or it sat unopened long enough to go stale. Nothing is lost — a new link takes one tap.': '招待は使用済みか、開かれないまま期限切れになりました。新しいリンクはすぐ作れます。',
+  'New invite': '新しい招待', 'Play the bot': 'ボットと対戦', 'Back to the lobby': 'ホームに戻る',
+  'Skip': 'スキップ', 'Start playing': '対局をはじめる',
+  'Peer-to-peer · not recorded · not stored': 'P2P通信・記録も保存もされません',
+  'Focus mode': '集中モード', 'Edit this position': '局面を編集',
   'At the table': '対局チャット', 'On air · mic': '配信中・マイク', 'On air · camera': '配信中・カメラ', 'On air · mic and camera': '配信中・マイクとカメラ',
   'Peer-to-peer · direct': 'P2P・直接接続', 'Focus mode': '集中モード', 'Peer-to-peer · not recorded · not stored': 'P2P通信・保存されません', 'Hide chat': 'チャットを隠す',
   'Audio off': '音声オフ', 'Video off': 'ビデオオフ', 'Hear audio': '相手の音声を聞く', 'No messages yet.': 'まだメッセージはありません。',
@@ -220,21 +247,21 @@ export function initI18n() {
       for (const node of record.addedNodes) translateTree(node, locale);
     }
   }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true,
-    attributeFilter: ['aria-label', 'placeholder', 'title', 'data-label'] });
+    attributeFilter: ['aria-label', 'placeholder', 'title', 'data-label', 'data-empty'] });
   return locale;
 }
 
 function translateTree(root, locale) {
   if (root.nodeType === Node.TEXT_NODE) return translateNode(root, locale);
   if (root.nodeType !== Node.ELEMENT_NODE && root.nodeType !== Node.DOCUMENT_NODE) return;
-  if (root.nodeType === Node.ELEMENT_NODE) for (const attr of ['aria-label', 'placeholder', 'title', 'data-label']) {
+  if (root.nodeType === Node.ELEMENT_NODE) for (const attr of ['aria-label', 'placeholder', 'title', 'data-label', 'data-empty']) {
     const value = root.getAttribute(attr); const translated = translateText(value, locale);
     if (value && translated !== value) root.setAttribute(attr, translated);
   }
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
   let node; while ((node = walker.nextNode())) {
     if (node.nodeType === Node.TEXT_NODE) translateNode(node, locale);
-    else for (const attr of ['aria-label', 'placeholder', 'title', 'data-label']) {
+    else for (const attr of ['aria-label', 'placeholder', 'title', 'data-label', 'data-empty']) {
       const value = node.getAttribute(attr); const translated = translateText(value, locale);
       if (value && translated !== value) node.setAttribute(attr, translated);
     }

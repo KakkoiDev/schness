@@ -104,8 +104,10 @@ test('the theme toggle says it is a switch, on every page', async ({ page }) => 
     await page.goto(path);
     const toggle = page.locator('[data-theme-toggle]');
     // library.html and puzzles.html announced only the word "Dark", with
-    // nothing to say it was a control or what it controlled.
+    // nothing to say it was a control or what it controlled. The label carries
+    // it: `aria-pressed` would contradict a word that names the action rather
+    // than the state, and would also draw the control as engaged.
     await expect(toggle, path).toHaveAttribute('aria-label', /Switch to (light|dark) mode/);
-    await expect(toggle, path).toHaveAttribute('aria-pressed', /true|false/);
+    expect(await toggle.getAttribute('aria-pressed'), path).toBe(null);
   }
 });

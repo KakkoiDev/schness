@@ -21,7 +21,7 @@
       <nav class="site-nav" aria-label="Schness"><a href="./watch.html">Bot arena</a><a href="./library.html" aria-current="page">Library</a><a href="./puzzles.html">Puzzles</a></nav>
       <div class="header-actions">
         <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
-        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
+        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
         <span class="header-rule" aria-hidden="true"></span>
       </div>
     </header>
@@ -58,7 +58,7 @@
         <label class="analysis-toggle"><input id="replay-advantage" type="checkbox"> Show estimated advantage</label><p id="replay-score" class="analysis-score" aria-live="polite" hidden></p><p id="replay-warning" hidden></p>
         <p id="replay-status" class="watch-status" aria-live="polite"></p>
         <div class="watch-controls"><button id="replay-first" type="button" class="btn" data-variant="secondary">Start</button><button id="replay-previous" type="button" class="btn" data-variant="secondary">Previous</button><button id="replay-next" type="button" class="btn" data-variant="secondary">Next</button><button id="replay-auto" type="button" aria-pressed="false" class="btn" data-variant="secondary">Auto · 1s</button><button id="replay-play-here" type="button" class="btn" data-variant="secondary">Play from here</button></div>
-        <section id="replay-moves" class="watch-moves" aria-label="Move transcript"></section>
+        <section id="replay-moves" class="watch-moves" data-empty="No moves yet." aria-label="Move transcript"></section>
         <details><summary>Experiment provenance</summary><div id="replay-sources" class="replay-sources"></div></details>
       </aside>
     </div>
