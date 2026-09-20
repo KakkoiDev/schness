@@ -1,6 +1,6 @@
 import { applyAction, BLACK, createInitialPosition, WHITE } from './rules.js';
 import { recordAction } from './history.js';
-import { decodeAction, matchesFilters, profilePairs, resultLabel } from './library.js';
+import { decodeAction, matchesFilters, profilePairs, resultLabel, resultTone, sortGames } from './library.js';
 import { createBoard, renderBoard, renderReserve } from './board-ui.js';
 import { initTheme } from './theme.js';
 import { initI18n } from './i18n.js';
@@ -51,6 +51,7 @@ async function loadLibrary() {
 
 function bindControls() {
   $('.library-filters').addEventListener('change', applyFilters);
+  $('#sort-games').addEventListener('change', applyFilters);
   $('#load-more').addEventListener('click', () => { shown += PAGE_SIZE; renderList(); });
   $('#replay-close').addEventListener('click', () => $('#replay-dialog').close());
   $('#replay-first').addEventListener('click', () => { pause(); ply = 0; renderReplay(); });
@@ -76,7 +77,7 @@ function applyFilters() {
     white: $('#filter-white').value, black: $('#filter-black').value,
     result: $('#filter-result').value, version: $('#filter-version').value,
   };
-  filtered = library.games.filter((game) => matchesFilters(game, filters));
+  filtered = sortGames(library.games.filter((game) => matchesFilters(game, filters)), $('#sort-games').value);
   renderList();
 }
 
@@ -86,25 +87,62 @@ function renderList() {
   $('#load-more').hidden = shown >= filtered.length;
 }
 
+/**
+ * 1,099 cards that all said the same thing in the same weight. The result is a
+ * colour and a shape now: a swatch, and the final position at about 13px a
+ * square — which is the size at which you read the *shape* of a position
+ * rather than identify the pieces, and that is the right thing to optimise.
+ */
 function gameCard(game) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'library-game btn';
   button.dataset.variant = 'outline';
-  const pairs = profilePairs(game);
-  const engines = pairs.length <= 2 ? pairs.join(' · ') : `${pairs[0]} · +${pairs.length - 1} configurations`;
+  button.dataset.result = resultTone(game.result);
+
+  const mini = document.createElement('div');
+  mini.className = 'library-mini board';
+  createBoard(mini, { interactive: false });
+  renderBoard(mini, finalPosition(game));
+  mini.setAttribute('aria-hidden', 'true');
+
+  const lines = document.createElement('span');
+  lines.className = 'library-game-lines';
+  const head = document.createElement('span');
+  head.className = 'library-game-head';
+  const result = document.createElement('strong');
+  result.className = 'library-result';
+  result.textContent = resultLabel(game.result);
   const id = document.createElement('span');
   id.className = 'library-game-id';
   id.textContent = `#${game.id}`;
-  const result = document.createElement('strong');
-  result.textContent = resultLabel(game.result);
+  head.append(result, id);
+
+  const pairs = profilePairs(game);
   const matchup = document.createElement('span');
-  matchup.textContent = engines;
+  matchup.className = 'library-matchup';
+  // Wrapped, not clipped: "Sharp v2 vs Learni…" is not a matchup.
+  matchup.textContent = pairs.length <= 2
+    ? pairs.join(' · ') : `${pairs[0]} · +${pairs.length - 1} more`;
+
   const length = document.createElement('small');
   length.textContent = `${game.plies} plies · ${Math.ceil(game.plies / 2)} moves${game.sources.length > 1 ? ` · seen ${game.sources.length}×` : ''}`;
-  button.append(id, result, matchup, length);
+
+  lines.append(head, matchup, length);
+  button.append(mini, lines);
   button.addEventListener('click', () => openReplay(game));
   return button;
+}
+
+const finalPositions = new Map();
+
+/** Replayed once per game, then remembered: filtering redraws the same cards. */
+function finalPosition(game) {
+  if (finalPositions.has(game.id)) return finalPositions.get(game.id);
+  let position = createInitialPosition();
+  for (const encoded of game.actions) position = applyAction(position, decodeAction(encoded));
+  finalPositions.set(game.id, position);
+  return position;
 }
 
 function openReplay(game) {

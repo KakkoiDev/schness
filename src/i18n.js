@@ -64,7 +64,7 @@ const JA = new Map(Object.entries({
   'Continue from here': 'ここから続ける', 'Edit position': '局面を編集', 'Position editor': '局面エディター', 'Set the board': '盤面を設定',
   'Choose a piece, then a square. Each missing rook, bishop, or knight goes to its owner’s reserve.': '駒を選んでからマスを選択します。盤上にないルーク、ビショップ、ナイトは持ち駒になります。',
   'Pieces': '駒', 'Erase': '消す', 'Side to move': '手番', 'Clear board': '盤面をクリア', 'Start here': 'ここから開始',
-  'AI archive': 'AIアーカイブ', 'Game library': '棋譜ライブラリ', 'Loading games…': '棋譜を読み込み中…', 'Library statistics': 'ライブラリ統計',
+  'AI archive': 'AIアーカイブ', 'Sort': '並び替え', 'As recorded': '記録順', 'Shortest first': '短い順', 'Longest first': '長い順', 'Most repeated': '重複が多い順', 'Game library': '棋譜ライブラリ', 'Loading games…': '棋譜を読み込み中…', 'Library statistics': 'ライブラリ統計',
   'Filter games': '棋譜を絞り込む', 'Any AI': 'すべてのAI', 'Result': '結果', 'Any result': 'すべての結果', 'White won': '白の勝ち', 'Black won': '黒の勝ち',
   'Threefold draw': '同一局面3回による引き分け', 'Ply-limit draw': '手数上限による引き分け', 'Stalemate': 'ステイルメイト', 'Any version': 'すべてのバージョン',
   'Show more': 'もっと見る', 'Recorded game': '記録された対局', 'Game': '対局', 'Start': '最初へ', 'Auto · 1s': '自動・1秒', 'Play from here': 'ここから対戦',

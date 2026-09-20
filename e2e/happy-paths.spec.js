@@ -487,3 +487,36 @@ test('the arena splits replay from setup and keeps a transcript you can read', a
   await page.locator('#watch-last').click();
   await expect(page.locator('#watch-live')).toBeDisabled();
 });
+
+test('library cards lead with a colour and a position, and can be sorted', async ({ page }) => {
+  await page.goto('/library.html');
+  const cards = page.locator('.library-game');
+  await expect(cards.first()).toBeVisible({ timeout: 20_000 });
+  // 1,099 cards that all said the same thing in the same weight were text,
+  // not information.
+  await expect(cards.first().locator('.library-mini .square')).toHaveCount(16);
+  const swatch = await cards.first().evaluate((card) =>
+    getComputedStyle(card).getPropertyValue('--result-swatch').trim());
+  expect(swatch).not.toBe('');
+  // The mini board is the same object as every other board here.
+  const frame = await cards.first().locator('.library-mini').evaluate((board) => ({
+    radius: getComputedStyle(board).borderTopLeftRadius,
+    colour: getComputedStyle(board).borderTopColor,
+  }));
+  const full = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--radius-card').trim());
+  expect(frame.radius).toBe(full);
+
+  // Filters existed; sort did not, so the archive could only be read in the
+  // order it happened to be recorded.
+  const plies = async () => Number((await cards.first().locator('small').textContent()).match(/^(\d+)/)[1]);
+  await page.locator('#sort-games').selectOption('short');
+  const shortest = await plies();
+  await page.locator('#sort-games').selectOption('long');
+  const longest = await plies();
+  expect(longest).toBeGreaterThan(shortest);
+
+  // Matchups wrap rather than truncating mid-word.
+  const clipped = await cards.first().locator('.library-matchup').evaluate((element) =>
+    element.scrollWidth > element.clientWidth + 1);
+  expect(clipped, 'the matchup is clipped').toBe(false);
+});

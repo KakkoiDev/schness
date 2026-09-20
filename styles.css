@@ -2240,12 +2240,31 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 .library-filters select { min-width:0;border:1px solid var(--line);border-radius:var(--radius-control);background:var(--surface);color:var(--ink);padding:.65rem }
 .filter-count { margin:.75rem 0;color:var(--muted);font-size:.8rem }
 .game-library-list { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem }
-.library-game { display:grid;gap:.3rem;min-width:0;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface);color:var(--ink);padding:.85rem;text-align:left;cursor:pointer }
-.library-game:hover { border-color:var(--muted);transform:translateY(-1px) }
-.library-game-id { color:var(--muted);font-size:.7rem;font-weight:640;letter-spacing:.08em }
-.library-game strong,.library-game span,.library-game small { overflow:hidden;text-overflow:ellipsis;white-space:nowrap }
-.library-game span { font-size:.78rem }
-.library-game small { color:var(--muted) }
+.library-game { display:grid;grid-template-columns:auto minmax(0,1fr);gap:.75rem;align-items:start;min-width:0;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface);color:var(--ink);padding:.85rem;text-align:left;cursor:pointer }
+.library-game:hover { border-color:var(--muted) }
+.library-game-lines { display:grid;gap:.2rem;min-width:0 }
+.library-game-head { display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;min-width:0 }
+.library-game-id { flex:none;color:var(--muted);font-size:.7rem;font-weight:640;letter-spacing:.08em }
+
+/*
+ * The result is a colour before it is a sentence: 1,099 cards that all said
+ * the same thing in the same weight were text, not information.
+ */
+.library-result { display:flex;align-items:center;gap:.4rem;min-width:0;overflow:hidden;font-size:.82rem;text-overflow:ellipsis;white-space:nowrap }
+.library-result::before { content:"";flex:none;width:.7rem;height:.7rem;border:1px solid var(--ink);border-radius:var(--radius-control);background:var(--result-swatch,var(--muted)) }
+.library-game[data-result="white-won"] { --result-swatch:var(--board-light) }
+.library-game[data-result="black-won"] { --result-swatch:var(--ink) }
+.library-game[data-result="draw"] { --result-swatch:var(--board-dark) }
+
+/* Wrapped, not clipped: "Sharp v2 vs Learni…" is not a matchup. */
+.library-matchup { font-size:.78rem;line-height:1.4;overflow-wrap:anywhere }
+.library-game small { color:var(--muted);font-weight:400 }
+
+/* The same frame as every other board, at the size a shape reads. */
+.library-mini { width:4.25rem;flex:none;border-width:2px;pointer-events:none }
+.library-mini .square { cursor:default }
+/* At 13px a square you read the shape of a position, not a label on it. */
+.library-mini .square::before,.library-mini .square-coordinate { display:none }
 .library-more { display:block;min-width:10rem;margin:1rem auto;border:1px solid var(--line);border-radius:var(--radius-pill);background:var(--surface);color:var(--ink);padding:.7rem 1rem;cursor:pointer }
 .replay-dialog { width:min(94vw,68rem);max-width:none;max-height:94svh;border:1px solid var(--line);border-radius:var(--radius-dialog);background:var(--paper);color:var(--ink);padding:1.2rem }
 .replay-dialog::backdrop { background:rgb(8 12 10/.7);backdrop-filter:blur(4px) }

@@ -259,6 +259,24 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### A library card leads with a colour and a shape
+
+1,099 cards that all said "Threefold draw" in the same size and weight are text, not information.
+Each card now leads with a **result swatch** and the **final position**, drawn with the shared board
+at about 13px a square — the size at which you read the *shape* of a position rather than identify
+the pieces, which is the right thing to optimise. The check and checkmate chips are suppressed at
+that size; the tinted square still carries it.
+
+`sortGames` is stable, so "as recorded" keeps the order the archive gives it. Filters already
+existed; sort did not, so the whole archive could only be read in the order it happened to be
+recorded.
+
+The final position is replayed once per game through `applyAction` and remembered, because filtering
+and sorting redraw the same cards. Measured in Chromium: re-sorting and redrawing 60 cards takes
+~53ms, and adding 60 more ~75ms.
+
+Matchups wrap rather than truncating: "Sharp v2 vs Learni…" is not a matchup.
+
 ### The arena asks one question per decision
 
 - **One seat control.** "You play: White / Black / Neither" — and a strength select for each side that
@@ -691,6 +709,8 @@ Newest first. One line per decision that changed how the app behaves.
 
 - One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
   them made the module precache work for the first time.
+
+- Library cards lead with a result swatch and the final position, and the archive can be sorted.
 
 - The arena asks one seat question, puts the turn status above the board, splits replay from setup,
   and keeps a transcript you can read.

@@ -139,7 +139,7 @@ dialog :is(.replay-panel, .dialog-body, .dialog-head, .dialog-foot) { padding: 1
 .arena-quiet .btn, .arena-primary.btn { width: 100%; }
 #watch-training summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 640; }
 .watch-moves .btn { min-height: 44px; padding: .4rem .6rem; font-size: .8rem; }
-.library-game.btn { display: grid; justify-content: stretch; height: auto; text-align: left; padding: 1rem; }
+.library-game.btn { display: grid; grid-template-columns: auto minmax(0,1fr); justify-content: stretch; height: auto; text-align: left; padding: 1rem; }
 .library-game.btn:hover { transform: none; }
 .library-game.btn small { font-weight: 400; }
 .library-filters label { gap: .375rem; }
