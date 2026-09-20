@@ -597,3 +597,40 @@ asserts what it always did.
 
 **Next measurement.** The stepper's board is 220px at 390×844. Whether that is big enough to learn
 a capture on is a question for someone holding a phone, not for a measurement.
+
+## 2026-09-21 — Online joins the nav, and two lines of the brief I did not follow
+
+**Nav.** The design pass gave the header a `<nav>` with Bot arena, Library and Puzzles. The revised
+brief adds Play and Online, and it is right about why: starting a game against a person was
+reachable from the lobby and nowhere else, which makes a primary thing a side door. The wrinkle is
+that Online's target is a dialog, not a page. Rejected giving it its own page for the sake of being
+a link — the dialog is three radio buttons and a submit. Rejected a `<button>` in the nav, which
+would be the only non-link in a row of links. It is `./index.html#online`: a real link that
+cmd-clicks and copies, navigating from elsewhere and opening in place on the lobby. Closing it
+strips the hash, or a refresh reopens a dialog nobody asked for.
+
+**Measured** at 390, 360 and 320px in both languages: wordmark holds at 102px, no sideways scroll,
+all five items on one row at 390px. At 320px the nav scrolls horizontally, which is what its
+`overflow-x` was already there for.
+
+**Two deviations from the brief, both deliberate, both repeated from last time.**
+
+1. **`aria-pressed` on the theme toggle** (Stage 13). Asked for twice now; still wrong, and I want
+   the reasoning on the record rather than just the decision. The button's visible word is the
+   *action*: it says "Dark" while the page is light. For `aria-pressed` to mean anything it has to
+   describe the control's own state, and WCAG 2.5.3 wants the accessible name to contain the
+   visible label — so the name has to keep flipping with the action word. Work it through and the
+   pressed state is `false` in both directions, because the button always offers the theme that is
+   *not* active. A constant attribute is not information. The alternative is to relabel the control
+   with its current state rather than its action, which is a different button than the one the
+   design asks for. It keeps a dynamic `aria-label` and no `aria-pressed`.
+2. **The 0:20 waiting line** (Stage 7a). The brief's table puts "Still listening — no relay is
+   answering yet" at twenty seconds. That sentence is a claim about the relay pool, and at twenty
+   seconds the app has not detected anything of the kind — the overwhelmingly likely truth is that
+   the friend has not clicked yet. Saying it on a timer would be the interface guessing out loud.
+   The shipped schedule keeps that sentence for when a dead relay pool is actually detected, where
+   it outranks the clock at any elapsed time, and the timed 0:20 line says what is actually known:
+   "no one has opened the link yet".
+
+**Next measurement.** Whether anyone uses Online from a page other than the lobby. If nobody does,
+the nav item is costing a row of space at 320px for nothing.
