@@ -158,10 +158,39 @@ test('the destinations are real links, not JavaScript navigations', async ({ pag
   for (const path of PAGES) {
     await page.goto(path);
     const nav = page.locator('header nav.site-nav');
-    await expect(nav.locator('a')).toHaveCount(3);
-    for (const href of ['./watch.html', './library.html', './puzzles.html']) {
+    // Play and Online are destinations too. Online especially: starting a game
+    // against a person used to be reachable from the lobby and nowhere else.
+    await expect(nav.locator('a')).toHaveCount(5);
+    for (const href of ['./index.html', './index.html#online', './watch.html', './puzzles.html', './library.html']) {
       await expect(nav.locator(`a[href="${href}"]`)).toHaveCount(1);
     }
+  }
+});
+
+test('Online is a destination from every page, and the lobby opens it in place', async ({ page }, testInfo) => {
+  for (const path of PAGES) {
+    await page.goto(path);
+    // During a match on a phone the board keeps the screen: the game page's
+    // nav is there for a screen reader and the keyboard, clipped to 1px. It is
+    // the one page where Online is not a thing you can tap.
+    const clipped = await page.locator('.site-nav').evaluate((nav) => nav.getBoundingClientRect().width <= 1);
+    if (clipped) {
+      expect(testInfo.project.name).toBe('mobile');
+      expect(path).toContain('/game.html');
+      await expect(page.locator('.site-nav a[data-online-link]')).toHaveAttribute('href', './index.html#online');
+      continue;
+    }
+    await page.locator('.site-nav a[data-online-link]').click();
+    // The lobby replaces the hash in place, so it stays on "/" there.
+    await expect(page).toHaveURL(/(index\.html)?#online$/);
+    await expect(page.locator('#online-setup')).toHaveJSProperty('open', true);
+    // From the lobby it is not a navigation, and closing it takes the hash
+    // back off — otherwise a refresh reopens a dialog nobody asked for.
+    await page.locator('#online-setup-close').click();
+    await expect(page).not.toHaveURL(/#online$/);
+    await page.locator('.site-nav a[data-online-link]').click();
+    await expect(page.locator('#online-setup')).toHaveJSProperty('open', true);
+    await page.locator('#online-setup-close').click();
   }
 });
 

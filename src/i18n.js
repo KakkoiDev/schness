@@ -19,7 +19,7 @@ const JA = new Map(Object.entries({
   'Time per player': '各プレイヤーの持ち時間', 'Choose untimed or a clock before creating the invitation link.': '招待リンクを作る前に、時間無制限か持ち時間を選んでください。',
   'Create invitation link': '招待リンクを作る', 'Close online setup': '対局設定を閉じる',
   'Move a piece, or deploy one from your reserve. Every capture comes back.': '駒を動かすか、持ち駒を配置。取られた駒はまた戻ってきます。',
-  'Bot arena': 'ボットアリーナ', 'Library': '棋譜', 'Puzzles': '詰みパズル', 'Your match': '対局中', 'The board is 4 × 4': '盤は4×4', 'Play against the bot': 'ボットと対戦', 'Play, watch, take over, or edit a position': '対戦・観戦・途中参加・局面編集',
+  'Bot arena': 'ボットアリーナ', 'Library': '棋譜', 'Puzzles': '詰みパズル', 'Play': '対戦', 'Online': 'オンライン', 'Your match': '対局中', 'The board is 4 × 4': '盤は4×4', 'Play against the bot': 'ボットと対戦', 'Play, watch, take over, or edit a position': '対戦・観戦・途中参加・局面編集',
   'Create an online game': 'オンライン対局を作る', 'Get a link to send a friend': '友だちに送るリンクを作成',
   'Browse recorded games': '棋譜ライブラリ', 'Study 1,099 unique AI games': '1,099局のAI対戦を研究',
   'Checkmate puzzles': '詰みパズル', 'Mate in one, two, three, or four': '1手詰めから4手詰めまで',

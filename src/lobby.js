@@ -17,9 +17,28 @@ const installButton = document.querySelector('#install');
 let installPrompt = null;
 
 const onlineSetup = document.querySelector('#online-setup');
-onlineButton.addEventListener('click', () => {
+onlineButton.addEventListener('click', () => openOnlineSetup());
+/*
+ * Online is a destination in the nav on every page, but the thing it opens is
+ * a dialog that lives here. From another page the link navigates to the lobby
+ * with #online on it; here it just opens, without a navigation.
+ */
+function openOnlineSetup() {
   onlineSetup.querySelector(`input[name="clock"][value="${clockMode()}"]`)?.click();
-  onlineSetup.showModal();
+  if (!onlineSetup.open) onlineSetup.showModal();
+}
+for (const link of document.querySelectorAll('[data-online-link]')) {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    history.replaceState(null, '', '#online');
+    openOnlineSetup();
+  });
+}
+if (location.hash === '#online') openOnlineSetup();
+// The hash is how you got here; it is not where you are once the dialog is
+// closed, and leaving it would reopen the dialog on a refresh.
+onlineSetup.addEventListener('close', () => {
+  if (location.hash === '#online') history.replaceState(null, '', location.pathname + location.search);
 });
 document.querySelector('#online-setup-close').addEventListener('click', () => onlineSetup.close());
 document.querySelector('#online-setup-form').addEventListener('submit', (event) => {

@@ -437,6 +437,27 @@ were good; the first impression was half a sentence.
   `width: min(100%, …)` against a track sized from its own content resolves to `0`: the board
   collapsed to 12px on a desktop the moment the instruction moved into that column.
 
+### The nav holds destinations, including Online
+
+The header used to carry brand · theme · Install · Rules — not one destination — and the nav that
+was added in the design pass carried three: Bot arena, Library, Puzzles. Starting a game against a
+person was reachable from the lobby and nowhere else, which made a primary thing a side door.
+
+Ship: **Play · Online · Bot arena · Puzzles · Library**, as links, on all five pages, with
+`aria-current="page"` on the one you are on.
+
+- Online is a destination whose target is a dialog that lives on the lobby. From another page the
+  link navigates to `./index.html#online` and `lobby.js` opens the dialog from the hash; on the
+  lobby it opens in place, with no navigation. Closing it takes the hash back off, so a refresh
+  does not reopen a dialog nobody asked for.
+- Measured at 390, 360 and 320px in both languages: the wordmark holds 102px and the document never
+  scrolls sideways. All five items fit on one row at 390px; at 320px the nav itself scrolls, which
+  is what `overflow-x: auto` on it is for.
+- **The game page is the exception on a phone.** Its nav is clipped to 1px — present for a screen
+  reader and the keyboard, invisible on screen — because during a match the board keeps the screen.
+  So Online is reachable from all five pages, but on one of them, on a phone, not by tapping. The
+  e2e test asserts that contract rather than skipping the page.
+
 ### The home page is a board, not a picture of one
 
 Landing on schness.com means you are already playing: place your king on rank 1 and the game runs.
