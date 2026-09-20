@@ -223,17 +223,11 @@ body dialog {
 }
 
 @media (max-width: 760px) {
-  /* A bottom sheet also puts the primary action in the thumb zone. */
-  body dialog.is-sheet {
-    inset: auto 0 0 0;
-    width: 100%;
-    max-width: none;
-    margin: 0;
-    border-radius: var(--radius-dialog) var(--radius-dialog) 0 0;
-    max-height: 88svh;
-    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
-  }
-
+  /* There was an .is-sheet here — a bottom sheet flush to the bottom edge, for
+     the invite dialog. It went because a dialog that small reads as displaced
+     rather than deliberate; centred is what the one dialog using it wanted to
+     be. If a sheet earns its place later it belongs back here as a class, not
+     as a rule on one dialog's id. */
   body dialog.is-full {
     inset: 0;
     width: 100%;

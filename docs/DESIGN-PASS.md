@@ -208,7 +208,7 @@ in `src/lobby.js`, and there is no `<nav>` element on any of the five pages.
 The header holds brand, theme, Install and Rules — **not one destination**. So "play against
 a person" is reachable from exactly one page.
 
-Ship a real `<nav>`: **Play, Online, Bot arena, Puzzles, Library**, as links, on all five
+Ship a real `<nav>`: **Play online, Bot arena, Puzzles, Library**, as links, on all five
 pages, with the current page marked `aria-current="page"`. Online belongs in it — starting a
 game against a person is a primary destination, not a lobby-only side door.
 
@@ -262,10 +262,9 @@ through the gap — and the gap is invisible in a desktop browser, which is why 
 
 **This is why the invite and rules modals look like different objects: they were never one
 component.** Fix the class, not the instance: centre every dialog at every viewport, and make
-size a class on the element — `is-sheet` (bottom sheet at <=760px) or `is-full` — never a
-per-dialog media query.
+size a class on the element — `is-full` — never a per-dialog media query.
 
-- `#online-setup` -> `is-sheet`. A bottom sheet also puts the primary action in the thumb zone.
+- `#online-setup` is centred at every width. (Shipped as a bottom sheet first; see `DECISIONS.md`.)
 - `#rules-dialog`, `#position-dialog`, `#replay-dialog` -> `is-full`, replacing their bespoke
   media queries.
 

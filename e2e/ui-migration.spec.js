@@ -158,10 +158,11 @@ test('the destinations are real links, not JavaScript navigations', async ({ pag
   for (const path of PAGES) {
     await page.goto(path);
     const nav = page.locator('header nav.site-nav');
-    // Play and Online are destinations too. Online especially: starting a game
-    // against a person used to be reachable from the lobby and nowhere else.
-    await expect(nav.locator('a')).toHaveCount(5);
-    for (const href of ['./index.html', './index.html#online', './watch.html', './puzzles.html', './library.html']) {
+    // Starting a game against a person is the destination people want, and it
+    // used to be reachable from the lobby and nowhere else. A bare "Play" next
+    // to it earned nothing — the wordmark is already the way home.
+    await expect(nav.locator('a')).toHaveCount(4);
+    for (const href of ['./index.html#online', './watch.html', './puzzles.html', './library.html']) {
       await expect(nav.locator(`a[href="${href}"]`)).toHaveCount(1);
     }
   }
