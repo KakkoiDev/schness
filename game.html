@@ -26,21 +26,24 @@
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
   <link rel="stylesheet" href="./vendor/basecoat/basecoat-nova.cdn.min.css">
-  <link rel="stylesheet" href="./styles.css?v=78">
-  <link rel="stylesheet" href="./ui.css?v=86">
+  <link rel="stylesheet" href="./styles.css?v=79">
+  <link rel="stylesheet" href="./ui.css?v=87">
 </head>
 <body>
   <main class="game game-page">
     <header>
-      <a class="brand" href="./" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><span><h1>Schness</h1></span></a>
+      <a class="brand" href="./" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><span class="brand-word">Schness</span></a>
+      <nav class="site-nav" aria-label="Schness"><a href="./watch.html">Bot arena</a><a href="./library.html">Library</a><a href="./puzzles.html">Puzzles</a></nav>
       <div class="header-actions">
-        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
-        <button class="text-button btn" type="button" data-open-sound data-variant="ghost">Sound</button>
         <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
+        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
+        <button class="text-button btn" type="button" data-open-sound data-variant="ghost">Sound</button>
+        <span class="header-rule" aria-hidden="true"></span>
       </div>
     </header>
 
     <section id="match">
+      <h1 class="visually-hidden">Your match</h1>
       <div class="match-actions">
         <a id="back-to-menu" class="text-button" href="./">← Home</a>
         <div class="match-action-buttons"><button id="swap-side" class="text-button btn" type="button" hidden data-variant="ghost">Play Black</button><button id="reset" class="reset btn" type="button" data-variant="outline">New game</button></div>
@@ -308,7 +311,7 @@
     </div>
   </dialog>
   <script type="module" src="./src/rules-modal.js?v=84"></script>
-  <script type="module" src="./src/main.js?v=71"></script>
+  <script type="module" src="./src/main.js?v=92"></script>
 </body>
 </html>
 

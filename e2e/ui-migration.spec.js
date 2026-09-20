@@ -98,3 +98,82 @@ test('Rules is available everywhere with an interactive board inside the modal',
     await expect(page.locator('#rules-dialog')).not.toBeVisible();
   }
 });
+
+const PAGES = ['/', '/watch.html', '/library.html', '/puzzles.html',
+  '/game.html?game=00000000-0000-4000-8000-000000000001&mode=bot'];
+
+for (const language of ['en', 'ja']) {
+  test(`the header is one order and the wordmark never vanishes in ${language}`, async ({ page }) => {
+    await page.addInitScript((value) => localStorage.setItem('schness-language', value), language);
+    const orders = [];
+    for (const path of PAGES) {
+      await page.goto(path);
+      await expect(page.locator('[data-language-toggle]')).toBeVisible();
+      // The brand was the only shrinkable item in a nowrap flex row, so at
+      // 390px the nav won and the wordmark collapsed to zero width — it did
+      // not truncate, it disappeared. Measured, because a rule in the sheet
+      // said it was `flex: 0 1 auto` and that read as fine.
+      const word = page.locator('.brand-word');
+      await expect(word).toBeVisible();
+      const box = await word.boundingBox();
+      expect(box.width, `${path} wordmark width`).toBeGreaterThan(40);
+      orders.push(await page.evaluate(() => [...document.querySelectorAll('header .header-actions > *')]
+        .filter((element) => element.getClientRects().length)
+        .map((element) => element.dataset.openRules !== undefined ? 'rules'
+          : element.dataset.themeToggle !== undefined ? 'theme'
+            : element.dataset.languageToggle !== undefined ? 'language'
+              : element.classList.contains('header-rule') ? 'rule' : 'page-control')
+        .join(' ')));
+    }
+    // Muscle memory broke on every navigation: index went language · theme ·
+    // Rules while watch and library went Rules · language · theme. Sound and
+    // Install are page controls that only exist on one page each, so the
+    // shared skeleton is what has to match: rules, theme, … rule, language.
+    for (const order of orders) {
+      expect(order.startsWith('rules theme')).toBe(true);
+      expect(order.endsWith('rule language')).toBe(true);
+      expect(order.replace(/ ?page-control/g, '')).toBe('rules theme rule language');
+    }
+  });
+}
+
+test('the destinations are real links, not JavaScript navigations', async ({ page }) => {
+  await page.goto('/');
+  // Nothing on this site used to be a link: three of the four lobby cards and
+  // every nav destination went through window.location.assign, so there was no
+  // cmd-click, no copy-link-address, no hover preview and nothing to crawl.
+  for (const [id, href] of [['bot-arena', 'watch.html'], ['browse-games', 'library.html'],
+    ['solve-puzzles', 'puzzles.html']]) {
+    const card = page.locator(`#${id}`);
+    await expect(card).toHaveJSProperty('tagName', 'A');
+    await expect(card).toHaveAttribute('href', `./${href}`);
+  }
+  // The online card opens a dialog, which is what a button is for.
+  await expect(page.locator('#play-online')).toHaveJSProperty('tagName', 'BUTTON');
+  for (const path of PAGES) {
+    await page.goto(path);
+    const nav = page.locator('header nav.site-nav');
+    await expect(nav.locator('a')).toHaveCount(3);
+    for (const href of ['./watch.html', './library.html', './puzzles.html']) {
+      await expect(nav.locator(`a[href="${href}"]`)).toHaveCount(1);
+    }
+  }
+});
+
+test('every page heading names the page, not the site', async ({ page }) => {
+  const titles = {
+    '/': 'Play Schness',
+    '/watch.html': 'Bot arena',
+    '/library.html': 'Game library',
+    '/puzzles.html': 'Find the checkmate',
+    '/game.html?game=00000000-0000-4000-8000-000000000001&mode=bot': 'Your match',
+  };
+  for (const path of PAGES) {
+    await page.goto(path);
+    // Heading navigation used to announce "Schness" five times and never the
+    // page: every h1 was the site name and the real title was an h2.
+    const headings = page.locator('main h1');
+    await expect(headings).toHaveCount(1);
+    await expect(headings).toHaveText(titles[path]);
+  }
+});

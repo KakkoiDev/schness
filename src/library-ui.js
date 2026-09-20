@@ -3,7 +3,7 @@ import { recordAction } from './history.js';
 import { decodeAction, matchesFilters, profilePairs, resultLabel } from './library.js';
 import { createBoard, renderBoard, renderReserve } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=71';
+import { initI18n } from './i18n.js?v=92';
 import { attachAnalysis } from './analysis-ui.js?v=71';
 
 initTheme();

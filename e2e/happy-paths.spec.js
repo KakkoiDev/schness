@@ -35,7 +35,8 @@ test('lobby settings, language, theme, rules and online invitation', async ({ pa
 test('the homepage opens the arena with visible training controls', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('#replay-tutorial')).toHaveCount(0);
-  await page.getByRole('button', { name: /Bot arena/ }).click();
+  // The card is an <a href> now, and "Bot arena" is also a nav link.
+  await page.locator('#bot-arena').click();
   await expect(page).toHaveURL(/watch\.html/);
   await expect(page.locator('#watch-training-mate')).toBeVisible();
   await expect(page.locator('#watch-training-advantage')).toBeVisible();

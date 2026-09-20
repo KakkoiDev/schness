@@ -78,8 +78,14 @@ test('Japanese mobile navigation stays horizontal and compact', async () => {
 
 test('phone navigation uses compact text controls without decorative icons', async () => {
   const css = await readFile(new URL('../styles.css', import.meta.url), 'utf8');
-  assert.match(css, /@media\(max-width:480px\)[\s\S]*?header \.brand h1,[\s\S]*?display:none/);
-  assert.match(css, /header \.header-actions \.text-button\s*\{[\s\S]*?width:auto;[\s\S]*?min-width:44px;[\s\S]*?height:44px;[\s\S]*?font-size:\.72rem/);
+  // The phone header used to make room by deleting the wordmark. Nothing may
+  // hide it again: it is the only thing in that row that never shrinks, and
+  // the nav takes a row of its own below 760px instead.
+  assert.doesNotMatch(css, /\.brand[^{}]*\{[^}]*display:\s*none/);
+  assert.doesNotMatch(css, /\.brand-word[^{}]*\{[^}]*display:\s*none/);
+  assert.match(css, /\.brand\{display:flex;flex:0 0 auto/);
+  assert.match(css, /@media\(max-width:760px\)[\s\S]*?\.site-nav \{ *order:3;flex-basis:100%/);
+  // Still text, not glyphs: a decorative icon is a second vocabulary to learn.
   assert.doesNotMatch(css, /header \.rules-button::before\s*\{\s*content/);
   for (const file of ['index.html', 'game.html', 'watch.html', 'library.html', 'puzzles.html']) {
     const page = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');

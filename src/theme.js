@@ -24,10 +24,17 @@ export function initTheme(root = document.documentElement) {
 
   function apply(theme) {
     root.dataset.theme = theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#161616' : '#f7f4ed');
+    // The two metas are media-scoped for the system preference; this one wins
+    // once a person has chosen. It used to be set to #161616 / #f7f4ed, which
+    // matched neither theme's paper — the browser chrome and the page differed.
+    document.querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', theme === 'dark' ? '#0E1512' : '#F2EEE4');
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
       const target = nextTheme(theme);
       button.textContent = target === 'dark' ? 'Dark' : 'Light';
+      // It is a switch, and it says which way it is set. Two pages announced
+      // only the word "Dark", with nothing to say it was a control at all.
+      button.setAttribute('aria-pressed', String(theme === 'dark'));
       button.setAttribute('aria-label', `Switch to ${target} mode`);
     });
   }

@@ -7,7 +7,7 @@ import { buildEditedPosition, controllerSearch, humanSeatControllers, putEditorP
 import { movedEnough } from './drag.js';
 import { createBoard, pieceElement, renderBoard, renderReserve as renderPieceReserve } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=81';
+import { initI18n } from './i18n.js?v=92';
 import { attachAnalysis } from './analysis-ui.js?v=71';
 import { resultLabel, sideName } from './watch.js';
 

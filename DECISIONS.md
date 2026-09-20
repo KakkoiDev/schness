@@ -240,6 +240,40 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### Destinations are links, and the header is one row in one order
+
+**Every page-to-page destination is an `<a href>`.** The only one on the whole site used to be
+`./watch.html`; `library.html`, `puzzles.html` and `game.html` were reached through
+`window.location.assign()` in `src/lobby.js`, so there was no cmd-click, no middle-click, no
+copy-link-address, no hover preview, screen readers announced "button" where a link belonged, and
+nothing crawled past the lobby. `#play-online` stays a `<button>`: it opens a dialog, and it is the
+one control that has to go dead when the browser goes offline.
+
+One `<nav>`, the same three destinations, on all five pages. Land on the library and there is a way
+onward that is not the back button.
+
+**Header order is brand · page controls · rule · language, everywhere.** It was language · theme ·
+Rules on the lobby and Rules · language · theme on the arena and the library, so muscle memory broke
+on every navigation. The language switch sits after a hairline rule because it is a different kind of
+decision from the two page controls. `src/i18n.js` appends its button rather than inserting it before
+the theme toggle, which is what produced the second order.
+
+**The wordmark never shrinks.** `header` was a nowrap flex row where `.brand` was `flex: 0 1 auto`
+and `.header-actions` was `flex: 0 0 auto`, so at 390px the nav won the row and the brand collapsed
+to **zero width** — it did not truncate, it disappeared, and a phone rule then deleted it outright
+below 480px. The brand is `flex: 0 0 auto` now; below 760px the nav takes a row of its own instead.
+Measured in Chromium at 1440, 390, 360 and 320px in both languages, because the sheet said
+`flex: 0 1 auto` and that reads as fine.
+
+On the match page at phone width the nav is **clipped, not removed** — same mechanism as the reserve
+labels and the toast beside it. A match is the one screen where leaving is not the job, and every row
+above the board costs it the axis that is already scarce.
+
+**The page title is the `h1`; the brand is a link.** Every page's `h1` was "Schness", with the real
+title as an `h2`, so heading navigation announced the site name five times and never the page. The
+match page's `h1` is read but not shown: the board is the page, and a visible title would cost it a
+row on a phone.
+
 ### The board is one object, drawn one way
 
 A 6px `--ink` frame, a `--radius-card` corner, and no shadow — on the game page, in the arena, in a
@@ -516,6 +550,9 @@ Newest first. One line per decision that changed how the app behaves.
 - The lobby's rule strip, setup disclosure, strength radios, settings dialog, the `.mini-board`, the
   hidden rules figure and `initSettings` are gone from the sheet and the markup, not just switched
   off; the reduced-motion block is now checked as a rule rather than as a list of two.
+
+- Real links everywhere, one `<nav>`, one header order, a wordmark that cannot vanish, and an `h1`
+  that names the page rather than the site.
 
 - One board: a 6px ink frame and the real two-tone palette everywhere, square states drawn on top
   rather than by repainting, pieces at 82%, and the dead Unicode glyph path removed.

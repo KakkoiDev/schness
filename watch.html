@@ -14,18 +14,22 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
   <link rel="stylesheet" href="./vendor/basecoat/basecoat-nova.cdn.min.css">
-  <link rel="stylesheet" href="./styles.css?v=78">
-  <link rel="stylesheet" href="./ui.css?v=86">
+  <link rel="stylesheet" href="./styles.css?v=79">
+  <link rel="stylesheet" href="./ui.css?v=87">
 </head>
 <body class="watch-page">
   <main class="game">
     <header>
-      <a class="brand" href="./" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><h1>Schness</h1></a>
-      <div class="header-actions"><button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button><button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button></div>
+      <a class="brand" href="./" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><span class="brand-word">Schness</span></a>
+      <nav class="site-nav" aria-label="Schness"><a href="./watch.html" aria-current="page">Bot arena</a><a href="./library.html">Library</a><a href="./puzzles.html">Puzzles</a></nav>
+      <div class="header-actions">
+        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
+        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
+        <span class="header-rule" aria-hidden="true"></span>
+      </div>
     </header>
     <div class="watch-heading">
-      <div><p class="eyebrow">Play · watch · experiment</p><h2>Bot arena</h2></div>
-      <a class="text-button" href="./">← Home</a>
+      <div><p class="eyebrow">Play · watch · experiment</p><h1>Bot arena</h1></div>
     </div>
     <label class="watch-seat-choice">Play as <select id="human-side" class="select"><option value="white">White</option><option value="black">Black</option><option value="watch">Watch both bots</option></select></label>
     <section class="watch-layout" aria-label="Schness bot arena">
@@ -98,7 +102,7 @@
     </div>
   </dialog>
   <script type="module" src="./src/rules-modal.js?v=84"></script>
-  <script type="module" src="./src/watch-ui.js?v=81"></script>
+  <script type="module" src="./src/watch-ui.js?v=92"></script>
 </body>
 </html>
 

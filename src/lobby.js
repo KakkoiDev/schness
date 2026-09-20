@@ -1,19 +1,19 @@
 import { gameUrl, launchIntent } from './navigation.js';
 import { clockMode, setClockMode } from './settings.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js?v=70';
+import { initI18n } from './i18n.js?v=92';
 
 initTheme();
 initI18n();
 
-const arenaButton = document.querySelector('#bot-arena');
+// Three of the four destinations are plain <a href> cards in the markup, so
+// they cmd-click, middle-click, copy-link and crawl like any other link. Only
+// the online card stays a button: it opens a dialog, which is what a button is
+// for, and it is the one that has to go dead when the browser goes offline.
 const onlineButton = document.querySelector('#play-online');
-const libraryButton = document.querySelector('#browse-games');
-const puzzlesButton = document.querySelector('#solve-puzzles');
 const installButton = document.querySelector('#install');
 let installPrompt = null;
 
-arenaButton.addEventListener('click', () => window.location.assign('./watch.html'));
 const onlineSetup = document.querySelector('#online-setup');
 onlineButton.addEventListener('click', () => {
   onlineSetup.querySelector(`input[name="clock"][value="${clockMode()}"]`)?.click();
@@ -25,8 +25,6 @@ document.querySelector('#online-setup-form').addEventListener('submit', (event) 
   setClockMode(new FormData(event.currentTarget).get('clock') || 'untimed');
   window.location.assign(gameUrl(window.location.href, 'online'));
 });
-libraryButton.addEventListener('click', () => window.location.assign('./library.html'));
-puzzlesButton.addEventListener('click', () => window.location.assign('./puzzles.html'));
 document.querySelectorAll('[data-open-rules]').forEach((button) =>
   button.addEventListener('click', () => rulesDialog.showModal()));
 // Chrome offers installation through a menu most people never open. Taking

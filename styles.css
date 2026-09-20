@@ -64,7 +64,14 @@
 /* Two weights in the whole product: 400 for anything you read, 640 for the
    things that label it. A third weight is a decision nobody made on purpose. */
 h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
-[hidden] { display: none !important; }body{margin:0;min-width:300px;min-height:100svh;background:var(--paper);color:var(--ink)}button,input{font:inherit}button{color:inherit}.game{width:min(100%,72rem);margin:auto;padding:max(1rem,env(safe-area-inset-top)) clamp(1rem,4vw,3rem) max(1.5rem,env(safe-area-inset-bottom))}header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:clamp(2rem,6vh,5rem)}.game-page{width:min(100%,66rem)}.game-page header{margin-bottom:.8rem}.brand{display:flex;align-items:center;gap:.65rem;color:inherit;text-decoration:none}.brand-glyph{flex:none;width:1.6em;height:1.6em;overflow:visible}.header-actions{display:flex;align-items:center;gap:.15rem}h1{margin:0;font-size:clamp(2rem,7vw,3.6rem);letter-spacing:-.075em;line-height:.9}.game-page h1{font-size:1.7rem;letter-spacing:-.055em}h2{margin:.35rem 0 1rem;font-size:clamp(2.5rem,9vw,5.8rem);letter-spacing:-.065em;line-height:.92}.eyebrow,.label{margin:0 0 .2rem;color:var(--muted);font-size:.68rem;font-weight:640;letter-spacing:.15em;text-transform:uppercase}.text-button{border:0;border-radius:var(--radius-control);background:transparent;padding:.55rem .65rem;color:inherit;text-decoration:none;cursor:pointer}.text-button:hover{background:rgb(127 127 127/.1)}.theme-button{color:var(--muted)}.reset{border:1px solid var(--line);border-radius:var(--radius-pill);background:var(--surface);padding:.5rem .8rem;cursor:pointer;box-shadow:none}
+[hidden] { display: none !important; }body{margin:0;min-width:300px;min-height:100svh;background:var(--paper);color:var(--ink)}button,input{font:inherit}button{color:inherit}.game{width:min(100%,72rem);margin:auto;padding:max(1rem,env(safe-area-inset-top)) clamp(1rem,4vw,3rem) max(1.5rem,env(safe-area-inset-bottom))}header{display:flex;align-items:center;gap:var(--space-4);margin-bottom:clamp(2rem,6vh,5rem);flex-wrap:wrap}.game-page{width:min(100%,66rem)}.game-page header{margin-bottom:.8rem}.brand{display:flex;flex:0 0 auto;align-items:center;gap:var(--space-2);color:inherit;font-size:1.0625rem;font-weight:640;text-decoration:none}
+.brand-word{letter-spacing:-.03em;white-space:nowrap}
+.brand-glyph{flex:none;width:1.6em;height:1.6em;overflow:visible}
+.site-nav{display:flex;flex:1 1 auto;min-width:0;align-items:center;gap:var(--space-1)}
+.site-nav a{display:inline-flex;min-height:36px;align-items:center;border-radius:var(--radius-control);color:var(--muted);padding:.4rem .6rem;font-size:.875rem;font-weight:640;text-decoration:none;white-space:nowrap}
+.site-nav a:hover{background:var(--sunk);color:var(--ink)}
+.site-nav a[aria-current="page"]{background:var(--sunk);color:var(--ink)}
+.header-rule{width:1px;height:1.25rem;background:var(--line)}.header-actions{display:flex;flex:0 0 auto;align-items:center;gap:.15rem}h1{margin:0;font-size:clamp(1.9rem,5.5vw,3rem);letter-spacing:-.045em;line-height:1.05}h2{margin:.35rem 0 1rem;font-size:clamp(1.35rem,3.2vw,1.85rem);letter-spacing:-.03em;line-height:1.2}.eyebrow,.label{margin:0 0 .2rem;color:var(--muted);font-size:.68rem;font-weight:640;letter-spacing:.15em;text-transform:uppercase}.text-button{border:0;border-radius:var(--radius-control);background:transparent;padding:.55rem .65rem;color:inherit;text-decoration:none;cursor:pointer}.text-button:hover{background:rgb(127 127 127/.1)}.theme-button{color:var(--muted)}.reset{border:1px solid var(--line);border-radius:var(--radius-pill);background:var(--surface);padding:.5rem .8rem;cursor:pointer;box-shadow:none}
 .menu{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(18rem,.75fr);gap:clamp(2rem,7vw,7rem);align-items:end;min-height:calc(100svh - 12rem)}.lobby-intro>p:not(.eyebrow){max-width:34rem;color:var(--muted);font-size:clamp(1rem,2vw,1.18rem);line-height:1.6}.mode-buttons{display:grid;gap:.7rem}.mode{display:grid;width:100%;gap:.2rem;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface);padding:1.15rem 1.2rem;text-align:left;cursor:pointer;box-shadow:none;transition:transform 140ms ease,box-shadow 140ms ease,border-color 140ms ease}.mode strong{font-size:1.05rem}.mode small{color:var(--muted)}.mode.dark{border-color:var(--ink);background:var(--ink);color:var(--inverse);box-shadow:none}.mode.dark small{color:inherit;opacity:.68}.mode:not(:disabled):hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:none}.mode:disabled{cursor:default;opacity:.45}
 .match-actions{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}.chat-form{display:flex}.chat-form input{min-width:0;flex:1;border:1px solid var(--line);border-radius:var(--radius-control) 0 0 var(--radius-control);background:var(--paper);color:var(--ink);padding:.7rem}.chat-form button{border:0;border-radius:0 var(--radius-control) var(--radius-control) 0;background:var(--ink);color:var(--inverse);padding:.7rem 1rem;cursor:pointer}.play-area{width:min(100%,37rem);margin:auto}.bank-piece:disabled{cursor:default;opacity:1}
 .board{display:grid;grid-template-columns:minmax(0, 1fr);grid-template-rows: repeat(4, minmax(0, 1fr));width:100%;aspect-ratio:1;overflow:hidden;border:6px solid var(--ink);border-radius:var(--radius-card);background:var(--board-light);contain:layout paint;user-select:none;-webkit-user-select:none}.square{position:relative;display:grid;width:100%;height:100%;min-width:0;min-height:0;padding:0;place-items:center;border:0;border-radius:0;background-color:var(--board-light);line-height:1;cursor:pointer;touch-action:manipulation}.board-row{display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));min-width:0;min-height:0}.board-row:nth-child(odd) .square:nth-child(even),.board-row:nth-child(even) .square:nth-child(odd){background-color:var(--board-dark)}.piece { position:relative;z-index:1;pointer-events:none }.square:disabled{cursor:default;opacity:1}.square.last-from, .square.last-to{background-image:linear-gradient(var(--move-highlight),var(--move-highlight))}.square.selected{box-shadow:inset 0 0 0 3px var(--ink);z-index:2}.square.target::after{content:"";position:absolute;width:20%;aspect-ratio:1;border-radius:50%;background:color-mix(in srgb, var(--ink) 55%, transparent)}.square.capture::after{width:74%;background:transparent;border:3px solid var(--accent)}.square.placement{outline:2px dashed var(--accent);outline-offset:-4px}.square.placement::after{width:20%;background:color-mix(in srgb, var(--accent) 80%, transparent)}.square.target:not(:disabled):hover{box-shadow:inset 0 0 0 2px color-mix(in srgb, var(--ink) 45%, transparent)}
@@ -77,7 +84,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 .lobby-page header{margin-bottom:clamp(4rem,12vh,7rem)}
 .lobby-page .menu{display:block;min-height:0}
 .lobby-page .lobby-intro{margin-bottom:2.75rem}
-.lobby-page .lobby-intro h2{margin:0 0 1rem;font-size:clamp(2.25rem,8vw,3.75rem);letter-spacing:-.055em}
+.lobby-page .lobby-intro h1{margin:0 0 1rem;font-size:clamp(2.25rem,8vw,3.75rem);letter-spacing:-.055em}
 .lobby-page .lobby-intro>p{max-width:34rem;margin:0;color:var(--muted);font-size:1rem;line-height:1.65}
 .lobby-page .mode-buttons{gap:.625rem}
 .lobby-page .mode{border-color:var(--line);border-radius:var(--radius-control);padding:1rem 1.1rem;box-shadow:none;transition:border-color 120ms ease,background-color 120ms ease}
@@ -179,6 +186,9 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 
 .language-button { border:1px solid var(--line);border-radius:var(--radius-pill);color:var(--muted);font-size:.75rem;font-weight:640;white-space:nowrap }
 :root[lang="ja"] h1,:root[lang="ja"] h2 { letter-spacing:-.045em }
+/* Japanese glyphs have no room under a Latin line-height: at 1, the tail of
+   遊 was clipped by the heading box on the lobby. */
+:root[lang="ja"] h1,:root[lang="ja"] h2,:root[lang="ja"] h3 { line-height:1.25 }
 :root[lang="ja"] button,:root[lang="ja"] summary,:root[lang="ja"] .mode { line-break:strict;overflow-wrap:break-word }
 @media(max-width:760px) {
   .header-actions { gap:0 }
@@ -1495,6 +1505,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   .reset,
   .rail-button,
   .moves-link,
+  .site-nav a,
   .brand {
     display: inline-flex;
     align-items: center;
@@ -1887,7 +1898,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 .watch-page .game { width:min(100%,70rem) }
 .watch-page header { margin-bottom:1.25rem }
 .watch-heading { display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1.25rem }
-.watch-heading h2 { margin:.2rem 0 0;font-size:clamp(2rem,6vw,3.5rem) }
+.watch-heading h1 { margin:.2rem 0 0;font-size:clamp(2rem,6vw,3.5rem) }
 .watch-layout { display:grid;grid-template-columns:minmax(0,37rem) minmax(15rem,19rem);gap:clamp(1.25rem,4vw,3rem);align-items:start;justify-content:center }
 .watch-stage { min-width:0 }
 .watch-player { display:flex;min-height:4.25rem;align-items:center;justify-content:space-between;gap:1rem;padding:.5rem .15rem }
@@ -1922,7 +1933,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 .position-error { min-height:1.5rem;margin:.5rem 0 0;color:var(--danger);font-size:.78rem;text-align:center }
 .puzzle-page .game { width:min(100%,65rem) }
 .puzzle-heading { display:flex;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1rem }
-.puzzle-heading h2 { margin:.15rem 0;font-size:clamp(2rem,6vw,3.5rem) }
+.puzzle-heading h1 { margin:.15rem 0;font-size:clamp(2rem,6vw,3.5rem) }
 .puzzle-layout { display:grid;grid-template-columns:minmax(0,37rem) minmax(16rem,20rem);gap:clamp(1rem,4vw,2.5rem);align-items:start;justify-content:center }
 .puzzle-stage { min-width:0 }
 .replay-seat { display:flex;min-height:3.75rem;align-items:center;justify-content:space-between;gap:.75rem }
@@ -1969,7 +1980,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   .watch-page .game { padding-inline:.75rem }
   .watch-page header { margin-bottom:.5rem }
   .watch-heading { margin-bottom:.5rem }
-  .watch-heading h2 { font-size:2rem }
+  .watch-heading h1 { font-size:2rem }
   .watch-layout { grid-template-columns:1fr;gap:.75rem }
   .watch-stage { width:min(100%,calc(100svh - 15rem));margin:auto }
   .watch-player { min-height:3.25rem;padding:.2rem 0 }
@@ -1983,7 +1994,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   .puzzle-page .game { padding-inline:.75rem }
   .puzzle-page header { margin-bottom:.4rem }
   .puzzle-heading { margin-bottom:.35rem }
-  .puzzle-heading h2 { font-size:1.8rem }
+  .puzzle-heading h1 { font-size:1.8rem }
   .puzzle-heading .text-button { display:none }
   .puzzle-layout { grid-template-columns:1fr;gap:.5rem }
   .puzzle-panel { display:contents }
@@ -2021,7 +2032,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
    scroll back and forth between a list and a board. */
 .library-page .game { width:min(100%,76rem) }
 .library-heading { display:flex;align-items:end;justify-content:space-between;gap:1rem;margin:0 0 1.25rem }
-.library-heading h2 { margin:.15rem 0;font-size:clamp(2.2rem,6vw,4rem) }
+.library-heading h1 { margin:.15rem 0;font-size:clamp(2.2rem,6vw,4rem) }
 .library-heading p:last-child { margin:.35rem 0 0;color:var(--muted) }
 .library-stats { display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface) }
 .library-stats div { display:grid;gap:.15rem;padding:1rem;border-right:1px solid var(--line) }
@@ -2060,7 +2071,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   .library-page .game { padding-inline:.75rem }
   .library-page header { margin-bottom:.5rem }
   .library-heading { align-items:start;margin-bottom:.75rem }
-  .library-heading h2 { font-size:2.3rem }
+  .library-heading h1 { font-size:2.3rem }
   .library-heading .text-button { display:none }
   .library-stats { grid-template-columns:1fr 1fr }
   .library-stats div:nth-child(2) { border-right:0 }
@@ -2097,16 +2108,40 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   .demo-panel > p { font-size:.82rem }
 }
 
-/* Mobile navigation is one deliberate row. Japanese labels must never become
-   vertical columns, and the header must not consume the first screen. */
+/* Japanese labels must never become vertical columns, and the header must not
+   consume the first screen. */
 .brand,
 .header-actions,
 .header-actions .text-button {
   white-space: nowrap;
 }
 
-.brand { min-width:0;flex:0 1 auto }
-.header-actions { flex:0 0 auto }
+/*
+ * Below 760px the nav takes a row of its own rather than competing with the
+ * wordmark for the first one. Above it, the three sit on one line.
+ */
+@media(max-width:760px) {
+  header { gap:var(--space-2) var(--space-3) }
+  .site-nav { order:3;flex-basis:100%;overflow-x:auto;overscroll-behavior-x:contain;margin-top:-.25rem }
+  .header-actions { margin-left:auto }
+}
+
+/*
+ * A match is the one screen where leaving is not the job, and every row above
+ * the board costs it the axis that is already scarce on a phone. The nav is
+ * clipped from the screen, not from the accessibility tree — same rule as the
+ * reserve labels and the toast beside it.
+ */
+@media(max-width:760px) {
+  .game-page .site-nav {
+    position:absolute;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    clip:rect(0 0 0 0);
+    white-space:nowrap;
+  }
+}
 
 @media(max-width:480px) {
   .game { padding-inline:1rem }
@@ -2119,7 +2154,14 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
     gap:.5rem;
     margin-bottom:1.25rem;
   }
-  .brand { gap:.45rem }
+  .brand { gap:.4rem;font-size:1rem }
+  /*
+   * The wordmark does not give up a pixel. What shrinks is the nav: the two
+   * page controls lose their padding and, below 380px, their labels — the
+   * glyph and the aria-label carry them from there.
+   */
+  .header-actions { gap:.1rem }
+  .site-nav a { padding:.5rem .45rem;font-size:.8125rem }
   .header-actions .text-button {
     min-width:44px;
     min-height:44px;
@@ -2129,7 +2171,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   }
   .language-button { min-width:44px }
   .lobby-page .lobby-intro { margin-bottom:1.5rem }
-  .lobby-page .lobby-intro h2 {
+  .lobby-page .lobby-intro h1 {
     margin-bottom:.7rem;
     font-size:clamp(2.15rem,11vw,2.8rem);
     line-height:1;
@@ -2143,31 +2185,6 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   .lobby-page .mode small { font-size:.78rem;line-height:1.45 }
 }
 
-/* Phone header: quiet text navigation. The full wordmark belongs to wider
-   layouts; the S mark is the established app logo and leaves the labels room. */
-@media(max-width:480px) {
-  header .brand h1,
-  .game-page header .brand h1 { display:none }
-
-  header .brand { flex:none }
-  header .header-actions { gap:.2rem }
-  header .header-actions .text-button {
-    display:inline-flex;
-    width:auto;
-    min-width:44px;
-    height:44px;
-    min-height:44px;
-    border:1px solid transparent;
-    border-radius:var(--radius-control);
-    padding:0 .45rem;
-    font-size:.72rem;
-    font-weight:640;
-  }
-  header .header-actions .language-button {
-    border-color:var(--line);
-    font-size:.72rem;
-  }
-}
 .analysis-panel{display:grid;gap:.35rem;margin:.6rem 0 1rem;padding:.7rem .85rem;border:1px solid var(--line);border-radius:var(--radius-control);font-size:.9rem}.analysis-panel[hidden],.analysis-bar[hidden],.analysis-panel [hidden]{display:none!important}.analysis-panel label,.analysis-toggle{display:flex;align-items:center;gap:.5rem}.analysis-panel input,.analysis-toggle input{accent-color:var(--ink)}.analysis-panel p{margin:.2rem 0 0;font-weight:640}.board-frame{position:relative}
 .online-setup{width:min(92vw,27rem);max-width:none;border:1px solid var(--line);border-radius:var(--radius-dialog);background:var(--paper);color:var(--ink);padding:1.25rem;box-shadow:var(--shadow-dialog)}.online-setup::backdrop{background:rgb(8 12 10/.65)}.online-setup h2{margin:.1rem 0;font-size:clamp(1.4rem,5vw,2rem)}.online-setup .clock-choice{margin:1rem 0 0}.online-setup-note{font-size:.8rem;line-height:1.5;color:var(--muted)}.online-setup-submit{width:100%;min-height:2.8rem;cursor:pointer}.watch-panel>.analysis-panel{margin:0;padding:.7rem .8rem}.watch-stage>.board-frame{width:100%}
 
