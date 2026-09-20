@@ -634,3 +634,34 @@ all five items on one row at 390px. At 320px the nav scrolls horizontally, which
 
 **Next measurement.** Whether anyone uses Online from a page other than the lobby. If nobody does,
 the nav item is costing a row of space at 320px for nothing.
+
+## 2026-09-21 — Two corrections from use
+
+**"Play" in the nav was useless.** Reported, and right. It shipped in the morning's nav as
+Play · Online · Bot arena · Puzzles · Library. From the lobby, "Play" pointed at the page you were
+already standing on; from anywhere else it went to a board you then had to scroll to find. The
+wordmark is already the way home, so the entry was a second home link wearing a verb.
+
+**Decision.** One entry, **Play online**, doing what the nav entry people actually want: opening the
+invite dialog. Rejected keeping both and renaming "Play" to "Home" — the wordmark is the home link
+on every site, and a nav that spends its first slot restating it has one slot fewer for
+destinations. Four items now, and at 390px they fit one row in both languages with the wordmark
+still at 102px.
+
+**The invite dialog was not centred, and I had measured that it was.** Both are true, which is the
+interesting part. On a desktop it centres exactly — 504px either side at 1440×900. At ≤760px it was
+`.is-sheet`: a full-width bottom sheet flush to the bottom edge, which the brief asked for and
+which my test asserted *as a sheet*, so nothing was red. The test was checking that it matched the
+shape I had decided on, not that the shape was right.
+
+**Decision.** Centred at every width. The reasoning for the sheet — the primary action lands in the
+thumb zone — is sound for a tall sheet full of content. This dialog is three radio buttons and a
+submit, about 290px tall, and a small box pinned to the bottom edge reads as displaced rather than
+placed. Measured after: 16px either side and 277px top and bottom at 390×844. The `.is-sheet` class
+went with it rather than sitting in the stylesheet unused; if a sheet earns its place later it
+returns as a class, not as a rule on one dialog's id.
+
+**What to take from it.** A geometry test proves a dialog is where you told it to go. It cannot
+tell you that you told it to go somewhere wrong. The measurement that would have caught this is
+someone opening the thing on a phone, which is exactly the check I have repeatedly noted I cannot
+run here.

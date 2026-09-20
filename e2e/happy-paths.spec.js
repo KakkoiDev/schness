@@ -609,7 +609,10 @@ test('every dialog is centred, or a deliberate sheet — measured, not eyeballed
   // dialogs escaped only because each had been given its own full-screen rule.
   // The gap was invisible in a desktop browser, which is how it shipped.
   const dialogs = [
-    ['/index.html', '#online-setup', 'sheet'],
+    // The invite dialog is centred at every width. It was a bottom sheet at
+    // <=760px for one release; small and flush to the bottom edge, it read as
+    // displaced rather than deliberate.
+    ['/index.html', '#online-setup', 'centred'],
     ['/index.html', '#rules-dialog', 'full'],
     ['/watch.html', '#position-dialog', 'full'],
     ['/library.html', '#replay-dialog', 'full'],
@@ -628,12 +631,10 @@ test('every dialog is centred, or a deliberate sheet — measured, not eyeballed
           bottom: Math.round(window.innerHeight - rect.bottom),
         };
       });
-      if (width > 760) {
+      if (width > 760 || shape === 'centred') {
         expect(Math.abs(box.left - box.right), `${selector} centred across`).toBeLessThanOrEqual(2);
         expect(Math.abs(box.top - box.bottom), `${selector} centred down`).toBeLessThanOrEqual(2);
-      } else if (shape === 'sheet') {
-        expect(box, `${selector} is a bottom sheet`).toMatchObject({ left: 0, right: 0, bottom: 0 });
-        expect(box.top, `${selector} leaves the page visible above it`).toBeGreaterThan(0);
+        expect(box.top, `${selector} is not flush to an edge`).toBeGreaterThan(0);
       } else {
         expect(box, `${selector} fills the screen`).toMatchObject({ left: 0, right: 0, top: 0, bottom: 0 });
       }

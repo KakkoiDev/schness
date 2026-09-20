@@ -443,11 +443,15 @@ The header used to carry brand · theme · Install · Rules — not one destinat
 was added in the design pass carried three: Bot arena, Library, Puzzles. Starting a game against a
 person was reachable from the lobby and nowhere else, which made a primary thing a side door.
 
-Ship: **Play · Online · Bot arena · Puzzles · Library**, as links, on all five pages, with
+Ship: **Play online · Bot arena · Puzzles · Library**, as links, on all five pages, with
 `aria-current="page"` on the one you are on.
 
-- Online is a destination whose target is a dialog that lives on the lobby. From another page the
-  link navigates to `./index.html#online` and `lobby.js` opens the dialog from the hash; on the
+- **There is no bare "Play".** It shipped for one release and earned nothing: from the lobby it
+  pointed at the page you were already on, and the wordmark is already the way home. What people
+  want from a nav is the thing that starts a game, so that entry says what it does — Play online,
+  and the invite dialog opens.
+- Play online is a destination whose target is a dialog that lives on the lobby. From another page
+  the link navigates to `./index.html#online` and `lobby.js` opens the dialog from the hash; on the
   lobby it opens in place, with no navigation. Closing it takes the hash back off, so a refresh
   does not reopen a dialog nobody asked for.
 - Measured at 390, 360 and 320px in both languages: the wordmark holds 102px and the document never
@@ -846,14 +850,21 @@ Newest first. One line per decision that changed how the app behaves.
 - Check and checkmate are Japanese on the Japanese site, and the language switch names the language
   rather than the country.
 
-- **A dialog is one component with two sizes, not six instances.** The rule that centres a dialog
+- **A dialog is one component, not six instances.** The rule that centres a dialog
   used to sit inside `@media (min-width: 761px)`, so below that nothing centred anything and the
   margin fell back to `0`. Four dialogs escaped only because each had separately been given a
   full-screen rule; `#online-setup` had none, and opened at x:0, y:0 on a phone — measured at
   390x844 with 31px spare to its right and 554px below. The centring rule is unconditional now, and
-  size is a class on the element: `.is-sheet` (a bottom sheet at ≤760px, primary action in the thumb
-  zone) or `.is-full`. Never a per-dialog media query. Guarded by an e2e test that measures each
-  dialog's box at 390, 768 and 1440px; it was confirmed to fail against the shipped markup.
+  size is a class on the element — today only `.is-full` — never a per-dialog media query. Guarded
+  by an e2e test that measures each dialog's box at 390, 768 and 1440px; it was confirmed to fail
+  against the shipped markup.
+
+- **The invite dialog is centred at every width.** For one release it was a bottom sheet at ≤760px,
+  on the reasoning that a sheet puts the primary action in the thumb zone. In use it read as
+  displaced rather than deliberate: it is a small dialog — three radio buttons and a submit — and
+  flush to the bottom edge a small box looks dropped, not placed. The `.is-sheet` class went with
+  it rather than sitting in the sheet unused. If a sheet earns its place later it comes back as a
+  class on the element, not as a rule on one dialog's id.
 
 - **`.dialog-grab` is gone.** A 38x4 bar drawn below 760px in all five pages, with no `pointerdown`
   or `touchstart` handler bound to it anywhere in `src/`. It promised drag-to-dismiss and did
