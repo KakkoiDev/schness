@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { closeRules, openLesson, stepping } from './rules-dialog.js';
 
 for (const language of ['en', 'ja']) {
   for (const theme of ['light', 'dark']) {
@@ -90,15 +91,15 @@ test('Rules is available everywhere with an interactive board inside the modal',
     // board and the square names showing — so there is nothing to place yet.
     await expect(page.locator('#rules-dialog #demo-board .piece')).toHaveCount(2);
     await expect(page.locator('#rules-demo')).toHaveAttribute('data-coordinates', 'true');
-    await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="board"]') })).toContainText('The board is 4 × 4');
-    await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="kings"]') })).toContainText('Kings go down first');
-    await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="deploy"]') })).toContainText('Move or deploy');
-    await expect(page.locator('.rules-list li').filter({ has: page.locator('[data-lesson="capture"]') })).toContainText('Captures come back');
-    await page.locator('[data-lesson="kings"]').click();
+    for (const [lesson, heading] of [['board', 'The board is 4 × 4'], ['kings', 'Kings go down first'],
+      ['deploy', 'Move or deploy'], ['capture', 'Captures come back']]) {
+      await expect(page.locator('.rules-list li').filter({ has: page.locator(`[data-lesson="${lesson}"]`) })).toContainText(heading);
+    }
+    await openLesson(page, 'kings');
     await expect(page.locator('#rules-dialog #demo-board .square.placement')).toHaveCount(4);
     await page.locator('#demo-board .square.placement').first().click();
     await expect(page.locator('#demo-board .piece-black')).toHaveCount(1, { timeout: 10000 });
-    await page.locator('.rules-confirm').click();
+    await closeRules(page);
     await expect(page.locator('#rules-dialog')).not.toBeVisible();
   }
 });
@@ -208,8 +209,15 @@ test('the rules dialog opens at the top with the board it teaches whole', async 
     }
     await expect(page.locator('#rules-dialog .rules-list > li')).toHaveCount(4);
     await expect(page.locator('#rules-dialog .rule-demo-trigger')).toHaveCount(4);
-    await expect(page.locator('#rules-dialog .dialog-foot')).toContainText('reopen this from');
-    await page.locator('.rules-confirm').click();
+    if (await stepping(page)) {
+      // One rule per screen, and the foot carries Back / Next instead of the
+      // note — there is no room for both, and the controls win.
+      await expect(page.locator('#rules-dialog .rules-list > li:not([hidden])')).toHaveCount(1);
+      await expect(page.locator('#rules-step-count')).toHaveText('Rule 1 of 4');
+    } else {
+      await expect(page.locator('#rules-dialog .dialog-foot')).toContainText('reopen this from');
+    }
+    await closeRules(page);
     await expect(page.locator('#rules-dialog')).toBeHidden();
   }
 });

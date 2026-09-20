@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { closeRules, openLesson } from './rules-dialog.js';
 
 const GAME_ID = '00000000-0000-4000-8000-000000000001';
 
@@ -20,7 +21,7 @@ test('lobby settings, language, theme, rules and online invitation', async ({ pa
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.getByRole('button', { name: 'Rules', exact: true }).click();
   await expect(page.getByRole('dialog', { name: /Schness in four rules/ })).toBeVisible();
-  await page.getByRole('button', { name: 'Start playing' }).click();
+  await closeRules(page);
   await page.getByRole('button', { name: /Create an online game/ }).click();
   await expect(page.getByRole('dialog', { name: 'Choose a time control' })).toBeVisible();
   await page.locator('#online-setup label:has(input[value="3+2"])').click();
@@ -94,8 +95,7 @@ test('training warns the defender of forced mate before they move', async ({ pag
 
 test('interactive tutorial uses the shared board and answers a king placement', async ({ page }) => {
   await page.goto('/');
-  await page.locator('header [data-open-rules]').click();
-  await page.getByRole('button', { name: 'Try placing the kings' }).click();
+  await openLesson(page, 'kings');
   const board = page.locator('#demo-board[data-schness-board="true"]');
   await expect(board).toBeVisible();
   await expect(board.locator('.square.placement.target')).toHaveCount(4);
@@ -106,8 +106,7 @@ test('interactive tutorial uses the shared board and answers a king placement', 
 
 test('drag pickup hides its source and an illegal drop restores it', async ({ page }) => {
   await page.goto('/');
-  await page.locator('header [data-open-rules]').click();
-  await page.getByRole('button', { name: 'Try moving or deploying' }).click();
+  await openLesson(page, 'deploy');
   const source = page.locator('#demo-board .square').filter({ has: page.locator('.piece-white') }).first();
   const box = await source.boundingBox();
   const x = box.x + box.width / 2;
@@ -640,4 +639,43 @@ test('every dialog is centred, or a deliberate sheet — measured, not eyeballed
       }
     }
   }
+});
+
+test('the rules are a stepper on a phone: one rule, a working Next, no scrolling', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'The stepper is the phone layout');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/index.html');
+  // Nothing opens the rules for you — the stepper lays itself out at load, and
+  // driving a lesson calls showModal(), so that must not happen here.
+  await expect(page.locator('#rules-dialog')).not.toHaveAttribute('open', /.*/);
+
+  await page.locator('header [data-open-rules]').click();
+  const dialog = page.locator('#rules-dialog');
+  await expect(dialog).toHaveClass(/is-stepping/);
+
+  for (const step of [1, 2, 3, 4]) {
+    await expect(page.locator('.rules-list > li:not([hidden])')).toHaveCount(1);
+    await expect(page.locator('#rules-step-count')).toHaveText(`Rule ${step} of 4`);
+    await expect(page.locator('.rules-progress li[data-state="current"]')).toHaveCount(1);
+    if (step === 1) await expect(page.locator('.rules-back')).toBeDisabled();
+    else await expect(page.locator('.rules-back')).toBeEnabled();
+
+    // Read what to do, then see the board you are to do it on.
+    const ordered = await page.evaluate(() => {
+      const instruction = document.querySelector('#demo-instruction').getBoundingClientRect();
+      return instruction.bottom <= document.querySelector('#demo-board').getBoundingClientRect().top;
+    });
+    expect(ordered).toBe(true);
+
+    // The whole step fits at 390x844. This is what the desktop layout reflowed
+    // onto a phone could not do, and scrolling was the only way to change rule.
+    const overflow = await page.locator('.dialog-body').evaluate((body) => body.scrollHeight - body.clientHeight);
+    expect(overflow, `step ${step} fits`).toBeLessThanOrEqual(1);
+
+    const next = page.locator('.rules-next');
+    await expect(next).toHaveText(step === 4 ? 'Start playing' : 'Next rule');
+    await next.click();
+  }
+  // Next on the last rule is the exit, which is why it says so.
+  await expect(dialog).not.toHaveAttribute('open', /.*/);
 });

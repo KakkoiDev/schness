@@ -257,13 +257,75 @@ body .rules-dialog { width: min(64rem, calc(100vw - 2rem)); max-height: calc(100
 .rules-practice { margin:1rem 0; }
 .rules-practice .rules-demo { margin:0; padding-top:.75rem; border:0; }
 /* Sized so the board this dialog is teaching is whole when it opens. */
-.rules-practice .demo-stage { width: min(100%, 22rem, calc(100svh - 25rem)); margin-inline: auto; }
-.rules-practice .demo-layout { grid-template-columns:minmax(0,1fr) minmax(14rem,1fr); }
+/* No percentage here: the stage sits in a `1fr` column, and a width that is a
+   percentage of a track that is sized from its content resolves to zero. */
+.rules-practice .demo-stage { width: min(22rem, calc(100svh - 25rem)); margin-inline: auto; }
+/* The instruction is a child of the layout now, so a phone can put it above
+   the board. On desktop it keeps its place at the top of the right column. */
+.rules-practice .demo-layout {
+  grid-template-columns:minmax(0,1fr) minmax(14rem,1fr);
+  grid-template-areas:"stage instruction" "stage panel";
+}
+.rules-practice .demo-layout > #demo-instruction { grid-area:instruction; margin:0 0 .75rem; }
+.rules-practice .demo-layout > .demo-stage { grid-area:stage; }
+.rules-practice .demo-layout > .demo-panel { grid-area:panel; }
+
+/* The stepper. Hidden markup on desktop; the dialog is the reading layout. */
+.rules-stepper { display:grid; gap:.5rem; margin-bottom:1rem; }
+.rules-progress { display:grid; grid-auto-flow:column; gap:.375rem; margin:0; padding:0; list-style:none; }
+.rules-progress li { height:4px; border-radius:var(--radius-pill); background:var(--sunk); }
+.rules-progress li[data-state="done"] { background:color-mix(in srgb, var(--accent) 45%, var(--sunk)); }
+.rules-progress li[data-state="current"] { background:var(--accent); }
+.rules-step-count { margin:0; color:var(--muted); font-size:.75rem; font-weight:640; }
+.rules-stepper-actions { display:flex; gap:.5rem; width:100%; }
+.rules-stepper-actions .btn { flex:1 1 0; }
+.rules-list > li > strong:focus-visible { outline:2px solid var(--focus); outline-offset:2px; }
 .rules-practice .demo-heading h2 { font-size:1.5rem; }
 @media(max-width:760px) {
   /* Geometry comes from .is-full. */
-  .rules-practice .demo-layout { grid-template-columns:1fr; }
-  .rules-practice .demo-stage { width: min(100%, 20rem); max-width:24rem; }
+  /* Read what to do, then see the board you are to do it on. */
+  .rules-practice .demo-layout {
+    grid-template-columns:1fr;
+    grid-template-areas:"instruction" "stage" "panel";
+  }
+  /* Capped so one whole step fits at 390x844 without scrolling. Measured.
+     The floor matters: an uncapped-below expression is how the puzzles board
+     ended up at 128px on a small phone. Below the floor the step scrolls,
+     which is the right trade — a board you cannot read is worth nothing. */
+  .rules-practice .demo-stage { width: clamp(11rem, calc(100svh - 39rem), 20rem); max-width:24rem; }
+  /* The cap belongs to the board, not the stage: capping the stage squeezed
+     the reserve rows, which need the full width to hold three pieces and a
+     label. The board is centred in what is left. */
+  .is-stepping .demo-stage { width:100%; max-width:none; }
+  .is-stepping #demo-board { width:clamp(11rem, calc(100svh - 39rem), 20rem); margin-inline:auto; }
+  .is-stepping .demo-stage > .replay-seat { margin-block:.25rem; }
+  /* One exit per screen: Back and Next are in the foot. */
+  .is-stepping .demo-full-game { display:none; }
+  /* In its resting state the strip says "Your turn — tap or drag a piece",
+     which the instruction above the board has already said. It earns its 54px
+     only when it has something of its own to report. */
+  .is-stepping #demo-feedback[data-state="ready"] { display:none; }
+  /* The counter numbers four rules in a list. A stepper shows one at a time
+     and says "Rule 3 of 4" above it, so the marker only ever read "1". */
+  .is-stepping .rules-list > li { grid-template-columns:minmax(0,1fr); }
+  .is-stepping .rules-list > li::before { display:none; }
+  .is-stepping .rules-list > li > strong { grid-column:1; display:block; font-size:1.15rem; margin-bottom:.35rem; }
+  .is-stepping .rules-list > li > span { grid-column:1; }
+  /* The "Try it" trigger is what the stepper presses for you. */
+  .is-stepping .rule-demo-trigger { display:none; }
+  .is-stepping .dialog-foot { position:sticky; bottom:0; background:var(--surface); border-top:1px solid var(--line); }
+  .is-stepping .dialog-foot-actions, .is-stepping .dialog-foot-note { display:none; }
+  .is-stepping .demo-heading { display:none; }
+  /* One step is one screen, so the space between its parts is the budget.
+     Measured at 390x844: 172px of the step was gaps and padding. */
+  .is-stepping .dialog-body { gap:.5rem; padding:4px 16px 12px; }
+  .is-stepping .rules-practice { margin:.25rem 0; }
+  .is-stepping .rules-practice .rules-demo { padding-top:0; }
+  .is-stepping .demo-layout { gap:.5rem; }
+  /* One panel inside another reads as two boxes; the step is the box. */
+  .is-stepping .demo-panel { gap:.5rem; padding:0; border:0; background:none; }
+  .is-stepping #demo-instruction { margin:0; }
+  .is-stepping .dialog-head { padding:12px 16px 8px; }
 }
 
 .square-coordinate { display:none; position:absolute; top:.25rem; right:.3rem; font:640 clamp(.55rem,1.4vw,.7rem)/1 var(--font-sans); color:var(--ink); background:color-mix(in srgb, var(--surface) 82%, transparent); border-radius:var(--radius-control); padding:.12rem .18rem; pointer-events:none; z-index:4; }

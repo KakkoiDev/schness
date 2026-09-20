@@ -416,9 +416,26 @@ were good; the first impression was half a sentence.
   which is where following notation actually happens.
 - The footer says where the dialog lives, so closing it is not a one-way door: "You can reopen this
   from **Rules** in the header at any time", then Skip and Start playing.
-- **On a phone the rules come first and the board is a scroll away.** There is no width for both,
-  and `order: 1` on `.rules-list` — a leftover from the layout where a static figure came last —
-  meant a dialog called "Schness in four rules" opened showing none of them.
+- **On a phone it is a different layout, not this one reflowed.** Stacking the desktop dialog gave
+  four rules in a column, a demo board eating half the viewport, the instruction *below* the board
+  it described, and no control anywhere to change rule — scrolling was the only way through. It is
+  a stepper now: one rule per screen, a four-segment progress bar and "Rule 3 of 4", the instruction
+  above the board, Back / Next pinned to the foot, and "Start playing" as the last step's Next,
+  because on rule four there is no next rule. The step is announced through `role="status"` on the
+  count and focus moves to the rule's heading.
+- **The whole step fits at 390×844 without scrolling**, which is the constraint that sized
+  everything else: the board is capped at `clamp(11rem, calc(100svh - 39rem), 20rem)` — 220px there —
+  the resting feedback strip is hidden because it only repeats the instruction above the board, and
+  the panel loses its chrome. The `clamp()` floor is deliberate: an expression with no lower bound is
+  exactly how the puzzles board reached 128px. Below the floor the step scrolls, which is the right
+  trade. All four steps measured; guarded by an e2e test.
+- **The stepper drives the existing "Try it" triggers rather than reaching into the tutorial**, so
+  one thing still knows how to open a lesson. It must not press one before the dialog is open:
+  opening a lesson calls `showModal()`, and the stepper laying itself out at load would otherwise
+  open the rules for you — the invariant this file states two sections down.
+- The demo stage's width may not be a percentage. It sits in a `1fr` column, and
+  `width: min(100%, …)` against a track sized from its own content resolves to `0`: the board
+  collapsed to 12px on a desktop the moment the instruction moved into that column.
 
 ### The home page is a board, not a picture of one
 

@@ -547,3 +547,53 @@ against the sandbox's blocked relays: it correctly reports "no relay is answerin
 **Next measurement.** Whether the `:has()` rule that widens the bottom padding for the feedback
 strip holds up in browsers without `:has()` support — there, the strip overlaps by ~38px. Every
 target browser has shipped it since 2023; worth a look if analytics ever says otherwise.
+
+## 2026-09-21 — The rules dialog on a phone is a stepper, not a reflow
+
+**Question.** The revised brief asks for one rule per screen on a phone. The existing mobile layout
+was the desktop dialog stacked: four rules in a column, the demo board taking about half the
+viewport, the instruction *below* the board it described, and no next/prev control at all —
+scrolling was the only way to reach rule 2.
+
+**Rejected: keep reflowing, just tighten it.** A single column can hold the rules or the board, not
+both, and no amount of tightening produces a control that does not exist. The reason to read rules
+on a phone is to do the thing they describe; a layout where the instruction arrives after the board
+has that backwards.
+
+**Decision.** A stepper: one rule per screen, a four-segment bar and "Rule 3 of 4", the instruction
+above the board, Back / Next pinned to the foot, and Next becoming "Start playing" on rule four. It
+drives the existing per-rule "Try it" triggers rather than reaching into the tutorial, so there is
+still exactly one thing that knows how to open a lesson.
+
+**The constraint that sized everything.** The brief requires the whole step to fit at 390×844
+without scrolling. Measured, the first attempt overflowed by up to 57px, so: the board is capped at
+`clamp(11rem, calc(100svh - 39rem), 20rem)` (220px there), the panel loses its chrome, and the
+resting feedback strip is hidden — in its "ready" state it says "Your turn — tap or drag a piece",
+which the instruction directly above the board has just said, and it was costing 54px to repeat it.
+The `clamp()` floor is not decoration: an expression with no lower bound is precisely how the
+puzzles board reached 128px, fixed earlier today. Below the floor the step scrolls, which is the
+right trade — a board too small to read is worth nothing.
+
+**Evidence.** All four steps at 390×844: one rule visible, the instruction above the board, and
+`scrollHeight === clientHeight`. Back disabled on rule one, "Start playing" on rule four, and
+pressing it closes the dialog.
+
+**Two bugs found while building it.**
+
+1. The stepper opens a lesson to match the rule you are standing on, and opening a lesson calls
+   `showModal()`. Laying itself out at load therefore *opened the rules for you* — the exact
+   invariant `DECISIONS.md` states, and one I had already tripped over once during the design pass.
+   It is gated on the dialog being open, and the e2e test asserts the dialog is closed on load.
+2. Moving the instruction into the demo's right-hand column collapsed the board to **12px on
+   desktop**. The stage's width was `min(100%, 22rem, …)` and it sits in a `1fr` column: a
+   percentage against a track sized from its own content resolves to zero. The percentage is gone.
+   This one is worth remembering — it did not look like a layout bug, it looked like the board had
+   stopped rendering.
+
+**Test changes.** Four existing tests drove the tutorial by clicking per-rule "Try it" buttons,
+which the stepper hides and presses for you. Rather than loosen them, `e2e/rules-dialog.js` now
+offers `openLesson` and `closeRules`, which drive whichever layout is on screen, so each test still
+asserts what it always did.
+
+**Next measurement.** The stepper's board is 220px at 390×844. Whether that is big enough to learn
+a capture on is a question for someone holding a phone, not for a measurement.
