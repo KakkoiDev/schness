@@ -109,6 +109,20 @@ export function renderBoard(element, position, {
     cell.classList.toggle('capture', targets.has(square) && Boolean(occupant));
     cell.classList.toggle('in-check', checked.has(square));
     cell.classList.toggle('in-checkmate', mate === square);
+    /*
+     * The two most important words in the game were `content: "CHECK"` and
+     * `content: "CHECKMATE"` in the stylesheet, where i18n cannot reach them,
+     * so a Japanese player read English on the board. They are data now, and
+     * the CSS reads `attr(data-label)`.
+     */
+    const state = mate === square ? 'checkmate' : checked.has(square) ? 'check' : null;
+    if (state) {
+      cell.dataset.state = state;
+      cell.dataset.label = state === 'checkmate' ? 'CHECKMATE' : 'CHECK';
+    } else {
+      delete cell.dataset.state;
+      delete cell.dataset.label;
+    }
     cell.classList.toggle('last-from', last?.from === square);
     cell.classList.toggle('last-to', last?.to === square);
     cell.classList.toggle('drag-source', dragging === square);

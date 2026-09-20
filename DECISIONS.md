@@ -259,6 +259,18 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### The two languages are one product
+
+- **The board's own words are data, not CSS.** `content: "CHECK"` and `content: "CHECKMATE"` sat in
+  the stylesheet, where `i18n.js` cannot reach them, so the two most important words in the game were
+  English on the Japanese site. The squares carry `data-state` and `data-label`, the CSS reads
+  `content: attr(data-label)`, and the observer translates `data-label` alongside `aria-label`.
+- **The switch says 日本語, not 日本.** 日本 is "Japan". It was chosen for being one character
+  shorter, and it is the first Japanese a Japanese speaker reads here. Measured with the extra
+  character: the header still fits, and the wordmark still survives, down to 320px.
+- One font stack with the Japanese faces appended — see the scale section above.
+- Measured at 390px in both languages: every plain control label is one line.
+
 ### Four button roles, and nothing else draws a rectangle
 
 `primary`, `secondary` (the default), `ghost`, `icon`. There were seven near-identical rectangles —
@@ -730,6 +742,9 @@ Newest first. One line per decision that changed how the app behaves.
 
 - One cache-busting number, `CACHE`: the 31 hand-maintained `?v=` strings are gone, and removing
   them made the module precache work for the first time.
+
+- Check and checkmate are Japanese on the Japanese site, and the language switch names the language
+  rather than the country.
 
 - Four button roles replace seven rectangles, most of which had already stopped having any effect —
   and two orphaned declaration blocks that had silently broken the online time control.

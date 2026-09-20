@@ -136,8 +136,9 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   box-shadow: inset 0 0 0 2px var(--check-edge);
   z-index: 2;
 }
-.board .board-row .square.in-check::before {
-  content: "CHECK";
+/* The word itself is data, so i18n can reach it; see src/board-ui.js. */
+.board .board-row .square[data-state]::before {
+  content: attr(data-label);
   position: absolute;
   top: 5px;
   left: 5px;
@@ -151,8 +152,7 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   pointer-events: none;
 }
 .board .board-row .square.in-checkmate { background-color: var(--mate-square); }
-.board .board-row .square.in-checkmate::before {
-  content: "CHECKMATE";
+.board .board-row .square[data-state="checkmate"]::before {
   font-size: clamp(7px, 1.2vw, 9px);
 }
 .game-page .turn-card.is-check {

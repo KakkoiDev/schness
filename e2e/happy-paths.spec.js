@@ -523,3 +523,31 @@ test('library cards lead with a colour and a position, and can be sorted', async
     element.scrollWidth > element.clientWidth + 1);
   expect(clipped, 'the matchup is clipped').toBe(false);
 });
+
+test('check and checkmate are in Japanese on the Japanese site', async ({ page }) => {
+  await installColorProbe(page);
+  await page.addInitScript(() => localStorage.setItem('schness-language', 'ja'));
+  await page.addInitScript(() => {
+    const board = Array(16).fill(null);
+    board[0] = { owner: 'black', piece: 'king' };
+    board[10] = { owner: 'black', piece: 'rook' };
+    board[14] = { owner: 'white', piece: 'king' };
+    sessionStorage.setItem('schness-arena-position', JSON.stringify({ board, turn: 'white' }));
+  });
+  await page.goto('/watch.html?position=library');
+  const king = page.locator('#watch-board .square[data-square="14"]');
+  await expect(king).toHaveClass(/in-check/);
+  // The word was `content: "CHECK"` in the stylesheet, where i18n cannot reach
+  // it, so this board said CHECK to a Japanese player.
+  await expect(king).toHaveAttribute('data-state', 'check');
+  expect(await king.evaluate((element) => getComputedStyle(element, '::before').content)).toBe('"王手"');
+
+  await page.goto('/library.html');
+  await expect(page.locator('.library-game').first()).toBeVisible({ timeout: 20_000 });
+  await page.locator('#filter-result').selectOption('w');
+  await page.locator('.library-game').first().click();
+  await page.locator('#replay-moves button').last().click();
+  const mated = page.locator('#replay-board .square.in-checkmate');
+  await expect(mated).toHaveCount(1);
+  expect(await mated.evaluate((element) => getComputedStyle(element, '::before').content)).toBe('"詰み"');
+});

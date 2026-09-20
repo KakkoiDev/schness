@@ -78,7 +78,7 @@ const JA = new Map(Object.entries({
   'Video is on.': 'ビデオはオンです。', 'Video is off.': 'ビデオはオフです。', 'Requesting microphone access…': 'マイクへのアクセスを確認中…', 'Requesting camera access…': 'カメラへのアクセスを確認中…',
   'Tap “Hear audio” to listen.': '「相手の音声を聞く」を押してください。',
   'Opponent left': '相手が退出しました', 'The board is yours. Start a new game when you are ready.': '盤面はそのままです。準備ができたら新しい対局を始めてください。',
-  'Draw': '引き分け', 'You and your opponent agreed to a draw.': '両者の合意で引き分けになりました。', 'Checkmate': 'チェックメイト',
+  'Draw': '引き分け', 'You and your opponent agreed to a draw.': '両者の合意で引き分けになりました。', 'Checkmate': 'チェックメイト', 'CHECK': '王手', 'CHECKMATE': '詰み',
   'You win.': 'あなたの勝ちです。', 'Your opponent wins.': '相手の勝ちです。', 'Stalemate — no legal move, and no check.': 'ステイルメイトです。合法手がなく、チェックもされていません。',
   'The same position came up three times.': '同じ局面が3回現れました。', 'Bot is placing its king': 'ボットがキングを配置中', 'Bot is thinking': 'ボットが考えています',
   'It is choosing from the same moves and deployments you have.': 'あなたと同じ移動と配置の選択肢から考えています。', 'Opponent’s turn': '相手の手番', 'Waiting for their move.': '相手の一手を待っています。',
@@ -197,7 +197,8 @@ export function initI18n() {
     button.className = 'text-button language-button btn';
     button.dataset.variant = 'ghost';
     button.dataset.languageToggle = '';
-    button.textContent = locale === 'ja' ? 'EN' : '日本';
+    // 日本 is "Japan". This is the first Japanese a Japanese speaker reads here.
+    button.textContent = locale === 'ja' ? 'EN' : '日本語';
     button.setAttribute('aria-label', locale === 'ja' ? '英語に切り替える' : 'Switch to Japanese');
     // Last in the row, after the hairline: the language is a different kind of
     // decision from the two page controls, and the order is the same on all
@@ -219,21 +220,21 @@ export function initI18n() {
       for (const node of record.addedNodes) translateTree(node, locale);
     }
   }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true,
-    attributeFilter: ['aria-label', 'placeholder', 'title'] });
+    attributeFilter: ['aria-label', 'placeholder', 'title', 'data-label'] });
   return locale;
 }
 
 function translateTree(root, locale) {
   if (root.nodeType === Node.TEXT_NODE) return translateNode(root, locale);
   if (root.nodeType !== Node.ELEMENT_NODE && root.nodeType !== Node.DOCUMENT_NODE) return;
-  if (root.nodeType === Node.ELEMENT_NODE) for (const attr of ['aria-label', 'placeholder', 'title']) {
+  if (root.nodeType === Node.ELEMENT_NODE) for (const attr of ['aria-label', 'placeholder', 'title', 'data-label']) {
     const value = root.getAttribute(attr); const translated = translateText(value, locale);
     if (value && translated !== value) root.setAttribute(attr, translated);
   }
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
   let node; while ((node = walker.nextNode())) {
     if (node.nodeType === Node.TEXT_NODE) translateNode(node, locale);
-    else for (const attr of ['aria-label', 'placeholder', 'title']) {
+    else for (const attr of ['aria-label', 'placeholder', 'title', 'data-label']) {
       const value = node.getAttribute(attr); const translated = translateText(value, locale);
       if (value && translated !== value) node.setAttribute(attr, translated);
     }

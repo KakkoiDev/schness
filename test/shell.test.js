@@ -37,10 +37,18 @@ test('a checked king has an unmistakable turn warning and board marker', async (
   assert.match(controller, /if \(isInCheck\(position, humanColor\)\) \{\s*return \{ title: 'CHECK — defend your king', detail: playDetail\(\), waiting: false, check: true \}/);
   assert.match(controller, /turnCard\.classList\.toggle\('is-check', Boolean\(check\)\)/);
   assert.match(controller, /warning \? `, in \$\{warning\}` : ''/);
-  assert.match(css, /\.board \.board-row \.square\.in-check::before \{[^}]*content: "CHECK"/);
+  // The two most important words in the game were literals in a stylesheet,
+  // where i18n cannot reach them, so a Japanese player read English on the
+  // board. They are data attributes the CSS reads.
+  assert.match(css, /\.board \.board-row \.square\[data-state\]::before \{[^}]*content: attr\(data-label\)/);
+  assert.doesNotMatch(css, /content: "CHECK/);
+  const boardUi = await readFile(resolve(root, 'src/board-ui.js'), 'utf8');
+  assert.match(boardUi, /cell\.dataset\.label = state === 'checkmate' \? 'CHECKMATE' : 'CHECK';/);
+  assert.match(translations, /'CHECK': '王手', 'CHECKMATE': '詰み'/);
+  assert.match(translations, /attributeFilter: \['aria-label', 'placeholder', 'title', 'data-label'\]/);
   assert.match(css, /\.board \.board-row \.square\.in-check \{[^}]*background-color: var\(--check-square\);[^}]*background-image: none/);
   assert.match(css, /:root\[data-theme="dark"\] \.board \{ --check-square: #[0-9a-f]+; --mate-square: #[0-9a-f]+; --check-edge: #[0-9a-f]+; \}/);
-  assert.match(css, /\.board \.board-row \.square\.in-checkmate::before \{[^}]*content: "CHECKMATE"/);
+  assert.match(css, /\.board \.board-row \.square\[data-state="checkmate"\]::before \{[^}]*font-size/);
   assert.match(css, /\.game-page \.turn-card\.is-check \{[^}]*border-color: var\(--danger\)/);
   assert.match(translations, /'CHECK — defend your king': '王手！キングを守ってください'/);
 });

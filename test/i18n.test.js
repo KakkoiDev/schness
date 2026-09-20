@@ -10,10 +10,14 @@ test('Japanese devices default to Japanese and a saved choice wins', () => {
   assert.equal(language({ getItem: () => 'en' }, 'ja-JP'), 'en');
 });
 
-test('the English interface offers the shorter Japanese language label', async () => {
+test('the language switch names the language, not the country', async () => {
   const source = await readFile(new URL('../src/i18n.js', import.meta.url), 'utf8');
-  assert.match(source, /locale === 'ja' \? 'EN' : '日本'/);
-  assert.doesNotMatch(source, /locale === 'ja' \? 'EN' : '日本語'/);
+  // 日本 is "Japan". It was chosen because it is one character shorter, and it
+  // is the first Japanese a Japanese speaker reads on this site. The header
+  // measures fine with the extra character down to 320px in both languages;
+  // Playwright checks that the wordmark still survives beside it.
+  assert.match(source, /locale === 'ja' \? 'EN' : '日本語'/);
+  assert.doesNotMatch(source, /: '日本'/);
 });
 
 test('every page entry point loads the shared bilingual interface', async () => {
