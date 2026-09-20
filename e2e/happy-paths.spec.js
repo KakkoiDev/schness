@@ -551,3 +551,55 @@ test('check and checkmate are in Japanese on the Japanese site', async ({ page }
   await expect(mated).toHaveCount(1);
   expect(await mated.evaluate((element) => getComputedStyle(element, '::before').content)).toBe('"詰み"');
 });
+
+test('the puzzle board keeps its width on a phone, and nothing hides behind the action bar', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'A phone-only layout');
+  // A previous pass capped the stage at calc(100svh - 32rem) to clear the fixed
+  // action bar. It bought nothing — the page scrolls at every mobile height —
+  // and cost the board a third of itself: 332px at 390x844, 188px at 390x700,
+  // 128px at 360x640. The board is the page here; it takes the width it has.
+  for (const height of [844, 800, 700, 640]) {
+    await page.setViewportSize({ width: 390, height });
+    await page.goto('/puzzles.html');
+    await expect(page.locator('#puzzle-board .square').first()).toBeVisible({ timeout: 20_000 });
+
+    const available = await page.locator('.puzzle-page .game').evaluate((game) => {
+      const style = getComputedStyle(game);
+      return game.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+    });
+    const board = await page.locator('#puzzle-board').evaluate((element) => element.getBoundingClientRect().width);
+    expect(board).toBeGreaterThanOrEqual(available - 1);
+
+    // The action bar and the feedback strip are fixed. Scrolled to the end,
+    // nothing in the flow may sit under either of them.
+    for (const state of ['ready', 'wrong']) {
+      await page.locator('#puzzle-feedback').evaluate((feedback, value) => { feedback.dataset.state = value; }, state);
+      await page.evaluate(() => {
+        const root = document.scrollingElement ?? document.documentElement;
+        root.scrollTop = root.scrollHeight;
+      });
+      await expect.poll(() => page.evaluate(() => {
+        const root = document.scrollingElement ?? document.documentElement;
+        return root.scrollHeight - root.clientHeight - root.scrollTop;
+      })).toBeLessThan(2);
+      const overlap = await page.evaluate(() => {
+        const bar = document.querySelector('.puzzle-actions').getBoundingClientRect();
+        const feedback = document.querySelector('#puzzle-feedback');
+        const floating = getComputedStyle(feedback).position === 'fixed';
+        const ceiling = Math.min(bar.top, floating ? feedback.getBoundingClientRect().top : Infinity);
+        let worst = -Infinity;
+        for (const element of document.querySelectorAll('.puzzle-page .game *')) {
+          const style = getComputedStyle(element);
+          if (style.position === 'fixed' || style.visibility === 'hidden') continue;
+          if (element.closest('.puzzle-actions')) continue;
+          if (floating && element.closest('#puzzle-feedback')) continue;
+          const box = element.getBoundingClientRect();
+          if (!box.width || !box.height) continue;
+          worst = Math.max(worst, box.bottom - ceiling);
+        }
+        return worst;
+      });
+      expect(overlap).toBeLessThan(0);
+    }
+  }
+});

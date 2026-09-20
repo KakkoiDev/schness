@@ -794,7 +794,13 @@ Newest first. One line per decision that changed how the app behaves.
   them made the module precache work for the first time.
 
 - `puzzles.html` joins the rest of the design: its board no longer sits under the fixed action bar,
-  and its empty states are translatable rather than CSS literals.
+  and its empty states are translatable rather than CSS literals. **The board is not capped by
+  viewport height.** An earlier pass sized the stage `min(100%, calc(100svh - 32rem))` to clear that
+  bar, which cost the board a third of itself on a phone (332px at 390x844, 188px at 390x700, 128px
+  at 360x640) and bought nothing — the page scrolls at every mobile height, so the cap never made
+  anything fit. A fixed bar is cleared by reserving space below the content, not by shrinking it.
+  Guarded by an e2e test that asserts the board fills the available width at four heights and that
+  nothing in the flow sits under the bar or the feedback strip.
 
 - Accessibility is audited by axe-core in CI across five pages, two themes and every dialog, with
   the focus ring, dialog focus and the theme switch checked separately.
