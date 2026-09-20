@@ -808,6 +808,20 @@ Newest first. One line per decision that changed how the app behaves.
 - Check and checkmate are Japanese on the Japanese site, and the language switch names the language
   rather than the country.
 
+- **A dialog is one component with two sizes, not six instances.** The rule that centres a dialog
+  used to sit inside `@media (min-width: 761px)`, so below that nothing centred anything and the
+  margin fell back to `0`. Four dialogs escaped only because each had separately been given a
+  full-screen rule; `#online-setup` had none, and opened at x:0, y:0 on a phone — measured at
+  390x844 with 31px spare to its right and 554px below. The centring rule is unconditional now, and
+  size is a class on the element: `.is-sheet` (a bottom sheet at ≤760px, primary action in the thumb
+  zone) or `.is-full`. Never a per-dialog media query. Guarded by an e2e test that measures each
+  dialog's box at 390, 768 and 1440px; it was confirmed to fail against the shipped markup.
+
+- **`.dialog-grab` is gone.** A 38x4 bar drawn below 760px in all five pages, with no `pointerdown`
+  or `touchstart` handler bound to it anywhere in `src/`. It promised drag-to-dismiss and did
+  nothing. The sheets are full height and carry a close button, so there was nothing to wire up —
+  the promise was the defect.
+
 - Four button roles replace seven rectangles, most of which had already stopped having any effect —
   and two orphaned declaration blocks that had silently broken the online time control.
 

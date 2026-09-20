@@ -514,7 +514,10 @@ test('lobby and game are separate documents with rules and home navigation', asy
   assert.match(html, /class="rules-skip btn"/);
   // Nothing opens the rules for you, so there is no "don't show this" to offer.
   assert.doesNotMatch(html, /id="rules-optout"/);
-  assert.match(html, /class="dialog-grab"/);
+  // A 38x4 bar that looked like drag-to-dismiss and had no pointer handler
+  // bound to it anywhere in src/. The sheets are full height with a close
+  // button, so there was nothing to wire up — the promise was the bug.
+  assert.doesNotMatch(html, /dialog-grab/);
   // The three rules are the lobby's pitch, and the bot is the primary action.
   assert.doesNotMatch(html, /class="rules-strip"/);
   assert.equal([...html.matchAll(/data-lesson=/g)].length, 4);

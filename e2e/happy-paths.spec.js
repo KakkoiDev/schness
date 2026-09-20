@@ -603,3 +603,41 @@ test('the puzzle board keeps its width on a phone, and nothing hides behind the 
     }
   }
 });
+
+test('every dialog is centred, or a deliberate sheet — measured, not eyeballed', async ({ page }, testInfo) => {
+  // #online-setup used to open at x:0, y:0 on a phone: the rule that centres
+  // every dialog was scoped to `@media (min-width: 761px)`, and the four other
+  // dialogs escaped only because each had been given its own full-screen rule.
+  // The gap was invisible in a desktop browser, which is how it shipped.
+  const dialogs = [
+    ['/index.html', '#online-setup', 'sheet'],
+    ['/index.html', '#rules-dialog', 'full'],
+    ['/watch.html', '#position-dialog', 'full'],
+    ['/library.html', '#replay-dialog', 'full'],
+  ];
+  const widths = testInfo.project.name === 'mobile' ? [[390, 844]] : [[768, 1024], [1440, 900]];
+  for (const [width, height] of widths) {
+    await page.setViewportSize({ width, height });
+    for (const [url, selector, shape] of dialogs) {
+      await page.goto(url);
+      await page.locator(selector).evaluate((dialog) => { if (!dialog.open) dialog.showModal(); });
+      const box = await page.locator(selector).evaluate((dialog) => {
+        const rect = dialog.getBoundingClientRect();
+        return {
+          left: Math.round(rect.left), top: Math.round(rect.top),
+          right: Math.round(window.innerWidth - rect.right),
+          bottom: Math.round(window.innerHeight - rect.bottom),
+        };
+      });
+      if (width > 760) {
+        expect(Math.abs(box.left - box.right), `${selector} centred across`).toBeLessThanOrEqual(2);
+        expect(Math.abs(box.top - box.bottom), `${selector} centred down`).toBeLessThanOrEqual(2);
+      } else if (shape === 'sheet') {
+        expect(box, `${selector} is a bottom sheet`).toMatchObject({ left: 0, right: 0, bottom: 0 });
+        expect(box.top, `${selector} leaves the page visible above it`).toBeGreaterThan(0);
+      } else {
+        expect(box, `${selector} fills the screen`).toMatchObject({ left: 0, right: 0, top: 0, bottom: 0 });
+      }
+    }
+  }
+});
