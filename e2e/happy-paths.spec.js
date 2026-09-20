@@ -169,6 +169,7 @@ test('recorded game analysis is opt-in and tracks replay', async ({ page }) => {
 });
 
 test('checked king has a visible labeled warning on the real game board', async ({ page }) => {
+  await installColorProbe(page);
   await page.goto(`/game.html?game=${GAME_ID}&mode=bot`);
   const square = page.locator('#board .square[data-square="15"]');
   await page.evaluate(async () => {
@@ -192,22 +193,44 @@ test('checked king has a visible labeled warning on the real game board', async 
   // colors: the original test only sampled a light square and missed the bug.
   const darkSquare = page.locator('#board .square[data-square="14"]');
   await darkSquare.evaluate((element) => element.classList.add('in-check'));
-  for (const [theme, expected] of [['light', 'rgb(213, 169, 161)'], ['dark', 'rgb(167, 122, 118)']]) {
+  for (const theme of ['light', 'dark']) {
     await page.locator('html').evaluate((element, value) => { element.dataset.theme = value; }, theme);
     for (const checkedSquare of [square, darkSquare]) {
       const colors = await checkedSquare.evaluate((element) => ({
         square: getComputedStyle(element).backgroundColor,
-        palette: getComputedStyle(element).getPropertyValue('--check-square').trim(),
+        // Resolved through the element, so the assertion is "the square is
+        // painted with --check-square" rather than a hex copied into the test.
+        palette: paintedColor(element, '--check-square'),
         image: getComputedStyle(element).backgroundImage,
       }));
       expect(colors.palette).toBeTruthy();
-      expect(colors.square).toBe(expected);
+      expect(colors.square).toBe(colors.palette);
       expect(colors.image).toBe('none');
     }
   }
 });
 
+/**
+ * The rgb() a custom property actually paints, resolved through the element it
+ * is read from. Copying the hex into the test made a token change look like a
+ * regression; this checks the rule ("the checked square is --check-square")
+ * rather than the value.
+ */
+async function installColorProbe(page) {
+  await page.addInitScript(() => {
+    globalThis.paintedColor = (element, property) => {
+      const probe = document.createElement('span');
+      probe.style.color = getComputedStyle(element).getPropertyValue(property).trim();
+      document.body.append(probe);
+      const painted = getComputedStyle(probe).color;
+      probe.remove();
+      return painted;
+    };
+  });
+}
+
 test('a real checked position highlights its king in Bot Arena, not just the status', async ({ page }) => {
+  await installColorProbe(page);
   await page.addInitScript(() => {
     const board = Array(16).fill(null);
     board[0] = { owner: 'black', piece: 'king' };
@@ -220,9 +243,14 @@ test('a real checked position highlights its king in Bot Arena, not just the sta
   const king = page.locator('#watch-board .square[data-square="14"]');
   await expect(king).toHaveClass(/in-check/);
   await expect(king).toHaveAttribute('aria-label', /white king/);
-  for (const [theme, expected] of [['light', 'rgb(213, 169, 161)'], ['dark', 'rgb(167, 122, 118)']]) {
+  for (const theme of ['light', 'dark']) {
     await page.locator('html').evaluate((element, value) => { element.dataset.theme = value; }, theme);
-    expect(await king.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe(expected);
+    const colors = await king.evaluate((element) => ({
+      square: getComputedStyle(element).backgroundColor,
+      palette: paintedColor(element, '--check-square'),
+    }));
+    expect(colors.palette).toBeTruthy();
+    expect(colors.square).toBe(colors.palette);
   }
 });
 

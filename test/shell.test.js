@@ -212,13 +212,32 @@ test('the black knight carries no stray corner-bracket stroke', async () => {
   assert.match(knight, /<path fill="#f2f2f2" d="M177\.4 578\.1/);
 });
 
+test('the board is drawn one way, on every surface that shows one', async () => {
+  const css = await readFile(resolve(root, 'styles.css'), 'utf8');
+  // It is the most identifying object on the site and it was drawn twice: an
+  // 8px frame, .65rem and a two-layer shadow in the rules dialog; a 1px
+  // hairline, .3rem and none in a match. No page may restate any of the three.
+  assert.match(css, /\.board\{[^}]*border:6px solid var\(--ink\);border-radius:var\(--radius-card\)/);
+  for (const page of ['.game-page', '.watch-page', '.puzzle-stage', '.replay-stage', '.demo-stage']) {
+    const rule = css.match(new RegExp(`\\${page} \\.board\\s*\\{([^}]*)\\}`))?.[1] ?? '';
+    assert.doesNotMatch(rule, /border|radius|shadow/, `${page} redraws the board frame`);
+  }
+  assert.match(css, /--board-light:#E9DCBE/);
+  assert.doesNotMatch(css, /--board-light:#dde2de|--board-light:#b8c0ba/);
+});
+
 test('board rows are fixed and every vector piece uses the same box', async () => {
   const css = await readFile(resolve(root, 'styles.css'), 'utf8');
   assert.match(css, /grid-template-rows:\s*repeat\(4, minmax\(0, 1fr\)\)/);
-  assert.match(css, /\.piece-white\s*{/);
-  assert.match(css, /\.piece-black\s*{/);
+  // The Georgia/Unicode glyph path is gone — pieces are <img>, so its
+  // font sizes, --piece-color and text-shadow outlines drew nothing at all.
+  assert.doesNotMatch(css, /--piece-color|--piece-stroke|Georgia/);
   assert.match(css, /\[hidden\]\s*{\s*display:\s*none\s*!important;/);
-  assert.match(css, /\.piece,[\s\S]*?\.bank-piece \.piece-king\s*{[\s\S]*?width:\s*78%;[\s\S]*?height:\s*78%;[\s\S]*?object-fit:\s*contain;/);
+  assert.match(css, /\.piece,[\s\S]*?\.bank-piece \.piece-king\s*{[\s\S]*?width:\s*82%;[\s\S]*?height:\s*82%;[\s\S]*?object-fit:\s*contain;/);
+  // One box, said once. Five per-page copies restated 78% and could drift;
+  // only the shared rule and the drag ghost size a piece now.
+  assert.equal([...css.matchAll(/object-fit:\s*contain/g)].length, 2);
+  assert.doesNotMatch(css, /(width|height):\s*78%/);
   assert.match(css, /\.bank-piece,\s*\n\.bank-slot\s*{[\s\S]*?width:\s*50px/);
   assert.match(css, /\.bank-slot\s*{[\s\S]*?border:\s*1px dashed var\(--line\)/);
   assert.match(css, /\.bank-piece\.selected\s*{[\s\S]*?border-color:\s*var\(--ink\)/);
@@ -230,7 +249,9 @@ test('board rows are fixed and every vector piece uses the same box', async () =
   assert.doesNotMatch(css, /\.bank-empty/);
   assert.doesNotMatch(css, /\.fallback\s*{[^}]*margin:\s*-/);
   assert.match(css, /\.square\.last-from, \.square\.last-to/);
-  assert.match(css, /\.square\.in-check[^}]+radial-gradient/);
+  // The in-check wash was a radial-gradient that `.board .board-row
+  // .square.in-check` then set to `background-image: none` on every board.
+  assert.doesNotMatch(css, /radial-gradient/);
 });
 
 test('a wait that has gone on too long says what it cannot rule out', async () => {
@@ -285,10 +306,11 @@ test('state tokens are defined in both themes and no decorative gradient remains
     assert.match(light, new RegExp(`${token}:#`), `${token} missing from the light theme`);
     assert.match(dark, new RegExp(`${token}:#`), `${token} missing from the dark theme`);
   }
-  // body::before held the two radial-gradient blobs; the check wash is the only gradient left.
+  // body::before held the two radial-gradient blobs; the check wash that
+  // replaced them was itself overridden on every board, so there are none.
   assert.doesNotMatch(css, /body::before/);
   assert.doesNotMatch(css, /\.lobby-page::before/);
-  assert.equal([...css.matchAll(/radial-gradient/g)].length, 1);
+  assert.equal([...css.matchAll(/radial-gradient/g)].length, 0);
 });
 
 test('board motion animates a copy, never the piece itself', async () => {

@@ -240,6 +240,28 @@ Six `rgb(228 91 53 / …)` literals were baked into rings and shadows, so dark m
 theme's colour and nobody noticed while both themes were orange — the moment the hue changed it
 would have been glaring. Guarded by `test/contrast.test.js`.
 
+### The board is one object, drawn one way
+
+A 6px `--ink` frame, a `--radius-card` corner, and no shadow — on the game page, in the arena, in a
+replay, in a puzzle and inside the rules dialog. It was drawn two ways: an 8px frame, `.65rem` and a
+two-layer shadow on `.board`, against a 1px hairline, `.3rem` and none on `.game-page .board`. It is
+the most identifying object on the site, so the board in the dialog that teaches the game and the
+board you play on cannot look like they come from different products.
+
+`--board-light` / `--board-dark` are the board, full stop. Five page classes used to override them to
+a grey `#dde2de` / `#7f9286` pair 2.5:1 apart, so the token in `:root` described a board that never
+shipped and the one that did read as a placeholder. They are 4.0:1 and 4.2:1 apart now.
+
+Square states are drawn on top of the board, never by repainting it: selected is an inset ring,
+a legal move is a centre dot, a capture is an ember ring, a drop target is a dashed ember outline.
+Check tints the square and adds a chip. `test/shell.test.js` fails if any page restates the frame.
+
+Pieces are `<img>` at **82%** of the square and cast no resting shadow — the artwork carries its own
+outline. The Georgia/Unicode glyph path that preceded the SVGs was still in the sheet, with font
+sizes, `--piece-color` and four-way `text-shadow` outlines that drew nothing at all. The set is
+Chessnut, unmodified, and `THIRD_PARTY_NOTICES.md` says why that is a decision rather than an
+oversight.
+
 ### The mark is the rule, drawn
 
 One path and one rect: the board with a 2×2 corner missing, and that block sitting outside it.
@@ -494,6 +516,9 @@ Newest first. One line per decision that changed how the app behaves.
 - The lobby's rule strip, setup disclosure, strength radios, settings dialog, the `.mini-board`, the
   hidden rules figure and `initSettings` are gone from the sheet and the markup, not just switched
   off; the reduced-motion block is now checked as a rule rather than as a list of two.
+
+- One board: a 6px ink frame and the real two-tone palette everywhere, square states drawn on top
+  rather than by repainting, pieces at 82%, and the dead Unicode glyph path removed.
 
 - The mark is the board with its corner missing and that block outside it — no letterform, no tile,
   and the favicon and the header finally agree on two colours.
