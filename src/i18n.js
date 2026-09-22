@@ -19,7 +19,9 @@ const JA = new Map(Object.entries({
   'Time per player': '各プレイヤーの持ち時間', 'Choose untimed or a clock before creating the invitation link.': '招待リンクを作る前に、時間無制限か持ち時間を選んでください。',
   'Create invitation link': '招待リンクを作る', 'Close online setup': '対局設定を閉じる',
   'Move a piece, or deploy one from your reserve. Every capture comes back.': '駒を動かすか、持ち駒を配置。取られた駒はまた戻ってきます。',
-  'Bot arena': 'ボットアリーナ', 'Library': '棋譜', 'Puzzles': '詰みパズル', 'Play online': 'オンライン対戦', 'Your match': '対局中', 'The board is 4 × 4': '盤は4×4', 'Play against the bot': 'ボットと対戦', 'Play, watch, take over, or edit a position': '対戦・観戦・途中参加・局面編集',
+  'Bot arena': 'ボットアリーナ', 'Library': '棋譜', 'Puzzles': '詰みパズル', 'Play online': 'オンライン対戦',
+  // The rules stepper's own chrome, which shipped in English on the JA site.
+  'Back': '戻る', 'Next rule': '次のルール', 'Your match': '対局中', 'The board is 4 × 4': '盤は4×4', 'Play against the bot': 'ボットと対戦', 'Play, watch, take over, or edit a position': '対戦・観戦・途中参加・局面編集',
   'Create an online game': 'オンライン対局を作る', 'Get a link to send a friend': '友だちに送るリンクを作成',
   'Browse recorded games': '棋譜ライブラリ', 'Study 1,099 unique AI games': '1,099局のAI対戦を研究',
   'Checkmate puzzles': '詰みパズル', 'Mate in one, two, three, or four': '1手詰めから4手詰めまで',
@@ -148,6 +150,7 @@ const JA = new Map(Object.entries({
 }));
 
 const PATTERNS = [
+  [/^Rule (\d+) of (\d+)$/, (_, step, total) => `ルール ${step} / ${total}`],
   [/^Danger: (White|Black) can force mate in (\d+) despite every defense\.$/, (_, side, n) => `危険：どの応手でも${side === 'White' ? '白' : '黒'}が${n}手で詰ませられます。`],
   [/^(White|Black) can force mate in (\d+)\.$/, (_, side, n) => `${side === 'White' ? '白' : '黒'}が${n}手で詰ませられます。`],
   [/^Caution: (\d+) moves? allow an opponent mate in (\d+): (.*)\.$/, (_, count, depth, actions) => `注意：${count}手は相手の${depth}手詰めを許します：${actions}。`],
@@ -158,7 +161,8 @@ const PATTERNS = [
   [/^(White|Black) to move · find the fastest mate$/, (_, side) => `${side === 'White' ? '白' : '黒'}の手番・最短の詰みを探してください`],
   [/^(Your|Their) reserve · (\d+)$/, (_, who, n) => `${who === 'Your' ? 'あなた' : '相手'}の持ち駒・${n}`],
   [/^(White|Black) reserve · (\d+)$/, (_, side, n) => `${side === 'White' ? '白' : '黒'}の持ち駒・${n}`],
-  [/^(\d+) unique games?$/, '$1局'], [/^(\d+) plies · (\d+) moves/, '$1プライ・$2手'],
+  [/^([\d,]+) unique games?$/, '$1局'], [/^([\d,]+) plies · ([\d,]+) moves/, '$1プライ・$2手'],
+  [/^([\d,]+) repeated records collapsed by exact move sequence\.$/, '同一の手順だった$1件の記録をまとめています。'],
   [/^Game #(\d+)$/, '対局 #$1'], [/^Ply (\d+) of (\d+) · (.*)$/, '$2手中 $1手目・$3'],
   [/^Game #(\d+), after ply (\d+)$/, '対局 #$1・$2プライ後'],
   [/^Checkmate — mate in (\d+) solved\.( Next puzzle coming…)?$/, (_, n, next) => `チェックメイト。${n}手詰め正解です。${next ? ' 次の問題へ進みます…' : ''}`],
