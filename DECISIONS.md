@@ -437,6 +437,19 @@ were good; the first impression was half a sentence.
   `width: min(100%, …)` against a track sized from its own content resolves to `0`: the board
   collapsed to 12px on a desktop the moment the instruction moved into that column.
 
+### Japanese parity is checked by sweeping the page, not by naming strings
+
+Three separate parity bugs have shipped: `CHECK`/`CHECKMATE` living in CSS `content`, the rules
+stepper's own chrome ("Rule 1 of 4", "Back", "Next rule"), and a library count whose pattern
+`/^(\d+) unique games?$/` could never match its own output, because the number is written with
+`toLocaleString()` and carries a thousands separator past 999.
+
+Each was invisible to a test that checks one string at a time, and each shipped behind a green
+suite. The guard is now a sweep: load every page with `lang="ja"` and assert that **no** visible
+text node is pure Latin script, excluding numbers, separators, the AI names (proper nouns) and the
+language toggle, which names the language it switches *to*. It was confirmed to fail against the
+two library strings before being trusted.
+
 ### The nav holds destinations, including Online
 
 The header used to carry brand · theme · Install · Rules — not one destination — and the nav that

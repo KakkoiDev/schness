@@ -328,3 +328,36 @@ test('the board in the rules dialog and the board in a game are the same object'
     expect(await frameOf(selector), path).toEqual(match);
   }
 });
+
+test('nothing on the Japanese site is left in English', async ({ page }) => {
+  // Three separate parity bugs have shipped this way: CHECK/CHECKMATE living in
+  // CSS content, the rules stepper's own chrome, and a library count whose
+  // pattern could not match its own thousands separator. Each was invisible to
+  // a test that checked one string at a time, so this checks every string.
+  await page.addInitScript(() => localStorage.setItem('schness-language', 'ja'));
+  for (const path of PAGES) {
+    await page.goto(path);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+    await page.waitForTimeout(600);
+    const english = await page.evaluate(() => {
+      const found = new Set();
+      const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      for (let node = walk.nextNode(); node; node = walk.nextNode()) {
+        const element = node.parentElement;
+        if (!element || element.closest('script,style')) continue;
+        if (!element.offsetParent && getComputedStyle(element).position !== 'fixed') continue;
+        const text = node.textContent.trim();
+        if (text.length < 2) continue;
+        // Anything holding a Japanese character has been through i18n.
+        if (/[　-鿿＀-￯]/.test(text)) continue;
+        // Numbers, separators, the language toggle (which names the language it
+        // switches *to*), and the AI names, which are proper nouns.
+        if (/^[\d\s.,:·×%#/+—–-]+$/.test(text)) continue;
+        if (/^(EN|Schness|Sharp|Learning|Steady|Greedy|Random|v\d|White|Black)/.test(text)) continue;
+        found.add(text.slice(0, 60));
+      }
+      return [...found];
+    });
+    expect(english, `${path} has untranslated text`).toEqual([]);
+  }
+});

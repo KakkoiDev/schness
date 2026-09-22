@@ -665,3 +665,44 @@ returns as a class, not as a rule on one dialog's id.
 tell you that you told it to go somewhere wrong. The measurement that would have caught this is
 someone opening the thing on a phone, which is exactly the check I have repeatedly noted I cannot
 run here.
+
+## 2026-09-22 — Looking for what the tests could not see
+
+**Method.** With the reported bugs fixed and the suite green, the useful question is what a green
+suite cannot tell you. Two sweeps rather than two guesses: every page rendered at 390 and 1440 in
+both themes, and every page loaded in Japanese with every visible text node inspected.
+
+**Found: the Japanese site was still partly English.** The rules stepper I shipped yesterday
+carries its own chrome — "Rule 1 of 4", "Back", "Next rule" — and none of it went through
+`i18n.js`. "Start playing" *was* translated, which is what made it look fine in passing: that string
+already existed for the desktop footer button, so the one label I happened to glance at was the one
+label that worked.
+
+**And an older one.** The library's count line reads `1,099 unique games`. There has been a
+translation pattern for it all along — `/^(\d+) unique games?$/` — which cannot match, because the
+number is written with `toLocaleString()` and carries a comma. It has been silently failing for
+every library with more than 999 games, which is every library this project has ever shipped. The
+summary line under the heading had no translation at all.
+
+**Decision.** Fix all three, then stop testing this one string at a time. The guard is now a sweep:
+load every page with `lang="ja"` and assert that no visible text node is pure Latin script, with
+carve-outs for numbers, separators, the AI names (proper nouns), and the language toggle, which by
+design names the language it switches *to*. Confirmed to fail against the two library strings before
+being trusted.
+
+**Rejected:** adding the three missing strings and moving on. Three bugs of one shape in one
+codebase is a pattern, and the shape is "a test that names the strings it knows about cannot report
+the ones nobody thought of".
+
+**Also.** `test.yml` now bounds both jobs — 10 minutes for unit, 20 for e2e, against a typical two.
+Without a bound a wedged job holds a runner for the six-hour default and reads as "still running"
+rather than as a failure. That is not hypothetical here: I have twice sat watching a run that had
+either already finished or was never going to.
+
+**Not found, and worth saying.** The visual sweep turned up nothing I would call a defect. The one
+thing I would still change is the invite card's link field, which truncates to
+`http://…/ga…` — on a real host the game id, the only part that distinguishes one invite from
+another, is never visible. The Copy button makes it work; it does not make the link the hero the
+design says it is. Left alone for now because it needs a layout decision, not a patch.
+
+**Next measurement.** Someone opening the site on a phone. Still the gap behind every entry above.
