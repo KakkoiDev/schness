@@ -36,7 +36,7 @@ Three documents, deliberately separate:
 | layer | modules | property |
 |---|---|---|
 | **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` | No DOM, no network. Directly unit-tested. |
-| **Transport** | `net` (+ vendored `trystero`) | WebRTC over public Nostr relays. |
+| **Transport** | `net` (+ vendored `p2p-core`, which carries `trystero`) | WebRTC over public Nostr relays; also another tab of the same browser, and a local `p2p-core serve`. |
 | **DOM glue** | `main` `lobby` `lobby-board` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
 
 Board squares, piece images, and reserve trays have one owner: `board-ui.js`. Game,
@@ -140,9 +140,37 @@ changes, because that is what makes the file differ and triggers a worker update
 Guarded by `test/shell.test.js`. Offline must keep working after any change here — the whole shell
 is cached and a full bot game plays with no network.
 
+### Networking comes from p2p-core, and is not edited here
+
+`vendor/p2p-core/` is a pinned copy of [p2p-core](https://github.com/KakkoiDev/p2p-core) v0.1.0,
+the library extracted from this app's `net.js` and kakkoi-online's. Do not edit it; upgrade it:
+
+```sh
+npx --yes github:KakkoiDev/p2p-core#vX.Y.Z vendor vendor/p2p-core
+npx --yes github:KakkoiDev/p2p-core#vX.Y.Z files ./vendor/p2p-core/   # then refresh sw.js SHELL
+```
+
+and bump `CACHE`. `sw.js` precaches only the files `net.js` reaches (the room, its transports,
+`extras/matchmaking.js` and trystero); the rest of the copy is there for the day it is needed.
+
+What moved: the pairing handshake (hello / offer / accept / decline / start, lost-hello recovery,
+the room-full rule) is p2p-core's `matchmake`, and `chooseHostCandidate` / `roomIsFull` are
+re-exported from it by `src/matchmaking.js`. What stayed: colours, the waiting-card schedule, the
+four match channels, `connectionReport()`. **The wire is unchanged** — same app id, same room names,
+same action names and `v` field, same trystero 0.21.5 — so a cached pre-p2p-core build and a new
+one still pair. That was checked in Chromium, old↔new both ways, through a local nostr relay.
+
+What it adds: a second tab of the same browser pairs over a BroadcastChannel, with no relay
+(`e2e/online-tabs.spec.js`, the one online path this sandbox can run end to end), and a page served
+by `npx p2p-core serve` on a laptop pairs through it, so a classroom with no internet can play.
+`connect-src 'self'` already covers that server's same-origin WebSocket.
+
 ### The relay list is append-only
 
-`RELAYS` in `src/net.js`. Two players meet only on a relay they both dial, and trystero dials every
+`RELAYS` in `src/net.js`, spread from p2p-core's shared list (`vendor/p2p-core/src/relays.js`),
+which every app built on p2p-core dials and which p2p-core keeps under the same rule. It dropped one
+of our ten, `relay.nostromo.social`: it refuses our notes ("blocked: not on white-list", recorded in
+kakkoi-online's FAILURES.md), so it was never a meeting place and leaving it strands nobody. Two players meet only on a relay they both dial, and trystero dials every
 url in the list rather than a sample. Removing one strands anyone still running a cached older
 build — and the service worker keeps old builds alive for a visit or two after a deploy.
 
@@ -793,6 +821,9 @@ Pure modules get real unit tests. DOM behaviour that cannot be unit-tested is gu
 against the source or the stylesheet — blunt, but it catches the specific regression it names, and
 each such test says which failure it is protecting against.
 
+`e2e/online-connect.spec.js` needs live public relays and fails in a sandbox whose proxy refuses
+them; `e2e/online-tabs.spec.js` covers matchmaking and the move channel without any relay.
+
 Desktop and mobile Playwright stories run in CI, including the UI migration's
 language/theme overflow and tap-target checks. **A class appearing is not proof a thing works** — the piece
 animation passed that bar while doing nothing at all. Measure the effect, not the trigger.
@@ -840,6 +871,9 @@ Honest list of what is not done and what cannot be checked from a sandbox:
 ## Log
 
 Newest first. One line per decision that changed how the app behaves.
+
+- Online play runs on vendored p2p-core: same wire, so old builds still pair; two tabs of one
+  browser and a local `p2p-core serve` now pair too.
 
 - The lobby's rule strip, setup disclosure, strength radios, settings dialog, the `.mini-board`, the
   hidden rules figure and `initSettings` are gone from the sheet and the markup, not just switched

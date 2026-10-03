@@ -1,7 +1,7 @@
 // Bumped whenever anything in SHELL changes. The fetch handler below no longer
 // depends on remembering to do it — it revalidates in the background — but a
 // bump is still the only thing that refreshes every client on the same visit.
-const CACHE = 'schness-v109';
+const CACHE = 'schness-v110';
 const SHELL = [
   './',
   './index.html',
@@ -64,12 +64,23 @@ const SHELL = [
   './src/puzzle-settings.js',
   './src/puzzle-ui.js',
   './src/tournament.js',
-  './vendor/trystero/nostr.js',
-  './vendor/trystero/node-crypto.js',
-  './vendor/trystero/node-chunk.js',
-  './vendor/trystero/src/strategy.js',
-  './vendor/trystero/src/utils.js',
-  './vendor/trystero/src/crypto.js',
+  './vendor/p2p-core/extras/matchmaking.js',
+  './vendor/p2p-core/p2p-core.js',
+  './vendor/p2p-core/src/relays.js',
+  './vendor/p2p-core/src/room.js',
+  './vendor/p2p-core/src/route.js',
+  './vendor/p2p-core/src/transports/memory.js',
+  './vendor/p2p-core/src/transports/pair.js',
+  './vendor/p2p-core/src/transports/relays.js',
+  './vendor/p2p-core/src/transports/server.js',
+  './vendor/p2p-core/src/transports/tabs.js',
+  './vendor/p2p-core/src/util.js',
+  './vendor/p2p-core/vendor/trystero/node-chunk.js',
+  './vendor/p2p-core/vendor/trystero/node-crypto.js',
+  './vendor/p2p-core/vendor/trystero/nostr.js',
+  './vendor/p2p-core/vendor/trystero/src/crypto.js',
+  './vendor/p2p-core/vendor/trystero/src/strategy.js',
+  './vendor/p2p-core/vendor/trystero/src/utils.js',
 ];
 
 self.addEventListener('install', (event) => {

@@ -8,6 +8,33 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-10-03 — Online play moves onto p2p-core
+
+**Question.** Schness, kakkoi-online and asakura each vendored trystero 0.21.5 and each grew its own
+relay list, relay-health check and hello-retry. Can the shared part live in one library without
+changing what goes on the wire?
+
+**Alternatives.** (1) Keep `net.js` as it was and only swap the import — gains nothing but a shared
+relay list. (2) Rewrite matchmaking against a new p2p-core protocol — cleaner, but strands every
+cached build until it updates, and the service worker keeps those around. (3) Move the pairing
+handshake into p2p-core *verbatim* as `matchmake`, keep the colours, waiting copy and channels
+here. Chose 3.
+
+**Evidence.** `npm test` green (229). Playwright desktop: 50 passed; `online-connect` fails as it
+did before, on the sandbox proxy refusing every public relay. New `online-tabs` passes: two tabs
+pair, get opposite colours and exchange a move with no relay. Served by `p2p-core serve`, two
+isolated browsers pair through the server with no relay. With every relay socket redirected to one
+local nostr relay, old↔old, new↔new, old↔new and new↔old all pair and exchange a move.
+
+**Decision.** `net.js` keeps its interface; `main.js` is untouched. The relay list is p2p-core's
+shared one: ours, minus `relay.nostromo.social`, which refuses our notes and so never carried a
+rendezvous. The waiting card still counts relays only, so in a classroom on
+`p2p-core serve` with no internet it says no relay is answering while the server pairs players
+anyway — wrong in tone, not in function.
+
+**Next measurement.** Two real devices on live relays, old build against new, before the cache
+version that ships this has rolled out. Then the waiting copy for the local-server case.
+
 ## 2026-09-12 — Check needs both words and a board marker
 
 **Problem.** The live match already identified check, but the turn headline still read “Your turn”
