@@ -1,5 +1,6 @@
-import { getRelaySockets, joinRoom as trysteroJoin, selfId } from '../vendor/trystero/nostr.js';
-import { chooseHostCandidate, colorsForPair, roomIsFull } from './matchmaking.js';
+import { joinRoom as p2pJoinRoom, RELAYS as SHARED_RELAYS } from '../vendor/p2p-core/p2p-core.js';
+import { matchmake } from '../vendor/p2p-core/extras/matchmaking.js';
+import { colorsForPair } from './matchmaking.js';
 
 /**
  * Two players find each other only on a relay they both dial, and trystero
@@ -13,20 +14,12 @@ import { chooseHostCandidate, colorsForPair, roomIsFull } from './matchmaking.js
  * And the list wants to be longer than feels necessary. These are volunteer
  * relays that come and go; matchmaking survives until the last one stops
  * answering, so every extra name is another whole outage that goes unnoticed.
- * The additions come from trystero's own maintained default list.
+ *
+ * The list itself now lives in p2p-core (`vendor/p2p-core/src/relays.js`),
+ * shared with every other app built on it, under the same append-only rule.
+ * It is spread here so this file still names the rendezvous it dials.
  */
-export const RELAYS = [
-  'wss://relay.snort.social',
-  'wss://nostr.sathoarder.com',
-  'wss://nostr.vulpem.com',
-  'wss://relay.primal.net',
-  'wss://nostr.mom',
-  'wss://offchain.pub',
-  'wss://eu.purplerelay.com',
-  'wss://nostr.data.haus',
-  'wss://relay.fountain.fm',
-  'wss://relay.nostromo.social',
-];
+export const RELAYS = [...SHARED_RELAYS];
 
 const APP_ID = 'schness-v2';
 const PROTOCOL = 1;
@@ -36,151 +29,65 @@ const SOCKET_OPEN = 1;
  * How many of the relays we asked for are actually answering. Trystero opens
  * them in the background and never reports a failure, so without this a player
  * whose network blocks the relays waits on "listening" until they give up.
+ *
+ * Called with no argument it reads the live room; the argument is for tests.
  */
-export function relayReach(sockets = getRelaySockets()) {
+let liveRoom = null;
+export function relayReach(sockets) {
+  if (sockets === undefined) {
+    const relays = liveRoom?.status().transports.relays;
+    return { total: RELAYS.length, open: relays?.open ?? 0 };
+  }
   const open = Object.values(sockets ?? {})
     .filter((socket) => socket?.readyState === SOCKET_OPEN).length;
   return { total: RELAYS.length, open };
 }
 
+/**
+ * A p2p-core room in trystero's call shape, so tests can hand in a fake
+ * trystero joinRoom. Besides the relays, p2p-core finds a second tab of this
+ * same browser directly, and a local `p2p-core serve` the page was loaded
+ * from, so two tabs and an offline classroom can both play.
+ */
+function defaultJoinRoom(config, roomId) {
+  const room = p2pJoinRoom({ app: config.appId, room: roomId, relays: config.relayUrls });
+  liveRoom = room;
+  return room;
+}
+
 export function joinMatchmaking(gameId, {
-  joinRoom = trysteroJoin, localId = selfId, helloIntervalMs = 4000,
+  joinRoom = defaultJoinRoom, localId, helloIntervalMs = 4000,
 } = {}) {
   if (!/^[0-9a-f-]{36}$/i.test(gameId)) throw new Error('Invalid match id');
   const room = joinRoom({ appId: APP_ID, relayUrls: RELAYS }, `match-${gameId}`);
-  const [sendHello, onHello] = room.makeAction('hello');
-  const [sendOffer, onOffer] = room.makeAction('offer');
-  const [sendAccept, onAccept] = room.makeAction('accept');
-  const [sendDecline, onDecline] = room.makeAction('decline');
-  const [sendStart, onStart] = room.makeAction('start');
-  const [sendGame, onGame] = room.makeAction('game');
-  const [sendChatPacket, onChatPacket] = room.makeAction('chat');
-  const [sendPreferencesPacket, onPreferencesPacket] = room.makeAction('prefs');
-  const [sendControlPacket, onControlPacket] = room.makeAction('control');
-  const matchHandlers = [], fullHandlers = [], gameHandlers = [], chatHandlers = [], preferenceHandlers = [], controlHandlers = [], streamHandlers = [], leaveHandlers = [], errorHandlers = [];
-  const peers = new Map();
-  let phase = 'waiting', target = null, opponentId = null, pendingTimer = null, lastPreferences = null;
+  // Pairing (hello / offer / accept / decline / start, lost-hello recovery,
+  // the room-full rule) is p2p-core's `matchmake`, extracted from this file.
+  // The wire format is unchanged, so builds from before the move still pair.
+  const match = matchmake(room, { selfId: localId ?? room.selfId, protocol: PROTOCOL, helloIntervalMs });
+  const selfId = match.selfId;
+  const [sendGame, onGame] = match.channel('game');
+  const [sendChatPacket, onChatPacket] = match.channel('chat');
+  const [sendPreferencesPacket, onPreferencesPacket] = match.channel('prefs');
+  const [sendControlPacket, onControlPacket] = match.channel('control');
+  const matchHandlers = [], gameHandlers = [], chatHandlers = [], preferenceHandlers = [], controlHandlers = [];
+  let lastPreferences = null;
 
-  room.onPeerJoin((id) => sendHelloPacket(id));
-  room.onPeerLeave((id) => {
-    peers.delete(id);
-    if (id === opponentId) {
-      opponentId = null;
-      phase = 'closed';
-      leaveHandlers.forEach((handler) => handler());
-    } else if (id === target) {
-      resetPending();
-      seek();
-    }
+  match.onMatch(({ opponentId, host }) => {
+    const color = host ? colorsForPair(selfId, opponentId)[selfId] : colorsForPair(opponentId, selfId)[selfId];
+    matchHandlers.forEach((handler) => handler({ color, opponentId }));
+  });
+  onGame((payload) => gameHandlers.forEach((handler) => handler(payload)));
+  onChatPacket((payload) => chatHandlers.forEach((handler) => handler(payload)));
+  onControlPacket((payload) => controlHandlers.forEach((handler) => handler(payload)));
+  onPreferencesPacket((payload) => {
+    lastPreferences = payload;
+    preferenceHandlers.forEach((handler) => handler(payload));
   });
 
-  onHello((data, id) => {
-    if (!validPacket(data)) return;
-    peers.set(id, { waiting: data.waiting === true });
-    if (phase === 'waiting' && roomIsFull(peers)) {
-      phase = 'full';
-      fullHandlers.forEach((handler) => handler());
-      return;
-    }
-    seek();
-  });
-  onOffer((data, id) => {
-    if (!validPacket(data)) return;
-    if (phase !== 'waiting') return sendDecline({ v: PROTOCOL }, id);
-    phase = 'pending-guest';
-    target = id;
-    armPending();
-    sendAccept({ v: PROTOCOL }, id);
-  });
-  onAccept((data, id) => {
-    if (!validPacket(data) || phase !== 'pending-host' || id !== target) return;
-    clearPending();
-    opponentId = id;
-    phase = 'matched';
-    sendStart({ v: PROTOCOL }, id);
-    announceUnavailable();
-    notifyMatch(colorsForPair(localId, id)[localId]);
-  });
-  onStart((data, id) => {
-    if (!validPacket(data) || phase !== 'pending-guest' || id !== target) return;
-    clearPending();
-    opponentId = id;
-    phase = 'matched';
-    announceUnavailable();
-    notifyMatch(colorsForPair(id, localId)[localId]);
-  });
-  onDecline((data, id) => {
-    if (!validPacket(data) || id !== target || !phase.startsWith('pending')) return;
-    resetPending();
-    peers.set(id, { waiting: false });
-    seek();
-  });
-  onGame((payload, id) => {
-    if (phase === 'matched' && id === opponentId) gameHandlers.forEach((handler) => handler(payload));
-  });
-  onChatPacket((payload, id) => {
-    if (phase === 'matched' && id === opponentId) chatHandlers.forEach((handler) => handler(payload));
-  });
-  onControlPacket((payload, id) => {
-    if (phase === 'matched' && id === opponentId) controlHandlers.forEach((handler) => handler(payload));
-  });
-  onPreferencesPacket((payload, id) => {
-    if (phase === 'matched' && id === opponentId) {
-      lastPreferences = payload;
-      preferenceHandlers.forEach((handler) => handler(payload));
-    }
-  });
-  room.onPeerStream((stream, id) => {
-    if (phase === 'matched' && id === opponentId) streamHandlers.forEach((handler) => handler(stream));
-  });
-
-  function validPacket(data) {
-    if (data?.v === PROTOCOL) return true;
-    errorHandlers.forEach((handler) => handler('A peer is using an incompatible game version.'));
-    return false;
-  }
-  function sendHelloPacket(to) { sendHello({ v: PROTOCOL, waiting: phase === 'waiting' }, to); }
-  function announceUnavailable() { sendHello({ v: PROTOCOL, waiting: false }); }
-  function seek() {
-    if (phase !== 'waiting') return;
-    const candidate = chooseHostCandidate(localId, peers);
-    if (!candidate) return;
-    phase = 'pending-host';
-    target = candidate;
-    armPending();
-    sendOffer({ v: PROTOCOL }, candidate);
-  }
-  function armPending() {
-    clearPending();
-    pendingTimer = setTimeout(() => {
-      resetPending();
-      announceWaiting();
-      seek();
-    }, 6000);
-  }
-  function clearPending() {
-    if (pendingTimer) clearTimeout(pendingTimer);
-    pendingTimer = null;
-  }
-  function resetPending() {
-    clearPending();
-    target = null;
-    if (!opponentId) phase = 'waiting';
-  }
-  function announceWaiting() {
-    if (phase === 'waiting') sendHello({ v: PROTOCOL, waiting: true });
-  }
-  function notifyMatch(color) { matchHandlers.forEach((handler) => handler({ color, opponentId })); }
-
-  // A hello sent while the other page is still registering its action handler
-  // can disappear. Reannounce while waiting so two open browsers recover
-  // without a refresh, even if both initial hellos were missed.
-  const helloTimer = setInterval(announceWaiting, helloIntervalMs);
-  queueMicrotask(announceWaiting);
   return {
-    selfId: localId,
+    selfId,
     onMatch: (handler) => matchHandlers.push(handler),
-    onRoomFull: (handler) => fullHandlers.push(handler),
+    onRoomFull: match.onRoomFull,
     onGame: (handler) => gameHandlers.push(handler),
     onChat: (handler) => chatHandlers.push(handler),
     onPreferences(handler) {
@@ -188,33 +95,16 @@ export function joinMatchmaking(gameId, {
       if (lastPreferences) queueMicrotask(() => handler(lastPreferences));
     },
     onControl: (handler) => controlHandlers.push(handler),
-    onPeerStream: (handler) => streamHandlers.push(handler),
-    onOpponentLeave: (handler) => leaveHandlers.push(handler),
-    onError: (handler) => errorHandlers.push(handler),
-    sendGame(payload) {
-      if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
-      sendGame(payload, opponentId);
-    },
-    sendChat(payload) {
-      if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
-      sendChatPacket(payload, opponentId);
-    },
-    sendPreferences(payload) {
-      if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
-      sendPreferencesPacket(payload, opponentId);
-    },
+    onPeerStream: match.onPeerStream,
+    onOpponentLeave: match.onOpponentLeave,
+    onError: match.onError,
+    sendGame: (payload) => { sendGame(payload); },
+    sendChat: (payload) => { sendChatPacket(payload); },
+    sendPreferences: (payload) => { sendPreferencesPacket(payload); },
     /** Out-of-band match control: take-back requests and resignations. */
-    sendControl(payload) {
-      if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
-      sendControlPacket(payload, opponentId);
-    },
-    addStream(stream) {
-      if (phase !== 'matched' || !opponentId) throw new Error('No opponent is connected');
-      room.addStream(stream, opponentId);
-    },
-    removeStream(stream) {
-      if (opponentId) room.removeStream(stream, opponentId);
-    },
+    sendControl: (payload) => { sendControlPacket(payload); },
+    addStream: (stream) => { match.addStream(stream); },
+    removeStream: (stream) => { match.removeStream(stream); },
     /**
      * What the link actually is, read from the peer connection rather than
      * assumed: whether the selected candidate pair goes through a relay, and
@@ -225,8 +115,7 @@ export function joinMatchmaking(gameId, {
      * require remembering to make the strip honest.
      */
     async connectionReport() {
-      if (phase !== 'matched' || !opponentId) return null;
-      const connection = room.getPeers?.()[opponentId];
+      const connection = match.matched ? match.connection() : null;
       if (!connection?.getStats) return null;
       let stats;
       try { stats = await connection.getStats(); } catch { return null; }
@@ -244,11 +133,9 @@ export function joinMatchmaking(gameId, {
       };
     },
     leave() {
-      clearPending();
-      clearInterval(helloTimer);
-      phase = 'closed';
-      room.leave();
+      match.leave();
+      if (liveRoom === room) liveRoom = null;
     },
-    get matched() { return phase === 'matched'; },
+    get matched() { return match.matched; },
   };
 }

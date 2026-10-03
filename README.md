@@ -137,7 +137,7 @@ Current implementation:
 - Local human-vs-minimax play in a Web Worker
 - Installable offline PWA shell
 - Unique UUID game URLs for bot matches and private P2P invitations
-- Serverless Trystero/WebRTC invite play using public Nostr relays
+- Serverless Trystero/WebRTC invite play using public Nostr relays, through the vendored [p2p-core](https://github.com/KakkoiDev/p2p-core) — which also pairs two tabs of one browser, and players on a local `npx p2p-core serve` with no internet
 - Per-move validation and position hashes at the network boundary
 - Persistent light and dark themes, with the device preference used on first visit
 - Ephemeral peer-to-peer match chat with validation and no stored transcript

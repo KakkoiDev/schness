@@ -1,17 +1,11 @@
-export function chooseHostCandidate(selfId, peers) {
-  return [...peers.entries()]
-    .filter(([id, peer]) => peer?.waiting === true && selfId < id)
-    .map(([id]) => id)
-    .sort()[0] ?? null;
-}
+// Who offers to whom, and when a room is taken, moved to p2p-core with the
+// rest of the pairing handshake; re-exported so this stays the one place the
+// app's matchmaking rules are read from.
+export { chooseHostCandidate, roomIsFull } from '../vendor/p2p-core/extras/matchmaking.js';
 
 export function colorsForPair(hostId, guestId) {
   if (!(hostId < guestId)) throw new Error('The lower peer id must host the match');
   return { [hostId]: 'white', [guestId]: 'black' };
-}
-
-export function roomIsFull(peers) {
-  return [...peers.values()].filter((peer) => peer?.waiting === false).length >= 2;
 }
 
 /**
