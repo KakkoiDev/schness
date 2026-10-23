@@ -35,7 +35,7 @@ Three documents, deliberately separate:
 
 | layer | modules | property |
 |---|---|---|
-| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` | No DOM, no network. Directly unit-tested. |
+| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` `variants` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `p2p-core`, which carries `trystero`) | WebRTC over public Nostr relays; also another tab of the same browser, and a local `p2p-core serve`. |
 | **DOM glue** | `main` `lobby` `lobby-board` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
 
@@ -1082,3 +1082,16 @@ exclude king placement. Mutual deployment gates unlock permanently based on dist
 previously deployed. No-drop-mate rejects a checking drop only when no legal reply exists.
 Private home-rank armies are independently sampled before reveal; saved six-drop serialization
 is for replay, never a sequence of informed setup choices. Hidden setup is not strategic AI.
+
+### Opt-in playable variants (2026-10-24)
+
+`variants.js` is the shared pure preset registry for Actions and the Bot Arena. The arena offers
+explicit choices and Random variant; random resolves once to a named complete preset plus a seed
+in the URL. Reload preserves that game recipe; New game rerolls if random remains selected.
+Rules are displayed beside the selector. Setup uses reserve controls and only quiet legal drops;
+private armies are sampled before their replay serialization. A replay cannot branch halfway
+through a hidden reveal. Actual movers drive replay columns when Black moves twice across the
+setup boundary. Position editing resets to canonical, since an arbitrary board lacks historical
+variant rights. Online invitations and the homepage's inline game remain canonical for now;
+experimental rules are opt-in Bot Arena play, not matchmaking. Theme concepts and the Lab army
+builder are proposals, not shipped visuals or dynamic geometry.

@@ -1,13 +1,15 @@
 import {
   BANK_PIECES, BLACK, KING, WHITE, applyAction, createInitialPosition, getResult, isInCheck,
 } from './rules.js';
+import { VARIANTS, VARIANT_IDS, VARIANT_LABELS, resolveVariant, description, variantSettings } from './variants.js';
+import { hiddenSetupPlacements } from './tournament.js';
 import { pairMoves, recordAction } from './history.js';
 import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
 import { buildEditedPosition, controllerSearch, humanSeatControllers, putEditorPiece } from './arena.js';
 import { movedEnough } from './drag.js';
 import { createBoard, pieceElement, renderBoard, renderReserve as renderPieceReserve } from './board-ui.js';
 import { initTheme } from './theme.js';
-import { initI18n } from './i18n.js';
+import { initI18n, translateText } from './i18n.js';
 import { attachAnalysis } from './analysis-ui.js';
 import { resultLabel, sideName } from './watch.js';
 
@@ -20,7 +22,24 @@ const board = $('#watch-board');
 const status = $('#watch-status');
 const moves = $('#watch-moves');
 const worker = new Worker('./src/bot-worker.js', { type: 'module' });
-let timeline = [createInitialPosition()];
+let chosenVariant = 'canonical';
+let variantChoice = 'canonical';
+let variantSeed = 0;
+try {
+  const settings = variantSettings(location.search);
+  chosenVariant = settings.id;
+  variantChoice = new URLSearchParams(location.search).get('variant') === 'random' ? 'random' : settings.id;
+  variantSeed = settings.seed;
+  if (variantChoice === 'random') {
+    variantSeed = crypto.getRandomValues(new Uint32Array(1))[0];
+    const url = new URL(location.href); url.searchParams.set('variant', chosenVariant); url.searchParams.set('seed', String(variantSeed));
+    window.history.replaceState(null, '', url);
+  }
+} catch {
+  // An invalid link never chooses an unrecognized ruleset.
+  document.querySelector('#variant-description').textContent = 'Unsupported variant link; using Classic Schness.';
+}
+let timeline = [createInitialPosition(VARIANTS[chosenVariant])];
 let history = [];
 let reviewIndex = 0;
 let selection = null;
@@ -42,7 +61,7 @@ const trainingAnalysis = attachAnalysis({
 let analyzedPosition = null;
 
 const imported = loadImportedPosition();
-if (imported) timeline = [imported];
+if (imported) { timeline = [imported]; chosenVariant = variantChoice = 'canonical'; }
 
 buildBoard(board, false);
 buildBoard($('#position-board'), true);
@@ -62,6 +81,13 @@ function loadImportedPosition() {
 }
 
 function bindControls() {
+  const variantSelect = $('#game-variant');
+  variantSelect.replaceChildren(...['random', ...VARIANT_IDS].map(id => {
+    const option = document.createElement('option'); option.value = id;
+    option.textContent = id === 'random' ? 'Random variant' : VARIANT_LABELS[id]; return option;
+  }));
+  variantSelect.value = variantChoice;
+  variantSelect.addEventListener('change', () => { variantChoice = variantSelect.value; restart(); });
   $('#human-side').addEventListener('change', () => {
     const seats = humanSeatControllers($('#human-side').value, controller(WHITE), controller(BLACK));
     $('#white-level').value = seats.white;
@@ -156,7 +182,19 @@ function playAction(action, botMoved = false) {
   const before = live();
   const after = applyAction(before, action);
   history = recordAction(history, before, action, after);
+  Object.assign(history[history.length - 1], { mover: before.turn, phase: before.phase });
   timeline.push(after);
+  if (after.phase === 'setup' && after.rules.hiddenSetup) {
+    const kings = { white: after.board.findIndex(p => p?.owner === WHITE && p.piece === KING), black: after.board.findIndex(p => p?.owner === BLACK && p.piece === KING) };
+    const armies = hiddenSetupPlacements(kings, variantSeed);
+    for (let slot = 0; slot < 3; slot++) for (const player of [WHITE, BLACK]) {
+      const previous = timeline.at(-1), drop = armies[player][slot];
+      const next = applyAction(previous, drop);
+      history = recordAction(history, previous, drop, next);
+      Object.assign(history[history.length - 1], { mover: player, phase: 'setup', simultaneousReveal: true });
+      timeline.push(next);
+    }
+  }
   reviewIndex = history.length;
   selection = null;
   render();
@@ -170,7 +208,7 @@ function chooseSquare(square) {
   if (suppressClick) return;
   const position = current();
   if (reviewIndex !== history.length || getResult(position) || controller(position.turn) !== 'human') return;
-  if (position.phase !== 'play') {
+  if (position.phase.startsWith('place-')) {
     const action = setupActionAt(position, square);
     if (action) playAction(action);
     return;
@@ -185,7 +223,7 @@ function chooseSquare(square) {
 function chooseReserve(piece) {
   if (suppressClick) return;
   const position = current();
-  if (reviewIndex !== history.length || getResult(position) || controller(position.turn) !== 'human' || position.phase !== 'play') return;
+  if (reviewIndex !== history.length || getResult(position) || controller(position.turn) !== 'human' || position.phase.startsWith('place-')) return;
   selection = selection?.type === 'bank' && selection.piece === piece ? null : bankSelection(piece);
   render();
 }
@@ -222,7 +260,14 @@ function branchHere() {
 
 function restart() {
   cancelSearch();
-  timeline = [createInitialPosition()];
+  chosenVariant = resolveVariant(variantChoice);
+  variantSeed = crypto.getRandomValues(new Uint32Array(1))[0];
+  const url = new URL(location.href);
+  url.searchParams.delete('position');
+  url.searchParams.set('variant', chosenVariant);
+  url.searchParams.set('seed', String(variantSeed));
+  window.history.replaceState(null, '', url);
+  timeline = [createInitialPosition(VARIANTS[chosenVariant])];
   history = [];
   reviewIndex = 0;
   selection = null;
@@ -240,14 +285,15 @@ function buildBoard(element, editor) {
 
 function render() {
   const position = current();
+  $('#variant-description').textContent = `${translateText(VARIANT_LABELS[chosenVariant])} · ${translateText(description(position.rules))}${chosenVariant === 'canonical' ? '' : ` ${translateText('Experimental rules.')}`}`;
   if (position !== analyzedPosition) {
     analyzedPosition = position;
     trainingAnalysis.refresh();
   }
   const humanTurn = reviewIndex === history.length && controller(position.turn) === 'human';
   const legal = selection ? actionsForSelection(position, selection) : [];
-  const placements = position.phase === 'play' ? new Set() : setupDestinations(position);
-  const targets = position.phase === 'play' ? new Set(legal.map((action) => action.to)) : new Set(placements);
+  const placements = position.phase.startsWith('place-') ? setupDestinations(position) : new Set();
+  const targets = position.phase.startsWith('place-') ? new Set(placements) : new Set(legal.map(action => action.to));
   const last = history[reviewIndex - 1]?.action;
   renderBoard(board, position, {
     last, selected: selection?.type === 'board' ? selection.square : null, targets,
@@ -272,6 +318,9 @@ function render() {
   } else if (aisPaused && !yours) {
     eyebrow = 'Paused';
     status.textContent = `Paused before ${sideName(position.turn)} moves`;
+  } else if (position.phase === 'setup') {
+    eyebrow = 'Army setup';
+    status.textContent = `${sideName(position.turn)}: choose a reserve piece and place it without check`;
   } else if (position.phase !== 'play') {
     eyebrow = yours ? 'Your move' : 'Placing kings';
     status.textContent = `${sideName(position.turn)}: place your king on the home row`;
@@ -310,7 +359,7 @@ function beginBoardDrag(event, square, button) {
 function beginBankDrag(event, piece, button) {
   const position = current();
   if (!event.isPrimary || reviewIndex !== history.length || controller(position.turn) !== 'human' ||
-      position.phase !== 'play' || getResult(position)) return;
+      position.phase.startsWith('place-') || getResult(position)) return;
   pointerDrag = dragStart(event, bankSelection(piece), position.turn, piece, button);
 }
 
@@ -411,7 +460,7 @@ function renderControls() {
   $('#watch-next').disabled = atLive;
   $('#watch-last').disabled = atLive;
   $('#watch-live').disabled = atLive;
-  $('#watch-branch').disabled = atLive;
+  $('#watch-branch').disabled = atLive || (current().rules?.hiddenSetup && current().phase === 'setup');
   $('#watch-auto').textContent = aisPaused ? 'Resume the bots' : 'Pause the bots';
   $('#watch-auto').setAttribute('aria-pressed', String(aisPaused));
 }
@@ -462,6 +511,10 @@ function renderEditor() {
 function applyEditor() {
   try {
     const position = buildEditedPosition(editorBoard, $('#position-turn').value);
+    chosenVariant = variantChoice = 'canonical';
+    $('#game-variant').value = 'canonical';
+    const url = new URL(location.href); url.searchParams.delete('variant'); url.searchParams.delete('seed');
+    window.history.replaceState(null, '', url);
     timeline = [position];
     history = [];
     reviewIndex = 0;
