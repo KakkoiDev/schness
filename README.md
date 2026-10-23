@@ -78,6 +78,11 @@ repetition-aware Sharp v2 is documented in **[AI tournament report — run 2](do
 threefold draws fell by 37 and Sharp's score against lower levels rose by 1.15 percentage points,
 though its losses also rose from 28 to 30.
 
+The 1,040-game **[checking-drops variant report](docs/tournament-report-2026-10-23-checking-drops.md)**
+rejects that rule for standard play. It cut draws to 1.3%, but White won 94.1% of all games and the
+corpus collapsed from 897 to 359 distinct action sequences. The permanent experimental dataset is
+available in **[Tournament 3](https://github.com/KakkoiDev/schness/releases/tag/tournament-run-3)**.
+
 The public **[game library](https://schness.com/library.html)** deduplicates both tournament runs by
 their complete action sequence: 2,080 records become 1,099 unique replayable games. Each game keeps
 all of its experiment provenance, including exact White and Black AI versions, result, length, and
