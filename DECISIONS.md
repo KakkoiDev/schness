@@ -1066,3 +1066,8 @@ only quiet placements until both banks are empty; blocked setup is a distinct dr
 setup transcripts carry actual movers rather than relying on ply parity. None of these presets
 is selectable in public matchmaking. Results must not mix distinct rulesets, and pilot/full games
 must not be pooled because full runs include the pilot schedule prefix.
+
+The first suite completed successfully (Actions 39946077456). Full quiet setup with White starting
+is the preferred human-playtest candidate; recurring protection is more decisive but favors Black,
+especially at equal strength. Canonical remains the default. Results and limitations are recorded
+in `docs/deployment-variant-results.md`; borderline 80-game pilots are not definitive rejections.

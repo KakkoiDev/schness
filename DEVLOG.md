@@ -794,3 +794,17 @@ screening because gross imbalance and blocked setup can be detected more cheaply
 **Next measurement.** Compare outcomes by color, engine matchup, king starts, blocked setups,
 normal-play length, checking drops and transcript diversity; inspect full results for promoted
 candidates. Pilot failure is a screening outcome, not a mathematical rejection of the rules.
+
+### Deployment suite outcome
+
+Actions run 39946077456 completed all ten pilots and three full expansions. The release digest
+matched and all 3,920 stored records replayed exactly (3,680 distinct scheduled variant/game pairs;
+full runs include pilot prefixes). Full quiet setup with White starting produced 283/278/479
+White/Black/draw outcomes and 1,017 distinct transcripts: the best candidate for human playtesting,
+though draws remain 46.1%. Recurring lone-king protection produced 363/464/213 and fewer draws,
+but Sharp–Sharp favors Black 91 to 52. Quiet returns produced 288/339/413 and add memory burden.
+Opening-only protection failed the pilot balance gate; grace and White-first checking setup were
+borderline and deserve new-seed confirmation rather than categorical rejection. No observed
+setup was blocked. Keep canonical default; see docs/deployment-variant-results.md for evidence,
+limitations and next measurements. The prior preference for setup with checking drops did not
+win this screen.
