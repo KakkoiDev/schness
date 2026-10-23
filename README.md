@@ -54,6 +54,12 @@ publishes the same ZIP permanently under **[GitHub Releases](../../releases)** w
 `tournament-run-<run>` tag. Tournament runs 1 and 2 are backfilled there. The archive workflow can
 preserve any older still-available run on demand.
 
+The workflow also exposes an experimental **Checking drops** switch. Off preserves canonical
+Schness, where a deployment may not check. On permits a reserve deployment to give check and records
+`{"allowCheckingDrops":true}` in every game and in `manifest.json`. Keep datasets from the two
+rulesets separate: their position keys, legal actions, and strategic conclusions are intentionally
+not interchangeable.
+
 The ZIP is designed for human or AI analysis:
 
 - `manifest.json` — experiment settings and overall result totals

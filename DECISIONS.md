@@ -1040,3 +1040,17 @@ Do not expose the coordinate preference in the Rules tutorial. The control is us
 ## 2026-09-16 — Repeat peer discovery while waiting
 
 `net.js` periodically broadcasts versioned waiting announcements until matched or closed. A single initial hello cannot be trusted when browser initialization and WebRTC peer callbacks race. Keep discovery retransmission separate from game packets; it must stop when leaving and must never alter an active match. The browser smoke test needs two isolated contexts and the exact same invite URL.
+
+## 2026-10-23 — Checking drops is a ruleset, not a hidden bot exception
+
+The first rules experiment permits a piece deployed from reserve to give check. Canonical Schness
+still forbids it. The choice lives on every engine position as `rules.allowCheckingDrops`, is part
+of the repetition/peer position key, survives cloning, and is written into each tournament game and
+manifest. Missing rules metadata means canonical Schness so old links, fixtures, and archived games
+remain readable.
+
+The tournament workflow owns the first public toggle because viability should be measured before the
+variant is offered as a player-facing matchmaking choice. An experiment branch matching
+`experiment/checking-drops-*` runs the full 1,040-game checking-drops tournament automatically;
+manual runs expose the same boolean input. Aggregation rejects mixed-ruleset shards rather than
+silently producing invalid comparisons.

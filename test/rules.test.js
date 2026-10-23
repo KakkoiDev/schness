@@ -24,7 +24,14 @@ const piece = (owner, kind) => ({ owner, piece: kind });
 const emptyBoard = () => Array(16).fill(null);
 const has = (actions, wanted) => actions.some((action) => actionKey(action) === actionKey(wanted));
 
-function position({ pieces, whiteBank = [], blackBank = [], turn = WHITE, repetitions = {} }) {
+function position({
+  pieces,
+  whiteBank = [],
+  blackBank = [],
+  turn = WHITE,
+  repetitions = {},
+  rules,
+}) {
   const board = emptyBoard();
   for (const [square, owner, kind] of pieces) board[square] = piece(owner, kind);
   return createPosition({
@@ -32,6 +39,7 @@ function position({ pieces, whiteBank = [], blackBank = [], turn = WHITE, repeti
     banks: { [WHITE]: whiteBank, [BLACK]: blackBank },
     turn,
     repetitions,
+    ...(rules ? { rules } : {}),
   });
 }
 
@@ -110,6 +118,26 @@ test('a drop that gives check is forbidden', () => {
   assert.equal(has(actions, { type: 'drop', piece: ROOK, to: 10 }), true);
 });
 
+test('checking drops can be enabled without changing the default rules', () => {
+  const setup = {
+    pieces: [[15, WHITE, KING], [0, BLACK, KING]],
+    whiteBank: [ROOK, KNIGHT],
+  };
+  const canonical = position(setup);
+  const variant = position({
+    ...setup,
+    rules: { allowCheckingDrops: true },
+  });
+
+  assert.equal(has(legalActions(canonical), { type: 'drop', piece: ROOK, to: 3 }), false);
+  assert.equal(has(legalActions(variant), { type: 'drop', piece: ROOK, to: 3 }), true);
+  assert.equal(has(legalActions(variant), { type: 'drop', piece: KNIGHT, to: 6 }), true);
+
+  const next = applyAction(variant, { type: 'drop', piece: ROOK, to: 3 });
+  assert.equal(next.rules.allowCheckingDrops, true);
+  assert.equal(isInCheck(next, BLACK), true);
+});
+
 test('a normal move may give check', () => {
   const game = position({ pieces: [[15, WHITE, KING], [0, BLACK, KING], [7, WHITE, ROOK]] });
   const next = applyAction(game, { type: 'move', from: 7, to: 4 });
@@ -169,6 +197,10 @@ test('position keys include board, banks, and side to move but not history', () 
   assert.equal(positionKey(base), positionKey(same));
   assert.notEqual(positionKey(base), positionKey({ ...base, turn: BLACK }));
   assert.notEqual(positionKey(base), positionKey({ ...base, banks: { ...base.banks, [WHITE]: [BISHOP] } }));
+  assert.notEqual(
+    positionKey(base),
+    positionKey({ ...base, rules: { allowCheckingDrops: true } }),
+  );
 });
 
 test('position keys distinguish kings from knights', () => {

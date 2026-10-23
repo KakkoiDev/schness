@@ -4,14 +4,20 @@ import { recordAction } from './history.js';
 import { squareName } from './notation.js';
 import { LEVEL_DEPTH } from './watch.js';
 
-export const TOURNAMENT_SCHEMA = 2;
-export const TOURNAMENT_RULES = Object.freeze([
+export const TOURNAMENT_SCHEMA = 3;
+export const TOURNAMENT_RULES = tournamentRules();
+
+export function tournamentRules({ allowCheckingDrops = false } = {}) {
+  return Object.freeze([
   'The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.',
   'On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.',
-  'A drop may not give check; a normal move may give check.',
+  allowCheckingDrops
+    ? 'A drop may give check, just like a normal move.'
+    : 'A drop may not give check; a normal move may give check.',
   'A captured rook, bishop, or knight returns to its original owner’s reserve.',
   'Normal king safety and checkmate apply; stalemate and threefold repetition are draws.',
-]);
+  ]);
+}
 export const TOURNAMENT_AI = Object.freeze({
   learning: Object.freeze({ version: 1, depth: 2, behavior: 'Shallow alpha-beta; seeded random choice among equally scored moves.' }),
   steady: Object.freeze({ version: 1, depth: 3, behavior: 'Medium alpha-beta; seeded random choice among equally scored moves.' }),
@@ -55,13 +61,21 @@ export function startingKings(index) {
   return { white: 12 + (combination % 4), black: Math.floor(combination / 4) };
 }
 
-export function playTournamentGame({ index, seed, white = 'sharp', black = 'sharp', maxPlies = 200 }) {
+export function playTournamentGame({
+  index,
+  seed,
+  white = 'sharp',
+  black = 'sharp',
+  maxPlies = 200,
+  allowCheckingDrops = false,
+}) {
   if (!Number.isInteger(index) || index < 0) throw new TypeError('index must be a non-negative integer');
   if (!LEVEL_DEPTH[white] || !LEVEL_DEPTH[black]) throw new TypeError('unknown AI level');
   const gameSeed = (Number(seed) + Math.imul(index + 1, 0x9e3779b9)) >>> 0;
   const random = seededRandom(gameSeed);
   const kings = startingKings(index);
-  let position = createInitialPosition();
+  const ruleset = { allowCheckingDrops: Boolean(allowCheckingDrops) };
+  let position = createInitialPosition(ruleset);
   let history = [];
 
   for (const to of [kings.white, kings.black]) {
@@ -95,6 +109,7 @@ export function playTournamentGame({ index, seed, white = 'sharp', black = 'shar
       white: { level: white, ...TOURNAMENT_AI[white] },
       black: { level: black, ...TOURNAMENT_AI[black] },
     },
+    ruleset,
     startingKings: { white: squareName(kings.white), black: squareName(kings.black) },
     result,
     plies: history.length,

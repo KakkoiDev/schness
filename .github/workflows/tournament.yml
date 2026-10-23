@@ -1,6 +1,9 @@
 name: AI tournament
 
 on:
+  push:
+    branches:
+      - 'experiment/checking-drops-*'
   workflow_dispatch:
     inputs:
       repetitions:
@@ -13,6 +16,11 @@ on:
         required: true
         default: '20260910'
         type: string
+      checking_drops:
+        description: Permit a dropped reserve piece to give check
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -28,8 +36,9 @@ jobs:
       - name: Play tournament outside the browser
         run: >-
           node scripts/run-tournament.js
-          --repetitions ${{ inputs.repetitions }}
-          --seed ${{ inputs.seed }}
+          --repetitions ${{ inputs.repetitions || '13' }}
+          --seed ${{ inputs.seed || '20260910' }}
+          --allowCheckingDrops ${{ github.event_name == 'push' || inputs.checking_drops }}
           --workers 4
           --output tournament-shards
       - name: Build AI-readable bundle
@@ -52,5 +61,5 @@ jobs:
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
             gh release upload "$RELEASE_TAG" "$ASSET" --clobber
           else
-            gh release create "$RELEASE_TAG" "$ASSET" --title "Tournament ${{ github.run_number }}" --notes "Permanent Schness tournament archive. Source workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}. Seed: ${{ inputs.seed }}. Complete 80-game sets: ${{ inputs.repetitions }}."
+            gh release create "$RELEASE_TAG" "$ASSET" --title "Tournament ${{ github.run_number }}" --notes "Permanent Schness tournament archive. Source workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}. Seed: ${{ inputs.seed || '20260910' }}. Complete 80-game sets: ${{ inputs.repetitions || '13' }}. Checking drops: ${{ github.event_name == 'push' || inputs.checking_drops }}."
           fi
