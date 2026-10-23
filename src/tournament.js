@@ -7,13 +7,14 @@ import { LEVEL_DEPTH } from './watch.js';
 export const TOURNAMENT_SCHEMA = 3;
 export const TOURNAMENT_RULES = tournamentRules();
 
-export function tournamentRules({ allowCheckingDrops = false } = {}) {
+export function tournamentRules({ allowCheckingDrops = false, experiment, setup, firstPlayer } = {}) {
   return Object.freeze([
   'The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.',
   'On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.',
   allowCheckingDrops
     ? 'A drop may give check, just like a normal move.'
     : 'A drop may not give check; a normal move may give check.',
+  ...(experiment ? [`Research variant: ${experiment}.`, ...(setup ? [`Alternate all six non-king placements without check, moves or captures; ${firstPlayer} starts normal play. A blocked setup is a draw.`] : []), ...(experiment === 'protected-recurring' ? ['No checking drop against a lone king, including after captures.'] : []), ...(experiment === 'protected-opening' ? ['No checking drop before the opponent first deploys a non-king; protection never returns.'] : []), ...(['grace', 'quiet-return'].includes(experiment) ? ['No checking drops until both players complete three post-king turns.'] : []), ...(experiment === 'quiet-return' ? ['Previously deployed pieces cannot give check on return drops.'] : [])] : []),
   'A captured rook, bishop, or knight returns to its original owner’s reserve.',
   'Normal king safety and checkmate apply; stalemate and threefold repetition are draws.',
   ]);
@@ -68,13 +69,14 @@ export function playTournamentGame({
   black = 'sharp',
   maxPlies = 200,
   allowCheckingDrops = false,
+  researchRules = null,
 }) {
   if (!Number.isInteger(index) || index < 0) throw new TypeError('index must be a non-negative integer');
   if (!LEVEL_DEPTH[white] || !LEVEL_DEPTH[black]) throw new TypeError('unknown AI level');
   const gameSeed = (Number(seed) + Math.imul(index + 1, 0x9e3779b9)) >>> 0;
   const random = seededRandom(gameSeed);
   const kings = startingKings(index);
-  const ruleset = { allowCheckingDrops: Boolean(allowCheckingDrops) };
+  const ruleset = researchRules ?? { allowCheckingDrops: Boolean(allowCheckingDrops) };
   let position = createInitialPosition(ruleset);
   let history = [];
 
@@ -96,6 +98,8 @@ export function playTournamentGame({
     const before = position;
     position = applyAction(position, action);
     history = recordAction(history, before, action, position);
+    history[history.length - 1].mover = before.turn;
+    history[history.length - 1].phase = before.phase;
     result = getResult(position);
   }
   result ??= { type: 'draw', reason: 'ply-limit' };

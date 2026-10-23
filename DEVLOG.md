@@ -770,3 +770,27 @@ first-player-biased and less varied. Retain the ruleset switch only for reproduc
 not expose it in matchmaking or mix its records into canonical datasets. A future compensation
 idea must first pass an 80-game pilot with White below 60% of decisive games before spending a full
 tournament run. See the [full variant report](docs/tournament-report-2026-10-23-checking-drops.md).
+
+## 2026-10-23 — Screen deployment and setup alternatives
+
+**Question.** Can restricting the opening checking-drop chain rescue the variant? The user
+requested all proposed experiments, including an explicit comparison of lone-king protection
+that returns after captures versus protection ending permanently after first deployment.
+
+**Alternatives and implementation.** Ten research presets cover two controls, both protection
+rules, three-turn grace, quiet return drops after that grace, and full quiet setup with later
+checking drops on/off and White/Black taking the first normal turn. Research rights live in
+positions and relevant rights enter position hashes; transcripts record actual movers because
+Black-first setup breaks ordinary ply parity. Blocked setups are measured as a separate draw.
+The standard public rules remain canonical. See docs/deployment-variant-experiments.md.
+
+**Evidence and decision.** The unrestricted result motivates a screening stage, not an assumption
+that any compensation works. Tests exercise the two lone-king interpretations, grace, returned
+pieces, all setup transitions and full transcript replay. Actions runs a balanced 80-game pilot
+per preset and automatically expands qualifying candidates to 1,040 games under the documented
+gate. No variant is selected before results exist. Avoid launching ten full tournaments before
+screening because gross imbalance and blocked setup can be detected more cheaply.
+
+**Next measurement.** Compare outcomes by color, engine matchup, king starts, blocked setups,
+normal-play length, checking drops and transcript diversity; inspect full results for promoted
+candidates. Pilot failure is a screening outcome, not a mathematical rejection of the rules.

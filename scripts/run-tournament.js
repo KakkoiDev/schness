@@ -17,6 +17,7 @@ async function playShard(options) {
       black: experiment.black,
       maxPlies: options.maxPlies,
       allowCheckingDrops: options.allowCheckingDrops,
+      researchRules: options.researchRules,
     });
     game.repetition = experiment.repetition;
     records.push(JSON.stringify(game));
@@ -40,6 +41,7 @@ if (!isMainThread) {
   const workers = Math.min(games, positive(parsed.workers, Math.min(4, availableParallelism())));
   const shared = {
     games,
+    researchRules: parsed.rules ? JSON.parse(parsed.rules) : null,
     repetitions,
     shards: workers,
     output: resolve(parsed.output ?? 'tournament-shards'),
