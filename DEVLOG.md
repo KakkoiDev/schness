@@ -808,3 +808,27 @@ borderline and deserve new-seed confirmation rather than categorical rejection. 
 setup was blocked. Keep canonical default; see docs/deployment-variant-results.md for evidence,
 limitations and next measurements. The prior preference for setup with checking drops did not
 win this screen.
+
+## 2026-10-24 — Symmetrical checking-drop restrictions and private setup
+
+**Question.** Does the recurring-protection Black advantage come from Black receiving the first
+checking deployment after White quietly deploys? The user requested all six proposed alternatives,
+two borderline repeats, and quiet first post-king turns for both sides. This causal mechanism
+remains a hypothesis, not an inference established solely by aggregate wins.
+
+**Alternatives.** Added quiet first turns alone and with recurring protection; permanent mutual
+one/two-distinct-piece gates; one checking-drop budget; checking-drop cooldown; no immediate drop
+mate; private home-rank setup with later checking drops on/off. Private setups are independently
+seeded uniform legal arrangements rather than pretending the perfect-information search is a
+hidden-information strategist. Precommit both armies before serialized replay. Repeat grace and
+White-first checking setup; include canonical/unrestricted/recurring controls.
+
+**Decision and evidence.** Screen all fourteen presets across three fresh seeds, combining pilot
+results before automatic promotion to three full tournaments. Avoid selecting only favorable
+seeds. Tests cover rights, both first turns, actual checking-drop mates, private setup for every
+king start, and full transcript replay. See docs/variant-wave2-experiments.md. Results pending.
+
+**Next measurement.** Compare color and equal-engine balance, development timing, checking-drop
+usage, mates, draws, length and diversity. Keep the default unchanged pending results. The user
+also requested selectable/random game variants and cyberpunk/classic visual concepts; mockups
+are to be reviewed before implementing the styling.

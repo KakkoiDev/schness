@@ -53,7 +53,7 @@ export function createInitialPosition(rules = DEFAULT_RULES) {
     turn: WHITE,
     phase: 'place-white-king',
     repetitions: {},
-    research: { turns: { white: 0, black: 0 }, deployed: { white: [], black: [] } },
+    research: { turns: { white: 0, black: 0 }, deployed: { white: [], black: [] }, checkingDrops: { white: 0, black: 0 }, lastCheckingDrop: { white: false, black: false } },
     rules: normalizeRules(rules),
   };
 }
@@ -78,7 +78,7 @@ export function createPosition({
     phase,
     repetitions: { ...repetitions },
     rules: normalizeRules(rules),
-    research: structuredClone(research),
+    research: { ...structuredClone(research), checkingDrops: { white: 0, black: 0, ...research.checkingDrops }, lastCheckingDrop: { white: false, black: false, ...research.lastCheckingDrop } },
   };
   validatePosition(position);
   return position;
@@ -130,7 +130,7 @@ function generateLegalActions(position) {
 
   for (const piece of position.banks[player]) {
     for (let to = 0; to < position.board.length; to += 1) {
-      if (!position.board[to]) candidates.push({ type: 'drop', piece, to });
+      if (!position.board[to] && !(position.phase === 'setup' && rulesOf(position).hiddenSetup && !homeRank(player).includes(to))) candidates.push({ type: 'drop', piece, to });
     }
   }
 
@@ -148,6 +148,10 @@ function generateLegalActions(position) {
     if (!checkingDropAllowed(position, action) &&
         action.type === 'drop' &&
         boardInCheck(next, enemy)) return false;
+    if (action.type === 'drop' && rulesOf(position).experiment === 'no-drop-mate' && boardInCheck(next, enemy)) {
+      // Recursive checking-drop replies consume reserves, so this terminates.
+      if (!generateLegalActions(applyUnchecked(position, action, false)).length) return false;
+    }
     return true;
   });
 }
@@ -274,8 +278,11 @@ export function positionKey(position) {
   const rules = rulesOf(position).allowCheckingDrops ? 'checking-drops' : 'quiet-drops';
   const researchRules = rulesOf(position);
   const rights = researchRules.experiment === 'protected-opening' ? PLAYERS_ARRAY.map(player => position.research.deployed[player].length > 0)
-    : researchRules.experiment === 'grace' ? position.research.turns
-      : researchRules.experiment === 'quiet-return' ? position.research : null;
+    : ['grace', 'first-turn-quiet', 'protected-first-turn'].includes(researchRules.experiment) ? position.research.turns
+      : ['mutual-one', 'mutual-two'].includes(researchRules.experiment) ? position.research.deployed
+        : researchRules.experiment === 'limited-check' ? position.research.checkingDrops
+          : researchRules.experiment === 'cooldown' ? position.research.lastCheckingDrop
+      : researchRules.experiment === 'quiet-return' ? { turns: position.research.turns, deployed: position.research.deployed } : null;
   const extra = researchRules.experiment ? `|${JSON.stringify(researchRules)}|${JSON.stringify(rights)}` : '';
   return `${rules}${extra}|${position.phase}|${position.turn}|${board}|${whiteBank}|${blackBank}`;
 }
@@ -333,6 +340,9 @@ function applyUnchecked(position, action, countRepetition) {
   }
 
   if (rulesOf(position).experiment && action.type !== 'place-king') {
+    const wasCheckingDrop = action.type === 'drop' && boardInCheck(next.board, opponent(player));
+    next.research.checkingDrops[player] = Math.min(1, next.research.checkingDrops[player] + Number(wasCheckingDrop));
+    next.research.lastCheckingDrop[player] = wasCheckingDrop;
     next.research.turns[player] = Math.min(3, next.research.turns[player] + 1);
     if (action.type === 'drop' && !next.research.deployed[player].includes(action.piece)) {
       next.research.deployed[player].push(action.piece);
@@ -439,7 +449,7 @@ function clonePosition(position) {
     phase: position.phase,
     repetitions: { ...position.repetitions },
     rules: rulesOf(position),
-    research: position.research ? { turns: { ...position.research.turns }, deployed: { white: [...position.research.deployed.white], black: [...position.research.deployed.black] } } : { turns: { white: 0, black: 0 }, deployed: { white: [], black: [] } },
+    research: position.research ? { checkingDrops: { white: 0, black: 0, ...position.research.checkingDrops }, lastCheckingDrop: { white: false, black: false, ...position.research.lastCheckingDrop }, turns: { ...position.research.turns }, deployed: { white: [...position.research.deployed.white], black: [...position.research.deployed.black] } } : { turns: { white: 0, black: 0 }, deployed: { white: [], black: [] } },
   };
 }
 
@@ -473,7 +483,7 @@ function normalizeRules(rules) {
     throw new Error('Invalid ruleset');
   }
   if (rules.experiment) {
-    if (!['protected-recurring', 'protected-opening', 'grace', 'quiet-return', 'setup'].includes(rules.experiment)) throw new Error('Unknown experiment');
+    if (!['protected-recurring', 'protected-opening', 'grace', 'quiet-return', 'setup', 'first-turn-quiet', 'protected-first-turn', 'mutual-one', 'mutual-two', 'limited-check', 'cooldown', 'no-drop-mate'].includes(rules.experiment)) throw new Error('Unknown experiment');
     if (rules.experiment === 'setup' && (!rules.setup || !PLAYERS.has(rules.firstPlayer))) throw new Error('Invalid setup rules');
     return Object.freeze(rules);
   }
@@ -496,7 +506,14 @@ function checkingDropAllowed(position, action) {
   const rules = rulesOf(position);
   if (!rules.allowCheckingDrops || position.phase === 'setup') return false;
   const enemy = opponent(position.turn);
-  if (rules.experiment === 'protected-recurring') {
+  if (['first-turn-quiet', 'protected-first-turn'].includes(rules.experiment) && position.research.turns[position.turn] === 0) return false;
+  if (['mutual-one', 'mutual-two'].includes(rules.experiment)) {
+    const required = rules.experiment === 'mutual-one' ? 1 : 2;
+    if (Math.min(position.research.deployed.white.length, position.research.deployed.black.length) < required) return false;
+  }
+  if (rules.experiment === 'limited-check' && position.research.checkingDrops[position.turn] >= 1) return false;
+  if (rules.experiment === 'cooldown' && position.research.lastCheckingDrop[position.turn]) return false;
+  if (['protected-recurring', 'protected-first-turn'].includes(rules.experiment)) {
     return position.board.some(piece => piece?.owner === enemy && piece.piece !== KING);
   }
   if (rules.experiment === 'protected-opening') return position.research.deployed[enemy].length > 0;
