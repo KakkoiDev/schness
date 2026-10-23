@@ -1,4 +1,4 @@
-import { BLACK, WHITE, applyAction, createInitialPosition, getResult } from './rules.js';
+import { BLACK, WHITE, applyAction, createInitialPosition, getResult, isInCheck, occupantOf } from './rules.js';
 import { chooseAction } from './bot.js';
 import { recordAction } from './history.js';
 import { squareName } from './notation.js';
@@ -7,7 +7,7 @@ import { LEVEL_DEPTH } from './watch.js';
 export const TOURNAMENT_SCHEMA = 3;
 export const TOURNAMENT_RULES = tournamentRules();
 
-export function tournamentRules({ allowCheckingDrops = false, experiment, setup, firstPlayer } = {}) {
+export function tournamentRules({ allowCheckingDrops = false, experiment, setup, firstPlayer, hiddenSetup } = {}) {
   return Object.freeze([
   'The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.',
   'On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.',
@@ -15,6 +15,8 @@ export function tournamentRules({ allowCheckingDrops = false, experiment, setup,
     ? 'A drop may give check, just like a normal move.'
     : 'A drop may not give check; a normal move may give check.',
   ...(experiment ? [`Research variant: ${experiment}.`, ...(setup ? [`Alternate all six non-king placements without check, moves or captures; ${firstPlayer} starts normal play. A blocked setup is a draw.`] : []), ...(experiment === 'protected-recurring' ? ['No checking drop against a lone king, including after captures.'] : []), ...(experiment === 'protected-opening' ? ['No checking drop before the opponent first deploys a non-king; protection never returns.'] : []), ...(['grace', 'quiet-return'].includes(experiment) ? ['No checking drops until both players complete three post-king turns.'] : []), ...(experiment === 'quiet-return' ? ['Previously deployed pieces cannot give check on return drops.'] : [])] : []),
+  ...(hiddenSetup ? ['Each player privately samples a uniform legal arrangement on their home rank, independently of the other player’s pieces. Both reveal simultaneously; serialized setup drops are replay-only.'] : []),
+  ...({ 'first-turn-quiet': ['Neither player may check by drop on their first post-king turn.'], 'protected-first-turn': ['Neither player may check by drop on their first post-king turn, and checking drops against lone kings stay forbidden.'], 'mutual-one': ['Checking drops unlock permanently once both players have deployed a non-king.'], 'mutual-two': ['Checking drops unlock permanently once both players have deployed two distinct non-kings.'], 'limited-check': ['Each player may make at most one checking drop.'], cooldown: ['No checking drop on the turn immediately following that player’s own checking drop.'], 'no-drop-mate': ['A drop may check but cannot immediately checkmate.'] }[experiment] ?? []),
   'A captured rook, bishop, or knight returns to its original owner’s reserve.',
   'Normal king safety and checkmate apply; stalemate and threefold repetition are draws.',
   ]);
@@ -86,6 +88,17 @@ export function playTournamentGame({
     history = recordAction(history, before, { type: 'place-king', to }, position);
   }
 
+  const hiddenSetup = ruleset.hiddenSetup ? hiddenSetupPlacements(kings, gameSeed) : null;
+  if (hiddenSetup) {
+    // Both choices are committed before either is applied; serialization is only for replay.
+    for (let slot = 0; slot < 3; slot++) for (const player of [WHITE, BLACK]) {
+      const before = position;
+      const action = hiddenSetup[player][slot];
+      position = applyAction(position, action);
+      history = recordAction(history, before, action, position);
+      Object.assign(history[history.length - 1], { mover: player, phase: 'setup', simultaneousReveal: true });
+    }
+  }
   let result = getResult(position);
   while (!result && history.length < maxPlies) {
     const level = position.turn === WHITE ? white : black;
@@ -114,6 +127,7 @@ export function playTournamentGame({
       black: { level: black, ...TOURNAMENT_AI[black] },
     },
     ruleset,
+    ...(hiddenSetup ? { hiddenSetup } : {}),
     startingKings: { white: squareName(kings.white), black: squareName(kings.black) },
     result,
     plies: history.length,
@@ -125,4 +139,27 @@ export function playTournamentGame({
 export function resultKey(result) {
   if (result.type === 'win') return `${result.winner}-win`;
   return `draw-${result.reason}`;
+}
+
+// Kings are public; each army is chosen without access to the opponent's arrangement.
+export function hiddenSetupPlacements(kings, gameSeed) {
+  const pieces = ['rook', 'bishop', 'knight'];
+  const permutations = pieces.flatMap(a => pieces.filter(b => b !== a).map(b => [a, b, pieces.find(c => c !== a && c !== b)]));
+  const result = { policy: 'independent-uniform-legal-home-rank-v1', seeds: {} };
+  for (const player of [WHITE, BLACK]) {
+    const enemy = player === WHITE ? BLACK : WHITE;
+    const squares = Array.from({ length: 4 }, (_, c) => (player === WHITE ? 12 : 0) + c).filter(sq => sq !== kings[player]);
+    const options = permutations.map(order => squares.map((to,i) => ({ type: 'drop', piece: order[i], to }))).filter(actions => {
+      const board = Array(16).fill(null);
+      board[kings.white] = occupantOf(WHITE, 'king');
+      board[kings.black] = occupantOf(BLACK, 'king');
+      for (const a of actions) board[a.to] = occupantOf(player, a.piece);
+      return !isInCheck({ board }, enemy);
+    });
+    if (!options.length) throw new Error('No legal private setup');
+    const seed = (gameSeed ^ (player === WHITE ? 0x1234abcd : 0x89abcdef)) >>> 0;
+    result.seeds[player] = seed;
+    result[player] = options[Math.floor(seededRandom(seed)() * options.length)];
+  }
+  return result;
 }

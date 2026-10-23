@@ -7,7 +7,8 @@ const id = process.argv[2];
 if (!Object.hasOwn(VARIANTS, id)) throw new Error(`Unknown variant: ${id}`);
 const rules = VARIANTS[id];
 const root = resolve(process.argv[3] ?? `research-results/${id}`);
-const seed = 20260910;
+const seed = Number(process.env.RESEARCH_SEED ?? 20260910);
+if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('Invalid research seed');
 await mkdir(root, { recursive: true });
 async function run(script, args) {
   await new Promise((done, fail) => {
@@ -43,6 +44,10 @@ async function tournament(stage, repetitions) {
   await writeFile(`${dir}/metrics.json`, JSON.stringify(metrics,null,2));
   return metrics;
 }
+if (process.env.RESEARCH_MODE === 'full') {
+  const full = await tournament('full', 13);
+  await writeFile(`${root}/full-summary.json`, JSON.stringify(full, null, 2));
+} else {
 const pilot = await tournament('pilot', 1);
 // A screening gate, not a statistical claim: insufficient decisive games need more evidence.
 const eligible = !['canonical','unrestricted'].includes(id) && pilot.decisive >= 16 &&
@@ -51,8 +56,10 @@ const eligible = !['canonical','unrestricted'].includes(id) && pilot.decisive >=
 const summary = { pilot, gate: { eligible, minDecisive:16, whiteShare:[0.4,0.6], maxSetupBlocked:0, minMedianNormalPlayPlies:20, minUniqueTranscripts:40 },
   interpretation: 'Pilot screening only. Failure means do not expand automatically, not proof the ruleset is unviable. Full runs retain the pilot schedule prefix; do not pool pilot and full as independent games.' };
 await writeFile(`${root}/summary.json`, JSON.stringify(summary,null,2));
-if (eligible) {
+if (eligible && process.env.RESEARCH_MODE !== 'pilot') {
   summary.full = await tournament('full',13);
   await writeFile(`${root}/summary.json`, JSON.stringify(summary,null,2));
 }
 console.log(JSON.stringify(summary,null,2));
+
+}

@@ -1071,3 +1071,14 @@ The first suite completed successfully (Actions 39946077456). Full quiet setup w
 is the preferred human-playtest candidate; recurring protection is more decisive but favors Black,
 especially at equal strength. Canonical remains the default. Results and limitations are recorded
 in `docs/deployment-variant-results.md`; borderline 80-game pilots are not definitive rejections.
+
+### Variant research wave 2 (2026-10-24)
+
+`research-variants-v2.yml` runs fourteen presets across three new seeds, combining pilot results
+before candidate promotion. Details and gate: `docs/variant-wave2-experiments.md`. Per-player
+checking-drop budgets and cooldown flags are copied independently and enter relevant position
+keys. Existing quiet-return keys exclude these unrelated new fields. Quiet-first-turn limits
+exclude king placement. Mutual deployment gates unlock permanently based on distinct pieces
+previously deployed. No-drop-mate rejects a checking drop only when no legal reply exists.
+Private home-rank armies are independently sampled before reveal; saved six-drop serialization
+is for replay, never a sequence of informed setup choices. Hidden setup is not strategic AI.
