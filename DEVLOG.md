@@ -756,3 +756,17 @@ provenance.
 (78 ply-limit draws and 2 White wins). That run validates the data path, not viability: eight plies
 is deliberately too short for a strategic conclusion. The full 1,040-game GitHub Action is the
 measurement.
+
+**Full result.** [Run 39895779482](https://github.com/KakkoiDev/schness/actions/runs/39895779482)
+completed all 1,040 games with verified checking-drop provenance. White won 979 (94.1%), Black 47,
+and only 14 games drew. Sharp–Sharp was 197 White wins, 10 Black wins, and one draw. Median length
+collapsed from the canonical 54 plies to 9. All games contained a checking drop: White checked by
+drop on ply 3 and again on ply 5 in every game. Despite fewer formal repetitions, the corpus had
+only 359 distinct action sequences versus 897 canonically. Steady as White beat Sharp as Black
+204–0 with four draws, proving that initiative overwhelmed engine strength.
+
+**Decision.** Reject checking drops for standard Schness. They make play decisive but severely
+first-player-biased and less varied. Retain the ruleset switch only for reproducible research; do
+not expose it in matchmaking or mix its records into canonical datasets. A future compensation
+idea must first pass an 80-game pilot with White below 60% of decisive games before spending a full
+tournament run. See the [full variant report](docs/tournament-report-2026-10-23-checking-drops.md).
