@@ -56,4 +56,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id }}
-        run: gh release create "research-wave2-$RUN_ID" research-wave2.zip --title "Variant experiments wave 2 — $RUN_ID" --notes "Fourteen variants across three fresh seeds: 42 balanced pilots, plus three 1,040-game expansions per candidate passing the combined screening gate. Includes complete transcripts, rules, AI profiles and metrics."
+        run: >-
+          gh release create "research-wave2-$RUN_ID" research-wave2.zip --title "Variant experiments wave 2 — $RUN_ID" --notes "Fourteen variants across three fresh seeds: 42 balanced pilots, plus three 1,040-game expansions per candidate passing the combined screening gate. Includes complete transcripts, rules, AI profiles and metrics."
