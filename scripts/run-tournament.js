@@ -10,7 +10,14 @@ async function playShard(options) {
   const plan = buildResearchPlan(options.repetitions);
   for (let planIndex = options.shard; planIndex < plan.length; planIndex += options.shards) {
     const experiment = plan[planIndex];
-    const game = playTournamentGame({ index: experiment.index, seed: options.seed, white: experiment.white, black: experiment.black, maxPlies: options.maxPlies });
+    const game = playTournamentGame({
+      index: experiment.index,
+      seed: options.seed,
+      white: experiment.white,
+      black: experiment.black,
+      maxPlies: options.maxPlies,
+      allowCheckingDrops: options.allowCheckingDrops,
+    });
     game.repetition = experiment.repetition;
     records.push(JSON.stringify(game));
     const key = resultKey(game.result);
@@ -38,6 +45,7 @@ if (!isMainThread) {
     output: resolve(parsed.output ?? 'tournament-shards'),
     seed: Number(parsed.seed ?? 20260910),
     maxPlies: positive(parsed.maxPlies, 200),
+    allowCheckingDrops: boolean(parsed.allowCheckingDrops, false),
   };
   const jobs = Array.from({ length: workers }, (_, shard) => new Promise((resolveJob, reject) => {
     const worker = new Worker(new URL(import.meta.url), { workerData: { ...shared, shard } });
@@ -61,4 +69,11 @@ function positive(value, fallback) {
   const parsed = Number(value ?? fallback);
   if (!Number.isInteger(parsed) || parsed <= 0) throw new TypeError(`expected a positive integer, received ${value}`);
   return parsed;
+}
+
+function boolean(value, fallback) {
+  if (value === undefined) return fallback;
+  if (value === true || value === 'true') return true;
+  if (value === false || value === 'false') return false;
+  throw new TypeError(`expected true or false, received ${value}`);
 }

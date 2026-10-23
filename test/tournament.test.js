@@ -7,6 +7,7 @@ import {
   playTournamentGame,
   seededRandom,
   startingKings,
+  tournamentRules,
 } from '../src/tournament.js';
 import { bufferNeeded } from '../src/watch.js';
 
@@ -45,7 +46,7 @@ test('the spectator maintains a bounded ten-move rolling buffer', () => {
 
 test('a tournament transcript is self-contained and bounded', () => {
   const game = playTournamentGame({ index: 5, seed: 7, white: 'learning', black: 'steady', maxPlies: 6 });
-  assert.equal(game.schema, 2);
+  assert.equal(game.schema, 3);
   assert.equal(game.transcript.length, 6);
   assert.equal(game.result.reason, 'ply-limit');
   assert.deepEqual(game.startingKings, { white: 'b1', black: 'b4' });
@@ -53,6 +54,23 @@ test('a tournament transcript is self-contained and bounded', () => {
   assert.equal(game.finalPosition.board.length, 16);
   assert.equal(game.engines.white.version, 1);
   assert.equal(game.engines.black.depth, 3);
+  assert.deepEqual(game.ruleset, { allowCheckingDrops: false });
+});
+
+test('tournament games record and preserve the checking-drops variant', () => {
+  const options = {
+    index: 2,
+    seed: 91,
+    white: 'learning',
+    black: 'learning',
+    maxPlies: 12,
+    allowCheckingDrops: true,
+  };
+  const game = playTournamentGame(options);
+  assert.deepEqual(game, playTournamentGame(options));
+  assert.deepEqual(game.ruleset, { allowCheckingDrops: true });
+  assert.equal(game.finalPosition.rules.allowCheckingDrops, true);
+  assert.ok(tournamentRules(game.ruleset).some((rule) => rule.includes('may give check')));
 });
 
 test('tournament metadata records the rules and Sharp v2 behavior', () => {

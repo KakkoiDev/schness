@@ -733,3 +733,26 @@ another, is never visible. The Copy button makes it work; it does not make the l
 design says it is. Left alone for now because it needs a layout decision, not a patch.
 
 **Next measurement.** Someone opening the site on a phone. Still the gap behind every entry above.
+
+## 2026-10-23 — Checking-drops viability experiment
+
+**Question.** Does Schness become more decisive or tactically interesting when a reserve deployment
+may immediately check the opposing king?
+
+**Implementation.** Added an explicit `allowCheckingDrops` ruleset flag. It defaults off, so the
+published game remains unchanged. With it on, the legal-action generator lifts only the
+no-check-on-drop restriction; self-check, occupied-square, ownership, checkmate, stalemate, and
+threefold rules are unchanged. Position keys include the ruleset to prevent repetition or peer-sync
+collisions. Old positions without rules metadata use canonical quiet drops.
+
+**Research contract.** Tournament schema 3 records the flag in every game and manifest, generates the
+matching human-readable rule list, and refuses to aggregate shards from different rulesets. The
+GitHub workflow has a manual Checking drops input and an experiment-branch trigger. Unit coverage
+proves canonical checking drops remain illegal, variant checking drops are legal and preserved, the
+two rulesets have distinct position keys, and tournament transcripts are reproducible with explicit
+provenance.
+
+**Smoke result.** An 80-game, eight-ply local pipeline run completed and aggregated successfully
+(78 ply-limit draws and 2 White wins). That run validates the data path, not viability: eight plies
+is deliberately too short for a strategic conclusion. The full 1,040-game GitHub Action is the
+measurement.
