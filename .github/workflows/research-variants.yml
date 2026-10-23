@@ -1,0 +1,59 @@
+name: Variant research suite
+on:
+  push:
+    branches: ['experiment/deployment-variants-*']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+  research:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        variant: [canonical, unrestricted, protected-recurring, protected-opening, grace, quiet-return, setup-white-quiet, setup-white-checking, setup-black-quiet, setup-black-checking]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run pilot and automatically expand candidates passing the screening gate
+        env:
+          VARIANT: ${{ matrix.variant }}
+        run: node scripts/run-research-suite.js "$VARIANT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: research-${{ matrix.variant }}
+          path: research-results/${{ matrix.variant }}/
+          if-no-files-found: error
+          retention-days: 90
+  archive:
+    needs: research
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: research-*
+          path: results
+      - run: zip -qr research-variants.zip results
+      - name: Preserve datasets as a release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: gh release create "research-variants-$RUN_ID" research-variants.zip --title "Deployment variant experiments $RUN_ID" --notes "Ten reproducible 80-game pilots plus 1,040-game expansions for candidates passing the recorded gate. Includes complete transcripts, rules, AI profiles and metrics."

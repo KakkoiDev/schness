@@ -9,7 +9,8 @@ export const BANK_PIECES = Object.freeze([ROOK, BISHOP, KNIGHT]);
 export const DEFAULT_RULES = Object.freeze({ allowCheckingDrops: false });
 const CHECKING_DROPS_RULES = Object.freeze({ allowCheckingDrops: true });
 
-const PLAYERS = new Set([WHITE, BLACK]);
+const PLAYERS_ARRAY = [WHITE, BLACK];
+const PLAYERS = new Set(PLAYERS_ARRAY);
 const PIECES = new Set([KING, ...BANK_PIECES]);
 const ORTHOGONAL = [[-1, 0], [1, 0], [0, -1], [0, 1]];
 const DIAGONAL = [[-1, -1], [-1, 1], [1, -1], [1, 1]];
@@ -52,6 +53,7 @@ export function createInitialPosition(rules = DEFAULT_RULES) {
     turn: WHITE,
     phase: 'place-white-king',
     repetitions: {},
+    research: { turns: { white: 0, black: 0 }, deployed: { white: [], black: [] } },
     rules: normalizeRules(rules),
   };
 }
@@ -64,6 +66,7 @@ export function createPosition({
   phase = 'play',
   repetitions = {},
   rules = DEFAULT_RULES,
+  research = { turns: { white: 0, black: 0 }, deployed: { white: [], black: [] } },
 }) {
   const position = {
     board: board.map((occupant) => occupant ? occupantOf(occupant.owner, occupant.piece) : null),
@@ -75,6 +78,7 @@ export function createPosition({
     phase,
     repetitions: { ...repetitions },
     rules: normalizeRules(rules),
+    research: structuredClone(research),
   };
   validatePosition(position);
   return position;
@@ -115,7 +119,7 @@ function generateLegalActions(position) {
   const enemy = opponent(player);
   const candidates = [];
 
-  for (let from = 0; from < position.board.length; from += 1) {
+  for (let from = 0; position.phase !== 'setup' && from < position.board.length; from += 1) {
     const occupant = position.board[from];
     if (!occupant || occupant.owner !== player) continue;
     for (const to of pseudoMoves(position.board, from, occupant.piece, player)) {
@@ -141,7 +145,7 @@ function generateLegalActions(position) {
     if (boardInCheck(next, player)) return false;
     // In the canonical rules a drop can defend our king, but may not give
     // check. The experimental checking-drops ruleset lifts only that limit.
-    if (!rulesOf(position).allowCheckingDrops &&
+    if (!checkingDropAllowed(position, action) &&
         action.type === 'drop' &&
         boardInCheck(next, enemy)) return false;
     return true;
@@ -268,10 +272,18 @@ export function positionKey(position) {
   const whiteBank = [...position.banks[WHITE]].sort().map((piece) => PIECE_CODE[piece]).join('');
   const blackBank = [...position.banks[BLACK]].sort().map((piece) => PIECE_CODE[piece]).join('');
   const rules = rulesOf(position).allowCheckingDrops ? 'checking-drops' : 'quiet-drops';
-  return `${rules}|${position.phase}|${position.turn}|${board}|${whiteBank}|${blackBank}`;
+  const researchRules = rulesOf(position);
+  const rights = researchRules.experiment === 'protected-opening' ? PLAYERS_ARRAY.map(player => position.research.deployed[player].length > 0)
+    : researchRules.experiment === 'grace' ? position.research.turns
+      : researchRules.experiment === 'quiet-return' ? position.research : null;
+  const extra = researchRules.experiment ? `|${JSON.stringify(researchRules)}|${JSON.stringify(rights)}` : '';
+  return `${rules}${extra}|${position.phase}|${position.turn}|${board}|${whiteBank}|${blackBank}`;
 }
 
 export function getResult(position) {
+  if (position.phase === 'setup') {
+    return legalActions(position).length ? null : { type: 'draw', reason: 'setup-blocked' };
+  }
   if (position.phase !== 'play') return null;
   const key = positionKey(position);
   if ((position.repetitions[key] ?? 0) >= 3) {
@@ -303,7 +315,7 @@ function applyUnchecked(position, action, countRepetition) {
       next.phase = 'place-black-king';
       next.turn = BLACK;
     } else {
-      next.phase = 'play';
+      next.phase = rulesOf(position).setup ? 'setup' : 'play';
       next.turn = WHITE;
     }
   } else if (action.type === 'move') {
@@ -318,6 +330,18 @@ function applyUnchecked(position, action, countRepetition) {
     next.banks[player].splice(bankIndex, 1);
     next.board[action.to] = occupantOf(player, action.piece);
     next.turn = opponent(player);
+  }
+
+  if (rulesOf(position).experiment && action.type !== 'place-king') {
+    next.research.turns[player] = Math.min(3, next.research.turns[player] + 1);
+    if (action.type === 'drop' && !next.research.deployed[player].includes(action.piece)) {
+      next.research.deployed[player].push(action.piece);
+      next.research.deployed[player].sort();
+    }
+    if (position.phase === 'setup' && !next.banks.white.length && !next.banks.black.length) {
+      next.phase = 'play';
+      next.turn = rulesOf(position).firstPlayer;
+    }
   }
 
   if (countRepetition && next.phase === 'play') {
@@ -415,6 +439,7 @@ function clonePosition(position) {
     phase: position.phase,
     repetitions: { ...position.repetitions },
     rules: rulesOf(position),
+    research: position.research ? { turns: { ...position.research.turns }, deployed: { white: [...position.research.deployed.white], black: [...position.research.deployed.black] } } : { turns: { white: 0, black: 0 }, deployed: { white: [], black: [] } },
   };
 }
 
@@ -423,7 +448,7 @@ function validatePosition(position) {
     throw new Error('A Schness board must contain exactly 16 squares');
   }
   if (!PLAYERS.has(position.turn)) throw new Error('Invalid player turn');
-  if (!['place-white-king', 'place-black-king', 'play'].includes(position.phase)) {
+  if (!['place-white-king', 'place-black-king', 'setup', 'play'].includes(position.phase)) {
     throw new Error('Invalid game phase');
   }
   if (position.rules && typeof position.rules.allowCheckingDrops !== 'boolean') {
@@ -447,6 +472,11 @@ function normalizeRules(rules) {
   if (!rules || typeof rules.allowCheckingDrops !== 'boolean') {
     throw new Error('Invalid ruleset');
   }
+  if (rules.experiment) {
+    if (!['protected-recurring', 'protected-opening', 'grace', 'quiet-return', 'setup'].includes(rules.experiment)) throw new Error('Unknown experiment');
+    if (rules.experiment === 'setup' && (!rules.setup || !PLAYERS.has(rules.firstPlayer))) throw new Error('Invalid setup rules');
+    return Object.freeze(rules);
+  }
   return rules.allowCheckingDrops
     ? CHECKING_DROPS_RULES
     : DEFAULT_RULES;
@@ -460,4 +490,19 @@ function assertSquare(square) {
   if (!Number.isInteger(square) || square < 0 || square >= 16) {
     throw new Error(`Invalid square: ${square}`);
   }
+}
+
+function checkingDropAllowed(position, action) {
+  const rules = rulesOf(position);
+  if (!rules.allowCheckingDrops || position.phase === 'setup') return false;
+  const enemy = opponent(position.turn);
+  if (rules.experiment === 'protected-recurring') {
+    return position.board.some(piece => piece?.owner === enemy && piece.piece !== KING);
+  }
+  if (rules.experiment === 'protected-opening') return position.research.deployed[enemy].length > 0;
+  if (rules.experiment === 'grace' || rules.experiment === 'quiet-return') {
+    if (Math.min(position.research.turns.white, position.research.turns.black) < 3) return false;
+    if (rules.experiment === 'quiet-return' && position.research.deployed[position.turn].includes(action.piece)) return false;
+  }
+  return true;
 }
