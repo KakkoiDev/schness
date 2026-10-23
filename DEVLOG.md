@@ -853,6 +853,10 @@ proposes 4–10 geometry, shared budgets, copy caps, queens and selected fairy p
 return to the original owner and points apply only before play. Avoid treating ordinary chess
 piece prices or fixed-depth search as established balance/performance across these boards.
 
-**Next measurement.** Browser-check actual setup drops, random/reload identity and hidden reveal.
+**Validation.** All 243 unit tests pass. The complete desktop/mobile browser run has 108 passed,
+5 skipped and one online-connection timeout with STUN DNS resolution failures. All six new
+variant checks pass, including actual setup drops, random/reload identity and hidden reveal.
+
+**Next measurement.**
 Review the visual concepts before implementation. Test board size alone before adding queens,
 duplicate armies or fairy moves. Wave 2 runs independently on its frozen experiment commit.
