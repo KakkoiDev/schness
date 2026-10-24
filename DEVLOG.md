@@ -1034,3 +1034,50 @@ Question: which of the 43 already authorized recipes meets both screening target
 Three recipes met >=80% decisiveness and 45–55% White share among decisive games: bank-4-delay-1, bank-5-delay-1 and bank-6-delay-1. Each has 44 White wins, 36 Black wins and 16 draws in 96 games (83.3% decisive; White 55.0% of wins). Each draw breakdown is 13 threefold repetitions and 3 stalemates. These use quiet capture-to-bank drops with one owner-turn capture cooldown and overflow returned to the captured owner. Identical counts do not establish that capacities are generally equivalent.
 
 Reject declaring official balance from this screen: six seeds repeat the same 16 king starts, search is depth 4, 200 total plies, and 43 recipes create selection effects. Hits are provisional; fresh positions/seeds and deeper search would be the next measurement, requiring a separate run authorization. No new run started. Home-row supplement findings remain unchanged: quiet 0/0/96, checking 6/2/88 W/B/draws, with 84 setup-blocked draws each. Archive all manifests, exact runtime, replay bundles and final report/rates/progress with verified SHA-256 parts. Preserve the prior archive and supplement.
+
+## 2026-10-25 — Four-slot one-turn cooldown across all named AI levels
+
+Question: does the screening candidate remain decisive and color-balanced at different named
+AI levels, and do mixed levels show the expected strength separation? User authorized a full
+all-level test. Freeze the completed balance screen's rules and bot byte for byte; expand only
+the tournament schedule to all nine ordered Learning v1 / Steady v1 / Sharp v2 pairings.
+Use six fresh seeds 20261501–20261506 and all 16 king placements: 864 games, 96 per pairing,
+200 total plies, eight local workers. Do not mix production Sharp v3 or numeric strength 100
+into this follow-up: that would change the engine as well as the pairing. Initial reserves
+are ready, captured copies wait one owner turn, overflow returns to the captured side, quiet
+drops only. No new rule tuning or automatic adoption.
+
+Schedule tests verify all nine pairings and 16 starts per seed; byte equality checks preserve
+the screened rules/search/profiles; report tests keep equal and mixed levels separate and
+retain draw reasons. Run source/manifest is committed before completion. On completion, verify
+all frozen sources and replays, archive full replay bundles and readable reports/checksums,
+and publish to the same follow-up branch. Only equal-level games assess color balance; repeated
+starts and finite depth remain limitations. Next measurement is this completed batch, not an
+automatic expansion.
+
+## 2026-10-25 — Completed all-level four-slot cooldown test
+
+All 864 authorized games completed. After confirming the original runner exited, frozen
+runtime --resume verified the SHA-256 source fingerprint and all checkpoint/replay legality,
+position keys and final outcomes. The full compressed manifest/runtime/replay bundles and
+readable reports/rates/progress are archived with verified part and whole hashes.
+
+Equal-level results (White/Black/draws, 96 each): Sharp v2 45/39/12, 87.5% decisive,
+White 53.6% of wins; Steady v1 59/37/0, 100% decisive, White 61.5% of wins;
+Learning v1 42/30/24, 75% decisive, White 58.3% of wins. Only Sharp meets the
+screening target. Sharp draws: nine repetitions, three stalemates; Learning draws:
+24 repetitions. Steady has no draws. This is fresh-seed replication of the candidate
+at the same Sharp depth, not proof of stronger-search balance or all-skill balance.
+
+Mixed pairings (White AI first, W/B/D): Sharp-Steady 75/16/5;
+Steady-Sharp 10/83/3; Sharp-Learning 79/3/14; Learning-Sharp 2/85/9;
+Steady-Learning 84/12/0; Learning-Steady 3/93/0. All mixed draws are repetitions.
+Across reversed-color pairings, Sharp wins 158/192 against Steady (82.3%, eight draws)
+and 164/192 against Learning (85.4%, 23 draws); Steady wins 177/192 against Learning
+(92.2%, no draws). These are strength comparisons, not color-balance estimates.
+
+Keep this 200-ply fixed-depth frozen Sharp v2 dataset separate from the earlier screen,
+numeric strength profiles and production Sharp v3. Six seeds repeat 16 king starts;
+sample size, correlated starts, evaluator assumptions and search horizon limit inference.
+Do not adopt an official variant or launch a new experiment automatically. Next useful
+measurement would be a separately authorized deeper-search or multi-engine confirmation.

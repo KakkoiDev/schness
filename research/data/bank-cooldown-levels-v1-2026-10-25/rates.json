@@ -1,0 +1,141 @@
+[
+  {
+    "whiteLevel": "sharp",
+    "blackLevel": "sharp",
+    "games": 96,
+    "white": 45,
+    "black": 39,
+    "draws": 12,
+    "drawReasons": {
+      "stalemate": 3,
+      "threefold-repetition": 9
+    },
+    "totalPlies": 5340,
+    "decisiveRate": 0.875,
+    "whiteDecisiveShare": 0.5357142857142857,
+    "averagePlies": 55.625,
+    "equalLevel": true
+  },
+  {
+    "whiteLevel": "steady",
+    "blackLevel": "learning",
+    "games": 96,
+    "white": 84,
+    "black": 12,
+    "draws": 0,
+    "drawReasons": {},
+    "totalPlies": 3240,
+    "decisiveRate": 1,
+    "whiteDecisiveShare": 0.875,
+    "averagePlies": 33.75,
+    "equalLevel": false
+  },
+  {
+    "whiteLevel": "learning",
+    "blackLevel": "steady",
+    "games": 96,
+    "white": 3,
+    "black": 93,
+    "draws": 0,
+    "drawReasons": {},
+    "totalPlies": 2559,
+    "decisiveRate": 1,
+    "whiteDecisiveShare": 0.03125,
+    "averagePlies": 26.65625,
+    "equalLevel": false
+  },
+  {
+    "whiteLevel": "learning",
+    "blackLevel": "learning",
+    "games": 96,
+    "white": 42,
+    "black": 30,
+    "draws": 24,
+    "drawReasons": {
+      "threefold-repetition": 24
+    },
+    "totalPlies": 2554,
+    "decisiveRate": 0.75,
+    "whiteDecisiveShare": 0.5833333333333334,
+    "averagePlies": 26.604166666666668,
+    "equalLevel": true
+  },
+  {
+    "whiteLevel": "sharp",
+    "blackLevel": "steady",
+    "games": 96,
+    "white": 75,
+    "black": 16,
+    "draws": 5,
+    "drawReasons": {
+      "threefold-repetition": 5
+    },
+    "totalPlies": 4001,
+    "decisiveRate": 0.9479166666666666,
+    "whiteDecisiveShare": 0.8241758241758241,
+    "averagePlies": 41.677083333333336,
+    "equalLevel": false
+  },
+  {
+    "whiteLevel": "steady",
+    "blackLevel": "sharp",
+    "games": 96,
+    "white": 10,
+    "black": 83,
+    "draws": 3,
+    "drawReasons": {
+      "threefold-repetition": 3
+    },
+    "totalPlies": 3869,
+    "decisiveRate": 0.96875,
+    "whiteDecisiveShare": 0.10752688172043011,
+    "averagePlies": 40.302083333333336,
+    "equalLevel": false
+  },
+  {
+    "whiteLevel": "sharp",
+    "blackLevel": "learning",
+    "games": 96,
+    "white": 79,
+    "black": 3,
+    "draws": 14,
+    "drawReasons": {
+      "threefold-repetition": 14
+    },
+    "totalPlies": 2883,
+    "decisiveRate": 0.8541666666666666,
+    "whiteDecisiveShare": 0.9634146341463414,
+    "averagePlies": 30.03125,
+    "equalLevel": false
+  },
+  {
+    "whiteLevel": "learning",
+    "blackLevel": "sharp",
+    "games": 96,
+    "white": 2,
+    "black": 85,
+    "draws": 9,
+    "drawReasons": {
+      "threefold-repetition": 9
+    },
+    "totalPlies": 2519,
+    "decisiveRate": 0.90625,
+    "whiteDecisiveShare": 0.022988505747126436,
+    "averagePlies": 26.239583333333332,
+    "equalLevel": false
+  },
+  {
+    "whiteLevel": "steady",
+    "blackLevel": "steady",
+    "games": 96,
+    "white": 59,
+    "black": 37,
+    "draws": 0,
+    "drawReasons": {},
+    "totalPlies": 4279,
+    "decisiveRate": 1,
+    "whiteDecisiveShare": 0.6145833333333334,
+    "averagePlies": 44.572916666666664,
+    "equalLevel": true
+  }
+]
