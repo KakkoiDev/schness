@@ -1095,3 +1095,14 @@ setup boundary. Position editing resets to canonical, since an arbitrary board l
 variant rights. Online invitations and the homepage's inline game remain canonical for now;
 experimental rules are opt-in Bot Arena play, not matchmaking. Theme concepts and the Lab army
 builder are proposals, not shipped visuals or dynamic geometry.
+
+### Spatial and piece-specific checking research (2026-10-24)
+
+Wave 3 adds seven independent checking-drop policies in the shared preset registry. Quiet drops
+remain legal; ordinary moves still give check normally. Home-half uses the mover's own two ranks;
+distant means Chebyshev distance >=2; supported means another friendly geometric attacker after
+the drop, including kings and pinned pieces. Countercheck requires an existing check and normal
+self-check resolution. Knight/bishop/rook-only policies restrict the checking piece type. These
+policies use current board state and need no historical rights. Workflow v3 preserves the
+three-seed combined gate, distinct controls, stage separation and full archives, with two jobs
+concurrent. Larger frontier mechanics remain proposals in docs/variant-frontier-proposals.md.
