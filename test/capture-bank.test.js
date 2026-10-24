@@ -36,3 +36,8 @@ test('capture presets keep king safety, drop policy and exact tournament replay'
 test('capture-aware search values duplicate reserve material',()=>{const p=fixture('capture-bank-6-quiet',['rook','rook'],[]);const q=createPosition({...p,banks:{white:['rook'],black:[]}});assert.ok(scorePosition(p,0)-scorePosition(q,0)>450);});
 
 test('capacity is part of position identity',()=>{assert.notEqual(positionKey(fixture('capture-bank-3-quiet')),positionKey(fixture('capture-bank-6-quiet')));});
+
+test('a king can acquire all six non-kings, while five slots return the sixth',()=>{
+ for(const cap of [5,6]){const board=Array(16).fill(null);board[8]={owner:'white',piece:'king'};board[3]={owner:'black',piece:'king'};board[4]={owner:'black',piece:'rook'};
+ const p=createPosition({board,banks:{white:['rook','bishop','bishop','knight','knight'],black:[]},rules:VARIANTS[`capture-bank-${cap}-quiet`]});const q=applyAction(p,{type:'move',from:8,to:4});assert.equal(q.banks.white.length,cap);assert.equal(q.banks.black.length,cap===5?1:0);assert.equal(q.board.filter(Boolean).length+q.banks.white.length+q.banks.black.length,8);}
+});

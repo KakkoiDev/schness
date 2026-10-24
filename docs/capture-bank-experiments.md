@@ -16,7 +16,8 @@ It is not full shogi.
   Today's engine is still fixed at N=3; larger armies remain a separate proposal. No extra pieces
   are added merely to fill a bank. Six non-kings plus two uncapturable kings are conserved.
 - Six slots equal unlimited capacity with today's set. A real six-slot bank cannot overflow:
-  at least one non-king must remain on the board to make a capture.
+  the captured non-king is outside the bank before capture, so at most five are already held.
+  A king can capture the sixth piece and fill all six slots.
 - Duplicates are allowed and shown with a count badge. Identical copies generate one legal drop
   action per type/destination, avoiding a search tie-breaking bias. Drops consume exactly one copy.
 - Capacity is validated and included in ruleset identity, hashes, replay and tournament metadata.
