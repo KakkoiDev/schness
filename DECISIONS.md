@@ -1133,3 +1133,15 @@ Finite-material-v1 search values reserves at full base material, and games/manif
 policy. No new insufficient-material or victory adjudication is added; report low-material
 repetition/ceiling outcomes explicitly. Wave 5 isolates this policy with/without checking drops
 against matched controls; see docs/permanent-loss-experiments.md.
+
+### Local fixed-depth research runner (2026-10-24)
+
+scripts/run-local-experiments.js shares CI's engine and research schedule, with a bounded worker
+pool, atomic per-game checkpoints and exact replay validation before persistence and on resume.
+Prepare freezes all src JavaScript plus the runner/package; manifest SHA-256 fingerprints identify
+actual source even with a dirty local checkout. Only the frozen runtime may resume a batch.
+Active locks prevent duplicate runners; failures remain explicit. Progress is provisional until
+all seed/variant/matchup/king-start combinations complete. Local pilot datasets do not auto-expand
+or alter defaults. Generated output/local-experiments is ignored by Git; preserve datasets and
+runtime together. No app shell files changed, so no service-worker bump is needed for this harness.
+
