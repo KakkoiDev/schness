@@ -997,3 +997,28 @@ Countdown gates drops on owner turns, comparing reset-on-capture against initial
 A forced wait only outside check avoids manufacturing stalemate while reserves cool down.
 These are proposals, not implemented presets; the active 36-preset batch stays frozen. Next:
 review setup flow, settle timer timing and wait semantics, then implement and test separately.
+
+## 2026-10-24 — Sharp-only balance experiments
+
+Question: can we retain quiet capture banks' decisiveness while bringing color balance inside
+45–55% of decisive games, with at least 80% decisive overall? The user requested running many
+recipes with Sharp against Sharp only, preserving all experimental data on GitHub, explicitly
+including capacity 5 and bishop/knight 3-turn versus rook 4-turn capture cooldowns.
+
+Decision: isolate the research engine rather than expose unfinished cooldown/Wait mechanics in
+the app. Main screen: 43 recipes, six fresh seeds and 16 king starts, 4,128 games, eight workers.
+The later own-home-row placement request is a separate two-recipe, 192-game supplement, preserving
+the already frozen main runtime. Both sides alternate quiet home-row deployments; then White
+starts normal play, comparing quiet versus checking drops and normal capture returns.
+
+Rejected: mixed-strength matches for this color-balance question; excluding capacity 5; silently
+changing rules after launch; treating a 48-game near-even result as proven balance; archiving
+only summaries or relying on expiring Actions artifacts. The completed prior 8,640-game batch
+is preserved as compressed full replay bundles plus source/manifest, not pooled into this screen.
+The 32-game max-four-ply smoke is separately labelled and retained only as execution evidence.
+
+Validation includes exact replay/material conservation for every recipe, baseline control
+transcript equivalence, all mirrored king starts, timer ownership and capture boundaries,
+duplicate ready/cooling copies, hash identity, capacity overflow, and forced-wait/checkmate rules.
+Next measurement: complete both schedules, report raw win/draw counts, decisiveness and White's
+share of decisive games, then confirm target hits with fresh seeds and a deeper engine budget.

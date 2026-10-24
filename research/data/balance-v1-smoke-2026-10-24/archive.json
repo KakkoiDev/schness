@@ -1,0 +1,15 @@
+{
+  "run": "balance-v1-smoke-2026-10-24",
+  "sourceFingerprint": "65ea73a47c22786807eddf4edafd32a9763351214ff2f0990e2ef94418015ba8",
+  "games": 32,
+  "archiveBytes": 28103,
+  "archiveSha256": "ea46009d16589c0559f6d6443981c98881490fe01795c5f56910e13c9b2a5ec9",
+  "parts": [
+    {
+      "path": "balance-v1-smoke-2026-10-24.tar.gz.part001",
+      "bytes": 28103,
+      "sha256": "ea46009d16589c0559f6d6443981c98881490fe01795c5f56910e13c9b2a5ec9"
+    }
+  ],
+  "restore": "cat balance-v1-smoke-2026-10-24.tar.gz.part* > balance-v1-smoke-2026-10-24.tar.gz; tar -xzf balance-v1-smoke-2026-10-24.tar.gz"
+}
