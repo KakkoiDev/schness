@@ -45,3 +45,18 @@ test('hidden setup reveals all eight pieces and returns normal play to White',as
   await expect(page.locator('#watch-status')).toContainText('White to move');
   await expect(page.locator('#white-reserve .bank-piece')).toHaveCount(0);
 });
+
+test('captured duplicate pieces remain visible and usable in the reserve',async({page})=>{
+  await page.goto('/watch.html?variant=capture-bank-4-quiet');
+  await dismissRules(page);
+  await expect(page.locator('#game-variant')).toHaveValue('capture-bank-4-quiet');
+  await page.evaluate(async()=>{
+    const {renderReserve}=await import('/src/board-ui.js');
+    renderReserve(document.querySelector('#white-reserve'),['rook','rook','bishop','knight'],'white',{interactive:true,onSelect:piece=>document.querySelector('#watch-status').textContent=piece});
+  });
+  const rook=page.locator('#white-reserve [data-piece="rook"]');
+  await expect(rook).toHaveCount(1);
+  await expect(rook).toHaveAccessibleName('white rook in reserve, 2 copies');
+  await expect(rook.locator('.bank-count')).toHaveText('×2');
+  await rook.click();await expect(page.locator('#watch-status')).toHaveText('rook');
+});

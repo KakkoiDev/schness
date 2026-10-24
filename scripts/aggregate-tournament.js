@@ -43,6 +43,7 @@ const manifest = {
   ruleset,
   rules,
   ai: TOURNAMENT_AI,
+  ...(games[0].evaluationPolicy ? { evaluationPolicy: games[0].evaluationPolicy } : {}),
   files: {
     'games.jsonl': 'One complete, self-contained game per line.',
     'summary.csv': 'Results grouped by the two starting king squares.',

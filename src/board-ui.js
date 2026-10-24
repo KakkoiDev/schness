@@ -31,7 +31,12 @@ export function renderReserve(element, held, owner, {
     button.dataset.piece = piece;
     button.dataset.owner = owner;
     button.append(pieceElement(owner, piece));
-    button.setAttribute('aria-label', `${owner} ${piece} in reserve`);
+    const count = held.filter(heldPiece => heldPiece === piece).length;
+    if (count > 1) {
+      const badge = document.createElement('span'); badge.className = 'bank-count';
+      badge.textContent = `×${count}`; badge.setAttribute('aria-hidden', 'true'); button.append(badge);
+    }
+    button.setAttribute('aria-label', count > 1 ? `${owner} ${piece} in reserve, ${count} copies` : `${owner} ${piece} in reserve`);
     button.classList.toggle('selected', interactive && selected === piece);
     button.classList.toggle('drag-source', dragging === piece);
     button.disabled = disabled || !interactive || Boolean(isDisabled?.(piece));

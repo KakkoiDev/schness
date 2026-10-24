@@ -2385,3 +2385,6 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 }
 
 .variant-description { color: var(--muted); max-width: 76ch; font-size: .9rem; line-height: 1.55; margin: .5rem 0 1.25rem; }
+
+.bank-piece { position:relative }
+.bank-count { position:absolute;right:1px;bottom:0;font-size:.7rem;line-height:1;padding:2px;background:var(--paper);color:var(--ink);border-radius:var(--radius-control);pointer-events:none }

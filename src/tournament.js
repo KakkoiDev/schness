@@ -7,7 +7,7 @@ import { LEVEL_DEPTH } from './watch.js';
 export const TOURNAMENT_SCHEMA = 3;
 export const TOURNAMENT_RULES = tournamentRules();
 
-export function tournamentRules({ allowCheckingDrops = false, experiment, setup, firstPlayer, hiddenSetup } = {}) {
+export function tournamentRules({ allowCheckingDrops = false, experiment, setup, firstPlayer, hiddenSetup, bankCapacity } = {}) {
   return Object.freeze([
   'The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.',
   'On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.',
@@ -17,7 +17,8 @@ export function tournamentRules({ allowCheckingDrops = false, experiment, setup,
   ...(experiment ? [`Research variant: ${experiment}.`, ...(setup ? [`Alternate all six non-king placements without check, moves or captures; ${firstPlayer} starts normal play. A blocked setup is a draw.`] : []), ...(experiment === 'protected-recurring' ? ['No checking drop against a lone king, including after captures.'] : []), ...(experiment === 'protected-opening' ? ['No checking drop before the opponent first deploys a non-king; protection never returns.'] : []), ...(['grace', 'quiet-return'].includes(experiment) ? ['No checking drops until both players complete three post-king turns.'] : []), ...(experiment === 'quiet-return' ? ['Previously deployed pieces cannot give check on return drops.'] : [])] : []),
   ...(hiddenSetup ? ['Each player privately samples a uniform legal arrangement on their home rank, independently of the other player’s pieces. Both reveal simultaneously; serialized setup drops are replay-only.'] : []),
   ...({ 'first-turn-quiet': ['Neither player may check by drop on their first post-king turn.'], 'protected-first-turn': ['Neither player may check by drop on their first post-king turn, and checking drops against lone kings stay forbidden.'], 'mutual-one': ['Checking drops unlock permanently once both players have deployed a non-king.'], 'mutual-two': ['Checking drops unlock permanently once both players have deployed two distinct non-kings.'], 'limited-check': ['Each player may make at most one checking drop.'], cooldown: ['No checking drop on the turn immediately following that player’s own checking drop.'], 'no-drop-mate': ['A drop may check but cannot immediately checkmate.'] }[experiment] ?? []),
-  'A captured rook, bishop, or knight returns to its original owner’s reserve.',
+  experiment === 'capture-bank' ? `Captured non-kings join the capturer’s reserve if fewer than ${bankCapacity} pieces are held; otherwise return to the captured side’s reserve.`
+    : 'A captured rook, bishop, or knight returns to its original owner’s reserve.',
   'Normal king safety and checkmate apply; stalemate and threefold repetition are draws.',
   ]);
 }
@@ -122,6 +123,7 @@ export function playTournamentGame({
     index,
     seed: gameSeed,
     levels: { white, black },
+    ...(ruleset.experiment === 'capture-bank' ? { evaluationPolicy: 'capture-material-v1: reserve pieces valued at full base material; deployed pieces retain the existing activity bonus' } : {}),
     engines: {
       white: { level: white, ...TOURNAMENT_AI[white] },
       black: { level: black, ...TOURNAMENT_AI[black] },
