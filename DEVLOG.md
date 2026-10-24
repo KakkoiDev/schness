@@ -1047,3 +1047,11 @@ hits and speed. No measured playing-strength improvement is claimed yet. Browser
 legacy depth and bounded strength at 390/1440 widths. Next: tactical suites and same-budget matches
 before claiming stronger AI, plus completed symmetric-army screening results. Live difficulty
 controls retain their existing depths; no new settings slider was added in this pass.
+
+## 2026-10-25 — Completed Classic symmetric-army screen
+
+Question: can army composition alone produce balanced, decisive Classic play? All 1,488 already authorized games across 31 symmetric rook/bishop/knight armies completed. After confirming original runners exited, frozen runtime --resume verified source hashes and all checkpoints/replays. All use unchanged Sharp v2 depth 4, quiet drops and owner-return captures; never pool with production Sharp v3 or rule-changing balance tests.
+
+No army meets both >=80% decisive and 45–55% White share of wins. The most decisive is RRN: 19 White wins, 4 Black wins, 25 draws out of 48 (47.9% decisive; White 82.6% of wins); draws are 24 repetitions and 1 ply ceiling. RRBN is closer in color split: 7 White wins, 6 Black wins, 35 draws (27.1% decisive; White 53.8% of wins); draws are 33 repetitions and 2 ply ceilings. Baseline RBN is 4/0/44. Do not select an official army from these data. Three seeds repeat 16 king starts; small samples, unchanged heuristic and depth/ply bounds limit generalization. Next measurement would need separately authorized stronger-search confirmation or different mechanics; none launched here.
+
+Commit full compressed replay bundles, manifest, frozen runtime, checksums and readable report/rates/progress; preserve the new production search engine and all prior branch contents. Home-row results are independently archived on PR #116 and remain unsuccessful rather than being reinterpreted as a setup success.
