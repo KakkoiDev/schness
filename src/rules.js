@@ -330,7 +330,7 @@ function applyUnchecked(position, action, countRepetition) {
     const captured = next.board[action.to];
     next.board[action.to] = moving;
     next.board[action.from] = null;
-    if (captured) {
+    if (captured && rulesOf(position).experiment !== 'permanent-loss') {
       const policy = rulesOf(position).experiment;
       const transfers = policy === 'capture-bank';
       const recipient = transfers && next.banks[player].length < rulesOf(position).bankCapacity
@@ -490,7 +490,7 @@ function normalizeRules(rules) {
     throw new Error('Invalid ruleset');
   }
   if (rules.experiment) {
-    if (!['protected-recurring', 'protected-opening', 'grace', 'quiet-return', 'setup', 'first-turn-quiet', 'protected-first-turn', 'mutual-one', 'mutual-two', 'limited-check', 'cooldown', 'no-drop-mate', 'home-half-check', 'distant-check', 'supported-check', 'countercheck-only', 'knight-check', 'bishop-check', 'rook-check', 'capture-bank'].includes(rules.experiment)) throw new Error('Unknown experiment');
+    if (!['protected-recurring', 'protected-opening', 'grace', 'quiet-return', 'setup', 'first-turn-quiet', 'protected-first-turn', 'mutual-one', 'mutual-two', 'limited-check', 'cooldown', 'no-drop-mate', 'home-half-check', 'distant-check', 'supported-check', 'countercheck-only', 'knight-check', 'bishop-check', 'rook-check', 'capture-bank', 'permanent-loss'].includes(rules.experiment)) throw new Error('Unknown experiment');
     if (rules.experiment === 'capture-bank' && (!Number.isInteger(rules.bankCapacity) || rules.bankCapacity < 3 || rules.bankCapacity > 6)) throw new Error('Invalid bank capacity');
     if (rules.experiment === 'setup' && (!rules.setup || !PLAYERS.has(rules.firstPlayer))) throw new Error('Invalid setup rules');
     return Object.freeze(rules);

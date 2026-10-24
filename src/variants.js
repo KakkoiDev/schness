@@ -1,5 +1,7 @@
 // Shared presets for research and the opt-in Bot Arena; online matchmaking stays canonical.
 export const VARIANTS = Object.freeze({
+  'permanent-loss-quiet': {allowCheckingDrops:false,experiment:'permanent-loss'},
+  'permanent-loss-checking': {allowCheckingDrops:true,experiment:'permanent-loss'},
   ...Object.fromEntries([3,4,5,6].flatMap(bankCapacity => [false, true].map(allowCheckingDrops => [`capture-bank-${bankCapacity}-${allowCheckingDrops ? 'checking' : 'quiet'}`, { allowCheckingDrops, experiment: 'capture-bank', bankCapacity }]))),
   ...Object.fromEntries(['home-half-check', 'distant-check', 'supported-check', 'countercheck-only', 'knight-check', 'bishop-check', 'rook-check'].map(experiment => [experiment, { allowCheckingDrops: true, experiment }])),
   'first-turn-quiet': { allowCheckingDrops: true, experiment: 'first-turn-quiet' },
@@ -27,6 +29,7 @@ export const VARIANTS = Object.freeze({
 
 export function description(rules) {
   switch (rules.experiment) {
+    case 'permanent-loss': return `Captured pieces leave the game permanently; unused reserves can still deploy. Checking drops ${rules.allowCheckingDrops ? 'allowed' : 'forbidden'}.`;
     case 'capture-bank': return `Captured pieces join your bank up to ${rules.bankCapacity} held pieces; overflow returns to the captured side. Checking drops ${rules.allowCheckingDrops ? 'allowed' : 'forbidden'}.`;
     case 'home-half-check': return 'Checking drops allowed only onto your own half of the board.';
     case 'distant-check': return 'Checking drops must land at least two king-steps from the opposing king.';
@@ -54,6 +57,7 @@ export function description(rules) {
 
 export const VARIANT_LABELS = Object.freeze({
   canonical: 'Classic Schness',
+  'permanent-loss-quiet': 'Permanent captures · quiet drops', 'permanent-loss-checking': 'Permanent captures · checking drops',
   ...Object.fromEntries([3,4,5,6].flatMap(n => [false,true].map(check => [`capture-bank-${n}-${check ? 'checking' : 'quiet'}`, `Capture bank ${n} · ${check ? 'checking' : 'quiet'} drops`]))),
   'home-half-check': 'Checking drops from home half', 'distant-check': 'Distant checking drops',
   'supported-check': 'Supported checking drops', 'countercheck-only': 'Counterchecking drops only',

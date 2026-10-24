@@ -1,0 +1,60 @@
+name: Variant research suite v5
+on:
+  push:
+    branches: ['codex/variant-wave5-*']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+  research:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        variant: [canonical, unrestricted, permanent-loss-quiet, permanent-loss-checking]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run pilot and automatically expand candidates passing the screening gate
+        env:
+          VARIANT: ${{ matrix.variant }}
+        run: node scripts/run-research-v5.js "$VARIANT"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: research-${{ matrix.variant }}
+          path: research-v5-results/${{ matrix.variant }}/
+          if-no-files-found: error
+          retention-days: 90
+  archive:
+    needs: research
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: research-*
+          path: results
+      - run: zip -qr research-wave5.zip results
+      - name: Preserve datasets as a release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: >-
+          gh release create "research-wave5-$RUN_ID" research-wave5.zip --title "Variant experiments wave 5 — $RUN_ID" --notes "Four variants across three fresh seeds: 12 balanced pilots, plus three 1,040-game expansions per candidate passing the combined screening gate. Includes complete transcripts, rules, AI profiles and metrics."
