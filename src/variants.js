@@ -1,5 +1,6 @@
 // Shared presets for research and the opt-in Bot Arena; online matchmaking stays canonical.
 export const VARIANTS = Object.freeze({
+  ...Object.fromEntries(['home-half-check', 'distant-check', 'supported-check', 'countercheck-only', 'knight-check', 'bishop-check', 'rook-check'].map(experiment => [experiment, { allowCheckingDrops: true, experiment }])),
   'first-turn-quiet': { allowCheckingDrops: true, experiment: 'first-turn-quiet' },
   'protected-first-turn': { allowCheckingDrops: true, experiment: 'protected-first-turn' },
   'mutual-one': { allowCheckingDrops: true, experiment: 'mutual-one' },
@@ -25,6 +26,13 @@ export const VARIANTS = Object.freeze({
 
 export function description(rules) {
   switch (rules.experiment) {
+    case 'home-half-check': return 'Checking drops allowed only onto your own half of the board.';
+    case 'distant-check': return 'Checking drops must land at least two king-steps from the opposing king.';
+    case 'supported-check': return 'Checking drops must be supported by another friendly piece, including the king; pinned supporters count.';
+    case 'countercheck-only': return 'Checking drops allowed only when your king is already in check; the drop must also resolve that check.';
+    case 'knight-check': return 'Only knights may give check on a drop; other pieces must drop quietly.';
+    case 'bishop-check': return 'Only bishops may give check on a drop; other pieces must drop quietly.';
+    case 'rook-check': return 'Only rooks may give check on a drop; other pieces must drop quietly.';
     case 'first-turn-quiet': return 'Each player’s first post-king turn forbids checking drops; later checking drops allowed.';
     case 'protected-first-turn': return 'Recurring lone-king protection plus a quiet first post-king turn for both players.';
     case 'mutual-one': return 'Checking drops unlock permanently for both players after both have first deployed one non-king.';
@@ -43,7 +51,11 @@ export function description(rules) {
 }
 
 export const VARIANT_LABELS = Object.freeze({
-  canonical: 'Classic Schness', unrestricted: 'Checking drops',
+  canonical: 'Classic Schness',
+  'home-half-check': 'Checking drops from home half', 'distant-check': 'Distant checking drops',
+  'supported-check': 'Supported checking drops', 'countercheck-only': 'Counterchecking drops only',
+  'knight-check': 'Knight checking drops only', 'bishop-check': 'Bishop checking drops only', 'rook-check': 'Rook checking drops only',
+  unrestricted: 'Checking drops',
   'protected-recurring': 'Lone-king protection', 'protected-opening': 'Opening king protection',
   'first-turn-quiet': 'Quiet first turn', 'protected-first-turn': 'Quiet first turn + king protection',
   'mutual-one': 'Both deploy one', 'mutual-two': 'Both deploy two',

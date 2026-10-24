@@ -860,3 +860,23 @@ variant checks pass, including actual setup drops, random/reload identity and hi
 **Next measurement.**
 Review the visual concepts before implementation. Test board size alone before adding queens,
 duplicate armies or fairy moves. Wave 2 runs independently on its frozen experiment commit.
+
+## 2026-10-24 — Wave 3 and a wider variant frontier
+
+**Question.** The user wants many possibilities implemented and tested, while reserving major
+redesigns for proposal review. Can restricting the location, support or piece type of a checking
+drop preserve tactics with less color bias than unrestricted deployment?
+
+**Evidence and decision.** Wave 2's completed quiet-first-turn pilot still favors White (148–52,
+40 draws), and forbidding immediate drop mate also leaves strong bias. Add seven independent
+spatial/support/piece policies rather than more timers: home half, distant, supported, defensive
+countercheck and each of the three piece types separately. Keep quiet drops unrestricted. Use
+fresh seeds 20261027–29, matched controls and the existing combined gate. No candidate is selected
+by a favorable individual seed. Details: docs/variant-wave3-experiments.md.
+
+**Alternatives and next measurement.** Army markets, recovery timers, deployment networks,
+additional victories and simultaneous/fog formats are proposed in docs/variant-frontier-proposals.md;
+they require distinct state, UI or search changes, so do not silently bundle them into drop-rule
+experiments. Check legality in both colors, exact transcript replay and board-state hashes; verify
+unit and browser suites before games start. Inspect equal-strength balance, draw mechanisms,
+opening traces and checking-piece usage when results arrive. Classic remains unchanged.

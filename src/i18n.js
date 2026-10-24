@@ -2,6 +2,20 @@ const STORAGE_KEY = 'schness-language';
 const SUPPORTED = new Set(['en', 'ja']);
 
 const JA = new Map(Object.entries({
+  "Checking drops from home half": "自陣半分からの王手配置",
+  "Distant checking drops": "離れたマスからの王手配置",
+  "Supported checking drops": "味方の支援がある王手配置",
+  "Counterchecking drops only": "王手への応手のみ王手配置",
+  "Knight checking drops only": "ナイトのみ王手配置",
+  "Bishop checking drops only": "ビショップのみ王手配置",
+  "Rook checking drops only": "ルークのみ王手配置",
+  "Checking drops allowed only onto your own half of the board.": "自陣側の半分に配置する場合のみ王手を許可します。",
+  "Checking drops must land at least two king-steps from the opposing king.": "相手キングからキングの動きで2歩以上離れたマスのみ王手配置を許可します。",
+  "Checking drops must be supported by another friendly piece, including the king; pinned supporters count.": "キングを含む味方の駒が支援するマスのみ王手配置を許可します。ピンされた支援駒も含みます。",
+  "Checking drops allowed only when your king is already in check; the drop must also resolve that check.": "自分が王手されている場合のみ王手配置を許可します。同時に自分の王手も解消する必要があります。",
+  "Only knights may give check on a drop; other pieces must drop quietly.": "配置による王手はナイトのみ。他の駒は王手せず配置します。",
+  "Only bishops may give check on a drop; other pieces must drop quietly.": "配置による王手はビショップのみ。他の駒は王手せず配置します。",
+  "Only rooks may give check on a drop; other pieces must drop quietly.": "配置による王手はルークのみ。他の駒は王手せず配置します。",
   "Each player’s first post-king turn forbids checking drops; later checking drops allowed.": "キング配置後の最初の手は双方とも王手配置禁止。その後は許可します。",
   "Recurring lone-king protection plus a quiet first post-king turn for both players.": "双方の初手は王手配置禁止。相手がキングのみなら再び保護します。",
   "Checking drops unlock permanently for both players after both have first deployed one non-king.": "双方がキング以外を1駒配置すると、王手配置を以後許可します。",
