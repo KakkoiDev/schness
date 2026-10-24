@@ -1081,3 +1081,31 @@ numeric strength profiles and production Sharp v3. Six seeds repeat 16 king star
 sample size, correlated starts, evaluator assumptions and search horizon limit inference.
 Do not adopt an official variant or launch a new experiment automatically. Next useful
 measurement would be a separately authorized deeper-search or multi-engine confirmation.
+
+## 2026-10-25 — Nine proposed variant options launched
+
+Question: can small reserve timing changes or new movement/objective constraints improve the
+four-slot one-turn cooldown candidate? User authorized testing every proposed direction.
+Run nine recipes: control 1/1 capture/return delay, 1/0 (also the stolen-only cooldown proposal),
+1/2, two-square rook/bishop move-and-attack range, three-check, five-check, center hold,
+mandatory king-safe captures, and own-half drops. Avoid duplicating the equivalent 1/0 ideas
+and avoid combining several unmeasured changes at once. All inherit the candidate's quiet
+drops and capture-bank semantics. Center hold means the same central square through one
+opponent reply, safe at the end; a checking reply cancels the claim. One checking action
+counts once even if double check. Objectives and timer/overflow rights are replay/hash state.
+
+Research Sharp uses a new explicit variant-objective-search-v1 identity for every recipe,
+including control: full repetition-history transposition keys, check progress 120 per count,
+center distance 60 and active claim 250. Reject blindly using an objective-unaware evaluator
+or presenting uncalibrated weights as optimal play. Keep this dataset separate from Sharp v2,
+production v3 and numeric strength. No mid-run tuning or automatic adoption.
+
+Six fresh seeds 20261601–20261606 × 16 starts × nine recipes = 864 Sharp-only depth-4 games,
+200 total plies, eight local workers. All 290 unit tests passed, including delay boundaries,
+range on moves/attacks/drop legality, check counters/double check/terminal search, center
+claim cancellation/search defense, pinned mandatory captures, schedule coverage, baseline
+rule identity and full replay/material conservation for each recipe. No app changes; no
+production browser acceptance claim. Preserve runtime/manifest before completion and append
+full replay archive/report/checksums on completion. Next measurement is the complete batch,
+with W/B/draws, draw reasons and checkmate versus objective victories; screening hits need
+independent stronger-search/human confirmation.

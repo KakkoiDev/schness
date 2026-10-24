@@ -1181,3 +1181,11 @@ research/bank-cooldown-levels-v1 preserves the screened rules and AI implementat
 frozen balance runtime. Only its schedule expands to all nine named-level pairings. Treat
 equal-level color balance and mixed-level strength separation as different measurements;
 never pool them. Numeric strength and production engine revisions require separate datasets.
+
+### Research variant options and objective identity (2026-10-25)
+
+research/variant-options-v1 is isolated from production and all earlier frozen runs. Nine
+one-change recipes share a newly versioned history/objective-aware research AI and include
+a matched control. New win conditions, check counters and pending center claims are state
+identity; slider range affects attacks as well as movement. Mandatory captures follow king
+safety filtering. Never pool this engine's data with Sharp v2/v3 or adopt rules automatically.
