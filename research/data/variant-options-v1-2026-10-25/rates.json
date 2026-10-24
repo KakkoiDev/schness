@@ -1,0 +1,277 @@
+[
+  {
+    "id": "control-delay-1-1",
+    "games": 96,
+    "white": 40,
+    "black": 41,
+    "draws": 15,
+    "reasons": {
+      "white": 40,
+      "black": 41,
+      "threefold-repetition": 11,
+      "stalemate": 4
+    },
+    "victoryReasons": {
+      "checkmate": 81
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 40,
+        "black": 41,
+        "draws": 15
+      }
+    },
+    "totalNormalPlies": 4881,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 2,
+    "decisiveRate": 0.84375,
+    "whiteDecisiveShare": 0.49382716049382713,
+    "meetsScreen": true
+  },
+  {
+    "id": "delay-1-0",
+    "games": 96,
+    "white": 40,
+    "black": 41,
+    "draws": 15,
+    "reasons": {
+      "white": 40,
+      "black": 41,
+      "threefold-repetition": 11,
+      "stalemate": 4
+    },
+    "victoryReasons": {
+      "checkmate": 81
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 40,
+        "black": 41,
+        "draws": 15
+      }
+    },
+    "totalNormalPlies": 4899,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 2,
+    "decisiveRate": 0.84375,
+    "whiteDecisiveShare": 0.49382716049382713,
+    "meetsScreen": true
+  },
+  {
+    "id": "delay-1-2",
+    "games": 96,
+    "white": 40,
+    "black": 41,
+    "draws": 15,
+    "reasons": {
+      "white": 40,
+      "black": 41,
+      "threefold-repetition": 11,
+      "stalemate": 4
+    },
+    "victoryReasons": {
+      "checkmate": 81
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 40,
+        "black": 41,
+        "draws": 15
+      }
+    },
+    "totalNormalPlies": 4881,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 2,
+    "decisiveRate": 0.84375,
+    "whiteDecisiveShare": 0.49382716049382713,
+    "meetsScreen": true
+  },
+  {
+    "id": "five-check",
+    "games": 96,
+    "white": 57,
+    "black": 39,
+    "draws": 0,
+    "reasons": {
+      "white": 57,
+      "black": 39
+    },
+    "victoryReasons": {
+      "5-check": 76,
+      "checkmate": 20
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 57,
+        "black": 39,
+        "draws": 0
+      }
+    },
+    "totalNormalPlies": 2781,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 2,
+    "decisiveRate": 1,
+    "whiteDecisiveShare": 0.59375,
+    "meetsScreen": false
+  },
+  {
+    "id": "center-hold",
+    "games": 96,
+    "white": 96,
+    "black": 0,
+    "draws": 0,
+    "reasons": {
+      "white": 96
+    },
+    "victoryReasons": {
+      "center-hold": 96
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 96,
+        "black": 0,
+        "draws": 0
+      }
+    },
+    "totalNormalPlies": 192,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 1,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "three-check",
+    "games": 96,
+    "white": 59,
+    "black": 35,
+    "draws": 2,
+    "reasons": {
+      "black": 35,
+      "white": 59,
+      "stalemate": 2
+    },
+    "victoryReasons": {
+      "3-check": 88,
+      "checkmate": 6
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 59,
+        "black": 35,
+        "draws": 2
+      }
+    },
+    "totalNormalPlies": 1803,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 1,
+    "decisiveRate": 0.9791666666666666,
+    "whiteDecisiveShare": 0.6276595744680851,
+    "meetsScreen": false
+  },
+  {
+    "id": "home-half-drops",
+    "games": 96,
+    "white": 37,
+    "black": 46,
+    "draws": 13,
+    "reasons": {
+      "black": 46,
+      "white": 37,
+      "threefold-repetition": 13
+    },
+    "victoryReasons": {
+      "checkmate": 83
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 37,
+        "black": 46,
+        "draws": 13
+      }
+    },
+    "totalNormalPlies": 3513,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 2,
+    "decisiveRate": 0.8645833333333334,
+    "whiteDecisiveShare": 0.4457831325301205,
+    "meetsScreen": false
+  },
+  {
+    "id": "sliders-range-2",
+    "games": 96,
+    "white": 49,
+    "black": 28,
+    "draws": 19,
+    "reasons": {
+      "black": 28,
+      "white": 49,
+      "threefold-repetition": 17,
+      "stalemate": 2
+    },
+    "victoryReasons": {
+      "checkmate": 77
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 49,
+        "black": 28,
+        "draws": 19
+      }
+    },
+    "totalNormalPlies": 3769,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 2,
+    "decisiveRate": 0.8020833333333334,
+    "whiteDecisiveShare": 0.6363636363636364,
+    "meetsScreen": false
+  },
+  {
+    "id": "mandatory-captures",
+    "games": 96,
+    "white": 12,
+    "black": 3,
+    "draws": 81,
+    "reasons": {
+      "stalemate": 28,
+      "threefold-repetition": 52,
+      "white": 12,
+      "black": 3,
+      "ply-limit": 1
+    },
+    "victoryReasons": {
+      "checkmate": 15
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 12,
+        "black": 3,
+        "draws": 81
+      }
+    },
+    "totalNormalPlies": 5632,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 1,
+    "decisiveRate": 0.15625,
+    "whiteDecisiveShare": 0.8,
+    "meetsScreen": false
+  }
+]
