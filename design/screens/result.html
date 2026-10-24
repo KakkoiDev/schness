@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="icon" href="../../icon.svg">
+  <title>Result · Schness design reference</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../ui.css">
+  <link rel="stylesheet" href="../design.css">
+</head>
+<body class="game-page ref-body">
+  <div class="game ref-screen">
+  <header>
+    <a class="brand" href="../index.html" aria-label="Schness home">
+      <img class="brand-mark-img" src="../../icon.svg" alt="" aria-hidden="true" width="28" height="28">
+      <span class="brand-word">Schness</span>
+    </a>
+    <div class="header-actions">
+      <button class="text-button btn" type="button" data-variant="ghost">Rules</button>
+      <button class="text-button btn" type="button" data-variant="ghost" data-ref-theme>Dark</button>
+      <button class="text-button btn" type="button" data-variant="ghost">Settings</button>
+    </div>
+  </header>
+  <nav class="site-nav" aria-label="Schness"><a href="play.html" aria-current="page">Play</a><a href="game.html">Arena</a><a href="#">Puzzles</a><a href="#">Library</a></nav>
+    <p class="eyebrow">Classic · 4 × 4</p>
+    <h1 class="ref-h1">Play</h1>
+    <div class="card-state ref-result"><p class="eyebrow">Game over</p><p class="ref-result-line">White wins by checkmate, in 14 moves.</p>
+      <div class="ref-actions"><button class="btn" type="button" data-variant="primary">Play again</button><button class="btn" type="button" data-variant="secondary">Review the game</button><button class="btn" type="button" data-variant="ghost">Open in Arena</button></div></div>
+    <div class="ref-play">
+      <div class="ref-seat"><span class="reserve-label">Black reserve</span><div class="bank"><button type="button" class="bank-piece" data-piece="bishop" data-owner="black" aria-label="black bishop in reserve"><img class="piece piece-black piece-bishop" src="../../assets/pieces/bB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="black" aria-label="black knight in reserve"><img class="piece piece-black piece-knight" src="../../assets/pieces/bN.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot"></span></div></div>
+      <div class="board" role="grid" aria-label="Schness board" data-orientation="white"><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="0" aria-label="Empty square 1"><span class="square-coordinate" aria-hidden="true">a4</span></button><button class="square in-checkmate" type="button" role="gridcell" tabindex="-1" data-square="1" aria-label="black king, square 2"><span class="square-coordinate" aria-hidden="true">b4</span><img class="piece piece-black piece-king" src="../../assets/pieces/bK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="2" aria-label="Empty square 3"><span class="square-coordinate" aria-hidden="true">c4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="3" aria-label="Empty square 4"><span class="square-coordinate" aria-hidden="true">d4</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="4" aria-label="Empty square 5"><span class="square-coordinate" aria-hidden="true">a3</span></button><button class="square last-to" type="button" role="gridcell" tabindex="-1" data-square="5" aria-label="white rook, square 6"><span class="square-coordinate" aria-hidden="true">b3</span><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="6" aria-label="Empty square 7"><span class="square-coordinate" aria-hidden="true">c3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="7" aria-label="Empty square 8"><span class="square-coordinate" aria-hidden="true">d3</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="8" aria-label="Empty square 9"><span class="square-coordinate" aria-hidden="true">a2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="9" aria-label="Empty square 10"><span class="square-coordinate" aria-hidden="true">b2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="10" aria-label="Empty square 11"><span class="square-coordinate" aria-hidden="true">c2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="11" aria-label="Empty square 12"><span class="square-coordinate" aria-hidden="true">d2</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="12" aria-label="Empty square 13"><span class="square-coordinate" aria-hidden="true">a1</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="13" aria-label="white king, square 14"><span class="square-coordinate" aria-hidden="true">b1</span><img class="piece piece-white piece-king" src="../../assets/pieces/wK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="14" aria-label="Empty square 15"><span class="square-coordinate" aria-hidden="true">c1</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="15" aria-label="Empty square 16"><span class="square-coordinate" aria-hidden="true">d1</span></button></div></div>
+      <div class="ref-seat"><span class="reserve-label">Your reserve</span><div class="bank"><button type="button" class="bank-piece" data-piece="bishop" data-owner="white" aria-label="white bishop in reserve"><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in reserve"><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot"></span></div></div>
+    </div>
+  </div>
+  <p class="ref-note">Proposed. The final position stays on screen; the result is a card above it, never a toast over it.</p>
+
+  <script src="../preview.js" type="module"></script>
+</body>
+</html>

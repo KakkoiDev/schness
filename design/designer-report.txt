@@ -1,0 +1,62 @@
+Both deliverables are on the canvas under a new Classic first — October section.
+
+The most important thing I found: your September brief shipped. PRs #101–#104 implemented it, and those decisions are now invariants in DECISIONS.md — “four button roles”, “the nav holds destinations, including Online”, “three radii, two elevations”. lobby-board.js and qr.js both exist. 231 tests green. So this pass builds on that rather than re-proposing it.
+
+The audit is six findings, all measured by driving the site. Three are P0 and they’re one story:
+
+A phone has no route to a game. .lobby-play{display:none} below 761px — the playable board is desktop-only. The phone’s substitute is the card reading “Bot arena — take this position further”, and DECISIONS.md says that sentence is true because the card inherits the lobby board’s position via sessionStorage. On a phone there’s no board, so nothing is inherited and the sentence is false on the only device where it’s the only way in. Then on that surface, the first action is below the fold on every viewport — 7px at 390×844, 205px at 360×640, 125px even at 1440×900. The turn card says “place your king on the home row” while the row is off-screen.
+
+The fourth is the answer to your forbidden-drop question, and it’s sharper than I expected. With a rook in hand against a black king on b4, six of fourteen empty squares refuse it — and they are exactly rank 4 plus the b-file. The rule is working perfectly. Tapping one of them silently clears your selection and says nothing. There’s already an aria-live status element on that page that could carry the reason.
+
+The recommendation is one sentence: the home page is the game at every width, and the advanced surface gets its own name — Play as the front door, Arena for replay, editor and variants. The IA board shows the four-screen phone flow, today-vs-recommended, and the alternatives I rejected including the cheap one, which was my own September call.
+
+Three corrections to the brief, all on the audit board:
+
+The contrast floor is 4.5:1, not 4.6 — test/contrast.test.js:43.
+The three reference images don’t exist. output/design/ is absent from every remote ref in the repo; I searched all of them. So I can’t use v2 or avoid v1’s three-row error. If they’re local to you, send them and I’ll reconcile.
+Checking drops are already decided. DEVLOG 2026-10-23 rejected them for standard Schness — White 94.1%, median length 54→9 plies. I’ve designed Classic as if that holds.
+
+One thing I’m carrying into the next stage rather than reopening now: your DEVLOG already flags the invite link truncating to http://…/ga…, and says it “needs a layout decision, not a patch”. That’s a real open question on a surface I designed, so I’ll resolve it in the screens.
+
+Everything is Chromium at a viewport — no real device, which is your own Known gap and is stated once on the audit board rather than quietly assumed.
+
+Ready for deliverable 3 — home, active game with reserve selected, a result, and settings, in light and dark at desktop and phone — once you’re happy with the IA direction.
+
+commit design system + html pages to the repo
+
+I can’t push: the git proxy refuses credentials for KakkoiDev/schness because it isn’t in this session’s authorized repository set (reads work — gh api user returns your login, but git push 403s). So I’ll commit on a branch locally and hand you either a patch or a push once you authorize the repo as a session source.
+
+One scoping decision first, because the three readings are very different amounts of change.
+
+What should the commit actually contain?
+Design reference under design/ (Rec.)
+
+Safe to add: design/ isn’t in the service worker’s SHELL, and decisions.test.js only guards src/ modules, cited tests, the CACHE pattern and CLAUDE.md. Let me check the CSP and the real component classes so the reference documents the shipped components rather than a redraw.
+
+No 404 on re-run (transient), and only one sub-44 target — a nav link at 41 wide, which is the app’s own .site-nav. Useful refinement: .bank-piece renders 46×46 here versus 41×44 in the arena, so the reserve isn’t inherently small — it’s being squeezed by that page’s layout. Now the system page.
+
+Committed on design/classic-reference-2026-10-24 — 11 files, 485 insertions, and all 231 tests still pass.
+
+I couldn’t push. The git proxy refuses to inject a credential for KakkoiDev/schness because it isn’t in this session’s authorized repository set — reads work fine (gh api user returns your login) but git push 403s. So the patch above is the deliverable: git am < schness-design-reference.patch, verified to apply cleanly on master. If you add the repo to the session’s sources I’ll push the branch instead.
+
+What’s in it:
+
+design/index.html          contact sheet — live iframes of all four screens
+design/system.html         tokens + components
+design/screens/play.html   Play — board above the fold at every width
+design/screens/game.html   reserve selected, refused squares explained
+design/screens/result.html checkmate, final position still on screen
+design/screens/settings.html
+design/design.css          .ref-prefixed chrome only
+design/preview.js          theme toggle
+design/README.md
+
+The one idea worth defending: the pages load ../styles.css and ../ui.css before their own CSS. Every swatch is var(--token) and every component is the shipped class — so the reference can’t describe a system the app doesn’t have. A reference that restates tokens is a second source of truth, and the copy is always the one that rots. It’s also why the system page shows ten real board states rather than redrawn approximations.
+
+Two things are marked PROPOSED and don’t ship: .square.refused, and the brand mark as an image rather than the Arial tile. Everything else is existing classes.
+
+I followed the repo’s own rules rather than just dropping files in. DEVLOG.md gets a full entry — question, the measurements, and what I rejected (implementing the IA in this pass, and a design/tokens.css, which reads as adoptable and would become a second home for tokens). DECISIONS.md gets a short log entry recording the boundary: nothing in src/ imports from design/, and it stays out of the service worker’s SHELL — so no CACHE bump was needed, and the moment either stops holding it’s product, not reference.
+
+One correction to my own audit, recorded in the DEVLOG: .bank-piece measures 41×44 in the arena but 46×46 in the reference’s layout. The reserve button isn’t inherently under the floor — that page’s column is squeezing it. That makes finding 05 a layout fix, not a component one.
+
+Nothing here changes a shipped page, per your brief. When you want the IA actually implemented, that’s its own commit — it reverses the “home page is a board” entry and needs the fold numbers as evidence, a CACHE bump and the e2e specs updated.

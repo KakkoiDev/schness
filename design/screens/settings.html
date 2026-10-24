@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="icon" href="../../icon.svg">
+  <title>Settings · Schness design reference</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../ui.css">
+  <link rel="stylesheet" href="../design.css">
+</head>
+<body class="game-page ref-body">
+  <div class="game ref-screen">
+  <header>
+    <a class="brand" href="../index.html" aria-label="Schness home">
+      <img class="brand-mark-img" src="../../icon.svg" alt="" aria-hidden="true" width="28" height="28">
+      <span class="brand-word">Schness</span>
+    </a>
+    <div class="header-actions">
+      <button class="text-button btn" type="button" data-variant="ghost">Rules</button>
+      <button class="text-button btn" type="button" data-variant="ghost" data-ref-theme>Dark</button>
+      <button class="text-button btn" type="button" data-variant="ghost">Settings</button>
+    </div>
+  </header>
+  <nav class="site-nav" aria-label="Schness"><a href="play.html" aria-current="page">Play</a><a href="game.html">Arena</a><a href="#">Puzzles</a><a href="#">Library</a></nav>
+    <p class="eyebrow">Classic · 4 × 4</p>
+    <h1 class="ref-h1">Play</h1>
+    <div class="ref-sheet">
+      <div class="ref-sheet-head"><div><p class="eyebrow">Settings</p><h2 class="ref-sheet-title">Preferences</h2></div>
+        <button class="dialog-close btn" type="button" data-variant="ghost" aria-label="Close settings">✕</button></div>
+      <div class="ref-sheet-body">
+        <p class="ref-group">Game</p>
+      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Bot difficulty</span><span class="ref-row-hint">Applies to the next game you start</span></div><div class="segmented ref-seg" role="group" aria-label="Bot difficulty"><button class="btn" type="button" data-variant="ghost">Learning</button><button class="btn" type="button" data-variant="primary" aria-pressed="true">Steady</button><button class="btn" type="button" data-variant="ghost">Sharp</button></div></div>
+      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Clock</span><span class="ref-row-hint">Default for new online invitations</span></div><div class="segmented ref-seg" role="group" aria-label="Clock"><button class="btn" type="button" data-variant="primary" aria-pressed="true">Untimed</button><button class="btn" type="button" data-variant="ghost">3+2</button><button class="btn" type="button" data-variant="ghost">5+0</button><button class="btn" type="button" data-variant="ghost">10+0</button></div></div>
+        <p class="ref-group">Presentation</p>
+      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Appearance</span><span class="ref-row-hint">Classic. Other themes change only how it looks.</span></div><div class="segmented ref-seg" role="group" aria-label="Appearance"><button class="btn" type="button" data-variant="ghost">Light</button><button class="btn" type="button" data-variant="ghost">Dark</button><button class="btn" type="button" data-variant="primary" aria-pressed="true">System</button></div></div>
+      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Motion</span><span class="ref-row-hint">Off also disables the capture animation</span></div><div class="segmented ref-seg" role="group" aria-label="Motion"><button class="btn" type="button" data-variant="primary" aria-pressed="true">Full</button><button class="btn" type="button" data-variant="ghost">Reduced</button><button class="btn" type="button" data-variant="ghost">Off</button></div></div>
+      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Sound</span><span class="ref-row-hint">Off until you ask for it</span></div><div class="segmented ref-seg" role="group" aria-label="Sound"><button class="btn" type="button" data-variant="ghost">On</button><button class="btn" type="button" data-variant="primary" aria-pressed="true">Off</button></div></div>
+        <p class="ref-group">Language</p>
+      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Language</span><span class="ref-row-hint">日本語 and English are the same product</span></div><div class="segmented ref-seg" role="group" aria-label="Language"><button class="btn" type="button" data-variant="primary" aria-pressed="true">English</button><button class="btn" type="button" data-variant="ghost">日本語</button></div></div>
+      </div>
+      <div class="ref-sheet-foot"><p class="ref-foot-note">Changes apply immediately. The board stays behind this sheet on purpose.</p>
+        <button class="btn" type="button" data-variant="primary">Done</button></div>
+    </div>
+  </div>
+  <p class="ref-note">Proposed. One sheet, reachable from the header on every page. Per-game choices stay beside the board.</p>
+
+  <script src="../preview.js" type="module"></script>
+</body>
+</html>

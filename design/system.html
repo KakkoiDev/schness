@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="icon" href="../icon.svg">
+  <title>The system · Schness design reference</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../ui.css">
+  <link rel="stylesheet" href="design.css">
+</head>
+<body class="ref-body">
+  <main class="ref-index">
+    <p class="eyebrow">Schness · design reference</p>
+    <h1>The system</h1>
+    <p class="ref-lede">Every swatch below is <code>var(--token)</code> read from the real
+      <code>styles.css</code>, and every component is the shipped class — this page links the
+      app&rsquo;s stylesheets rather than restating them, so it cannot drift out of date without
+      the app drifting too. Use the Dark button to see both colour modes.</p>
+    <p><button class="btn" type="button" data-variant="secondary" data-ref-theme>Dark</button>
+       <a class="btn" href="index.html" data-variant="ghost">← All screens</a></p>
+
+    <section class="ref-section"><h2>Colour</h2>
+      <h3 class="ref-group">Surfaces</h3><div class="ref-swatches"><figure class="ref-swatch"><div class="ref-chip ref-chip-paper"></div><figcaption><strong>--paper</strong><code>the page</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-surface"></div><figcaption><strong>--surface</strong><code>raised onto it</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-sunk"></div><figcaption><strong>--sunk</strong><code>pressed into it</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-line"></div><figcaption><strong>--line</strong><code>border</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-hairline"></div><figcaption><strong>--hairline</strong><code>divider</code></figcaption></figure></div><h3 class="ref-group">Ink</h3><div class="ref-swatches"><figure class="ref-swatch"><div class="ref-chip ref-chip-ink"></div><figcaption><strong>--ink</strong><code>15.3:1 on paper</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-muted"></div><figcaption><strong>--muted</strong><code>5.2:1</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-inverse"></div><figcaption><strong>--inverse</strong><code>on ink</code></figcaption></figure></div><h3 class="ref-group">Accent</h3><div class="ref-swatches"><figure class="ref-swatch"><div class="ref-chip ref-chip-accent"></div><figcaption><strong>--accent</strong><code>ember · also the focus ring</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-accent-text"></div><figcaption><strong>--accent-text</strong><code>type-safe accent</code></figcaption></figure></div><h3 class="ref-group">Board</h3><div class="ref-swatches"><figure class="ref-swatch"><div class="ref-chip ref-chip-board-light"></div><figcaption><strong>--board-light</strong><code>4.0:1 between squares</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-board-dark"></div><figcaption><strong>--board-dark</strong><code></code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-legal-target"></div><figcaption><strong>--legal-target</strong><code>move dot</code></figcaption></figure></div><h3 class="ref-group">Status</h3><div class="ref-swatches"><figure class="ref-swatch"><div class="ref-chip ref-chip-ok"></div><figcaption><strong>--ok</strong><code>draw / connected</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-warn"></div><figcaption><strong>--warn</strong><code>reconnecting</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-danger"></div><figcaption><strong>--danger</strong><code>check / mate / refused</code></figcaption></figure></div>
+    </section>
+
+    <section class="ref-section"><h2>Buttons — four roles, and nothing else draws a rectangle</h2>
+      <p class="ref-lede"><code>primary</code>, <code>secondary</code> (the default), <code>ghost</code>,
+        <code>icon</code>. Disabled is drawn, not dimmed — except ghost, which keeps its transparency.</p>
+      <div class="ref-row-demo"><span class="ref-key">primary</span><button class="btn" type="button" data-variant="primary">New game</button><button class="btn" type="button" data-variant="primary" disabled>Disabled</button></div><div class="ref-row-demo"><span class="ref-key">secondary</span><button class="btn" type="button" data-variant="secondary">New game</button><button class="btn" type="button" data-variant="secondary" disabled>Disabled</button></div><div class="ref-row-demo"><span class="ref-key">ghost</span><button class="btn" type="button" data-variant="ghost">New game</button><button class="btn" type="button" data-variant="ghost" disabled>Disabled</button></div>
+    </section>
+
+    <section class="ref-section"><h2>Board states</h2>
+      <p class="ref-lede">Ten states ship today. <code>.refused</code> is the one this pass adds: a drop
+        that would give check is currently rejected in silence, and the square should say so.</p>
+      <div class="ref-states">
+        <figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square selected"><img class="piece piece-white piece-rook" src="../assets/pieces/wR.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.selected</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square target"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.target</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square capture"><img class="piece piece-black piece-king" src="../assets/pieces/bK.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.capture</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square placement"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.placement</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square last-from"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.last-from</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square last-to"><img class="piece piece-white piece-rook" src="../assets/pieces/wR.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.last-to</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square in-check"><img class="piece piece-black piece-king" src="../assets/pieces/bK.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.in-check</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square in-checkmate"><img class="piece piece-black piece-king" src="../assets/pieces/bK.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.in-checkmate</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square is-cursor"><img class="piece piece-white piece-rook" src="../assets/pieces/wR.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.is-cursor</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square refused"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.refused</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="ref-section"><h2>A future appearance, bounded</h2>
+      <p class="ref-lede">The same markup, the same classes, one different set of token values.
+        Nothing below is a new component and no page is duplicated per theme — which is the whole
+        claim the token layer has to support before a cyberpunk theme is worth building.</p>
+      <div class="ref-theme-demo">
+        <p class="eyebrow">Your move</p>
+        <p class="ref-turn-line">Rook in hand · nine squares accept it.</p>
+        <div class="ref-row-demo"><button class="btn" type="button" data-variant="primary">New game</button>
+          <button class="btn" type="button" data-variant="secondary">Review</button>
+          <button class="btn" type="button" data-variant="ghost">Settings</button></div>
+      </div>
+    </section>
+  </main>
+  <script src="preview.js" type="module"></script>
+</body>
+</html>
