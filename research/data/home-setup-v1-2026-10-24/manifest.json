@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-24T11:05:48.835Z",
+  "config": {
+    "variants": [
+      "home-setup-quiet",
+      "home-setup-checking"
+    ],
+    "seeds": [
+      20261301,
+      20261302,
+      20261303,
+      20261304,
+      20261305,
+      20261306
+    ],
+    "repetitions": 1,
+    "maxPlies": 200,
+    "workers": 2
+  },
+  "totalGames": 192,
+  "sourceFingerprint": "2f3ca2210e3bbd758edcb437346b823483b66f8026ab295741e74608f3aa795d",
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "89c47db7851f89caec72da4f215ebc21cf1e294aeef3b45d2583562d846ab035"
+    },
+    {
+      "path": "run.js",
+      "sha256": "04741f13c5c6aa9336f4a50493eba8507dc56969f9455cf56aee4b311d99275b"
+    },
+    {
+      "path": "core/bot.js",
+      "sha256": "e48a289e2a3fdab180107e1050063d6503e0fa5cba55d7383bfa5f876a82e883"
+    },
+    {
+      "path": "core/history.js",
+      "sha256": "44b155668b2a0f1a595805e636fc98229a73c1b8a7a3f3a671e812cf9c0b30d0"
+    },
+    {
+      "path": "core/notation.js",
+      "sha256": "ee47d5a1f8dd05fe5f7fee6694c2a7d5f6e97118bde0e0ed5a0cf0d8c0f8029e"
+    },
+    {
+      "path": "core/rules.js",
+      "sha256": "38125977ee64cbf2dc40f27c7e07264fabe268565391b2b9f01620acae881423"
+    },
+    {
+      "path": "core/settings.js",
+      "sha256": "9044dd082e2d99bc75934edac5ed82000105ea8507ce47f3f7736e848ef045c8"
+    },
+    {
+      "path": "core/tournament.js",
+      "sha256": "eb01b645045b0bd4a29b11768595535d496dd4fc01094843587e96719aa12d6c"
+    },
+    {
+      "path": "core/variants.js",
+      "sha256": "589a46c902497fe5c55948d569bc7058891ef7215333b57a9fc8561d10d9b3e2"
+    },
+    {
+      "path": "core/watch.js",
+      "sha256": "70dcdc4d73dac27b5e6479b5b2fe3b6b1f7472e0364830191ea6948694b3c24c"
+    }
+  ],
+  "git": {
+    "head": "3b1c05050750e02516faf73688280defc184f01e",
+    "status": " M ../../.gitignore\n M ../../DECISIONS.md\n M ../../DEVLOG.md\n M ../../index.html\n M ../../scripts/aggregate-tournament.js\n M ../../scripts/run-tournament.js\n M ../../src/board-ui.js\n M ../../src/bot.js\n M ../../src/history.js\n M ../../src/i18n.js\n M ../../src/rules.js\n M ../../src/tournament.js\n M ../../src/watch-ui.js\n M ../../styles.css\n M ../../sw.js\n M ../../watch.html\n?? ../../.github/workflows/research-variants-v2.yml\n?? ../../.github/workflows/research-variants-v3.yml\n?? ../../.github/workflows/research-variants-v4.yml\n?? ../../.github/workflows/research-variants-v5.yml\n?? ../../.github/workflows/research-variants.yml\n?? ../../design/README.md\n?? ../../design/design.css\n?? ../../design/designer-original.patch\n?? ../../design/designer-report.txt\n?? ../../design/index.html\n?? ../../design/preview.js\n?? ../../design/screens/\n?? ../../design/system.html\n?? ../../docs/army-builder-proposal.md\n?? ../../docs/capture-bank-experiments.md\n?? ../../docs/countdown-variant-proposal.md\n?? ../../docs/custom-game-builder-proposal.md\n?? ../../docs/deployment-variant-experiments.md\n?? ../../docs/deployment-variant-results.json\n?? ../../docs/deployment-variant-results.md\n?? ../../docs/designer-handoff-classic.md\n?? ../../docs/local-experiments.md\n?? ../../docs/local-variant-win-rates-2026-10-24.md\n?? ../../docs/permanent-loss-experiments.md\n?? ../../docs/variant-frontier-proposals.md\n?? ../../docs/variant-selection.md\n?? ../../docs/variant-wave2-experiments.md\n?? ../../docs/variant-wave3-experiments.md\n?? ../../e2e/variants.spec.js\n?? ../../output/\n?? ../\n?? ../../scripts/archive-local-experiments.py\n?? ../../scripts/research-variants.js\n?? ../../scripts/run-local-experiments.js\n?? ../../scripts/run-research-suite.js\n?? ../../scripts/run-research-v2.js\n?? ../../scripts/run-research-v3.js\n?? ../../scripts/run-research-v4.js\n?? ../../scripts/run-research-v5.js\n?? ../../src/variants.js\n?? ../../test/balance-bench.test.js\n?? ../../test/capture-bank.test.js\n?? ../../test/local-experiments.test.js\n?? ../../test/permanent-loss.test.js\n?? ../../test/research-variants.test.js\n?? ../../test/research-wave2.test.js\n?? ../../test/research-wave3.test.js\n?? ../../test/variants.test.js\n"
+  },
+  "node": "v24.21.0",
+  "machine": {
+    "model": "Apple M6",
+    "cpus": 12,
+    "memoryGiB": 32
+  },
+  "rules": {
+    "home-setup-quiet": {
+      "experiment": "setup",
+      "setup": true,
+      "homeSetup": true,
+      "firstPlayer": "white",
+      "allowCheckingDrops": false,
+      "description": "Alternate all three reserve placements on each player's king home row, no moves/captures/checking drops during setup. White begins normal play after all six placements. Captures return to owner. Later checking drops forbidden. Blocked placement is a setup-blocked draw.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: setup.",
+        "Alternate all six non-king placements without check, moves or captures; white starts normal play. A blocked setup is a draw.",
+        "Setup placements are restricted to each player’s own king home row; no checking drops during setup.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "home-setup-checking": {
+      "experiment": "setup",
+      "setup": true,
+      "homeSetup": true,
+      "firstPlayer": "white",
+      "allowCheckingDrops": true,
+      "description": "Alternate all three reserve placements on each player's king home row, no moves/captures/checking drops during setup. White begins normal play after all six placements. Captures return to owner. Later checking drops allowed. Blocked placement is a setup-blocked draw.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: setup.",
+        "Alternate all six non-king placements without check, moves or captures; white starts normal play. A blocked setup is a draw.",
+        "Setup placements are restricted to each player’s own king home row; no checking drops during setup.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    }
+  },
+  "ai": {
+    "learning": {
+      "version": 1,
+      "depth": 2,
+      "behavior": "Shallow alpha-beta; seeded random choice among equally scored moves."
+    },
+    "steady": {
+      "version": 1,
+      "depth": 3,
+      "behavior": "Medium alpha-beta; seeded random choice among equally scored moves."
+    },
+    "sharp": {
+      "version": 2,
+      "depth": 4,
+      "behavior": "Deep alpha-beta; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score."
+    }
+  },
+  "notes": "Balance-v1 Sharp-only fixed-depth screening, not AI training. Six fresh seeds by default. Target: >=80% decisive and White share of decisive games 45–55%. No automatic full expansion. Compare complete schedules only; do not pool with CI stages or historical engine snapshots."
+}

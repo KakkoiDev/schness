@@ -1160,3 +1160,17 @@ armies requires private simultaneous choices and a joint reveal, with public bud
 Countdown deployment is documented separately and is not a supported ruleset yet. Do not expose
 larger boards, unimplemented pieces or countdown controls as playable merely because they appear
 in design documents. See docs/custom-game-builder-proposal.md and docs/countdown-variant-proposal.md.
+
+### Sharp-only balance screen and durable local data (2026-10-24)
+
+research/balance-v1 is a deliberately isolated research fork, never an app layer or shell import.
+It combines capture-bank capacities 3–6, mutual deployment/checking cooldown, owner-turn capture
+readiness, opening restrictions and mirrored openings. A separate later home-row setup supplement
+keeps both armies on their own king rows during quiet setup, then compares normal checking-drop
+policies. Its addition must not mutate the running main batch. Exact executed source lives in each
+fingerprinted frozen runtime, not implicitly at a working-tree HEAD. Sharp-only matchups have equal
+search depth and matched king starts/seeds. Target >=80% decisive and 45–55% White share among
+wins is a screening threshold, not a claim of statistical or human balance. Captured-copy cooldown
+rights are hashed and replayable; forced wait exists only outside check with no alternative.
+Archive completed manifests, runtime and all JSONL replays under research/data with SHA-256 checksums
+and 1 MiB compressed parts. No new src modules or production shell changes belong to this screen.

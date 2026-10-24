@@ -997,3 +997,40 @@ Countdown gates drops on owner turns, comparing reset-on-capture against initial
 A forced wait only outside check avoids manufacturing stalemate while reserves cool down.
 These are proposals, not implemented presets; the active 36-preset batch stays frozen. Next:
 review setup flow, settle timer timing and wait semantics, then implement and test separately.
+
+## 2026-10-24 — Sharp-only balance experiments
+
+Question: can we retain quiet capture banks' decisiveness while bringing color balance inside
+45–55% of decisive games, with at least 80% decisive overall? The user requested running many
+recipes with Sharp against Sharp only, preserving all experimental data on GitHub, explicitly
+including capacity 5 and bishop/knight 3-turn versus rook 4-turn capture cooldowns.
+
+Decision: isolate the research engine rather than expose unfinished cooldown/Wait mechanics in
+the app. Main screen: 43 recipes, six fresh seeds and 16 king starts, 4,128 games, eight workers.
+The later own-home-row placement request is a separate two-recipe, 192-game supplement, preserving
+the already frozen main runtime. Both sides alternate quiet home-row deployments; then White
+starts normal play, comparing quiet versus checking drops and normal capture returns.
+
+Rejected: mixed-strength matches for this color-balance question; excluding capacity 5; silently
+changing rules after launch; treating a 48-game near-even result as proven balance; archiving
+only summaries or relying on expiring Actions artifacts. The completed prior 8,640-game batch
+is preserved as compressed full replay bundles plus source/manifest, not pooled into this screen.
+The 32-game max-four-ply smoke is separately labelled and retained only as execution evidence.
+
+Validation includes exact replay/material conservation for every recipe, baseline control
+transcript equivalence, all mirrored king starts, timer ownership and capture boundaries,
+duplicate ready/cooling copies, hash identity, capacity overflow, and forced-wait/checkmate rules.
+Next measurement: complete both schedules, report raw win/draw counts, decisiveness and White's
+share of decisive games, then confirm target hits with fresh seeds and a deeper engine budget.
+
+### Home-row setup supplement completed
+
+All 192 Sharp-vs-Sharp games completed and replay-validated. Quiet drops: 0 White wins, 0 Black wins, 96 draws. Post-setup checking drops: 6 White wins, 2 Black wins, 88 draws. Both recipes had 84 setup-blocked draws; the other draws were threefold repetition (12 quiet, 4 checking). The free alternating placement procedure can reach blocked arrangements, and the AI often chooses a draw rather than proceeding into a worse position. These results fail the decisiveness target and do not establish that every legal complete home-row arrangement is drawish. A later experiment could prevalidate full arrangements or use simultaneous complete placement, clearly labelled as a different setup policy. Full replays, frozen source, report and checksums are committed. The main 4,128-game screen remains running separately.
+
+## 2026-10-25 — Completed frozen Sharp v2 balance screen
+
+Question: which of the 43 already authorized recipes meets both screening targets? All 4,128 games finished; the frozen runtime --resume verified source hashes and every checkpoint/replay after confirming both original runners had exited. No changed rules or new games were launched. Preserve this engine version separately from production Sharp v3 and the older 8,640-game screen.
+
+Three recipes met >=80% decisiveness and 45–55% White share among decisive games: bank-4-delay-1, bank-5-delay-1 and bank-6-delay-1. Each has 44 White wins, 36 Black wins and 16 draws in 96 games (83.3% decisive; White 55.0% of wins). Each draw breakdown is 13 threefold repetitions and 3 stalemates. These use quiet capture-to-bank drops with one owner-turn capture cooldown and overflow returned to the captured owner. Identical counts do not establish that capacities are generally equivalent.
+
+Reject declaring official balance from this screen: six seeds repeat the same 16 king starts, search is depth 4, 200 total plies, and 43 recipes create selection effects. Hits are provisional; fresh positions/seeds and deeper search would be the next measurement, requiring a separate run authorization. No new run started. Home-row supplement findings remain unchanged: quiet 0/0/96, checking 6/2/88 W/B/draws, with 84 setup-blocked draws each. Archive all manifests, exact runtime, replay bundles and final report/rates/progress with verified SHA-256 parts. Preserve the prior archive and supplement.

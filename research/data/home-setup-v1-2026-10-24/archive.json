@@ -1,0 +1,15 @@
+{
+  "run": "home-setup-v1-2026-10-24",
+  "sourceFingerprint": "2f3ca2210e3bbd758edcb437346b823483b66f8026ab295741e74608f3aa795d",
+  "games": 192,
+  "archiveBytes": 80930,
+  "archiveSha256": "5f6848cad3cf624044ff1b9fa571857d9f1ecf32f91e40fc77c0e25c950fdbb7",
+  "parts": [
+    {
+      "path": "home-setup-v1-2026-10-24.tar.gz.part001",
+      "bytes": 80930,
+      "sha256": "5f6848cad3cf624044ff1b9fa571857d9f1ecf32f91e40fc77c0e25c950fdbb7"
+    }
+  ],
+  "restore": "cat home-setup-v1-2026-10-24.tar.gz.part* > home-setup-v1-2026-10-24.tar.gz; tar -xzf home-setup-v1-2026-10-24.tar.gz"
+}
