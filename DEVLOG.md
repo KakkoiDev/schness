@@ -1026,3 +1026,24 @@ share of decisive games, then confirm target hits with fresh seeds and a deeper 
 ### Home-row setup supplement completed
 
 All 192 Sharp-vs-Sharp games completed and replay-validated. Quiet drops: 0 White wins, 0 Black wins, 96 draws. Post-setup checking drops: 6 White wins, 2 Black wins, 88 draws. Both recipes had 84 setup-blocked draws; the other draws were threefold repetition (12 quiet, 4 checking). The free alternating placement procedure can reach blocked arrangements, and the AI often chooses a draw rather than proceeding into a worse position. These results fail the decisiveness target and do not establish that every legal complete home-row arrangement is drawish. A later experiment could prevalidate full arrangements or use simultaneous complete placement, clearly labelled as a different setup policy. Full replays, frozen source, report and checksums are committed. The main 4,128-game screen remains running separately.
+
+## 2026-10-24 — Symmetric Classic armies and adaptable AI
+
+Question: how much do starting armies influence Classic balance, and can the search accept future
+movement/objective changes without embedding each variant into its algorithm?
+
+Launch a separate 31-army screen covering every 2/3/4-piece multiset of current rook/bishop/knight
+material, identical for both players. Keep Classic drops/capture returns and freeze Sharp v2:
+three seeds and 16 king starts = 1,488 games. Reject adding queens/fairy pieces or asymmetric armies
+in the same test, and reject using the newly refactored AI for only this army comparison. The
+baseline army remains RBN. Data is preserved with runtime, manifest, reports and replay bundles.
+
+Production search now accepts a variant adapter for actions, immutable transitions, full state
+identity, terminal scores, evaluation and ordering. Strength 0–100 maps to depth/node budgets;
+iterative deepening returns a completed iteration or explicit legal fallback, with diagnostics.
+Repetition-aware cache keys address board-identical positions with different draw rights; this
+changes search semantics, so metadata identifies Sharp v3 / lower profiles v2. It may cost cache
+hits and speed. No measured playing-strength improvement is claimed yet. Browser workers verified
+legacy depth and bounded strength at 390/1440 widths. Next: tactical suites and same-budget matches
+before claiming stronger AI, plus completed symmetric-army screening results. Live difficulty
+controls retain their existing depths; no new settings slider was added in this pass.

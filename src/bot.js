@@ -1,3 +1,4 @@
+import {createSearchEngine} from './search.js';
 import {
   BISHOP,
   BLACK,
@@ -15,82 +16,26 @@ import {
 const VALUES = { [KING]: 0, [ROOK]: 500, [BISHOP]: 320, [KNIGHT]: 300 };
 const MATE = 1_000_000;
 
-/** Deterministic alpha-beta search. A Web Worker can call this without UI coupling. */
-export function chooseAction(position, {
-  depth = 4,
-  useCache = true,
-  random = null,
-  repetitionAversion = false,
-} = {}) {
-  const actions = orderActions(position, legalActionsUnchecked(position));
-  if (!actions.length) return null;
-  const player = position.turn;
-  const cache = useCache ? new Map() : null;
-  let bestAction = actions[0];
-  let bestScore = -Infinity;
-  let bestRepetitions = Infinity;
-  let equallyBest = 0;
+/** Variant adapter keeps Schness legality, objectives and evaluation out of search. */
+export const schnessSearch = createSearchEngine({
+  actions: legalActionsUnchecked,
+  apply: applyLegalAction,
+  turn: p => p.turn,
+  key: p => `${positionKey(p)}|history:${JSON.stringify(Object.entries(p.repetitions ?? {}).sort(([a],[b])=>a<b?-1:a>b?1:0))}`,
+  terminal: (p, player, depth) => {
+    const result=getResult(p);
+    return !result ? null : result.type==='draw' ? 0 : result.winner===player ? MATE+depth : -MATE-depth;
+  },
+  evaluate,
+  order: orderActions,
+  repetitions: p => p.repetitions[positionKey(p)] ?? 0,
+});
 
-  for (const action of actions) {
-    const next = applyLegalAction(position, action);
-    const score = search(next, depth - 1, -Infinity, Infinity, player, cache);
-    const repetitions = repetitionAversion ? (next.repetitions[positionKey(next)] ?? 0) : 0;
-    if (score > bestScore || (score === bestScore && repetitions < bestRepetitions)) {
-      bestScore = score;
-      bestRepetitions = repetitions;
-      bestAction = action;
-      equallyBest = 1;
-    } else if (score === bestScore && repetitions === bestRepetitions && typeof random === 'function') {
-      equallyBest += 1;
-      if (random() < 1 / equallyBest) bestAction = action;
-    }
-  }
-  return bestAction;
-}
-
-function search(position, depth, alpha, beta, maximizingPlayer, cache) {
-  const result = getResult(position);
-  if (result) {
-    if (result.type === 'draw') return 0;
-    return result.winner === maximizingPlayer ? MATE + depth : -MATE - depth;
-  }
-  if (depth <= 0) return evaluate(position, maximizingPlayer);
-
-  const key = `${positionKey(position)}|${depth}|${maximizingPlayer}`;
-  const alphaStart = alpha;
-  const betaStart = beta;
-  const cached = cache?.get(key);
-  if (cached) {
-    if (cached.type === 'exact') return cached.value;
-    if (cached.type === 'lower') alpha = Math.max(alpha, cached.value);
-    else beta = Math.min(beta, cached.value);
-    if (alpha >= beta) return cached.value;
-  }
-
-  const maximizing = position.turn === maximizingPlayer;
-  let value = maximizing ? -Infinity : Infinity;
-  for (const action of orderActions(position, legalActionsUnchecked(position))) {
-    const child = search(applyLegalAction(position, action), depth - 1, alpha, beta, maximizingPlayer, cache);
-    if (maximizing) {
-      value = Math.max(value, child);
-      alpha = Math.max(alpha, value);
-    } else {
-      value = Math.min(value, child);
-      beta = Math.min(beta, value);
-    }
-    if (beta <= alpha) break;
-  }
-  if (cache) {
-    const type = value <= alphaStart ? 'upper' : value >= betaStart ? 'lower' : 'exact';
-    cache.set(key, { value, type });
-  }
-  return value;
-}
-
-/** White-positive heuristic search score, in Schness units (not chess centipawns). */
-export function scorePosition(position, depth = 3) {
-  return search(position, depth, -Infinity, Infinity, WHITE, new Map());
-}
+/** Existing depth profiles stay supported; strength 0–100 enables bounded iterative search. */
+export function chooseAction(position, options={}) { return analyzeAction(position,options).action; }
+export function analyzeAction(position, options={}) { return schnessSearch.choose(position,options); }
+/** White-positive score. */
+export function scorePosition(position, depth=3) { return schnessSearch.score(position,WHITE,depth); }
 
 function evaluate(position, player) {
   const enemy = player === WHITE ? BLACK : WHITE;
