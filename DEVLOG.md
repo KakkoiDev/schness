@@ -880,3 +880,26 @@ they require distinct state, UI or search changes, so do not silently bundle the
 experiments. Check legality in both colors, exact transcript replay and board-state hashes; verify
 unit and browser suites before games start. Inspect equal-strength balance, draw mechanisms,
 opening traces and checking-piece usage when results arrive. Classic remains unchanged.
+
+## 2026-10-24 — Capture to your own bank, with variable capacity and overflow return
+
+**Question.** The user proposed shogi-style capture ownership, then corrected capacity to team size N
+through 2N (3–6 today), with overflow returned to the opponent. Does material transfer create richer decisive play or runaway advantage?
+
+**Decision and alternatives.** Implement capacities 3, 4, 5 and 6, crossed independently with quiet/checking
+drops. Six-slot capacity equals unlimited for today's six non-kings. Capacity counts currently held pieces; return overflow to the side captured
+from, not the piece's initial allegiance. Avoid a discard-choice phase or destroying overflow.
+Duplicate reserves need count badges and action deduplication so they remain visible and do not
+bias search tie-breaking. Classic capture behavior remains unchanged.
+
+**Validation and next measurement.** Tests cover actual transfers, capacity boundaries, unchanged
+input positions, repeated capture ownership, duplicate drop consumption and exact tournament
+replay. Wave 4 schedules 2,400 balanced pilot games across three fresh seeds with two matched
+controls, existing combined screening and conditional full expansions. Inspect snowball/comeback
+patterns and overflow frequency before recommending a default; existing finite-depth bots are
+not a proof of balance. Details: docs/capture-bank-experiments.md.
+
+**Search adaptation.** Existing evaluation counted deployed material only, appropriate to the
+old fixed ownership but misleading after transfers. Capture presets now value every reserve
+piece at its base material value while preserving the existing deployed activity bonus. Record
+capture-material-v1 in games/manifests; leave control evaluation untouched.

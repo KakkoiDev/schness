@@ -95,6 +95,11 @@ export function scorePosition(position, depth = 3) {
 function evaluate(position, player) {
   const enemy = player === WHITE ? BLACK : WHITE;
   let score = 0;
+  // Captures change total owned material in these presets, so held pieces have value too.
+  if (position.rules?.experiment === 'capture-bank') {
+    for (const piece of position.banks[player]) score += VALUES[piece];
+    for (const piece of position.banks[enemy]) score -= VALUES[piece];
+  }
   for (const occupant of position.board) {
     if (!occupant) continue;
     const deployed = VALUES[occupant.piece] + (occupant.piece === KING ? 0 : 20);

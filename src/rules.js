@@ -128,7 +128,7 @@ function generateLegalActions(position) {
     }
   }
 
-  for (const piece of position.banks[player]) {
+  for (const piece of new Set(position.banks[player])) {
     for (let to = 0; to < position.board.length; to += 1) {
       if (!position.board[to] && !(position.phase === 'setup' && rulesOf(position).hiddenSetup && !homeRank(player).includes(to))) candidates.push({ type: 'drop', piece, to });
     }
@@ -330,7 +330,13 @@ function applyUnchecked(position, action, countRepetition) {
     const captured = next.board[action.to];
     next.board[action.to] = moving;
     next.board[action.from] = null;
-    if (captured) next.banks[captured.owner].push(captured.piece);
+    if (captured) {
+      const policy = rulesOf(position).experiment;
+      const transfers = policy === 'capture-bank';
+      const recipient = transfers && next.banks[player].length < rulesOf(position).bankCapacity
+        ? player : captured.owner;
+      next.banks[recipient].push(captured.piece);
+    }
     next.turn = opponent(player);
   } else if (action.type === 'drop') {
     const bankIndex = next.banks[player].indexOf(action.piece);
@@ -475,6 +481,7 @@ function validatePosition(position) {
         position.banks[player].some((piece) => !BANK_PIECES.includes(piece))) {
       throw new Error('Invalid bank');
     }
+    if (position.rules?.experiment === 'capture-bank' && position.banks[player].length > position.rules.bankCapacity) throw new Error('Capture bank overflow');
   }
 }
 
@@ -483,7 +490,8 @@ function normalizeRules(rules) {
     throw new Error('Invalid ruleset');
   }
   if (rules.experiment) {
-    if (!['protected-recurring', 'protected-opening', 'grace', 'quiet-return', 'setup', 'first-turn-quiet', 'protected-first-turn', 'mutual-one', 'mutual-two', 'limited-check', 'cooldown', 'no-drop-mate', 'home-half-check', 'distant-check', 'supported-check', 'countercheck-only', 'knight-check', 'bishop-check', 'rook-check'].includes(rules.experiment)) throw new Error('Unknown experiment');
+    if (!['protected-recurring', 'protected-opening', 'grace', 'quiet-return', 'setup', 'first-turn-quiet', 'protected-first-turn', 'mutual-one', 'mutual-two', 'limited-check', 'cooldown', 'no-drop-mate', 'home-half-check', 'distant-check', 'supported-check', 'countercheck-only', 'knight-check', 'bishop-check', 'rook-check', 'capture-bank'].includes(rules.experiment)) throw new Error('Unknown experiment');
+    if (rules.experiment === 'capture-bank' && (!Number.isInteger(rules.bankCapacity) || rules.bankCapacity < 3 || rules.bankCapacity > 6)) throw new Error('Invalid bank capacity');
     if (rules.experiment === 'setup' && (!rules.setup || !PLAYERS.has(rules.firstPlayer))) throw new Error('Invalid setup rules');
     return Object.freeze(rules);
   }

@@ -1106,3 +1106,19 @@ self-check resolution. Knight/bishop/rook-only policies restrict the checking pi
 policies use current board state and need no historical rights. Workflow v3 preserves the
 three-seed combined gate, distinct controls, stage separation and full archives, with two jobs
 concurrent. Larger frontier mechanics remain proposals in docs/variant-frontier-proposals.md.
+
+### Ownership-changing capture presets (2026-10-24)
+
+Classic returns captures to their current owner; capture-bank experiments instead transfer
+non-kings to the capturer. Capacity is configurable from starting non-king team size N through 2N (currently 3–6); transfer
+requires a free bank slot, otherwise returning to the side just captured from. Capacity counts all
+held pieces, not deployed pieces. Kings remain uncapturable, six non-kings are conserved, and
+ownership may change repeatedly. Duplicate reserves generate one action per type/destination;
+the shared reserve UI displays multiplicity with badges. No provenance identity is required:
+identical copies with identical rights are interchangeable and bank multiplicity is hashed.
+Capture-bank snapshots reject overfull banks. Tournament rule text explicitly records capture policy.
+Research wave 4 tests all four capacities with/without checking drops; see
+`docs/capture-bank-experiments.md`. Existing default and online rules remain canonical.
+
+Capture presets value held material at full base piece value in search (capture-material-v1);
+classic evaluation is preserved. Games and aggregate manifests record the evaluation policy.
