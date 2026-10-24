@@ -1,0 +1,61 @@
+{
+  "status": "completed",
+  "pid": 85288,
+  "startedAt": "2026-10-24T11:06:05.077Z",
+  "updatedAt": "2026-10-24T11:07:33.047Z",
+  "sourceFingerprint": "2f3ca2210e3bbd758edcb437346b823483b66f8026ab295741e74608f3aa795d",
+  "completed": 192,
+  "total": 192,
+  "remaining": 0,
+  "workers": 2,
+  "inFlight": [],
+  "failure": null,
+  "variants": {
+    "home-setup-quiet": {
+      "games": 96,
+      "white": 0,
+      "black": 0,
+      "draws": 96,
+      "reasons": {
+        "setup-blocked": 84,
+        "threefold-repetition": 12
+      },
+      "matchups": {
+        "sharp-sharp": {
+          "white": 0,
+          "black": 0,
+          "draws": 96
+        }
+      },
+      "totalNormalPlies": 588,
+      "totalNonKings": 576,
+      "kingOnly": 0,
+      "checkingDrops": 0,
+      "waits": 0
+    },
+    "home-setup-checking": {
+      "games": 96,
+      "white": 6,
+      "black": 2,
+      "draws": 88,
+      "reasons": {
+        "setup-blocked": 84,
+        "threefold-repetition": 4,
+        "black": 2,
+        "white": 6
+      },
+      "matchups": {
+        "sharp-sharp": {
+          "white": 6,
+          "black": 2,
+          "draws": 88
+        }
+      },
+      "totalNormalPlies": 202,
+      "totalNonKings": 576,
+      "kingOnly": 0,
+      "checkingDrops": 33,
+      "waits": 0
+    }
+  }
+}

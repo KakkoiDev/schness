@@ -1,0 +1,56 @@
+[
+  {
+    "id": "home-setup-checking",
+    "games": 96,
+    "white": 6,
+    "black": 2,
+    "draws": 88,
+    "reasons": {
+      "setup-blocked": 84,
+      "threefold-repetition": 4,
+      "black": 2,
+      "white": 6
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 6,
+        "black": 2,
+        "draws": 88
+      }
+    },
+    "totalNormalPlies": 202,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 33,
+    "waits": 0,
+    "decisiveRate": 0.08333333333333333,
+    "whiteDecisiveShare": 0.75,
+    "meetsScreen": false
+  },
+  {
+    "id": "home-setup-quiet",
+    "games": 96,
+    "white": 0,
+    "black": 0,
+    "draws": 96,
+    "reasons": {
+      "setup-blocked": 84,
+      "threefold-repetition": 12
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 0,
+        "black": 0,
+        "draws": 96
+      }
+    },
+    "totalNormalPlies": 588,
+    "totalNonKings": 576,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0,
+    "whiteDecisiveShare": null,
+    "meetsScreen": false
+  }
+]

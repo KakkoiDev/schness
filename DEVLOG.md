@@ -1022,3 +1022,7 @@ transcript equivalence, all mirrored king starts, timer ownership and capture bo
 duplicate ready/cooling copies, hash identity, capacity overflow, and forced-wait/checkmate rules.
 Next measurement: complete both schedules, report raw win/draw counts, decisiveness and White's
 share of decisive games, then confirm target hits with fresh seeds and a deeper engine budget.
+
+### Home-row setup supplement completed
+
+All 192 Sharp-vs-Sharp games completed and replay-validated. Quiet drops: 0 White wins, 0 Black wins, 96 draws. Post-setup checking drops: 6 White wins, 2 Black wins, 88 draws. Both recipes had 84 setup-blocked draws; the other draws were threefold repetition (12 quiet, 4 checking). The free alternating placement procedure can reach blocked arrangements, and the AI often chooses a draw rather than proceeding into a worse position. These results fail the decisiveness target and do not establish that every legal complete home-row arrangement is drawish. A later experiment could prevalidate full arrangements or use simultaneous complete placement, clearly labelled as a different setup policy. Full replays, frozen source, report and checksums are committed. The main 4,128-game screen remains running separately.
