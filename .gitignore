@@ -7,3 +7,6 @@ test-results/
 # belongs in test/ or e2e/.
 *.sandbox.mjs
 *.sandbox.config.js
+
+# Frozen local research runtimes, per-game checkpoints and generated bundles.
+output/local-experiments/
