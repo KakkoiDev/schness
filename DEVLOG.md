@@ -1054,3 +1054,30 @@ all frozen sources and replays, archive full replay bundles and readable reports
 and publish to the same follow-up branch. Only equal-level games assess color balance; repeated
 starts and finite depth remain limitations. Next measurement is this completed batch, not an
 automatic expansion.
+
+## 2026-10-25 — Completed all-level four-slot cooldown test
+
+All 864 authorized games completed. After confirming the original runner exited, frozen
+runtime --resume verified the SHA-256 source fingerprint and all checkpoint/replay legality,
+position keys and final outcomes. The full compressed manifest/runtime/replay bundles and
+readable reports/rates/progress are archived with verified part and whole hashes.
+
+Equal-level results (White/Black/draws, 96 each): Sharp v2 45/39/12, 87.5% decisive,
+White 53.6% of wins; Steady v1 59/37/0, 100% decisive, White 61.5% of wins;
+Learning v1 42/30/24, 75% decisive, White 58.3% of wins. Only Sharp meets the
+screening target. Sharp draws: nine repetitions, three stalemates; Learning draws:
+24 repetitions. Steady has no draws. This is fresh-seed replication of the candidate
+at the same Sharp depth, not proof of stronger-search balance or all-skill balance.
+
+Mixed pairings (White AI first, W/B/D): Sharp-Steady 75/16/5;
+Steady-Sharp 10/83/3; Sharp-Learning 79/3/14; Learning-Sharp 2/85/9;
+Steady-Learning 84/12/0; Learning-Steady 3/93/0. All mixed draws are repetitions.
+Across reversed-color pairings, Sharp wins 158/192 against Steady (82.3%, eight draws)
+and 164/192 against Learning (85.4%, 23 draws); Steady wins 177/192 against Learning
+(92.2%, no draws). These are strength comparisons, not color-balance estimates.
+
+Keep this 200-ply fixed-depth frozen Sharp v2 dataset separate from the earlier screen,
+numeric strength profiles and production Sharp v3. Six seeds repeat 16 king starts;
+sample size, correlated starts, evaluator assumptions and search horizon limit inference.
+Do not adopt an official variant or launch a new experiment automatically. Next useful
+measurement would be a separately authorized deeper-search or multi-engine confirmation.
