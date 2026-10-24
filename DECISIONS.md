@@ -1174,3 +1174,10 @@ wins is a screening threshold, not a claim of statistical or human balance. Capt
 rights are hashed and replayable; forced wait exists only outside check with no alternative.
 Archive completed manifests, runtime and all JSONL replays under research/data with SHA-256 checksums
 and 1 MiB compressed parts. No new src modules or production shell changes belong to this screen.
+
+### All-level capture-cooldown confirmation (2026-10-25)
+
+research/bank-cooldown-levels-v1 preserves the screened rules and AI implementation from the
+frozen balance runtime. Only its schedule expands to all nine named-level pairings. Treat
+equal-level color balance and mixed-level strength separation as different measurements;
+never pool them. Numeric strength and production engine revisions require separate datasets.

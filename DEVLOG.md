@@ -1034,3 +1034,23 @@ Question: which of the 43 already authorized recipes meets both screening target
 Three recipes met >=80% decisiveness and 45–55% White share among decisive games: bank-4-delay-1, bank-5-delay-1 and bank-6-delay-1. Each has 44 White wins, 36 Black wins and 16 draws in 96 games (83.3% decisive; White 55.0% of wins). Each draw breakdown is 13 threefold repetitions and 3 stalemates. These use quiet capture-to-bank drops with one owner-turn capture cooldown and overflow returned to the captured owner. Identical counts do not establish that capacities are generally equivalent.
 
 Reject declaring official balance from this screen: six seeds repeat the same 16 king starts, search is depth 4, 200 total plies, and 43 recipes create selection effects. Hits are provisional; fresh positions/seeds and deeper search would be the next measurement, requiring a separate run authorization. No new run started. Home-row supplement findings remain unchanged: quiet 0/0/96, checking 6/2/88 W/B/draws, with 84 setup-blocked draws each. Archive all manifests, exact runtime, replay bundles and final report/rates/progress with verified SHA-256 parts. Preserve the prior archive and supplement.
+
+## 2026-10-25 — Four-slot one-turn cooldown across all named AI levels
+
+Question: does the screening candidate remain decisive and color-balanced at different named
+AI levels, and do mixed levels show the expected strength separation? User authorized a full
+all-level test. Freeze the completed balance screen's rules and bot byte for byte; expand only
+the tournament schedule to all nine ordered Learning v1 / Steady v1 / Sharp v2 pairings.
+Use six fresh seeds 20261501–20261506 and all 16 king placements: 864 games, 96 per pairing,
+200 total plies, eight local workers. Do not mix production Sharp v3 or numeric strength 100
+into this follow-up: that would change the engine as well as the pairing. Initial reserves
+are ready, captured copies wait one owner turn, overflow returns to the captured side, quiet
+drops only. No new rule tuning or automatic adoption.
+
+Schedule tests verify all nine pairings and 16 starts per seed; byte equality checks preserve
+the screened rules/search/profiles; report tests keep equal and mixed levels separate and
+retain draw reasons. Run source/manifest is committed before completion. On completion, verify
+all frozen sources and replays, archive full replay bundles and readable reports/checksums,
+and publish to the same follow-up branch. Only equal-level games assess color balance; repeated
+starts and finite depth remain limitations. Next measurement is this completed batch, not an
+automatic expansion.
