@@ -1062,3 +1062,29 @@ Commit full compressed replay bundles, manifest, frozen runtime, checksums and r
 Question: make the engine general across deterministic two-player perfect-information zero-sum games, with regression evidence and direct numeric lookahead. Decision: integer level 0–100 requests the matching number of future actions; zero returns an unevaluated legal fallback. Numeric levels use a fixed 262144-node safety budget and expose requested versus completed depth. Add ranked legal continuations and opt-in bounded adapter-defined tactical extensions, preserving old worker responses and named preset fixed depths. Do not enable tactical search by default based on a small sample.
 
 Evidence: 314 workspace unit tests pass; an independent oracle validates all 5478 reachable tic-tac-toe states. Real browser worker checks pass on desktop/mobile. Controlled happy paths: candidate 51 pass/5 fail/2 skip; previous engine on same local interface 50/6/2. Three candidate-only failures all pass on serial rerun. Broad UI release checks remain open. A 32-game paired Classic smoke benchmark at max1024 nodes/move gives default candidate 7W/5L/4D and tactical-depth2 candidate 8W/3L/5D. These small samples do not establish a strength gain; all replays/results and source/checksum identities are verified. Full report: docs/generalist-engine-report-2026-10-25.md; evidence: research/engine-generalist-v1. Reject automatic promotion/merge. Next measurement: larger fresh-opening matched-budget comparisons and independent resolution of remaining UI checks. No historical or active research runtime changed.
+
+## 2026-10-25 — Optimize playing search, pruning and work per node
+
+Question: can exact search reach farther at the same budget, independently of UI automation?
+Decision: share alpha at the root for single-line play; preserve full-window ranked analysis;
+reuse cached best actions across iterations and bound table memory; share legal actions across
+terminal adjudication, expansion and evaluation; reuse immutable root successors. Preserve
+complete repetition identities and exact-depth score reuse. Resolve ambiguous bound ties before
+random/repetition selection. Reject speculative pruning and mutable undo machinery without
+additional general-game safety evidence. Advance named versions to Sharp v4, Learning/Steady v3.
+
+Evidence: 320 workspace unit tests pass, including independent tic-tac-toe oracle, 1,800 seeded
+transposition-graph comparisons, bound-tie trap, bounded tables and trusted adjudication parity.
+Direct desktop/mobile worker tests pass. On 32 correlated saved positions, all 96 depth-4 score
+pairs agree; nodes fall from 165145 to 72755 (55.9%), median time from 2598.8 to 892.0 ms (2.91x).
+At 4096 nodes, mean completed depth rises 3.44 to 4.19: 23 positions deeper, 9 equal, none shallower.
+CPU profiles identify legal/attack generation as the dominant baseline cost. Cross-depth action
+hints are used 5992 times in capped search; score-table hits are zero on this history-sensitive
+corpus, so that gain is not attributed to score-cache hits.
+
+A separate deterministic 32-game color-swapped Classic match at 2048 nodes/move gives optimized
+13 wins, baseline 1 win, 18 draws (4 repetitions,14 ply ceilings). Small samples are not an Elo
+rating or optimal-play proof. Sources, observations, profiles and every replay are fingerprinted,
+archived and verified under research/search-performance-v2. Report: docs/search-performance-report-2026-10-25.md.
+No prior frozen runtime/dataset modified. No UI behavior changes. No automatic merge. Next
+measurement: larger fresh-opening schedules at multiple budgets before a general strength claim.

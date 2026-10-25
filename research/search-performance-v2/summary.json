@@ -1,0 +1,54 @@
+{
+  "baselineCommit": "3d4dea355e2f9e9c79430bcc842f2ff2db25f8c3",
+  "positions": 32,
+  "fixedDepth": 4,
+  "repetitions": 3,
+  "maxNodes": 4096,
+  "requestedBudgetDepth": 8,
+  "exactScoresMatch": true,
+  "sources": {
+    "../src/search.js": "35615db38d85cf8d1b2925378391fcd4914ec88f6abd68216a8f4b4e3bd9ee91",
+    "../src/bot.js": "515cf4b1a40e554c10e18d33d6e17600b2ec70ea2c215c4dbbac60c40b08cb97",
+    "../src/rules.js": "9ddc9a0e2d73e8355b47a4eff696a79cbd2c0def665804eab3e6798f629a2b8f",
+    "../research/search-performance-v2/baseline-search.js": "c3559e5346b63a9c34146cb43fc2ec81e5a937964101dff593e75362a6e76604",
+    "../research/search-performance-v2/baseline-bot.js": "615af6dcd9dece59433916a3efe78ff3a9b8ee97233ddf26c01035f9ee8ea7a1",
+    "../research/search-performance-v2/baseline-rules.js": "8d8a4628cad97da1f21b1f731e55da74f5cc88c9a4d9c3e7a5b64b4ed3a46b9d"
+  },
+  "summaries": {
+    "baseline": {
+      "fixedDepth": 4,
+      "nodes": 165145,
+      "totalMillisByRepeat": [
+        2647.3505419999997,
+        2574.736503000001,
+        2598.765247000004
+      ],
+      "medianMillis": 2598.765247000004,
+      "boundedDepthSum": 110,
+      "boundedDepthDistribution": {
+        "3": 19,
+        "4": 12,
+        "5": 1
+      },
+      "boundedNodes": 131072
+    },
+    "optimized": {
+      "fixedDepth": 4,
+      "nodes": 72755,
+      "totalMillisByRepeat": [
+        933.1305789999988,
+        841.1905849999985,
+        892.038873000005
+      ],
+      "medianMillis": 892.038873000005,
+      "boundedDepthSum": 134,
+      "boundedDepthDistribution": {
+        "3": 2,
+        "4": 24,
+        "5": 4,
+        "6": 2
+      },
+      "boundedNodes": 131072
+    }
+  }
+}

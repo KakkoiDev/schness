@@ -50,8 +50,8 @@ synchronous callbacks mid-call. Random tie-breaking remains seedable.
 
 The Schness adapter's transposition key includes the whole repetition map, not only the board.
 Two identical boards can have different future draw outcomes. This may reduce cache hits and
-change choices; fixed-depth runtime can increase. Existing preset metadata identifies Sharp
-v3 and Learning/Steady v2. Historical Sharp v2 datasets keep their original versions and frozen
+change choices; fixed-depth runtime can increase. Current preset metadata identifies Sharp
+v4 and Learning/Steady v3. Historical Sharp v2 datasets keep their original versions and frozen
 source. Do not pool engine versions into a balance claim.
 
 Tests cover alternate win/loss objectives, terminal roots, exact node caps, legal fallback,
@@ -89,3 +89,21 @@ minimax oracle on all 5,478 reachable positions.
 The worker keeps its existing `{action, request}` response. Send `analyze: true` to also receive
 `analysis`, including requested/completed depth, budget status and ranked continuations. It accepts
 `multiPv` and `quiescenceDepth`; invalid options return an error with the original request ID.
+
+
+## Efficient play search
+
+Single-line search (`multiPv: 1`) shares alpha across root alternatives; multi-line analysis retains
+exact alternative scores. Ambiguous bound-equalities are fully re-searched before randomized or
+repetition tie selection. `actionKey(action)` is an optional adapter callback for cached move
+ordering; otherwise JSON action identity is used. Supply a stable key for non-JSON actions.
+
+Terminal callbacks receive an optional fourth argument `facts`; evaluation receives it as a third
+argument. `facts.actions()` lazily supplies and reuses this node's legal action list. Treat it as
+read-only. Existing adapters with fewer parameters remain compatible. Positions and transitions
+must remain immutable for per-node reuse and root child reuse to be safe.
+
+Score bounds are cached only at equal remaining depth, while best-action hints can order later
+iterations at other depths. Each table defaults to 50,000 entries, configurable with
+`maxTableEntries`; `useCache: false` disables both. Completed results expose `stats` counters.
+See [the measured optimization report](search-performance-report-2026-10-25.md).

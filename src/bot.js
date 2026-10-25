@@ -7,7 +7,8 @@ import {
   ROOK,
   WHITE,
   applyLegalAction,
-  getResult,
+  getResultUnchecked,
+  actionKey,
   isInCheck,
   legalActionsUnchecked,
   positionKey,
@@ -19,11 +20,12 @@ const MATE = 1_000_000;
 /** Variant adapter keeps Schness legality, objectives and evaluation out of search. */
 export const schnessSearch = createSearchEngine({
   actions: legalActionsUnchecked,
+  actionKey,
   apply: applyLegalAction,
   turn: p => p.turn,
   key: p => `${positionKey(p)}|history:${JSON.stringify(Object.entries(p.repetitions ?? {}).sort(([a],[b])=>a<b?-1:a>b?1:0))}`,
-  terminal: (p, player, depth) => {
-    const result=getResult(p);
+  terminal: (p, player, depth, facts) => {
+    const result=getResultUnchecked(p, facts.actions());
     return !result ? null : result.type==='draw' ? 0 : result.winner===player ? MATE+depth : -MATE-depth;
   },
   evaluate,
@@ -34,12 +36,12 @@ export const schnessSearch = createSearchEngine({
 });
 
 /** Existing depth profiles stay supported; strength 0–100 enables bounded iterative search. */
-export function chooseAction(position, options={}) { return analyzeAction(position,options).action; }
+export function chooseAction(position, options={}) { return analyzeAction(position,{...options,multiPv:1}).action; }
 export function analyzeAction(position, options={}) { return schnessSearch.choose(position,options); }
 /** White-positive score. */
 export function scorePosition(position, depth=3) { return schnessSearch.score(position,WHITE,depth); }
 
-function evaluate(position, player) {
+function evaluate(position, player, facts) {
   const enemy = player === WHITE ? BLACK : WHITE;
   let score = 0;
   // Material can transfer or disappear in these presets, so held pieces have value too.
@@ -52,8 +54,8 @@ function evaluate(position, player) {
     const deployed = VALUES[occupant.piece] + (occupant.piece === KING ? 0 : 20);
     score += occupant.owner === player ? deployed : -deployed;
   }
-  score += (legalActionsUnchecked({ ...position, turn: player }).length -
-            legalActionsUnchecked({ ...position, turn: enemy }).length) * 2;
+  score += ((position.turn === player ? facts.actions() : legalActionsUnchecked({ ...position, turn: player })).length -
+            (position.turn === enemy ? facts.actions() : legalActionsUnchecked({ ...position, turn: enemy })).length) * 2;
   if (isInCheck(position, enemy)) score += 30;
   if (isInCheck(position, player)) score -= 30;
   return score;

@@ -288,8 +288,17 @@ export function positionKey(position) {
 }
 
 export function getResult(position) {
+  return resultWithActions(position, () => legalActions(position));
+}
+
+/** Search-only adjudication: reuse legal actions generated from an immutable trusted state. */
+export function getResultUnchecked(position, actions) {
+  return resultWithActions(position, () => actions ?? legalActionsUnchecked(position));
+}
+
+function resultWithActions(position, actions) {
   if (position.phase === 'setup') {
-    return legalActions(position).length ? null : { type: 'draw', reason: 'setup-blocked' };
+    return actions().length ? null : { type: 'draw', reason: 'setup-blocked' };
   }
   if (position.phase !== 'play') return null;
   const key = positionKey(position);
@@ -297,7 +306,7 @@ export function getResult(position) {
     return { type: 'draw', reason: 'threefold-repetition' };
   }
 
-  if (legalActions(position).length > 0) return null;
+  if (actions().length > 0) return null;
   if (isInCheck(position, position.turn)) {
     return { type: 'win', winner: opponent(position.turn), reason: 'checkmate' };
   }

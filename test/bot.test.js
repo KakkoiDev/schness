@@ -72,3 +72,15 @@ test('repetition aversion breaks an equal score toward the less repeated positio
     actionKey(repeated),
   );
 });
+
+test('trusted adjudication matches public results through legal Classic and variant play', async () => {
+ const {createInitialPosition,getResult,getResultUnchecked}=await import('../src/rules.js');
+ for(const rules of [{allowCheckingDrops:false},{allowCheckingDrops:true},{allowCheckingDrops:false,experiment:'capture-bank',bankCapacity:4}]){
+  let position=createInitialPosition(rules);
+  for(let ply=0;ply<60;ply++){
+   const actions=legalActions(position);assert.deepEqual(getResultUnchecked(position,actions),getResult(position));
+   if(getResult(position))break;
+   position=applyAction(position,actions[(ply*7+3)%actions.length]);
+  }
+ }
+});

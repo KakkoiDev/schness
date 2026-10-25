@@ -1199,3 +1199,15 @@ are returned only for complete iterations. Named fixed-depth presets remain unch
 worker includes analysis only when requested, preserving its action-only protocol otherwise.
 Tic-tac-toe exhaustive oracle coverage guards the general-game contract. No Elo or guaranteed
 playing-strength improvement follows from this API change. See docs/generalist-engine-report-2026-10-25.md.
+
+## 2026-10-25 — Exact-search performance and versioned play behavior
+
+Single-line play shares root alpha; multi-line analysis preserves exact scores for alternatives.
+Bound equality must be resolved with a full-window search before random/repetition tie selection.
+Depth-dependent generic scores may only reuse transposition bounds at equal remaining depth;
+cross-depth entries may guide ordering. Score and action-hint tables each default to 50,000
+entries. Immutable per-node legal lists and root successors may be reused; public adjudication
+remains guarded. Full repetition histories remain in search identities. New named identities are
+Sharp v4 and Learning/Steady v3; do not pool earlier results. Exact optimizations are preferred
+here over speculative reductions that would assume chess-specific rules. See the measured
+report in docs/search-performance-report-2026-10-25.md.

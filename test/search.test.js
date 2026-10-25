@@ -131,3 +131,43 @@ test('time exhaustion returns an honest fallback and terminal roots never expand
  const e=createSearchEngine({actions:()=>{throw Error('expanded terminal');},apply:()=>{},turn:()=>0,key:()=>'',terminal:()=>0,evaluate:()=>{throw Error('evaluated terminal');}});
  const r=e.choose({}, {strength:100});assert.equal(r.action,null);assert.equal(r.nodes,0);assert.equal(r.score,0);assert.equal(r.requestedDepth,100);
 });
+
+test('play prunes root alternatives while multi-PV retains exact alternative scores',()=>{
+ const nodes={root:{turn:'A',next:{best:'best',bad:'bad'}},best:{turn:'B',next:{a:'five',b:'six'}},bad:{turn:'B',next:{a:'four',b:'minus'}},five:{turn:'A',terminal:5},six:{turn:'A',terminal:6},four:{turn:'A',terminal:4},minus:{turn:'A',terminal:-10}};
+ const e=graphEngine(nodes),play=e.choose('root',{depth:2}),analysis=e.choose('root',{depth:2,multiPv:2});
+ assert.equal(play.score,5);assert.equal(play.action,'best');assert.ok(play.nodes<analysis.nodes);assert.ok(play.stats.cutoffs>0);
+ assert.deepEqual(analysis.variations.map(v=>v.score),[5,-10]);
+});
+test('fail-low equality cannot masquerade as a real tie for randomness or repetition',()=>{
+ const e=graphEngine({root:{turn:'A',next:{best:'best',trap:'trap'}},best:{turn:'B',terminal:5},trap:{turn:'B',next:{looksEqual:'five',actuallyBad:'zero'}},five:{turn:'A',terminal:5},zero:{turn:'A',terminal:0}},{repetitions:p=>p==='best'?2:0});
+ for(const options of [{random:()=>0},{repetitionAversion:true}]){
+  const r=e.choose('root',{depth:2,...options});assert.equal(r.action,'best');assert.equal(r.score,5);assert.equal(r.stats.rootResearches,1);
+ }
+});
+test('bounded cache and cross-iteration hints preserve exact-depth minimax',()=>{
+ const e=game(),p={n:9,turn:0};const expected=e.choose(p,{depth:7,useCache:false});
+ for(const maxTableEntries of [1,2,100]){
+  const r=e.choose(p,{depth:7,maxNodes:100000,maxTableEntries});assert.equal(r.score,expected.score);assert.ok(r.stats.tableEntries<=maxTableEntries);assert.ok(r.stats.hintEntries<=maxTableEntries);
+ }
+ assert.ok(e.choose(p,{depth:7,maxNodes:100000}).stats.hintHits>0);
+ assert.throws(()=>e.choose(p,{maxTableEntries:0}));
+});
+test('random transposition graphs agree with independent exhaustive minimax at every depth',()=>{
+ let seed=42;const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/2**32;};
+ for(let trial=0;trial<60;trial++){
+  const nodes=Array.from({length:16},(_,i)=>({turn:random()<0.5?'A':'B',value:Math.floor(random()*21)-10,next:{}}));nodes[0].turn='A';
+  for(let i=0;i<16;i++)if(i>12)nodes[i].terminal=Math.floor(random()*5-2)*100;else for(let a=0;a<3;a++)nodes[i].next[a]=i+1+Math.floor(random()*(15-i));
+  const e=graphEngine(nodes);
+  function oracle(p,d){const n=nodes[p];if(n.terminal!==undefined)return n.terminal;if(!d)return n.value;const values=Object.values(n.next).map(next=>oracle(next,d-1));return n.turn==='A'?Math.max(...values):Math.min(...values);}
+  for(let depth=1;depth<=6;depth++){
+   const expected=oracle(0,depth);
+   for(const options of [{},{useCache:false},{multiPv:3},{iterativeDeepening:true},{maxTableEntries:1}]){
+    const r=e.choose(0,{depth,...options});assert.equal(r.score,expected,`graph ${trial}, depth ${depth}`);assert.equal(oracle(nodes[0].next[r.action],depth-1),expected);
+   }
+  }
+ }
+});
+test('per-node legal actions are lazy and shared by terminal, search and evaluation',()=>{
+ const counts=new Map();const e=createSearchEngine({actions:p=>{counts.set(p,(counts.get(p)??0)+1);return p?[]:[1];},apply:()=>1,turn:()=>0,key:String,terminal:(p,who,d,facts)=>{facts.actions();return p?2:null;},evaluate:(p,who,facts)=>facts.actions().length});
+ assert.equal(e.choose(0,{depth:1}).score,2);assert.deepEqual([...counts.values()],[1,1]);
+});

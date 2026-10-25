@@ -1,0 +1,52 @@
+{
+  "config": {
+    "depth": 8,
+    "maxNodes": 2048,
+    "maxPlies": 120,
+    "openings": 16,
+    "colorsSwapped": true,
+    "randomness": "none",
+    "rules": "Classic quiet drops",
+    "baselineCommit": "3d4dea355e2f9e9c79430bcc842f2ff2db25f8c3"
+  },
+  "sources": {
+    "../src/search.js": "35615db38d85cf8d1b2925378391fcd4914ec88f6abd68216a8f4b4e3bd9ee91",
+    "../src/bot.js": "515cf4b1a40e554c10e18d33d6e17600b2ec70ea2c215c4dbbac60c40b08cb97",
+    "../src/rules.js": "9ddc9a0e2d73e8355b47a4eff696a79cbd2c0def665804eab3e6798f629a2b8f",
+    "../research/search-performance-v2/baseline-search.js": "c3559e5346b63a9c34146cb43fc2ec81e5a937964101dff593e75362a6e76604",
+    "../research/search-performance-v2/baseline-bot.js": "615af6dcd9dece59433916a3efe78ff3a9b8ee97233ddf26c01035f9ee8ea7a1",
+    "../research/search-performance-v2/baseline-rules.js": "8d8a4628cad97da1f21b1f731e55da74f5cc88c9a4d9c3e7a5b64b4ed3a46b9d"
+  },
+  "games": 32,
+  "summary": {
+    "optimizedWins": 13,
+    "baselineWins": 1,
+    "draws": 18,
+    "reasons": {
+      "checkmate": 14,
+      "threefold-repetition": 4,
+      "ply-limit": 14
+    },
+    "completedDepth": {
+      "optimized": {
+        "2": 22,
+        "3": 287,
+        "4": 937,
+        "5": 124,
+        "6": 6
+      },
+      "baseline": {
+        "2": 152,
+        "3": 938,
+        "4": 235,
+        "5": 42,
+        "6": 2,
+        "7": 1
+      }
+    }
+  },
+  "archive": {
+    "compressedSha256": "019fd8ea25badb02d9a96cb34db57eb88908b65b2f3c363b3f2f4f78e8e11ecd",
+    "rawSha256": "e68b31310b4e59895e36518b81337050c779f9d2b31b2ab3816653bccf5c1c35"
+  }
+}
