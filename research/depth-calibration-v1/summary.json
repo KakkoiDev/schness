@@ -1,0 +1,56 @@
+{
+  "v2d4": {
+    "medianPassMillis": 2267.5226260000004,
+    "meanPerPositionMillis": 70.86008206250001,
+    "medianPerPositionMillis": 57.1284999999998,
+    "p95Millis": 256.25391599999966,
+    "passMillis": [
+      2255.239914999999,
+      2267.5226260000004,
+      2293.384793000001
+    ]
+  },
+  "v7d4": {
+    "medianPassMillis": 146.71883199999866,
+    "meanPerPositionMillis": 4.584963499999958,
+    "medianPerPositionMillis": 4.760624999998981,
+    "p95Millis": 10.297708000000057,
+    "passMillis": [
+      141.23549999999523,
+      146.71883199999866,
+      148.1944969999978
+    ]
+  },
+  "v7d5": {
+    "medianPassMillis": 797.7327910000004,
+    "meanPerPositionMillis": 24.92914971875001,
+    "medianPerPositionMillis": 24.892667000000074,
+    "p95Millis": 61.828125,
+    "passMillis": [
+      781.2367500000046,
+      797.7327910000004,
+      805.617915999992
+    ]
+  },
+  "v7d6": {
+    "medianPassMillis": 3331.266500000005,
+    "meanPerPositionMillis": 104.10207812500016,
+    "medianPerPositionMillis": 84.41858299999967,
+    "p95Millis": 272.65733399999954,
+    "passMillis": [
+      3323.5590430000016,
+      3331.266500000005,
+      3368.861748000003
+    ]
+  },
+  "timeMatched": {
+    "searches": 32,
+    "meanBudgetMillis": 70.85606893749988,
+    "meanMillis": 71.46383593749988,
+    "meanCompletedDepth": 5.28125,
+    "depthCounts": {
+      "5": 23,
+      "6": 9
+    }
+  }
+}

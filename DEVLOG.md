@@ -1411,3 +1411,8 @@ equivalent-position speed measurement. No new games or runtime changes.
 
 See docs/engine-comparison-by-variant-2026-10-25.md and
 research/data/sharp-v7-v2-full-v1-2026-10-25/thinking-times.json for counts and timing detail.
+
+
+## 2026-10-25 — Same-position depth calibration
+
+Measured frozen Sharp v2 depth four against Sharp v7 depths four, five and six on 32 saved Classic positions, serial and warmed, three repetitions. Mean milliseconds per position (median full pass): v2 d4 70.86; v7 d4 4.58; v7 d5 24.93; v7 d6 104.10. With each position's measured v2 budget, iterative v7 completed depth five on 23 positions and depth six on nine (mean observed 71.46 ms). Prefer time budgets for comparable latency; fixed depth five is conservative and six can take longer. All selected actions and continuation lines replay-validated; source fingerprints recorded. This is timing calibration, not a strength test or a universal browser/variant budget. Full compressed raw data, summary, report and reproducible script committed under research/depth-calibration-v1 and scripts/bench-depth-calibration.js.
