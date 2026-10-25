@@ -1122,3 +1122,14 @@ Research wave 4 tests all four capacities with/without checking drops; see
 
 Capture presets value held material at full base piece value in search (capture-material-v1);
 classic evaluation is preserved. Games and aggregate manifests record the evaluation policy.
+
+### Permanent-loss capture policy (2026-10-24)
+
+The opt-in permanent-loss presets remove captured non-kings without crediting either bank.
+Unused reserves still deploy normally, so each initial non-king can be deployed at most once.
+Kings remain uncapturable. Existing capture policies and canonical defaults are unchanged.
+Rules identity distinguishes these positions; missing material needs no extra historical rights.
+Finite-material-v1 search values reserves at full base material, and games/manifests record that
+policy. No new insufficient-material or victory adjudication is added; report low-material
+repetition/ceiling outcomes explicitly. Wave 5 isolates this policy with/without checking drops
+against matched controls; see docs/permanent-loss-experiments.md.

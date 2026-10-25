@@ -2,6 +2,10 @@ const STORAGE_KEY = 'schness-language';
 const SUPPORTED = new Set(['en', 'ja']);
 
 const JA = new Map(Object.entries({
+  "Permanent captures · quiet drops": "捕獲駒は除去・王手配置なし",
+  "Permanent captures · checking drops": "捕獲駒は除去・王手配置あり",
+  "Captured pieces leave the game permanently; unused reserves can still deploy. Checking drops allowed.": "取られた駒は対局から永久に除去。未使用の持ち駒は配置できます。王手配置は許可。",
+  "Captured pieces leave the game permanently; unused reserves can still deploy. Checking drops forbidden.": "取られた駒は対局から永久に除去。未使用の持ち駒は配置できます。王手配置は禁止。",
   "Capture bank 3 · checking drops": "持ち駒上限3・王手配置許可",
   "Captured pieces join your bank up to 3 held pieces; overflow returns to the captured side. Checking drops allowed.": "持ち駒上限は3駒。捕獲駒を獲得し、満杯なら取られた側へ戻します。王手配置は許可。",
   "Capture bank 3 · quiet drops": "持ち駒上限3・王手配置禁止",

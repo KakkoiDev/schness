@@ -903,3 +903,22 @@ not a proof of balance. Details: docs/capture-bank-experiments.md.
 old fixed ownership but misleading after transfers. Capture presets now value every reserve
 piece at its base material value while preserving the existing deployed activity bonus. Record
 capture-material-v1 in games/manifests; leave control evaluation untouched.
+
+## 2026-10-24 — One-use reserves and permanent capture losses
+
+**Question.** The user suggested that deployed pieces never return after capture. Does finite
+material create meaningful exchanges and less repetition, or produce passive reserve hoarding
+and king-only draws?
+
+**Decision and alternatives.** Implement two permanent-loss presets, quiet/checking drops, while
+leaving unused reserves available. Neither bank receives a captured piece. Avoid mixing in pawn
+rules, new victories or insufficient-material adjudication: those would obscure the capture
+policy's effect. Reuse full reserve valuation with a separately recorded finite-material-v1
+policy, preserving control evaluation. Position/replay already represent missing material.
+
+**Validation and next measurement.** Verify removal and unchanged banks for both colors, normal
+reserve deployment, no resurrection, drop-check policy, material-aware search, rules identity and
+exact tournament replay with monotonically decreasing material. Wave 5 schedules 960 pilots
+across three fresh seeds and four presets with the existing gate and conditional full expansions.
+Inspect low-material endings, reserve hoarding, capture timing and first-loss snowball before
+judging it superior to renewable or capturer-owned reserves. Classic stays unchanged.
