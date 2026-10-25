@@ -1341,3 +1341,24 @@ and correlated samples prevent proven-balance claims. No rule tuning, new experi
 automatic merge follows these results. Full checking-drop charge-bank tests are independently
 authorized and tracked in PR #121; do not pool their results. Next measurement for this
 matrix would need separately specified deeper/multi-engine confirmation.
+
+## 2026-10-25 — Merge open PR stack and start full fixed-color engine regression
+
+At the user's explicit request, merged every then-open PR (#108–#122) into master, in dependency
+order. Resolved divergent experiment-record append conflicts while preserving both reports;
+no PRs remained open afterward. Final merge 9fe678d911041af38d5c9056bc9838cc11e25cc5 has the
+same validated playing-engine core as the prior optimization pass.
+
+Started sharp-v7-v2-full-v1-2026-10-25: 6,912 fixed-depth games on all 36 shared production
+presets, six fresh seeds and all 16 king starts, split into 3,456 candidate-White and 3,456
+candidate-Black tasks. Both engines search exactly four individual actions with repetition
+aversion and independently seeded tie selection; no time/node caps, quiescence or reductions.
+Ceiling is 200 total actions. New-engine source and an original Sharp v2 runtime are frozen;
+the old files' original manifest hashes and Sharp v2 metadata were checked before copying.
+Source fingerprint: b964f7a4c0cde7738e449eeef1976fc3cad98176608f976483df527b236f3097.
+
+All 338 unit tests pass, including complete color/seed/start coverage and checkpoint/resume,
+active-lock and source-tampering regressions for this runner. Each actual transition is also
+cross-checked against legacy rules during play. Results are pending; do not infer non-inferiority
+from partial schedules or pool distinct historical research adapters into this comparison.
+A completion monitor will verify all replays, archive full runtime/bundles and publish final data.

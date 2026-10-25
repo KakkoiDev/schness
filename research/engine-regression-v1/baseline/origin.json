@@ -1,0 +1,19 @@
+{
+  "run": "output/local-experiments/all-variants-2026-10-24",
+  "sourceFingerprint": "d07eded283d39a65b84ce739cff94ad05de53d4d9b13a03bfcb32e5122bf0eb4",
+  "ai": {
+    "version": 2,
+    "depth": 4,
+    "behavior": "Deep alpha-beta; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score."
+  },
+  "files": [
+    {
+      "path": "src/bot.js",
+      "sha256": "158a6de8ad27eb8ea3b1c995d85c65d3ff6ac084d0923468c6887c2da3ee3e89"
+    },
+    {
+      "path": "src/rules.js",
+      "sha256": "8d8a4628cad97da1f21b1f731e55da74f5cc88c9a4d9c3e7a5b64b4ed3a46b9d"
+    }
+  ]
+}
