@@ -1,0 +1,259 @@
+{
+  "files": [
+    {
+      "path": "baseline-board-masks.js",
+      "bytes": 2965,
+      "sha256": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+    },
+    {
+      "path": "baseline-bot.js",
+      "bytes": 5513,
+      "sha256": "34ac7d04159c0b3324d93318c95b1303b4dec1bd054de0c99998d295992c9ddf"
+    },
+    {
+      "path": "baseline-rules.js",
+      "bytes": 24514,
+      "sha256": "051abbe367f104b43b032144110304b2db55c9a27f8c9ca66f639a9033db4a66"
+    },
+    {
+      "path": "baseline-search.js",
+      "bytes": 14884,
+      "sha256": "f621c58006ae43b4f6abbb9fb9193142534319cea4a7e5bae8bae41412d8dece"
+    },
+    {
+      "path": "browser-results.json.gz",
+      "bytes": 20702,
+      "sha256": "76a5cf0a6ef2189836ce9c99305779a510d57fe7c8f595ac59b8633f348b528f"
+    },
+    {
+      "path": "browser-summary.json",
+      "bytes": 257,
+      "sha256": "04fc69f6578a4bc857ea624c60863f87e762d4dd8662b8210d3dbf5bf8bcf4b2"
+    },
+    {
+      "path": "browser-worker.log.gz",
+      "bytes": 348,
+      "sha256": "c4be7c4aff0037aee8f9360307b34769de4d48e9deb2abd53d1e8af7d8aed4a9"
+    },
+    {
+      "path": "exact-play-games.jsonl.gz",
+      "bytes": 71222,
+      "sha256": "581a09b020dcb32c97a60ed6e0867ddc801a36019fbb851dcbd870196de7434a"
+    },
+    {
+      "path": "exact-play-progress.json",
+      "bytes": 517,
+      "sha256": "434c022b68663fb79c6cdada908808a248a6e0c879e18e6086c56f67b443ffe4"
+    },
+    {
+      "path": "exact-play-results.json",
+      "bytes": 2552,
+      "sha256": "9c05e1327f26737fb9840e5830d5b35f86a73ffe69d84470caf410b52a3d87c7"
+    },
+    {
+      "path": "exact-play.log.gz",
+      "bytes": 281,
+      "sha256": "7136a0df6c3d0b308c789fc182938af9430c7805d4ec97d28525862e67c45525"
+    },
+    {
+      "path": "final-results.json.gz",
+      "bytes": 44794,
+      "sha256": "91e20e4392fc075b38534bd2ff2cfafce541c9ee8c4f32d8a1328458bfc0e7d0"
+    },
+    {
+      "path": "king-safety-play-games.jsonl.gz",
+      "bytes": 72032,
+      "sha256": "705d3ff7053e06eb9bb2b75d91cbcfecea436bbd5e0b7146bd0cfa7c3715e9ac"
+    },
+    {
+      "path": "king-safety-play-progress.json",
+      "bytes": 550,
+      "sha256": "46bdfdaa7911e491bf5561f46d75154ecde050b5bd30c9b0cfa13ff441b09f33"
+    },
+    {
+      "path": "king-safety-play-results.json",
+      "bytes": 2596,
+      "sha256": "e801e71a83392644824b328f11afa1cd0f830f5a3410ccaa2c4bd80257989197"
+    },
+    {
+      "path": "king-safety-play.log.gz",
+      "bytes": 295,
+      "sha256": "830443819af9f31c5d944bcaf95bc31a4612fea95b6cfc5b8d07dca673a8a63b"
+    },
+    {
+      "path": "king-safety-runtime/board-masks.js",
+      "bytes": 2965,
+      "sha256": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+    },
+    {
+      "path": "king-safety-runtime/bot.js",
+      "bytes": 7205,
+      "sha256": "1f41a3b683589f58bfcf11422c8415a3648a0ec025b0a02676c5fee0c56447c0"
+    },
+    {
+      "path": "king-safety-runtime/rules.js",
+      "bytes": 25120,
+      "sha256": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7"
+    },
+    {
+      "path": "king-safety-runtime/search.js",
+      "bytes": 16159,
+      "sha256": "c89a61268296815dc5be45a1a4b97f5d947a211753ab89cc06cef4f80a2fc438"
+    },
+    {
+      "path": "reduced-play-games.jsonl.gz",
+      "bytes": 69455,
+      "sha256": "8424e5a22934dc027edb5bf0506a00451fab403ed57013e058b31399a7b70339"
+    },
+    {
+      "path": "reduced-play-progress.json",
+      "bytes": 518,
+      "sha256": "ee3d5ed87ef73e048bf9377f255da854e4707c4e43d04aa4a80617060986385c"
+    },
+    {
+      "path": "reduced-play-results.json",
+      "bytes": 2091,
+      "sha256": "5041bc5e33f4f5bf916ca90f77a8c4858187f76d60b728f45f3bba2989a6f92c"
+    },
+    {
+      "path": "reduced-play.log.gz",
+      "bytes": 292,
+      "sha256": "6339d0586d0e71ff6fe73c25d922e514eb36abea2bdb9a10b61a4a54c3eabc9c"
+    },
+    {
+      "path": "stages/reduced/scripts/bench-search-play-v5.js",
+      "bytes": 3565,
+      "sha256": "5cdfe508dd4d5b8a8d53458fad68d29edc500085e1ce0c720097fed8f44674d2"
+    },
+    {
+      "path": "stages/step-1/src/board-masks.js",
+      "bytes": 2965,
+      "sha256": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+    },
+    {
+      "path": "stages/step-1/src/bot.js",
+      "bytes": 5486,
+      "sha256": "cf7bcc7bbe67bf3f1ff4bc3d40add9588df52768612b3f82c04a0c1ba20fdef5"
+    },
+    {
+      "path": "stages/step-1/src/rules.js",
+      "bytes": 25120,
+      "sha256": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7"
+    },
+    {
+      "path": "stages/step-1/src/search.js",
+      "bytes": 14884,
+      "sha256": "f621c58006ae43b4f6abbb9fb9193142534319cea4a7e5bae8bae41412d8dece"
+    },
+    {
+      "path": "stages/step-2/src/board-masks.js",
+      "bytes": 2965,
+      "sha256": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+    },
+    {
+      "path": "stages/step-2/src/bot.js",
+      "bytes": 5782,
+      "sha256": "5a4d4779fd28c535d6ee4adac644de833a7f9dfd62fe1b6721df7bcceace2891"
+    },
+    {
+      "path": "stages/step-2/src/rules.js",
+      "bytes": 25120,
+      "sha256": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7"
+    },
+    {
+      "path": "stages/step-2/src/search.js",
+      "bytes": 14884,
+      "sha256": "f621c58006ae43b4f6abbb9fb9193142534319cea4a7e5bae8bae41412d8dece"
+    },
+    {
+      "path": "stages/tactical/scripts/bench-search-play-v5.js",
+      "bytes": 3513,
+      "sha256": "3d6c8dd4524801ba7fe6ef4aee9474d309f2154a63e92db8bcfa652a8fc5013a"
+    },
+    {
+      "path": "stages/tactical/src/board-masks.js",
+      "bytes": 2965,
+      "sha256": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+    },
+    {
+      "path": "stages/tactical/src/bot.js",
+      "bytes": 6265,
+      "sha256": "c10162ed6f65f0cb92e90a50c2cf285c73b06fae3df225623ef0b08c2d073f66"
+    },
+    {
+      "path": "stages/tactical/src/rules.js",
+      "bytes": 25120,
+      "sha256": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7"
+    },
+    {
+      "path": "stages/tactical/src/search.js",
+      "bytes": 15116,
+      "sha256": "bb79a89765e320259c11c13d681bd214b0d3726b57e1d7b996250a56189eb3a7"
+    },
+    {
+      "path": "step-1-results.json.gz",
+      "bytes": 43913,
+      "sha256": "2df04904d199892dc5ead87e6f68b726d5e5544e92bf38df51fbf03a6c74fed7"
+    },
+    {
+      "path": "step-1-tests.log.gz",
+      "bytes": 679,
+      "sha256": "8c2ca2fbab8fe6bebb8aa84d3db751753eeb78ba9a59525a6d09e12aea835ec8"
+    },
+    {
+      "path": "step-2-results.json.gz",
+      "bytes": 43896,
+      "sha256": "32de734e0c5d8e6cb468326548e4f06108e17d8840c47bad5a6f934d5025069b"
+    },
+    {
+      "path": "step-2-tests.log.gz",
+      "bytes": 680,
+      "sha256": "3b7fec542f610a005db7f5610924f8199d183d1e48ec2b06848cfdf129f68003"
+    },
+    {
+      "path": "step-3-tests.log.gz",
+      "bytes": 1512,
+      "sha256": "63a1db65c6911d67a73426de510caed1c5bc1eac1e494fc76cfe914fa6c610d3"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 569,
+      "sha256": "9de29804be32f8841f53fe0fd4819262b399d33fa1831e6b8c7b49c855b5de09"
+    },
+    {
+      "path": "tactical-corpus.json",
+      "bytes": 21539,
+      "sha256": "1dc01d42a120e63ced58cbfc74ac9b89f349fd8cf303f4e39bc39d8bbfd7a23e"
+    },
+    {
+      "path": "tactical-play-games.jsonl.gz",
+      "bytes": 69954,
+      "sha256": "692ddc1d1f8c04d9ffe683b2426b066943eee54805808bf08c668649973f6935"
+    },
+    {
+      "path": "tactical-play-progress.json",
+      "bytes": 500,
+      "sha256": "61ccd5d4ff83041d56566412763a37caef42c356ba306b099d3d29b8fa903968"
+    },
+    {
+      "path": "tactical-play-results.json",
+      "bytes": 2289,
+      "sha256": "ec522d7884bbf2da59a03a8fe3091a9483b0eb60ef63e90a04ed8c036d9853aa"
+    },
+    {
+      "path": "tactical-play.log.gz",
+      "bytes": 285,
+      "sha256": "4e1f013a071b36119561a75342b4e672bc4e4186a2ff9d3d53a44b913384cbc1"
+    },
+    {
+      "path": "tactical-tests.log.gz",
+      "bytes": 345,
+      "sha256": "dc9d3d58eae5cec56e9c3fb3a2eb9aa6637dda5066fe9d9b569600d4952472cc"
+    },
+    {
+      "path": "unit.log.gz",
+      "bytes": 10664,
+      "sha256": "48b88283e9bed268e1600c5cbde510313ed91f9839d269259a1086c0a086c1a0"
+    }
+  ]
+}

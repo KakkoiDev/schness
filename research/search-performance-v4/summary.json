@@ -1,0 +1,44 @@
+{
+  "initial": {
+    "fixedDepth": 4,
+    "medianMillis": 2610.1249579999985,
+    "millisByRepeat": [
+      2596.4444999999996,
+      2610.1249579999985,
+      2622.4897919999976
+    ],
+    "nodes": 165145
+  },
+  "rootPruned": {
+    "fixedDepth": 4,
+    "medianMillis": 900.0698759999941,
+    "millisByRepeat": [
+      891.8767510000002,
+      900.0698759999941,
+      906.2937889999994
+    ],
+    "nodes": 72755
+  },
+  "baseline": {
+    "fixedDepth": 4,
+    "medianMillis": 207.93899699999565,
+    "millisByRepeat": [
+      198.5651670000061,
+      207.93899699999565,
+      231.49562000000014
+    ],
+    "nodes": 50824,
+    "boundedMeanDepth": 4.28125
+  },
+  "candidate": {
+    "fixedDepth": 4,
+    "medianMillis": 157.61241600000176,
+    "millisByRepeat": [
+      156.41120999999657,
+      157.61241600000176,
+      172.30233199999884
+    ],
+    "nodes": 50824,
+    "boundedMeanDepth": 4.28125
+  }
+}

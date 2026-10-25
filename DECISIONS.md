@@ -1216,3 +1216,28 @@ report in docs/search-performance-report-2026-10-25.md.
 ## 2026-10-25 — Reversible Schness search and exact 4×4 geometry
 
 `board-masks` precomputes 16-square attack geometry and blocker masks. `rules.js` uses those exact masks for king safety and offers search-only make/unmake transitions. Public transitions still return independent positions; saved hashes, replay formats and rules are unchanged. The bot owns one cloned working position, incremental material/masks/current key and bounded, collision-free IDs for ordered extensions of the root's full repetition history. Score caches never discard repetition history. Board-only hints influence ordering, not score reuse. The generic search keeps immutable adapters compatible and supports optional reversible adapters, score-step-gated PVS, retrying aspiration windows, killer and history ordering. Null moves and late-move reductions remain disabled: no pruning assumption about future drop legality or objectives is introduced. Production metadata advances to Sharp v5 and Learning/Steady v4; frozen experiments retain their original engines.
+
+## 2026-10-25 — Exact generation and experimental selective search
+
+Schness's direct generator preserves historical legal action order. Check evasions and absolute
+pins prove ordinary non-king move safety on these rules (no en passant/castling); king moves and
+malformed multi-king boards retain simulation. Drops block every checking ray and cannot uncover
+an attack. Public legal actions remain independent copies; trusted pooled actions are frozen.
+Count-only leaf mobility uses identical legality, and linked continuations are flattened for
+published analysis. Each active search frame owns a distinct reused mask buffer.
+
+Optional countActions returns a nonnegative exact count and shares node facts with actions.
+Optional noisyActions receives {includeChecks} as a third argument. quiescenceChecks defaults
+false and only matters with a positive quiescenceDepth. Browser workers forward both this flag
+and the experimental lateMoveReduction flag with correlated validation errors.
+
+lateMoveReduction defaults false and requires an adapter.canReduce policy. Reduced fail-lows can
+hide a full-depth win, as guarded explicitly by test/search-tactics.test.js; this mode is not an
+exact-search replacement. Tactical checks and reductions remain opt-in after small draw-heavy
+screens. A king-escape evaluation bonus remains research-only. Default profiles are Sharp v7 and
+Learning/Steady v6, preserving requested depths, evaluation and zero quiescence. Multiplayer is
+deferred. Old frozen research runtimes are not rewritten.
+
+Guarded by test/search-generation.test.js, test/search-tactics.test.js,
+test/search-reversible.test.js, test/bot-worker.test.js and e2e/engine-contract.spec.js.
+See docs/search-performance-v5-report-2026-10-25.md for separate match results and limitations.

@@ -1,0 +1,104 @@
+{
+  "files": [
+    {
+      "path": "baseline-board-masks.js",
+      "bytes": 2253,
+      "sha256": "64f233ea005cf4b63aa4a95fa7f9ec2b8af5059c7a6bc34012980313af9f2cba"
+    },
+    {
+      "path": "baseline-bot.js",
+      "bytes": 5421,
+      "sha256": "0f50151746bc472b04abb1b5840a335988d6c5c694a5e8588b936938516eec68"
+    },
+    {
+      "path": "baseline-rules.js",
+      "bytes": 23481,
+      "sha256": "43cd753e0549cff21d949511b24c0160ad97e419570613d78d62f96e6b549c45"
+    },
+    {
+      "path": "baseline-search.js",
+      "bytes": 14054,
+      "sha256": "74f2507cfd9c1b06b2128366c400070fe71616e7509ee90ff4dce5a3cc01f993"
+    },
+    {
+      "path": "browser-results.json.gz",
+      "bytes": 20959,
+      "sha256": "5c152f170c80ac267f5319ec3f25f156c76f332e8ea3847c68a08eae2d5d5f00"
+    },
+    {
+      "path": "browser-summary.json",
+      "bytes": 265,
+      "sha256": "3c8145bd261f7898243e8d3f537a6403cee752895afe97228a7cd955754f8b16"
+    },
+    {
+      "path": "browser-worker.log.gz",
+      "bytes": 349,
+      "sha256": "98c10ae7da80a50ca0b7fa48e714b6c809ad669e20368c56b04403b10223167a"
+    },
+    {
+      "path": "cpu-profiles.tar.gz",
+      "bytes": 23807,
+      "sha256": "98da79c3d853ea37d51efd0589c1ed1ddfc17fe5dfb0add01c3a2e95a338cbcc"
+    },
+    {
+      "path": "play-games.jsonl.gz",
+      "bytes": 71192,
+      "sha256": "9180204e0143d09547a67580f78ffa97fb91f95425b09e886f220d36660b3eb6"
+    },
+    {
+      "path": "play-progress.json",
+      "bytes": 498,
+      "sha256": "c0bd6f98b795d5c524d64b8e6c016eab9a9a17c48272b619f95d007d78132ab7"
+    },
+    {
+      "path": "play-results.json",
+      "bytes": 1938,
+      "sha256": "f8771ce4fb0536de3cc64140832862d6ed8a54b258eba858ce2269ba98a157e5"
+    },
+    {
+      "path": "play.log.gz",
+      "bytes": 282,
+      "sha256": "f26427bfc23c2bd1b357a4ec07edb829bec5df3f61a1708a7139188def6d7886"
+    },
+    {
+      "path": "profile-summary.json",
+      "bytes": 5422,
+      "sha256": "6121b6c982be988fd90c8d856d7f1dee093fec0eef18be529dbdfbf18c6f0f8b"
+    },
+    {
+      "path": "results.json.gz",
+      "bytes": 38268,
+      "sha256": "bd3f7fb9e22fa56bac7dbf19b679e053afafbb5fd3cee933af93e6a6c017a166"
+    },
+    {
+      "path": "runtime/src/board-masks.js",
+      "bytes": 2965,
+      "sha256": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+    },
+    {
+      "path": "runtime/src/bot.js",
+      "bytes": 5486,
+      "sha256": "cf7bcc7bbe67bf3f1ff4bc3d40add9588df52768612b3f82c04a0c1ba20fdef5"
+    },
+    {
+      "path": "runtime/src/rules.js",
+      "bytes": 24505,
+      "sha256": "23a8c2506c52da70563ff11716eaa47f6f28497af5b5fd365a751d684c6bc9c8"
+    },
+    {
+      "path": "runtime/src/search.js",
+      "bytes": 14884,
+      "sha256": "f621c58006ae43b4f6abbb9fb9193142534319cea4a7e5bae8bae41412d8dece"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 903,
+      "sha256": "2b81bbb1d132a7c5e298443eae99cabcebe57f2f5734db050d892f72dd20c8d3"
+    },
+    {
+      "path": "unit.log.gz",
+      "bytes": 10490,
+      "sha256": "a538e9552a23bdd4d22e78fa9e528dceef9c6d97463cfd85583a4898cd770eb6"
+    }
+  ]
+}

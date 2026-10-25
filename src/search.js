@@ -24,6 +24,11 @@ export function createSearchEngine(adapter) {
     const merged = {...(options.strength === undefined ? {} : strengthOptions(options.strength)), ...options};
     merged.depth ??= 4;
     merged.quiescenceDepth ??= 0;
+    merged.quiescenceChecks ??= false;
+    if(typeof merged.quiescenceChecks!=='boolean')throw new TypeError('Invalid quiescenceChecks');
+    merged.lateMoveReduction ??= false;
+    if(typeof merged.lateMoveReduction!=='boolean')throw new TypeError('Invalid lateMoveReduction');
+    if(merged.lateMoveReduction && typeof adapter.canReduce!=='function')throw new TypeError('Late move reduction requires adapter.canReduce');
     merged.multiPv ??= 1;
     merged.maxTableEntries ??= 50000;
     merged.aspirationWindow ??= 50;
@@ -39,11 +44,13 @@ export function createSearchEngine(adapter) {
     if (!(maxNodes === Infinity || Number.isInteger(maxNodes) && maxNodes >= 1)) throw new RangeError('Invalid node budget');
     if (!(maxMillis === Infinity || Number.isFinite(maxMillis) && maxMillis > 0)) throw new RangeError('Invalid time budget');
     return {nodes:0, quiescenceNodes:0, cutoffs:0, cacheHits:0, tableCutoffs:0, hintHits:0,
-      rootResearches:0, aspirationResearches:0, pvsResearches:0, historyHits:0, evaluations:0, actionGenerations:0, transitions:0,
+      rootResearches:0, aspirationResearches:0, pvsResearches:0, historyHits:0, evaluations:0, actionGenerations:0, countGenerations:0, transitions:0,
+      reducedSearches:0,reductionResearches:0,lateMoveReduction:options.lateMoveReduction,
       maxNodes, deadline:maxMillis === Infinity ? Infinity : Date.now()+maxMillis,
       maxTableEntries:options.maxTableEntries, quiescenceDepth:options.quiescenceDepth ?? 0,
+      noisyOptions:Object.freeze({includeChecks:options.quiescenceChecks}),
       pvs:options.principalVariation !== false && adapter.scoreStep !== undefined,
-      history:options.useHistory === false ? null : new Map(),killers:new Map(),
+      history:options.useHistory === false ? null : new Map(),killers:new Map(),ranks:new Map(),
       reversible:options.useMutable !== false && typeof adapter.make === 'function',
       cache:options.useCache === false ? null : new Map(), hints:options.useCache === false ? null : new Map()};
   }
@@ -53,9 +60,19 @@ export function createSearchEngine(adapter) {
     if (!table.has(key) && table.size >= ctx.maxTableEntries) table.delete(table.keys().next().value);
     table.set(key,value);
   }
-  function factsFor(p,ctx) {
-    let actions;
-    return {actions() {if (actions === undefined) {ctx.actionGenerations++;actions=adapter.actions(p);}return actions;}};
+  function factsFor(p,ctx,preferCount=false) {
+    let actions,count;
+    const facts={
+      actions(){if(actions===undefined){ctx.actionGenerations++;actions=adapter.actions(p);if(count!==undefined && count!==actions.length)throw new Error('Action count disagrees with legal actions');count=actions.length;}return actions;},
+      actionCount(){
+        if(count===undefined){
+          if(preferCount && adapter.countActions){ctx.countGenerations++;count=adapter.countActions(p);if(!Number.isInteger(count)||count<0)throw new TypeError('Action count must be a nonnegative integer');}
+          else count=facts.actions().length;
+        }
+        return count;
+      },
+    };
+    return facts;
   }
   function apply(p,action,ctx) {ctx.transitions++;return adapter.apply(p,action);}
   function withChild(p,action,ctx,fn,cachedChild) {
@@ -65,17 +82,20 @@ export function createSearchEngine(adapter) {
     try {return fn(p);} finally {adapter.unmake(p,undo);}
   }
   function ordered(p,actions,hint,ctx,depth) {
-    const sorted=order(p,actions),player=adapter.turn(p),killers=ctx.killers.get(depth) ?? [];
-    const ranked=sorted.map((action,index)=>{
-      const id=actionIdentity(action),history=ctx.history?.get(`${player}:${id}`) ?? 0;
+    const sorted=[...order(p,actions)],player=adapter.turn(p),killers=ctx.killers.get(depth) ?? [];
+    const ranks=ctx.ranks,stride=sorted.length+1;
+    ranks.clear();let hasHint=false;
+    for(let index=0;index<sorted.length;index++){
+      const action=sorted[index],id=actionIdentity(action),history=ctx.history?.get(`${player}:${id}`) ?? 0;
       if(history)ctx.historyHits++;
-      return {action,index,id,history,tactical:Boolean(adapter.isTactical?.(p,action)),killer:killers.indexOf(id)};
-    });
-    if(hint!==undefined && ranked.some(x=>x.id===hint))ctx.hintHits++;
-    ranked.sort((a,b)=>Number(b.id===hint)-Number(a.id===hint) || Number(b.tactical)-Number(a.tactical) ||
-      Number(b.killer>=0)-Number(a.killer>=0) || (a.killer>=0&&b.killer>=0?a.killer-b.killer:0) ||
-      b.history-a.history || a.index-b.index);
-    return ranked.map(x=>x.action);
+      if(hint!==undefined && id===hint)hasHint=true;
+      const killer=killers.indexOf(id),tactical=Number(Boolean(adapter.isTactical?.(p,action)));
+      // Same lexicographic order as before, without one wrapper object per move.
+      ranks.set(action,((((Number(id===hint)*2+tactical)*3+(killer<0?0:2-killer))*1000001+history)*stride-index));
+    }
+    if(hasHint)ctx.hintHits++;
+    sorted.sort((a,b)=>ranks.get(b)-ranks.get(a));
+    return sorted;
   }
   function cutoff(p,action,depth,ctx){
     ctx.cutoffs++;
@@ -92,16 +112,16 @@ export function createSearchEngine(adapter) {
   }
   function visit(p, depth, alpha, beta, player, ctx, remainingQ=ctx.quiescenceDepth) {
     enter(ctx, depth <= 0 && ctx.quiescenceDepth > 0);
-    const facts=factsFor(p,ctx);
+    const facts=factsFor(p,ctx,depth<=0 && !remainingQ);
     const result = terminal(p, player, Math.max(0,depth),facts);
-    if (result !== null) return {value:result, pv:[]};
+    if (result !== null) return {value:result, line:null};
     const maximizing = adapter.turn(p) === player;
     if (depth <= 0) {
       ctx.evaluations++;
       const standPat = finite(adapter.evaluate(p, player,facts), 'Evaluation');
-      if (!remainingQ || (!adapter.noisyActions && !adapter.inDanger)) return {value:standPat,pv:[]};
+      if (!remainingQ || (!adapter.noisyActions && !adapter.inDanger)) return {value:standPat,line:null};
       const danger = Boolean(adapter.inDanger?.(p));
-      let best = {value:danger ? (maximizing ? -Infinity : Infinity) : standPat, pv:[]};
+      let best = {value:danger ? (maximizing ? -Infinity : Infinity) : standPat, line:null};
       if (!danger) {
         if (maximizing) alpha = Math.max(alpha, standPat);
         else beta = Math.min(beta, standPat);
@@ -109,10 +129,10 @@ export function createSearchEngine(adapter) {
       }
       const legal = facts.actions();
       if (!legal.length) throw new Error('Adapter must adjudicate a position without actions');
-      const actions = danger ? legal : (adapter.noisyActions?.(p, legal) ?? []);
+      const actions = danger ? legal : (adapter.noisyActions?.(p, legal, ctx.noisyOptions) ?? []);
       for (const action of order(p, actions)) {
         const child = withChild(p,action,ctx,next=>visit(next, 0, alpha,beta,player,ctx,remainingQ-1));
-        if (maximizing ? child.value > best.value : child.value < best.value) best = {value:child.value,pv:[action,...child.pv]};
+        if (maximizing ? child.value > best.value : child.value < best.value) best = {value:child.value,line:{action,next:child.line}};
         if (maximizing) alpha = Math.max(alpha,best.value);
         else beta = Math.min(beta,best.value);
         if (beta <= alpha) {ctx.cutoffs++;break;}
@@ -126,16 +146,27 @@ export function createSearchEngine(adapter) {
     const startAlpha=alpha, startBeta=beta, cached=ctx.cache?.get(key);
     if (cached) {
       ctx.cacheHits++;
-      if (cached.type === 'exact') return {value:cached.value,pv:cached.pv};
+      if (cached.type === 'exact') return {value:cached.value,line:cached.line};
       if (cached.type === 'lower') alpha = Math.max(alpha,cached.value);
       else beta = Math.min(beta,cached.value);
-      if (beta <= alpha) {ctx.tableCutoffs++;return {value:cached.value,pv:cached.pv};}
+      if (beta <= alpha) {ctx.tableCutoffs++;return {value:cached.value,line:cached.line};}
     }
     const actions = ordered(p,facts.actions(),ctx.hints?.get(hintKey),ctx,depth);
     if (!actions.length) throw new Error('Adapter must adjudicate a position without actions');
-    let best = {value:maximizing ? -Infinity : Infinity,pv:[]};
+    let best = {value:maximizing ? -Infinity : Infinity,line:null};
+    let moveIndex=0;
     for (const action of actions) {
+      const reduce=ctx.lateMoveReduction && depth>=3 && moveIndex>=3 && adapter.canReduce(p,action);
+      moveIndex++;
       const child = withChild(p,action,ctx,next=>{
+        // Experimental selective search, never part of the exact default mode.
+        // A reduced fail-low can still hide a full-depth tactical improvement.
+        if(reduce && !adapter.inDanger?.(next)){
+          ctx.reducedSearches++;
+          const reduced=visit(next,depth-2,alpha,beta,player,ctx);
+          if(maximizing?reduced.value<=alpha:reduced.value>=beta)return reduced;
+          ctx.reductionResearches++;
+        }
         if(!ctx.pvs || !Number.isFinite(best.value))return visit(next,depth-1,alpha,beta,player,ctx);
         const step=adapter.scoreStep;
         let result=maximizing?visit(next,depth-1,alpha,Math.min(beta,alpha+step),player,ctx)
@@ -143,13 +174,13 @@ export function createSearchEngine(adapter) {
         if(result.value>alpha && result.value<beta){ctx.pvsResearches++;result=visit(next,depth-1,alpha,beta,player,ctx);}
         return result;
       });
-      if (maximizing ? child.value > best.value : child.value < best.value) best = {value:child.value,pv:[action,...child.pv]};
+      if (maximizing ? child.value > best.value : child.value < best.value) best = {value:child.value,line:{action,next:child.line}};
       if (maximizing) alpha=Math.max(alpha,best.value);
       else beta=Math.min(beta,best.value);
       if (beta <= alpha) {cutoff(p,action,depth,ctx);break;}
     }
     boundedSet(ctx.cache,key,{...best,type:best.value<=startAlpha ? 'upper' : best.value>=startBeta ? 'lower' : 'exact'},ctx);
-    boundedSet(ctx.hints,hintKey,actionIdentity(best.pv[0]),ctx);
+    boundedSet(ctx.hints,hintKey,actionIdentity(best.line.action),ctx);
     return best;
   }
   function choose(position, options={}) {
@@ -189,7 +220,8 @@ export function createSearchEngine(adapter) {
             }
             return {rep,child};
           },next);
-          const line={action,score:child.value,pv:[action,...child.pv]};
+          const pv=[action];for(let link=child.line;link;link=link.next)pv.push(link.action);
+          const line={action,score:child.value,pv};
           lines.push({line,rep});
           if (!selected || line.score>selected.score || line.score===selected.score && rep<repetitions) {
             selected=line; repetitions=rep; ties=1;
@@ -223,7 +255,8 @@ export function createSearchEngine(adapter) {
     }
     return {...completed,requestedDepth:options.depth,nodes:ctx.nodes,quiescenceNodes:ctx.quiescenceNodes,
       stats:{cutoffs:ctx.cutoffs,cacheHits:ctx.cacheHits,tableCutoffs:ctx.tableCutoffs,hintHits:ctx.hintHits,
-        rootResearches:ctx.rootResearches,pvsResearches:ctx.pvsResearches,aspirationResearches:ctx.aspirationResearches,historyHits:ctx.historyHits,evaluations:ctx.evaluations,actionGenerations:ctx.actionGenerations,
+        rootResearches:ctx.rootResearches,pvsResearches:ctx.pvsResearches,aspirationResearches:ctx.aspirationResearches,historyHits:ctx.historyHits,evaluations:ctx.evaluations,actionGenerations:ctx.actionGenerations,countGenerations:ctx.countGenerations,
+        reducedSearches:ctx.reducedSearches,reductionResearches:ctx.reductionResearches,
         transitions:ctx.transitions,tableEntries:ctx.cache?.size ?? 0,hintEntries:ctx.hints?.size ?? 0}};
   }
   function score(position, player, depth=3, options={}) {

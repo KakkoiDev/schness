@@ -1102,3 +1102,35 @@ Implemented exact 4×4 attack masks, reversible search-only transitions with exc
 Against d1db2c5, all 96 depth-4 score pairs match: median workload time 893.25→201.13 ms (4.44x faster), nodes 72,755→50,824 (30.1% fewer). Same-node completed mean depth 4.1875→4.28125. Real Chromium at 100 ms/search completes 4.875→5.792 plies on average. A separate 32-game color-swapped Classic match at 25 ms/move scores candidate 12 wins / baseline 1 / 19 draws (13 mates, 17 ceiling draws, 2 repetitions). These correlated, short samples are not Elo or universal variant-strength evidence.
 
 All 327 workspace unit tests and four desktop/mobile-emulated browser worker tests pass. Verification replays all continuations/matches and checks sources, node caps and compressed hashes. Full report: docs/search-performance-v3-report-2026-10-25.md; complete measurements, prior source snapshots, logs, hashes and all match replays: research/search-performance-v3. Evaluator weights are unchanged; speculative pruning remains disabled.
+
+## 2026-10-25 — Exact two-player speedups and screened tactical search
+
+Finished and archived performance rounds four and five without changing older tournament runtimes.
+Round four adds direct generation, exact count-only mobility, pooled private actions, scratch
+legality masks, linked continuations and allocation-light ordering. Its same-session 32-position
+comparison measured 1.32× speed against the previous optimized engine, or 16.56× against the
+earliest preserved generalist baseline; these figures are workload-specific. Its 32-game
+equal-time screen was 3 wins / 0 losses / 29 draws (24 move-ceiling draws).
+
+Round five adds proved non-king legality and per-search stack mask reuse. Seven saved-workload
+passes measured 160.60→147.96 ms (7.9% less time), with identical depth-four scores and nodes.
+All 336 unit tests and four desktop/mobile-emulated browser-worker tests pass. New tests include
+15 independently exhaustive sparse mate fixtures across five rule recipes, 5,000 additional
+board comparisons, a checking-extension oracle and an explicit reduced-search tactical blind spot.
+
+Four separate 32-game Classic screens at 25 ms/action:
+- Final exact engine vs frozen round four: 2 wins / 0 losses / 30 draws.
+- Checking extension depth 2 vs frozen round four: 4 / 1 / 27.
+- Experimental late-move reductions vs frozen round four: 5 / 3 / 24.
+- King-escape evaluation bonus vs final exact engine: 3 / 2 / 27.
+
+These screens are not pooled and establish no Elo gain. Many draws hit the 100-play-ply ceiling.
+Exact speedups are retained; checking extensions and reductions are opt-in, and the evaluation
+bonus remains a frozen research runtime. Sharp v7 / Learning and Steady v6 retain previous default
+depths/evaluation and zero quiescence. Multiplayer is deferred. Null-move/SEE/futility pruning,
+trained evaluation and parallel search require separate evidence rather than automatic enabling.
+
+Full measurements, source snapshots, CPU profiles, all 160 round-four/five match replays, logs
+and checksum manifests are under research/search-performance-v4 and research/search-performance-v5.
+Both verification scripts pass. See docs/search-performance-v4-report-2026-10-25.md,
+docs/search-performance-v5-report-2026-10-25.md and docs/how-the-game-engine-works.md.

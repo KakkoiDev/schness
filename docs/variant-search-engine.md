@@ -140,3 +140,39 @@ add `pvsResearches`, `aspirationResearches` and `historyHits`.
 
 Production profiles now identify Sharp v5 and Learning/Steady v4. Quiescence stays opt-in; old
 frozen research runtimes and datasets are unchanged. See the performance-v3 report for measurements.
+
+## Direct generation and count-only leaf facts
+
+Optional `countActions(position)` returns the exact nonnegative integer number of legal actions,
+using the same rules as `actions`. `facts.actionCount()` shares a node's existing list when present.
+At static leaves with no remaining tactical extension it may use the count-only callback instead.
+Interior nodes keep one shared list, avoiding a count pass followed by a second generation pass.
+Adapters without `countActions` retain the existing list-based behavior. If a callback requests both,
+the counts must agree; invalid counts fail explicitly.
+
+Schness counts both sides' exact mobility without materializing leaf action lists. Private fixed
+action values and ray tables, early check/pin filtering, and per-generation scratch masks reduce
+allocation. Public `legalActions` still returns independent mutable action copies. Private linked
+continuations and a reusable ordering-rank map are flattened into independent published PV arrays.
+Named profiles are now Sharp v6 and Learning/Steady v5; their requested depths remain unchanged.
+The game/search explanation and multiplayer boundaries are in docs/how-the-game-engine-works.md.
+
+## Optional tactical checks and selective reductions
+
+`quiescenceChecks` is a boolean, false by default. When true, the search passes
+`{includeChecks:true}` as the third argument to the optional `noisyActions` adapter callback.
+The Schness adapter includes legal captures and checks, including permitted checking drops.
+Set a positive `quiescenceDepth` to use it. In-check tactical nodes still search every legal
+reply; tactical extensions share the normal node/time caps.
+
+`lateMoveReduction` is a boolean, false by default, and requires `adapter.canReduce(position,
+action)`. After three searched actions at remaining depth at least three, qualifying moves
+may be searched one ply shallower first. Improvements are searched again at full depth;
+reduced fail-lows are speculative and can miss a tactic. Schness excludes captures, drops,
+check evasions, setup and moves that leave the opponent in check. `reducedSearches` and
+`reductionResearches` report use. Root moves are never reduced. Other adapters must explicitly
+qualify moves according to their own rules. Exact reference mode keeps this option false.
+
+Sharp v7 and Learning/Steady v6 retain their previous evaluation, requested depths and default
+zero tactical extension. The new exact work avoids redundant king-safety simulations and
+reuses distinct mask buffers by active search-stack depth. Multiplayer remains out of scope.

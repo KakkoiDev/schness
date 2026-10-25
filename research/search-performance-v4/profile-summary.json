@@ -1,0 +1,228 @@
+{
+  "baseline": {
+    "sampledMicros": 5337625,
+    "topSelfSamples": [
+      {
+        "function": "generateLegalActions",
+        "file": "baseline-rules.js",
+        "micros": 978542,
+        "percent": 18.332910236294232
+      },
+      {
+        "function": "masksAfter",
+        "file": "baseline-board-masks.js",
+        "micros": 782830,
+        "percent": 14.666260743308118
+      },
+      {
+        "function": "",
+        "file": "baseline-rules.js",
+        "micros": 711499,
+        "percent": 13.329879862298307
+      },
+      {
+        "function": "advancePosition",
+        "file": "baseline-rules.js",
+        "micros": 404788,
+        "percent": 7.583672513524274
+      },
+      {
+        "function": "positionKey",
+        "file": "baseline-rules.js",
+        "micros": 379631,
+        "percent": 7.112358024402239
+      },
+      {
+        "function": "",
+        "file": "baseline-search.js",
+        "micros": 353749,
+        "percent": 6.627460715205733
+      },
+      {
+        "function": "make",
+        "file": "baseline-bot.js",
+        "micros": 247334,
+        "percent": 4.633783752136952
+      },
+      {
+        "function": "visit",
+        "file": "baseline-search.js",
+        "micros": 218463,
+        "percent": 4.092887754385143
+      },
+      {
+        "function": "orderActions",
+        "file": "baseline-bot.js",
+        "micros": 155288,
+        "percent": 2.909308915482073
+      },
+      {
+        "function": "legalActionsUnchecked",
+        "file": "baseline-rules.js",
+        "micros": 149580,
+        "percent": 2.802369967916442
+      },
+      {
+        "function": "ordered",
+        "file": "baseline-search.js",
+        "micros": 148087,
+        "percent": 2.7743987260251517
+      },
+      {
+        "function": "(garbage collector)",
+        "file": "",
+        "micros": 135374,
+        "percent": 2.536221634153767
+      },
+      {
+        "function": "raySquares",
+        "file": "baseline-rules.js",
+        "micros": 94045,
+        "percent": 1.7619259502119389
+      },
+      {
+        "function": "checkingDropAllowed",
+        "file": "baseline-rules.js",
+        "micros": 79333,
+        "percent": 1.4862977447834946
+      },
+      {
+        "function": "(program)",
+        "file": "",
+        "micros": 62376,
+        "percent": 1.1686096344347907
+      },
+      {
+        "function": "",
+        "file": "baseline-bot.js",
+        "micros": 50122,
+        "percent": 0.9390318727898644
+      },
+      {
+        "function": "boundedSet",
+        "file": "baseline-search.js",
+        "micros": 47417,
+        "percent": 0.8883539027189059
+      },
+      {
+        "function": "unmakeSearchAction",
+        "file": "baseline-rules.js",
+        "micros": 45832,
+        "percent": 0.8586590477974755
+      }
+    ]
+  },
+  "candidate": {
+    "sampledMicros": 3835083,
+    "topSelfSamples": [
+      {
+        "function": "generateLegalActions",
+        "file": "rules.js",
+        "micros": 820381,
+        "percent": 21.39147966289126
+      },
+      {
+        "function": "ordered",
+        "file": "search.js",
+        "micros": 452130,
+        "percent": 11.789314598927845
+      },
+      {
+        "function": "advancePosition",
+        "file": "rules.js",
+        "micros": 350128,
+        "percent": 9.129606842928823
+      },
+      {
+        "function": "accept",
+        "file": "rules.js",
+        "micros": 314499,
+        "percent": 8.200578709769776
+      },
+      {
+        "function": "positionKey",
+        "file": "rules.js",
+        "micros": 299997,
+        "percent": 7.822438262744249
+      },
+      {
+        "function": "masksAfter",
+        "file": "board-masks.js",
+        "micros": 268170,
+        "percent": 6.992547488541969
+      },
+      {
+        "function": "make",
+        "file": "bot.js",
+        "micros": 168667,
+        "percent": 4.398001294887229
+      },
+      {
+        "function": "visit",
+        "file": "search.js",
+        "micros": 145915,
+        "percent": 3.804741644444201
+      },
+      {
+        "function": "",
+        "file": "search.js",
+        "micros": 125998,
+        "percent": 3.285404774811914
+      },
+      {
+        "function": "orderActions",
+        "file": "bot.js",
+        "micros": 95084,
+        "percent": 2.479320525787838
+      },
+      {
+        "function": "masksInCheck",
+        "file": "board-masks.js",
+        "micros": 92461,
+        "percent": 2.4109256566285526
+      },
+      {
+        "function": "target",
+        "file": "rules.js",
+        "micros": 78916,
+        "percent": 2.0577390371994557
+      },
+      {
+        "function": "countLegalActionsUnchecked",
+        "file": "rules.js",
+        "micros": 76372,
+        "percent": 1.9914040973819862
+      },
+      {
+        "function": "(garbage collector)",
+        "file": "",
+        "micros": 74667,
+        "percent": 1.9469461286757028
+      },
+      {
+        "function": "",
+        "file": "bot.js",
+        "micros": 74582,
+        "percent": 1.9447297490041284
+      },
+      {
+        "function": "(program)",
+        "file": "",
+        "micros": 49830,
+        "percent": 1.2993199886417062
+      },
+      {
+        "function": "actionKey",
+        "file": "rules.js",
+        "micros": 43914,
+        "percent": 1.1450599635001382
+      },
+      {
+        "function": "makeSearchAction",
+        "file": "rules.js",
+        "micros": 39001,
+        "percent": 1.0169532184831462
+      }
+    ]
+  }
+}

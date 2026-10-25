@@ -42,7 +42,7 @@ test('optimized worker preserves variant rights and legal continuations',async({
     }
     if(rules.getResult(p))continue;
     const saved=JSON.stringify(p);
-    const response=await new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('Worker timeout '+id)),10000);worker.onmessage=({data})=>{clearTimeout(timeout);resolve(data);};worker.onerror=e=>{clearTimeout(timeout);reject(Error(e.message));};worker.postMessage({position:p,strength:100,maxNodes:256,analyze:true,multiPv:3,request:id});});
+    const response=await new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('Worker timeout '+id)),10000);worker.onmessage=({data})=>{clearTimeout(timeout);resolve(data);};worker.onerror=e=>{clearTimeout(timeout);reject(Error(e.message));};worker.postMessage({position:p,strength:100,maxNodes:256,analyze:true,multiPv:3,quiescenceDepth:1,quiescenceChecks:true,lateMoveReduction:true,request:id});});
     if(response.error)throw Error(id+': '+response.error);
     if(response.request!==id||response.analysis.nodes>256)throw Error('Worker protocol/budget '+id);
     if(!rules.legalActions(p).some(a=>rules.actionKey(a)===rules.actionKey(response.action)))throw Error('Illegal action '+id);

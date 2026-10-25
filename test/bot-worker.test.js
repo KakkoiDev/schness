@@ -12,5 +12,11 @@ test('worker preserves move protocol and offers explicit analysis with correlate
   assert.equal(replies[1].request,'analysis');assert.equal(replies[1].analysis.requestedDepth,1);assert.deepEqual(replies[1].action,replies[1].analysis.action);
   handler({data:{position:createInitialPosition(),strength:101,request:'bad'}});
   assert.equal(replies[2].request,'bad');assert.match(replies[2].error,/Level/);
+  handler({data:{position:createInitialPosition(),depth:1,quiescenceDepth:1,quiescenceChecks:true,lateMoveReduction:true,analyze:true,request:'experimental'}});
+  assert.equal(replies[3].request,'experimental');assert(replies[3].analysis);
+  for(const name of ['quiescenceChecks','lateMoveReduction']){
+   handler({data:{position:createInitialPosition(),[name]:1,request:name}});
+   assert.match(replies.at(-1).error,new RegExp(name));assert.equal(replies.at(-1).request,name);
+  }
  } finally {if(previous===undefined)delete globalThis.self;else globalThis.self=previous;}
 });

@@ -52,7 +52,7 @@ test('only trusted search modules may use engine entry points that skip validati
   for (const file of files) {
     if (allowed.has(file)) continue;
     const source = await read(`src/${file}`);
-    for (const shortcut of ['applyLegalAction', 'legalActionsUnchecked', 'getResultUnchecked', 'createSearchPosition', 'makeSearchAction', 'unmakeSearchAction']) {
+    for (const shortcut of ['applyLegalAction', 'legalActionsUnchecked', 'getResultUnchecked', 'countLegalActionsUnchecked', 'createSearchPosition', 'makeSearchAction', 'unmakeSearchAction']) {
       assert.ok(!source.includes(shortcut),
         `src/${file} uses ${shortcut}, which skips validation — use applyAction/legalActions instead`);
     }

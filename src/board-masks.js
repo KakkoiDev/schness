@@ -21,8 +21,9 @@ export function boardMasks(board){
  for(let i=0;i<16;i++){const o=board[i];if(o){masks[(o.owner==='white'?0:4)+PIECE_INDEX[o.piece]]|=1<<i;masks[8]|=1<<i;}}
  return masks;
 }
-export function masksAfter(masks,board,player,action){
- const next=masks.slice(),offset=player==='white'?0:4,toBit=1<<action.to,captured=board[action.to];
+export function masksAfter(masks,board,player,action,scratch){
+ const next=scratch ?? new Uint16Array(9);next.set(masks);
+ const offset=player==='white'?0:4,toBit=1<<action.to,captured=board[action.to];
  if(captured)next[(captured.owner==='white'?0:4)+PIECE_INDEX[captured.piece]]&=~toBit;
  if(action.type==='move'){
   const fromBit=1<<action.from,index=offset+PIECE_INDEX[board[action.from].piece];
@@ -41,4 +42,18 @@ export function masksInCheck(masks,player){
  const kings=masks[player==='white'?0:4];
  // Invalid multi-king boards retain the public rules' first-king behavior.
  return kings?masksAttack(masks,31-Math.clz32(kings&-kings),player==='white'?'black':'white'):false;
+}
+
+/** Geometry-only helpers for early check evasions and absolute pins. */
+export function betweenMask(from,to){return BETWEEN[from][to];}
+export function alignedSliders(masks,square,player){
+ const offset=player==='white'?0:4;
+ return (ROOK[square]&masks[offset+2])|(BISHOP[square]&masks[offset+3]);
+}
+export function maskAttackers(masks,square,player){
+ const offset=player==='white'?0:4;
+ let result=(KING[square]&masks[offset])|(KNIGHT[square]&masks[offset+1]);
+ let sliders=alignedSliders(masks,square,player);
+ while(sliders){const bit=sliders&-sliders,from=31-Math.clz32(bit);if(!(BETWEEN[square][from]&masks[8]))result|=bit;sliders^=bit;}
+ return result;
 }

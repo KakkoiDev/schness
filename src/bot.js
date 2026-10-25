@@ -12,7 +12,7 @@ import {
   getResultUnchecked,
   actionKey,
   isInCheck,
-  legalActionsUnchecked,
+  legalActionsUnchecked, countLegalActionsUnchecked,
   positionKey,
 } from './rules.js';
 
@@ -31,7 +31,7 @@ function prepare(position,options) {
   // IDs identify an ordered extension of this root's exact initial history.
   // Different histories never share an ID; equivalent reorderings may miss a hit.
   searchState.set(p,{material:material(p),masks:boardMasks(p.board),key:positionKey(p),history:1,nextHistory:2,
-    paths:new Map(),pathLimit:options.maxTableEntries ?? 50000});
+    maskStack:[],maskDepth:0,paths:new Map(),pathLimit:options.maxTableEntries ?? 50000});
   return p;
 }
 function make(position,action) {
@@ -48,7 +48,11 @@ function make(position,action) {
       }
     }
   }
-  state.masks=masksAfter(state.masks,position.board,player,action);
+  // A buffer belongs to one active stack frame. Siblings reuse it only after
+  // unmake has restored the parent's distinct buffer.
+  const scratch=state.maskStack[state.maskDepth] ??= new Uint16Array(9);
+  state.maskDepth++;
+  state.masks=masksAfter(state.masks,position.board,player,action,scratch);
   const undo=makeSearchAction(position,action);
   state.key=undo.key ?? positionKey(position);
   const path=`${state.history}:${state.key}`;
@@ -57,7 +61,7 @@ function make(position,action) {
   state.history=id;
   return {undo,saved};
 }
-function unmake(position,{undo,saved}) {unmakeSearchAction(position,undo);Object.assign(searchState.get(position),saved);}
+function unmake(position,{undo,saved}) {unmakeSearchAction(position,undo);const state=searchState.get(position);state.maskDepth--;Object.assign(state,saved);}
 
 
 /** Variant adapter keeps Schness legality, objectives and evaluation out of search. */
@@ -65,7 +69,10 @@ export const schnessSearch = createSearchEngine({
   prepare, make, unmake,
   scoreStep:1,
   isTactical:(p,a)=>a.type==='move' && Boolean(p.board[a.to]),
+  canReduce:(p,a)=>p.phase==='play' && a.type==='move' && !p.board[a.to] &&
+    !(searchState.has(p)?masksInCheck(searchState.get(p).masks,p.turn):isInCheck(p,p.turn)),
   actions: p=>legalActionsUnchecked(p,searchState.get(p)?.masks),
+  countActions:p=>countLegalActionsUnchecked(p,searchState.get(p)?.masks),
   actionKey,
   apply: applyLegalAction,
   turn: p => p.turn,
@@ -73,12 +80,20 @@ export const schnessSearch = createSearchEngine({
   hintKey: p => searchState.get(p)?.key ?? positionKey(p),
   terminal: (p, player, depth, facts) => {
     const state=searchState.get(p);
-    const result=getResultUnchecked(p, facts.actions(),state?.key,state?.masks);
+    const result=getResultUnchecked(p, facts.actionCount(),state?.key,state?.masks);
     return !result ? null : result.type==='draw' ? 0 : result.winner===player ? MATE+depth : -MATE-depth;
   },
   evaluate,
   inDanger: p => searchState.has(p)?masksInCheck(searchState.get(p).masks,p.turn):isInCheck(p,p.turn),
-  noisyActions: (p, actions) => actions.filter(a => a.type === 'move' && p.board[a.to]),
+  noisyActions: (p, actions, options) => {
+    if(!options.includeChecks)return actions.filter(a => a.type === 'move' && p.board[a.to]);
+    const masks=searchState.get(p)?.masks ?? boardMasks(p.board),scratch=new Uint16Array(9);
+    const enemy=p.turn===WHITE?BLACK:WHITE;
+    // The input is already legal: variant-specific forbidden checks and mates
+    // cannot enter this list. This includes checking drops when permitted.
+    return actions.filter(a => a.type==='move' && p.board[a.to] ||
+      masksInCheck(masksAfter(masks,p.board,p.turn,a,scratch),enemy));
+  },
   order: orderActions,
   repetitions: p => p.repetitions[searchState.get(p)?.key ?? positionKey(p)] ?? 0,
 });
@@ -92,9 +107,9 @@ export function scorePosition(position, depth=3) { return schnessSearch.score(po
 function evaluate(position, player, facts) {
   const enemy = player === WHITE ? BLACK : WHITE;
   let score=(searchState.get(position)?.material ?? material(position))*(player===WHITE?1:-1);
-  score += ((position.turn === player ? facts.actions() : legalActionsUnchecked({ ...position, turn: player })).length -
-            (position.turn === enemy ? facts.actions() : legalActionsUnchecked({ ...position, turn: enemy })).length) * 2;
   const masks=searchState.get(position)?.masks ?? boardMasks(position.board);
+  score += ((position.turn===player?facts.actionCount():countLegalActionsUnchecked({...position,turn:player},masks))-
+    (position.turn===enemy?facts.actionCount():countLegalActionsUnchecked({...position,turn:enemy},masks)))*2;
   if (masksInCheck(masks, enemy)) score += 30;
   if (masksInCheck(masks, player)) score -= 30;
   return score;
