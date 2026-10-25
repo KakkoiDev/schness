@@ -1,0 +1,28 @@
+{
+  "baselineCommit": "bb6a09f85617027a051f60fcd778ff4b9b07e0e8",
+  "rules": "Classic Schness quiet drops; identical current rules for both engines",
+  "maxNodes": 1024,
+  "maxPlies": 120,
+  "depth": 4,
+  "starts": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "profiles": [
+    "candidate-q0",
+    "candidate-q2"
+  ],
+  "sources": {
+    "../src/search.js": "c3559e5346b63a9c34146cb43fc2ec81e5a937964101dff593e75362a6e76604",
+    "../src/bot.js": "d23dfd2ab189ec791ed61810b1a8dd669413fd61f610506376faebbf92f0b75c",
+    "../src/rules.js": "8d8a4628cad97da1f21b1f731e55da74f5cc88c9a4d9c3e7a5b64b4ed3a46b9d",
+    "../research/engine-generalist-v1/baseline-search.js": "6cfbcbd5904766934c73570caa5386307e2b3715090bd6f4d63d6ef5b54a26ab",
+    "../research/engine-generalist-v1/baseline-bot.js": "98c3051531384e52cbce7c519c48b936fe81e348cee2b85f3ba5285467a2230c"
+  }
+}

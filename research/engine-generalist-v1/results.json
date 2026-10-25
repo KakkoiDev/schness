@@ -1,0 +1,60 @@
+{
+  "games": 32,
+  "replaysVerified": true,
+  "summary": {
+    "candidate-q0": {
+      "candidateWins": 7,
+      "baselineWins": 5,
+      "draws": 4,
+      "reasons": {
+        "checkmate": 12,
+        "ply-limit": 4
+      },
+      "candidateNodes": 505184,
+      "baselineNodes": 497349,
+      "candidateMillis": 9075.755163999973,
+      "baselineMillis": 9187.86178599999,
+      "completedDepth": {
+        "candidate": {
+          "1": 8,
+          "2": 175,
+          "3": 296,
+          "4": 25
+        },
+        "baseline": {
+          "1": 8,
+          "2": 175,
+          "3": 278,
+          "4": 42
+        }
+      }
+    },
+    "candidate-q2": {
+      "candidateWins": 8,
+      "baselineWins": 3,
+      "draws": 5,
+      "reasons": {
+        "ply-limit": 5,
+        "checkmate": 11
+      },
+      "candidateNodes": 715991,
+      "baselineNodes": 703272,
+      "candidateMillis": 14872.226208999931,
+      "baselineMillis": 12182.77799200004,
+      "completedDepth": {
+        "candidate": {
+          "1": 48,
+          "2": 481,
+          "3": 163,
+          "4": 11
+        },
+        "baseline": {
+          "1": 19,
+          "2": 169,
+          "3": 477,
+          "4": 37
+        }
+      }
+    }
+  }
+}

@@ -33,7 +33,7 @@ score, visited nodes, completed depth and whether the search stopped at a budget
 
     analyzeAction(position, {strength: 40, maxNodes: 10000})
 
-Strength 0–100 maps monotonically to depth 1–6 and node budget 256–262144. Explicit depth and node
+Integer level (`strength`) 0–100 maps directly to requested depth 0–100 with a default safety budget of 262144 nodes. Level 0 selects a legal ordered action without evaluating successors. One depth unit is one action by either player, including extra turns. Explicit depth and node
 options override the mapped values. Strength is not Elo, and different variants have different
 branching factors. Use fixed node budgets for reproducible research. Optional maxMillis is a
 wall-clock responsiveness cap, unsuitable as the sole budget for comparisons across machines.
@@ -50,7 +50,7 @@ synchronous callbacks mid-call. Random tie-breaking remains seedable.
 
 The Schness adapter's transposition key includes the whole repetition map, not only the board.
 Two identical boards can have different future draw outcomes. This may reduce cache hits and
-change choices; fixed-depth runtime can increase. Current metadata therefore identifies Sharp
+change choices; fixed-depth runtime can increase. Existing preset metadata identifies Sharp
 v3 and Learning/Steady v2. Historical Sharp v2 datasets keep their original versions and frozen
 source. Do not pool engine versions into a balance claim.
 
@@ -60,3 +60,32 @@ requests at phone/desktop widths verify both old depth and new bounded-strength 
 For further strength improvement, benchmark tactical correctness and nodes per second, then
 head-to-head at matched budgets on fresh openings. Faster code and deeper defaults alone are
 not evidence of a stronger engine.
+
+## General game contract and analysis
+
+The shared engine targets deterministic, two-player, zero-sum games with perfect information.
+It does not assume a grid, chess, alternating turns or a particular player identity. Stochastic,
+hidden-information, simultaneous-action and multiplayer games need different search support.
+Adapters must be pure, provide complete state identities, and adjudicate all terminal states.
+Search can explore a new objective immediately, but good heuristic weights require calibration.
+
+`choose` also returns `pv` (the chosen continuation) and `variations`; `multiPv: 3` requests up to
+three ranked root alternatives. Scores share the root player's perspective. Only completed
+iterations are exposed; a budget fallback has no evaluated continuation. These are predicted
+best-play lines, not an enumeration of all possible futures or a proof of optimal play.
+
+Optional `noisyActions(position, legalActions)` and `inDanger(position)` enable bounded tactical
+extensions with `quiescenceDepth: 1..8`. Danger searches every legal reply instead of allowing a
+static stand-pat score. Extensions share the normal node/time budget, stop at their explicit
+limit and never alter legal rules. At the extension limit even a dangerous state is evaluated
+statically. Defaults remain zero; Schness supplies capture and check callbacks but does not yet
+turn extensions on in its production profiles. No new strength version or Elo claim is made.
+
+Regression coverage includes a separate take-away game, altered victory objectives, extra turns,
+a tactical horizon trap, forced quiet evasions, legal ranked continuations, cached/uncached
+agreement and exact budget accounting. Tic-tac-toe is checked against an independent exhaustive
+minimax oracle on all 5,478 reachable positions.
+
+The worker keeps its existing `{action, request}` response. Send `analyze: true` to also receive
+`analysis`, including requested/completed depth, budget status and ranked continuations. It accepts
+`multiPv` and `quiescenceDepth`; invalid options return an error with the original request ID.

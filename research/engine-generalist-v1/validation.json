@@ -1,0 +1,29 @@
+{
+  "workspaceUnit": {
+    "passed": 314,
+    "failed": 0
+  },
+  "candidateHappyPaths": {
+    "passed": 51,
+    "failed": 5,
+    "skipped": 2
+  },
+  "baselineSameInterfaceHappyPaths": {
+    "passed": 50,
+    "failed": 6,
+    "skipped": 2
+  },
+  "dedicatedBrowserWorker": {
+    "passed": 2,
+    "failed": 0
+  },
+  "candidateOnlyFailureSerialRecheck": {
+    "passed": 3,
+    "failed": 0
+  },
+  "logs": {
+    "file": "validation-logs.tar.gz",
+    "bytes": 48287,
+    "sha256": "0fe68afe7f5a01d39afc4e52e3184bab0400142241820358b2b3983e70e8affc"
+  }
+}

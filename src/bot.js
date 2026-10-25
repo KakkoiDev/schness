@@ -27,6 +27,8 @@ export const schnessSearch = createSearchEngine({
     return !result ? null : result.type==='draw' ? 0 : result.winner===player ? MATE+depth : -MATE-depth;
   },
   evaluate,
+  inDanger: p => isInCheck(p, p.turn),
+  noisyActions: (p, actions) => actions.filter(a => a.type === 'move' && p.board[a.to]),
   order: orderActions,
   repetitions: p => p.repetitions[positionKey(p)] ?? 0,
 });

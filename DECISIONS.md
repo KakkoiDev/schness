@@ -1186,3 +1186,16 @@ maps to deterministic depth/node budgets; wall time is optional and not a fair b
 Bounded iterative search returns only a completed depth or a labelled legal fallback. Schness
 search cache identity includes repetition history; metadata advances Sharp to v3 and lower levels
 to v2. No claim of stronger play without head-to-head evidence. Cache bumped to v118 for new module.
+
+
+## 2026-10-25 — General game analysis and exact numeric level semantics
+
+The search adapter targets deterministic two-player zero-sum perfect-information games, including
+extra turns. Numeric level (`strength`) is now integer requested action depth 0–100, replacing
+the earlier nonlinear 1–6 mapping. Level zero evaluates no successor. Numeric requests have a
+262144-node default safety cap; requestedDepth and completedDepth must remain distinct.
+Optional adapter-defined tactical extensions share the cap and default to zero. Ranked lines
+are returned only for complete iterations. Named fixed-depth presets remain unchanged. The
+worker includes analysis only when requested, preserving its action-only protocol otherwise.
+Tic-tac-toe exhaustive oracle coverage guards the general-game contract. No Elo or guaranteed
+playing-strength improvement follows from this API change. See docs/generalist-engine-report-2026-10-25.md.
