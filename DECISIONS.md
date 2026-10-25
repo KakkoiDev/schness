@@ -35,7 +35,7 @@ Three documents, deliberately separate:
 
 | layer | modules | property |
 |---|---|---|
-| **Pure core** | `rules` `bot` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` `variants` | No DOM, no network. Directly unit-tested. |
+| **Pure core** | `rules` `bot` `search` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` `variants` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `p2p-core`, which carries `trystero`) | WebRTC over public Nostr relays; also another tab of the same browser, and a local `p2p-core serve`. |
 | **DOM glue** | `main` `lobby` `lobby-board` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
 
@@ -1197,3 +1197,14 @@ drop-mate prohibition is composable with capture banks and evaluates king-safe l
 replies under that same rule. Board-move mates remain legal, and recursive reply drops
 strictly consume reserves. Freeze adapter identity as variant-objective-search-v2; keep
 all prior runtimes and datasets separate. No production app imports or official adoption.
+### Symmetric armies and adaptable search (2026-10-24)
+
+research/armies-v1 screens all 31 symmetric rook/bishop/knight multisets of size 2–4 under Classic
+rules, with frozen Sharp v2, 48 games each. No new movement types, asymmetric armies or changed
+capture rules are implied. The source fork and per-run fingerprints preserve the original AI.
+Production src/search is pure, adapter-driven two-player zero-sum search. Variants supply legal
+actions, state application, identity, terminal scoring and evaluation. Optional numeric strength
+maps to deterministic depth/node budgets; wall time is optional and not a fair benchmark alone.
+Bounded iterative search returns only a completed depth or a labelled legal fallback. Schness
+search cache identity includes repetition history; metadata advances Sharp to v3 and lower levels
+to v2. No claim of stronger play without head-to-head evidence. Cache bumped to v118 for new module.
