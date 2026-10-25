@@ -1145,3 +1145,18 @@ all seed/variant/matchup/king-start combinations complete. Local pilot datasets 
 or alter defaults. Generated output/local-experiments is ignored by Git; preserve datasets and
 runtime together. No app shell files changed, so no service-worker bump is needed for this harness.
 
+## 2026-10-24 — design/ is a reference, not a layer
+
+`design/` holds review material: a system page and proposed screens. It links the app's stylesheets
+so it cannot describe tokens the app does not have. Nothing in `src/` or any shipped page may import
+from it, and it stays out of the service worker's `SHELL` — the moment either changes, it has become
+part of the product and belongs in the invariants above, not in a folder README.
+
+### Custom setup and countdown proposals (2026-10-24)
+
+Classic remains the quick-start default. Proposed advanced setup must validate a resolved recipe
+before both players accept it; random recipes record the generator version and seed. Buying
+armies requires private simultaneous choices and a joint reveal, with public budgets and limits.
+Countdown deployment is documented separately and is not a supported ruleset yet. Do not expose
+larger boards, unimplemented pieces or countdown controls as playable merely because they appear
+in design documents. See docs/custom-game-builder-proposal.md and docs/countdown-variant-proposal.md.

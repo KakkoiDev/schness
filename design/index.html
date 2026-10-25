@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="icon" href="../icon.svg">
+  <title>Design reference · Schness</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../ui.css">
+  <link rel="stylesheet" href="design.css">
+</head>
+<body class="ref-body">
+  <main class="ref-index">
+    <p class="eyebrow">Schness · Classic first</p>
+    <h1>Design reference</h1>
+    <p class="ref-lede">Four proposed screens and the component system behind them. These pages are
+      <strong>not part of the app</strong> — nothing links to them, the service worker does not cache
+      them, and no shipped page imports anything from this folder. They exist to be reviewed in a
+      browser at a real width.</p>
+    <p><a class="btn" href="system.html" data-variant="primary">The system →</a>
+       <button class="btn" type="button" data-variant="secondary" data-ref-theme>Dark</button></p>
+    <div class="ref-grid"><article class="ref-card"><iframe class="ref-frame" src="screens/play.html" title="Play — the home page" loading="lazy"></iframe><div class="ref-card-body"><h3><a href="screens/play.html">Play — the home page</a></h3><p>The board is the page at every width. This is the screen a phone does not have today.</p></div></article><article class="ref-card"><iframe class="ref-frame" src="screens/game.html" title="Reserve selected" loading="lazy"></iframe><div class="ref-card-body"><h3><a href="screens/game.html">Reserve selected</a></h3><p>Nine squares accept the rook; five are crossed because a drop there would give check — and the status line says so.</p></div></article><article class="ref-card"><iframe class="ref-frame" src="screens/result.html" title="Result" loading="lazy"></iframe><div class="ref-card-body"><h3><a href="screens/result.html">Result</a></h3><p>The final position stays on screen. The result is a card above it, not a toast over it.</p></div></article><article class="ref-card"><iframe class="ref-frame" src="screens/settings.html" title="Settings" loading="lazy"></iframe><div class="ref-card-body"><h3><a href="screens/settings.html">Settings</a></h3><p>One sheet, reachable from the header on every page. Per-game choices stay beside the board.</p></div></article></div>
+    <section class="ref-section"><h2>What is proposed, and what already ships</h2>
+      <p class="ref-lede">Everything here uses the shipped classes except two additions, both marked
+        PROPOSED in <code>design.css</code>: <code>.square.refused</code>, and the brand mark as an
+        image rather than the Arial letterform tile. The rest is the system as it stands.</p>
+    </section>
+  </main>
+  <script src="preview.js" type="module"></script>
+</body>
+</html>

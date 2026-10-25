@@ -945,3 +945,55 @@ docs/local-experiments.md. The designer report arrived during this work; its pat
 applied as a separate design-reference change. Its 4.5 contrast-floor correction
 is verified against test/contrast.test.js and reflected in the designer brief.
 
+## 2026-10-24 — A design reference that cannot rot
+
+**Question.** The Classic-first pass produced an audit and an IA recommendation. Where do the
+screens live so they can be reviewed without being mistaken for shipped product?
+
+**Implementation.** `design/` gains a contact sheet, a system page and four screens: Play, a
+reserve selected, a result, and settings. They load `../styles.css` and `../ui.css` *before* their
+own `design.css`, so every swatch is `var(--token)` and every component is the shipped class. A
+reference that restates the tokens is a second source of truth, and the copy is what rots.
+
+**Designer-reported measurements (not independently reproduced here).** Driving the shipped site: the first action a
+new player must take is below the fold on every viewport — 7px at 390×844, 205px at 360×640, and
+125px even at 1440×900. `.lobby-play{display:none}` below 761px, so a phone has no route to a game
+at all; its only play entry is the card reading "Bot arena — take this position further", and
+`DECISIONS.md` says that sentence is true *because the card inherits the lobby board*. On a phone
+there is no board to inherit, so it is false exactly where it is the only door. And with a rook in
+hand against a black king on b4, six of fourteen empty squares refuse the drop — precisely rank 4
+and the b-file. The rule is correct; the interface never says why, and the tap clears the selection.
+
+**Rejected:** implementing the IA into `index.html` and `watch.html` in the same pass. That
+reverses "The home page is a board, not a picture of one", which needs its own commit with the fold
+numbers as evidence, a `CACHE` bump and the e2e specs updated. A proposal that quietly ships is not
+a proposal.
+
+**Also rejected:** a `design/tokens.css` for the app to import. It reads as adoptable and would
+become a second place tokens live. The reference consumes `styles.css`; it does not feed it.
+
+**Not a defect, worth recording.** `.bank-piece` measures 41×44 in the arena but 46×46 in the
+reference's layout. The reserve button is not inherently under the 44px floor — that page's column
+is squeezing it, which makes it a layout fix rather than a component one.
+
+**Next measurement.** Someone opening `design/index.html` and disagreeing with the Play screen
+before any of it is built. Still, behind that: a real phone.
+
+### Reference publication and new setup proposals
+
+The supplied patch is preserved in design/designer-original.patch alongside the designer's
+report, original canvas, Classic/cyberpunk raster concepts and prompt history. The Classic v2
+raster is the corrected selected concept; the first draft remains identified as a draft.
+A small reference-only fix synchronizes the theme toggle label when opening a dark-theme URL.
+Browser verification covered all six reference pages at 390 and 1440 pixels, light and dark:
+no page errors, failing resource requests or horizontal overflow. Play screenshots were inspected;
+these static screens do not establish product usability or real-device behavior. All 259 unit
+checks passed after applying the supplied patch.
+
+The user's next ideas are captured in docs/custom-game-builder-proposal.md and
+countdown-variant-proposal.md. Keep Classic as quick start; advanced games use a validated recipe,
+with public asymmetries and private simultaneous army purchases followed by joint reveal.
+Countdown gates drops on owner turns, comparing reset-on-capture against initial-unlock-only.
+A forced wait only outside check avoids manufacturing stalemate while reserves cool down.
+These are proposals, not implemented presets; the active 36-preset batch stays frozen. Next:
+review setup flow, settle timer timing and wait semantics, then implement and test separately.

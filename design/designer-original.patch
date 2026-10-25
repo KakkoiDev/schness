@@ -1,0 +1,614 @@
+From bfd1b4c3c462cde68ca2881177685a6462607150 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 24 Oct 2026 15:18:37 +0900
+Subject: [PATCH] A design reference for Classic that cannot rot
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Adds design/ : a contact sheet, a component and token system page, and four
+proposed screens (Play, a reserve selected, a result, settings).
+
+The pages load ../styles.css and ../ui.css before their own design.css, so every
+swatch is var(--token) and every component is the shipped class. A reference that
+restates the tokens is a second source of truth, and the copy is what rots.
+
+Nothing in the app links here, nothing in src/ imports from here, and design/ is
+not in the service worker's SHELL — so no CACHE bump is needed. DECISIONS.md
+records that boundary; the moment it stops holding, this stops being a reference.
+
+Two additions are marked PROPOSED in design.css and do not ship: .square.refused,
+and the brand mark as an image rather than the Arial letterform tile.
+
+Measured first, so the screens answer something. The first action is below the
+fold on every viewport (7px at 390x844, 205px at 360x640, 125px at 1440x900);
+.lobby-play is display:none below 761px so a phone has no route to a game; and a
+drop that would give check is refused in silence — with a rook in hand against a
+black king on b4, the six refused squares are exactly rank 4 and the b-file.
+
+DEVLOG has the full entry, including what was rejected: implementing the IA in
+this pass, and shipping a design/tokens.css for the app to import.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Ui6JBZRY3fRTtmxFKpEtSP
+---
+ DECISIONS.md                 |   7 +++
+ DEVLOG.md                    |  34 +++++++++++
+ design/README.md             |  48 +++++++++++++++
+ design/design.css            | 114 +++++++++++++++++++++++++++++++++++
+ design/index.html            |  32 ++++++++++
+ design/preview.js            |  15 +++++
+ design/screens/game.html     |  41 +++++++++++++
+ design/screens/play.html     |  45 ++++++++++++++
+ design/screens/result.html   |  41 +++++++++++++
+ design/screens/settings.html |  51 ++++++++++++++++
+ design/system.html           |  57 ++++++++++++++++++
+ 11 files changed, 485 insertions(+)
+ create mode 100644 design/README.md
+ create mode 100644 design/design.css
+ create mode 100644 design/index.html
+ create mode 100644 design/preview.js
+ create mode 100644 design/screens/game.html
+ create mode 100644 design/screens/play.html
+ create mode 100644 design/screens/result.html
+ create mode 100644 design/screens/settings.html
+ create mode 100644 design/system.html
+
+diff --git a/DECISIONS.md b/DECISIONS.md
+index c479039..91cef3d 100644
+--- a/DECISIONS.md
++++ b/DECISIONS.md
+@@ -1054,3 +1054,10 @@ variant is offered as a player-facing matchmaking choice. An experiment branch m
+ `experiment/checking-drops-*` runs the full 1,040-game checking-drops tournament automatically;
+ manual runs expose the same boolean input. Aggregation rejects mixed-ruleset shards rather than
+ silently producing invalid comparisons.
++
++## 2026-10-24 — design/ is a reference, not a layer
++
++`design/` holds review material: a system page and proposed screens. It links the app's stylesheets
++so it cannot describe tokens the app does not have. Nothing in `src/` or any shipped page may import
++from it, and it stays out of the service worker's `SHELL` — the moment either changes, it has become
++part of the product and belongs in the invariants above, not in a folder README.
+diff --git a/DEVLOG.md b/DEVLOG.md
+index 9f0ecf3..c7f853d 100644
+--- a/DEVLOG.md
++++ b/DEVLOG.md
+@@ -770,3 +770,37 @@ first-player-biased and less varied. Retain the ruleset switch only for reproduc
+ not expose it in matchmaking or mix its records into canonical datasets. A future compensation
+ idea must first pass an 80-game pilot with White below 60% of decisive games before spending a full
+ tournament run. See the [full variant report](docs/tournament-report-2026-10-23-checking-drops.md).
++
++## 2026-10-24 — A design reference that cannot rot
++
++**Question.** The Classic-first pass produced an audit and an IA recommendation. Where do the
++screens live so they can be reviewed without being mistaken for shipped product?
++
++**Implementation.** `design/` gains a contact sheet, a system page and four screens: Play, a
++reserve selected, a result, and settings. They load `../styles.css` and `../ui.css` *before* their
++own `design.css`, so every swatch is `var(--token)` and every component is the shipped class. A
++reference that restates the tokens is a second source of truth, and the copy is what rots.
++
++**Measured first, so the screens answer something.** Driving the shipped site: the first action a
++new player must take is below the fold on every viewport — 7px at 390×844, 205px at 360×640, and
++125px even at 1440×900. `.lobby-play{display:none}` below 761px, so a phone has no route to a game
++at all; its only play entry is the card reading "Bot arena — take this position further", and
++`DECISIONS.md` says that sentence is true *because the card inherits the lobby board*. On a phone
++there is no board to inherit, so it is false exactly where it is the only door. And with a rook in
++hand against a black king on b4, six of fourteen empty squares refuse the drop — precisely rank 4
++and the b-file. The rule is correct; the interface never says why, and the tap clears the selection.
++
++**Rejected:** implementing the IA into `index.html` and `watch.html` in the same pass. That
++reverses "The home page is a board, not a picture of one", which needs its own commit with the fold
++numbers as evidence, a `CACHE` bump and the e2e specs updated. A proposal that quietly ships is not
++a proposal.
++
++**Also rejected:** a `design/tokens.css` for the app to import. It reads as adoptable and would
++become a second place tokens live. The reference consumes `styles.css`; it does not feed it.
++
++**Not a defect, worth recording.** `.bank-piece` measures 41×44 in the arena but 46×46 in the
++reference's layout. The reserve button is not inherently under the 44px floor — that page's column
++is squeezing it, which makes it a layout fix rather than a component one.
++
++**Next measurement.** Someone opening `design/index.html` and disagreeing with the Play screen
++before any of it is built. Still, behind that: a real phone.
+diff --git a/design/README.md b/design/README.md
+new file mode 100644
+index 0000000..52c5980
+--- /dev/null
++++ b/design/README.md
+@@ -0,0 +1,48 @@
++# Design reference
++
++Four proposed screens and the component system behind them, for the "Classic first" pass.
++
++Open `design/index.html` in a browser from the repo root (`npx serve .`, or any static server —
++the pages use relative paths and the same CSP as the app, so `file://` will not work).
++
++| File | What it is |
++|---|---|
++| `index.html` | Contact sheet. Live previews of the four screens, in iframes, at real widths. |
++| `system.html` | Tokens and components. Swatches are `var(--token)` read from the real `styles.css`. |
++| `screens/play.html` | Play — the home page, board above the fold at every width. |
++| `screens/game.html` | A reserve piece selected, legal squares marked, refused squares explained. |
++| `screens/result.html` | Checkmate, with the final position still on screen. |
++| `screens/settings.html` | The settings sheet. |
++| `design.css` | Chrome for these pages only. Every rule is `.ref-`-prefixed or scoped under one. |
++| `preview.js` | A theme toggle. Deliberately separate from `src/theme.js` so opening a reference page at a theme does not touch app storage. |
++
++## This is not part of the app
++
++- No shipped page links here, and nothing in `src/` imports from here.
++- `design/` is **not** in the service worker's `SHELL`, so none of it is cached or deployed as app shell.
++- Adding files here needs no `CACHE` bump.
++
++If any of those three stop being true, this folder has become part of the product and needs an
++entry in `DECISIONS.md` rather than a line in this README.
++
++## Why it links the app's stylesheets
++
++`system.html` and the screens load `../styles.css` and `../ui.css` before `design.css`. That is the
++point: the swatches and the components *are* the shipped ones. A reference that restates tokens is
++a second source of truth, and the one that rots is always the one nobody runs.
++
++## What is proposed here, and what already ships
++
++Everything uses shipped classes except two additions, both marked `PROPOSED` in `design.css`:
++
++- **`.square.refused`** — today a drop that would give check is rejected in silence and the
++  selection is cleared. Measured: with a rook in hand against a black king on b4, six of fourteen
++  empty squares refuse it, and they are exactly rank 4 plus the b-file. The rule is right; only the
++  explanation is missing.
++- **`.brand-mark-img`** — the mark as an image rather than the Arial letterform tile.
++
++## What these screens are not
++
++They are Chromium at a viewport. No real device has run them, which is the same limit
++`DECISIONS.md` lists under Known gaps. Nothing here has been validated by a user, and a screen
++looking cleaner is not evidence that it works better.
+diff --git a/design/design.css b/design/design.css
+new file mode 100644
+index 0000000..eca0fb2
+--- /dev/null
++++ b/design/design.css
+@@ -0,0 +1,114 @@
++/* Schness design reference — chrome for the reference pages only.
++   Every rule here is prefixed .ref- or scoped to a .ref- ancestor, so nothing
++   in this file can reach the app. The pages link ../styles.css and ../ui.css
++   first, so what they show is the shipped component, not a redraw of one.
++   Two exceptions are marked PROPOSED: they are the states this pass is asking
++   for and they do not exist in the app yet. */
++
++.ref-body { padding-bottom: var(--space-8, 48px); }
++.ref-screen { padding-top: var(--space-4, 16px); }
++.ref-h1 { margin: 0 0 var(--space-4, 16px); font-size: 1.6rem; letter-spacing: -.05em; }
++
++.ref-play { display: grid; gap: var(--space-2, 8px); width: min(100%, 30rem); margin: 0 auto; }
++.ref-seat { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3, 12px); }
++
++.ref-turn { margin-bottom: var(--space-3, 12px); }
++.ref-turn-line { margin: .25rem 0 0; font-size: 1rem; font-weight: 640; letter-spacing: -.01em; }
++.ref-refuse { display: block; margin-top: .3rem; font-weight: 400; color: var(--muted); }
++.ref-live { width: min(100%, 30rem); margin: var(--space-3, 12px) auto 0; padding: .7rem .85rem;
++  border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--radius-card, 10px);
++  background: var(--surface); font-size: .9rem; color: var(--ink); }
++
++.ref-modes { margin-top: var(--space-5, 24px); }
++
++.ref-result { margin-bottom: var(--space-3, 12px); }
++.ref-result-line { margin: .25rem 0 var(--space-3, 12px); font-size: 1.15rem; font-weight: 640; letter-spacing: -.02em; }
++.ref-actions { display: flex; flex-wrap: wrap; gap: var(--space-2, 8px); }
++
++.ref-sheet { width: min(100%, 34rem); margin: 0 auto; border: 1px solid var(--line);
++  border-radius: var(--radius-dialog, 16px); background: var(--surface); overflow: hidden; }
++.ref-sheet-head { display: flex; align-items: flex-start; justify-content: space-between;
++  gap: var(--space-4, 16px); padding: var(--space-4, 16px); border-bottom: 1px solid var(--hairline); }
++.ref-sheet-title { margin: .2rem 0 0; font-size: 1.3rem; letter-spacing: -.03em; }
++.ref-sheet-body { padding: var(--space-2, 8px) var(--space-4, 16px) var(--space-4, 16px); }
++.ref-sheet-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4, 16px);
++  padding: var(--space-4, 16px); border-top: 1px solid var(--hairline); background: var(--sunk); }
++.ref-foot-note { margin: 0; font-size: .8rem; color: var(--muted); }
++.ref-group { margin: var(--space-4, 16px) 0 var(--space-1, 4px); font-size: .68rem; font-weight: 750;
++  letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
++.ref-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4, 16px);
++  flex-wrap: wrap; padding: var(--space-3, 12px) 0; border-top: 1px solid var(--hairline); }
++.ref-row-text { display: grid; gap: 2px; min-width: 0; }
++.ref-row-label { font-size: .95rem; font-weight: 640; }
++.ref-row-hint { font-size: .8rem; color: var(--muted); }
++.ref-seg { display: flex; flex-wrap: wrap; gap: 4px; }
++
++.ref-note { width: min(100%, 44rem); margin: var(--space-6, 32px) auto 0; padding: 0 var(--space-4, 16px);
++  font-size: .85rem; line-height: 1.6; color: var(--muted); }
++
++/* ---- contact sheet and system page ---- */
++.ref-index { width: min(100%, 72rem); margin: 0 auto; padding: var(--space-6, 32px) var(--space-4, 16px) var(--space-8, 48px); }
++.ref-lede { max-width: 44rem; font-size: 1rem; line-height: 1.65; color: var(--muted); }
++.ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: var(--space-5, 24px); margin-top: var(--space-6, 32px); }
++.ref-card { border: 1px solid var(--line); border-radius: var(--radius-card, 10px); background: var(--surface); overflow: hidden; }
++.ref-frame { display: block; width: 100%; height: 30rem; border: 0; border-bottom: 1px solid var(--hairline); background: var(--paper); }
++.ref-card-body { padding: var(--space-4, 16px); }
++.ref-card-body h3 { margin: 0 0 .3rem; font-size: 1rem; letter-spacing: -.02em; }
++.ref-card-body p { margin: 0; font-size: .85rem; line-height: 1.55; color: var(--muted); }
++
++.ref-section { margin-top: var(--space-8, 48px); }
++.ref-section > h2 { margin: 0 0 var(--space-4, 16px); font-size: 1.3rem; letter-spacing: -.035em; }
++.ref-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: var(--space-3, 12px); }
++.ref-swatch { border: 1px solid var(--line); border-radius: var(--radius-control, 6px); overflow: hidden; background: var(--surface); }
++.ref-chip { height: 3.4rem; }
++.ref-swatch figcaption { display: grid; gap: 1px; padding: .5rem .6rem; font-size: .75rem; }
++.ref-swatch code { font-family: var(--font-mono, ui-monospace, monospace); color: var(--muted); }
++.ref-row-demo { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3, 12px); padding: var(--space-3, 12px) 0; border-top: 1px solid var(--hairline); }
++.ref-key { min-width: 9rem; font-size: .8rem; font-weight: 640; }
++.ref-mini { width: 13rem; }
++.ref-states { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); gap: var(--space-3, 12px); }
++.ref-state figcaption { padding-top: .4rem; font-size: .75rem; color: var(--muted); }
++.ref-state .board { pointer-events: none; }
++
++/* PROPOSED — does not ship yet. A drop that would give check is refused; the
++   square says so rather than silently clearing the selection. */
++.square.refused { cursor: not-allowed; }
++.square.refused::after { content: ""; position: absolute; inset: 0;
++  background-image: repeating-linear-gradient(45deg, rgb(158 34 51 / .26) 0 3px, transparent 3px 7px);
++  box-shadow: inset 0 0 0 2px var(--danger); }
++
++/* PROPOSED — the brand mark as an <img>, replacing the Arial letterform tile. */
++.brand-mark-img { display: block; }
++.brand-word { font-size: 1.1rem; font-weight: 640; letter-spacing: -.035em; }
++
++/* generated swatch classes — one per token, so a swatch can never disagree with the sheet */
++.ref-chip-paper { background: var(--paper); }
++.ref-chip-surface { background: var(--surface); }
++.ref-chip-sunk { background: var(--sunk); }
++.ref-chip-line { background: var(--line); }
++.ref-chip-hairline { background: var(--hairline); }
++.ref-chip-ink { background: var(--ink); }
++.ref-chip-muted { background: var(--muted); }
++.ref-chip-inverse { background: var(--inverse); }
++.ref-chip-accent { background: var(--accent); }
++.ref-chip-accent-text { background: var(--accent-text); }
++.ref-chip-board-light { background: var(--board-light); }
++.ref-chip-board-dark { background: var(--board-dark); }
++.ref-chip-legal-target { background: var(--legal-target); }
++.ref-chip-ok { background: var(--ok); }
++.ref-chip-warn { background: var(--warn); }
++.ref-chip-danger { background: var(--danger); }
++
++/* Bounded future-theme preview. The components below are untouched; only the
++   token values change. This is the whole claim of the token layer, and it is
++   the only cyberpunk in the repository. */
++.ref-theme-demo {
++  --paper:#0B0712; --surface:#150E22; --sunk:#0F0A1A;
++  --line:#2E2347; --hairline:#241B38;
++  --ink:#EDE7FA; --muted:#A192C4; --inverse:#0B0712;
++  --accent:#C04BE0; --accent-text:#D98BEE; --focus:#C04BE0;
++  --board-light:#2A2140; --board-dark:#160F26;
++  --ok:#3FBF8F; --warn:#C9A227; --danger:#E0457B;
++  padding: var(--space-4, 16px); border-radius: var(--radius-card, 10px);
++  background: var(--paper); color: var(--ink);
++}
+diff --git a/design/index.html b/design/index.html
+new file mode 100644
+index 0000000..c2d6cbf
+--- /dev/null
++++ b/design/index.html
+@@ -0,0 +1,32 @@
++<!doctype html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
++  <link rel="icon" href="../icon.svg">
++  <title>Design reference · Schness</title>
++  <link rel="stylesheet" href="../styles.css">
++  <link rel="stylesheet" href="../ui.css">
++  <link rel="stylesheet" href="design.css">
++</head>
++<body class="ref-body">
++  <main class="ref-index">
++    <p class="eyebrow">Schness · Classic first</p>
++    <h1>Design reference</h1>
++    <p class="ref-lede">Four proposed screens and the component system behind them. These pages are
++      <strong>not part of the app</strong> — nothing links to them, the service worker does not cache
++      them, and no shipped page imports anything from this folder. They exist to be reviewed in a
++      browser at a real width.</p>
++    <p><a class="btn" href="system.html" data-variant="primary">The system →</a>
++       <button class="btn" type="button" data-variant="secondary" data-ref-theme>Dark</button></p>
++    <div class="ref-grid"><article class="ref-card"><iframe class="ref-frame" src="screens/play.html" title="Play — the home page" loading="lazy"></iframe><div class="ref-card-body"><h3><a href="screens/play.html">Play — the home page</a></h3><p>The board is the page at every width. This is the screen a phone does not have today.</p></div></article><article class="ref-card"><iframe class="ref-frame" src="screens/game.html" title="Reserve selected" loading="lazy"></iframe><div class="ref-card-body"><h3><a href="screens/game.html">Reserve selected</a></h3><p>Nine squares accept the rook; five are crossed because a drop there would give check — and the status line says so.</p></div></article><article class="ref-card"><iframe class="ref-frame" src="screens/result.html" title="Result" loading="lazy"></iframe><div class="ref-card-body"><h3><a href="screens/result.html">Result</a></h3><p>The final position stays on screen. The result is a card above it, not a toast over it.</p></div></article><article class="ref-card"><iframe class="ref-frame" src="screens/settings.html" title="Settings" loading="lazy"></iframe><div class="ref-card-body"><h3><a href="screens/settings.html">Settings</a></h3><p>One sheet, reachable from the header on every page. Per-game choices stay beside the board.</p></div></article></div>
++    <section class="ref-section"><h2>What is proposed, and what already ships</h2>
++      <p class="ref-lede">Everything here uses the shipped classes except two additions, both marked
++        PROPOSED in <code>design.css</code>: <code>.square.refused</code>, and the brand mark as an
++        image rather than the Arial letterform tile. The rest is the system as it stands.</p>
++    </section>
++  </main>
++  <script src="preview.js" type="module"></script>
++</body>
++</html>
+diff --git a/design/preview.js b/design/preview.js
+new file mode 100644
+index 0000000..60193bc
+--- /dev/null
++++ b/design/preview.js
+@@ -0,0 +1,15 @@
++// Reference-page chrome: a theme toggle and nothing else.
++// The app owns theme persistence in src/theme.js; this is deliberately separate
++// so a reference page can be opened at a theme without touching app storage.
++const root = document.documentElement;
++const params = new URLSearchParams(location.search);
++const initial = params.get('theme');
++if (initial === 'dark' || initial === 'light') root.setAttribute('data-theme', initial);
++
++for (const button of document.querySelectorAll('[data-ref-theme]')) {
++  button.addEventListener('click', () => {
++    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
++    root.setAttribute('data-theme', next);
++    button.textContent = next === 'dark' ? 'Light' : 'Dark';
++  });
++}
+diff --git a/design/screens/game.html b/design/screens/game.html
+new file mode 100644
+index 0000000..557e203
+--- /dev/null
++++ b/design/screens/game.html
+@@ -0,0 +1,41 @@
++<!doctype html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
++  <link rel="icon" href="../../icon.svg">
++  <title>Reserve selected · Schness design reference</title>
++  <link rel="stylesheet" href="../../styles.css">
++  <link rel="stylesheet" href="../../ui.css">
++  <link rel="stylesheet" href="../design.css">
++</head>
++<body class="game-page ref-body">
++  <div class="game ref-screen">
++  <header>
++    <a class="brand" href="../index.html" aria-label="Schness home">
++      <img class="brand-mark-img" src="../../icon.svg" alt="" aria-hidden="true" width="28" height="28">
++      <span class="brand-word">Schness</span>
++    </a>
++    <div class="header-actions">
++      <button class="text-button btn" type="button" data-variant="ghost">Rules</button>
++      <button class="text-button btn" type="button" data-variant="ghost" data-ref-theme>Dark</button>
++      <button class="text-button btn" type="button" data-variant="ghost">Settings</button>
++    </div>
++  </header>
++  <nav class="site-nav" aria-label="Schness"><a href="play.html" aria-current="page">Play</a><a href="game.html">Arena</a><a href="#">Puzzles</a><a href="#">Library</a></nav>
++    <p class="eyebrow">Classic · 4 × 4</p>
++    <h1 class="ref-h1">Play</h1>
++    <div class="turn-card ref-turn"><p class="eyebrow">Rook in hand</p><p class="ref-turn-line">Nine squares accept it. <span class="ref-refuse">The five crossed squares would give check, so a drop there is refused.</span></p></div>
++    <div class="ref-play">
++      <div class="ref-seat"><span class="reserve-label">Black reserve</span><div class="bank"><button type="button" class="bank-piece" data-piece="bishop" data-owner="black" aria-label="black bishop in reserve"><img class="piece piece-black piece-bishop" src="../../assets/pieces/bB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="black" aria-label="black knight in reserve"><img class="piece piece-black piece-knight" src="../../assets/pieces/bN.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot"></span></div></div>
++      <div class="board" role="grid" aria-label="Schness board" data-orientation="white"><div class="board-row" role="row"><button class="square refused" type="button" role="gridcell" tabindex="-1" data-square="0" aria-label="Empty square 1"><span class="square-coordinate" aria-hidden="true">a4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="1" aria-label="black king, square 2"><span class="square-coordinate" aria-hidden="true">b4</span><img class="piece piece-black piece-king" src="../../assets/pieces/bK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square refused" type="button" role="gridcell" tabindex="-1" data-square="2" aria-label="Empty square 3"><span class="square-coordinate" aria-hidden="true">c4</span></button><button class="square refused" type="button" role="gridcell" tabindex="-1" data-square="3" aria-label="Empty square 4"><span class="square-coordinate" aria-hidden="true">d4</span></button></div><div class="board-row" role="row"><button class="square target" type="button" role="gridcell" tabindex="-1" data-square="4" aria-label="Empty square 5"><span class="square-coordinate" aria-hidden="true">a3</span></button><button class="square refused" type="button" role="gridcell" tabindex="-1" data-square="5" aria-label="Empty square 6"><span class="square-coordinate" aria-hidden="true">b3</span></button><button class="square target" type="button" role="gridcell" tabindex="-1" data-square="6" aria-label="Empty square 7"><span class="square-coordinate" aria-hidden="true">c3</span></button><button class="square target" type="button" role="gridcell" tabindex="-1" data-square="7" aria-label="Empty square 8"><span class="square-coordinate" aria-hidden="true">d3</span></button></div><div class="board-row" role="row"><button class="square target" type="button" role="gridcell" tabindex="-1" data-square="8" aria-label="Empty square 9"><span class="square-coordinate" aria-hidden="true">a2</span></button><button class="square refused" type="button" role="gridcell" tabindex="-1" data-square="9" aria-label="Empty square 10"><span class="square-coordinate" aria-hidden="true">b2</span></button><button class="square target" type="button" role="gridcell" tabindex="-1" data-square="10" aria-label="Empty square 11"><span class="square-coordinate" aria-hidden="true">c2</span></button><button class="square target" type="button" role="gridcell" tabindex="-1" data-square="11" aria-label="Empty square 12"><span class="square-coordinate" aria-hidden="true">d2</span></button></div><div class="board-row" role="row"><button class="square target" type="button" role="gridcell" tabindex="-1" data-square="12" aria-label="Empty square 13"><span class="square-coordinate" aria-hidden="true">a1</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="13" aria-label="white king, square 14"><span class="square-coordinate" aria-hidden="true">b1</span><img class="piece piece-white piece-king" src="../../assets/pieces/wK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square target" type="button" role="gridcell" tabindex="-1" data-square="14" aria-label="Empty square 15"><span class="square-coordinate" aria-hidden="true">c1</span></button><button class="square target" type="button" role="gridcell" tabindex="-1" data-square="15" aria-label="Empty square 16"><span class="square-coordinate" aria-hidden="true">d1</span></button></div></div>
++      <div class="ref-seat"><span class="reserve-label">Your reserve</span><div class="bank"><button type="button" class="bank-piece selected" data-piece="rook" data-owner="white" aria-label="white rook in reserve" aria-pressed="true"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="bishop" data-owner="white" aria-label="white bishop in reserve"><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in reserve"><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button></div></div>
++    </div>
++    <p class="ref-live" role="status">A dropped piece may not give check. Your rook is still in hand.</p>
++  </div>
++  <p class="ref-note">Proposed. The refused state and the status line are new; every other class here already ships.</p>
++
++  <script src="../preview.js" type="module"></script>
++</body>
++</html>
+diff --git a/design/screens/play.html b/design/screens/play.html
+new file mode 100644
+index 0000000..e936254
+--- /dev/null
++++ b/design/screens/play.html
+@@ -0,0 +1,45 @@
++<!doctype html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
++  <link rel="icon" href="../../icon.svg">
++  <title>Play · Schness design reference</title>
++  <link rel="stylesheet" href="../../styles.css">
++  <link rel="stylesheet" href="../../ui.css">
++  <link rel="stylesheet" href="../design.css">
++</head>
++<body class="game-page ref-body">
++  <div class="game ref-screen">
++  <header>
++    <a class="brand" href="../index.html" aria-label="Schness home">
++      <img class="brand-mark-img" src="../../icon.svg" alt="" aria-hidden="true" width="28" height="28">
++      <span class="brand-word">Schness</span>
++    </a>
++    <div class="header-actions">
++      <button class="text-button btn" type="button" data-variant="ghost">Rules</button>
++      <button class="text-button btn" type="button" data-variant="ghost" data-ref-theme>Dark</button>
++      <button class="text-button btn" type="button" data-variant="ghost">Settings</button>
++    </div>
++  </header>
++  <nav class="site-nav" aria-label="Schness"><a href="play.html" aria-current="page">Play</a><a href="game.html">Arena</a><a href="#">Puzzles</a><a href="#">Library</a></nav>
++    <p class="eyebrow">Classic · 4 × 4</p>
++    <h1 class="ref-h1">Play</h1>
++    <div class="turn-card ref-turn"><p class="eyebrow">Your move</p><p class="ref-turn-line">Place your king on your home row.</p></div>
++    <div class="ref-play">
++      <div class="ref-seat"><span class="reserve-label">Black reserve</span><div class="bank"><button type="button" class="bank-piece" data-piece="rook" data-owner="black" aria-label="black rook in reserve"><img class="piece piece-black piece-rook" src="../../assets/pieces/bR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="bishop" data-owner="black" aria-label="black bishop in reserve"><img class="piece piece-black piece-bishop" src="../../assets/pieces/bB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="black" aria-label="black knight in reserve"><img class="piece piece-black piece-knight" src="../../assets/pieces/bN.svg" alt="" draggable="false" aria-hidden="true"></button></div></div>
++      <div class="board" role="grid" aria-label="Schness board" data-orientation="white"><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="0" aria-label="Empty square 1"><span class="square-coordinate" aria-hidden="true">a4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="1" aria-label="Empty square 2"><span class="square-coordinate" aria-hidden="true">b4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="2" aria-label="Empty square 3"><span class="square-coordinate" aria-hidden="true">c4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="3" aria-label="Empty square 4"><span class="square-coordinate" aria-hidden="true">d4</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="4" aria-label="Empty square 5"><span class="square-coordinate" aria-hidden="true">a3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="5" aria-label="Empty square 6"><span class="square-coordinate" aria-hidden="true">b3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="6" aria-label="Empty square 7"><span class="square-coordinate" aria-hidden="true">c3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="7" aria-label="Empty square 8"><span class="square-coordinate" aria-hidden="true">d3</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="8" aria-label="Empty square 9"><span class="square-coordinate" aria-hidden="true">a2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="9" aria-label="Empty square 10"><span class="square-coordinate" aria-hidden="true">b2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="10" aria-label="Empty square 11"><span class="square-coordinate" aria-hidden="true">c2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="11" aria-label="Empty square 12"><span class="square-coordinate" aria-hidden="true">d2</span></button></div><div class="board-row" role="row"><button class="square placement" type="button" role="gridcell" tabindex="-1" data-square="12" aria-label="Empty square 13"><span class="square-coordinate" aria-hidden="true">a1</span></button><button class="square placement" type="button" role="gridcell" tabindex="-1" data-square="13" aria-label="Empty square 14"><span class="square-coordinate" aria-hidden="true">b1</span></button><button class="square placement" type="button" role="gridcell" tabindex="-1" data-square="14" aria-label="Empty square 15"><span class="square-coordinate" aria-hidden="true">c1</span></button><button class="square placement" type="button" role="gridcell" tabindex="-1" data-square="15" aria-label="Empty square 16"><span class="square-coordinate" aria-hidden="true">d1</span></button></div></div>
++      <div class="ref-seat"><span class="reserve-label">Your reserve</span><div class="bank"><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in reserve"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="bishop" data-owner="white" aria-label="white bishop in reserve"><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in reserve"><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button></div></div>
++    </div>
++    <div class="mode-group ref-modes">
++      <a class="mode btn" href="game.html" data-variant="secondary"><strong>Arena</strong><small>Stronger bots, replay, the position editor</small></a>
++      <a class="mode btn" href="#" data-variant="secondary"><strong>Play online</strong><small>A link to send a friend</small></a>
++      <a class="mode btn" href="#" data-variant="secondary"><strong>Puzzles</strong><small>Mate in one to four</small></a>
++    </div>
++  </div>
++  <p class="ref-note">Proposed. The board is the page at every width — this is the screen a phone does not have today.</p>
++
++  <script src="../preview.js" type="module"></script>
++</body>
++</html>
+diff --git a/design/screens/result.html b/design/screens/result.html
+new file mode 100644
+index 0000000..df6164f
+--- /dev/null
++++ b/design/screens/result.html
+@@ -0,0 +1,41 @@
++<!doctype html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
++  <link rel="icon" href="../../icon.svg">
++  <title>Result · Schness design reference</title>
++  <link rel="stylesheet" href="../../styles.css">
++  <link rel="stylesheet" href="../../ui.css">
++  <link rel="stylesheet" href="../design.css">
++</head>
++<body class="game-page ref-body">
++  <div class="game ref-screen">
++  <header>
++    <a class="brand" href="../index.html" aria-label="Schness home">
++      <img class="brand-mark-img" src="../../icon.svg" alt="" aria-hidden="true" width="28" height="28">
++      <span class="brand-word">Schness</span>
++    </a>
++    <div class="header-actions">
++      <button class="text-button btn" type="button" data-variant="ghost">Rules</button>
++      <button class="text-button btn" type="button" data-variant="ghost" data-ref-theme>Dark</button>
++      <button class="text-button btn" type="button" data-variant="ghost">Settings</button>
++    </div>
++  </header>
++  <nav class="site-nav" aria-label="Schness"><a href="play.html" aria-current="page">Play</a><a href="game.html">Arena</a><a href="#">Puzzles</a><a href="#">Library</a></nav>
++    <p class="eyebrow">Classic · 4 × 4</p>
++    <h1 class="ref-h1">Play</h1>
++    <div class="card-state ref-result"><p class="eyebrow">Game over</p><p class="ref-result-line">White wins by checkmate, in 14 moves.</p>
++      <div class="ref-actions"><button class="btn" type="button" data-variant="primary">Play again</button><button class="btn" type="button" data-variant="secondary">Review the game</button><button class="btn" type="button" data-variant="ghost">Open in Arena</button></div></div>
++    <div class="ref-play">
++      <div class="ref-seat"><span class="reserve-label">Black reserve</span><div class="bank"><button type="button" class="bank-piece" data-piece="bishop" data-owner="black" aria-label="black bishop in reserve"><img class="piece piece-black piece-bishop" src="../../assets/pieces/bB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="black" aria-label="black knight in reserve"><img class="piece piece-black piece-knight" src="../../assets/pieces/bN.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot"></span></div></div>
++      <div class="board" role="grid" aria-label="Schness board" data-orientation="white"><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="0" aria-label="Empty square 1"><span class="square-coordinate" aria-hidden="true">a4</span></button><button class="square in-checkmate" type="button" role="gridcell" tabindex="-1" data-square="1" aria-label="black king, square 2"><span class="square-coordinate" aria-hidden="true">b4</span><img class="piece piece-black piece-king" src="../../assets/pieces/bK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="2" aria-label="Empty square 3"><span class="square-coordinate" aria-hidden="true">c4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="3" aria-label="Empty square 4"><span class="square-coordinate" aria-hidden="true">d4</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="4" aria-label="Empty square 5"><span class="square-coordinate" aria-hidden="true">a3</span></button><button class="square last-to" type="button" role="gridcell" tabindex="-1" data-square="5" aria-label="white rook, square 6"><span class="square-coordinate" aria-hidden="true">b3</span><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="6" aria-label="Empty square 7"><span class="square-coordinate" aria-hidden="true">c3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="7" aria-label="Empty square 8"><span class="square-coordinate" aria-hidden="true">d3</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="8" aria-label="Empty square 9"><span class="square-coordinate" aria-hidden="true">a2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="9" aria-label="Empty square 10"><span class="square-coordinate" aria-hidden="true">b2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="10" aria-label="Empty square 11"><span class="square-coordinate" aria-hidden="true">c2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="11" aria-label="Empty square 12"><span class="square-coordinate" aria-hidden="true">d2</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="12" aria-label="Empty square 13"><span class="square-coordinate" aria-hidden="true">a1</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="13" aria-label="white king, square 14"><span class="square-coordinate" aria-hidden="true">b1</span><img class="piece piece-white piece-king" src="../../assets/pieces/wK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="14" aria-label="Empty square 15"><span class="square-coordinate" aria-hidden="true">c1</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="15" aria-label="Empty square 16"><span class="square-coordinate" aria-hidden="true">d1</span></button></div></div>
++      <div class="ref-seat"><span class="reserve-label">Your reserve</span><div class="bank"><button type="button" class="bank-piece" data-piece="bishop" data-owner="white" aria-label="white bishop in reserve"><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in reserve"><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot"></span></div></div>
++    </div>
++  </div>
++  <p class="ref-note">Proposed. The final position stays on screen; the result is a card above it, never a toast over it.</p>
++
++  <script src="../preview.js" type="module"></script>
++</body>
++</html>
+diff --git a/design/screens/settings.html b/design/screens/settings.html
+new file mode 100644
+index 0000000..96fffe0
+--- /dev/null
++++ b/design/screens/settings.html
+@@ -0,0 +1,51 @@
++<!doctype html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
++  <link rel="icon" href="../../icon.svg">
++  <title>Settings · Schness design reference</title>
++  <link rel="stylesheet" href="../../styles.css">
++  <link rel="stylesheet" href="../../ui.css">
++  <link rel="stylesheet" href="../design.css">
++</head>
++<body class="game-page ref-body">
++  <div class="game ref-screen">
++  <header>
++    <a class="brand" href="../index.html" aria-label="Schness home">
++      <img class="brand-mark-img" src="../../icon.svg" alt="" aria-hidden="true" width="28" height="28">
++      <span class="brand-word">Schness</span>
++    </a>
++    <div class="header-actions">
++      <button class="text-button btn" type="button" data-variant="ghost">Rules</button>
++      <button class="text-button btn" type="button" data-variant="ghost" data-ref-theme>Dark</button>
++      <button class="text-button btn" type="button" data-variant="ghost">Settings</button>
++    </div>
++  </header>
++  <nav class="site-nav" aria-label="Schness"><a href="play.html" aria-current="page">Play</a><a href="game.html">Arena</a><a href="#">Puzzles</a><a href="#">Library</a></nav>
++    <p class="eyebrow">Classic · 4 × 4</p>
++    <h1 class="ref-h1">Play</h1>
++    <div class="ref-sheet">
++      <div class="ref-sheet-head"><div><p class="eyebrow">Settings</p><h2 class="ref-sheet-title">Preferences</h2></div>
++        <button class="dialog-close btn" type="button" data-variant="ghost" aria-label="Close settings">✕</button></div>
++      <div class="ref-sheet-body">
++        <p class="ref-group">Game</p>
++      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Bot difficulty</span><span class="ref-row-hint">Applies to the next game you start</span></div><div class="segmented ref-seg" role="group" aria-label="Bot difficulty"><button class="btn" type="button" data-variant="ghost">Learning</button><button class="btn" type="button" data-variant="primary" aria-pressed="true">Steady</button><button class="btn" type="button" data-variant="ghost">Sharp</button></div></div>
++      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Clock</span><span class="ref-row-hint">Default for new online invitations</span></div><div class="segmented ref-seg" role="group" aria-label="Clock"><button class="btn" type="button" data-variant="primary" aria-pressed="true">Untimed</button><button class="btn" type="button" data-variant="ghost">3+2</button><button class="btn" type="button" data-variant="ghost">5+0</button><button class="btn" type="button" data-variant="ghost">10+0</button></div></div>
++        <p class="ref-group">Presentation</p>
++      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Appearance</span><span class="ref-row-hint">Classic. Other themes change only how it looks.</span></div><div class="segmented ref-seg" role="group" aria-label="Appearance"><button class="btn" type="button" data-variant="ghost">Light</button><button class="btn" type="button" data-variant="ghost">Dark</button><button class="btn" type="button" data-variant="primary" aria-pressed="true">System</button></div></div>
++      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Motion</span><span class="ref-row-hint">Off also disables the capture animation</span></div><div class="segmented ref-seg" role="group" aria-label="Motion"><button class="btn" type="button" data-variant="primary" aria-pressed="true">Full</button><button class="btn" type="button" data-variant="ghost">Reduced</button><button class="btn" type="button" data-variant="ghost">Off</button></div></div>
++      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Sound</span><span class="ref-row-hint">Off until you ask for it</span></div><div class="segmented ref-seg" role="group" aria-label="Sound"><button class="btn" type="button" data-variant="ghost">On</button><button class="btn" type="button" data-variant="primary" aria-pressed="true">Off</button></div></div>
++        <p class="ref-group">Language</p>
++      <div class="ref-row"><div class="ref-row-text"><span class="ref-row-label">Language</span><span class="ref-row-hint">日本語 and English are the same product</span></div><div class="segmented ref-seg" role="group" aria-label="Language"><button class="btn" type="button" data-variant="primary" aria-pressed="true">English</button><button class="btn" type="button" data-variant="ghost">日本語</button></div></div>
++      </div>
++      <div class="ref-sheet-foot"><p class="ref-foot-note">Changes apply immediately. The board stays behind this sheet on purpose.</p>
++        <button class="btn" type="button" data-variant="primary">Done</button></div>
++    </div>
++  </div>
++  <p class="ref-note">Proposed. One sheet, reachable from the header on every page. Per-game choices stay beside the board.</p>
++
++  <script src="../preview.js" type="module"></script>
++</body>
++</html>
+diff --git a/design/system.html b/design/system.html
+new file mode 100644
+index 0000000..4817107
+--- /dev/null
++++ b/design/system.html
+@@ -0,0 +1,57 @@
++<!doctype html>
++<html lang="en">
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
++  <link rel="icon" href="../icon.svg">
++  <title>The system · Schness design reference</title>
++  <link rel="stylesheet" href="../styles.css">
++  <link rel="stylesheet" href="../ui.css">
++  <link rel="stylesheet" href="design.css">
++</head>
++<body class="ref-body">
++  <main class="ref-index">
++    <p class="eyebrow">Schness · design reference</p>
++    <h1>The system</h1>
++    <p class="ref-lede">Every swatch below is <code>var(--token)</code> read from the real
++      <code>styles.css</code>, and every component is the shipped class — this page links the
++      app&rsquo;s stylesheets rather than restating them, so it cannot drift out of date without
++      the app drifting too. Use the Dark button to see both colour modes.</p>
++    <p><button class="btn" type="button" data-variant="secondary" data-ref-theme>Dark</button>
++       <a class="btn" href="index.html" data-variant="ghost">← All screens</a></p>
++
++    <section class="ref-section"><h2>Colour</h2>
++      <h3 class="ref-group">Surfaces</h3><div class="ref-swatches"><figure class="ref-swatch"><div class="ref-chip ref-chip-paper"></div><figcaption><strong>--paper</strong><code>the page</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-surface"></div><figcaption><strong>--surface</strong><code>raised onto it</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-sunk"></div><figcaption><strong>--sunk</strong><code>pressed into it</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-line"></div><figcaption><strong>--line</strong><code>border</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-hairline"></div><figcaption><strong>--hairline</strong><code>divider</code></figcaption></figure></div><h3 class="ref-group">Ink</h3><div class="ref-swatches"><figure class="ref-swatch"><div class="ref-chip ref-chip-ink"></div><figcaption><strong>--ink</strong><code>15.3:1 on paper</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-muted"></div><figcaption><strong>--muted</strong><code>5.2:1</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-inverse"></div><figcaption><strong>--inverse</strong><code>on ink</code></figcaption></figure></div><h3 class="ref-group">Accent</h3><div class="ref-swatches"><figure class="ref-swatch"><div class="ref-chip ref-chip-accent"></div><figcaption><strong>--accent</strong><code>ember · also the focus ring</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-accent-text"></div><figcaption><strong>--accent-text</strong><code>type-safe accent</code></figcaption></figure></div><h3 class="ref-group">Board</h3><div class="ref-swatches"><figure class="ref-swatch"><div class="ref-chip ref-chip-board-light"></div><figcaption><strong>--board-light</strong><code>4.0:1 between squares</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-board-dark"></div><figcaption><strong>--board-dark</strong><code></code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-legal-target"></div><figcaption><strong>--legal-target</strong><code>move dot</code></figcaption></figure></div><h3 class="ref-group">Status</h3><div class="ref-swatches"><figure class="ref-swatch"><div class="ref-chip ref-chip-ok"></div><figcaption><strong>--ok</strong><code>draw / connected</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-warn"></div><figcaption><strong>--warn</strong><code>reconnecting</code></figcaption></figure><figure class="ref-swatch"><div class="ref-chip ref-chip-danger"></div><figcaption><strong>--danger</strong><code>check / mate / refused</code></figcaption></figure></div>
++    </section>
++
++    <section class="ref-section"><h2>Buttons — four roles, and nothing else draws a rectangle</h2>
++      <p class="ref-lede"><code>primary</code>, <code>secondary</code> (the default), <code>ghost</code>,
++        <code>icon</code>. Disabled is drawn, not dimmed — except ghost, which keeps its transparency.</p>
++      <div class="ref-row-demo"><span class="ref-key">primary</span><button class="btn" type="button" data-variant="primary">New game</button><button class="btn" type="button" data-variant="primary" disabled>Disabled</button></div><div class="ref-row-demo"><span class="ref-key">secondary</span><button class="btn" type="button" data-variant="secondary">New game</button><button class="btn" type="button" data-variant="secondary" disabled>Disabled</button></div><div class="ref-row-demo"><span class="ref-key">ghost</span><button class="btn" type="button" data-variant="ghost">New game</button><button class="btn" type="button" data-variant="ghost" disabled>Disabled</button></div>
++    </section>
++
++    <section class="ref-section"><h2>Board states</h2>
++      <p class="ref-lede">Ten states ship today. <code>.refused</code> is the one this pass adds: a drop
++        that would give check is currently rejected in silence, and the square should say so.</p>
++      <div class="ref-states">
++        <figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square selected"><img class="piece piece-white piece-rook" src="../assets/pieces/wR.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.selected</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square target"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.target</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square capture"><img class="piece piece-black piece-king" src="../assets/pieces/bK.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.capture</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square placement"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.placement</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square last-from"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.last-from</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square last-to"><img class="piece piece-white piece-rook" src="../assets/pieces/wR.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.last-to</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square in-check"><img class="piece piece-black piece-king" src="../assets/pieces/bK.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.in-check</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square in-checkmate"><img class="piece piece-black piece-king" src="../assets/pieces/bK.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.in-checkmate</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square is-cursor"><img class="piece piece-white piece-rook" src="../assets/pieces/wR.svg" alt="" aria-hidden="true"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.is-cursor</figcaption></figure><figure class="ref-state"><div class="board" aria-hidden="true"><div class="board-row"><div class="square "> </div><div class="square refused"></div></div><div class="board-row"><div class="square"> </div><div class="square"> </div></div></div><figcaption>.refused</figcaption></figure>
++      </div>
++    </section>
++
++    <section class="ref-section"><h2>A future appearance, bounded</h2>
++      <p class="ref-lede">The same markup, the same classes, one different set of token values.
++        Nothing below is a new component and no page is duplicated per theme — which is the whole
++        claim the token layer has to support before a cyberpunk theme is worth building.</p>
++      <div class="ref-theme-demo">
++        <p class="eyebrow">Your move</p>
++        <p class="ref-turn-line">Rook in hand · nine squares accept it.</p>
++        <div class="ref-row-demo"><button class="btn" type="button" data-variant="primary">New game</button>
++          <button class="btn" type="button" data-variant="secondary">Review</button>
++          <button class="btn" type="button" data-variant="ghost">Settings</button></div>
++      </div>
++    </section>
++  </main>
++  <script src="preview.js" type="module"></script>
++</body>
++</html>
+-- 
+2.43.0
+

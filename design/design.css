@@ -1,0 +1,114 @@
+/* Schness design reference — chrome for the reference pages only.
+   Every rule here is prefixed .ref- or scoped to a .ref- ancestor, so nothing
+   in this file can reach the app. The pages link ../styles.css and ../ui.css
+   first, so what they show is the shipped component, not a redraw of one.
+   Two exceptions are marked PROPOSED: they are the states this pass is asking
+   for and they do not exist in the app yet. */
+
+.ref-body { padding-bottom: var(--space-8, 48px); }
+.ref-screen { padding-top: var(--space-4, 16px); }
+.ref-h1 { margin: 0 0 var(--space-4, 16px); font-size: 1.6rem; letter-spacing: -.05em; }
+
+.ref-play { display: grid; gap: var(--space-2, 8px); width: min(100%, 30rem); margin: 0 auto; }
+.ref-seat { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3, 12px); }
+
+.ref-turn { margin-bottom: var(--space-3, 12px); }
+.ref-turn-line { margin: .25rem 0 0; font-size: 1rem; font-weight: 640; letter-spacing: -.01em; }
+.ref-refuse { display: block; margin-top: .3rem; font-weight: 400; color: var(--muted); }
+.ref-live { width: min(100%, 30rem); margin: var(--space-3, 12px) auto 0; padding: .7rem .85rem;
+  border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--radius-card, 10px);
+  background: var(--surface); font-size: .9rem; color: var(--ink); }
+
+.ref-modes { margin-top: var(--space-5, 24px); }
+
+.ref-result { margin-bottom: var(--space-3, 12px); }
+.ref-result-line { margin: .25rem 0 var(--space-3, 12px); font-size: 1.15rem; font-weight: 640; letter-spacing: -.02em; }
+.ref-actions { display: flex; flex-wrap: wrap; gap: var(--space-2, 8px); }
+
+.ref-sheet { width: min(100%, 34rem); margin: 0 auto; border: 1px solid var(--line);
+  border-radius: var(--radius-dialog, 16px); background: var(--surface); overflow: hidden; }
+.ref-sheet-head { display: flex; align-items: flex-start; justify-content: space-between;
+  gap: var(--space-4, 16px); padding: var(--space-4, 16px); border-bottom: 1px solid var(--hairline); }
+.ref-sheet-title { margin: .2rem 0 0; font-size: 1.3rem; letter-spacing: -.03em; }
+.ref-sheet-body { padding: var(--space-2, 8px) var(--space-4, 16px) var(--space-4, 16px); }
+.ref-sheet-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4, 16px);
+  padding: var(--space-4, 16px); border-top: 1px solid var(--hairline); background: var(--sunk); }
+.ref-foot-note { margin: 0; font-size: .8rem; color: var(--muted); }
+.ref-group { margin: var(--space-4, 16px) 0 var(--space-1, 4px); font-size: .68rem; font-weight: 750;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.ref-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4, 16px);
+  flex-wrap: wrap; padding: var(--space-3, 12px) 0; border-top: 1px solid var(--hairline); }
+.ref-row-text { display: grid; gap: 2px; min-width: 0; }
+.ref-row-label { font-size: .95rem; font-weight: 640; }
+.ref-row-hint { font-size: .8rem; color: var(--muted); }
+.ref-seg { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.ref-note { width: min(100%, 44rem); margin: var(--space-6, 32px) auto 0; padding: 0 var(--space-4, 16px);
+  font-size: .85rem; line-height: 1.6; color: var(--muted); }
+
+/* ---- contact sheet and system page ---- */
+.ref-index { width: min(100%, 72rem); margin: 0 auto; padding: var(--space-6, 32px) var(--space-4, 16px) var(--space-8, 48px); }
+.ref-lede { max-width: 44rem; font-size: 1rem; line-height: 1.65; color: var(--muted); }
+.ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: var(--space-5, 24px); margin-top: var(--space-6, 32px); }
+.ref-card { border: 1px solid var(--line); border-radius: var(--radius-card, 10px); background: var(--surface); overflow: hidden; }
+.ref-frame { display: block; width: 100%; height: 30rem; border: 0; border-bottom: 1px solid var(--hairline); background: var(--paper); }
+.ref-card-body { padding: var(--space-4, 16px); }
+.ref-card-body h3 { margin: 0 0 .3rem; font-size: 1rem; letter-spacing: -.02em; }
+.ref-card-body p { margin: 0; font-size: .85rem; line-height: 1.55; color: var(--muted); }
+
+.ref-section { margin-top: var(--space-8, 48px); }
+.ref-section > h2 { margin: 0 0 var(--space-4, 16px); font-size: 1.3rem; letter-spacing: -.035em; }
+.ref-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: var(--space-3, 12px); }
+.ref-swatch { border: 1px solid var(--line); border-radius: var(--radius-control, 6px); overflow: hidden; background: var(--surface); }
+.ref-chip { height: 3.4rem; }
+.ref-swatch figcaption { display: grid; gap: 1px; padding: .5rem .6rem; font-size: .75rem; }
+.ref-swatch code { font-family: var(--font-mono, ui-monospace, monospace); color: var(--muted); }
+.ref-row-demo { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3, 12px); padding: var(--space-3, 12px) 0; border-top: 1px solid var(--hairline); }
+.ref-key { min-width: 9rem; font-size: .8rem; font-weight: 640; }
+.ref-mini { width: 13rem; }
+.ref-states { display: grid; grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); gap: var(--space-3, 12px); }
+.ref-state figcaption { padding-top: .4rem; font-size: .75rem; color: var(--muted); }
+.ref-state .board { pointer-events: none; }
+
+/* PROPOSED — does not ship yet. A drop that would give check is refused; the
+   square says so rather than silently clearing the selection. */
+.square.refused { cursor: not-allowed; }
+.square.refused::after { content: ""; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(45deg, rgb(158 34 51 / .26) 0 3px, transparent 3px 7px);
+  box-shadow: inset 0 0 0 2px var(--danger); }
+
+/* PROPOSED — the brand mark as an <img>, replacing the Arial letterform tile. */
+.brand-mark-img { display: block; }
+.brand-word { font-size: 1.1rem; font-weight: 640; letter-spacing: -.035em; }
+
+/* generated swatch classes — one per token, so a swatch can never disagree with the sheet */
+.ref-chip-paper { background: var(--paper); }
+.ref-chip-surface { background: var(--surface); }
+.ref-chip-sunk { background: var(--sunk); }
+.ref-chip-line { background: var(--line); }
+.ref-chip-hairline { background: var(--hairline); }
+.ref-chip-ink { background: var(--ink); }
+.ref-chip-muted { background: var(--muted); }
+.ref-chip-inverse { background: var(--inverse); }
+.ref-chip-accent { background: var(--accent); }
+.ref-chip-accent-text { background: var(--accent-text); }
+.ref-chip-board-light { background: var(--board-light); }
+.ref-chip-board-dark { background: var(--board-dark); }
+.ref-chip-legal-target { background: var(--legal-target); }
+.ref-chip-ok { background: var(--ok); }
+.ref-chip-warn { background: var(--warn); }
+.ref-chip-danger { background: var(--danger); }
+
+/* Bounded future-theme preview. The components below are untouched; only the
+   token values change. This is the whole claim of the token layer, and it is
+   the only cyberpunk in the repository. */
+.ref-theme-demo {
+  --paper:#0B0712; --surface:#150E22; --sunk:#0F0A1A;
+  --line:#2E2347; --hairline:#241B38;
+  --ink:#EDE7FA; --muted:#A192C4; --inverse:#0B0712;
+  --accent:#C04BE0; --accent-text:#D98BEE; --focus:#C04BE0;
+  --board-light:#2A2140; --board-dark:#160F26;
+  --ok:#3FBF8F; --warn:#C9A227; --danger:#E0457B;
+  padding: var(--space-4, 16px); border-radius: var(--radius-card, 10px);
+  background: var(--paper); color: var(--ink);
+}
