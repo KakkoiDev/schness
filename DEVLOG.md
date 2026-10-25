@@ -1362,3 +1362,39 @@ active-lock and source-tampering regressions for this runner. Each actual transi
 cross-checked against legacy rules during play. Results are pending; do not infer non-inferiority
 from partial schedules or pool distinct historical research adapters into this comparison.
 A completion monitor will verify all replays, archive full runtime/bundles and publish final data.
+
+## 2026-10-25 — Full Sharp v7 versus Sharp v2 fixed-color benchmark completed
+
+All 6,912 authorized games completed on the 36 shared production presets: six seeds and all
+16 king starts, with 3,456 games in each fixed candidate color. Both use exact depth four,
+seeded tie selection and repetition aversion, no time/node caps, no quiescence/reductions and
+a 200-total-action ceiling. No additional experiment or frozen-runtime change was made.
+
+After confirming original PID 6171 had exited and the run lock was absent, frozen --resume
+validated every source hash and checkpoint/replay. The archived runtime's 15 source files,
+all 6,912 bundled replay IDs, 72 variant/color groups of 96 games, eight archive parts and
+the whole SHA-256 archive were independently checked. Fingerprint:
+b964f7a4c0cde7738e449eeef1976fc3cad98176608f976483df527b236f3097.
+
+Descriptive suite counts, kept separate by candidate color:
+- v7 White: 1,409 v7 wins / 548 v2 wins / 1,499 draws; score 62.46%.
+  Draws: 1,470 repetitions, 23 ply ceilings, six stalemates.
+- v7 Black: 636 v7 wins / 1,357 v2 wins / 1,463 draws; score 39.57%.
+  Draws: 1,430 repetitions, 27 ply ceilings, six stalemates.
+- Across this fixed equally weighted preset schedule: 2,045 v7 wins / 1,905 v2 wins /
+  2,962 draws; v7 score 51.01% with draws worth one half.
+
+After both colors, raw win-minus-loss differences favor v7 in 23 presets, favor v2 in 11
+and tie in two. Classic specifically is 7 v7 wins / 9 v2 wins / 176 draws (49.48%).
+Reject a universal non-inferiority or Elo claim: six seeds repeat 16 starts, individual
+variant samples are small, draws include artificial ceilings, and variant color biases
+dominate separate-color raw rates. Mixed-engine games are not intrinsic variant balance
+measurements. Historical custom-army/objective/capture-delay/charge datasets are separate
+rule and engine adapters and were not pooled into this result.
+
+Full raw per-variant and per-color counts, scores and draw reasons are in
+research/data/sharp-v7-v2-full-v1-2026-10-25/report.md and rates.json. That directory also
+contains complete replay/runtime archive parts, manifest, progress and verification.json.
+All PRs open at the user's merge request (#108–#122) had already been merged. The completion
+monitor can now be removed; future strength work should investigate specific tactical
+differences rather than silently relaunching a modified benchmark.

@@ -1,0 +1,17 @@
+{
+  "verified": true,
+  "originalRunnerInactive": true,
+  "frozenResumeExitCode": 0,
+  "sourceFingerprint": "b964f7a4c0cde7738e449eeef1976fc3cad98176608f976483df527b236f3097",
+  "games": 6912,
+  "candidateColors": {
+    "white": 3456,
+    "black": 3456
+  },
+  "variantColorGroups": 72,
+  "gamesPerVariantColor": 96,
+  "runtimeFilesVerified": 15,
+  "archiveSha256": "899e20624811948fd02f0ec2b4abd8cddbd03e048dd7093c7f6338464dae7bb2",
+  "partsVerified": 8,
+  "wholeArchiveVerified": true
+}
