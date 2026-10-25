@@ -1,0 +1,20 @@
+{
+  "run": "armies-v1-2026-10-24",
+  "sourceFingerprint": "e2cffc287a0d235fc9b02f1ca668bbfa4537b1b2ec41b2d99db978741e0c0c04",
+  "games": 1488,
+  "archiveBytes": 1872913,
+  "archiveSha256": "99e5974d23f22d094ed89b9b3e39c5e4129b7a5510efe290485a96be5b172bdc",
+  "parts": [
+    {
+      "path": "armies-v1-2026-10-24.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "41d12e05efffc34629e24351e52a4e3f29a88b48abb6ce694e83dd0c87677a6d"
+    },
+    {
+      "path": "armies-v1-2026-10-24.tar.gz.part002",
+      "bytes": 824337,
+      "sha256": "597157bb50a46a8e30d07e10ac081b1c36984cdbe60c8044a125fd630ca26e7d"
+    }
+  ],
+  "restore": "cat armies-v1-2026-10-24.tar.gz.part* > armies-v1-2026-10-24.tar.gz; tar -xzf armies-v1-2026-10-24.tar.gz"
+}
