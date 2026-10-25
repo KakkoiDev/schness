@@ -1189,3 +1189,11 @@ one-change recipes share a newly versioned history/objective-aware research AI a
 a matched control. New win conditions, check counters and pending center claims are state
 identity; slider range affects attacks as well as movement. Mandatory captures follow king
 safety filtering. Never pool this engine's data with Sharp v2/v3 or adopt rules automatically.
+
+### Capture cooldown crossed with checking policy (2026-10-25)
+
+research/drop-policy-cooldown-v1 isolates the 2×3 cooldown/drop-policy matrix. Immediate
+drop-mate prohibition is composable with capture banks and evaluates king-safe legal
+replies under that same rule. Board-move mates remain legal, and recursive reply drops
+strictly consume reserves. Freeze adapter identity as variant-objective-search-v2; keep
+all prior runtimes and datasets separate. No production app imports or official adoption.

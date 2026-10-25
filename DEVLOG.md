@@ -1147,3 +1147,32 @@ or numeric strength. Six seeds repeat 16 starts; uncalibrated objective weights 
 search/ply limits constrain inference. Keep separate data and matched control, do not
 claim proven balance or automatic official variants. Next measurement would require a
 separately specified confirmation; no automatic new experiments launched.
+
+## 2026-10-25 — Checking/drop-mate policy crossed with cooldown
+
+Question: does the four-slot candidate improve with checking drops, and does forbidding
+immediate drop mate change that result with or without capture cooldown? User authorized
+both checking policies and asked about zero delay. The older 8,640-game archive already
+contains zero-delay checking (48 equal Sharp games: 72.9% White, 8.3% Black, 18.8% draws);
+the 4,128-game screen contains quiet zero-delay 64/22/10. Do not compare these as a matched
+factorial experiment or pool engine versions.
+
+Launch six matched recipes: capture/return delay 0 or 1 crossed with quiet drops, unrestricted
+checking drops including mate, and checking without immediate drop mate. No new movement
+or victory objectives. Six fresh seeds 20261701–20261706 × 16 starts × six recipes = 576
+Research Sharp-only depth-4 games, 200 total plies, eight workers. Research objective-search-v2
+records the new noDropMate adapter identity; bot/evaluation code is byte-identical to v1 and
+objective progress bonuses are inactive. Include quiet controls under that same runtime.
+
+No-drop-mate checks legal replies under the same policy, including king escapes, captures,
+ready reserve blocks and legal counterchecks. Recursive checking-drop replies terminate as
+reserves are consumed without captures. Cooling reserves cannot delay checkmate and normal
+mating board moves remain legal. Source hashes include noDropMate/cooldown; validate no
+forbidden mating-drop replay on persistence/resume. Record checking and mating-drop usage.
+
+All 297 unit tests passed; focused tests verify allowed/forbidden drop mates, legal nonmating
+checks and captures, reserve blocks/readiness, normal mating moves, timing, full matrix
+coverage and replay/material conservation for every recipe. No app/UI changes. Freeze
+runtime/manifest before run; on completion replay-validate and commit full compressed
+archives/checksums and readable reports. Next measurement is this complete matrix; no
+automatic expansion, tuning, adoption or merge.
