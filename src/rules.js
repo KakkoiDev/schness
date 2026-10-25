@@ -483,7 +483,7 @@ function normalizeRules(rules) {
     throw new Error('Invalid ruleset');
   }
   if (rules.experiment) {
-    if (!['protected-recurring', 'protected-opening', 'grace', 'quiet-return', 'setup', 'first-turn-quiet', 'protected-first-turn', 'mutual-one', 'mutual-two', 'limited-check', 'cooldown', 'no-drop-mate'].includes(rules.experiment)) throw new Error('Unknown experiment');
+    if (!['protected-recurring', 'protected-opening', 'grace', 'quiet-return', 'setup', 'first-turn-quiet', 'protected-first-turn', 'mutual-one', 'mutual-two', 'limited-check', 'cooldown', 'no-drop-mate', 'home-half-check', 'distant-check', 'supported-check', 'countercheck-only', 'knight-check', 'bishop-check', 'rook-check'].includes(rules.experiment)) throw new Error('Unknown experiment');
     if (rules.experiment === 'setup' && (!rules.setup || !PLAYERS.has(rules.firstPlayer))) throw new Error('Invalid setup rules');
     return Object.freeze(rules);
   }
@@ -506,6 +506,16 @@ function checkingDropAllowed(position, action) {
   const rules = rulesOf(position);
   if (!rules.allowCheckingDrops || position.phase === 'setup') return false;
   const enemy = opponent(position.turn);
+  // These policies restrict checking drops only; quiet drops remain ordinary legal actions.
+  if (action.type !== 'drop') return true;
+  if (rules.experiment === 'home-half-check') return position.turn === WHITE ? action.to >= 8 : action.to < 8;
+  if (rules.experiment === 'distant-check') {
+    const king = kingSquare(position, enemy);
+    return Math.max(Math.abs(Math.floor(action.to / 4) - Math.floor(king / 4)), Math.abs(action.to % 4 - king % 4)) >= 2;
+  }
+  if (rules.experiment === 'supported-check') return boardAttacks(boardAfter(position, action), action.to, position.turn);
+  if (rules.experiment === 'countercheck-only') return boardInCheck(position.board, position.turn);
+  if (['knight-check', 'bishop-check', 'rook-check'].includes(rules.experiment)) return action.piece === rules.experiment.split('-')[0];
   if (['first-turn-quiet', 'protected-first-turn'].includes(rules.experiment) && position.research.turns[position.turn] === 0) return false;
   if (['mutual-one', 'mutual-two'].includes(rules.experiment)) {
     const required = rules.experiment === 'mutual-one' ? 1 : 2;
