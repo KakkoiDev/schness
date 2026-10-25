@@ -1,0 +1,1863 @@
+{
+  "total": 3920,
+  "results": [
+    {
+      "variant": "canonical",
+      "stage": "pilot",
+      "seed": 20260910,
+      "games": 80,
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "description": "Canonical quiet drops.",
+      "counts": {
+        "threefold-repetition": 40,
+        "black": 16,
+        "white": 22,
+        "ply-limit": 2
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "threefold-repetition": 15,
+          "black": 1
+        },
+        "sharp-steady": {
+          "white": 9,
+          "threefold-repetition": 5,
+          "black": 1,
+          "ply-limit": 1
+        },
+        "steady-sharp": {
+          "white": 2,
+          "threefold-repetition": 4,
+          "black": 9,
+          "ply-limit": 1
+        },
+        "sharp-learning": {
+          "white": 11,
+          "threefold-repetition": 5
+        },
+        "learning-sharp": {
+          "threefold-repetition": 11,
+          "black": 5
+        }
+      },
+      "decisive": 38,
+      "whiteShare": 0.5789473684210527,
+      "meanPlies": 66.2375,
+      "medianPlies": 56,
+      "medianNormalPlayPlies": 54,
+      "uniqueTranscripts": 80,
+      "checkingDrops": 0,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 3,
+          "black": 0,
+          "draw": 2
+        },
+        "b1-a4": {
+          "white": 0,
+          "black": 1,
+          "draw": 4
+        },
+        "c1-a4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "d1-a4": {
+          "white": 1,
+          "black": 0,
+          "draw": 4
+        },
+        "a1-b4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "b1-b4": {
+          "white": 2,
+          "black": 0,
+          "draw": 3
+        },
+        "c1-b4": {
+          "white": 0,
+          "black": 1,
+          "draw": 4
+        },
+        "d1-b4": {
+          "white": 0,
+          "black": 1,
+          "draw": 4
+        },
+        "a1-c4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "b1-c4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "c1-c4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "d1-c4": {
+          "white": 1,
+          "black": 1,
+          "draw": 3
+        },
+        "a1-d4": {
+          "white": 0,
+          "black": 2,
+          "draw": 3
+        },
+        "b1-d4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "c1-d4": {
+          "white": 2,
+          "black": 0,
+          "draw": 3
+        },
+        "d1-d4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        }
+      },
+      "matingPieces": {
+        "rook": 31,
+        "knight": 5,
+        "bishop": 2
+      },
+      "checkingDropMates": 0,
+      "checkingDropsByColor": {
+        "white": 0,
+        "black": 0
+      },
+      "gamesWithCheckingDrops": 0,
+      "normalStart": 0
+    },
+    {
+      "variant": "grace",
+      "stage": "pilot",
+      "seed": 20260910,
+      "games": 80,
+      "rules": {
+        "allowCheckingDrops": true,
+        "experiment": "grace"
+      },
+      "description": "Checking drops permitted only after both players have completed three turns following king placement.",
+      "counts": {
+        "threefold-repetition": 20,
+        "white": 37,
+        "black": 23
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "threefold-repetition": 10,
+          "white": 6
+        },
+        "sharp-steady": {
+          "white": 16
+        },
+        "steady-sharp": {
+          "black": 12,
+          "threefold-repetition": 4
+        },
+        "sharp-learning": {
+          "white": 15,
+          "threefold-repetition": 1
+        },
+        "learning-sharp": {
+          "black": 11,
+          "threefold-repetition": 5
+        }
+      },
+      "decisive": 60,
+      "whiteShare": 0.6166666666666667,
+      "meanPlies": 29.9625,
+      "medianPlies": 28.5,
+      "medianNormalPlayPlies": 26.5,
+      "uniqueTranscripts": 80,
+      "checkingDrops": 385,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "b1-a4": {
+          "white": 3,
+          "black": 2,
+          "draw": 0
+        },
+        "c1-a4": {
+          "white": 3,
+          "black": 1,
+          "draw": 1
+        },
+        "d1-a4": {
+          "white": 3,
+          "black": 0,
+          "draw": 2
+        },
+        "a1-b4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "b1-b4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "c1-b4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "d1-b4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "a1-c4": {
+          "white": 3,
+          "black": 2,
+          "draw": 0
+        },
+        "b1-c4": {
+          "white": 3,
+          "black": 2,
+          "draw": 0
+        },
+        "c1-c4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "d1-c4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "a1-d4": {
+          "white": 2,
+          "black": 0,
+          "draw": 3
+        },
+        "b1-d4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "c1-d4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "d1-d4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        }
+      },
+      "matingPieces": {
+        "rook": 42,
+        "knight": 16,
+        "bishop": 2
+      },
+      "checkingDropMates": 29,
+      "checkingDropsByColor": {
+        "white": 204,
+        "black": 181
+      },
+      "gamesWithCheckingDrops": 79,
+      "normalStart": 0
+    },
+    {
+      "variant": "protected-opening",
+      "stage": "pilot",
+      "seed": 20260910,
+      "games": 80,
+      "rules": {
+        "allowCheckingDrops": true,
+        "experiment": "protected-opening"
+      },
+      "description": "Checking drops forbidden until the opponent first deploys a non-king; protection never returns.",
+      "counts": {
+        "threefold-repetition": 13,
+        "black": 42,
+        "white": 25
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "threefold-repetition": 5,
+          "black": 9,
+          "white": 2
+        },
+        "sharp-steady": {
+          "white": 10,
+          "black": 5,
+          "threefold-repetition": 1
+        },
+        "steady-sharp": {
+          "black": 16
+        },
+        "sharp-learning": {
+          "white": 13,
+          "threefold-repetition": 3
+        },
+        "learning-sharp": {
+          "black": 12,
+          "threefold-repetition": 4
+        }
+      },
+      "decisive": 67,
+      "whiteShare": 0.373134328358209,
+      "meanPlies": 31.0625,
+      "medianPlies": 29,
+      "medianNormalPlayPlies": 27,
+      "uniqueTranscripts": 77,
+      "checkingDrops": 640,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "b1-a4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "c1-a4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "d1-a4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "a1-b4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "b1-b4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "c1-b4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "d1-b4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "a1-c4": {
+          "white": 1,
+          "black": 4,
+          "draw": 0
+        },
+        "b1-c4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "c1-c4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "d1-c4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "a1-d4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "b1-d4": {
+          "white": 0,
+          "black": 3,
+          "draw": 2
+        },
+        "c1-d4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "d1-d4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        }
+      },
+      "matingPieces": {
+        "rook": 49,
+        "bishop": 6,
+        "knight": 12
+      },
+      "checkingDropMates": 39,
+      "checkingDropsByColor": {
+        "white": 187,
+        "black": 453
+      },
+      "gamesWithCheckingDrops": 80,
+      "normalStart": 0
+    },
+    {
+      "variant": "protected-recurring",
+      "stage": "pilot",
+      "seed": 20260910,
+      "games": 80,
+      "rules": {
+        "allowCheckingDrops": true,
+        "experiment": "protected-recurring"
+      },
+      "description": "Checking drops forbidden whenever the opponent has only a king deployed; protection returns after captures.",
+      "counts": {
+        "threefold-repetition": 14,
+        "white": 27,
+        "black": 39
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "threefold-repetition": 5,
+          "white": 4,
+          "black": 7
+        },
+        "sharp-steady": {
+          "black": 5,
+          "white": 8,
+          "threefold-repetition": 3
+        },
+        "steady-sharp": {
+          "black": 15,
+          "threefold-repetition": 1
+        },
+        "sharp-learning": {
+          "white": 15,
+          "threefold-repetition": 1
+        },
+        "learning-sharp": {
+          "black": 12,
+          "threefold-repetition": 4
+        }
+      },
+      "decisive": 66,
+      "whiteShare": 0.4090909090909091,
+      "meanPlies": 32.7875,
+      "medianPlies": 29,
+      "medianNormalPlayPlies": 27,
+      "uniqueTranscripts": 76,
+      "checkingDrops": 688,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "b1-a4": {
+          "white": 3,
+          "black": 1,
+          "draw": 1
+        },
+        "c1-a4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "d1-a4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "a1-b4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "b1-b4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "c1-b4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "d1-b4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "a1-c4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "b1-c4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "c1-c4": {
+          "white": 1,
+          "black": 1,
+          "draw": 3
+        },
+        "d1-c4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "a1-d4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "b1-d4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "c1-d4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "d1-d4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        }
+      },
+      "matingPieces": {
+        "rook": 41,
+        "knight": 22,
+        "bishop": 3
+      },
+      "checkingDropMates": 38,
+      "checkingDropsByColor": {
+        "white": 219,
+        "black": 469
+      },
+      "gamesWithCheckingDrops": 80,
+      "normalStart": 0
+    },
+    {
+      "variant": "protected-recurring",
+      "stage": "full",
+      "seed": 20260910,
+      "games": 1040,
+      "rules": {
+        "allowCheckingDrops": true,
+        "experiment": "protected-recurring"
+      },
+      "description": "Checking drops forbidden whenever the opponent has only a king deployed; protection returns after captures.",
+      "counts": {
+        "threefold-repetition": 213,
+        "white": 363,
+        "black": 464
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "threefold-repetition": 65,
+          "white": 52,
+          "black": 91
+        },
+        "sharp-steady": {
+          "black": 46,
+          "white": 130,
+          "threefold-repetition": 32
+        },
+        "steady-sharp": {
+          "black": 168,
+          "threefold-repetition": 39,
+          "white": 1
+        },
+        "sharp-learning": {
+          "white": 178,
+          "threefold-repetition": 28,
+          "black": 2
+        },
+        "learning-sharp": {
+          "black": 157,
+          "threefold-repetition": 49,
+          "white": 2
+        }
+      },
+      "decisive": 827,
+      "whiteShare": 0.43893591293833134,
+      "meanPlies": 30.642307692307693,
+      "medianPlies": 25,
+      "medianNormalPlayPlies": 23,
+      "uniqueTranscripts": 503,
+      "checkingDrops": 8511,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 15,
+          "black": 31,
+          "draw": 19
+        },
+        "b1-a4": {
+          "white": 36,
+          "black": 16,
+          "draw": 13
+        },
+        "c1-a4": {
+          "white": 18,
+          "black": 36,
+          "draw": 11
+        },
+        "d1-a4": {
+          "white": 34,
+          "black": 15,
+          "draw": 16
+        },
+        "a1-b4": {
+          "white": 21,
+          "black": 36,
+          "draw": 8
+        },
+        "b1-b4": {
+          "white": 18,
+          "black": 23,
+          "draw": 24
+        },
+        "c1-b4": {
+          "white": 21,
+          "black": 41,
+          "draw": 3
+        },
+        "d1-b4": {
+          "white": 18,
+          "black": 33,
+          "draw": 14
+        },
+        "a1-c4": {
+          "white": 19,
+          "black": 32,
+          "draw": 14
+        },
+        "b1-c4": {
+          "white": 23,
+          "black": 41,
+          "draw": 1
+        },
+        "c1-c4": {
+          "white": 19,
+          "black": 22,
+          "draw": 24
+        },
+        "d1-c4": {
+          "white": 20,
+          "black": 37,
+          "draw": 8
+        },
+        "a1-d4": {
+          "white": 33,
+          "black": 19,
+          "draw": 13
+        },
+        "b1-d4": {
+          "white": 20,
+          "black": 38,
+          "draw": 7
+        },
+        "c1-d4": {
+          "white": 35,
+          "black": 16,
+          "draw": 14
+        },
+        "d1-d4": {
+          "white": 13,
+          "black": 28,
+          "draw": 24
+        }
+      },
+      "matingPieces": {
+        "rook": 498,
+        "knight": 243,
+        "bishop": 86
+      },
+      "checkingDropMates": 551,
+      "checkingDropsByColor": {
+        "white": 2662,
+        "black": 5849
+      },
+      "gamesWithCheckingDrops": 1040,
+      "normalStart": 0
+    },
+    {
+      "variant": "quiet-return",
+      "stage": "pilot",
+      "seed": 20260910,
+      "games": 80,
+      "rules": {
+        "allowCheckingDrops": true,
+        "experiment": "quiet-return"
+      },
+      "description": "Same three-turn grace period; a piece that has previously been deployed can never check on a later drop.",
+      "counts": {
+        "threefold-repetition": 29,
+        "black": 23,
+        "white": 22,
+        "ply-limit": 6
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "threefold-repetition": 14,
+          "black": 2
+        },
+        "sharp-steady": {
+          "white": 11,
+          "ply-limit": 2,
+          "threefold-repetition": 2,
+          "black": 1
+        },
+        "steady-sharp": {
+          "threefold-repetition": 4,
+          "black": 8,
+          "ply-limit": 4
+        },
+        "sharp-learning": {
+          "white": 11,
+          "threefold-repetition": 5
+        },
+        "learning-sharp": {
+          "threefold-repetition": 4,
+          "black": 12
+        }
+      },
+      "decisive": 45,
+      "whiteShare": 0.4888888888888889,
+      "meanPlies": 71.9,
+      "medianPlies": 57,
+      "medianNormalPlayPlies": 55,
+      "uniqueTranscripts": 80,
+      "checkingDrops": 86,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 2,
+          "black": 0,
+          "draw": 3
+        },
+        "b1-a4": {
+          "white": 0,
+          "black": 2,
+          "draw": 3
+        },
+        "c1-a4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "d1-a4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "a1-b4": {
+          "white": 0,
+          "black": 2,
+          "draw": 3
+        },
+        "b1-b4": {
+          "white": 2,
+          "black": 0,
+          "draw": 3
+        },
+        "c1-b4": {
+          "white": 0,
+          "black": 2,
+          "draw": 3
+        },
+        "d1-b4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "a1-c4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "b1-c4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "c1-c4": {
+          "white": 1,
+          "black": 1,
+          "draw": 3
+        },
+        "d1-c4": {
+          "white": 2,
+          "black": 0,
+          "draw": 3
+        },
+        "a1-d4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "b1-d4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "c1-d4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "d1-d4": {
+          "white": 1,
+          "black": 1,
+          "draw": 3
+        }
+      },
+      "matingPieces": {
+        "knight": 11,
+        "rook": 31,
+        "bishop": 3
+      },
+      "checkingDropMates": 2,
+      "checkingDropsByColor": {
+        "white": 43,
+        "black": 43
+      },
+      "gamesWithCheckingDrops": 60,
+      "normalStart": 0
+    },
+    {
+      "variant": "quiet-return",
+      "stage": "full",
+      "seed": 20260910,
+      "games": 1040,
+      "rules": {
+        "allowCheckingDrops": true,
+        "experiment": "quiet-return"
+      },
+      "description": "Same three-turn grace period; a piece that has previously been deployed can never check on a later drop.",
+      "counts": {
+        "threefold-repetition": 345,
+        "black": 339,
+        "white": 288,
+        "ply-limit": 68
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "threefold-repetition": 151,
+          "black": 42,
+          "white": 14,
+          "ply-limit": 1
+        },
+        "sharp-steady": {
+          "white": 127,
+          "ply-limit": 33,
+          "threefold-repetition": 40,
+          "black": 8
+        },
+        "steady-sharp": {
+          "threefold-repetition": 45,
+          "black": 123,
+          "ply-limit": 34,
+          "white": 6
+        },
+        "sharp-learning": {
+          "white": 141,
+          "threefold-repetition": 67
+        },
+        "learning-sharp": {
+          "threefold-repetition": 42,
+          "black": 166
+        }
+      },
+      "decisive": 627,
+      "whiteShare": 0.45933014354066987,
+      "meanPlies": 72.33653846153847,
+      "medianPlies": 53,
+      "medianNormalPlayPlies": 51,
+      "uniqueTranscripts": 871,
+      "checkingDrops": 1198,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 21,
+          "black": 16,
+          "draw": 28
+        },
+        "b1-a4": {
+          "white": 18,
+          "black": 18,
+          "draw": 29
+        },
+        "c1-a4": {
+          "white": 22,
+          "black": 22,
+          "draw": 21
+        },
+        "d1-a4": {
+          "white": 22,
+          "black": 16,
+          "draw": 27
+        },
+        "a1-b4": {
+          "white": 12,
+          "black": 20,
+          "draw": 33
+        },
+        "b1-b4": {
+          "white": 16,
+          "black": 19,
+          "draw": 30
+        },
+        "c1-b4": {
+          "white": 15,
+          "black": 23,
+          "draw": 27
+        },
+        "d1-b4": {
+          "white": 17,
+          "black": 37,
+          "draw": 11
+        },
+        "a1-c4": {
+          "white": 17,
+          "black": 31,
+          "draw": 17
+        },
+        "b1-c4": {
+          "white": 15,
+          "black": 26,
+          "draw": 24
+        },
+        "c1-c4": {
+          "white": 13,
+          "black": 18,
+          "draw": 34
+        },
+        "d1-c4": {
+          "white": 16,
+          "black": 19,
+          "draw": 30
+        },
+        "a1-d4": {
+          "white": 25,
+          "black": 18,
+          "draw": 22
+        },
+        "b1-d4": {
+          "white": 18,
+          "black": 22,
+          "draw": 25
+        },
+        "c1-d4": {
+          "white": 22,
+          "black": 22,
+          "draw": 21
+        },
+        "d1-d4": {
+          "white": 19,
+          "black": 12,
+          "draw": 34
+        }
+      },
+      "matingPieces": {
+        "knight": 112,
+        "rook": 486,
+        "bishop": 29
+      },
+      "checkingDropMates": 40,
+      "checkingDropsByColor": {
+        "white": 561,
+        "black": 637
+      },
+      "gamesWithCheckingDrops": 806,
+      "normalStart": 0
+    },
+    {
+      "variant": "setup-black-checking",
+      "stage": "pilot",
+      "seed": 20260910,
+      "games": 80,
+      "rules": {
+        "allowCheckingDrops": true,
+        "experiment": "setup",
+        "setup": true,
+        "firstPlayer": "black"
+      },
+      "description": "Alternate quiet drops of all pieces, with no moves or captures during setup. black takes the first normal turn. Later checking drops allowed. No legal setup placement is a setup-blocked draw.",
+      "counts": {
+        "black": 40,
+        "threefold-repetition": 20,
+        "white": 20
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "black": 7,
+          "threefold-repetition": 8,
+          "white": 1
+        },
+        "sharp-steady": {
+          "black": 4,
+          "white": 7,
+          "threefold-repetition": 5
+        },
+        "steady-sharp": {
+          "black": 13,
+          "threefold-repetition": 2,
+          "white": 1
+        },
+        "sharp-learning": {
+          "white": 11,
+          "threefold-repetition": 5
+        },
+        "learning-sharp": {
+          "black": 16
+        }
+      },
+      "decisive": 60,
+      "whiteShare": 0.3333333333333333,
+      "meanPlies": 24.95,
+      "medianPlies": 21.5,
+      "medianNormalPlayPlies": 13.5,
+      "uniqueTranscripts": 80,
+      "checkingDrops": 275,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 1,
+          "black": 4,
+          "draw": 0
+        },
+        "b1-a4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "c1-a4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "d1-a4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "a1-b4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "b1-b4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "c1-b4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "d1-b4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "a1-c4": {
+          "white": 0,
+          "black": 3,
+          "draw": 2
+        },
+        "b1-c4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "c1-c4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "d1-c4": {
+          "white": 0,
+          "black": 2,
+          "draw": 3
+        },
+        "a1-d4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "b1-d4": {
+          "white": 3,
+          "black": 2,
+          "draw": 0
+        },
+        "c1-d4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "d1-d4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        }
+      },
+      "matingPieces": {
+        "rook": 49,
+        "knight": 7,
+        "bishop": 4
+      },
+      "checkingDropMates": 23,
+      "checkingDropsByColor": {
+        "white": 147,
+        "black": 128
+      },
+      "gamesWithCheckingDrops": 64,
+      "normalStart": 0
+    },
+    {
+      "variant": "setup-black-quiet",
+      "stage": "pilot",
+      "seed": 20260910,
+      "games": 80,
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "setup",
+        "setup": true,
+        "firstPlayer": "black"
+      },
+      "description": "Alternate quiet drops of all pieces, with no moves or captures during setup. black takes the first normal turn. Later checking drops forbidden. No legal setup placement is a setup-blocked draw.",
+      "counts": {
+        "white": 19,
+        "threefold-repetition": 25,
+        "black": 29,
+        "ply-limit": 7
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "white": 1,
+          "threefold-repetition": 12,
+          "black": 3
+        },
+        "sharp-steady": {
+          "black": 1,
+          "white": 8,
+          "ply-limit": 6,
+          "threefold-repetition": 1
+        },
+        "steady-sharp": {
+          "black": 11,
+          "threefold-repetition": 1,
+          "white": 3,
+          "ply-limit": 1
+        },
+        "sharp-learning": {
+          "threefold-repetition": 9,
+          "white": 7
+        },
+        "learning-sharp": {
+          "black": 14,
+          "threefold-repetition": 2
+        }
+      },
+      "decisive": 48,
+      "whiteShare": 0.3958333333333333,
+      "meanPlies": 61.65,
+      "medianPlies": 38,
+      "medianNormalPlayPlies": 30,
+      "uniqueTranscripts": 80,
+      "checkingDrops": 0,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "b1-a4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "c1-a4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "d1-a4": {
+          "white": 0,
+          "black": 2,
+          "draw": 3
+        },
+        "a1-b4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "b1-b4": {
+          "white": 1,
+          "black": 0,
+          "draw": 4
+        },
+        "c1-b4": {
+          "white": 1,
+          "black": 0,
+          "draw": 4
+        },
+        "d1-b4": {
+          "white": 0,
+          "black": 1,
+          "draw": 4
+        },
+        "a1-c4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "b1-c4": {
+          "white": 2,
+          "black": 3,
+          "draw": 0
+        },
+        "c1-c4": {
+          "white": 0,
+          "black": 3,
+          "draw": 2
+        },
+        "d1-c4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "a1-d4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "b1-d4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "c1-d4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "d1-d4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        }
+      },
+      "matingPieces": {
+        "knight": 10,
+        "rook": 38
+      },
+      "checkingDropMates": 0,
+      "checkingDropsByColor": {
+        "white": 0,
+        "black": 0
+      },
+      "gamesWithCheckingDrops": 0,
+      "normalStart": 0
+    },
+    {
+      "variant": "setup-white-checking",
+      "stage": "pilot",
+      "seed": 20260910,
+      "games": 80,
+      "rules": {
+        "allowCheckingDrops": true,
+        "experiment": "setup",
+        "setup": true,
+        "firstPlayer": "white"
+      },
+      "description": "Alternate quiet drops of all pieces, with no moves or captures during setup. white takes the first normal turn. Later checking drops allowed. No legal setup placement is a setup-blocked draw.",
+      "counts": {
+        "threefold-repetition": 26,
+        "white": 33,
+        "black": 21
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "threefold-repetition": 7,
+          "white": 7,
+          "black": 2
+        },
+        "sharp-steady": {
+          "white": 10,
+          "threefold-repetition": 6
+        },
+        "steady-sharp": {
+          "black": 11,
+          "threefold-repetition": 2,
+          "white": 3
+        },
+        "sharp-learning": {
+          "white": 11,
+          "threefold-repetition": 5
+        },
+        "learning-sharp": {
+          "black": 8,
+          "threefold-repetition": 6,
+          "white": 2
+        }
+      },
+      "decisive": 54,
+      "whiteShare": 0.6111111111111112,
+      "meanPlies": 34.65,
+      "medianPlies": 29.5,
+      "medianNormalPlayPlies": 21.5,
+      "uniqueTranscripts": 80,
+      "checkingDrops": 430,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "b1-a4": {
+          "white": 2,
+          "black": 0,
+          "draw": 3
+        },
+        "c1-a4": {
+          "white": 1,
+          "black": 3,
+          "draw": 1
+        },
+        "d1-a4": {
+          "white": 0,
+          "black": 2,
+          "draw": 3
+        },
+        "a1-b4": {
+          "white": 3,
+          "black": 1,
+          "draw": 1
+        },
+        "b1-b4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "c1-b4": {
+          "white": 3,
+          "black": 2,
+          "draw": 0
+        },
+        "d1-b4": {
+          "white": 1,
+          "black": 1,
+          "draw": 3
+        },
+        "a1-c4": {
+          "white": 1,
+          "black": 1,
+          "draw": 3
+        },
+        "b1-c4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "c1-c4": {
+          "white": 3,
+          "black": 0,
+          "draw": 2
+        },
+        "d1-c4": {
+          "white": 3,
+          "black": 1,
+          "draw": 1
+        },
+        "a1-d4": {
+          "white": 3,
+          "black": 1,
+          "draw": 1
+        },
+        "b1-d4": {
+          "white": 1,
+          "black": 1,
+          "draw": 3
+        },
+        "c1-d4": {
+          "white": 4,
+          "black": 0,
+          "draw": 1
+        },
+        "d1-d4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        }
+      },
+      "matingPieces": {
+        "rook": 35,
+        "bishop": 4,
+        "knight": 15
+      },
+      "checkingDropMates": 25,
+      "checkingDropsByColor": {
+        "white": 247,
+        "black": 183
+      },
+      "gamesWithCheckingDrops": 75,
+      "normalStart": 0
+    },
+    {
+      "variant": "setup-white-quiet",
+      "stage": "pilot",
+      "seed": 20260910,
+      "games": 80,
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "setup",
+        "setup": true,
+        "firstPlayer": "white"
+      },
+      "description": "Alternate quiet drops of all pieces, with no moves or captures during setup. white takes the first normal turn. Later checking drops forbidden. No legal setup placement is a setup-blocked draw.",
+      "counts": {
+        "threefold-repetition": 30,
+        "black": 21,
+        "white": 27,
+        "ply-limit": 2
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "threefold-repetition": 15,
+          "black": 1
+        },
+        "sharp-steady": {
+          "white": 13,
+          "threefold-repetition": 2,
+          "ply-limit": 1
+        },
+        "steady-sharp": {
+          "black": 10,
+          "threefold-repetition": 5,
+          "ply-limit": 1
+        },
+        "sharp-learning": {
+          "white": 14,
+          "threefold-repetition": 2
+        },
+        "learning-sharp": {
+          "threefold-repetition": 6,
+          "black": 10
+        }
+      },
+      "decisive": 48,
+      "whiteShare": 0.5625,
+      "meanPlies": 69.6375,
+      "medianPlies": 46.5,
+      "medianNormalPlayPlies": 38.5,
+      "uniqueTranscripts": 80,
+      "checkingDrops": 0,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "b1-a4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "c1-a4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "d1-a4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "a1-b4": {
+          "white": 2,
+          "black": 0,
+          "draw": 3
+        },
+        "b1-b4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "c1-b4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "d1-b4": {
+          "white": 0,
+          "black": 2,
+          "draw": 3
+        },
+        "a1-c4": {
+          "white": 2,
+          "black": 2,
+          "draw": 1
+        },
+        "b1-c4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "c1-c4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "d1-c4": {
+          "white": 1,
+          "black": 2,
+          "draw": 2
+        },
+        "a1-d4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "b1-d4": {
+          "white": 0,
+          "black": 1,
+          "draw": 4
+        },
+        "c1-d4": {
+          "white": 2,
+          "black": 1,
+          "draw": 2
+        },
+        "d1-d4": {
+          "white": 2,
+          "black": 0,
+          "draw": 3
+        }
+      },
+      "matingPieces": {
+        "rook": 36,
+        "knight": 10,
+        "bishop": 2
+      },
+      "checkingDropMates": 0,
+      "checkingDropsByColor": {
+        "white": 0,
+        "black": 0
+      },
+      "gamesWithCheckingDrops": 0,
+      "normalStart": 0
+    },
+    {
+      "variant": "setup-white-quiet",
+      "stage": "full",
+      "seed": 20260910,
+      "games": 1040,
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "setup",
+        "setup": true,
+        "firstPlayer": "white"
+      },
+      "description": "Alternate quiet drops of all pieces, with no moves or captures during setup. white takes the first normal turn. Later checking drops forbidden. No legal setup placement is a setup-blocked draw.",
+      "counts": {
+        "threefold-repetition": 433,
+        "black": 278,
+        "white": 283,
+        "ply-limit": 46
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "threefold-repetition": 176,
+          "black": 18,
+          "white": 13,
+          "ply-limit": 1
+        },
+        "sharp-steady": {
+          "white": 127,
+          "threefold-repetition": 55,
+          "ply-limit": 20,
+          "black": 6
+        },
+        "steady-sharp": {
+          "black": 129,
+          "threefold-repetition": 49,
+          "ply-limit": 25,
+          "white": 5
+        },
+        "sharp-learning": {
+          "white": 137,
+          "threefold-repetition": 70,
+          "black": 1
+        },
+        "learning-sharp": {
+          "threefold-repetition": 83,
+          "black": 124,
+          "white": 1
+        }
+      },
+      "decisive": 561,
+      "whiteShare": 0.5044563279857398,
+      "meanPlies": 64.4826923076923,
+      "medianPlies": 46,
+      "medianNormalPlayPlies": 38,
+      "uniqueTranscripts": 1017,
+      "checkingDrops": 0,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 18,
+          "black": 14,
+          "draw": 33
+        },
+        "b1-a4": {
+          "white": 16,
+          "black": 20,
+          "draw": 29
+        },
+        "c1-a4": {
+          "white": 19,
+          "black": 18,
+          "draw": 28
+        },
+        "d1-a4": {
+          "white": 23,
+          "black": 13,
+          "draw": 29
+        },
+        "a1-b4": {
+          "white": 17,
+          "black": 16,
+          "draw": 32
+        },
+        "b1-b4": {
+          "white": 19,
+          "black": 18,
+          "draw": 28
+        },
+        "c1-b4": {
+          "white": 18,
+          "black": 16,
+          "draw": 31
+        },
+        "d1-b4": {
+          "white": 11,
+          "black": 19,
+          "draw": 35
+        },
+        "a1-c4": {
+          "white": 20,
+          "black": 17,
+          "draw": 28
+        },
+        "b1-c4": {
+          "white": 16,
+          "black": 20,
+          "draw": 29
+        },
+        "c1-c4": {
+          "white": 19,
+          "black": 18,
+          "draw": 28
+        },
+        "d1-c4": {
+          "white": 17,
+          "black": 20,
+          "draw": 28
+        },
+        "a1-d4": {
+          "white": 15,
+          "black": 11,
+          "draw": 39
+        },
+        "b1-d4": {
+          "white": 19,
+          "black": 16,
+          "draw": 30
+        },
+        "c1-d4": {
+          "white": 19,
+          "black": 18,
+          "draw": 28
+        },
+        "d1-d4": {
+          "white": 17,
+          "black": 24,
+          "draw": 24
+        }
+      },
+      "matingPieces": {
+        "rook": 428,
+        "knight": 88,
+        "bishop": 45
+      },
+      "checkingDropMates": 0,
+      "checkingDropsByColor": {
+        "white": 0,
+        "black": 0
+      },
+      "gamesWithCheckingDrops": 0,
+      "normalStart": 0
+    },
+    {
+      "variant": "unrestricted",
+      "stage": "pilot",
+      "seed": 20260910,
+      "games": 80,
+      "rules": {
+        "allowCheckingDrops": true
+      },
+      "description": "Unrestricted checking drops.",
+      "counts": {
+        "white": 76,
+        "black": 3,
+        "threefold-repetition": 1
+      },
+      "matchup": {
+        "sharp-sharp": {
+          "white": 15,
+          "black": 1
+        },
+        "sharp-steady": {
+          "white": 16
+        },
+        "steady-sharp": {
+          "white": 15,
+          "threefold-repetition": 1
+        },
+        "sharp-learning": {
+          "white": 16
+        },
+        "learning-sharp": {
+          "white": 14,
+          "black": 2
+        }
+      },
+      "decisive": 79,
+      "whiteShare": 0.9620253164556962,
+      "meanPlies": 14.3125,
+      "medianPlies": 9,
+      "medianNormalPlayPlies": 7,
+      "uniqueTranscripts": 63,
+      "checkingDrops": 317,
+      "kingStarts": {
+        "a1-a4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "b1-a4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "c1-a4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "d1-a4": {
+          "white": 4,
+          "black": 1,
+          "draw": 0
+        },
+        "a1-b4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "b1-b4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "c1-b4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "d1-b4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "a1-c4": {
+          "white": 3,
+          "black": 1,
+          "draw": 1
+        },
+        "b1-c4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "c1-c4": {
+          "white": 4,
+          "black": 1,
+          "draw": 0
+        },
+        "d1-c4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "a1-d4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "b1-d4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "c1-d4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        },
+        "d1-d4": {
+          "white": 5,
+          "black": 0,
+          "draw": 0
+        }
+      },
+      "matingPieces": {
+        "rook": 64,
+        "bishop": 8,
+        "knight": 7
+      },
+      "checkingDropMates": 13,
+      "checkingDropsByColor": {
+        "white": 288,
+        "black": 29
+      },
+      "gamesWithCheckingDrops": 80,
+      "normalStart": 0
+    }
+  ]
+}
