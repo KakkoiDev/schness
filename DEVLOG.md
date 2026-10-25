@@ -1205,6 +1205,36 @@ runtime/manifest before run; on completion replay-validate and commit full compr
 archives/checksums and readable reports. Next measurement is this complete matrix; no
 automatic expansion, tuning, adoption or merge.
 
+## 2026-10-25 — Rechargeable checking-drop charge banks
+
+User authorized charge capacities 1/2/3, starting at zero, replenishing after one non-checking-
+drop own turn. Cross with capture/return delays 0/1: six recipes, six fresh seeds 20261801–06,
+16 starts per recipe, 576 Research Sharp-only depth-4 games, 200 total plies. Drop-mate remains
+allowed when charged. King placement does not charge; a checking drop spends one with no
+same-turn recharge. Other own play actions, including board checks and forced waits, restore
+one to the cap. Capture readiness and checking-drop charges are independent resources.
+
+Charge state is part of rules, immutable transitions, hashes/repetition/cache identity and
+replay validation. Use distinct adapter objective-search-v3 with unchanged search/evaluation
+code. No extra heuristic value for saved charges; mobility sees legal options, so tactical
+correctness does not establish optimal saving strategy. Keep data separate from earlier
+engines and the still-finishing drop-policy matrix. No mid-run tuning or automatic adoption.
+
+All 303 unit tests passed, including zero first-turn charges, no king-placement recharge,
+spending/no immediate recharge, normal checks regenerating, caps/identity/immutability,
+charged drop-mates, matched schedule and full replay/material conservation for all recipes.
+Freeze exact source and manifest; run locally and archive all replays/checksums/reports on
+completion. Next measurement is this complete batch. No production UI or Tutor change is
+implied; Tutor principal lines and explanations remain a separate proposed feature.
+
+
+## 2026-10-25 — Completed checking-drop charge-bank screen
+
+All 576 Research objective-search-v3 depth-4 games completed. Frozen source fingerprint 7f08da9419c99ab6235406e95a2ba73dad5a46d853dfd8350faf45499df56fc6; runner was confirmed inactive before frozen --resume verified every source hash and replay/checkpoint. Full runtime, manifest and replays are archived under research/data/check-charge-v1-2026-10-25 with verified part/whole SHA-256 df5281b8da2246cfc8dcc53dae8d5c0530a331b062f0b734659dce70898ea177.
+
+Each recipe has 96 games. Capacity/capture-cooldown: 1/0 = 20 White, 63 Black, 13 draws (86.5% decisive; White 24.1% of wins); 2/0 = 63/19/14 (85.4%; 76.8%); 3/0 = 60/24/12 (87.5%; 71.4%); 1/1 = 29/57/10 (89.6%; 33.7%); 2/1 = 47/44/5 (94.8%; 51.6%); 3/1 = 46/46/4 (95.8%; 50.0%). Only capacities 2 and 3 with one-turn capture cooldown meet the >=80% decisive, White 45–55% screen. All wins were checkmate. All draws repetition except three stalemates each for 2/0 and 3/0. Checking/mating-drop counts respectively: 564/37,398/44,409/48,547/31,387/57,391/58.
+
+Decision: retain 2/1 and 3/1 as provisional confirmation candidates, not official balanced variants. Capacity one strongly favors Black; higher capacities without capture cooldown favor White. Six seeds repeat the same 16 king starts, the heuristic has no stored-charge bonus, and finite-depth play is not an optimal-play proof. Do not pool with other engine identities. Next measurement, if authorized, is fresh starts/seeds and deeper matched-budget search. No new experiment started; no automatic merge.
 ## 2026-10-25 — Completed checking/drop-mate × capture-cooldown matrix
 
 All 576 games finished and frozen runtime --resume verified the source fingerprint and

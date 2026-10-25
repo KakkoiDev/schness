@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-25T00:42:11.796Z",
+  "config": {
+    "variants": [
+      "charges-1-delay-0",
+      "charges-2-delay-0",
+      "charges-3-delay-0",
+      "charges-1-delay-1",
+      "charges-2-delay-1",
+      "charges-3-delay-1"
+    ],
+    "seeds": [
+      20261801,
+      20261802,
+      20261803,
+      20261804,
+      20261805,
+      20261806
+    ],
+    "repetitions": 1,
+    "maxPlies": 200,
+    "workers": 8
+  },
+  "totalGames": 576,
+  "sourceFingerprint": "7f08da9419c99ab6235406e95a2ba73dad5a46d853dfd8350faf45499df56fc6",
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "89c47db7851f89caec72da4f215ebc21cf1e294aeef3b45d2583562d846ab035"
+    },
+    {
+      "path": "run.js",
+      "sha256": "ddf1891fa3446124c91c5f7ae3e863589e229757b0605ff38adcb422ac7ea84d"
+    },
+    {
+      "path": "core/bot.js",
+      "sha256": "d4fd925f74cb6016b9bd70a9352b78ac8c36da40fb0e70b260d8ac210bbb2b9e"
+    },
+    {
+      "path": "core/history.js",
+      "sha256": "44b155668b2a0f1a595805e636fc98229a73c1b8a7a3f3a671e812cf9c0b30d0"
+    },
+    {
+      "path": "core/notation.js",
+      "sha256": "ee47d5a1f8dd05fe5f7fee6694c2a7d5f6e97118bde0e0ed5a0cf0d8c0f8029e"
+    },
+    {
+      "path": "core/rules.js",
+      "sha256": "12f728421621cdf49585eb4fc6157cbda8e3b78783dac4c23c1335b38cf36399"
+    },
+    {
+      "path": "core/settings.js",
+      "sha256": "9044dd082e2d99bc75934edac5ed82000105ea8507ce47f3f7736e848ef045c8"
+    },
+    {
+      "path": "core/tournament.js",
+      "sha256": "31ed8291d1d79d1ab4e1041d6c2ea9becf21991d128c486ef73c8a8b8a786c6e"
+    },
+    {
+      "path": "core/variants.js",
+      "sha256": "d6502be553ac0b9950b50b6317379b19528e37933e6c8398a357146d0dcf5542"
+    },
+    {
+      "path": "core/watch.js",
+      "sha256": "70dcdc4d73dac27b5e6479b5b2fe3b6b1f7472e0364830191ea6948694b3c24c"
+    }
+  ],
+  "git": {
+    "head": "3b1c05050750e02516faf73688280defc184f01e",
+    "status": " M ../../.gitignore\n M ../../DECISIONS.md\n M ../../DEVLOG.md\n M ../../index.html\n M ../../scripts/aggregate-tournament.js\n M ../../scripts/run-tournament.js\n M ../../src/board-ui.js\n M ../../src/bot-worker.js\n M ../../src/bot.js\n M ../../src/history.js\n M ../../src/i18n.js\n M ../../src/rules.js\n M ../../src/tournament.js\n M ../../src/watch-ui.js\n M ../../styles.css\n M ../../sw.js\n M ../../test/tournament.test.js\n M ../../watch.html\n?? ../../.github/workflows/research-variants-v2.yml\n?? ../../.github/workflows/research-variants-v3.yml\n?? ../../.github/workflows/research-variants-v4.yml\n?? ../../.github/workflows/research-variants-v5.yml\n?? ../../.github/workflows/research-variants.yml\n?? ../../design/README.md\n?? ../../design/design.css\n?? ../../design/designer-original.patch\n?? ../../design/designer-report.txt\n?? ../../design/index.html\n?? ../../design/preview.js\n?? ../../design/screens/\n?? ../../design/system.html\n?? ../../docs/army-builder-proposal.md\n?? ../../docs/capture-bank-experiments.md\n?? ../../docs/chess-variant-inspirations.md\n?? ../../docs/countdown-variant-proposal.md\n?? ../../docs/custom-game-builder-proposal.md\n?? ../../docs/deployment-variant-experiments.md\n?? ../../docs/deployment-variant-results.json\n?? ../../docs/deployment-variant-results.md\n?? ../../docs/designer-handoff-classic.md\n?? ../../docs/local-experiments.md\n?? ../../docs/local-variant-win-rates-2026-10-24.md\n?? ../../docs/permanent-loss-experiments.md\n?? ../../docs/variant-frontier-proposals.md\n?? ../../docs/variant-search-engine.md\n?? ../../docs/variant-selection.md\n?? ../../docs/variant-wave2-experiments.md\n?? ../../docs/variant-wave3-experiments.md\n?? ../../e2e/variants.spec.js\n?? ../../output/\n?? ../\n?? ../../scripts/archive-local-experiments.py\n?? ../../scripts/research-variants.js\n?? ../../scripts/run-local-experiments.js\n?? ../../scripts/run-research-suite.js\n?? ../../scripts/run-research-v2.js\n?? ../../scripts/run-research-v3.js\n?? ../../scripts/run-research-v4.js\n?? ../../scripts/run-research-v5.js\n?? ../../src/search.js\n?? ../../src/variants.js\n?? ../../test/balance-bench.test.js\n?? ../../test/bank-cooldown-levels.test.js\n?? ../../test/capture-bank.test.js\n?? ../../test/check-charge.test.js\n?? ../../test/drop-policy-cooldown.test.js\n?? ../../test/local-experiments.test.js\n?? ../../test/permanent-loss.test.js\n?? ../../test/research-variants.test.js\n?? ../../test/research-wave2.test.js\n?? ../../test/research-wave3.test.js\n?? ../../test/search.test.js\n?? ../../test/symmetric-armies.test.js\n?? ../../test/variant-options.test.js\n?? ../../test/variants.test.js\n"
+  },
+  "node": "v24.21.0",
+  "machine": {
+    "model": "Apple M6",
+    "cpus": 12,
+    "memoryGiB": 32
+  },
+  "rules": {
+    "charges-1-delay-0": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "captureDelay": 0,
+      "checkChargeCap": 1,
+      "description": "Four-slot capture bank, overflow returns to captured side. Capture/return cooldown 0 owner turns. Initial reserves ready. Checking-drop charges start at 0, cap 1; each non-checking-drop own play action restores one. Checking drop spends one with no same-turn recharge. King placement does not charge; board checks cost nothing. Drop-mate allowed when charged. Normal checkmate, stalemate and repetition rules.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":0,\"checkChargeCap\":1}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Checking-drop charges start at zero with maximum 1. A checking drop spends one and gives no recharge that turn; every other own play action restores one up to the cap. King placement does not charge. Normal checks spend nothing; drop-mate allowed when charged.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "charges-2-delay-0": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "captureDelay": 0,
+      "checkChargeCap": 2,
+      "description": "Four-slot capture bank, overflow returns to captured side. Capture/return cooldown 0 owner turns. Initial reserves ready. Checking-drop charges start at 0, cap 2; each non-checking-drop own play action restores one. Checking drop spends one with no same-turn recharge. King placement does not charge; board checks cost nothing. Drop-mate allowed when charged. Normal checkmate, stalemate and repetition rules.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":0,\"checkChargeCap\":2}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Checking-drop charges start at zero with maximum 2. A checking drop spends one and gives no recharge that turn; every other own play action restores one up to the cap. King placement does not charge. Normal checks spend nothing; drop-mate allowed when charged.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "charges-3-delay-0": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "captureDelay": 0,
+      "checkChargeCap": 3,
+      "description": "Four-slot capture bank, overflow returns to captured side. Capture/return cooldown 0 owner turns. Initial reserves ready. Checking-drop charges start at 0, cap 3; each non-checking-drop own play action restores one. Checking drop spends one with no same-turn recharge. King placement does not charge; board checks cost nothing. Drop-mate allowed when charged. Normal checkmate, stalemate and repetition rules.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":0,\"checkChargeCap\":3}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Checking-drop charges start at zero with maximum 3. A checking drop spends one and gives no recharge that turn; every other own play action restores one up to the cap. King placement does not charge. Normal checks spend nothing; drop-mate allowed when charged.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "charges-1-delay-1": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "captureDelay": 1,
+      "checkChargeCap": 1,
+      "description": "Four-slot capture bank, overflow returns to captured side. Capture/return cooldown 1 owner turns. Initial reserves ready. Checking-drop charges start at 0, cap 1; each non-checking-drop own play action restores one. Checking drop spends one with no same-turn recharge. King placement does not charge; board checks cost nothing. Drop-mate allowed when charged. Normal checkmate, stalemate and repetition rules.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":1,\"checkChargeCap\":1}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Checking-drop charges start at zero with maximum 1. A checking drop spends one and gives no recharge that turn; every other own play action restores one up to the cap. King placement does not charge. Normal checks spend nothing; drop-mate allowed when charged.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "charges-2-delay-1": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "captureDelay": 1,
+      "checkChargeCap": 2,
+      "description": "Four-slot capture bank, overflow returns to captured side. Capture/return cooldown 1 owner turns. Initial reserves ready. Checking-drop charges start at 0, cap 2; each non-checking-drop own play action restores one. Checking drop spends one with no same-turn recharge. King placement does not charge; board checks cost nothing. Drop-mate allowed when charged. Normal checkmate, stalemate and repetition rules.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":1,\"checkChargeCap\":2}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Checking-drop charges start at zero with maximum 2. A checking drop spends one and gives no recharge that turn; every other own play action restores one up to the cap. King placement does not charge. Normal checks spend nothing; drop-mate allowed when charged.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "charges-3-delay-1": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "captureDelay": 1,
+      "checkChargeCap": 3,
+      "description": "Four-slot capture bank, overflow returns to captured side. Capture/return cooldown 1 owner turns. Initial reserves ready. Checking-drop charges start at 0, cap 3; each non-checking-drop own play action restores one. Checking drop spends one with no same-turn recharge. King placement does not charge; board checks cost nothing. Drop-mate allowed when charged. Normal checkmate, stalemate and repetition rules.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":1,\"checkChargeCap\":3}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Checking-drop charges start at zero with maximum 3. A checking drop spends one and gives no recharge that turn; every other own play action restores one up to the cap. King placement does not charge. Normal checks spend nothing; drop-mate allowed when charged.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    }
+  },
+  "ai": {
+    "learning": {
+      "version": 1,
+      "engine": "variant-objective-search-v3",
+      "depth": 2,
+      "behavior": "Shallow alpha-beta; seeded random choice among equally scored moves."
+    },
+    "steady": {
+      "version": 1,
+      "engine": "variant-objective-search-v3",
+      "depth": 3,
+      "behavior": "Medium alpha-beta; seeded random choice among equally scored moves."
+    },
+    "sharp": {
+      "version": 1,
+      "engine": "variant-objective-search-v3",
+      "depth": 4,
+      "behavior": "Research Sharp: history-aware alpha-beta and objective-aware evaluation; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score."
+    }
+  },
+  "notes": "Check-charge-v1: charge banks start at zero, cap 1/2/3, recharge one on each non-checking-drop own play turn, no recharge on checking-drop or king placement. Drop mates allowed when charged. Capture cooldown 0/1; six recipes, six fresh seeds, 16 starts each, 576 Research Sharp depth-4 games. Objective-search-v3 adapter; do not pool datasets."
+}

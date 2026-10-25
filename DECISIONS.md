@@ -1197,6 +1197,14 @@ drop-mate prohibition is composable with capture banks and evaluates king-safe l
 replies under that same rule. Board-move mates remain legal, and recursive reply drops
 strictly consume reserves. Freeze adapter identity as variant-objective-search-v2; keep
 all prior runtimes and datasets separate. No production app imports or official adoption.
+
+### Rechargeable checking-drop experiment (2026-10-25)
+
+research/check-charge-v1 isolates zero-initial-charge banks capped at 1/2/3. King placement
+never charges; checking drops spend one without same-turn recharge; other own play actions
+restore one. Charge rights participate in state identity independently of capture timers.
+Adapter objective-search-v3 is separate from production Sharp v3 and prior datasets. No
+extra charge heuristic is tuned mid-run and no automatic adoption or merge follows.
 ### Symmetric armies and adaptable search (2026-10-24)
 
 research/armies-v1 screens all 31 symmetric rook/bishop/knight multisets of size 2–4 under Classic
