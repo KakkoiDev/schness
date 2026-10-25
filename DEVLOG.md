@@ -1176,3 +1176,31 @@ coverage and replay/material conservation for every recipe. No app/UI changes. F
 runtime/manifest before run; on completion replay-validate and commit full compressed
 archives/checksums and readable reports. Next measurement is this complete matrix; no
 automatic expansion, tuning, adoption or merge.
+
+## 2026-10-25 — Completed checking/drop-mate × capture-cooldown matrix
+
+All 576 games finished and frozen runtime --resume verified the source fingerprint and
+all checkpoint/replay validity after original PID 6412 exited. Complete replay bundles,
+runtime/manifest, reports/rates/progress and SHA-256-verified compressed archive preserved.
+
+96 games each (White/Black/draws; decisive%; White share of wins):
+quiet delay 0: 57/28/11; 88.5%; 67.1%.
+quiet delay 1: 43/39/14; 85.4%; 52.4% — only screening hit.
+checking including mate delay 0: 68/10/18; 81.3%; 87.2%.
+checking including mate delay 1: 72/8/16; 83.3%; 90.0%.
+checking without drop-mate delay 0: 80/2/14; 85.4%; 97.6%.
+checking without drop-mate delay 1: 74/8/14; 85.4%; 90.2%.
+
+Draw reasons: quiet-0 has 11 repetitions; quiet-1 has 10 repetitions and four stalemates;
+checking-0 has 18 repetitions; checking-1 has 14 repetitions and two stalemates;
+no-drop-mate-0 and -1 each have 14 repetitions. All wins are checkmate.
+Checking/mating-drop usage respectively: quiet-0 0/0, quiet-1 0/0,
+checking-0 379/26, checking-1 380/24, no-drop-mate-0 366/0, no-drop-mate-1 360/0.
+Prohibiting immediate drop mate did not remove the observed White advantage.
+
+Keep this objective-search-v2 depth-4 dataset separate from earlier engines and the
+separately authorized charge-bank experiment. Six seeds repeat 16 starts, finite search
+and correlated samples prevent proven-balance claims. No rule tuning, new experiment or
+automatic merge follows these results. Full checking-drop charge-bank tests are independently
+authorized and tracked in PR #121; do not pool their results. Next measurement for this
+matrix would need separately specified deeper/multi-engine confirmation.

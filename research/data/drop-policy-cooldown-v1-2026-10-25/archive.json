@@ -1,0 +1,15 @@
+{
+  "run": "drop-policy-cooldown-v1-2026-10-25",
+  "sourceFingerprint": "5fb199c5bb2144e3531047f6e9430d15294f6d355627ce8d24d25f4c4710f3d2",
+  "games": 576,
+  "archiveBytes": 810931,
+  "archiveSha256": "9d8e943879ac0f4b1f302211e0e330c7ce9a2bad03a7d20f8ed3896de1b2ad05",
+  "parts": [
+    {
+      "path": "drop-policy-cooldown-v1-2026-10-25.tar.gz.part001",
+      "bytes": 810931,
+      "sha256": "9d8e943879ac0f4b1f302211e0e330c7ce9a2bad03a7d20f8ed3896de1b2ad05"
+    }
+  ],
+  "restore": "cat drop-policy-cooldown-v1-2026-10-25.tar.gz.part* > drop-policy-cooldown-v1-2026-10-25.tar.gz; tar -xzf drop-policy-cooldown-v1-2026-10-25.tar.gz"
+}
