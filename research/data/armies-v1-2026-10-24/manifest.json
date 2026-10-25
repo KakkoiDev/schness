@@ -1,0 +1,626 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-24T11:15:24.392Z",
+  "config": {
+    "variants": [
+      "army-NN",
+      "army-BN",
+      "army-BB",
+      "army-RN",
+      "army-RB",
+      "army-RR",
+      "army-NNN",
+      "army-BNN",
+      "army-BBN",
+      "army-BBB",
+      "army-RNN",
+      "army-RBN",
+      "army-RBB",
+      "army-RRN",
+      "army-RRB",
+      "army-RRR",
+      "army-NNNN",
+      "army-BNNN",
+      "army-BBNN",
+      "army-BBBN",
+      "army-BBBB",
+      "army-RNNN",
+      "army-RBNN",
+      "army-RBBN",
+      "army-RBBB",
+      "army-RRNN",
+      "army-RRBN",
+      "army-RRBB",
+      "army-RRRN",
+      "army-RRRB",
+      "army-RRRR"
+    ],
+    "seeds": [
+      20261401,
+      20261402,
+      20261403
+    ],
+    "repetitions": 1,
+    "maxPlies": 200,
+    "workers": 2
+  },
+  "totalGames": 1488,
+  "sourceFingerprint": "e2cffc287a0d235fc9b02f1ca668bbfa4537b1b2ec41b2d99db978741e0c0c04",
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "89c47db7851f89caec72da4f215ebc21cf1e294aeef3b45d2583562d846ab035"
+    },
+    {
+      "path": "run.js",
+      "sha256": "6d850d833aeacda0bface682ec9eb3ca426e9a6c677b11226d252622d41f3e36"
+    },
+    {
+      "path": "core/bot.js",
+      "sha256": "e48a289e2a3fdab180107e1050063d6503e0fa5cba55d7383bfa5f876a82e883"
+    },
+    {
+      "path": "core/history.js",
+      "sha256": "44b155668b2a0f1a595805e636fc98229a73c1b8a7a3f3a671e812cf9c0b30d0"
+    },
+    {
+      "path": "core/notation.js",
+      "sha256": "ee47d5a1f8dd05fe5f7fee6694c2a7d5f6e97118bde0e0ed5a0cf0d8c0f8029e"
+    },
+    {
+      "path": "core/rules.js",
+      "sha256": "88028ef250a4e59c8cc5a6fc72ca7e7ca610abc3312d645f9a8d064fb4b2ec89"
+    },
+    {
+      "path": "core/settings.js",
+      "sha256": "9044dd082e2d99bc75934edac5ed82000105ea8507ce47f3f7736e848ef045c8"
+    },
+    {
+      "path": "core/tournament.js",
+      "sha256": "eb01b645045b0bd4a29b11768595535d496dd4fc01094843587e96719aa12d6c"
+    },
+    {
+      "path": "core/variants.js",
+      "sha256": "8b5f68a378590eae61d13a8758e27d28f79134b373002f54d3dd95692c0cbccf"
+    },
+    {
+      "path": "core/watch.js",
+      "sha256": "70dcdc4d73dac27b5e6479b5b2fe3b6b1f7472e0364830191ea6948694b3c24c"
+    }
+  ],
+  "git": {
+    "head": "3b1c05050750e02516faf73688280defc184f01e",
+    "status": " M ../../.gitignore\n M ../../DECISIONS.md\n M ../../DEVLOG.md\n M ../../index.html\n M ../../scripts/aggregate-tournament.js\n M ../../scripts/run-tournament.js\n M ../../src/board-ui.js\n M ../../src/bot-worker.js\n M ../../src/bot.js\n M ../../src/history.js\n M ../../src/i18n.js\n M ../../src/rules.js\n M ../../src/tournament.js\n M ../../src/watch-ui.js\n M ../../styles.css\n M ../../sw.js\n M ../../watch.html\n?? ../../.github/workflows/research-variants-v2.yml\n?? ../../.github/workflows/research-variants-v3.yml\n?? ../../.github/workflows/research-variants-v4.yml\n?? ../../.github/workflows/research-variants-v5.yml\n?? ../../.github/workflows/research-variants.yml\n?? ../../design/README.md\n?? ../../design/design.css\n?? ../../design/designer-original.patch\n?? ../../design/designer-report.txt\n?? ../../design/index.html\n?? ../../design/preview.js\n?? ../../design/screens/\n?? ../../design/system.html\n?? ../../docs/army-builder-proposal.md\n?? ../../docs/capture-bank-experiments.md\n?? ../../docs/chess-variant-inspirations.md\n?? ../../docs/countdown-variant-proposal.md\n?? ../../docs/custom-game-builder-proposal.md\n?? ../../docs/deployment-variant-experiments.md\n?? ../../docs/deployment-variant-results.json\n?? ../../docs/deployment-variant-results.md\n?? ../../docs/designer-handoff-classic.md\n?? ../../docs/local-experiments.md\n?? ../../docs/local-variant-win-rates-2026-10-24.md\n?? ../../docs/permanent-loss-experiments.md\n?? ../../docs/variant-frontier-proposals.md\n?? ../../docs/variant-selection.md\n?? ../../docs/variant-wave2-experiments.md\n?? ../../docs/variant-wave3-experiments.md\n?? ../../e2e/variants.spec.js\n?? ../../output/\n?? ../\n?? ../../scripts/archive-local-experiments.py\n?? ../../scripts/research-variants.js\n?? ../../scripts/run-local-experiments.js\n?? ../../scripts/run-research-suite.js\n?? ../../scripts/run-research-v2.js\n?? ../../scripts/run-research-v3.js\n?? ../../scripts/run-research-v4.js\n?? ../../scripts/run-research-v5.js\n?? ../../src/search.js\n?? ../../src/variants.js\n?? ../../test/balance-bench.test.js\n?? ../../test/capture-bank.test.js\n?? ../../test/local-experiments.test.js\n?? ../../test/permanent-loss.test.js\n?? ../../test/research-variants.test.js\n?? ../../test/research-wave2.test.js\n?? ../../test/research-wave3.test.js\n?? ../../test/search.test.js\n?? ../../test/symmetric-armies.test.js\n?? ../../test/variants.test.js\n"
+  },
+  "node": "v24.21.0",
+  "machine": {
+    "model": "Apple M6",
+    "cpus": 12,
+    "memoryGiB": 32
+  },
+  "rules": {
+    "army-NN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "knight",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus knight, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-BN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "bishop",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus bishop, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-BB": {
+      "allowCheckingDrops": false,
+      "army": [
+        "bishop",
+        "bishop"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus bishop, bishop. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RB": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "bishop"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, bishop. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RR": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "rook"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, rook. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-NNN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "knight",
+        "knight",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus knight, knight, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-BNN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "bishop",
+        "knight",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus bishop, knight, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-BBN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "bishop",
+        "bishop",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus bishop, bishop, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-BBB": {
+      "allowCheckingDrops": false,
+      "army": [
+        "bishop",
+        "bishop",
+        "bishop"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus bishop, bishop, bishop. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RNN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "knight",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, knight, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RBN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "bishop",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, bishop, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RBB": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "bishop",
+        "bishop"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, bishop, bishop. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RRN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "rook",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, rook, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RRB": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "rook",
+        "bishop"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, rook, bishop. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RRR": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "rook",
+        "rook"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, rook, rook. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-NNNN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "knight",
+        "knight",
+        "knight",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus knight, knight, knight, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-BNNN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "bishop",
+        "knight",
+        "knight",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus bishop, knight, knight, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-BBNN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "bishop",
+        "bishop",
+        "knight",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus bishop, bishop, knight, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-BBBN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "bishop",
+        "bishop",
+        "bishop",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus bishop, bishop, bishop, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-BBBB": {
+      "allowCheckingDrops": false,
+      "army": [
+        "bishop",
+        "bishop",
+        "bishop",
+        "bishop"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus bishop, bishop, bishop, bishop. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RNNN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "knight",
+        "knight",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, knight, knight, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RBNN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "bishop",
+        "knight",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, bishop, knight, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RBBN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "bishop",
+        "bishop",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, bishop, bishop, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RBBB": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "bishop",
+        "bishop",
+        "bishop"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, bishop, bishop, bishop. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RRNN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "rook",
+        "knight",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, rook, knight, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RRBN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "rook",
+        "bishop",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, rook, bishop, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RRBB": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "rook",
+        "bishop",
+        "bishop"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, rook, bishop, bishop. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RRRN": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "rook",
+        "rook",
+        "knight"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, rook, rook, knight. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RRRB": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "rook",
+        "rook",
+        "bishop"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, rook, rook, bishop. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "army-RRRR": {
+      "allowCheckingDrops": false,
+      "army": [
+        "rook",
+        "rook",
+        "rook",
+        "rook"
+      ],
+      "description": "Classic Schness 4×4, quiet drops, captures return to current owner. Both sides: king plus rook, rook, rook, rook. Starting reserves ready. No new piece movements or victory conditions. Frozen Sharp v2 depth 4.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    }
+  },
+  "ai": {
+    "learning": {
+      "version": 1,
+      "depth": 2,
+      "behavior": "Shallow alpha-beta; seeded random choice among equally scored moves."
+    },
+    "steady": {
+      "version": 1,
+      "depth": 3,
+      "behavior": "Medium alpha-beta; seeded random choice among equally scored moves."
+    },
+    "sharp": {
+      "version": 2,
+      "depth": 4,
+      "behavior": "Deep alpha-beta; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score."
+    }
+  },
+  "notes": "Armies-v1 Classic symmetric Sharp-only fixed-depth screening, not AI training. Three fresh seeds by default. Target: >=80% decisive and White share of decisive games 45–55%. No automatic full expansion. Compare complete schedules only; do not pool with CI stages or historical engine snapshots."
+}

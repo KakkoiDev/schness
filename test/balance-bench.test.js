@@ -54,7 +54,7 @@ test('every recipe has legal full-game replay and conserves material',()=>{
 });
 
 test('unmodified controls reproduce the shipped research engine exactly',async()=>{
- const {playTournamentGame:baseline}=await import('../src/tournament.js');
+ const {playTournamentGame:baseline}=await import('../research/data/balance-v1-2026-10-24/runtime/core/tournament.js');
  const controls=[['canonical',{allowCheckingDrops:false}],['mutual-two',{allowCheckingDrops:true,experiment:'mutual-two'}]];
  for(const [id,researchRules] of controls){const options={index:3,seed:114,white:'learning',black:'learning',maxPlies:18,researchRules};const a=baseline(options),b=playTournamentGame(options);assert.deepEqual(b.transcript,a.transcript);assert.deepEqual(b.result,a.result);}
 });
