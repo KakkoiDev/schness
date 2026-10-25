@@ -1,0 +1,79 @@
+{
+  "status": "completed",
+  "pid": 83647,
+  "startedAt": "2026-10-24T17:33:51.613Z",
+  "updatedAt": "2026-10-24T17:33:52.407Z",
+  "sourceFingerprint": "227dd933384f2098dab4a28cbfde1de3623d39081c4d7fdd13490ddfdaa78ec2",
+  "completed": 864,
+  "total": 864,
+  "remaining": 0,
+  "workers": 8,
+  "inFlight": [],
+  "failure": null,
+  "variants": {
+    "bank-4-delay-1": {
+      "games": 864,
+      "white": 399,
+      "black": 398,
+      "draws": 67,
+      "reasons": {
+        "stalemate": 3,
+        "white": 399,
+        "black": 398,
+        "threefold-repetition": 64
+      },
+      "matchups": {
+        "sharp-sharp": {
+          "white": 45,
+          "black": 39,
+          "draws": 12
+        },
+        "steady-learning": {
+          "white": 84,
+          "black": 12,
+          "draws": 0
+        },
+        "learning-steady": {
+          "white": 3,
+          "black": 93,
+          "draws": 0
+        },
+        "learning-learning": {
+          "white": 42,
+          "black": 30,
+          "draws": 24
+        },
+        "sharp-steady": {
+          "white": 75,
+          "black": 16,
+          "draws": 5
+        },
+        "steady-sharp": {
+          "white": 10,
+          "black": 83,
+          "draws": 3
+        },
+        "sharp-learning": {
+          "white": 79,
+          "black": 3,
+          "draws": 14
+        },
+        "learning-sharp": {
+          "white": 2,
+          "black": 85,
+          "draws": 9
+        },
+        "steady-steady": {
+          "white": 59,
+          "black": 37,
+          "draws": 0
+        }
+      },
+      "totalNormalPlies": 29516,
+      "totalNonKings": 5184,
+      "kingOnly": 0,
+      "checkingDrops": 0,
+      "waits": 56
+    }
+  }
+}
