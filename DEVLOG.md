@@ -1176,3 +1176,25 @@ coverage and replay/material conservation for every recipe. No app/UI changes. F
 runtime/manifest before run; on completion replay-validate and commit full compressed
 archives/checksums and readable reports. Next measurement is this complete matrix; no
 automatic expansion, tuning, adoption or merge.
+
+## 2026-10-25 — Rechargeable checking-drop charge banks
+
+User authorized charge capacities 1/2/3, starting at zero, replenishing after one non-checking-
+drop own turn. Cross with capture/return delays 0/1: six recipes, six fresh seeds 20261801–06,
+16 starts per recipe, 576 Research Sharp-only depth-4 games, 200 total plies. Drop-mate remains
+allowed when charged. King placement does not charge; a checking drop spends one with no
+same-turn recharge. Other own play actions, including board checks and forced waits, restore
+one to the cap. Capture readiness and checking-drop charges are independent resources.
+
+Charge state is part of rules, immutable transitions, hashes/repetition/cache identity and
+replay validation. Use distinct adapter objective-search-v3 with unchanged search/evaluation
+code. No extra heuristic value for saved charges; mobility sees legal options, so tactical
+correctness does not establish optimal saving strategy. Keep data separate from earlier
+engines and the still-finishing drop-policy matrix. No mid-run tuning or automatic adoption.
+
+All 303 unit tests passed, including zero first-turn charges, no king-placement recharge,
+spending/no immediate recharge, normal checks regenerating, caps/identity/immutability,
+charged drop-mates, matched schedule and full replay/material conservation for all recipes.
+Freeze exact source and manifest; run locally and archive all replays/checksums/reports on
+completion. Next measurement is this complete batch. No production UI or Tutor change is
+implied; Tutor principal lines and explanations remain a separate proposed feature.
