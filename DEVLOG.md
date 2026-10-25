@@ -1088,3 +1088,8 @@ rating or optimal-play proof. Sources, observations, profiles and every replay a
 archived and verified under research/search-performance-v2. Report: docs/search-performance-report-2026-10-25.md.
 No prior frozen runtime/dataset modified. No UI behavior changes. No automatic merge. Next
 measurement: larger fresh-opening schedules at multiple budgets before a general strength claim.
+
+
+## 2026-10-25 — Browser engine comparison
+
+Compared the current Schness JavaScript playing engine with pinned Fairy-Stockfish WASM 1.1.12 (one thread, NNUE disabled) in real Chromium on the same machine. Used common six-slot capture-bank rules with quiet drops and no cooldown; this is not a Classic rules comparison. All 32 depth-4 legal trees matched (702,598 leaves), and all 192 timed-search moves were legal. Across 96 searches per engine at a requested 100 ms, aggregate throughput was 87,122 versus 1,602,117 reported nodes/s (18.39x); identical legal-tree enumeration took 890.41 versus 170.60 ms (5.22x). Selective depths and search node counts are not equivalent measures of thinking quality. No head-to-head games or Elo claim. Full UCI output, timing samples, source hashes, configuration, reproducible scripts and limitations are in research/browser-engine-v1. No production changes or variant tournaments were introduced.
