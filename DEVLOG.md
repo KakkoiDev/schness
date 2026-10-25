@@ -1398,3 +1398,16 @@ contains complete replay/runtime archive parts, manifest, progress and verificat
 All PRs open at the user's merge request (#108–#122) had already been merged. The completion
 monitor can now be removed; future strength work should investigate specific tactical
 differences rather than silently relaunching a modified benchmark.
+
+## 2026-10-25 — Explicit per-color engine results and thinking times
+
+At the user's request, derived readable tables for all 36 presets, showing new-engine versus
+v2 wins and draws separately with each engine's colors explicit. Each pairing has 96 games.
+Mean thinking times use only transcript entries with actual engine decisions; automatic king
+and private-placement actions are excluded. Summed timing totals were cross-checked against
+the archived rates.json for every variant/color/engine group. Eight games ran concurrently
+and engines reached different positions, so these are observed wall times, not an isolated
+equivalent-position speed measurement. No new games or runtime changes.
+
+See docs/engine-comparison-by-variant-2026-10-25.md and
+research/data/sharp-v7-v2-full-v1-2026-10-25/thinking-times.json for counts and timing detail.

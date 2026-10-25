@@ -1,0 +1,944 @@
+{
+  "sourceFingerprint": "b964f7a4c0cde7738e449eeef1976fc3cad98176608f976483df527b236f3097",
+  "units": "milliseconds",
+  "method": "Sum of recorded search milliseconds divided by engine decision count, excluding automatic king/private placements. Eight games ran in parallel. Different engines visited different game positions; these are observed wall times, not an isolated equivalent-position speed test.",
+  "workers": 8,
+  "rows": {
+    "canonical": {
+      "white": {
+        "candidate": {
+          "decisions": 2191,
+          "totalMillis": 27882.376502000123,
+          "meanMillis": 12.725867869466054
+        },
+        "baseline": {
+          "decisions": 2144,
+          "totalMillis": 311963.2500330004,
+          "meanMillis": 145.50524721688453
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 3027,
+          "totalMillis": 26306.068812998943,
+          "meanMillis": 8.690475326395422
+        },
+        "baseline": {
+          "decisions": 3075,
+          "totalMillis": 595156.0451869997,
+          "meanMillis": 193.54668136162593
+        }
+      }
+    },
+    "permanent-loss-quiet": {
+      "white": {
+        "candidate": {
+          "decisions": 2902,
+          "totalMillis": 17175.52872100003,
+          "meanMillis": 5.918514376636813
+        },
+        "baseline": {
+          "decisions": 2853,
+          "totalMillis": 141264.24288100007,
+          "meanMillis": 49.514280715387336
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2792,
+          "totalMillis": 11403.067169995513,
+          "meanMillis": 4.084193112462576
+        },
+        "baseline": {
+          "decisions": 2835,
+          "totalMillis": 256169.33663199865,
+          "meanMillis": 90.35955436754803
+        }
+      }
+    },
+    "permanent-loss-checking": {
+      "white": {
+        "candidate": {
+          "decisions": 1079,
+          "totalMillis": 20871.50903099976,
+          "meanMillis": 19.343381863762524
+        },
+        "baseline": {
+          "decisions": 1007,
+          "totalMillis": 30278.68497900002,
+          "meanMillis": 30.06820752631581
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1005,
+          "totalMillis": 4543.367937996052,
+          "meanMillis": 4.520764117409007
+        },
+        "baseline": {
+          "decisions": 1079,
+          "totalMillis": 426121.4248010006,
+          "meanMillis": 394.92254383781335
+        }
+      }
+    },
+    "capture-bank-3-quiet": {
+      "white": {
+        "candidate": {
+          "decisions": 2351,
+          "totalMillis": 44021.80002999962,
+          "meanMillis": 18.724712900893074
+        },
+        "baseline": {
+          "decisions": 2299,
+          "totalMillis": 530640.9334910014,
+          "meanMillis": 230.81380317137945
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2278,
+          "totalMillis": 36070.00973600079,
+          "meanMillis": 15.834069243196135
+        },
+        "baseline": {
+          "decisions": 2330,
+          "totalMillis": 673809.2793680022,
+          "meanMillis": 289.1885319175975
+        }
+      }
+    },
+    "capture-bank-3-checking": {
+      "white": {
+        "candidate": {
+          "decisions": 666,
+          "totalMillis": 29062.051261000684,
+          "meanMillis": 43.63671360510613
+        },
+        "baseline": {
+          "decisions": 578,
+          "totalMillis": 42486.61887400018,
+          "meanMillis": 73.50626102768197
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 590,
+          "totalMillis": 5842.596831997158,
+          "meanMillis": 9.902706494910436
+        },
+        "baseline": {
+          "decisions": 677,
+          "totalMillis": 482650.8417129952,
+          "meanMillis": 712.9259109497714
+        }
+      }
+    },
+    "capture-bank-4-quiet": {
+      "white": {
+        "candidate": {
+          "decisions": 2283,
+          "totalMillis": 40672.87951800067,
+          "meanMillis": 17.815540743758508
+        },
+        "baseline": {
+          "decisions": 2220,
+          "totalMillis": 496058.64044999995,
+          "meanMillis": 223.44983804054053
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2298,
+          "totalMillis": 33633.99569899589,
+          "meanMillis": 14.636203524367227
+        },
+        "baseline": {
+          "decisions": 2354,
+          "totalMillis": 659066.2523779955,
+          "meanMillis": 279.97716753525725
+        }
+      }
+    },
+    "capture-bank-4-checking": {
+      "white": {
+        "candidate": {
+          "decisions": 816,
+          "totalMillis": 25690.251787000714,
+          "meanMillis": 31.483151699755776
+        },
+        "baseline": {
+          "decisions": 740,
+          "totalMillis": 44164.3704639998,
+          "meanMillis": 59.68158170810784
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 664,
+          "totalMillis": 5936.992632001871,
+          "meanMillis": 8.94125396385824
+        },
+        "baseline": {
+          "decisions": 743,
+          "totalMillis": 496575.0207790006,
+          "meanMillis": 668.3378476164207
+        }
+      }
+    },
+    "capture-bank-5-quiet": {
+      "white": {
+        "candidate": {
+          "decisions": 2240,
+          "totalMillis": 40427.592950000835,
+          "meanMillis": 18.048032566964658
+        },
+        "baseline": {
+          "decisions": 2177,
+          "totalMillis": 492044.447089002,
+          "meanMillis": 226.0194979738181
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2290,
+          "totalMillis": 33905.306321006734,
+          "meanMillis": 14.805810620526959
+        },
+        "baseline": {
+          "decisions": 2345,
+          "totalMillis": 663603.3058539969,
+          "meanMillis": 282.98648437270657
+        }
+      }
+    },
+    "capture-bank-5-checking": {
+      "white": {
+        "candidate": {
+          "decisions": 727,
+          "totalMillis": 22883.17062399973,
+          "meanMillis": 31.476163169188073
+        },
+        "baseline": {
+          "decisions": 654,
+          "totalMillis": 40200.714490999526,
+          "meanMillis": 61.46898240213995
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 654,
+          "totalMillis": 5875.405982997268,
+          "meanMillis": 8.98380119724353
+        },
+        "baseline": {
+          "decisions": 733,
+          "totalMillis": 491200.598257998,
+          "meanMillis": 670.1235992605702
+        }
+      }
+    },
+    "capture-bank-6-quiet": {
+      "white": {
+        "candidate": {
+          "decisions": 2240,
+          "totalMillis": 39552.01755199954,
+          "meanMillis": 17.657150692856938
+        },
+        "baseline": {
+          "decisions": 2177,
+          "totalMillis": 481533.16469100124,
+          "meanMillis": 221.1911643045481
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2290,
+          "totalMillis": 33942.51724599558,
+          "meanMillis": 14.822059932749161
+        },
+        "baseline": {
+          "decisions": 2345,
+          "totalMillis": 665343.6479789999,
+          "meanMillis": 283.72863453262255
+        }
+      }
+    },
+    "capture-bank-6-checking": {
+      "white": {
+        "candidate": {
+          "decisions": 732,
+          "totalMillis": 22871.073414000566,
+          "meanMillis": 31.244635811476183
+        },
+        "baseline": {
+          "decisions": 659,
+          "totalMillis": 43739.7628049996,
+          "meanMillis": 66.37293293626647
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 619,
+          "totalMillis": 5437.20387099497,
+          "meanMillis": 8.78385116477378
+        },
+        "baseline": {
+          "decisions": 697,
+          "totalMillis": 466995.38264799747,
+          "meanMillis": 670.0077225939706
+        }
+      }
+    },
+    "home-half-check": {
+      "white": {
+        "candidate": {
+          "decisions": 2603,
+          "totalMillis": 45142.55951899901,
+          "meanMillis": 17.342512300806384
+        },
+        "baseline": {
+          "decisions": 2532,
+          "totalMillis": 290592.40915599884,
+          "meanMillis": 114.76793410584473
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2588,
+          "totalMillis": 24342.484187008813,
+          "meanMillis": 9.405905790961674
+        },
+        "baseline": {
+          "decisions": 2665,
+          "totalMillis": 1058274.9047900042,
+          "meanMillis": 397.1012775947483
+        }
+      }
+    },
+    "distant-check": {
+      "white": {
+        "candidate": {
+          "decisions": 2983,
+          "totalMillis": 43488.35877799959,
+          "meanMillis": 14.578732409654572
+        },
+        "baseline": {
+          "decisions": 2949,
+          "totalMillis": 451231.00785199925,
+          "meanMillis": 153.01153199457417
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2785,
+          "totalMillis": 29814.91339000268,
+          "meanMillis": 10.705534430880675
+        },
+        "baseline": {
+          "decisions": 2828,
+          "totalMillis": 942721.0541650034,
+          "meanMillis": 333.35256512199555
+        }
+      }
+    },
+    "supported-check": {
+      "white": {
+        "candidate": {
+          "decisions": 956,
+          "totalMillis": 24585.434284999676,
+          "meanMillis": 25.716981469664933
+        },
+        "baseline": {
+          "decisions": 870,
+          "totalMillis": 110553.98163799976,
+          "meanMillis": 127.07354211264341
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1035,
+          "totalMillis": 9361.486174001358,
+          "meanMillis": 9.04491417777909
+        },
+        "baseline": {
+          "decisions": 1128,
+          "totalMillis": 795510.0577190034,
+          "meanMillis": 705.2394128714569
+        }
+      }
+    },
+    "countercheck-only": {
+      "white": {
+        "candidate": {
+          "decisions": 2265,
+          "totalMillis": 36921.91521200264,
+          "meanMillis": 16.301066318764963
+        },
+        "baseline": {
+          "decisions": 2217,
+          "totalMillis": 412338.1737459991,
+          "meanMillis": 185.9892529300853
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2867,
+          "totalMillis": 32428.126143981237,
+          "meanMillis": 11.31082181513123
+        },
+        "baseline": {
+          "decisions": 2911,
+          "totalMillis": 766915.5920070107,
+          "meanMillis": 263.45434283992125
+        }
+      }
+    },
+    "knight-check": {
+      "white": {
+        "candidate": {
+          "decisions": 2098,
+          "totalMillis": 34133.64598099934,
+          "meanMillis": 16.269612002382907
+        },
+        "baseline": {
+          "decisions": 2062,
+          "totalMillis": 291012.3766220008,
+          "meanMillis": 141.13112348302658
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2199,
+          "totalMillis": 23735.349311005324,
+          "meanMillis": 10.793701369261175
+        },
+        "baseline": {
+          "decisions": 2230,
+          "totalMillis": 749607.4214419923,
+          "meanMillis": 336.14682575874093
+        }
+      }
+    },
+    "bishop-check": {
+      "white": {
+        "candidate": {
+          "decisions": 2328,
+          "totalMillis": 41603.82373900036,
+          "meanMillis": 17.871058307130742
+        },
+        "baseline": {
+          "decisions": 2272,
+          "totalMillis": 327348.75161500066,
+          "meanMillis": 144.07955616857424
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2432,
+          "totalMillis": 27931.170686990023,
+          "meanMillis": 11.484856368005765
+        },
+        "baseline": {
+          "decisions": 2489,
+          "totalMillis": 793322.4705280163,
+          "meanMillis": 318.7314063993637
+        }
+      }
+    },
+    "rook-check": {
+      "white": {
+        "candidate": {
+          "decisions": 1560,
+          "totalMillis": 47027.5416419995,
+          "meanMillis": 30.145860026922758
+        },
+        "baseline": {
+          "decisions": 1503,
+          "totalMillis": 288115.75157799677,
+          "meanMillis": 191.6937801583478
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1453,
+          "totalMillis": 23661.873735001776,
+          "meanMillis": 16.284840836202186
+        },
+        "baseline": {
+          "decisions": 1508,
+          "totalMillis": 1129692.3863759912,
+          "meanMillis": 749.1328822121957
+        }
+      }
+    },
+    "unrestricted": {
+      "white": {
+        "candidate": {
+          "decisions": 764,
+          "totalMillis": 23556.576861999463,
+          "meanMillis": 30.833215787957414
+        },
+        "baseline": {
+          "decisions": 673,
+          "totalMillis": 39460.26971500041,
+          "meanMillis": 58.63338739227401
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 894,
+          "totalMillis": 6293.254871992394,
+          "meanMillis": 7.039434979857265
+        },
+        "baseline": {
+          "decisions": 982,
+          "totalMillis": 570444.8774079964,
+          "meanMillis": 580.9010971568192
+        }
+      }
+    },
+    "protected-recurring": {
+      "white": {
+        "candidate": {
+          "decisions": 1217,
+          "totalMillis": 22555.111029000836,
+          "meanMillis": 18.533369785538895
+        },
+        "baseline": {
+          "decisions": 1173,
+          "totalMillis": 563966.8356380013,
+          "meanMillis": 480.7901412088673
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1148,
+          "totalMillis": 33457.28696899768,
+          "meanMillis": 29.14397819599101
+        },
+        "baseline": {
+          "decisions": 1192,
+          "totalMillis": 446947.71221400704,
+          "meanMillis": 374.95613440772405
+        }
+      }
+    },
+    "protected-opening": {
+      "white": {
+        "candidate": {
+          "decisions": 1354,
+          "totalMillis": 22003.903092002496,
+          "meanMillis": 16.251036257018093
+        },
+        "baseline": {
+          "decisions": 1321,
+          "totalMillis": 562062.8496109993,
+          "meanMillis": 425.4828536040873
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1391,
+          "totalMillis": 37428.8738950016,
+          "meanMillis": 26.9078892127977
+        },
+        "baseline": {
+          "decisions": 1426,
+          "totalMillis": 426403.1426419914,
+          "meanMillis": 299.02043663533755
+        }
+      }
+    },
+    "first-turn-quiet": {
+      "white": {
+        "candidate": {
+          "decisions": 1643,
+          "totalMillis": 35289.59064300149,
+          "meanMillis": 21.478752673768405
+        },
+        "baseline": {
+          "decisions": 1578,
+          "totalMillis": 257257.82132699934,
+          "meanMillis": 163.0277701692011
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1670,
+          "totalMillis": 21735.6632359894,
+          "meanMillis": 13.015367207179281
+        },
+        "baseline": {
+          "decisions": 1731,
+          "totalMillis": 750937.635615998,
+          "meanMillis": 433.81723605776887
+        }
+      }
+    },
+    "protected-first-turn": {
+      "white": {
+        "candidate": {
+          "decisions": 1331,
+          "totalMillis": 33650.74442400178,
+          "meanMillis": 25.282302347108775
+        },
+        "baseline": {
+          "decisions": 1273,
+          "totalMillis": 284993.3654599993,
+          "meanMillis": 223.87538527886827
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1231,
+          "totalMillis": 16743.95821100287,
+          "meanMillis": 13.601915687248473
+        },
+        "baseline": {
+          "decisions": 1291,
+          "totalMillis": 728221.1066759983,
+          "meanMillis": 564.0752181843519
+        }
+      }
+    },
+    "mutual-one": {
+      "white": {
+        "candidate": {
+          "decisions": 1701,
+          "totalMillis": 37889.19519000186,
+          "meanMillis": 22.274659135803564
+        },
+        "baseline": {
+          "decisions": 1636,
+          "totalMillis": 280491.1116919976,
+          "meanMillis": 171.44933477505967
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1690,
+          "totalMillis": 23161.75707498612,
+          "meanMillis": 13.705181701175219
+        },
+        "baseline": {
+          "decisions": 1749,
+          "totalMillis": 839743.0606189957,
+          "meanMillis": 480.1275360886196
+        }
+      }
+    },
+    "mutual-two": {
+      "white": {
+        "candidate": {
+          "decisions": 1582,
+          "totalMillis": 40810.03012599738,
+          "meanMillis": 25.796479219973058
+        },
+        "baseline": {
+          "decisions": 1538,
+          "totalMillis": 433258.91537799884,
+          "meanMillis": 281.70280583745046
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1641,
+          "totalMillis": 26386.90195400361,
+          "meanMillis": 16.079769624621335
+        },
+        "baseline": {
+          "decisions": 1681,
+          "totalMillis": 791433.380394002,
+          "meanMillis": 470.8110531790613
+        }
+      }
+    },
+    "limited-check": {
+      "white": {
+        "candidate": {
+          "decisions": 2510,
+          "totalMillis": 37486.49829600239,
+          "meanMillis": 14.934859878885415
+        },
+        "baseline": {
+          "decisions": 2465,
+          "totalMillis": 335325.10479899694,
+          "meanMillis": 136.03452527342674
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2688,
+          "totalMillis": 27646.5023669973,
+          "meanMillis": 10.285157130579353
+        },
+        "baseline": {
+          "decisions": 2739,
+          "totalMillis": 802642.7319099959,
+          "meanMillis": 293.04225334428475
+        }
+      }
+    },
+    "cooldown": {
+      "white": {
+        "candidate": {
+          "decisions": 2112,
+          "totalMillis": 40882.5864859994,
+          "meanMillis": 19.357285267992143
+        },
+        "baseline": {
+          "decisions": 2052,
+          "totalMillis": 361519.7096610009,
+          "meanMillis": 176.17919574122848
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1919,
+          "totalMillis": 25064.264751988463,
+          "meanMillis": 13.061107218336875
+        },
+        "baseline": {
+          "decisions": 1973,
+          "totalMillis": 707214.1800799957,
+          "meanMillis": 358.44611255955175
+        }
+      }
+    },
+    "no-drop-mate": {
+      "white": {
+        "candidate": {
+          "decisions": 1185,
+          "totalMillis": 184653.20223100414,
+          "meanMillis": 155.82548711477142
+        },
+        "baseline": {
+          "decisions": 1097,
+          "totalMillis": 320971.81595399417,
+          "meanMillis": 292.5905341422007
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 986,
+          "totalMillis": 34783.639121010434,
+          "meanMillis": 35.277524463499425
+        },
+        "baseline": {
+          "decisions": 1072,
+          "totalMillis": 2503073.528555009,
+          "meanMillis": 2334.9566497714636
+        }
+      }
+    },
+    "grace": {
+      "white": {
+        "candidate": {
+          "decisions": 1512,
+          "totalMillis": 32679.507657005917,
+          "meanMillis": 21.61343099008328
+        },
+        "baseline": {
+          "decisions": 1451,
+          "totalMillis": 291471.3274450009,
+          "meanMillis": 200.87617329083452
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1267,
+          "totalMillis": 20015.042069999035,
+          "meanMillis": 15.797191846881638
+        },
+        "baseline": {
+          "decisions": 1325,
+          "totalMillis": 574364.4677750035,
+          "meanMillis": 433.4826171886819
+        }
+      }
+    },
+    "quiet-return": {
+      "white": {
+        "candidate": {
+          "decisions": 2558,
+          "totalMillis": 44752.17913799081,
+          "meanMillis": 17.494987935101957
+        },
+        "baseline": {
+          "decisions": 2515,
+          "totalMillis": 467238.0420820033,
+          "meanMillis": 185.78053363101523
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2448,
+          "totalMillis": 34963.43977101194,
+          "meanMillis": 14.282450886851281
+        },
+        "baseline": {
+          "decisions": 2487,
+          "totalMillis": 816498.25048899,
+          "meanMillis": 328.3064939642099
+        }
+      }
+    },
+    "setup-white-quiet": {
+      "white": {
+        "candidate": {
+          "decisions": 2601,
+          "totalMillis": 22255.29728999082,
+          "meanMillis": 8.556438788923806
+        },
+        "baseline": {
+          "decisions": 2554,
+          "totalMillis": 201318.2313620043,
+          "meanMillis": 78.82467946828673
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2514,
+          "totalMillis": 19474.53777202405,
+          "meanMillis": 7.746435072404157
+        },
+        "baseline": {
+          "decisions": 2563,
+          "totalMillis": 257991.61529500317,
+          "meanMillis": 100.66001377097275
+        }
+      }
+    },
+    "setup-white-checking": {
+      "white": {
+        "candidate": {
+          "decisions": 1394,
+          "totalMillis": 15272.338688000571,
+          "meanMillis": 10.955766634146752
+        },
+        "baseline": {
+          "decisions": 1343,
+          "totalMillis": 89370.04758600052,
+          "meanMillis": 66.54508383172042
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1569,
+          "totalMillis": 13150.77423501946,
+          "meanMillis": 8.381627938189586
+        },
+        "baseline": {
+          "decisions": 1610,
+          "totalMillis": 171113.1181310136,
+          "meanMillis": 106.28143983292769
+        }
+      }
+    },
+    "setup-black-quiet": {
+      "white": {
+        "candidate": {
+          "decisions": 2181,
+          "totalMillis": 19350.815327003365,
+          "meanMillis": 8.87245086061594
+        },
+        "baseline": {
+          "decisions": 2244,
+          "totalMillis": 182835.7162650018,
+          "meanMillis": 81.47759191845
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2229,
+          "totalMillis": 17917.24266600143,
+          "meanMillis": 8.038242559892971
+        },
+        "baseline": {
+          "decisions": 2170,
+          "totalMillis": 223706.09701199923,
+          "meanMillis": 103.09036728663558
+        }
+      }
+    },
+    "setup-black-checking": {
+      "white": {
+        "candidate": {
+          "decisions": 1318,
+          "totalMillis": 14344.355853999266,
+          "meanMillis": 10.883426292867425
+        },
+        "baseline": {
+          "decisions": 1372,
+          "totalMillis": 108102.66159299691,
+          "meanMillis": 78.79202740014352
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1173,
+          "totalMillis": 10907.69015301112,
+          "meanMillis": 9.29896858739226
+        },
+        "baseline": {
+          "decisions": 1107,
+          "totalMillis": 127876.39329298772,
+          "meanMillis": 115.5161637696366
+        }
+      }
+    },
+    "hidden-quiet": {
+      "white": {
+        "candidate": {
+          "decisions": 2364,
+          "totalMillis": 17035.45651199622,
+          "meanMillis": 7.20619987817099
+        },
+        "baseline": {
+          "decisions": 2304,
+          "totalMillis": 174233.36252599792,
+          "meanMillis": 75.62211915190882
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 2201,
+          "totalMillis": 14762.262839018367,
+          "meanMillis": 6.707070803733925
+        },
+        "baseline": {
+          "decisions": 2257,
+          "totalMillis": 179640.28190499824,
+          "meanMillis": 79.5925041670351
+        }
+      }
+    },
+    "hidden-checking": {
+      "white": {
+        "candidate": {
+          "decisions": 1150,
+          "totalMillis": 10348.590034998488,
+          "meanMillis": 8.998773943476946
+        },
+        "baseline": {
+          "decisions": 1086,
+          "totalMillis": 57642.75888100988,
+          "meanMillis": 53.07804685175864
+        }
+      },
+      "black": {
+        "candidate": {
+          "decisions": 1078,
+          "totalMillis": 6553.770086010918,
+          "meanMillis": 6.079564087208643
+        },
+        "baseline": {
+          "decisions": 1146,
+          "totalMillis": 99908.79234101903,
+          "meanMillis": 87.18044706895203
+        }
+      }
+    }
+  }
+}
