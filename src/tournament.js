@@ -24,9 +24,9 @@ export function tournamentRules({ allowCheckingDrops = false, experiment, setup,
   ]);
 }
 export const TOURNAMENT_AI = Object.freeze({
-  learning: Object.freeze({ version: 1, depth: 2, behavior: 'Shallow alpha-beta; seeded random choice among equally scored moves.' }),
-  steady: Object.freeze({ version: 1, depth: 3, behavior: 'Medium alpha-beta; seeded random choice among equally scored moves.' }),
-  sharp: Object.freeze({ version: 2, depth: 4, behavior: 'Deep alpha-beta; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score.' }),
+  learning: Object.freeze({ version: 2, depth: 2, behavior: 'History-aware alpha-beta; shallow search; seeded random choice among equally scored moves.' }),
+  steady: Object.freeze({ version: 2, depth: 3, behavior: 'History-aware alpha-beta; medium search; seeded random choice among equally scored moves.' }),
+  sharp: Object.freeze({ version: 3, depth: 4, behavior: 'History-aware alpha-beta; deep search; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score.' }),
 });
 export const RESEARCH_MATCHUPS = Object.freeze([
   Object.freeze({ white: 'sharp', black: 'sharp' }),

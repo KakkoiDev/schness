@@ -1,0 +1,829 @@
+[
+  {
+    "id": "army-RRN",
+    "games": 48,
+    "white": 19,
+    "black": 4,
+    "draws": 25,
+    "reasons": {
+      "threefold-repetition": 24,
+      "white": 19,
+      "ply-limit": 1,
+      "black": 4
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 19,
+        "black": 4,
+        "draws": 25
+      }
+    },
+    "totalNormalPlies": 1962,
+    "totalNonKings": 288,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.4791666666666667,
+    "whiteDecisiveShare": 0.8260869565217391,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RBBB",
+    "games": 48,
+    "white": 13,
+    "black": 8,
+    "draws": 27,
+    "reasons": {
+      "threefold-repetition": 26,
+      "black": 8,
+      "white": 13,
+      "ply-limit": 1
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 13,
+        "black": 8,
+        "draws": 27
+      }
+    },
+    "totalNormalPlies": 3184,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.4375,
+    "whiteDecisiveShare": 0.6190476190476191,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RRBB",
+    "games": 48,
+    "white": 12,
+    "black": 6,
+    "draws": 30,
+    "reasons": {
+      "black": 6,
+      "threefold-repetition": 30,
+      "white": 12
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 12,
+        "black": 6,
+        "draws": 30
+      }
+    },
+    "totalNormalPlies": 2070,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.375,
+    "whiteDecisiveShare": 0.6666666666666666,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RBB",
+    "games": 48,
+    "white": 14,
+    "black": 3,
+    "draws": 31,
+    "reasons": {
+      "threefold-repetition": 31,
+      "white": 14,
+      "black": 3
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 14,
+        "black": 3,
+        "draws": 31
+      }
+    },
+    "totalNormalPlies": 2276,
+    "totalNonKings": 288,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.3541666666666667,
+    "whiteDecisiveShare": 0.8235294117647058,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RNNN",
+    "games": 48,
+    "white": 11,
+    "black": 4,
+    "draws": 33,
+    "reasons": {
+      "threefold-repetition": 32,
+      "white": 11,
+      "black": 4,
+      "ply-limit": 1
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 11,
+        "black": 4,
+        "draws": 33
+      }
+    },
+    "totalNormalPlies": 2316,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.3125,
+    "whiteDecisiveShare": 0.7333333333333333,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RRNN",
+    "games": 48,
+    "white": 10,
+    "black": 5,
+    "draws": 33,
+    "reasons": {
+      "threefold-repetition": 32,
+      "white": 10,
+      "ply-limit": 1,
+      "black": 5
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 10,
+        "black": 5,
+        "draws": 33
+      }
+    },
+    "totalNormalPlies": 3176,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.3125,
+    "whiteDecisiveShare": 0.6666666666666666,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-NNNN",
+    "games": 48,
+    "white": 9,
+    "black": 5,
+    "draws": 34,
+    "reasons": {
+      "threefold-repetition": 34,
+      "white": 9,
+      "black": 5
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 9,
+        "black": 5,
+        "draws": 34
+      }
+    },
+    "totalNormalPlies": 2238,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.2916666666666667,
+    "whiteDecisiveShare": 0.6428571428571429,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RBBN",
+    "games": 48,
+    "white": 11,
+    "black": 3,
+    "draws": 34,
+    "reasons": {
+      "white": 11,
+      "threefold-repetition": 31,
+      "black": 3,
+      "ply-limit": 3
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 11,
+        "black": 3,
+        "draws": 34
+      }
+    },
+    "totalNormalPlies": 3400,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.2916666666666667,
+    "whiteDecisiveShare": 0.7857142857142857,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RRRB",
+    "games": 48,
+    "white": 14,
+    "black": 0,
+    "draws": 34,
+    "reasons": {
+      "threefold-repetition": 34,
+      "white": 14
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 14,
+        "black": 0,
+        "draws": 34
+      }
+    },
+    "totalNormalPlies": 2183,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.2916666666666667,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RRBN",
+    "games": 48,
+    "white": 7,
+    "black": 6,
+    "draws": 35,
+    "reasons": {
+      "threefold-repetition": 33,
+      "black": 6,
+      "white": 7,
+      "ply-limit": 2
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 7,
+        "black": 6,
+        "draws": 35
+      }
+    },
+    "totalNormalPlies": 2247,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.2708333333333333,
+    "whiteDecisiveShare": 0.5384615384615384,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RBNN",
+    "games": 48,
+    "white": 7,
+    "black": 5,
+    "draws": 36,
+    "reasons": {
+      "threefold-repetition": 33,
+      "white": 7,
+      "black": 5,
+      "ply-limit": 3
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 7,
+        "black": 5,
+        "draws": 36
+      }
+    },
+    "totalNormalPlies": 2577,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.25,
+    "whiteDecisiveShare": 0.5833333333333334,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RRRN",
+    "games": 48,
+    "white": 11,
+    "black": 0,
+    "draws": 37,
+    "reasons": {
+      "threefold-repetition": 37,
+      "white": 11
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 11,
+        "black": 0,
+        "draws": 37
+      }
+    },
+    "totalNormalPlies": 1585,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.22916666666666666,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RN",
+    "games": 48,
+    "white": 8,
+    "black": 0,
+    "draws": 40,
+    "reasons": {
+      "white": 8,
+      "threefold-repetition": 40
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 8,
+        "black": 0,
+        "draws": 40
+      }
+    },
+    "totalNormalPlies": 1725,
+    "totalNonKings": 192,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.16666666666666666,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RRB",
+    "games": 48,
+    "white": 6,
+    "black": 2,
+    "draws": 40,
+    "reasons": {
+      "threefold-repetition": 40,
+      "white": 6,
+      "black": 2
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 6,
+        "black": 2,
+        "draws": 40
+      }
+    },
+    "totalNormalPlies": 1825,
+    "totalNonKings": 288,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.16666666666666666,
+    "whiteDecisiveShare": 0.75,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RRR",
+    "games": 48,
+    "white": 7,
+    "black": 0,
+    "draws": 41,
+    "reasons": {
+      "threefold-repetition": 41,
+      "white": 7
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 7,
+        "black": 0,
+        "draws": 41
+      }
+    },
+    "totalNormalPlies": 2303,
+    "totalNonKings": 288,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.14583333333333334,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-BNNN",
+    "games": 48,
+    "white": 6,
+    "black": 1,
+    "draws": 41,
+    "reasons": {
+      "threefold-repetition": 40,
+      "ply-limit": 1,
+      "white": 6,
+      "black": 1
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 6,
+        "black": 1,
+        "draws": 41
+      }
+    },
+    "totalNormalPlies": 2743,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.14583333333333334,
+    "whiteDecisiveShare": 0.8571428571428571,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-NNN",
+    "games": 48,
+    "white": 4,
+    "black": 1,
+    "draws": 43,
+    "reasons": {
+      "threefold-repetition": 43,
+      "white": 4,
+      "black": 1
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 4,
+        "black": 1,
+        "draws": 43
+      }
+    },
+    "totalNormalPlies": 1839,
+    "totalNonKings": 288,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.10416666666666667,
+    "whiteDecisiveShare": 0.8,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RNN",
+    "games": 48,
+    "white": 3,
+    "black": 2,
+    "draws": 43,
+    "reasons": {
+      "threefold-repetition": 43,
+      "white": 3,
+      "black": 2
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 3,
+        "black": 2,
+        "draws": 43
+      }
+    },
+    "totalNormalPlies": 2517,
+    "totalNonKings": 288,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.10416666666666667,
+    "whiteDecisiveShare": 0.6,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RB",
+    "games": 48,
+    "white": 0,
+    "black": 4,
+    "draws": 44,
+    "reasons": {
+      "threefold-repetition": 44,
+      "black": 4
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 0,
+        "black": 4,
+        "draws": 44
+      }
+    },
+    "totalNormalPlies": 1369,
+    "totalNonKings": 192,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.08333333333333333,
+    "whiteDecisiveShare": 0,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RBN",
+    "games": 48,
+    "white": 4,
+    "black": 0,
+    "draws": 44,
+    "reasons": {
+      "threefold-repetition": 44,
+      "white": 4
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 4,
+        "black": 0,
+        "draws": 44
+      }
+    },
+    "totalNormalPlies": 2066,
+    "totalNonKings": 288,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.08333333333333333,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RRRR",
+    "games": 48,
+    "white": 4,
+    "black": 0,
+    "draws": 44,
+    "reasons": {
+      "threefold-repetition": 44,
+      "white": 4
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 4,
+        "black": 0,
+        "draws": 44
+      }
+    },
+    "totalNormalPlies": 1695,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.08333333333333333,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-BBN",
+    "games": 48,
+    "white": 1,
+    "black": 2,
+    "draws": 45,
+    "reasons": {
+      "threefold-repetition": 45,
+      "white": 1,
+      "black": 2
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 1,
+        "black": 2,
+        "draws": 45
+      }
+    },
+    "totalNormalPlies": 1970,
+    "totalNonKings": 288,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.0625,
+    "whiteDecisiveShare": 0.3333333333333333,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-BNN",
+    "games": 48,
+    "white": 2,
+    "black": 0,
+    "draws": 46,
+    "reasons": {
+      "threefold-repetition": 46,
+      "white": 2
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 2,
+        "black": 0,
+        "draws": 46
+      }
+    },
+    "totalNormalPlies": 1453,
+    "totalNonKings": 288,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.041666666666666664,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-RR",
+    "games": 48,
+    "white": 1,
+    "black": 0,
+    "draws": 47,
+    "reasons": {
+      "threefold-repetition": 47,
+      "white": 1
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 1,
+        "black": 0,
+        "draws": 47
+      }
+    },
+    "totalNormalPlies": 1286,
+    "totalNonKings": 192,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.020833333333333332,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-BBNN",
+    "games": 48,
+    "white": 1,
+    "black": 0,
+    "draws": 47,
+    "reasons": {
+      "threefold-repetition": 47,
+      "white": 1
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 1,
+        "black": 0,
+        "draws": 47
+      }
+    },
+    "totalNormalPlies": 3154,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.020833333333333332,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-BBBN",
+    "games": 48,
+    "white": 1,
+    "black": 0,
+    "draws": 47,
+    "reasons": {
+      "threefold-repetition": 47,
+      "white": 1
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 1,
+        "black": 0,
+        "draws": 47
+      }
+    },
+    "totalNormalPlies": 2145,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0.020833333333333332,
+    "whiteDecisiveShare": 1,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-NN",
+    "games": 48,
+    "white": 0,
+    "black": 0,
+    "draws": 48,
+    "reasons": {
+      "threefold-repetition": 48
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 0,
+        "black": 0,
+        "draws": 48
+      }
+    },
+    "totalNormalPlies": 1591,
+    "totalNonKings": 192,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0,
+    "whiteDecisiveShare": null,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-BN",
+    "games": 48,
+    "white": 0,
+    "black": 0,
+    "draws": 48,
+    "reasons": {
+      "threefold-repetition": 48
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 0,
+        "black": 0,
+        "draws": 48
+      }
+    },
+    "totalNormalPlies": 1630,
+    "totalNonKings": 192,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0,
+    "whiteDecisiveShare": null,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-BB",
+    "games": 48,
+    "white": 0,
+    "black": 0,
+    "draws": 48,
+    "reasons": {
+      "threefold-repetition": 47,
+      "ply-limit": 1
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 0,
+        "black": 0,
+        "draws": 48
+      }
+    },
+    "totalNormalPlies": 2667,
+    "totalNonKings": 192,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0,
+    "whiteDecisiveShare": null,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-BBB",
+    "games": 48,
+    "white": 0,
+    "black": 0,
+    "draws": 48,
+    "reasons": {
+      "threefold-repetition": 42,
+      "ply-limit": 6
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 0,
+        "black": 0,
+        "draws": 48
+      }
+    },
+    "totalNormalPlies": 3740,
+    "totalNonKings": 288,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0,
+    "whiteDecisiveShare": null,
+    "meetsScreen": false
+  },
+  {
+    "id": "army-BBBB",
+    "games": 48,
+    "white": 0,
+    "black": 0,
+    "draws": 48,
+    "reasons": {
+      "threefold-repetition": 37,
+      "ply-limit": 11
+    },
+    "matchups": {
+      "sharp-sharp": {
+        "white": 0,
+        "black": 0,
+        "draws": 48
+      }
+    },
+    "totalNormalPlies": 4614,
+    "totalNonKings": 384,
+    "kingOnly": 0,
+    "checkingDrops": 0,
+    "waits": 0,
+    "decisiveRate": 0,
+    "whiteDecisiveShare": null,
+    "meetsScreen": false
+  }
+]
