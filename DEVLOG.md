@@ -1109,3 +1109,69 @@ numeric strength profiles and production Sharp v3. Six seeds repeat 16 king star
 sample size, correlated starts, evaluator assumptions and search horizon limit inference.
 Do not adopt an official variant or launch a new experiment automatically. Next useful
 measurement would be a separately authorized deeper-search or multi-engine confirmation.
+
+## 2026-10-25 — Nine proposed variant options launched
+
+Question: can small reserve timing changes or new movement/objective constraints improve the
+four-slot one-turn cooldown candidate? User authorized testing every proposed direction.
+Run nine recipes: control 1/1 capture/return delay, 1/0 (also the stolen-only cooldown proposal),
+1/2, two-square rook/bishop move-and-attack range, three-check, five-check, center hold,
+mandatory king-safe captures, and own-half drops. Avoid duplicating the equivalent 1/0 ideas
+and avoid combining several unmeasured changes at once. All inherit the candidate's quiet
+drops and capture-bank semantics. Center hold means the same central square through one
+opponent reply, safe at the end; a checking reply cancels the claim. One checking action
+counts once even if double check. Objectives and timer/overflow rights are replay/hash state.
+
+Research Sharp uses a new explicit variant-objective-search-v1 identity for every recipe,
+including control: full repetition-history transposition keys, check progress 120 per count,
+center distance 60 and active claim 250. Reject blindly using an objective-unaware evaluator
+or presenting uncalibrated weights as optimal play. Keep this dataset separate from Sharp v2,
+production v3 and numeric strength. No mid-run tuning or automatic adoption.
+
+Six fresh seeds 20261601–20261606 × 16 starts × nine recipes = 864 Sharp-only depth-4 games,
+200 total plies, eight local workers. All 290 unit tests passed, including delay boundaries,
+range on moves/attacks/drop legality, check counters/double check/terminal search, center
+claim cancellation/search defense, pinned mandatory captures, schedule coverage, baseline
+rule identity and full replay/material conservation for each recipe. No app changes; no
+production browser acceptance claim. Preserve runtime/manifest before completion and append
+full replay archive/report/checksums on completion. Next measurement is the complete batch,
+with W/B/draws, draw reasons and checkmate versus objective victories; screening hits need
+independent stronger-search/human confirmation.
+
+## 2026-10-25 — Completed nine-option research screen
+
+All 864 authorized games completed; after confirming PID 89823 had exited, frozen runtime
+--resume verified source fingerprint 81aead8505cb836f29765f39cc86dac44c61cde5d7f04033145357810dbc595b
+and every checkpoint's legal replay, resulting keys, final state and result. Full replay
+bundles, manifest, exact runtime, readable report/rates/progress and verified SHA-256 archive
+parts are committed. No new experiments, changed frozen source or merge.
+
+Per recipe, 96 games (White/Black/draws; decisive%; White share of decisive games):
+- Control 1/1: 40/41/15; 84.4%; 49.4%.
+- Capture/return delay 1/0: 40/41/15; 84.4%; 49.4%.
+- Capture/return delay 1/2: 40/41/15; 84.4%; 49.4%.
+- Two-square sliders: 49/28/19; 80.2%; 63.6%.
+- Three-check: 59/35/2; 97.9%; 62.8%.
+- Five-check: 57/39/0; 100%; 59.4%.
+- Center hold: 96/0/0; 100%; 100%.
+- Mandatory captures: 12/3/81; 15.6%; 80.0%.
+- Own-half drops: 37/46/13; 86.5%; 44.6% (strictly below 45%, not a hit).
+
+Only the delay/control group meets both prespecified screening thresholds. All three
+have 11 repetition and four stalemate draws; all 81 wins are checkmate. No played overflow
+capture occurs in these 288 games, so return cooldown effects are not established. Delay
+1/2 matches all 96 control action sequences; 1/0 matches 94/96. Identical totals are not
+independent confirmations of three distinct effective mechanisms.
+
+Slider draws: 17 repetitions, two stalemates; 77 checkmates. Three-check: 88 check-count
+wins, six checkmates and two stalemate draws. Five-check: 76 check-count wins, 20 checkmates,
+no draws. Center hold: all 96 White objective wins on ply four (king placements, White
+central king entry, Black's first reply); reject this opening objective as balanced in
+its current form. Mandatory captures: 15 checkmates; 52 repetition, 28 stalemate and one
+ply-limit draw. Own-half: 83 checkmates and 13 repetition draws.
+
+These are the newly versioned objective-search-v1 depth-4 engine, not prior Sharp v2/v3
+or numeric strength. Six seeds repeat 16 starts; uncalibrated objective weights and the
+search/ply limits constrain inference. Keep separate data and matched control, do not
+claim proven balance or automatic official variants. Next measurement would require a
+separately specified confirmation; no automatic new experiments launched.

@@ -1,0 +1,20 @@
+{
+  "run": "variant-options-v1-2026-10-25",
+  "sourceFingerprint": "81aead8505cb836f29765f39cc86dac44c61cde5d7f04033145357810dbc595b",
+  "games": 864,
+  "archiveBytes": 1790140,
+  "archiveSha256": "55ef4c9a084787226f9486f5fe2bd69e15972ba48f1e52168c2a032f70c95a71",
+  "parts": [
+    {
+      "path": "variant-options-v1-2026-10-25.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "53408e661e992258e9cd060a224a0d04641821782f42482f0c5008f5b415e76c"
+    },
+    {
+      "path": "variant-options-v1-2026-10-25.tar.gz.part002",
+      "bytes": 741564,
+      "sha256": "275f6261afe7adb4720ea9a4f8d97ab1dfefe4f7d62c3cd4d601e1cf156be6f2"
+    }
+  ],
+  "restore": "cat variant-options-v1-2026-10-25.tar.gz.part* > variant-options-v1-2026-10-25.tar.gz; tar -xzf variant-options-v1-2026-10-25.tar.gz"
+}
