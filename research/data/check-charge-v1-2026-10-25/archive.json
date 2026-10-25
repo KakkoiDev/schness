@@ -1,0 +1,15 @@
+{
+  "run": "check-charge-v1-2026-10-25",
+  "sourceFingerprint": "7f08da9419c99ab6235406e95a2ba73dad5a46d853dfd8350faf45499df56fc6",
+  "games": 576,
+  "archiveBytes": 832702,
+  "archiveSha256": "df5281b8da2246cfc8dcc53dae8d5c0530a331b062f0b734659dce70898ea177",
+  "parts": [
+    {
+      "path": "check-charge-v1-2026-10-25.tar.gz.part001",
+      "bytes": 832702,
+      "sha256": "df5281b8da2246cfc8dcc53dae8d5c0530a331b062f0b734659dce70898ea177"
+    }
+  ],
+  "restore": "cat check-charge-v1-2026-10-25.tar.gz.part* > check-charge-v1-2026-10-25.tar.gz; tar -xzf check-charge-v1-2026-10-25.tar.gz"
+}
