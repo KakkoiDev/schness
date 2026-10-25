@@ -1,0 +1,35 @@
+{
+  "baseline": {
+    "fixedDepth": 4,
+    "medianMillis": 893.2499999999991,
+    "millisByRepeat": [
+      844.6872909999993,
+      893.2499999999991,
+      920.9196689999997
+    ],
+    "nodes": 72755,
+    "boundedMeanDepth": 4.1875,
+    "boundedDepthDistribution": {
+      "3": 2,
+      "4": 24,
+      "5": 4,
+      "6": 2
+    }
+  },
+  "candidate": {
+    "fixedDepth": 4,
+    "medianMillis": 201.1303759999994,
+    "millisByRepeat": [
+      198.07671299999947,
+      201.1303759999994,
+      219.8607930000012
+    ],
+    "nodes": 50824,
+    "boundedMeanDepth": 4.28125,
+    "boundedDepthDistribution": {
+      "4": 25,
+      "5": 5,
+      "6": 2
+    }
+  }
+}

@@ -1055,6 +1055,85 @@ Question: can army composition alone produce balanced, decisive Classic play? Al
 No army meets both >=80% decisive and 45–55% White share of wins. The most decisive is RRN: 19 White wins, 4 Black wins, 25 draws out of 48 (47.9% decisive; White 82.6% of wins); draws are 24 repetitions and 1 ply ceiling. RRBN is closer in color split: 7 White wins, 6 Black wins, 35 draws (27.1% decisive; White 53.8% of wins); draws are 33 repetitions and 2 ply ceilings. Baseline RBN is 4/0/44. Do not select an official army from these data. Three seeds repeat 16 king starts; small samples, unchanged heuristic and depth/ply bounds limit generalization. Next measurement would need separately authorized stronger-search confirmation or different mechanics; none launched here.
 
 Commit full compressed replay bundles, manifest, frozen runtime, checksums and readable report/rates/progress; preserve the new production search engine and all prior branch contents. Home-row results are independently archived on PR #116 and remain unsuccessful rather than being reinterpreted as a setup success.
+
+
+## 2026-10-25 — Stabilized generalist search and explicit lookahead levels
+
+Question: make the engine general across deterministic two-player perfect-information zero-sum games, with regression evidence and direct numeric lookahead. Decision: integer level 0–100 requests the matching number of future actions; zero returns an unevaluated legal fallback. Numeric levels use a fixed 262144-node safety budget and expose requested versus completed depth. Add ranked legal continuations and opt-in bounded adapter-defined tactical extensions, preserving old worker responses and named preset fixed depths. Do not enable tactical search by default based on a small sample.
+
+Evidence: 314 workspace unit tests pass; an independent oracle validates all 5478 reachable tic-tac-toe states. Real browser worker checks pass on desktop/mobile. Controlled happy paths: candidate 51 pass/5 fail/2 skip; previous engine on same local interface 50/6/2. Three candidate-only failures all pass on serial rerun. Broad UI release checks remain open. A 32-game paired Classic smoke benchmark at max1024 nodes/move gives default candidate 7W/5L/4D and tactical-depth2 candidate 8W/3L/5D. These small samples do not establish a strength gain; all replays/results and source/checksum identities are verified. Full report: docs/generalist-engine-report-2026-10-25.md; evidence: research/engine-generalist-v1. Reject automatic promotion/merge. Next measurement: larger fresh-opening matched-budget comparisons and independent resolution of remaining UI checks. No historical or active research runtime changed.
+
+## 2026-10-25 — Optimize playing search, pruning and work per node
+
+Question: can exact search reach farther at the same budget, independently of UI automation?
+Decision: share alpha at the root for single-line play; preserve full-window ranked analysis;
+reuse cached best actions across iterations and bound table memory; share legal actions across
+terminal adjudication, expansion and evaluation; reuse immutable root successors. Preserve
+complete repetition identities and exact-depth score reuse. Resolve ambiguous bound ties before
+random/repetition selection. Reject speculative pruning and mutable undo machinery without
+additional general-game safety evidence. Advance named versions to Sharp v4, Learning/Steady v3.
+
+Evidence: 320 workspace unit tests pass, including independent tic-tac-toe oracle, 1,800 seeded
+transposition-graph comparisons, bound-tie trap, bounded tables and trusted adjudication parity.
+Direct desktop/mobile worker tests pass. On 32 correlated saved positions, all 96 depth-4 score
+pairs agree; nodes fall from 165145 to 72755 (55.9%), median time from 2598.8 to 892.0 ms (2.91x).
+At 4096 nodes, mean completed depth rises 3.44 to 4.19: 23 positions deeper, 9 equal, none shallower.
+CPU profiles identify legal/attack generation as the dominant baseline cost. Cross-depth action
+hints are used 5992 times in capped search; score-table hits are zero on this history-sensitive
+corpus, so that gain is not attributed to score-cache hits.
+
+A separate deterministic 32-game color-swapped Classic match at 2048 nodes/move gives optimized
+13 wins, baseline 1 win, 18 draws (4 repetitions,14 ply ceilings). Small samples are not an Elo
+rating or optimal-play proof. Sources, observations, profiles and every replay are fingerprinted,
+archived and verified under research/search-performance-v2. Report: docs/search-performance-report-2026-10-25.md.
+No prior frozen runtime/dataset modified. No UI behavior changes. No automatic merge. Next
+measurement: larger fresh-opening schedules at multiple budgets before a general strength claim.
+
+
+## 2026-10-25 — Browser engine comparison
+
+Compared the current Schness JavaScript playing engine with pinned Fairy-Stockfish WASM 1.1.12 (one thread, NNUE disabled) in real Chromium on the same machine. Used common six-slot capture-bank rules with quiet drops and no cooldown; this is not a Classic rules comparison. All 32 depth-4 legal trees matched (702,598 leaves), and all 192 timed-search moves were legal. Across 96 searches per engine at a requested 100 ms, aggregate throughput was 87,122 versus 1,602,117 reported nodes/s (18.39x); identical legal-tree enumeration took 890.41 versus 170.60 ms (5.22x). Selective depths and search node counts are not equivalent measures of thinking quality. No head-to-head games or Elo claim. Full UCI output, timing samples, source hashes, configuration, reproducible scripts and limitations are in research/browser-engine-v1. No production changes or variant tournaments were introduced.
+
+
+## 2026-10-25 — Faster native JavaScript playing engine
+
+Implemented exact 4×4 attack masks, reversible search-only transitions with exception/budget-safe undo, incremental material and masks, cached current keys, bounded collision-free history path IDs, history-independent move hints, killer/history ordering, PVS and retrying aspiration windows. Public rules and immutable replay transitions are unchanged. Sharp is now v5; Learning/Steady v4. No Stockfish integration or frozen research changes.
+
+Against d1db2c5, all 96 depth-4 score pairs match: median workload time 893.25→201.13 ms (4.44x faster), nodes 72,755→50,824 (30.1% fewer). Same-node completed mean depth 4.1875→4.28125. Real Chromium at 100 ms/search completes 4.875→5.792 plies on average. A separate 32-game color-swapped Classic match at 25 ms/move scores candidate 12 wins / baseline 1 / 19 draws (13 mates, 17 ceiling draws, 2 repetitions). These correlated, short samples are not Elo or universal variant-strength evidence.
+
+All 327 workspace unit tests and four desktop/mobile-emulated browser worker tests pass. Verification replays all continuations/matches and checks sources, node caps and compressed hashes. Full report: docs/search-performance-v3-report-2026-10-25.md; complete measurements, prior source snapshots, logs, hashes and all match replays: research/search-performance-v3. Evaluator weights are unchanged; speculative pruning remains disabled.
+
+## 2026-10-25 — Exact two-player speedups and screened tactical search
+
+Finished and archived performance rounds four and five without changing older tournament runtimes.
+Round four adds direct generation, exact count-only mobility, pooled private actions, scratch
+legality masks, linked continuations and allocation-light ordering. Its same-session 32-position
+comparison measured 1.32× speed against the previous optimized engine, or 16.56× against the
+earliest preserved generalist baseline; these figures are workload-specific. Its 32-game
+equal-time screen was 3 wins / 0 losses / 29 draws (24 move-ceiling draws).
+
+Round five adds proved non-king legality and per-search stack mask reuse. Seven saved-workload
+passes measured 160.60→147.96 ms (7.9% less time), with identical depth-four scores and nodes.
+All 336 unit tests and four desktop/mobile-emulated browser-worker tests pass. New tests include
+15 independently exhaustive sparse mate fixtures across five rule recipes, 5,000 additional
+board comparisons, a checking-extension oracle and an explicit reduced-search tactical blind spot.
+
+Four separate 32-game Classic screens at 25 ms/action:
+- Final exact engine vs frozen round four: 2 wins / 0 losses / 30 draws.
+- Checking extension depth 2 vs frozen round four: 4 / 1 / 27.
+- Experimental late-move reductions vs frozen round four: 5 / 3 / 24.
+- King-escape evaluation bonus vs final exact engine: 3 / 2 / 27.
+
+These screens are not pooled and establish no Elo gain. Many draws hit the 100-play-ply ceiling.
+Exact speedups are retained; checking extensions and reductions are opt-in, and the evaluation
+bonus remains a frozen research runtime. Sharp v7 / Learning and Steady v6 retain previous default
+depths/evaluation and zero quiescence. Multiplayer is deferred. Null-move/SEE/futility pruning,
+trained evaluation and parallel search require separate evidence rather than automatic enabling.
+
+Full measurements, source snapshots, CPU profiles, all 160 round-four/five match replays, logs
+and checksum manifests are under research/search-performance-v4 and research/search-performance-v5.
+Both verification scripts pass. See docs/search-performance-v4-report-2026-10-25.md,
+docs/search-performance-v5-report-2026-10-25.md and docs/how-the-game-engine-works.md.
 ## 2026-10-25 — Completed frozen Sharp v2 balance screen
 
 Question: which of the 43 already authorized recipes meets both screening targets? All 4,128 games finished; the frozen runtime --resume verified source hashes and every checkpoint/replay after confirming both original runners had exited. No changed rules or new games were launched. Preserve this engine version separately from production Sharp v3 and the older 8,640-game screen.

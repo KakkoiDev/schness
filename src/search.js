@@ -1,52 +1,270 @@
-/** Two-player, zero-sum alpha-beta search. Rules and objectives belong to the adapter. */
+/** Two-player zero-sum search. The adapter owns all game-specific rules. */
 export function strengthOptions(strength) {
-  if (!Number.isFinite(strength) || strength < 0 || strength > 100) throw new RangeError('Strength must be 0–100');
-  return {depth:1+Math.floor(strength/20),maxNodes:Math.round(256*2**(strength/10))};
+  if (!Number.isInteger(strength) || strength < 0 || strength > 100) throw new RangeError('Level must be an integer 0–100');
+  return {depth:strength, maxNodes:262144};
 }
 
 export function createSearchEngine(adapter) {
-  for (const key of ['actions','apply','turn','terminal','evaluate','key']) if(typeof adapter[key]!=='function') throw new TypeError(`Missing search adapter: ${key}`);
-  const order=(p,a)=>adapter.order?adapter.order(p,a):a;
-  const STOP=Symbol('search budget exhausted');
-  const terminal=(p,who,d)=>{const score=adapter.terminal(p,who,d);if(score!==null&&!Number.isFinite(score))throw new TypeError('Terminal score must be finite or null');return score;};
+  for (const name of ['actions','apply','turn','terminal','evaluate','key']) {
+    if (typeof adapter[name] !== 'function') throw new TypeError(`Missing search adapter: ${name}`);
+  }
+  if ((typeof adapter.make === 'function') !== (typeof adapter.unmake === 'function')) throw new TypeError('Reversible search requires both make and unmake');
+  if (adapter.scoreStep !== undefined && (!Number.isFinite(adapter.scoreStep) || adapter.scoreStep <= 0)) throw new TypeError('Invalid score step');
+  const STOP = Symbol('search budget exhausted');
+  const order = (p, actions) => adapter.order ? adapter.order(p, actions) : actions;
+  const finite = (value, label) => {
+    if (!Number.isFinite(value)) throw new TypeError(`${label} must be finite`);
+    return value;
+  };
+  function terminal(p, who, depth, facts) {
+    const value = adapter.terminal(p, who, depth, facts);
+    return value === null ? null : finite(value, 'Terminal score');
+  }
+  function optionsFor(options) {
+    const merged = {...(options.strength === undefined ? {} : strengthOptions(options.strength)), ...options};
+    merged.depth ??= 4;
+    merged.quiescenceDepth ??= 0;
+    merged.quiescenceChecks ??= false;
+    if(typeof merged.quiescenceChecks!=='boolean')throw new TypeError('Invalid quiescenceChecks');
+    merged.lateMoveReduction ??= false;
+    if(typeof merged.lateMoveReduction!=='boolean')throw new TypeError('Invalid lateMoveReduction');
+    if(merged.lateMoveReduction && typeof adapter.canReduce!=='function')throw new TypeError('Late move reduction requires adapter.canReduce');
+    merged.multiPv ??= 1;
+    merged.maxTableEntries ??= 50000;
+    merged.aspirationWindow ??= 50;
+    if(!Number.isFinite(merged.aspirationWindow) || merged.aspirationWindow<=0)throw new RangeError('Invalid aspiration window');
+    for (const [name, min, max] of [['depth',0,100],['quiescenceDepth',0,8],['multiPv',1,10]]) {
+      if (!Number.isInteger(merged[name]) || merged[name] < min || merged[name] > max) throw new RangeError(`Invalid ${name}`);
+    }
+    if (!Number.isInteger(merged.maxTableEntries) || merged.maxTableEntries < 1) throw new RangeError('Invalid table capacity');
+    return merged;
+  }
   function context(options) {
-    const {maxNodes=Infinity,maxMillis=Infinity}=options;
-    if (!(maxNodes===Infinity||Number.isInteger(maxNodes)&&maxNodes>=1)) throw new RangeError('Invalid node budget');
-    if (!(maxMillis===Infinity||Number.isFinite(maxMillis)&&maxMillis>0)) throw new RangeError('Invalid time budget');
-    return {nodes:0,deadline:Date.now()+maxMillis,maxNodes,cache:options.useCache===false?null:new Map()};
+    const {maxNodes=Infinity, maxMillis=Infinity} = options;
+    if (!(maxNodes === Infinity || Number.isInteger(maxNodes) && maxNodes >= 1)) throw new RangeError('Invalid node budget');
+    if (!(maxMillis === Infinity || Number.isFinite(maxMillis) && maxMillis > 0)) throw new RangeError('Invalid time budget');
+    return {nodes:0, quiescenceNodes:0, cutoffs:0, cacheHits:0, tableCutoffs:0, hintHits:0,
+      rootResearches:0, aspirationResearches:0, pvsResearches:0, historyHits:0, evaluations:0, actionGenerations:0, countGenerations:0, transitions:0,
+      reducedSearches:0,reductionResearches:0,lateMoveReduction:options.lateMoveReduction,
+      maxNodes, deadline:maxMillis === Infinity ? Infinity : Date.now()+maxMillis,
+      maxTableEntries:options.maxTableEntries, quiescenceDepth:options.quiescenceDepth ?? 0,
+      noisyOptions:Object.freeze({includeChecks:options.quiescenceChecks}),
+      pvs:options.principalVariation !== false && adapter.scoreStep !== undefined,
+      history:options.useHistory === false ? null : new Map(),killers:new Map(),ranks:new Map(),
+      reversible:options.useMutable !== false && typeof adapter.make === 'function',
+      cache:options.useCache === false ? null : new Map(), hints:options.useCache === false ? null : new Map()};
   }
-  function visit(p,depth,alpha,beta,player,ctx) {
-    if(ctx.nodes>=ctx.maxNodes||Date.now()>=ctx.deadline)throw STOP;
+  const actionIdentity = adapter.actionKey ?? (action => JSON.stringify(action));
+  function boundedSet(table, key, value, ctx) {
+    if (!table) return;
+    if (!table.has(key) && table.size >= ctx.maxTableEntries) table.delete(table.keys().next().value);
+    table.set(key,value);
+  }
+  function factsFor(p,ctx,preferCount=false) {
+    let actions,count;
+    const facts={
+      actions(){if(actions===undefined){ctx.actionGenerations++;actions=adapter.actions(p);if(count!==undefined && count!==actions.length)throw new Error('Action count disagrees with legal actions');count=actions.length;}return actions;},
+      actionCount(){
+        if(count===undefined){
+          if(preferCount && adapter.countActions){ctx.countGenerations++;count=adapter.countActions(p);if(!Number.isInteger(count)||count<0)throw new TypeError('Action count must be a nonnegative integer');}
+          else count=facts.actions().length;
+        }
+        return count;
+      },
+    };
+    return facts;
+  }
+  function apply(p,action,ctx) {ctx.transitions++;return adapter.apply(p,action);}
+  function withChild(p,action,ctx,fn,cachedChild) {
+    if(!ctx.reversible)return fn(cachedChild ?? apply(p,action,ctx));
+    ctx.transitions++;
+    const undo=adapter.make(p,action);
+    try {return fn(p);} finally {adapter.unmake(p,undo);}
+  }
+  function ordered(p,actions,hint,ctx,depth) {
+    const sorted=[...order(p,actions)],player=adapter.turn(p),killers=ctx.killers.get(depth) ?? [];
+    const ranks=ctx.ranks,stride=sorted.length+1;
+    ranks.clear();let hasHint=false;
+    for(let index=0;index<sorted.length;index++){
+      const action=sorted[index],id=actionIdentity(action),history=ctx.history?.get(`${player}:${id}`) ?? 0;
+      if(history)ctx.historyHits++;
+      if(hint!==undefined && id===hint)hasHint=true;
+      const killer=killers.indexOf(id),tactical=Number(Boolean(adapter.isTactical?.(p,action)));
+      // Same lexicographic order as before, without one wrapper object per move.
+      ranks.set(action,((((Number(id===hint)*2+tactical)*3+(killer<0?0:2-killer))*1000001+history)*stride-index));
+    }
+    if(hasHint)ctx.hintHits++;
+    sorted.sort((a,b)=>ranks.get(b)-ranks.get(a));
+    return sorted;
+  }
+  function cutoff(p,action,depth,ctx){
+    ctx.cutoffs++;
+    if(!ctx.history || adapter.isTactical?.(p,action))return;
+    const id=actionIdentity(action),key=`${adapter.turn(p)}:${id}`;
+    boundedSet(ctx.history,key,Math.min(1000000,(ctx.history.get(key)??0)+depth*depth),ctx);
+    const killers=ctx.killers.get(depth)??[];
+    ctx.killers.set(depth,[id,...killers.filter(x=>x!==id)].slice(0,2));
+  }
+  function enter(ctx, tactical) {
+    if (ctx.nodes >= ctx.maxNodes || (ctx.deadline !== Infinity && Date.now() >= ctx.deadline)) throw STOP;
     ctx.nodes++;
-    const result=terminal(p,player,depth);
-    if(result!==null)return result;
-    if(depth<=0)return adapter.evaluate(p,player);
-    const key=ctx.cache?`${adapter.key(p)}|${depth}|${player}`:null;
-    const startAlpha=alpha,startBeta=beta,cached=ctx.cache?.get(key);
-    if(cached){if(cached.type==='exact')return cached.value;if(cached.type==='lower')alpha=Math.max(alpha,cached.value);else beta=Math.min(beta,cached.value);if(alpha>=beta)return cached.value;}
-    const maximizing=adapter.turn(p)===player;
-    let value=maximizing?-Infinity:Infinity;
-    const actions=order(p,adapter.actions(p));
-    if(!actions.length)throw new Error('Adapter must adjudicate a position without actions');
-    for(const action of actions){const score=visit(adapter.apply(p,action),depth-1,alpha,beta,player,ctx);if(maximizing){value=Math.max(value,score);alpha=Math.max(alpha,value);}else{value=Math.min(value,score);beta=Math.min(beta,value);}if(beta<=alpha)break;}
-    ctx.cache?.set(key,{value,type:value<=startAlpha?'upper':value>=startBeta?'lower':'exact'});return value;
+    if (tactical) ctx.quiescenceNodes++;
   }
-  function optionsFor(options){const merged={...(options.strength===undefined?{}:strengthOptions(options.strength)),...options};merged.depth??=4;if(!Number.isInteger(merged.depth)||merged.depth<1||merged.depth>12)throw new RangeError('Depth must be 1–12');return merged;}
-  function choose(position,options={}) {
-    options=optionsFor(options);const ctx=context(options),player=adapter.turn(position);
-    const result=terminal(position,player,options.depth);
-    if(result!==null)return {action:null,score:result,nodes:0,completedDepth:0,stopped:false};
-    const actions=order(position,adapter.actions(position));if(!actions.length)throw new Error('Adapter must adjudicate a position without actions');
-    let completed={action:actions[0],score:null,nodes:0,completedDepth:0,stopped:false};
-    const iterative=Number.isFinite(options.maxNodes)||Number.isFinite(options.maxMillis);
-    try {for(let depth=iterative?1:options.depth;depth<=options.depth;depth++){
-      let action=actions[0],score=-Infinity,repetitions=Infinity,ties=0;
-      for(const candidate of actions){const next=adapter.apply(position,candidate);const value=visit(next,depth-1,-Infinity,Infinity,player,ctx);const rep=options.repetitionAversion?(adapter.repetitions?.(next)??0):0;
-        if(value>score||value===score&&rep<repetitions){score=value;repetitions=rep;action=candidate;ties=1;}else if(value===score&&rep===repetitions&&typeof options.random==='function'){ties++;if(options.random()<1/ties)action=candidate;}}
-      completed={action,score,nodes:ctx.nodes,completedDepth:depth,stopped:false};
-    }}catch(e){if(e!==STOP)throw e;completed.stopped=true;}
-    return {...completed,nodes:ctx.nodes};
+  function visit(p, depth, alpha, beta, player, ctx, remainingQ=ctx.quiescenceDepth) {
+    enter(ctx, depth <= 0 && ctx.quiescenceDepth > 0);
+    const facts=factsFor(p,ctx,depth<=0 && !remainingQ);
+    const result = terminal(p, player, Math.max(0,depth),facts);
+    if (result !== null) return {value:result, line:null};
+    const maximizing = adapter.turn(p) === player;
+    if (depth <= 0) {
+      ctx.evaluations++;
+      const standPat = finite(adapter.evaluate(p, player,facts), 'Evaluation');
+      if (!remainingQ || (!adapter.noisyActions && !adapter.inDanger)) return {value:standPat,line:null};
+      const danger = Boolean(adapter.inDanger?.(p));
+      let best = {value:danger ? (maximizing ? -Infinity : Infinity) : standPat, line:null};
+      if (!danger) {
+        if (maximizing) alpha = Math.max(alpha, standPat);
+        else beta = Math.min(beta, standPat);
+        if (beta <= alpha) {ctx.cutoffs++;return best;}
+      }
+      const legal = facts.actions();
+      if (!legal.length) throw new Error('Adapter must adjudicate a position without actions');
+      const actions = danger ? legal : (adapter.noisyActions?.(p, legal, ctx.noisyOptions) ?? []);
+      for (const action of order(p, actions)) {
+        const child = withChild(p,action,ctx,next=>visit(next, 0, alpha,beta,player,ctx,remainingQ-1));
+        if (maximizing ? child.value > best.value : child.value < best.value) best = {value:child.value,line:{action,next:child.line}};
+        if (maximizing) alpha = Math.max(alpha,best.value);
+        else beta = Math.min(beta,best.value);
+        if (beta <= alpha) {ctx.cutoffs++;break;}
+      }
+      return best;
+    }
+    const stateKey = ctx.cache ? adapter.key(p) : null;
+    // Bounds require the same remaining depth: generic terminal scores may depend on depth.
+    const key = ctx.cache ? `${stateKey}|${depth}` : null;
+    const hintKey=ctx.hints ? (adapter.hintKey?.(p) ?? stateKey) : null;
+    const startAlpha=alpha, startBeta=beta, cached=ctx.cache?.get(key);
+    if (cached) {
+      ctx.cacheHits++;
+      if (cached.type === 'exact') return {value:cached.value,line:cached.line};
+      if (cached.type === 'lower') alpha = Math.max(alpha,cached.value);
+      else beta = Math.min(beta,cached.value);
+      if (beta <= alpha) {ctx.tableCutoffs++;return {value:cached.value,line:cached.line};}
+    }
+    const actions = ordered(p,facts.actions(),ctx.hints?.get(hintKey),ctx,depth);
+    if (!actions.length) throw new Error('Adapter must adjudicate a position without actions');
+    let best = {value:maximizing ? -Infinity : Infinity,line:null};
+    let moveIndex=0;
+    for (const action of actions) {
+      const reduce=ctx.lateMoveReduction && depth>=3 && moveIndex>=3 && adapter.canReduce(p,action);
+      moveIndex++;
+      const child = withChild(p,action,ctx,next=>{
+        // Experimental selective search, never part of the exact default mode.
+        // A reduced fail-low can still hide a full-depth tactical improvement.
+        if(reduce && !adapter.inDanger?.(next)){
+          ctx.reducedSearches++;
+          const reduced=visit(next,depth-2,alpha,beta,player,ctx);
+          if(maximizing?reduced.value<=alpha:reduced.value>=beta)return reduced;
+          ctx.reductionResearches++;
+        }
+        if(!ctx.pvs || !Number.isFinite(best.value))return visit(next,depth-1,alpha,beta,player,ctx);
+        const step=adapter.scoreStep;
+        let result=maximizing?visit(next,depth-1,alpha,Math.min(beta,alpha+step),player,ctx)
+          :visit(next,depth-1,Math.max(alpha,beta-step),beta,player,ctx);
+        if(result.value>alpha && result.value<beta){ctx.pvsResearches++;result=visit(next,depth-1,alpha,beta,player,ctx);}
+        return result;
+      });
+      if (maximizing ? child.value > best.value : child.value < best.value) best = {value:child.value,line:{action,next:child.line}};
+      if (maximizing) alpha=Math.max(alpha,best.value);
+      else beta=Math.min(beta,best.value);
+      if (beta <= alpha) {cutoff(p,action,depth,ctx);break;}
+    }
+    boundedSet(ctx.cache,key,{...best,type:best.value<=startAlpha ? 'upper' : best.value>=startBeta ? 'lower' : 'exact'},ctx);
+    boundedSet(ctx.hints,hintKey,actionIdentity(best.line.action),ctx);
+    return best;
   }
-  function score(position,player,depth=3){if(!Number.isInteger(depth)||depth<0||depth>12)throw new RangeError('Depth must be 0–12');return visit(position,depth,-Infinity,Infinity,player,context({}));}
+  function choose(position, options={}) {
+    options=optionsFor(options);
+    const ctx=context(options);
+    if(ctx.reversible)position=adapter.prepare?adapter.prepare(position,options):structuredClone(position);
+    const player=adapter.turn(position);
+    const rootFacts=factsFor(position,ctx);
+    const outcome=terminal(position,player,options.depth,rootFacts);
+    if (outcome !== null) return {action:null,score:outcome,requestedDepth:options.depth,nodes:0,quiescenceNodes:0,completedDepth:0,stopped:false,pv:[],variations:[]};
+    let actions=order(position,rootFacts.actions());
+    if (!actions.length) throw new Error('Adapter must adjudicate a position without actions');
+    if (options.depth === 0) return {action:actions[0],score:null,completedDepth:0,requestedDepth:0,stopped:false,pv:[],variations:[],nodes:0,quiescenceNodes:0};
+    let completed={action:actions[0],score:null,completedDepth:0,stopped:false,pv:[],variations:[]};
+    const iterative=Number.isFinite(options.maxNodes) || Number.isFinite(options.maxMillis) || options.iterativeDeepening === true;
+    const rootChildren=new Map();
+    try {
+      for (let depth=iterative ? 1 : options.depth; depth<=options.depth; depth++) {
+        const iteration=(lower,upper)=>{
+        let selected=null, repetitions=Infinity, ties=0;
+        const lines=[];
+        for (const action of actions) {
+          let next;
+          if(!ctx.reversible){
+            next=rootChildren.get(action);
+            if(next===undefined){next=apply(position,action,ctx);rootChildren.set(action,next);}
+          }
+          const {rep,child}=withChild(position,action,ctx,next=>{
+            const rep=options.repetitionAversion ? (adapter.repetitions?.(next) ?? 0) : 0;
+            const alpha=options.multiPv === 1 ? Math.max(lower,selected?.score ?? -Infinity) : -Infinity;
+            let child=visit(next,depth-1,alpha,upper,player,ctx);
+            // Fail-low equality is a bound. Resolve it before tie selection.
+            if(selected && alpha!==-Infinity && child.value===selected.score &&
+                (rep<repetitions || typeof options.random==='function')){
+              ctx.rootResearches++;
+              child=visit(next,depth-1,-Infinity,Infinity,player,ctx);
+            }
+            return {rep,child};
+          },next);
+          const pv=[action];for(let link=child.line;link;link=link.next)pv.push(link.action);
+          const line={action,score:child.value,pv};
+          lines.push({line,rep});
+          if (!selected || line.score>selected.score || line.score===selected.score && rep<repetitions) {
+            selected=line; repetitions=rep; ties=1;
+          } else if (line.score===selected.score && rep===repetitions && typeof options.random==='function') {
+            ties++;
+            if (options.random()<1/ties) selected=line;
+          }
+          if(selected.score>=upper)break;
+        }
+        lines.sort((a,b)=>b.line.score-a.line.score || a.rep-b.rep);
+        const ranked=[selected,...lines.map(x=>x.line).filter(line=>line!==selected)];
+        return {...selected,ranked};
+        };
+        const aspiration=options.aspiration !== false && adapter.scoreStep !== undefined && options.multiPv===1 && Number.isFinite(completed.score);
+        let window=options.aspirationWindow,lower=aspiration?completed.score-window:-Infinity,upper=aspiration?completed.score+window:Infinity;
+        let result=iteration(lower,upper),retries=0;
+        while(result.score<=lower || result.score>=upper){
+          ctx.aspirationResearches++;window*=4;retries++;
+          lower=retries<3?completed.score-window:-Infinity;
+          upper=retries<3?completed.score+window:Infinity;
+          result=iteration(lower,upper);
+        }
+        const {ranked,...selected}=result;
+        completed={...selected,completedDepth:depth,stopped:false,variations:ranked.slice(0,options.multiPv)};
+        // Publish and reorder only a fully completed, exact iteration.
+        actions=ranked.map(line=>line.action);
+      }
+    } catch (error) {
+      if (error !== STOP) throw error;
+      completed.stopped=true;
+    }
+    return {...completed,requestedDepth:options.depth,nodes:ctx.nodes,quiescenceNodes:ctx.quiescenceNodes,
+      stats:{cutoffs:ctx.cutoffs,cacheHits:ctx.cacheHits,tableCutoffs:ctx.tableCutoffs,hintHits:ctx.hintHits,
+        rootResearches:ctx.rootResearches,pvsResearches:ctx.pvsResearches,aspirationResearches:ctx.aspirationResearches,historyHits:ctx.historyHits,evaluations:ctx.evaluations,actionGenerations:ctx.actionGenerations,countGenerations:ctx.countGenerations,
+        reducedSearches:ctx.reducedSearches,reductionResearches:ctx.reductionResearches,
+        transitions:ctx.transitions,tableEntries:ctx.cache?.size ?? 0,hintEntries:ctx.hints?.size ?? 0}};
+  }
+  function score(position, player, depth=3, options={}) {
+    if (!Number.isInteger(depth) || depth<0 || depth>100) throw new RangeError('Depth must be 0–100');
+    const resolved=optionsFor({...options,depth:Math.max(1,depth)});
+    const ctx=context(resolved);
+    if(ctx.reversible)position=adapter.prepare?adapter.prepare(position,resolved):structuredClone(position);
+    return visit(position,depth,-Infinity,Infinity,player,ctx).value;
+  }
   return Object.freeze({choose,score});
 }

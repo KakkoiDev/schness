@@ -1,0 +1,3052 @@
+[
+  {
+    "id": "opening-0-white-ply-4",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK----------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|bK--wB----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|bK--wB----wR----bB--bR--wK------|N|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-0-white-ply-12",
+    "position": {
+      "board": [
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK----------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|bK--wB----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|bK--wB----wR----bB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|bKwNwB----wR----bB--bR--wK------||N": 1,
+        "quiet-drops|play|white|bKwNwBbN--wR----bB--bR--wK------||": 1,
+        "quiet-drops|play|black|bK--wBbN--wR----bB--wN--wK------||R": 1,
+        "quiet-drops|play|white|bK--wB----bN----bB--wN--wK------|R|R": 1,
+        "quiet-drops|play|black|bK--------wB----bB--wN--wK------|R|NR": 1,
+        "quiet-drops|play|white|----------bK----bB--wN--wK------|BR|NR": 1,
+        "quiet-drops|play|black|----wR----bK----bB--wN--wK------|B|NR": 1,
+        "quiet-drops|play|white|----wR----bK--bRbB--wN--wK------|B|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-0-white-ply-24",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        }
+      ],
+      "banks": {
+        "white": [],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK----------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|bK--wB----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|bK--wB----wR----bB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|bKwNwB----wR----bB--bR--wK------||N": 1,
+        "quiet-drops|play|white|bKwNwBbN--wR----bB--bR--wK------||": 1,
+        "quiet-drops|play|black|bK--wBbN--wR----bB--wN--wK------||R": 1,
+        "quiet-drops|play|white|bK--wB----bN----bB--wN--wK------|R|R": 1,
+        "quiet-drops|play|black|bK--------wB----bB--wN--wK------|R|NR": 1,
+        "quiet-drops|play|white|----------bK----bB--wN--wK------|BR|NR": 1,
+        "quiet-drops|play|black|----wR----bK----bB--wN--wK------|B|NR": 1,
+        "quiet-drops|play|white|----wR----bK--bRbB--wN--wK------|B|N": 1,
+        "quiet-drops|play|black|----wR----bK--bRbB--wNwBwK------||N": 1,
+        "quiet-drops|play|white|----wR----bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|black|--wR------bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|white|--wR----------bRbBbNbKwBwK------|N|": 1,
+        "quiet-drops|play|black|--------------bRbBwRbKwBwK------|N|N": 1,
+        "quiet-drops|play|white|--------------bRbBwR--wBwK----bK|N|N": 1,
+        "quiet-drops|play|black|--------------bRwKwR--wB------bK|N|BN": 1,
+        "quiet-drops|play|white|--------bB----bRwKwR--wB------bK|N|N": 1,
+        "quiet-drops|play|black|--------bBwN--bRwKwR--wB------bK||N": 1,
+        "quiet-drops|play|white|----------wN--bRwKbB--wB------bK|R|N": 1,
+        "quiet-drops|play|black|----wR----wN--bRwKbB--wB------bK||N": 1,
+        "quiet-drops|play|white|bN--wR----wN--bRwKbB--wB------bK||": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-0-white-ply-40",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK----------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|bK--wB----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|bK--wB----wR----bB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|bKwNwB----wR----bB--bR--wK------||N": 1,
+        "quiet-drops|play|white|bKwNwBbN--wR----bB--bR--wK------||": 1,
+        "quiet-drops|play|black|bK--wBbN--wR----bB--wN--wK------||R": 1,
+        "quiet-drops|play|white|bK--wB----bN----bB--wN--wK------|R|R": 1,
+        "quiet-drops|play|black|bK--------wB----bB--wN--wK------|R|NR": 1,
+        "quiet-drops|play|white|----------bK----bB--wN--wK------|BR|NR": 1,
+        "quiet-drops|play|black|----wR----bK----bB--wN--wK------|B|NR": 1,
+        "quiet-drops|play|white|----wR----bK--bRbB--wN--wK------|B|N": 1,
+        "quiet-drops|play|black|----wR----bK--bRbB--wNwBwK------||N": 1,
+        "quiet-drops|play|white|----wR----bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|black|--wR------bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|white|--wR----------bRbBbNbKwBwK------|N|": 1,
+        "quiet-drops|play|black|--------------bRbBwRbKwBwK------|N|N": 1,
+        "quiet-drops|play|white|--------------bRbBwR--wBwK----bK|N|N": 1,
+        "quiet-drops|play|black|--------------bRwKwR--wB------bK|N|BN": 1,
+        "quiet-drops|play|white|--------bB----bRwKwR--wB------bK|N|N": 1,
+        "quiet-drops|play|black|--------bBwN--bRwKwR--wB------bK||N": 1,
+        "quiet-drops|play|white|----------wN--bRwKbB--wB------bK|R|N": 1,
+        "quiet-drops|play|black|----wR----wN--bRwKbB--wB------bK||N": 2,
+        "quiet-drops|play|white|bN--wR----wN--bRwKbB--wB------bK||": 2,
+        "quiet-drops|play|black|wR--------wN--bRwKbB--wB------bK||N": 1,
+        "quiet-drops|play|white|wR--bN----wN--bRwKbB--wB------bK||": 1,
+        "quiet-drops|play|black|bN--wR----wN--bRwKbB--------wBbK||": 1,
+        "quiet-drops|play|white|bN--wR----bR----wKbB--------wBbK|N|": 1,
+        "quiet-drops|play|black|bN--wR----wK------bB--------wBbK|N|R": 1,
+        "quiet-drops|play|white|bN--wR----wK------bB------bRwBbK|N|": 1,
+        "quiet-drops|play|black|bN--wR----wK------bB--wN--bRwBbK||": 1,
+        "quiet-drops|play|white|bN--wR----wK------bB--wN----bRbK|B|": 1,
+        "quiet-drops|play|black|bN--------wK------bB--wN----wRbK|B|R": 1,
+        "quiet-drops|play|white|bN--------wK------bB--wN----bK--|BR|R": 1,
+        "quiet-drops|play|black|bN----wR--wK------bB--wN----bK--|B|R": 1,
+        "quiet-drops|play|white|bN----wR--wK------bBbRwN----bK--|B|": 1,
+        "quiet-drops|play|black|bN----wRwBwK------bBbRwN----bK--||": 1,
+        "quiet-drops|play|white|bN----wRbBwK--------bRwN----bK--|B|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-0-black-ply-12",
+    "position": {
+      "board": [
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK----------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|bK--wB----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|bK--wB----wR----bB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|bKwNwB----wR----bB--bR--wK------||N": 1,
+        "quiet-drops|play|white|bKwNwB----wR----bB--bR--wK--bN--||": 1,
+        "quiet-drops|play|black|bK--wB----wR----bB--wN--wK--bN--||R": 1,
+        "quiet-drops|play|white|bK--wB----bN----bB--wN--wK------|R|R": 1,
+        "quiet-drops|play|black|bK--------wB----bB--wN--wK------|R|NR": 1,
+        "quiet-drops|play|white|----------bK----bB--wN--wK------|BR|NR": 1,
+        "quiet-drops|play|black|----wR----bK----bB--wN--wK------|B|NR": 1,
+        "quiet-drops|play|white|----wR----bK--bRbB--wN--wK------|B|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-0-black-ply-24",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        }
+      ],
+      "banks": {
+        "white": [],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK----------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|bK--wB----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|bK--wB----wR----bB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|bKwNwB----wR----bB--bR--wK------||N": 1,
+        "quiet-drops|play|white|bKwNwB----wR----bB--bR--wK--bN--||": 1,
+        "quiet-drops|play|black|bK--wB----wR----bB--wN--wK--bN--||R": 1,
+        "quiet-drops|play|white|bK--wB----bN----bB--wN--wK------|R|R": 1,
+        "quiet-drops|play|black|bK--------wB----bB--wN--wK------|R|NR": 1,
+        "quiet-drops|play|white|----------bK----bB--wN--wK------|BR|NR": 1,
+        "quiet-drops|play|black|----wR----bK----bB--wN--wK------|B|NR": 1,
+        "quiet-drops|play|white|----wR----bK--bRbB--wN--wK------|B|N": 1,
+        "quiet-drops|play|black|----wR----bK--bRbB--wNwBwK------||N": 1,
+        "quiet-drops|play|white|----wR----bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|black|--wR------bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|white|--wR----------bRbBbNbKwBwK------|N|": 1,
+        "quiet-drops|play|black|--------------bRbBwRbKwBwK------|N|N": 1,
+        "quiet-drops|play|white|--------------bRbBwR--wBwK----bK|N|N": 1,
+        "quiet-drops|play|black|--------------bRwKwR--wB------bK|N|BN": 1,
+        "quiet-drops|play|white|--------bB----bRwKwR--wB------bK|N|N": 1,
+        "quiet-drops|play|black|--------bBwN--bRwKwR--wB------bK||N": 1,
+        "quiet-drops|play|white|----------wN--bRwKbB--wB------bK|R|N": 1,
+        "quiet-drops|play|black|----wR----wN--bRwKbB--wB------bK||N": 1,
+        "quiet-drops|play|white|bN--wR----wN--bRwKbB--wB------bK||": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-0-black-ply-40",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK----------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|bK--wB----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|bK--wB----wR----bB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|bKwNwB----wR----bB--bR--wK------||N": 1,
+        "quiet-drops|play|white|bKwNwB----wR----bB--bR--wK--bN--||": 1,
+        "quiet-drops|play|black|bK--wB----wR----bB--wN--wK--bN--||R": 1,
+        "quiet-drops|play|white|bK--wB----bN----bB--wN--wK------|R|R": 1,
+        "quiet-drops|play|black|bK--------wB----bB--wN--wK------|R|NR": 1,
+        "quiet-drops|play|white|----------bK----bB--wN--wK------|BR|NR": 1,
+        "quiet-drops|play|black|----wR----bK----bB--wN--wK------|B|NR": 1,
+        "quiet-drops|play|white|----wR----bK--bRbB--wN--wK------|B|N": 1,
+        "quiet-drops|play|black|----wR----bK--bRbB--wNwBwK------||N": 1,
+        "quiet-drops|play|white|----wR----bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|black|--wR------bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|white|--wR----------bRbBbNbKwBwK------|N|": 1,
+        "quiet-drops|play|black|--------------bRbBwRbKwBwK------|N|N": 1,
+        "quiet-drops|play|white|--------------bRbBwR--wBwK----bK|N|N": 1,
+        "quiet-drops|play|black|--------------bRwKwR--wB------bK|N|BN": 1,
+        "quiet-drops|play|white|--------bB----bRwKwR--wB------bK|N|N": 1,
+        "quiet-drops|play|black|--------bBwN--bRwKwR--wB------bK||N": 1,
+        "quiet-drops|play|white|----------wN--bRwKbB--wB------bK|R|N": 1,
+        "quiet-drops|play|black|----wR----wN--bRwKbB--wB------bK||N": 2,
+        "quiet-drops|play|white|bN--wR----wN--bRwKbB--wB------bK||": 2,
+        "quiet-drops|play|black|wR--------wN--bRwKbB--wB------bK||N": 1,
+        "quiet-drops|play|white|wR--bN----wN--bRwKbB--wB------bK||": 1,
+        "quiet-drops|play|black|bN--wR----wN--bRwKbB--------wBbK||": 1,
+        "quiet-drops|play|white|bN--wR----bR----wKbB--------wBbK|N|": 1,
+        "quiet-drops|play|black|bN--wR----wK------bB--------wBbK|N|R": 1,
+        "quiet-drops|play|white|bN--wR----wK------bB------bRwBbK|N|": 1,
+        "quiet-drops|play|black|bN--wR----wK------bB--wN--bRwBbK||": 1,
+        "quiet-drops|play|white|bN--wR----wK------bB--wN----bRbK|B|": 1,
+        "quiet-drops|play|black|bN--------wK------bB--wN----wRbK|B|R": 1,
+        "quiet-drops|play|white|bN--------wK------bB--wN----bK--|BR|R": 1,
+        "quiet-drops|play|black|bNwR------wK------bB--wN----bK--|B|R": 1,
+        "quiet-drops|play|white|bNwR------wK------bB--wNbR--bK--|B|": 1,
+        "quiet-drops|play|black|bNwRwN----wK------bB----bR--bK--|B|": 1,
+        "quiet-drops|play|white|bNwRwN----wKbB----------bR--bK--|B|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-1-white-ply-4",
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|--bK----------wR--------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bK----------wR----bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|--bK------wB--wRbB--bR--wK------|N|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-1-white-ply-12",
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|--bK----------wR--------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bK----------wR----bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|--bK------wB--wRbB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|--bK----------wRbB--wB--wK------|N|NR": 1,
+        "quiet-drops|play|white|--bKbR--------wRbB--wB--wK------|N|N": 1,
+        "quiet-drops|play|black|--bKbR------wNwRbB--wB--wK------||N": 1,
+        "quiet-drops|play|white|--bK--------bRwRbB--wB--wK------|N|N": 1,
+        "quiet-drops|play|black|--bK--------wR--bB--wB--wK------|N|NR": 1,
+        "quiet-drops|play|white|--bK--------wR--bB--wBbRwK------|N|N": 1,
+        "quiet-drops|play|black|--bK--------wR--bB--wBbRwKwN----||N": 1,
+        "quiet-drops|play|white|--bK--------wR--bB--bR--wKwN----|B|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-1-white-ply-24",
+    "position": {
+      "board": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|--bK----------wR--------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bK----------wR----bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|--bK------wB--wRbB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|--bK----------wRbB--wB--wK------|N|NR": 1,
+        "quiet-drops|play|white|--bKbR--------wRbB--wB--wK------|N|N": 1,
+        "quiet-drops|play|black|--bKbR------wNwRbB--wB--wK------||N": 1,
+        "quiet-drops|play|white|--bK--------bRwRbB--wB--wK------|N|N": 1,
+        "quiet-drops|play|black|--bK--------wR--bB--wB--wK------|N|NR": 1,
+        "quiet-drops|play|white|--bK--------wR--bB--wBbRwK------|N|N": 1,
+        "quiet-drops|play|black|--bK--------wR--bB--wBbRwKwN----||N": 1,
+        "quiet-drops|play|white|--bK--------wR--bB--bR--wKwN----|B|N": 1,
+        "quiet-drops|play|black|--bK------------bB--wR--wKwN----|B|NR": 1,
+        "quiet-drops|play|white|--bK------------bB--wR--wKwN--bR|B|N": 1,
+        "quiet-drops|play|black|--bK------------bB--wR--wKwNwBbR||N": 1,
+        "quiet-drops|play|white|--bK----------------wR--wKbBwBbR|N|N": 1,
+        "quiet-drops|play|black|--bK--------------wR----wKbBwBbR|N|N": 1,
+        "quiet-drops|play|white|------------bK----wR----wKbBwBbR|N|N": 2,
+        "quiet-drops|play|black|--------wN--bK----wR----wKbBwBbR||N": 1,
+        "quiet-drops|play|white|--------wN--bKbB--wR----wK--wBbR||N": 1,
+        "quiet-drops|play|black|------------bKbB--wR----wKwNwBbR||N": 1,
+        "quiet-drops|play|black|------------bK----wR--wNwKbBwBbR||N": 1,
+        "quiet-drops|play|white|------------bK----wR--wNwKbBbR--|B|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-1-white-ply-40",
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null
+      ],
+      "banks": {
+        "white": [],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|--bK----------wR--------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bK----------wR----bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|--bK------wB--wRbB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|--bK----------wRbB--wB--wK------|N|NR": 1,
+        "quiet-drops|play|white|--bKbR--------wRbB--wB--wK------|N|N": 1,
+        "quiet-drops|play|black|--bKbR------wNwRbB--wB--wK------||N": 1,
+        "quiet-drops|play|white|--bK--------bRwRbB--wB--wK------|N|N": 1,
+        "quiet-drops|play|black|--bK--------wR--bB--wB--wK------|N|NR": 1,
+        "quiet-drops|play|white|--bK--------wR--bB--wBbRwK------|N|N": 1,
+        "quiet-drops|play|black|--bK--------wR--bB--wBbRwKwN----||N": 1,
+        "quiet-drops|play|white|--bK--------wR--bB--bR--wKwN----|B|N": 1,
+        "quiet-drops|play|black|--bK------------bB--wR--wKwN----|B|NR": 1,
+        "quiet-drops|play|white|--bK------------bB--wR--wKwN--bR|B|N": 1,
+        "quiet-drops|play|black|--bK------------bB--wR--wKwNwBbR||N": 1,
+        "quiet-drops|play|white|--bK----------------wR--wKbBwBbR|N|N": 1,
+        "quiet-drops|play|black|--bK--------------wR----wKbBwBbR|N|N": 1,
+        "quiet-drops|play|white|------------bK----wR----wKbBwBbR|N|N": 2,
+        "quiet-drops|play|black|--------wN--bK----wR----wKbBwBbR||N": 1,
+        "quiet-drops|play|white|--------wN--bKbB--wR----wK--wBbR||N": 1,
+        "quiet-drops|play|black|------------bKbB--wR----wKwNwBbR||N": 1,
+        "quiet-drops|play|black|------------bK----wR--wNwKbBwBbR||N": 1,
+        "quiet-drops|play|white|------------bK----wR--wNwKbBbR--|B|N": 1,
+        "quiet-drops|play|black|wB----------bK----wR--wNwKbBbR--||N": 1,
+        "quiet-drops|play|white|wB----------bK----wRbBwNwK--bR--||N": 1,
+        "quiet-drops|play|black|wB----------bK----wRbB--wKwNbR--||N": 1,
+        "quiet-drops|play|white|wB----------bK----wRbB--wKbR----|N|N": 1,
+        "quiet-drops|play|black|wB----------bK------bB--wKwR----|N|NR": 1,
+        "quiet-drops|play|white|wB----bR----bK------bB--wKwR----|N|N": 1,
+        "quiet-drops|play|black|------bR----bK------wB--wKwR----|N|BN": 1,
+        "quiet-drops|play|white|------bRbB--bK------wB--wKwR----|N|N": 1,
+        "quiet-drops|play|black|--wN--bRbB--bK------wB--wKwR----||N": 1,
+        "quiet-drops|play|white|--wNbNbRbB--bK------wB--wKwR----||": 1,
+        "quiet-drops|play|black|--wNbNbRbBwRbK------wB--wK------||": 1,
+        "quiet-drops|play|white|--wNbNbRbBwR--------wBbKwK------||": 1,
+        "quiet-drops|play|black|--wNbNbRwR----------wBbKwK------||B": 1,
+        "quiet-drops|play|white|--wNbNbRwR----------wBbKwKbB----||": 1,
+        "quiet-drops|play|black|--wNbNbRwR------------bKwKwB----||B": 1,
+        "quiet-drops|play|white|--wNbNbRwR------------bKwKwBbB--||": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-1-black-ply-4",
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|--bK----------wR--------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bK----------wR----bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|--bK------wB--wR----bR--wK--bB--|N|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-1-black-ply-12",
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null
+      ],
+      "banks": {
+        "white": [],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|--bK----------wR--------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bK----------wR----bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|--bK------wB--wR----bR--wK--bB--|N|N": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wKwNbB--||N": 1,
+        "quiet-drops|play|white|--bK------wB--wR--bR----wKwNbB--||N": 1,
+        "quiet-drops|play|black|--bK------wBwR----bR----wKwNbB--||N": 1,
+        "quiet-drops|play|white|--bK------wBwR--bNbR----wKwNbB--||": 1,
+        "quiet-drops|play|black|--bK--------wR--wBbR----wKwNbB--||N": 1,
+        "quiet-drops|play|white|--bK--------wR--wBbR--bNwKwNbB--||": 1,
+        "quiet-drops|play|black|--bK------------wBbR--bNwKwNwR--||B": 1,
+        "quiet-drops|play|white|--bK--bB--------wBbR--bNwKwNwR--||": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-1-black-ply-24",
+    "position": {
+      "board": [
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight",
+          "bishop"
+        ],
+        "black": [
+          "bishop"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|--bK----------wR--------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bK----------wR----bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|--bK------wB--wR----bR--wK--bB--|N|N": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wKwNbB--||N": 1,
+        "quiet-drops|play|white|--bK------wB--wR--bR----wKwNbB--||N": 1,
+        "quiet-drops|play|black|--bK------wBwR----bR----wKwNbB--||N": 1,
+        "quiet-drops|play|white|--bK------wBwR--bNbR----wKwNbB--||": 1,
+        "quiet-drops|play|black|--bK--------wR--wBbR----wKwNbB--||N": 1,
+        "quiet-drops|play|white|--bK--------wR--wBbR--bNwKwNbB--||": 1,
+        "quiet-drops|play|black|--bK------------wBbR--bNwKwNwR--||B": 1,
+        "quiet-drops|play|white|--bK--bB--------wBbR--bNwKwNwR--||": 1,
+        "quiet-drops|play|black|--bK--bB--------wBbR--wNwK--wR--||N": 1,
+        "quiet-drops|play|white|--bK--bBbN------wBbR--wNwK--wR--||": 1,
+        "quiet-drops|play|black|--bKwRbBbN------wBbR--wNwK------||": 1,
+        "quiet-drops|play|white|--bKbNbB--------wBbR--wNwK------|R|": 1,
+        "quiet-drops|play|black|--bKbNbB------wRwBbR--wNwK------||": 1,
+        "quiet-drops|play|white|--bKbNbB------wRwB----bRwK------|N|": 1,
+        "quiet-drops|play|black|--bKbNwR--------wB----bRwK------|N|B": 1,
+        "quiet-drops|play|white|--bKbNbR--------wB------wK------|NR|B": 1,
+        "quiet-drops|play|black|--bKbNbR--------wB--wR--wK------|N|B": 1,
+        "quiet-drops|play|white|--bKbNbR--bB----wB--wR--wK------|N|": 1,
+        "quiet-drops|play|black|--bKbNbR--wB--------wR--wK------|N|B": 1,
+        "quiet-drops|play|white|----bNbR--bK--------wR--wK------|BN|B": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-1-black-ply-40",
+    "position": {
+      "board": [
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|--bK----------wR--------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bK----------wR----bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|--bK------wB--wR----bR--wK--bB--|N|N": 1,
+        "quiet-drops|play|black|--bK------wB--wR----bR--wKwNbB--||N": 1,
+        "quiet-drops|play|white|--bK------wB--wR--bR----wKwNbB--||N": 1,
+        "quiet-drops|play|black|--bK------wBwR----bR----wKwNbB--||N": 1,
+        "quiet-drops|play|white|--bK------wBwR--bNbR----wKwNbB--||": 1,
+        "quiet-drops|play|black|--bK--------wR--wBbR----wKwNbB--||N": 1,
+        "quiet-drops|play|white|--bK--------wR--wBbR--bNwKwNbB--||": 1,
+        "quiet-drops|play|black|--bK------------wBbR--bNwKwNwR--||B": 1,
+        "quiet-drops|play|white|--bK--bB--------wBbR--bNwKwNwR--||": 1,
+        "quiet-drops|play|black|--bK--bB--------wBbR--wNwK--wR--||N": 1,
+        "quiet-drops|play|white|--bK--bBbN------wBbR--wNwK--wR--||": 1,
+        "quiet-drops|play|black|--bKwRbBbN------wBbR--wNwK------||": 1,
+        "quiet-drops|play|white|--bKbNbB--------wBbR--wNwK------|R|": 1,
+        "quiet-drops|play|black|--bKbNbB------wRwBbR--wNwK------||": 1,
+        "quiet-drops|play|white|--bKbNbB------wRwB----bRwK------|N|": 1,
+        "quiet-drops|play|black|--bKbNwR--------wB----bRwK------|N|B": 1,
+        "quiet-drops|play|white|--bKbNbR--------wB------wK------|NR|B": 1,
+        "quiet-drops|play|black|--bKbNbR--------wB--wR--wK------|N|B": 1,
+        "quiet-drops|play|white|--bKbNbR--bB----wB--wR--wK------|N|": 1,
+        "quiet-drops|play|black|--bKbNbR--wB--------wR--wK------|N|B": 1,
+        "quiet-drops|play|white|----bNbR--bK--------wR--wK------|BN|B": 1,
+        "quiet-drops|play|black|----bNbR--bK--wB----wR--wK------|N|B": 1,
+        "quiet-drops|play|white|----bN----bK--bR----wR--wK------|BN|B": 1,
+        "quiet-drops|play|black|----bN----bK--bR----wR--wKwB----|N|B": 1,
+        "quiet-drops|play|white|--bBbN----bK--bR----wR--wKwB----|N|": 1,
+        "quiet-drops|play|black|--bBbN----bK--bRwN--wR--wKwB----||": 1,
+        "quiet-drops|play|white|----bN--bBbK--bRwN--wR--wKwB----||": 1,
+        "quiet-drops|play|black|----bN--bBbKwNbR----wR--wKwB----||": 1,
+        "quiet-drops|play|white|----bN--bBbKbR------wR--wKwB----|N|": 1,
+        "quiet-drops|play|black|----bN--bBbKwR----------wKwB----|N|R": 1,
+        "quiet-drops|play|white|----bN--bB--bK----------wKwB----|NR|R": 1,
+        "quiet-drops|play|black|wR--bN--bB--bK----------wKwB----|N|R": 1,
+        "quiet-drops|play|white|wR--bN--bBbRbK----------wKwB----|N|": 1,
+        "quiet-drops|play|black|wR--bN--bBbRbKwN--------wKwB----||": 1,
+        "quiet-drops|play|white|wR--bN--bB--bKwN--------wKbR----|B|": 1,
+        "quiet-drops|play|black|wR--bN--bB--bKwN----------wK----|B|R": 1,
+        "quiet-drops|play|white|wR--bN--bB--bKwN----bR----wK----|B|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-2-white-ply-4",
+    "position": {
+      "board": [
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|----bK------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|----bK----wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|----bK----wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|wB--bK----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|wB--bK----wR----bB--bR--wK------|N|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-2-white-ply-12",
+    "position": {
+      "board": [
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|----bK------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|----bK----wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|----bK----wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|wB--bK----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|wB--bK----wR----bB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|wBwNbK----wR----bB--bR--wK------||N": 1,
+        "quiet-drops|play|white|wBwNbKbN--wR----bB--bR--wK------||": 1,
+        "quiet-drops|play|black|wB--bKbN--wR----bB--wN--wK------||R": 1,
+        "quiet-drops|play|white|wB--bK----bN----bB--wN--wK------|R|R": 1,
+        "quiet-drops|play|black|----bK----wB----bB--wN--wK------|R|NR": 1,
+        "quiet-drops|play|white|----------bK----bB--wN--wK------|BR|NR": 1,
+        "quiet-drops|play|black|----wR----bK----bB--wN--wK------|B|NR": 1,
+        "quiet-drops|play|white|----wR----bK--bRbB--wN--wK------|B|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-2-white-ply-24",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        }
+      ],
+      "banks": {
+        "white": [],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|----bK------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|----bK----wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|----bK----wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|wB--bK----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|wB--bK----wR----bB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|wBwNbK----wR----bB--bR--wK------||N": 1,
+        "quiet-drops|play|white|wBwNbKbN--wR----bB--bR--wK------||": 1,
+        "quiet-drops|play|black|wB--bKbN--wR----bB--wN--wK------||R": 1,
+        "quiet-drops|play|white|wB--bK----bN----bB--wN--wK------|R|R": 1,
+        "quiet-drops|play|black|----bK----wB----bB--wN--wK------|R|NR": 1,
+        "quiet-drops|play|white|----------bK----bB--wN--wK------|BR|NR": 1,
+        "quiet-drops|play|black|----wR----bK----bB--wN--wK------|B|NR": 1,
+        "quiet-drops|play|white|----wR----bK--bRbB--wN--wK------|B|N": 1,
+        "quiet-drops|play|black|----wR----bK--bRbB--wNwBwK------||N": 1,
+        "quiet-drops|play|white|----wR----bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|black|--wR------bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|white|--wR----------bRbBbNbKwBwK------|N|": 1,
+        "quiet-drops|play|black|--------------bRbBwRbKwBwK------|N|N": 1,
+        "quiet-drops|play|white|--------------bRbBwR--wBwK----bK|N|N": 1,
+        "quiet-drops|play|black|--------------bRwKwR--wB------bK|N|BN": 1,
+        "quiet-drops|play|white|--------bB----bRwKwR--wB------bK|N|N": 1,
+        "quiet-drops|play|black|--------bBwN--bRwKwR--wB------bK||N": 1,
+        "quiet-drops|play|white|----------wN--bRwKbB--wB------bK|R|N": 1,
+        "quiet-drops|play|black|----wR----wN--bRwKbB--wB------bK||N": 1,
+        "quiet-drops|play|white|bN--wR----wN--bRwKbB--wB------bK||": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-2-white-ply-40",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|----bK------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|----bK----wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|----bK----wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|wB--bK----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|wB--bK----wR----bB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|wBwNbK----wR----bB--bR--wK------||N": 1,
+        "quiet-drops|play|white|wBwNbKbN--wR----bB--bR--wK------||": 1,
+        "quiet-drops|play|black|wB--bKbN--wR----bB--wN--wK------||R": 1,
+        "quiet-drops|play|white|wB--bK----bN----bB--wN--wK------|R|R": 1,
+        "quiet-drops|play|black|----bK----wB----bB--wN--wK------|R|NR": 1,
+        "quiet-drops|play|white|----------bK----bB--wN--wK------|BR|NR": 1,
+        "quiet-drops|play|black|----wR----bK----bB--wN--wK------|B|NR": 1,
+        "quiet-drops|play|white|----wR----bK--bRbB--wN--wK------|B|N": 1,
+        "quiet-drops|play|black|----wR----bK--bRbB--wNwBwK------||N": 1,
+        "quiet-drops|play|white|----wR----bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|black|--wR------bK--bRbBbNwNwBwK------||": 1,
+        "quiet-drops|play|white|--wR----------bRbBbNbKwBwK------|N|": 1,
+        "quiet-drops|play|black|--------------bRbBwRbKwBwK------|N|N": 1,
+        "quiet-drops|play|white|--------------bRbBwR--wBwK----bK|N|N": 1,
+        "quiet-drops|play|black|--------------bRwKwR--wB------bK|N|BN": 1,
+        "quiet-drops|play|white|--------bB----bRwKwR--wB------bK|N|N": 1,
+        "quiet-drops|play|black|--------bBwN--bRwKwR--wB------bK||N": 1,
+        "quiet-drops|play|white|----------wN--bRwKbB--wB------bK|R|N": 1,
+        "quiet-drops|play|black|----wR----wN--bRwKbB--wB------bK||N": 2,
+        "quiet-drops|play|white|bN--wR----wN--bRwKbB--wB------bK||": 2,
+        "quiet-drops|play|black|wR--------wN--bRwKbB--wB------bK||N": 1,
+        "quiet-drops|play|white|wR--bN----wN--bRwKbB--wB------bK||": 1,
+        "quiet-drops|play|black|bN--wR----wN--bRwKbB--------wBbK||": 1,
+        "quiet-drops|play|white|bN--wR----bR----wKbB--------wBbK|N|": 1,
+        "quiet-drops|play|black|bN--wR----wK------bB--------wBbK|N|R": 1,
+        "quiet-drops|play|white|bN--wR----wK------bB------bRwBbK|N|": 1,
+        "quiet-drops|play|black|bN--wR----wK------bB--wN--bRwBbK||": 1,
+        "quiet-drops|play|white|bN--wR----wK------bB--wN----bRbK|B|": 1,
+        "quiet-drops|play|black|bN--------wK------bB--wN----wRbK|B|R": 1,
+        "quiet-drops|play|white|bN--------wK------bB--wN----bK--|BR|R": 1,
+        "quiet-drops|play|black|bN----wR--wK------bB--wN----bK--|B|R": 1,
+        "quiet-drops|play|white|bN----wR--wK------bBbRwN----bK--|B|": 1,
+        "quiet-drops|play|black|bN----wRwBwK------bBbRwN----bK--||": 1,
+        "quiet-drops|play|white|bN----wRbBwK--------bRwN----bK--|B|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-2-black-ply-12",
+    "position": {
+      "board": [
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "rook"
+        ],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|----bK------------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|----bK----wR------------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|----bK----wR--------bR--wK------|BN|BN": 1,
+        "quiet-drops|play|black|wB--bK----wR--------bR--wK------|N|BN": 1,
+        "quiet-drops|play|white|wB--bK----wR----bB--bR--wK------|N|N": 1,
+        "quiet-drops|play|black|wBwNbK----wR----bB--bR--wK------||N": 1,
+        "quiet-drops|play|white|wBwNbK----wR----bB--bR--wK--bN--||": 1,
+        "quiet-drops|play|black|wBwNbK--wR------bB--bR--wK--bN--||": 1,
+        "quiet-drops|play|white|wBbK----wR------bB--bR--wK--bN--|N|": 1,
+        "quiet-drops|play|black|wBbK----wR------bB--bR--wKwNbN--||": 1,
+        "quiet-drops|play|white|wBbK----wR----------bR--wKbBbN--|N|": 1,
+        "quiet-drops|play|black|wBbK--wNwR----------bR--wKbBbN--||": 1,
+        "quiet-drops|play|white|wB----wNbK----------bR--wKbBbN--|R|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-3-white-ply-4",
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|------bK----------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|------bK----wR----------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bR--bK----wR----------wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bR--bK----wR----wB----wK------|N|BN": 1,
+        "quiet-drops|play|white|--bR--bK----wR----wB--bBwK------|N|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-3-white-ply-12",
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        null
+      ],
+      "banks": {
+        "white": [],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|------bK----------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|------bK----wR----------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bR--bK----wR----------wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bR--bK----wR----wB----wK------|N|BN": 1,
+        "quiet-drops|play|white|--bR--bK----wR----wB--bBwK------|N|N": 1,
+        "quiet-drops|play|black|--bR--bK----wRwN--wB--bBwK------||N": 1,
+        "quiet-drops|play|white|--bR--bK----bBwN--wB----wK------|R|N": 1,
+        "quiet-drops|play|black|--bR--bKwR--bBwN--wB----wK------||N": 1,
+        "quiet-drops|play|white|--bR--bKwR----wN--bB----wK------|B|N": 1,
+        "quiet-drops|play|black|--bR--bKwR--------wN----wK------|B|BN": 1,
+        "quiet-drops|play|white|--bR--bKwRbB------wN----wK------|B|N": 1,
+        "quiet-drops|play|black|--bR--bKwRbB------wN----wKwB----||N": 1,
+        "quiet-drops|play|white|--bR--bKwRbBbN----wN----wKwB----||": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-3-black-ply-12",
+    "position": {
+      "board": [
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|------bK----------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|------bK----wR----------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bR--bK----wR----------wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bR--bK----wR----wB----wK------|N|BN": 1,
+        "quiet-drops|play|white|--bR--bK----wR----wB--bBwK------|N|N": 1,
+        "quiet-drops|play|black|--bR--bK----wRwN--wB--bBwK------||N": 1,
+        "quiet-drops|play|white|--bR--bK----bBwN--wB----wK------|R|N": 1,
+        "quiet-drops|play|black|--wN--bK----bB----wB----wK------|R|NR": 1,
+        "quiet-drops|play|white|--wN--bK--bRbB----wB----wK------|R|N": 1,
+        "quiet-drops|play|black|------bK--bRbB----wBwN--wK------|R|N": 1,
+        "quiet-drops|play|white|----------bRbBbK--wBwN--wK------|R|N": 1,
+        "quiet-drops|play|black|wR--------bRbBbK--wBwN--wK------||N": 1,
+        "quiet-drops|play|white|wR--------bR--bK--bBwN--wK------|B|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-3-black-ply-24",
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "black",
+          "piece": "knight"
+        }
+      ],
+      "banks": {
+        "white": [],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|------bK----------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|------bK----wR----------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bR--bK----wR----------wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bR--bK----wR----wB----wK------|N|BN": 1,
+        "quiet-drops|play|white|--bR--bK----wR----wB--bBwK------|N|N": 1,
+        "quiet-drops|play|black|--bR--bK----wRwN--wB--bBwK------||N": 1,
+        "quiet-drops|play|white|--bR--bK----bBwN--wB----wK------|R|N": 1,
+        "quiet-drops|play|black|--wN--bK----bB----wB----wK------|R|NR": 1,
+        "quiet-drops|play|white|--wN--bK--bRbB----wB----wK------|R|N": 1,
+        "quiet-drops|play|black|------bK--bRbB----wBwN--wK------|R|N": 1,
+        "quiet-drops|play|white|----------bRbBbK--wBwN--wK------|R|N": 1,
+        "quiet-drops|play|black|wR--------bRbBbK--wBwN--wK------||N": 1,
+        "quiet-drops|play|white|wR--------bR--bK--bBwN--wK------|B|N": 1,
+        "quiet-drops|play|black|wR--------bR--bK--bBwN----wK----|B|N": 2,
+        "quiet-drops|play|white|wR--------bR--bKbNbBwN----wK----|B|": 2,
+        "quiet-drops|play|black|----------bR--bKwRbBwN----wK----|B|N": 2,
+        "quiet-drops|play|white|bN--------bR--bKwRbBwN----wK----|B|": 1,
+        "quiet-drops|play|white|----------bR--bKwRbBwN----wK--bN|B|": 1,
+        "quiet-drops|play|black|--wB------bR--bKwRbBwN----wK--bN||": 1,
+        "quiet-drops|play|white|--wB----bBbR--bKwR--wN----wK--bN||": 1,
+        "quiet-drops|play|black|--wB----bBbR--bKwR--wN--wK----bN||": 1,
+        "quiet-drops|play|white|--wB------bR--bKwR--wN--wK--bBbN||": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-3-black-ply-40",
+    "position": {
+      "board": [
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "knight"
+        }
+      ],
+      "banks": {
+        "white": [
+          "knight",
+          "rook"
+        ],
+        "black": [
+          "rook"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|------bK----------------wK------|BNR|BNR": 1,
+        "quiet-drops|play|black|------bK----wR----------wK------|BN|BNR": 1,
+        "quiet-drops|play|white|--bR--bK----wR----------wK------|BN|BN": 1,
+        "quiet-drops|play|black|--bR--bK----wR----wB----wK------|N|BN": 1,
+        "quiet-drops|play|white|--bR--bK----wR----wB--bBwK------|N|N": 1,
+        "quiet-drops|play|black|--bR--bK----wRwN--wB--bBwK------||N": 1,
+        "quiet-drops|play|white|--bR--bK----bBwN--wB----wK------|R|N": 1,
+        "quiet-drops|play|black|--wN--bK----bB----wB----wK------|R|NR": 1,
+        "quiet-drops|play|white|--wN--bK--bRbB----wB----wK------|R|N": 1,
+        "quiet-drops|play|black|------bK--bRbB----wBwN--wK------|R|N": 1,
+        "quiet-drops|play|white|----------bRbBbK--wBwN--wK------|R|N": 1,
+        "quiet-drops|play|black|wR--------bRbBbK--wBwN--wK------||N": 1,
+        "quiet-drops|play|white|wR--------bR--bK--bBwN--wK------|B|N": 1,
+        "quiet-drops|play|black|wR--------bR--bK--bBwN----wK----|B|N": 2,
+        "quiet-drops|play|white|wR--------bR--bKbNbBwN----wK----|B|": 2,
+        "quiet-drops|play|black|----------bR--bKwRbBwN----wK----|B|N": 2,
+        "quiet-drops|play|white|bN--------bR--bKwRbBwN----wK----|B|": 1,
+        "quiet-drops|play|white|----------bR--bKwRbBwN----wK--bN|B|": 1,
+        "quiet-drops|play|black|--wB------bR--bKwRbBwN----wK--bN||": 1,
+        "quiet-drops|play|white|--wB----bBbR--bKwR--wN----wK--bN||": 1,
+        "quiet-drops|play|black|--wB----bBbR--bKwR--wN--wK----bN||": 1,
+        "quiet-drops|play|white|--wB------bR--bKwR--wN--wK--bBbN||": 1,
+        "quiet-drops|play|black|--------wBbR--bKwR--wN--wK--bBbN||": 1,
+        "quiet-drops|play|white|--------bR----bKwR--wN--wK--bBbN|B|": 1,
+        "quiet-drops|play|black|--------wR----bK----wN--wK--bBbN|B|R": 1,
+        "quiet-drops|play|white|--------bB----bK----wN--wK----bN|BR|R": 1,
+        "quiet-drops|play|black|----wR--bB----bK----wN--wK----bN|B|R": 1,
+        "quiet-drops|play|white|----wR--bB----bK--bRwN--wK----bN|B|": 1,
+        "quiet-drops|play|black|----wR--bB----bKwBbRwN--wK----bN||": 1,
+        "quiet-drops|play|white|----wR--bB----bKbR--wN--wK----bN|B|": 1,
+        "quiet-drops|play|black|----wR--bB----bKwK--wN--------bN|B|R": 1,
+        "quiet-drops|play|white|----wR--bB----bKwK--wN------bRbN|B|": 1,
+        "quiet-drops|play|black|----wR--bBwB--bKwK--wN------bRbN||": 1,
+        "quiet-drops|play|white|----wR--bBwB--bKwK--bR--------bN|N|": 1,
+        "quiet-drops|play|black|----wR--bB----bKwK--wB--------bN|N|R": 1,
+        "quiet-drops|play|white|----bK--bB------wK--wB--------bN|NR|R": 1,
+        "quiet-drops|play|black|----bK--bBwB----wK------------bN|NR|R": 1,
+        "quiet-drops|play|white|--------bBwB--bKwK------------bN|NR|R": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-4-white-ply-4",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK------------------------wK----|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR--------------wK----|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR----------bR--wK----|BN|BN": 1,
+        "quiet-drops|play|black|bK--------wR--------wBbR--wK----|N|BN": 1,
+        "quiet-drops|play|white|bK----bB--wR--------wBbR--wK----|N|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-4-white-ply-12",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight"
+        ],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK------------------------wK----|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR--------------wK----|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR----------bR--wK----|BN|BN": 1,
+        "quiet-drops|play|black|bK--------wR--------wBbR--wK----|N|BN": 1,
+        "quiet-drops|play|white|bK----bB--wR--------wBbR--wK----|N|N": 1,
+        "quiet-drops|play|black|bK--wNbB--wR--------wBbR--wK----||N": 1,
+        "quiet-drops|play|white|bK--wNbB--wR--------bR----wK----|B|N": 1,
+        "quiet-drops|play|black|bK--wNbB--wR--------wK----------|B|NR": 1,
+        "quiet-drops|play|white|bK--wNbB--wR--------wK--bR------|B|N": 1,
+        "quiet-drops|play|black|bKwBwNbB--wR--------wK--bR------||N": 1,
+        "quiet-drops|play|white|bKwBwNbB--wR--------wK--bR--bN--||": 1,
+        "quiet-drops|play|black|bKwB--bB--wR------wNwK--bR--bN--||": 1,
+        "quiet-drops|play|white|bKwB------wR------bBwK--bR--bN--|N|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-4-white-ply-24",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "rook"
+        ],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK------------------------wK----|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR--------------wK----|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR----------bR--wK----|BN|BN": 1,
+        "quiet-drops|play|black|bK--------wR--------wBbR--wK----|N|BN": 1,
+        "quiet-drops|play|white|bK----bB--wR--------wBbR--wK----|N|N": 1,
+        "quiet-drops|play|black|bK--wNbB--wR--------wBbR--wK----||N": 1,
+        "quiet-drops|play|white|bK--wNbB--wR--------bR----wK----|B|N": 1,
+        "quiet-drops|play|black|bK--wNbB--wR--------wK----------|B|NR": 1,
+        "quiet-drops|play|white|bK--wNbB--wR--------wK--bR------|B|N": 1,
+        "quiet-drops|play|black|bKwBwNbB--wR--------wK--bR------||N": 1,
+        "quiet-drops|play|white|bKwBwNbB--wR--------wK--bR--bN--||": 1,
+        "quiet-drops|play|black|bKwB--bB--wR------wNwK--bR--bN--||": 1,
+        "quiet-drops|play|white|bKwB------wR------bBwK--bR--bN--|N|": 1,
+        "quiet-drops|play|black|bKwB------wR------wK----bR--bN--|N|B": 1,
+        "quiet-drops|play|white|bKwB------wR--bB--wK----bR--bN--|N|": 1,
+        "quiet-drops|play|black|bKwB----------wR--wK----bR--bN--|N|B": 1,
+        "quiet-drops|play|white|bKwB----------bN--wK----bR------|NR|B": 1,
+        "quiet-drops|play|black|bKwB----------bN--------wK------|NR|BR": 1,
+        "quiet-drops|play|white|bKwB----------bN--bR----wK------|NR|B": 1,
+        "quiet-drops|play|black|bKwB--------wRbN--bR----wK------|N|B": 1,
+        "quiet-drops|play|white|bKwB--------wRbN--bR--bBwK------|N|": 1,
+        "quiet-drops|play|black|bKwBwN------wRbN--bR--bBwK------||": 1,
+        "quiet-drops|play|white|bKwBwN------bBbN--bR----wK------|R|": 1,
+        "quiet-drops|play|black|bK--wN------wBbN--bR----wK------|R|B": 1,
+        "quiet-drops|play|white|bK--wN------wBbNbBbR----wK------|R|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-4-white-ply-40",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK------------------------wK----|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR--------------wK----|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR----------bR--wK----|BN|BN": 1,
+        "quiet-drops|play|black|bK--------wR--------wBbR--wK----|N|BN": 1,
+        "quiet-drops|play|white|bK----bB--wR--------wBbR--wK----|N|N": 1,
+        "quiet-drops|play|black|bK--wNbB--wR--------wBbR--wK----||N": 1,
+        "quiet-drops|play|white|bK--wNbB--wR--------bR----wK----|B|N": 1,
+        "quiet-drops|play|black|bK--wNbB--wR--------wK----------|B|NR": 1,
+        "quiet-drops|play|white|bK--wNbB--wR--------wK--bR------|B|N": 1,
+        "quiet-drops|play|black|bKwBwNbB--wR--------wK--bR------||N": 1,
+        "quiet-drops|play|white|bKwBwNbB--wR--------wK--bR--bN--||": 1,
+        "quiet-drops|play|black|bKwB--bB--wR------wNwK--bR--bN--||": 1,
+        "quiet-drops|play|white|bKwB------wR------bBwK--bR--bN--|N|": 1,
+        "quiet-drops|play|black|bKwB------wR------wK----bR--bN--|N|B": 1,
+        "quiet-drops|play|white|bKwB------wR--bB--wK----bR--bN--|N|": 1,
+        "quiet-drops|play|black|bKwB----------wR--wK----bR--bN--|N|B": 1,
+        "quiet-drops|play|white|bKwB----------bN--wK----bR------|NR|B": 1,
+        "quiet-drops|play|black|bKwB----------bN--------wK------|NR|BR": 1,
+        "quiet-drops|play|white|bKwB----------bN--bR----wK------|NR|B": 1,
+        "quiet-drops|play|black|bKwB--------wRbN--bR----wK------|N|B": 1,
+        "quiet-drops|play|white|bKwB--------wRbN--bR--bBwK------|N|": 1,
+        "quiet-drops|play|black|bKwBwN------wRbN--bR--bBwK------||": 1,
+        "quiet-drops|play|white|bKwBwN------bBbN--bR----wK------|R|": 1,
+        "quiet-drops|play|black|bK--wN------wBbN--bR----wK------|R|B": 1,
+        "quiet-drops|play|white|bK--wN------wBbNbBbR----wK------|R|": 1,
+        "quiet-drops|play|black|bK----------wBbNbBwN----wK------|R|R": 1,
+        "quiet-drops|play|white|bK----------wB--bBbN----wK------|NR|R": 1,
+        "quiet-drops|play|black|bK----------wB--bBbN--wRwK------|N|R": 1,
+        "quiet-drops|play|white|bK------bR--wB--bBbN--wRwK------|N|": 1,
+        "quiet-drops|play|black|bK------bR------bBwB--wRwK------|N|N": 1,
+        "quiet-drops|play|white|bK------bR----bNbBwB--wRwK------|N|": 1,
+        "quiet-drops|play|black|bK------bR----bNbBwBwNwRwK------||": 1,
+        "quiet-drops|play|white|bK------bR------bBbNwNwRwK------|B|": 1,
+        "quiet-drops|play|black|bKwB----bR------bBbNwNwRwK------||": 1,
+        "quiet-drops|play|white|bKwB----bR----bNbB--wNwRwK------||": 1,
+        "quiet-drops|play|black|bK------wB----bNbB--wNwRwK------||R": 1,
+        "quiet-drops|play|white|bK------wBbR--bNbB--wNwRwK------||": 1,
+        "quiet-drops|play|black|bK------wBbR--bNwK--wNwR--------||B": 1,
+        "quiet-drops|play|white|bK--bB--wBbR--bNwK--wNwR--------||": 1,
+        "quiet-drops|play|black|bK--bB--wBbR--bN----wNwRwK------||": 1,
+        "quiet-drops|play|white|bK--bB--bR----bN----wNwRwK------|B|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-4-black-ply-24",
+    "position": {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight",
+          "bishop"
+        ],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK------------------------wK----|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR--------------wK----|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR----------bR--wK----|BN|BN": 1,
+        "quiet-drops|play|black|bK--------wR--------wBbR--wK----|N|BN": 1,
+        "quiet-drops|play|white|bK----bB--wR--------wBbR--wK----|N|N": 1,
+        "quiet-drops|play|black|bK--wNbB--wR--------wBbR--wK----||N": 1,
+        "quiet-drops|play|white|bK--wNbB--wR--------bR----wK----|B|N": 1,
+        "quiet-drops|play|black|bK--wNbB--wR--------wK----------|B|NR": 1,
+        "quiet-drops|play|white|bK--wNbB--wR--------wK--bR------|B|N": 1,
+        "quiet-drops|play|black|bKwBwNbB--wR--------wK--bR------||N": 1,
+        "quiet-drops|play|white|bKwBwNbB--wR--------wK--bR--bN--||": 1,
+        "quiet-drops|play|black|bKwB--bB--wR------wNwK--bR--bN--||": 1,
+        "quiet-drops|play|white|bKwB------wR------bBwK--bR--bN--|N|": 1,
+        "quiet-drops|play|black|bKwB------wR------wK----bR--bN--|N|B": 1,
+        "quiet-drops|play|white|bKwB------wR------wKbB--bR--bN--|N|": 1,
+        "quiet-drops|play|black|bKwB------wR--------bB--wK--bN--|N|R": 1,
+        "quiet-drops|play|white|bKwB------bN--------bB--wK------|NR|R": 1,
+        "quiet-drops|play|black|bKwB------bN------wKbB----------|NR|R": 1,
+        "quiet-drops|play|white|bKwBbR----bN------wKbB----------|NR|": 1,
+        "quiet-drops|play|black|bKwBbR----bN------wKbBwR--------|N|": 1,
+        "quiet-drops|play|white|--bKbR----bN------wKbBwR--------|BN|": 1,
+        "quiet-drops|play|black|wBbKbR----bN------wKbBwR--------|N|": 1,
+        "quiet-drops|play|white|bK--bR----bN------wKbBwR--------|BN|": 1,
+        "quiet-drops|play|black|bK--bR----bNwB----wKbBwR--------|N|": 1,
+        "quiet-drops|play|white|bK--------bNbR----wKbBwR--------|BN|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-4-black-ply-40",
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight",
+          "bishop"
+        ],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|bK------------------------wK----|BNR|BNR": 1,
+        "quiet-drops|play|black|bK--------wR--------------wK----|BN|BNR": 1,
+        "quiet-drops|play|white|bK--------wR----------bR--wK----|BN|BN": 1,
+        "quiet-drops|play|black|bK--------wR--------wBbR--wK----|N|BN": 1,
+        "quiet-drops|play|white|bK----bB--wR--------wBbR--wK----|N|N": 1,
+        "quiet-drops|play|black|bK--wNbB--wR--------wBbR--wK----||N": 1,
+        "quiet-drops|play|white|bK--wNbB--wR--------bR----wK----|B|N": 1,
+        "quiet-drops|play|black|bK--wNbB--wR--------wK----------|B|NR": 1,
+        "quiet-drops|play|white|bK--wNbB--wR--------wK--bR------|B|N": 1,
+        "quiet-drops|play|black|bKwBwNbB--wR--------wK--bR------||N": 1,
+        "quiet-drops|play|white|bKwBwNbB--wR--------wK--bR--bN--||": 1,
+        "quiet-drops|play|black|bKwB--bB--wR------wNwK--bR--bN--||": 1,
+        "quiet-drops|play|white|bKwB------wR------bBwK--bR--bN--|N|": 1,
+        "quiet-drops|play|black|bKwB------wR------wK----bR--bN--|N|B": 1,
+        "quiet-drops|play|white|bKwB------wR------wKbB--bR--bN--|N|": 1,
+        "quiet-drops|play|black|bKwB------wR--------bB--wK--bN--|N|R": 1,
+        "quiet-drops|play|white|bKwB------bN--------bB--wK------|NR|R": 1,
+        "quiet-drops|play|black|bKwB------bN------wKbB----------|NR|R": 1,
+        "quiet-drops|play|white|bKwBbR----bN------wKbB----------|NR|": 1,
+        "quiet-drops|play|black|bKwBbR----bN------wKbBwR--------|N|": 1,
+        "quiet-drops|play|white|--bKbR----bN------wKbBwR--------|BN|": 1,
+        "quiet-drops|play|black|wBbKbR----bN------wKbBwR--------|N|": 1,
+        "quiet-drops|play|white|bK--bR----bN------wKbBwR--------|BN|": 1,
+        "quiet-drops|play|black|bK--bR----bNwB----wKbBwR--------|N|": 1,
+        "quiet-drops|play|white|bK--------bNbR----wKbBwR--------|BN|": 1,
+        "quiet-drops|play|black|bK--------bNwK------bBwR--------|BN|R": 1,
+        "quiet-drops|play|white|bK--------bNwK------bBwR----bR--|BN|": 1,
+        "quiet-drops|play|black|bK------wBbNwK------bBwR----bR--|N|": 1,
+        "quiet-drops|play|white|--------bKbNwK------bBwR----bR--|BN|": 1,
+        "quiet-drops|play|black|----wB--bKbNwK------bBwR----bR--|N|": 1,
+        "quiet-drops|play|white|----wB--bKbNwK--------wR--bBbR--|N|": 1,
+        "quiet-drops|play|black|----wB--bKbNwK------wR----bBbR--|N|": 1,
+        "quiet-drops|play|white|----wB--bKbNwK------bR----bB----|NR|": 1,
+        "quiet-drops|play|black|----wB--bKbN--wK----bR----bB----|NR|": 1,
+        "quiet-drops|play|white|----wB--bK----wK----bR----bBbN--|NR|": 1,
+        "quiet-drops|play|black|----wBwKbK----------bR----bBbN--|NR|": 1,
+        "quiet-drops|play|white|----bRwKbK----------------bBbN--|BNR|": 1,
+        "quiet-drops|play|black|----wK--bK----------------bBbN--|BNR|R": 1,
+        "quiet-drops|play|white|----wK--bK----bR----------bBbN--|BNR|": 1,
+        "quiet-drops|play|black|--wRwK--bK----bR----------bBbN--|BN|": 1,
+        "quiet-drops|play|white|--wRwK--bK----bRbB----------bN--|BN|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  },
+  {
+    "id": "opening-5-white-ply-4",
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|play|white|--bK----------------------wK----|BNR|BNR": 1,
+        "quiet-drops|play|black|--bK--------wR------------wK----|BN|BNR": 1,
+        "quiet-drops|play|white|--bK--------wR--------bR--wK----|BN|BN": 1,
+        "quiet-drops|play|black|--bK--wB----wR--------bR--wK----|N|BN": 1,
+        "quiet-drops|play|white|--bK--wB----wR----bB--bR--wK----|N|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 0,
+          "black": 0
+        },
+        "deployed": {
+          "white": [],
+          "black": []
+        }
+      }
+    }
+  }
+]

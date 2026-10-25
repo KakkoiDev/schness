@@ -1,3 +1,4 @@
+import {boardMasks, masksAfter, masksAttack, masksInCheck, maskAttackers, betweenMask, alignedSliders} from './board-masks.js';
 export const BOARD_SIZE = 4;
 export const WHITE = 'white';
 export const BLACK = 'black';
@@ -22,6 +23,19 @@ const KNIGHT_STEPS = [
   [1, -2], [1, 2], [2, -1], [2, 1],
 ];
 const PIECE_CODE = { [KING]: 'K', [ROOK]: 'R', [BISHOP]: 'B', [KNIGHT]: 'N' };
+// Fixed actions and geometry are immutable values, safe to share across positions.
+const MOVE_ACTIONS=Array.from({length:16},(_,from)=>Array.from({length:16},(_,to)=>Object.freeze({type:'move',from,to})));
+const DROP_ACTIONS=Object.fromEntries(BANK_PIECES.map(piece=>[piece,Array.from({length:16},(_,to)=>Object.freeze({type:'drop',piece,to}))]));
+const KING_ACTIONS=Array.from({length:16},(_,to)=>Object.freeze({type:'place-king',to}));
+const ACTION_KEYS=new WeakMap();
+for(const row of MOVE_ACTIONS)for(const a of row)ACTION_KEYS.set(a,`move:${a.from}:${a.to}`);
+for(const row of Object.values(DROP_ACTIONS))for(const a of row)ACTION_KEYS.set(a,`drop:${a.piece}:${a.to}`);
+for(const a of KING_ACTIONS)ACTION_KEYS.set(a,`place-king:${a.to}`);
+const STEP_TARGETS=Object.fromEntries([[KING,KING_STEPS],[KNIGHT,KNIGHT_STEPS]].map(([piece,steps])=>[piece,Array.from({length:16},(_,from)=>steps.map(([dy,dx])=>squareAt((from>>2)+dy,(from&3)+dx)).filter(to=>to!==null))]));
+const RAY_TARGETS=Object.fromEntries([[ROOK,ORTHOGONAL],[BISHOP,DIAGONAL]].map(([piece,directions])=>[piece,Array.from({length:16},(_,from)=>directions.map(([dy,dx])=>{
+ const ray=[];for(let distance=1;distance<4;distance++){const to=squareAt((from>>2)+dy*distance,(from&3)+dx*distance);if(to===null)break;ray.push(to);}return ray;
+}))]));
+
 
 /*
  * An occupant is a value, not an object with a life of its own. Exactly eight
@@ -90,7 +104,7 @@ export function createPosition({
  */
 export function legalActions(position) {
   validatePosition(position);
-  return generateLegalActions(position);
+  return generateLegalActions(position).map(action=>({...action}));
 }
 
 /**
@@ -99,62 +113,72 @@ export function legalActions(position) {
  * positions this engine just built and re-validated every one of them.
  * Never call this on anything that came from outside the engine.
  */
-export function legalActionsUnchecked(position) {
-  return generateLegalActions(position);
+export function legalActionsUnchecked(position, masks) {
+  return generateLegalActions(position, masks);
 }
 
-function generateLegalActions(position) {
-  if (position.phase === 'place-white-king') {
-    return homeRank(WHITE)
-      .filter((to) => !position.board[to])
-      .map((to) => ({ type: 'place-king', to }));
+function generateLegalActions(position, suppliedMasks, countOnly=false) {
+  const actions=countOnly?null:[];
+  let count=0;
+  if(position.phase==='place-white-king'||position.phase==='place-black-king'){
+    for(const to of homeRank(position.phase==='place-white-king'?WHITE:BLACK))if(!position.board[to]){count++;if(actions)actions.push(KING_ACTIONS[to]);}
+    return countOnly?count:actions;
   }
-  if (position.phase === 'place-black-king') {
-    return homeRank(BLACK)
-      .filter((to) => !position.board[to])
-      .map((to) => ({ type: 'place-king', to }));
-  }
-
-  const player = position.turn;
-  const enemy = opponent(player);
-  const candidates = [];
-
-  for (let from = 0; position.phase !== 'setup' && from < position.board.length; from += 1) {
-    const occupant = position.board[from];
-    if (!occupant || occupant.owner !== player) continue;
-    for (const to of pseudoMoves(position.board, from, occupant.piece, player)) {
-      if (position.board[to]?.piece === KING) continue;
-      candidates.push({ type: 'move', from, to });
+  const player=position.turn,enemy=opponent(player),board=position.board;
+  const masks=suppliedMasks ?? boardMasks(board),scratch=new Uint16Array(9),rules=rulesOf(position);
+  const offset=player===WHITE?0:4,kings=masks[offset],own=masks[offset]|masks[offset+1]|masks[offset+2]|masks[offset+3];
+  let evasion=65535,dropEvasion=65535;
+  const pins=new Uint16Array(16);
+  if(kings){
+    const king=31-Math.clz32(kings&-kings);
+    let checkers=maskAttackers(masks,king,enemy);
+    while(checkers){const bit=checkers&-checkers,from=31-Math.clz32(bit),between=betweenMask(king,from);evasion&=between|bit;dropEvasion&=between;checkers^=bit;}
+    let sliders=alignedSliders(masks,king,enemy);
+    while(sliders){
+      const bit=sliders&-sliders,from=31-Math.clz32(bit),between=betweenMask(king,from),blockers=between&masks[8];
+      if(blockers && !(blockers&(blockers-1)) && (blockers&own))pins[31-Math.clz32(blockers)]=between|bit;
+      sliders^=bit;
     }
   }
-
-  for (const piece of new Set(position.banks[player])) {
-    for (let to = 0; to < position.board.length; to += 1) {
-      if (!position.board[to] && !(position.phase === 'setup' && rulesOf(position).hiddenSetup && !homeRank(player).includes(to))) candidates.push({ type: 'drop', piece, to });
+  function accept(action){
+    // Evasion and absolute-pin filters already prove king safety for ordinary
+    // non-king moves. There is no en passant or castling in these rules.
+    // Preserve the historical first-king behavior on malformed multi-king boards.
+    const singleKing=!(kings&(kings-1));
+    if(action.type==='move' && board[action.from].piece!==KING && singleKing){
+      count++;if(actions)actions.push(action);return;
     }
+    const next=masksAfter(masks,board,player,action,scratch);
+    // Adding a piece cannot uncover an attack; drops must already block every
+    // checking ray. King moves and malformed boards still need the full test.
+    if((action.type!=='drop' || !singleKing) && masksInCheck(next,player))return;
+    if(action.type==='drop' && masksInCheck(next,enemy)){
+      if(!checkingDropAllowed(position,action))return;
+      // Checking-drop replies consume reserves, so recursive mate legality terminates.
+      if(rules.experiment==='no-drop-mate' && !generateLegalActions(applyUnchecked(position,action,false),undefined,true))return;
+    }
+    count++;if(actions)actions.push(action);
   }
-
-  /*
-   * Legality is a question about the board alone, so this builds only the
-   * board the action would leave behind. It used to clone the whole position
-   * — sixteen occupant spreads, both banks and the repetition map — once per
-   * candidate, thirty-odd times per search node, to answer it.
-   */
-  return candidates.filter((action) => {
-    const next = boardAfter(position, action);
-    if (boardInCheck(next, player)) return false;
-    // In the canonical rules a drop can defend our king, but may not give
-    // check. The experimental checking-drops ruleset lifts only that limit.
-    if (!checkingDropAllowed(position, action) &&
-        action.type === 'drop' &&
-        boardInCheck(next, enemy)) return false;
-    if (action.type === 'drop' && rulesOf(position).experiment === 'no-drop-mate' && boardInCheck(next, enemy)) {
-      // Recursive checking-drop replies consume reserves, so this terminates.
-      if (!generateLegalActions(applyUnchecked(position, action, false)).length) return false;
+  if(position.phase!=='setup')for(let from=0;from<16;from++){
+    const occupant=board[from];if(!occupant||occupant.owner!==player)continue;
+    function target(to){
+      const other=board[to];if(other && (other.owner===player||other.piece===KING))return;
+      if(occupant.piece!==KING && (!(evasion&(1<<to)) || (pins[from] && !(pins[from]&(1<<to)))))return;
+      accept(MOVE_ACTIONS[from][to]);
     }
-    return true;
-  });
+    if(STEP_TARGETS[occupant.piece])for(const to of STEP_TARGETS[occupant.piece][from])target(to);
+    else for(const ray of RAY_TARGETS[occupant.piece][from])for(const to of ray){target(to);if(board[to])break;}
+  }
+  let seen=0;
+  for(const piece of position.banks[player]){
+    const bit=piece===ROOK?1:piece===BISHOP?2:4;if(seen&bit)continue;seen|=bit;
+    for(let to=0;to<16;to++)if(!board[to] && (dropEvasion&(1<<to)) && !(position.phase==='setup' && rules.hiddenSetup && (player===WHITE?to<12:to>=4)))accept(DROP_ACTIONS[piece][to]);
+  }
+  return countOnly?count:actions;
 }
+
+/** Search-only mobility counting; shares exact move legality without building an action array. */
+export function countLegalActionsUnchecked(position,masks){return generateLegalActions(position,masks,true);}
 
 export function applyAction(position, action) {
   const legal = legalActions(position);
@@ -186,47 +210,7 @@ export function isSquareAttacked(position, square, byPlayer) {
 }
 
 function boardAttacks(board, square, byPlayer) {
-  for (let from = 0; from < board.length; from += 1) {
-    const occupant = board[from];
-    if (!occupant || occupant.owner !== byPlayer) continue;
-    if (attacksSquare(board, from, occupant.piece, square)) return true;
-  }
-  return false;
-}
-
-/**
- * `attackSquares(...).includes(target)` with the array never built. Same
- * geometry, same ray rule — a ray reaches an occupied square and stops there
- * — but it answers on the first hit and allocates nothing. This is the single
- * hottest question in the engine: the legality filter asks it for every
- * enemy piece, for every candidate move, at every node of the search.
- */
-function attacksSquare(board, from, piece, target) {
-  const [row, column] = coordinates(from);
-  if (piece === KNIGHT) return stepHits(row, column, KNIGHT_STEPS, target);
-  if (piece === KING) return stepHits(row, column, KING_STEPS, target);
-  if (piece === ROOK) return rayHits(board, row, column, ORTHOGONAL, target);
-  if (piece === BISHOP) return rayHits(board, row, column, DIAGONAL, target);
-  return false;
-}
-
-function stepHits(row, column, steps, target) {
-  for (const [dr, dc] of steps) {
-    if (squareAt(row + dr, column + dc) === target) return true;
-  }
-  return false;
-}
-
-function rayHits(board, row, column, directions, target) {
-  for (const [dr, dc] of directions) {
-    for (let distance = 1; distance < BOARD_SIZE; distance += 1) {
-      const square = squareAt(row + dr * distance, column + dc * distance);
-      if (square === null) break;
-      if (square === target) return true;
-      if (board[square]) break;
-    }
-  }
-  return false;
+  return masksAttack(boardMasks(board), square, byPlayer);
 }
 
 /**
@@ -257,15 +241,7 @@ export function isInCheck(position, player) {
 }
 
 function boardInCheck(board, player) {
-  // A plain loop, not findIndex: this is called twice per candidate move and
-  // the callback allocation showed up as the largest single cost in a profile.
-  for (let square = 0; square < board.length; square += 1) {
-    const occupant = board[square];
-    if (occupant && occupant.owner === player && occupant.piece === KING) {
-      return boardAttacks(board, square, opponent(player));
-    }
-  }
-  return false;
+  return masksInCheck(boardMasks(board), player);
 }
 
 export function positionKey(position) {
@@ -288,17 +264,26 @@ export function positionKey(position) {
 }
 
 export function getResult(position) {
+  return resultWithActions(position, () => legalActions(position));
+}
+
+/** Search-only adjudication: reuse legal actions generated from an immutable trusted state. */
+export function getResultUnchecked(position, actions, key, masks) {
+  return resultWithActions(position, () => typeof actions==='number'?{length:actions}:actions ?? legalActionsUnchecked(position, masks), key, masks);
+}
+
+function resultWithActions(position, actions, suppliedKey, masks) {
   if (position.phase === 'setup') {
-    return legalActions(position).length ? null : { type: 'draw', reason: 'setup-blocked' };
+    return actions().length ? null : { type: 'draw', reason: 'setup-blocked' };
   }
   if (position.phase !== 'play') return null;
-  const key = positionKey(position);
+  const key = suppliedKey ?? positionKey(position);
   if ((position.repetitions[key] ?? 0) >= 3) {
     return { type: 'draw', reason: 'threefold-repetition' };
   }
 
-  if (legalActions(position).length > 0) return null;
-  if (isInCheck(position, position.turn)) {
+  if (actions().length > 0) return null;
+  if (masks ? masksInCheck(masks, position.turn) : isInCheck(position, position.turn)) {
     return { type: 'win', winner: opponent(position.turn), reason: 'checkmate' };
   }
   return { type: 'draw', reason: 'stalemate' };
@@ -306,6 +291,7 @@ export function getResult(position) {
 
 export function actionKey(action) {
   if (!action || typeof action !== 'object') return 'invalid';
+  const cached=ACTION_KEYS.get(action);if(cached!==undefined)return cached;
   if (action.type === 'place-king') return `place-king:${action.to}`;
   if (action.type === 'move') return `move:${action.from}:${action.to}`;
   if (action.type === 'drop') return `drop:${action.piece}:${action.to}`;
@@ -314,15 +300,48 @@ export function actionKey(action) {
 
 function applyUnchecked(position, action, countRepetition) {
   const next = clonePosition(position);
-  const player = position.turn;
+  advancePosition(next, action, countRepetition);
+  return next;
+}
+
+/** Isolated mutable state for a single synchronous search, never a UI/replay state. */
+export function createSearchPosition(position) { return clonePosition(position); }
+
+/** Search-only reversible transition. The caller must supply a generated legal action. */
+export function makeSearchAction(position, action) {
+  const player=position.turn;
+  const undo={action,turn:player,phase:position.phase,to:position.board[action.to],
+    from:action.type==='move'?position.board[action.from]:null};
+  if(rulesOf(position).experiment && action.type!=='place-king'){
+    undo.research={turns:position.research.turns[player],checkingDrops:position.research.checkingDrops[player],
+      lastCheckingDrop:position.research.lastCheckingDrop[player],deployed:position.research.deployed[player].slice()};
+  }
+  advancePosition(position,action,true,undo);
+  return undo;
+}
+
+export function unmakeSearchAction(position, undo) {
+  const {action,turn:player}=undo;
+  position.board[action.to]=undo.to;
+  if(action.type==='move')position.board[action.from]=undo.from;
+  if(undo.bank){const b=undo.bank;if(b.added)position.banks[b.owner].splice(b.index,1);else position.banks[b.owner].splice(b.index,0,b.piece);}
+  if(undo.research){for(const field of ['turns','checkingDrops','lastCheckingDrop','deployed'])position.research[field][player]=undo.research[field];}
+  if(undo.key){if(undo.hadCount)position.repetitions[undo.key]=undo.count;else delete position.repetitions[undo.key];}
+  position.turn=player;position.phase=undo.phase;
+}
+
+function advancePosition(next, action, countRepetition, undo) {
+  const player = next.turn;
+  const phase = next.phase;
+  const rules = rulesOf(next);
 
   if (action.type === 'place-king') {
     next.board[action.to] = occupantOf(player, KING);
-    if (position.phase === 'place-white-king') {
+    if (phase === 'place-white-king') {
       next.phase = 'place-black-king';
       next.turn = BLACK;
     } else {
-      next.phase = rulesOf(position).setup ? 'setup' : 'play';
+      next.phase = rules.setup ? 'setup' : 'play';
       next.turn = WHITE;
     }
   } else if (action.type === 'move') {
@@ -330,22 +349,24 @@ function applyUnchecked(position, action, countRepetition) {
     const captured = next.board[action.to];
     next.board[action.to] = moving;
     next.board[action.from] = null;
-    if (captured && rulesOf(position).experiment !== 'permanent-loss') {
-      const policy = rulesOf(position).experiment;
+    if (captured && rules.experiment !== 'permanent-loss') {
+      const policy = rules.experiment;
       const transfers = policy === 'capture-bank';
-      const recipient = transfers && next.banks[player].length < rulesOf(position).bankCapacity
+      const recipient = transfers && next.banks[player].length < rules.bankCapacity
         ? player : captured.owner;
+      if (undo) undo.bank = {owner:recipient,index:next.banks[recipient].length,added:true};
       next.banks[recipient].push(captured.piece);
     }
     next.turn = opponent(player);
   } else if (action.type === 'drop') {
     const bankIndex = next.banks[player].indexOf(action.piece);
+    if (undo) undo.bank = {owner:player,index:bankIndex,piece:action.piece,added:false};
     next.banks[player].splice(bankIndex, 1);
     next.board[action.to] = occupantOf(player, action.piece);
     next.turn = opponent(player);
   }
 
-  if (rulesOf(position).experiment && action.type !== 'place-king') {
+  if (rules.experiment && action.type !== 'place-king') {
     const wasCheckingDrop = action.type === 'drop' && boardInCheck(next.board, opponent(player));
     next.research.checkingDrops[player] = Math.min(1, next.research.checkingDrops[player] + Number(wasCheckingDrop));
     next.research.lastCheckingDrop[player] = wasCheckingDrop;
@@ -354,54 +375,25 @@ function applyUnchecked(position, action, countRepetition) {
       next.research.deployed[player].push(action.piece);
       next.research.deployed[player].sort();
     }
-    if (position.phase === 'setup' && !next.banks.white.length && !next.banks.black.length) {
+    if (phase === 'setup' && !next.banks.white.length && !next.banks.black.length) {
       next.phase = 'play';
-      next.turn = rulesOf(position).firstPlayer;
+      next.turn = rules.firstPlayer;
     }
   }
 
   if (countRepetition && next.phase === 'play') {
     const key = positionKey(next);
+    if (undo) {undo.key=key;undo.hadCount=Object.hasOwn(next.repetitions,key);undo.count=next.repetitions[key];}
     next.repetitions[key] = (next.repetitions[key] ?? 0) + 1;
   }
   return next;
 }
 
-function pseudoMoves(board, from, piece, owner) {
-  return attackSquares(board, from, piece).filter((to) => {
-    const occupant = board[to];
-    return !occupant || occupant.owner !== owner;
-  });
-}
-
-function attackSquares(board, from, piece) {
-  const [row, column] = coordinates(from);
-  if (piece === KNIGHT) {
-    return KNIGHT_STEPS
-      .map(([dr, dc]) => squareAt(row + dr, column + dc))
-      .filter((square) => square !== null);
-  }
-  if (piece === KING) {
-    return KING_STEPS
-      .map(([dr, dc]) => squareAt(row + dr, column + dc))
-      .filter((square) => square !== null);
-  }
-  if (piece === ROOK) return raySquares(board, row, column, ORTHOGONAL);
-  if (piece === BISHOP) return raySquares(board, row, column, DIAGONAL);
-  return [];
-}
-
-function raySquares(board, row, column, directions) {
-  const squares = [];
-  for (const [dr, dc] of directions) {
-    for (let distance = 1; distance < BOARD_SIZE; distance += 1) {
-      const square = squareAt(row + dr * distance, column + dc * distance);
-      if (square === null) break;
-      squares.push(square);
-      if (board[square]) break;
-    }
-  }
-  return squares;
+function attackSquares(board,from,piece){
+  if(STEP_TARGETS[piece])return STEP_TARGETS[piece][from];
+  const result=[];
+  for(const ray of RAY_TARGETS[piece]?.[from]??[])for(const to of ray){result.push(to);if(board[to])break;}
+  return result;
 }
 
 function homeRank(player) {
@@ -436,14 +428,8 @@ function coordinates(square) {
   return [Math.floor(square / BOARD_SIZE), square % BOARD_SIZE];
 }
 
-/**
- * The repetition map is copied here, once per applied action, and it grows by
- * one entry per ply: a search late in a long game pays for that at every
- * node. Measured at 1.9× the time of the same search with an empty map once
- * the map holds 150 entries. Nothing shares it any more — the legality filter
- * stopped cloning positions at all — so this is the remaining length-dependent
- * cost in the engine, and it is documented in DECISIONS.md rather than fixed.
- */
+/** Public transitions and search preparation own their copies. Reversible search
+ * updates the working repetition map in place instead of cloning it per node. */
 function clonePosition(position) {
   return {
     board: position.board.slice(),

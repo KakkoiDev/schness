@@ -1,3 +1,4 @@
+import {boardMasks, masksAfter, masksInCheck} from './board-masks.js';
 import {createSearchEngine} from './search.js';
 import {
   BISHOP,
@@ -7,53 +8,110 @@ import {
   ROOK,
   WHITE,
   applyLegalAction,
-  getResult,
+  createSearchPosition, makeSearchAction, unmakeSearchAction,
+  getResultUnchecked,
+  actionKey,
   isInCheck,
-  legalActionsUnchecked,
+  legalActionsUnchecked, countLegalActionsUnchecked,
   positionKey,
 } from './rules.js';
 
 const VALUES = { [KING]: 0, [ROOK]: 500, [BISHOP]: 320, [KNIGHT]: 300 };
 const MATE = 1_000_000;
+const searchState = new WeakMap();
+const materialBanks = p => ['capture-bank','permanent-loss'].includes(p.rules?.experiment);
+function material(p) {
+  let value=0;
+  for(const o of p.board)if(o)value+=(o.owner===WHITE?1:-1)*(VALUES[o.piece]+(o.piece===KING?0:20));
+  if(materialBanks(p))for(const owner of [WHITE,BLACK])for(const piece of p.banks[owner])value+=(owner===WHITE?1:-1)*VALUES[piece];
+  return value;
+}
+function prepare(position,options) {
+  const p=createSearchPosition(position);
+  // IDs identify an ordered extension of this root's exact initial history.
+  // Different histories never share an ID; equivalent reorderings may miss a hit.
+  searchState.set(p,{material:material(p),masks:boardMasks(p.board),key:positionKey(p),history:1,nextHistory:2,
+    maskStack:[],maskDepth:0,paths:new Map(),pathLimit:options.maxTableEntries ?? 50000});
+  return p;
+}
+function make(position,action) {
+  const state=searchState.get(position),saved={material:state.material,masks:state.masks,key:state.key,history:state.history};
+  const player=position.turn,sign=player===WHITE?1:-1;
+  if(action.type==='drop')state.material+=sign*(VALUES[action.piece]+20-(materialBanks(position)?VALUES[action.piece]:0));
+  if(action.type==='move'){
+    const captured=position.board[action.to];
+    if(captured){
+      state.material-=(captured.owner===WHITE?1:-1)*(VALUES[captured.piece]+20);
+      if(materialBanks(position) && position.rules.experiment==='capture-bank'){
+        const recipient=position.banks[player].length<position.rules.bankCapacity?player:captured.owner;
+        state.material+=(recipient===WHITE?1:-1)*VALUES[captured.piece];
+      }
+    }
+  }
+  // A buffer belongs to one active stack frame. Siblings reuse it only after
+  // unmake has restored the parent's distinct buffer.
+  const scratch=state.maskStack[state.maskDepth] ??= new Uint16Array(9);
+  state.maskDepth++;
+  state.masks=masksAfter(state.masks,position.board,player,action,scratch);
+  const undo=makeSearchAction(position,action);
+  state.key=undo.key ?? positionKey(position);
+  const path=`${state.history}:${state.key}`;
+  let id=state.paths.get(path);
+  if(id===undefined){id=state.nextHistory++;if(state.paths.size>=state.pathLimit)state.paths.delete(state.paths.keys().next().value);state.paths.set(path,id);}
+  state.history=id;
+  return {undo,saved};
+}
+function unmake(position,{undo,saved}) {unmakeSearchAction(position,undo);const state=searchState.get(position);state.maskDepth--;Object.assign(state,saved);}
+
 
 /** Variant adapter keeps Schness legality, objectives and evaluation out of search. */
 export const schnessSearch = createSearchEngine({
-  actions: legalActionsUnchecked,
+  prepare, make, unmake,
+  scoreStep:1,
+  isTactical:(p,a)=>a.type==='move' && Boolean(p.board[a.to]),
+  canReduce:(p,a)=>p.phase==='play' && a.type==='move' && !p.board[a.to] &&
+    !(searchState.has(p)?masksInCheck(searchState.get(p).masks,p.turn):isInCheck(p,p.turn)),
+  actions: p=>legalActionsUnchecked(p,searchState.get(p)?.masks),
+  countActions:p=>countLegalActionsUnchecked(p,searchState.get(p)?.masks),
+  actionKey,
   apply: applyLegalAction,
   turn: p => p.turn,
-  key: p => `${positionKey(p)}|history:${JSON.stringify(Object.entries(p.repetitions ?? {}).sort(([a],[b])=>a<b?-1:a>b?1:0))}`,
-  terminal: (p, player, depth) => {
-    const result=getResult(p);
+  key: p => {const s=searchState.get(p);return s?`${s.key}|history-id:${s.history}`:`${positionKey(p)}|history:${JSON.stringify(Object.entries(p.repetitions ?? {}).sort(([a],[b])=>a<b?-1:a>b?1:0))}`;},
+  hintKey: p => searchState.get(p)?.key ?? positionKey(p),
+  terminal: (p, player, depth, facts) => {
+    const state=searchState.get(p);
+    const result=getResultUnchecked(p, facts.actionCount(),state?.key,state?.masks);
     return !result ? null : result.type==='draw' ? 0 : result.winner===player ? MATE+depth : -MATE-depth;
   },
   evaluate,
+  inDanger: p => searchState.has(p)?masksInCheck(searchState.get(p).masks,p.turn):isInCheck(p,p.turn),
+  noisyActions: (p, actions, options) => {
+    if(!options.includeChecks)return actions.filter(a => a.type === 'move' && p.board[a.to]);
+    const masks=searchState.get(p)?.masks ?? boardMasks(p.board),scratch=new Uint16Array(9);
+    const enemy=p.turn===WHITE?BLACK:WHITE;
+    // The input is already legal: variant-specific forbidden checks and mates
+    // cannot enter this list. This includes checking drops when permitted.
+    return actions.filter(a => a.type==='move' && p.board[a.to] ||
+      masksInCheck(masksAfter(masks,p.board,p.turn,a,scratch),enemy));
+  },
   order: orderActions,
-  repetitions: p => p.repetitions[positionKey(p)] ?? 0,
+  repetitions: p => p.repetitions[searchState.get(p)?.key ?? positionKey(p)] ?? 0,
 });
 
 /** Existing depth profiles stay supported; strength 0–100 enables bounded iterative search. */
-export function chooseAction(position, options={}) { return analyzeAction(position,options).action; }
+export function chooseAction(position, options={}) { return analyzeAction(position,{...options,multiPv:1}).action; }
 export function analyzeAction(position, options={}) { return schnessSearch.choose(position,options); }
 /** White-positive score. */
 export function scorePosition(position, depth=3) { return schnessSearch.score(position,WHITE,depth); }
 
-function evaluate(position, player) {
+function evaluate(position, player, facts) {
   const enemy = player === WHITE ? BLACK : WHITE;
-  let score = 0;
-  // Material can transfer or disappear in these presets, so held pieces have value too.
-  if (['capture-bank','permanent-loss'].includes(position.rules?.experiment)) {
-    for (const piece of position.banks[player]) score += VALUES[piece];
-    for (const piece of position.banks[enemy]) score -= VALUES[piece];
-  }
-  for (const occupant of position.board) {
-    if (!occupant) continue;
-    const deployed = VALUES[occupant.piece] + (occupant.piece === KING ? 0 : 20);
-    score += occupant.owner === player ? deployed : -deployed;
-  }
-  score += (legalActionsUnchecked({ ...position, turn: player }).length -
-            legalActionsUnchecked({ ...position, turn: enemy }).length) * 2;
-  if (isInCheck(position, enemy)) score += 30;
-  if (isInCheck(position, player)) score -= 30;
+  let score=(searchState.get(position)?.material ?? material(position))*(player===WHITE?1:-1);
+  const masks=searchState.get(position)?.masks ?? boardMasks(position.board);
+  score += ((position.turn===player?facts.actionCount():countLegalActionsUnchecked({...position,turn:player},masks))-
+    (position.turn===enemy?facts.actionCount():countLegalActionsUnchecked({...position,turn:enemy},masks)))*2;
+  if (masksInCheck(masks, enemy)) score += 30;
+  if (masksInCheck(masks, player)) score -= 30;
   return score;
 }
 

@@ -1,0 +1,49 @@
+{
+  "files": [
+    {
+      "path": "positions.json",
+      "bytes": 91624,
+      "sha256": "55089ff063b6c6cfc8ec9632440e9138bdf0189e537e2e89e3da685587833a96"
+    },
+    {
+      "path": "results.json.gz",
+      "bytes": 19068,
+      "sha256": "e628a7f2aaa53c72f6debdd87464853fd4a38c84c7ef8e5887f827433e09488f"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 1678,
+      "sha256": "12e2fe3a374cc39010da1505a4115cfa5abbc7d590eb0586af26f2ed4ad8e392"
+    },
+    {
+      "path": "profile-summary.json",
+      "bytes": 4270,
+      "sha256": "dc3837d336b24eb3c5c36d392291e6f09ae13c79151094dabeadc274afcdb744"
+    },
+    {
+      "path": "cpu-profiles.tar.gz",
+      "bytes": 23671,
+      "sha256": "ece4a5ef740cc916e2245d2c7c0ff9809638406af24f23c8a602d80ef3363b85"
+    },
+    {
+      "path": "play-games.jsonl.gz",
+      "bytes": 43634,
+      "sha256": "019fd8ea25badb02d9a96cb34db57eb88908b65b2f3c363b3f2f4f78e8e11ecd"
+    },
+    {
+      "path": "play-results.json",
+      "bytes": 1600,
+      "sha256": "e06e8ab22f663249607881254d94cf9ab34e4f82623e29a3d41184c881466c89"
+    },
+    {
+      "path": "unit.log.gz",
+      "bytes": 10096,
+      "sha256": "2a98434c31cd8ab82b637154e5a12deaee59480af2b6750726326e54f9cb4723"
+    },
+    {
+      "path": "browser-worker.log.gz",
+      "bytes": 390,
+      "sha256": "077a5ae32a4c0b00aabc800ae5175181989519d0949d09d19b1e4bae938ddfc9"
+    }
+  ]
+}

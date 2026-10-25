@@ -33,7 +33,7 @@ score, visited nodes, completed depth and whether the search stopped at a budget
 
     analyzeAction(position, {strength: 40, maxNodes: 10000})
 
-Strength 0–100 maps monotonically to depth 1–6 and node budget 256–262144. Explicit depth and node
+Integer level (`strength`) 0–100 maps directly to requested depth 0–100 with a default safety budget of 262144 nodes. Level 0 selects a legal ordered action without evaluating successors. One depth unit is one action by either player, including extra turns. Explicit depth and node
 options override the mapped values. Strength is not Elo, and different variants have different
 branching factors. Use fixed node budgets for reproducible research. Optional maxMillis is a
 wall-clock responsiveness cap, unsuitable as the sole budget for comparisons across machines.
@@ -50,8 +50,8 @@ synchronous callbacks mid-call. Random tie-breaking remains seedable.
 
 The Schness adapter's transposition key includes the whole repetition map, not only the board.
 Two identical boards can have different future draw outcomes. This may reduce cache hits and
-change choices; fixed-depth runtime can increase. Current metadata therefore identifies Sharp
-v3 and Learning/Steady v2. Historical Sharp v2 datasets keep their original versions and frozen
+change choices; fixed-depth runtime can increase. Current preset metadata identifies Sharp
+v4 and Learning/Steady v3. Historical Sharp v2 datasets keep their original versions and frozen
 source. Do not pool engine versions into a balance claim.
 
 Tests cover alternate win/loss objectives, terminal roots, exact node caps, legal fallback,
@@ -60,3 +60,119 @@ requests at phone/desktop widths verify both old depth and new bounded-strength 
 For further strength improvement, benchmark tactical correctness and nodes per second, then
 head-to-head at matched budgets on fresh openings. Faster code and deeper defaults alone are
 not evidence of a stronger engine.
+
+## General game contract and analysis
+
+The shared engine targets deterministic, two-player, zero-sum games with perfect information.
+It does not assume a grid, chess, alternating turns or a particular player identity. Stochastic,
+hidden-information, simultaneous-action and multiplayer games need different search support.
+Adapters must be pure, provide complete state identities, and adjudicate all terminal states.
+Search can explore a new objective immediately, but good heuristic weights require calibration.
+
+`choose` also returns `pv` (the chosen continuation) and `variations`; `multiPv: 3` requests up to
+three ranked root alternatives. Scores share the root player's perspective. Only completed
+iterations are exposed; a budget fallback has no evaluated continuation. These are predicted
+best-play lines, not an enumeration of all possible futures or a proof of optimal play.
+
+Optional `noisyActions(position, legalActions)` and `inDanger(position)` enable bounded tactical
+extensions with `quiescenceDepth: 1..8`. Danger searches every legal reply instead of allowing a
+static stand-pat score. Extensions share the normal node/time budget, stop at their explicit
+limit and never alter legal rules. At the extension limit even a dangerous state is evaluated
+statically. Defaults remain zero; Schness supplies capture and check callbacks but does not yet
+turn extensions on in its production profiles. No new strength version or Elo claim is made.
+
+Regression coverage includes a separate take-away game, altered victory objectives, extra turns,
+a tactical horizon trap, forced quiet evasions, legal ranked continuations, cached/uncached
+agreement and exact budget accounting. Tic-tac-toe is checked against an independent exhaustive
+minimax oracle on all 5,478 reachable positions.
+
+The worker keeps its existing `{action, request}` response. Send `analyze: true` to also receive
+`analysis`, including requested/completed depth, budget status and ranked continuations. It accepts
+`multiPv` and `quiescenceDepth`; invalid options return an error with the original request ID.
+
+
+## Efficient play search
+
+Single-line search (`multiPv: 1`) shares alpha across root alternatives; multi-line analysis retains
+exact alternative scores. Ambiguous bound-equalities are fully re-searched before randomized or
+repetition tie selection. `actionKey(action)` is an optional adapter callback for cached move
+ordering; otherwise JSON action identity is used. Supply a stable key for non-JSON actions.
+
+Terminal callbacks receive an optional fourth argument `facts`; evaluation receives it as a third
+argument. `facts.actions()` lazily supplies and reuses this node's legal action list. Treat it as
+read-only. Existing adapters with fewer parameters remain compatible. The default adapter path uses immutable positions and transitions. Optional reversible
+adapters follow the ownership and undo contract below.
+
+Score bounds are cached only at equal remaining depth, while best-action hints can order later
+iterations at other depths. Each table defaults to 50,000 entries, configurable with
+`maxTableEntries`; `useCache: false` disables both. Completed results expose `stats` counters.
+See [the measured optimization report](search-performance-report-2026-10-25.md).
+
+## Reversible adapters and exact search accelerators
+
+An adapter may supply `make(position, action)` and `unmake(position, undo)` together. Search
+clones the root once with `structuredClone`, or calls optional `prepare(position, options)` to
+obtain an owned working state. `prepare` must not return the caller's mutable state. The action
+must be legal for the current state. `make` must either succeed completely or leave it unchanged
+on error. Every successful make is paired with unmake in `finally`, including budget exhaustion,
+PVS re-searches and adapter failures. Undo must restore all board, bank, rule-right and history
+state. Callbacks cannot retain references to mutable positions or mutate cached action arrays.
+`useMutable: false` selects the original immutable path for comparisons.
+
+Schness keeps a private working position and updates material, piece masks and the current
+position key. Repetition counts are updated and undone in place. Bounded path interning assigns
+unique IDs to ordered extensions of the exact root history; it uses no probabilistic hash and
+never merges different histories. It may miss equivalent histories reached in a different order.
+`hintKey(position)` may omit history because it is used only for best-move ordering; score keys
+must still distinguish history. Neither cache is shared between searches.
+
+`scoreStep` declares the exact score lattice (Schness uses integer scores and step 1). It enables
+principal variation search and aspiration windows on iterative single-line play. Do not declare
+it for arbitrary fractional evaluations. `principalVariation: false` and `aspiration: false`
+disable these independently. Aspiration failures widen the window and eventually re-search a
+full window; incomplete retries never replace the last completed result. Multi-PV bypasses
+aspiration windows so alternative root scores stay exact. `aspirationWindow` defaults to 50.
+
+Optional `isTactical(position, action)` identifies captures to prioritize ahead of quiet killer
+and history moves. `useHistory: false` disables those learned ordering hints. The bounded history
+table affects move order only. No branch is discarded merely for looking unpromising. Diagnostics
+add `pvsResearches`, `aspirationResearches` and `historyHits`.
+
+Production profiles now identify Sharp v5 and Learning/Steady v4. Quiescence stays opt-in; old
+frozen research runtimes and datasets are unchanged. See the performance-v3 report for measurements.
+
+## Direct generation and count-only leaf facts
+
+Optional `countActions(position)` returns the exact nonnegative integer number of legal actions,
+using the same rules as `actions`. `facts.actionCount()` shares a node's existing list when present.
+At static leaves with no remaining tactical extension it may use the count-only callback instead.
+Interior nodes keep one shared list, avoiding a count pass followed by a second generation pass.
+Adapters without `countActions` retain the existing list-based behavior. If a callback requests both,
+the counts must agree; invalid counts fail explicitly.
+
+Schness counts both sides' exact mobility without materializing leaf action lists. Private fixed
+action values and ray tables, early check/pin filtering, and per-generation scratch masks reduce
+allocation. Public `legalActions` still returns independent mutable action copies. Private linked
+continuations and a reusable ordering-rank map are flattened into independent published PV arrays.
+Named profiles are now Sharp v6 and Learning/Steady v5; their requested depths remain unchanged.
+The game/search explanation and multiplayer boundaries are in docs/how-the-game-engine-works.md.
+
+## Optional tactical checks and selective reductions
+
+`quiescenceChecks` is a boolean, false by default. When true, the search passes
+`{includeChecks:true}` as the third argument to the optional `noisyActions` adapter callback.
+The Schness adapter includes legal captures and checks, including permitted checking drops.
+Set a positive `quiescenceDepth` to use it. In-check tactical nodes still search every legal
+reply; tactical extensions share the normal node/time caps.
+
+`lateMoveReduction` is a boolean, false by default, and requires `adapter.canReduce(position,
+action)`. After three searched actions at remaining depth at least three, qualifying moves
+may be searched one ply shallower first. Improvements are searched again at full depth;
+reduced fail-lows are speculative and can miss a tactic. Schness excludes captures, drops,
+check evasions, setup and moves that leave the opponent in check. `reducedSearches` and
+`reductionResearches` report use. Root moves are never reduced. Other adapters must explicitly
+qualify moves according to their own rules. Exact reference mode keeps this option false.
+
+Sharp v7 and Learning/Steady v6 retain their previous evaluation, requested depths and default
+zero tactical extension. The new exact work avoids redundant king-safety simulations and
+reuses distinct mask buffers by active search-stack depth. Multiplayer remains out of scope.

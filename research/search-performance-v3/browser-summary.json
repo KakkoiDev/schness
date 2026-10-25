@@ -1,0 +1,14 @@
+{
+  "baseline": {
+    "searches": 96,
+    "meanDepth": 4.875,
+    "meanMillis": 99.99166666681413,
+    "nodes": 942995
+  },
+  "candidate": {
+    "searches": 96,
+    "meanDepth": 5.791666666666667,
+    "meanMillis": 99.99791666659682,
+    "nodes": 2817915
+  }
+}

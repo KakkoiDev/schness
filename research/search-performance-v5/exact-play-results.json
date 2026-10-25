@@ -1,0 +1,62 @@
+{
+  "config": {
+    "depth": 100,
+    "maxNodes": 10000000,
+    "maxMillis": 25,
+    "maxPlies": 100,
+    "openings": 16,
+    "colorsSwapped": true,
+    "randomness": "none",
+    "rules": "Classic quiet drops",
+    "baselineDescription": "frozen local round-four engine; exact source hashes below",
+    "candidateOptions": {}
+  },
+  "sources": {
+    "src/search.js": "c89a61268296815dc5be45a1a4b97f5d947a211753ab89cc06cef4f80a2fc438",
+    "src/bot.js": "7eeb9141a71a2e1d261ef8c3e6b2c0143408e41534d60cb86537d12f0beb727b",
+    "src/rules.js": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7",
+    "src/board-masks.js": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00",
+    "scripts/bench-search-play-v5.js": "2d58d368c3578d87c2c293b88e2143580ecd5890da3eb68aa03bae7f6fbcf2c7",
+    "research/search-performance-v5/king-safety-runtime/search.js": "c89a61268296815dc5be45a1a4b97f5d947a211753ab89cc06cef4f80a2fc438",
+    "research/search-performance-v5/king-safety-runtime/bot.js": "1f41a3b683589f58bfcf11422c8415a3648a0ec025b0a02676c5fee0c56447c0",
+    "research/search-performance-v5/king-safety-runtime/rules.js": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7",
+    "research/search-performance-v5/king-safety-runtime/board-masks.js": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00",
+    "research/search-performance-v5/baseline-search.js": "f621c58006ae43b4f6abbb9fb9193142534319cea4a7e5bae8bae41412d8dece",
+    "research/search-performance-v5/baseline-rules.js": "051abbe367f104b43b032144110304b2db55c9a27f8c9ca66f639a9033db4a66",
+    "research/search-performance-v5/baseline-bot.js": "34ac7d04159c0b3324d93318c95b1303b4dec1bd054de0c99998d295992c9ddf",
+    "research/search-performance-v5/baseline-board-masks.js": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+  },
+  "games": 32,
+  "summary": {
+    "candidateWins": 2,
+    "baselineWins": 0,
+    "draws": 30,
+    "reasons": {
+      "ply-limit": 26,
+      "checkmate": 2,
+      "threefold-repetition": 4
+    },
+    "completedDepth": {
+      "candidate": {
+        "3": 31,
+        "4": 261,
+        "5": 893,
+        "6": 263,
+        "7": 18,
+        "100": 1
+      },
+      "baseline": {
+        "3": 36,
+        "4": 278,
+        "5": 890,
+        "6": 256,
+        "7": 4,
+        "8": 3
+      }
+    }
+  },
+  "archive": {
+    "compressedSha256": "581a09b020dcb32c97a60ed6e0867ddc801a36019fbb851dcbd870196de7434a",
+    "rawSha256": "f6dc4b4375c36c396388186ad20050cb40aad4f7048a309ca45eb524d87063a8"
+  }
+}

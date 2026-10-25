@@ -1,0 +1,60 @@
+{
+  "config": {
+    "depth": 100,
+    "maxNodes": 10000000,
+    "maxMillis": 25,
+    "maxPlies": 100,
+    "openings": 16,
+    "colorsSwapped": true,
+    "randomness": "none",
+    "rules": "Classic quiet drops",
+    "baselineDescription": "frozen local round-four engine; exact source hashes below",
+    "candidateOptions": {
+      "lateMoveReduction": true
+    }
+  },
+  "sources": {
+    "src/search.js": "c89a61268296815dc5be45a1a4b97f5d947a211753ab89cc06cef4f80a2fc438",
+    "src/bot.js": "7eeb9141a71a2e1d261ef8c3e6b2c0143408e41534d60cb86537d12f0beb727b",
+    "src/rules.js": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7",
+    "src/board-masks.js": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00",
+    "research/search-performance-v5/baseline-search.js": "f621c58006ae43b4f6abbb9fb9193142534319cea4a7e5bae8bae41412d8dece",
+    "research/search-performance-v5/baseline-rules.js": "051abbe367f104b43b032144110304b2db55c9a27f8c9ca66f639a9033db4a66",
+    "research/search-performance-v5/baseline-bot.js": "34ac7d04159c0b3324d93318c95b1303b4dec1bd054de0c99998d295992c9ddf",
+    "research/search-performance-v5/baseline-board-masks.js": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00",
+    "research/search-performance-v5/stages/reduced/scripts/bench-search-play-v5.js": "5cdfe508dd4d5b8a8d53458fad68d29edc500085e1ce0c720097fed8f44674d2"
+  },
+  "games": 32,
+  "summary": {
+    "candidateWins": 5,
+    "baselineWins": 3,
+    "draws": 24,
+    "reasons": {
+      "threefold-repetition": 5,
+      "ply-limit": 19,
+      "checkmate": 8
+    },
+    "completedDepth": {
+      "candidate": {
+        "3": 30,
+        "4": 178,
+        "5": 747,
+        "6": 389,
+        "7": 33
+      },
+      "baseline": {
+        "3": 37,
+        "4": 229,
+        "5": 833,
+        "6": 260,
+        "7": 12,
+        "8": 4,
+        "100": 1
+      }
+    }
+  },
+  "archive": {
+    "compressedSha256": "8424e5a22934dc027edb5bf0506a00451fab403ed57013e058b31399a7b70339",
+    "rawSha256": "a69bb687c9c91fa3656c6b0115ecb755c87c56b24a709c7847c68376cbe87d61"
+  }
+}

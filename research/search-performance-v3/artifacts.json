@@ -1,0 +1,69 @@
+{
+  "files": [
+    {
+      "path": "results.json.gz",
+      "bytes": 23072,
+      "sha256": "1f0d7ddde1916ff0b1331e06bf0073ff35a896a2a2f73ef2a716fcce73766c28"
+    },
+    {
+      "path": "browser-results.json.gz",
+      "bytes": 20132,
+      "sha256": "9a1393050c9e2c7c5fb9405c1f39aecce21661b3922f62afcf15388254f3a75d"
+    },
+    {
+      "path": "unit.log.gz",
+      "bytes": 10329,
+      "sha256": "467b06903fc598bced16edd0005b606f4fddc371aed20216e3c28574bc80e32a"
+    },
+    {
+      "path": "browser-worker.log.gz",
+      "bytes": 349,
+      "sha256": "13ba16b85278ce85e2ac2369f57fa5a3051fc17c032c5cb19f8dbf49e734f864"
+    },
+    {
+      "path": "play.log.gz",
+      "bytes": 289,
+      "sha256": "166127f6e6832d6d2bb6de38f11514065371793c051d821322213a1cb4abc605"
+    },
+    {
+      "path": "play-games.jsonl.gz",
+      "bytes": 65758,
+      "sha256": "56f23c7b62556f620ee9614f644e2dfe95c2def8422d4b339dbbc158a0fc2835"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 660,
+      "sha256": "849d8ca8f33c6420d5349a99936e0543261fc5ce052d84a40b71afdef5a65cbf"
+    },
+    {
+      "path": "browser-summary.json",
+      "bytes": 261,
+      "sha256": "a34095705b052214a3e44bee127f22f9ad2bce0b18885bdd0400be325be033c0"
+    },
+    {
+      "path": "play-results.json",
+      "bytes": 1810,
+      "sha256": "70c58dc5a658a9ac940eaf01902b9e11689678a4ef73150dc7d972edd1241c28"
+    },
+    {
+      "path": "play-progress.json",
+      "bytes": 500,
+      "sha256": "d5c0237e27ac675c737d0ed77118db5882a50c5e1948589fa9a0a14fa3a3fae5"
+    },
+    {
+      "path": "baseline-search.js",
+      "bytes": 10402,
+      "sha256": "35615db38d85cf8d1b2925378391fcd4914ec88f6abd68216a8f4b4e3bd9ee91"
+    },
+    {
+      "path": "baseline-bot.js",
+      "bytes": 3036,
+      "sha256": "d5618de2134ffffa392c8a319ef63c08c6015451b1763b2920aa5294ede64acb"
+    },
+    {
+      "path": "baseline-rules.js",
+      "bytes": 23160,
+      "sha256": "9ddc9a0e2d73e8355b47a4eff696a79cbd2c0def665804eab3e6798f629a2b8f"
+    }
+  ]
+}

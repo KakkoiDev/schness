@@ -1,0 +1,32 @@
+{
+  "completed": 32,
+  "total": 32,
+  "summary": {
+    "candidateWins": 5,
+    "baselineWins": 3,
+    "draws": 24,
+    "reasons": {
+      "threefold-repetition": 5,
+      "ply-limit": 19,
+      "checkmate": 8
+    },
+    "completedDepth": {
+      "candidate": {
+        "3": 30,
+        "4": 178,
+        "5": 747,
+        "6": 389,
+        "7": 33
+      },
+      "baseline": {
+        "3": 37,
+        "4": 229,
+        "5": 833,
+        "6": 260,
+        "7": 12,
+        "8": 4,
+        "100": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "positions": 32,
+  "legalLeaves": 702598,
+  "parityDepth": 4,
+  "repeats": 3,
+  "budgetMillis": 100,
+  "engines": {
+    "ours": {
+      "medianMillis": 99.43250000011176,
+      "totalMillis": 9549.83000001125,
+      "nodes": 832001,
+      "nodesPerSecond": 87122.07442425884,
+      "medianReportedCompletedDepth": 6,
+      "minDepth": 4,
+      "maxDepth": 7
+    },
+    "fairy": {
+      "medianMillis": 104.47250000014901,
+      "totalMillis": 9971.92499999702,
+      "nodes": 15976192,
+      "nodesPerSecond": 1602117.143881926,
+      "medianReportedCompletedDepth": 16,
+      "minDepth": 12,
+      "maxDepth": 22
+    }
+  },
+  "nodeThroughputRatio": 18.389336508220495,
+  "perftWallMillis": {
+    "ours": 890.4050000086427,
+    "fairy": 170.5950000062585
+  }
+}
