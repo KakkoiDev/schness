@@ -52,9 +52,9 @@ export function recordAction(history, position, action, next) {
 export function pairMoves(history) {
   const rows = [];
   for (const entry of history) {
-    const number = Math.ceil(entry.ply / 2);
-    if (moverOfPly(entry.ply) === WHITE) rows.push({ number, white: entry, black: null });
-    else if (rows.length) rows[rows.length - 1].black = entry;
+    const number = rows.length + 1;
+    if ((entry.mover ?? moverOfPly(entry.ply)) === WHITE) rows.push({ number, white: entry, black: null });
+    else if (rows.length && rows[rows.length - 1].black === null) rows[rows.length - 1].black = entry;
     else rows.push({ number, white: null, black: entry });
   }
   return rows;

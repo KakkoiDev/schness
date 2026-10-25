@@ -2383,3 +2383,5 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
   .analysis-bar { top: .25rem; bottom: .25rem; left: .25rem; right: auto; width: 1rem; }
   .analysis-side { height: 1.35rem; font-size: .6rem; }
 }
+
+.variant-description { color: var(--muted); max-width: 76ch; font-size: .9rem; line-height: 1.55; margin: .5rem 0 1.25rem; }

@@ -832,3 +832,31 @@ king start, and full transcript replay. See docs/variant-wave2-experiments.md. R
 usage, mates, draws, length and diversity. Keep the default unchanged pending results. The user
 also requested selectable/random game variants and cyberpunk/classic visual concepts; mockups
 are to be reviewed before implementing the styling.
+
+## 2026-10-24 — Playable variant selector, design concepts and Lab proposal
+
+**Question.** Let players try the tested rules and a random complete preset; explore a cyberpunk
+neo-purple appearance while retaining a clean Classic alternative; propose dynamic boards and
+point-budget armies, including queens, duplicate queens and fairy pieces.
+
+**Implementation and alternatives.** Share preset definitions between research and the arena.
+Random selects one complete ruleset rather than composing incompatible toggles. Store resolved
+identity/seed in the URL and show the rules before play. Human reserve interaction works during
+full setup; hidden setups reveal precommitted random armies. Replays use actual movers; editing
+resets to canonical because historical rights cannot be inferred from a board. The first release
+is arena-only; online invitation negotiation is not silently changed.
+
+**Design decision.** The user chose mockups first, so no cyberpunk CSS or lightning is shipped.
+Generated cyberpunk and Classic concept sheets are saved locally under output/design, with prompts and
+implementation notes. The Lab proposal in docs/army-builder-proposal.md keeps Classic 4×4 fixed,
+proposes 4–10 geometry, shared budgets, copy caps, queens and selected fairy pieces. Captures still
+return to the original owner and points apply only before play. Avoid treating ordinary chess
+piece prices or fixed-depth search as established balance/performance across these boards.
+
+**Validation.** All 243 unit tests pass. The complete desktop/mobile browser run has 108 passed,
+5 skipped and one online-connection timeout with STUN DNS resolution failures. All six new
+variant checks pass, including actual setup drops, random/reload identity and hidden reveal.
+
+**Next measurement.**
+Review the visual concepts before implementation. Test board size alone before adding queens,
+duplicate armies or fairy moves. Wave 2 runs independently on its frozen experiment commit.
