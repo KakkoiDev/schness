@@ -100,10 +100,43 @@ ordering; otherwise JSON action identity is used. Supply a stable key for non-JS
 
 Terminal callbacks receive an optional fourth argument `facts`; evaluation receives it as a third
 argument. `facts.actions()` lazily supplies and reuses this node's legal action list. Treat it as
-read-only. Existing adapters with fewer parameters remain compatible. Positions and transitions
-must remain immutable for per-node reuse and root child reuse to be safe.
+read-only. Existing adapters with fewer parameters remain compatible. The default adapter path uses immutable positions and transitions. Optional reversible
+adapters follow the ownership and undo contract below.
 
 Score bounds are cached only at equal remaining depth, while best-action hints can order later
 iterations at other depths. Each table defaults to 50,000 entries, configurable with
 `maxTableEntries`; `useCache: false` disables both. Completed results expose `stats` counters.
 See [the measured optimization report](search-performance-report-2026-10-25.md).
+
+## Reversible adapters and exact search accelerators
+
+An adapter may supply `make(position, action)` and `unmake(position, undo)` together. Search
+clones the root once with `structuredClone`, or calls optional `prepare(position, options)` to
+obtain an owned working state. `prepare` must not return the caller's mutable state. The action
+must be legal for the current state. `make` must either succeed completely or leave it unchanged
+on error. Every successful make is paired with unmake in `finally`, including budget exhaustion,
+PVS re-searches and adapter failures. Undo must restore all board, bank, rule-right and history
+state. Callbacks cannot retain references to mutable positions or mutate cached action arrays.
+`useMutable: false` selects the original immutable path for comparisons.
+
+Schness keeps a private working position and updates material, piece masks and the current
+position key. Repetition counts are updated and undone in place. Bounded path interning assigns
+unique IDs to ordered extensions of the exact root history; it uses no probabilistic hash and
+never merges different histories. It may miss equivalent histories reached in a different order.
+`hintKey(position)` may omit history because it is used only for best-move ordering; score keys
+must still distinguish history. Neither cache is shared between searches.
+
+`scoreStep` declares the exact score lattice (Schness uses integer scores and step 1). It enables
+principal variation search and aspiration windows on iterative single-line play. Do not declare
+it for arbitrary fractional evaluations. `principalVariation: false` and `aspiration: false`
+disable these independently. Aspiration failures widen the window and eventually re-search a
+full window; incomplete retries never replace the last completed result. Multi-PV bypasses
+aspiration windows so alternative root scores stay exact. `aspirationWindow` defaults to 50.
+
+Optional `isTactical(position, action)` identifies captures to prioritize ahead of quiet killer
+and history moves. `useHistory: false` disables those learned ordering hints. The bounded history
+table affects move order only. No branch is discarded merely for looking unpromising. Diagnostics
+add `pvsResearches`, `aspirationResearches` and `historyHits`.
+
+Production profiles now identify Sharp v5 and Learning/Steady v4. Quiescence stays opt-in; old
+frozen research runtimes and datasets are unchanged. See the performance-v3 report for measurements.

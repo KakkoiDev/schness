@@ -1211,3 +1211,8 @@ remains guarded. Full repetition histories remain in search identities. New name
 Sharp v4 and Learning/Steady v3; do not pool earlier results. Exact optimizations are preferred
 here over speculative reductions that would assume chess-specific rules. See the measured
 report in docs/search-performance-report-2026-10-25.md.
+
+
+## 2026-10-25 — Reversible Schness search and exact 4×4 geometry
+
+`board-masks` precomputes 16-square attack geometry and blocker masks. `rules.js` uses those exact masks for king safety and offers search-only make/unmake transitions. Public transitions still return independent positions; saved hashes, replay formats and rules are unchanged. The bot owns one cloned working position, incremental material/masks/current key and bounded, collision-free IDs for ordered extensions of the root's full repetition history. Score caches never discard repetition history. Board-only hints influence ordering, not score reuse. The generic search keeps immutable adapters compatible and supports optional reversible adapters, score-step-gated PVS, retrying aspiration windows, killer and history ordering. Null moves and late-move reductions remain disabled: no pruning assumption about future drop legality or objectives is introduced. Production metadata advances to Sharp v5 and Learning/Steady v4; frozen experiments retain their original engines.

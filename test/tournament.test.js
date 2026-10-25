@@ -52,7 +52,7 @@ test('a tournament transcript is self-contained and bounded', () => {
   assert.deepEqual(game.startingKings, { white: 'b1', black: 'b4' });
   assert.ok(game.transcript.every((entry) => entry.action && entry.notation && entry.resultingKey));
   assert.equal(game.finalPosition.board.length, 16);
-  assert.equal(game.engines.white.version, 3);
+  assert.equal(game.engines.white.version, 4);
   assert.equal(game.engines.black.depth, 3);
   assert.deepEqual(game.ruleset, { allowCheckingDrops: false });
 });
@@ -73,11 +73,11 @@ test('tournament games record and preserve the checking-drops variant', () => {
   assert.ok(tournamentRules(game.ruleset).some((rule) => rule.includes('may give check')));
 });
 
-test('tournament metadata records the rules and Sharp v4 behavior', () => {
+test('tournament metadata records the rules and Sharp v5 behavior', () => {
   assert.ok(TOURNAMENT_RULES.some((rule) => rule.includes('threefold repetition')));
   assert.deepEqual(TOURNAMENT_AI.sharp, {
-    version: 4,
+    version: 5,
     depth: 4,
-    behavior: 'Root-pruned alpha-beta with bounded tables and cached move ordering; deep search; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score.',
+    behavior: 'Reversible alpha-beta/PVS with attack masks, incremental material, bounded tables, aspiration windows and history ordering; deep search; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score.',
   });
 });

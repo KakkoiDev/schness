@@ -1093,3 +1093,12 @@ measurement: larger fresh-opening schedules at multiple budgets before a general
 ## 2026-10-25 — Browser engine comparison
 
 Compared the current Schness JavaScript playing engine with pinned Fairy-Stockfish WASM 1.1.12 (one thread, NNUE disabled) in real Chromium on the same machine. Used common six-slot capture-bank rules with quiet drops and no cooldown; this is not a Classic rules comparison. All 32 depth-4 legal trees matched (702,598 leaves), and all 192 timed-search moves were legal. Across 96 searches per engine at a requested 100 ms, aggregate throughput was 87,122 versus 1,602,117 reported nodes/s (18.39x); identical legal-tree enumeration took 890.41 versus 170.60 ms (5.22x). Selective depths and search node counts are not equivalent measures of thinking quality. No head-to-head games or Elo claim. Full UCI output, timing samples, source hashes, configuration, reproducible scripts and limitations are in research/browser-engine-v1. No production changes or variant tournaments were introduced.
+
+
+## 2026-10-25 — Faster native JavaScript playing engine
+
+Implemented exact 4×4 attack masks, reversible search-only transitions with exception/budget-safe undo, incremental material and masks, cached current keys, bounded collision-free history path IDs, history-independent move hints, killer/history ordering, PVS and retrying aspiration windows. Public rules and immutable replay transitions are unchanged. Sharp is now v5; Learning/Steady v4. No Stockfish integration or frozen research changes.
+
+Against d1db2c5, all 96 depth-4 score pairs match: median workload time 893.25→201.13 ms (4.44x faster), nodes 72,755→50,824 (30.1% fewer). Same-node completed mean depth 4.1875→4.28125. Real Chromium at 100 ms/search completes 4.875→5.792 plies on average. A separate 32-game color-swapped Classic match at 25 ms/move scores candidate 12 wins / baseline 1 / 19 draws (13 mates, 17 ceiling draws, 2 repetitions). These correlated, short samples are not Elo or universal variant-strength evidence.
+
+All 327 workspace unit tests and four desktop/mobile-emulated browser worker tests pass. Verification replays all continuations/matches and checks sources, node caps and compressed hashes. Full report: docs/search-performance-v3-report-2026-10-25.md; complete measurements, prior source snapshots, logs, hashes and all match replays: research/search-performance-v3. Evaluator weights are unchanged; speculative pruning remains disabled.

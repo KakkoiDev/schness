@@ -1,3 +1,4 @@
+import {boardMasks, masksAfter, masksAttack, masksInCheck} from './board-masks.js';
 export const BOARD_SIZE = 4;
 export const WHITE = 'white';
 export const BLACK = 'black';
@@ -99,11 +100,11 @@ export function legalActions(position) {
  * positions this engine just built and re-validated every one of them.
  * Never call this on anything that came from outside the engine.
  */
-export function legalActionsUnchecked(position) {
-  return generateLegalActions(position);
+export function legalActionsUnchecked(position, masks) {
+  return generateLegalActions(position, masks);
 }
 
-function generateLegalActions(position) {
+function generateLegalActions(position, suppliedMasks) {
   if (position.phase === 'place-white-king') {
     return homeRank(WHITE)
       .filter((to) => !position.board[to])
@@ -140,15 +141,16 @@ function generateLegalActions(position) {
    * — sixteen occupant spreads, both banks and the repetition map — once per
    * candidate, thirty-odd times per search node, to answer it.
    */
+  const masks = suppliedMasks ?? boardMasks(position.board);
   return candidates.filter((action) => {
-    const next = boardAfter(position, action);
-    if (boardInCheck(next, player)) return false;
+    const next = masksAfter(masks, position.board, player, action);
+    if (masksInCheck(next, player)) return false;
     // In the canonical rules a drop can defend our king, but may not give
     // check. The experimental checking-drops ruleset lifts only that limit.
     if (!checkingDropAllowed(position, action) &&
         action.type === 'drop' &&
-        boardInCheck(next, enemy)) return false;
-    if (action.type === 'drop' && rulesOf(position).experiment === 'no-drop-mate' && boardInCheck(next, enemy)) {
+        masksInCheck(next, enemy)) return false;
+    if (action.type === 'drop' && rulesOf(position).experiment === 'no-drop-mate' && masksInCheck(next, enemy)) {
       // Recursive checking-drop replies consume reserves, so this terminates.
       if (!generateLegalActions(applyUnchecked(position, action, false)).length) return false;
     }
@@ -186,47 +188,7 @@ export function isSquareAttacked(position, square, byPlayer) {
 }
 
 function boardAttacks(board, square, byPlayer) {
-  for (let from = 0; from < board.length; from += 1) {
-    const occupant = board[from];
-    if (!occupant || occupant.owner !== byPlayer) continue;
-    if (attacksSquare(board, from, occupant.piece, square)) return true;
-  }
-  return false;
-}
-
-/**
- * `attackSquares(...).includes(target)` with the array never built. Same
- * geometry, same ray rule — a ray reaches an occupied square and stops there
- * — but it answers on the first hit and allocates nothing. This is the single
- * hottest question in the engine: the legality filter asks it for every
- * enemy piece, for every candidate move, at every node of the search.
- */
-function attacksSquare(board, from, piece, target) {
-  const [row, column] = coordinates(from);
-  if (piece === KNIGHT) return stepHits(row, column, KNIGHT_STEPS, target);
-  if (piece === KING) return stepHits(row, column, KING_STEPS, target);
-  if (piece === ROOK) return rayHits(board, row, column, ORTHOGONAL, target);
-  if (piece === BISHOP) return rayHits(board, row, column, DIAGONAL, target);
-  return false;
-}
-
-function stepHits(row, column, steps, target) {
-  for (const [dr, dc] of steps) {
-    if (squareAt(row + dr, column + dc) === target) return true;
-  }
-  return false;
-}
-
-function rayHits(board, row, column, directions, target) {
-  for (const [dr, dc] of directions) {
-    for (let distance = 1; distance < BOARD_SIZE; distance += 1) {
-      const square = squareAt(row + dr * distance, column + dc * distance);
-      if (square === null) break;
-      if (square === target) return true;
-      if (board[square]) break;
-    }
-  }
-  return false;
+  return masksAttack(boardMasks(board), square, byPlayer);
 }
 
 /**
@@ -257,15 +219,7 @@ export function isInCheck(position, player) {
 }
 
 function boardInCheck(board, player) {
-  // A plain loop, not findIndex: this is called twice per candidate move and
-  // the callback allocation showed up as the largest single cost in a profile.
-  for (let square = 0; square < board.length; square += 1) {
-    const occupant = board[square];
-    if (occupant && occupant.owner === player && occupant.piece === KING) {
-      return boardAttacks(board, square, opponent(player));
-    }
-  }
-  return false;
+  return masksInCheck(boardMasks(board), player);
 }
 
 export function positionKey(position) {
@@ -292,22 +246,22 @@ export function getResult(position) {
 }
 
 /** Search-only adjudication: reuse legal actions generated from an immutable trusted state. */
-export function getResultUnchecked(position, actions) {
-  return resultWithActions(position, () => actions ?? legalActionsUnchecked(position));
+export function getResultUnchecked(position, actions, key, masks) {
+  return resultWithActions(position, () => actions ?? legalActionsUnchecked(position, masks), key, masks);
 }
 
-function resultWithActions(position, actions) {
+function resultWithActions(position, actions, suppliedKey, masks) {
   if (position.phase === 'setup') {
     return actions().length ? null : { type: 'draw', reason: 'setup-blocked' };
   }
   if (position.phase !== 'play') return null;
-  const key = positionKey(position);
+  const key = suppliedKey ?? positionKey(position);
   if ((position.repetitions[key] ?? 0) >= 3) {
     return { type: 'draw', reason: 'threefold-repetition' };
   }
 
   if (actions().length > 0) return null;
-  if (isInCheck(position, position.turn)) {
+  if (masks ? masksInCheck(masks, position.turn) : isInCheck(position, position.turn)) {
     return { type: 'win', winner: opponent(position.turn), reason: 'checkmate' };
   }
   return { type: 'draw', reason: 'stalemate' };
@@ -323,15 +277,48 @@ export function actionKey(action) {
 
 function applyUnchecked(position, action, countRepetition) {
   const next = clonePosition(position);
-  const player = position.turn;
+  advancePosition(next, action, countRepetition);
+  return next;
+}
+
+/** Isolated mutable state for a single synchronous search, never a UI/replay state. */
+export function createSearchPosition(position) { return clonePosition(position); }
+
+/** Search-only reversible transition. The caller must supply a generated legal action. */
+export function makeSearchAction(position, action) {
+  const player=position.turn;
+  const undo={action,turn:player,phase:position.phase,to:position.board[action.to],
+    from:action.type==='move'?position.board[action.from]:null};
+  if(rulesOf(position).experiment && action.type!=='place-king'){
+    undo.research={turns:position.research.turns[player],checkingDrops:position.research.checkingDrops[player],
+      lastCheckingDrop:position.research.lastCheckingDrop[player],deployed:position.research.deployed[player].slice()};
+  }
+  advancePosition(position,action,true,undo);
+  return undo;
+}
+
+export function unmakeSearchAction(position, undo) {
+  const {action,turn:player}=undo;
+  position.board[action.to]=undo.to;
+  if(action.type==='move')position.board[action.from]=undo.from;
+  if(undo.bank){const b=undo.bank;if(b.added)position.banks[b.owner].splice(b.index,1);else position.banks[b.owner].splice(b.index,0,b.piece);}
+  if(undo.research){for(const field of ['turns','checkingDrops','lastCheckingDrop','deployed'])position.research[field][player]=undo.research[field];}
+  if(undo.key){if(undo.hadCount)position.repetitions[undo.key]=undo.count;else delete position.repetitions[undo.key];}
+  position.turn=player;position.phase=undo.phase;
+}
+
+function advancePosition(next, action, countRepetition, undo) {
+  const player = next.turn;
+  const phase = next.phase;
+  const rules = rulesOf(next);
 
   if (action.type === 'place-king') {
     next.board[action.to] = occupantOf(player, KING);
-    if (position.phase === 'place-white-king') {
+    if (phase === 'place-white-king') {
       next.phase = 'place-black-king';
       next.turn = BLACK;
     } else {
-      next.phase = rulesOf(position).setup ? 'setup' : 'play';
+      next.phase = rules.setup ? 'setup' : 'play';
       next.turn = WHITE;
     }
   } else if (action.type === 'move') {
@@ -339,22 +326,24 @@ function applyUnchecked(position, action, countRepetition) {
     const captured = next.board[action.to];
     next.board[action.to] = moving;
     next.board[action.from] = null;
-    if (captured && rulesOf(position).experiment !== 'permanent-loss') {
-      const policy = rulesOf(position).experiment;
+    if (captured && rules.experiment !== 'permanent-loss') {
+      const policy = rules.experiment;
       const transfers = policy === 'capture-bank';
-      const recipient = transfers && next.banks[player].length < rulesOf(position).bankCapacity
+      const recipient = transfers && next.banks[player].length < rules.bankCapacity
         ? player : captured.owner;
+      if (undo) undo.bank = {owner:recipient,index:next.banks[recipient].length,added:true};
       next.banks[recipient].push(captured.piece);
     }
     next.turn = opponent(player);
   } else if (action.type === 'drop') {
     const bankIndex = next.banks[player].indexOf(action.piece);
+    if (undo) undo.bank = {owner:player,index:bankIndex,piece:action.piece,added:false};
     next.banks[player].splice(bankIndex, 1);
     next.board[action.to] = occupantOf(player, action.piece);
     next.turn = opponent(player);
   }
 
-  if (rulesOf(position).experiment && action.type !== 'place-king') {
+  if (rules.experiment && action.type !== 'place-king') {
     const wasCheckingDrop = action.type === 'drop' && boardInCheck(next.board, opponent(player));
     next.research.checkingDrops[player] = Math.min(1, next.research.checkingDrops[player] + Number(wasCheckingDrop));
     next.research.lastCheckingDrop[player] = wasCheckingDrop;
@@ -363,14 +352,15 @@ function applyUnchecked(position, action, countRepetition) {
       next.research.deployed[player].push(action.piece);
       next.research.deployed[player].sort();
     }
-    if (position.phase === 'setup' && !next.banks.white.length && !next.banks.black.length) {
+    if (phase === 'setup' && !next.banks.white.length && !next.banks.black.length) {
       next.phase = 'play';
-      next.turn = rulesOf(position).firstPlayer;
+      next.turn = rules.firstPlayer;
     }
   }
 
   if (countRepetition && next.phase === 'play') {
     const key = positionKey(next);
+    if (undo) {undo.key=key;undo.hadCount=Object.hasOwn(next.repetitions,key);undo.count=next.repetitions[key];}
     next.repetitions[key] = (next.repetitions[key] ?? 0) + 1;
   }
   return next;
