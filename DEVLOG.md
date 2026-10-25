@@ -1175,3 +1175,60 @@ or numeric strength. Six seeds repeat 16 starts; uncalibrated objective weights 
 search/ply limits constrain inference. Keep separate data and matched control, do not
 claim proven balance or automatic official variants. Next measurement would require a
 separately specified confirmation; no automatic new experiments launched.
+
+## 2026-10-25 — Checking/drop-mate policy crossed with cooldown
+
+Question: does the four-slot candidate improve with checking drops, and does forbidding
+immediate drop mate change that result with or without capture cooldown? User authorized
+both checking policies and asked about zero delay. The older 8,640-game archive already
+contains zero-delay checking (48 equal Sharp games: 72.9% White, 8.3% Black, 18.8% draws);
+the 4,128-game screen contains quiet zero-delay 64/22/10. Do not compare these as a matched
+factorial experiment or pool engine versions.
+
+Launch six matched recipes: capture/return delay 0 or 1 crossed with quiet drops, unrestricted
+checking drops including mate, and checking without immediate drop mate. No new movement
+or victory objectives. Six fresh seeds 20261701–20261706 × 16 starts × six recipes = 576
+Research Sharp-only depth-4 games, 200 total plies, eight workers. Research objective-search-v2
+records the new noDropMate adapter identity; bot/evaluation code is byte-identical to v1 and
+objective progress bonuses are inactive. Include quiet controls under that same runtime.
+
+No-drop-mate checks legal replies under the same policy, including king escapes, captures,
+ready reserve blocks and legal counterchecks. Recursive checking-drop replies terminate as
+reserves are consumed without captures. Cooling reserves cannot delay checkmate and normal
+mating board moves remain legal. Source hashes include noDropMate/cooldown; validate no
+forbidden mating-drop replay on persistence/resume. Record checking and mating-drop usage.
+
+All 297 unit tests passed; focused tests verify allowed/forbidden drop mates, legal nonmating
+checks and captures, reserve blocks/readiness, normal mating moves, timing, full matrix
+coverage and replay/material conservation for every recipe. No app/UI changes. Freeze
+runtime/manifest before run; on completion replay-validate and commit full compressed
+archives/checksums and readable reports. Next measurement is this complete matrix; no
+automatic expansion, tuning, adoption or merge.
+
+## 2026-10-25 — Completed checking/drop-mate × capture-cooldown matrix
+
+All 576 games finished and frozen runtime --resume verified the source fingerprint and
+all checkpoint/replay validity after original PID 6412 exited. Complete replay bundles,
+runtime/manifest, reports/rates/progress and SHA-256-verified compressed archive preserved.
+
+96 games each (White/Black/draws; decisive%; White share of wins):
+quiet delay 0: 57/28/11; 88.5%; 67.1%.
+quiet delay 1: 43/39/14; 85.4%; 52.4% — only screening hit.
+checking including mate delay 0: 68/10/18; 81.3%; 87.2%.
+checking including mate delay 1: 72/8/16; 83.3%; 90.0%.
+checking without drop-mate delay 0: 80/2/14; 85.4%; 97.6%.
+checking without drop-mate delay 1: 74/8/14; 85.4%; 90.2%.
+
+Draw reasons: quiet-0 has 11 repetitions; quiet-1 has 10 repetitions and four stalemates;
+checking-0 has 18 repetitions; checking-1 has 14 repetitions and two stalemates;
+no-drop-mate-0 and -1 each have 14 repetitions. All wins are checkmate.
+Checking/mating-drop usage respectively: quiet-0 0/0, quiet-1 0/0,
+checking-0 379/26, checking-1 380/24, no-drop-mate-0 366/0, no-drop-mate-1 360/0.
+Prohibiting immediate drop mate did not remove the observed White advantage.
+
+Keep this objective-search-v2 depth-4 dataset separate from earlier engines and the
+separately authorized charge-bank experiment. Six seeds repeat 16 starts, finite search
+and correlated samples prevent proven-balance claims. No rule tuning, new experiment or
+automatic merge follows these results. Full checking-drop charge-bank tests are independently
+authorized and tracked in PR #121; do not pool their results. Next measurement for this
+matrix would need separately specified deeper/multi-engine confirmation.
