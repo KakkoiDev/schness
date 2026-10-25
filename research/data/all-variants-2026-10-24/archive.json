@@ -1,0 +1,60 @@
+{
+  "run": "all-variants-2026-10-24",
+  "sourceFingerprint": "d07eded283d39a65b84ce739cff94ad05de53d4d9b13a03bfcb32e5122bf0eb4",
+  "games": 8640,
+  "archiveBytes": 10295375,
+  "archiveSha256": "88e68cd3395eac9aab64f7347b094ebc266573631d60d2c82b0f58a7e2d9ce6e",
+  "parts": [
+    {
+      "path": "all-variants-2026-10-24.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "ab182412b0d87f38d7fff139e625de241811d39c6cc81b51f3f28272a1b6d5ea"
+    },
+    {
+      "path": "all-variants-2026-10-24.tar.gz.part002",
+      "bytes": 1048576,
+      "sha256": "25f80c86290dc06d9bfe924099c20f87ae0e59cf12636eb980e08fb4d3aa2f5a"
+    },
+    {
+      "path": "all-variants-2026-10-24.tar.gz.part003",
+      "bytes": 1048576,
+      "sha256": "b95db34ef9d388215d084b2cac3da5b394e5d672a8f0ee3d71e8dbc0250b0950"
+    },
+    {
+      "path": "all-variants-2026-10-24.tar.gz.part004",
+      "bytes": 1048576,
+      "sha256": "3c4132a8812437d523a811f92a11db9aa802ab5ae2ff9bca6e52ce5e2e5d7e3b"
+    },
+    {
+      "path": "all-variants-2026-10-24.tar.gz.part005",
+      "bytes": 1048576,
+      "sha256": "1693ab8504e4c8c4eac87fb3364a49beb3a220163af612053a469aaa1df02f52"
+    },
+    {
+      "path": "all-variants-2026-10-24.tar.gz.part006",
+      "bytes": 1048576,
+      "sha256": "64f1205a2f08e5517e3eab0f2be4aaaecfbe233111b4f47336b220d0ace6f07d"
+    },
+    {
+      "path": "all-variants-2026-10-24.tar.gz.part007",
+      "bytes": 1048576,
+      "sha256": "ca3f433865c22430de90f05a67687caf140c89bfd62167d931600aaafcc1967d"
+    },
+    {
+      "path": "all-variants-2026-10-24.tar.gz.part008",
+      "bytes": 1048576,
+      "sha256": "540cf96797e86020169d898f8a0101b9cdbcdd9bd8b86879fc9559bacc4908b1"
+    },
+    {
+      "path": "all-variants-2026-10-24.tar.gz.part009",
+      "bytes": 1048576,
+      "sha256": "099b975b64f18ab031ab76ff8544ccd1dce0d898f4a808b2dbf17d0236dad55b"
+    },
+    {
+      "path": "all-variants-2026-10-24.tar.gz.part010",
+      "bytes": 858191,
+      "sha256": "30aa92990ccc1b6f685103098a6993ab1b7656ecc4b68f71b190b0826db9e020"
+    }
+  ],
+  "restore": "cat all-variants-2026-10-24.tar.gz.part* > all-variants-2026-10-24.tar.gz; tar -xzf all-variants-2026-10-24.tar.gz"
+}

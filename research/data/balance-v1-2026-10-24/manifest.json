@@ -1,0 +1,872 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-24T11:03:35.590Z",
+  "config": {
+    "variants": [
+      "canonical",
+      "mutual-two",
+      "bank-3-quiet",
+      "bank-3-mutual-2",
+      "bank-3-mutual-3",
+      "bank-3-delay-1",
+      "bank-3-delay-2",
+      "bank-3-delay-weighted",
+      "bank-3-mutual-2-check-cooldown",
+      "bank-3-mutual-3-check-cooldown",
+      "bank-4-quiet",
+      "bank-4-mutual-2",
+      "bank-4-mutual-3",
+      "bank-4-delay-1",
+      "bank-4-delay-2",
+      "bank-4-delay-weighted",
+      "bank-4-mutual-2-check-cooldown",
+      "bank-4-mutual-3-check-cooldown",
+      "bank-5-quiet",
+      "bank-5-mutual-2",
+      "bank-5-mutual-3",
+      "bank-5-delay-1",
+      "bank-5-delay-2",
+      "bank-5-delay-weighted",
+      "bank-5-mutual-2-check-cooldown",
+      "bank-5-mutual-3-check-cooldown",
+      "bank-6-quiet",
+      "bank-6-mutual-2",
+      "bank-6-mutual-3",
+      "bank-6-delay-1",
+      "bank-6-delay-2",
+      "bank-6-delay-weighted",
+      "bank-6-mutual-2-check-cooldown",
+      "bank-6-mutual-3-check-cooldown",
+      "bank-4-quiet-earlyQuiet",
+      "bank-4-quiet-whiteHome",
+      "bank-4-mutual-2-earlyQuiet",
+      "bank-4-mutual-2-whiteHome",
+      "bank-4-mutual-3-earlyQuiet",
+      "bank-4-mutual-3-whiteHome",
+      "bank-4-mirrored-rook",
+      "bank-4-mirrored-bishop",
+      "bank-4-mirrored-knight"
+    ],
+    "seeds": [
+      20261301,
+      20261302,
+      20261303,
+      20261304,
+      20261305,
+      20261306
+    ],
+    "repetitions": 1,
+    "maxPlies": 200,
+    "workers": 8
+  },
+  "totalGames": 4128,
+  "sourceFingerprint": "65ea73a47c22786807eddf4edafd32a9763351214ff2f0990e2ef94418015ba8",
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "89c47db7851f89caec72da4f215ebc21cf1e294aeef3b45d2583562d846ab035"
+    },
+    {
+      "path": "run.js",
+      "sha256": "04741f13c5c6aa9336f4a50493eba8507dc56969f9455cf56aee4b311d99275b"
+    },
+    {
+      "path": "core/bot.js",
+      "sha256": "e48a289e2a3fdab180107e1050063d6503e0fa5cba55d7383bfa5f876a82e883"
+    },
+    {
+      "path": "core/history.js",
+      "sha256": "44b155668b2a0f1a595805e636fc98229a73c1b8a7a3f3a671e812cf9c0b30d0"
+    },
+    {
+      "path": "core/notation.js",
+      "sha256": "ee47d5a1f8dd05fe5f7fee6694c2a7d5f6e97118bde0e0ed5a0cf0d8c0f8029e"
+    },
+    {
+      "path": "core/rules.js",
+      "sha256": "8f87d25a6556f022a28d6534e8b376c2ed2c2520a37533066f65721295be5ff4"
+    },
+    {
+      "path": "core/settings.js",
+      "sha256": "9044dd082e2d99bc75934edac5ed82000105ea8507ce47f3f7736e848ef045c8"
+    },
+    {
+      "path": "core/tournament.js",
+      "sha256": "99b546d91c7a066f3f5a17f6e24d1f336efbfb3b191416318ead0bfc6f553364"
+    },
+    {
+      "path": "core/variants.js",
+      "sha256": "eff94e154568d07da9737f59266fa442d4b54c37379a66ddd84d1760577968ae"
+    },
+    {
+      "path": "core/watch.js",
+      "sha256": "70dcdc4d73dac27b5e6479b5b2fe3b6b1f7472e0364830191ea6948694b3c24c"
+    }
+  ],
+  "git": {
+    "head": "3b1c05050750e02516faf73688280defc184f01e",
+    "status": " M ../../.gitignore\n M ../../DECISIONS.md\n M ../../DEVLOG.md\n M ../../index.html\n M ../../scripts/aggregate-tournament.js\n M ../../scripts/run-tournament.js\n M ../../src/board-ui.js\n M ../../src/bot.js\n M ../../src/history.js\n M ../../src/i18n.js\n M ../../src/rules.js\n M ../../src/tournament.js\n M ../../src/watch-ui.js\n M ../../styles.css\n M ../../sw.js\n M ../../watch.html\n?? ../../.github/workflows/research-variants-v2.yml\n?? ../../.github/workflows/research-variants-v3.yml\n?? ../../.github/workflows/research-variants-v4.yml\n?? ../../.github/workflows/research-variants-v5.yml\n?? ../../.github/workflows/research-variants.yml\n?? ../../design/README.md\n?? ../../design/design.css\n?? ../../design/designer-original.patch\n?? ../../design/designer-report.txt\n?? ../../design/index.html\n?? ../../design/preview.js\n?? ../../design/screens/\n?? ../../design/system.html\n?? ../../docs/army-builder-proposal.md\n?? ../../docs/capture-bank-experiments.md\n?? ../../docs/countdown-variant-proposal.md\n?? ../../docs/custom-game-builder-proposal.md\n?? ../../docs/deployment-variant-experiments.md\n?? ../../docs/deployment-variant-results.json\n?? ../../docs/deployment-variant-results.md\n?? ../../docs/designer-handoff-classic.md\n?? ../../docs/local-experiments.md\n?? ../../docs/local-variant-win-rates-2026-10-24.md\n?? ../../docs/permanent-loss-experiments.md\n?? ../../docs/variant-frontier-proposals.md\n?? ../../docs/variant-selection.md\n?? ../../docs/variant-wave2-experiments.md\n?? ../../docs/variant-wave3-experiments.md\n?? ../../e2e/variants.spec.js\n?? ../../output/\n?? ../\n?? ../../scripts/archive-local-experiments.py\n?? ../../scripts/research-variants.js\n?? ../../scripts/run-local-experiments.js\n?? ../../scripts/run-research-suite.js\n?? ../../scripts/run-research-v2.js\n?? ../../scripts/run-research-v3.js\n?? ../../scripts/run-research-v4.js\n?? ../../scripts/run-research-v5.js\n?? ../../src/variants.js\n?? ../../test/balance-bench.test.js\n?? ../../test/capture-bank.test.js\n?? ../../test/local-experiments.test.js\n?? ../../test/permanent-loss.test.js\n?? ../../test/research-variants.test.js\n?? ../../test/research-wave2.test.js\n?? ../../test/research-wave3.test.js\n?? ../../test/variants.test.js\n"
+  },
+  "node": "v24.21.0",
+  "machine": {
+    "model": "Apple M6",
+    "cpus": 12,
+    "memoryGiB": 32
+  },
+  "rules": {
+    "canonical": {
+      "allowCheckingDrops": false,
+      "description": "Canonical quiet drops.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "mutual-two": {
+      "allowCheckingDrops": true,
+      "experiment": "mutual-two",
+      "description": "Checking drops unlock permanently after both players have deployed two distinct non-kings.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: mutual-two.",
+        "Checking drops unlock permanently once both players have deployed two distinct non-kings.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-3-quiet": {
+      "experiment": "balance-bench",
+      "bankCapacity": 3,
+      "allowCheckingDrops": false,
+      "unlock": 0,
+      "description": "Capture-to-bank capacity 3; overflow returns to captured owner. Quiet drops only. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 3 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":0}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 3 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-3-mutual-2": {
+      "experiment": "balance-bench",
+      "bankCapacity": 3,
+      "allowCheckingDrops": true,
+      "unlock": 2,
+      "description": "Capture-to-bank capacity 3; overflow returns to captured owner. Checking drops unlock once both deploy 2 distinct types. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 3 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":2}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 3 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-3-mutual-3": {
+      "experiment": "balance-bench",
+      "bankCapacity": 3,
+      "allowCheckingDrops": true,
+      "unlock": 3,
+      "description": "Capture-to-bank capacity 3; overflow returns to captured owner. Checking drops unlock once both deploy 3 distinct types. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 3 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":3}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 3 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-3-delay-1": {
+      "experiment": "balance-bench",
+      "bankCapacity": 3,
+      "allowCheckingDrops": false,
+      "captureDelay": 1,
+      "description": "Capture-to-bank capacity 3; overflow returns to captured owner. Quiet drops only. New captures cool down 1 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 3 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":1}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 3 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-3-delay-2": {
+      "experiment": "balance-bench",
+      "bankCapacity": 3,
+      "allowCheckingDrops": false,
+      "captureDelay": 2,
+      "description": "Capture-to-bank capacity 3; overflow returns to captured owner. Quiet drops only. New captures cool down 2 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 3 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":2}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 3 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-3-delay-weighted": {
+      "experiment": "balance-bench",
+      "bankCapacity": 3,
+      "allowCheckingDrops": false,
+      "captureDelay": "weighted",
+      "description": "Capture-to-bank capacity 3; overflow returns to captured owner. Quiet drops only. New captures cool down bishop/knight 3, rook 4 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 3 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":\"weighted\"}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 3 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-3-mutual-2-check-cooldown": {
+      "experiment": "balance-bench",
+      "bankCapacity": 3,
+      "allowCheckingDrops": true,
+      "unlock": 2,
+      "checkCooldown": true,
+      "description": "Capture-to-bank capacity 3; overflow returns to captured owner. Checking drops unlock once both deploy 2 distinct types. No checking drop immediately after own checking drop. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 3 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":2,\"checkCooldown\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 3 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-3-mutual-3-check-cooldown": {
+      "experiment": "balance-bench",
+      "bankCapacity": 3,
+      "allowCheckingDrops": true,
+      "unlock": 3,
+      "checkCooldown": true,
+      "description": "Capture-to-bank capacity 3; overflow returns to captured owner. Checking drops unlock once both deploy 3 distinct types. No checking drop immediately after own checking drop. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 3 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":3,\"checkCooldown\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 3 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-quiet": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": false,
+      "unlock": 0,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Quiet drops only. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":0}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mutual-2": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "unlock": 2,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Checking drops unlock once both deploy 2 distinct types. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":2}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mutual-3": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "unlock": 3,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Checking drops unlock once both deploy 3 distinct types. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":3}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-delay-1": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": false,
+      "captureDelay": 1,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Quiet drops only. New captures cool down 1 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":1}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-delay-2": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": false,
+      "captureDelay": 2,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Quiet drops only. New captures cool down 2 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":2}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-delay-weighted": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": false,
+      "captureDelay": "weighted",
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Quiet drops only. New captures cool down bishop/knight 3, rook 4 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":\"weighted\"}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mutual-2-check-cooldown": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "unlock": 2,
+      "checkCooldown": true,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Checking drops unlock once both deploy 2 distinct types. No checking drop immediately after own checking drop. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":2,\"checkCooldown\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mutual-3-check-cooldown": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "unlock": 3,
+      "checkCooldown": true,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Checking drops unlock once both deploy 3 distinct types. No checking drop immediately after own checking drop. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":3,\"checkCooldown\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-5-quiet": {
+      "experiment": "balance-bench",
+      "bankCapacity": 5,
+      "allowCheckingDrops": false,
+      "unlock": 0,
+      "description": "Capture-to-bank capacity 5; overflow returns to captured owner. Quiet drops only. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 5 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":0}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 5 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-5-mutual-2": {
+      "experiment": "balance-bench",
+      "bankCapacity": 5,
+      "allowCheckingDrops": true,
+      "unlock": 2,
+      "description": "Capture-to-bank capacity 5; overflow returns to captured owner. Checking drops unlock once both deploy 2 distinct types. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 5 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":2}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 5 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-5-mutual-3": {
+      "experiment": "balance-bench",
+      "bankCapacity": 5,
+      "allowCheckingDrops": true,
+      "unlock": 3,
+      "description": "Capture-to-bank capacity 5; overflow returns to captured owner. Checking drops unlock once both deploy 3 distinct types. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 5 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":3}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 5 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-5-delay-1": {
+      "experiment": "balance-bench",
+      "bankCapacity": 5,
+      "allowCheckingDrops": false,
+      "captureDelay": 1,
+      "description": "Capture-to-bank capacity 5; overflow returns to captured owner. Quiet drops only. New captures cool down 1 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 5 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":1}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 5 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-5-delay-2": {
+      "experiment": "balance-bench",
+      "bankCapacity": 5,
+      "allowCheckingDrops": false,
+      "captureDelay": 2,
+      "description": "Capture-to-bank capacity 5; overflow returns to captured owner. Quiet drops only. New captures cool down 2 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 5 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":2}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 5 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-5-delay-weighted": {
+      "experiment": "balance-bench",
+      "bankCapacity": 5,
+      "allowCheckingDrops": false,
+      "captureDelay": "weighted",
+      "description": "Capture-to-bank capacity 5; overflow returns to captured owner. Quiet drops only. New captures cool down bishop/knight 3, rook 4 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 5 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":\"weighted\"}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 5 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-5-mutual-2-check-cooldown": {
+      "experiment": "balance-bench",
+      "bankCapacity": 5,
+      "allowCheckingDrops": true,
+      "unlock": 2,
+      "checkCooldown": true,
+      "description": "Capture-to-bank capacity 5; overflow returns to captured owner. Checking drops unlock once both deploy 2 distinct types. No checking drop immediately after own checking drop. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 5 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":2,\"checkCooldown\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 5 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-5-mutual-3-check-cooldown": {
+      "experiment": "balance-bench",
+      "bankCapacity": 5,
+      "allowCheckingDrops": true,
+      "unlock": 3,
+      "checkCooldown": true,
+      "description": "Capture-to-bank capacity 5; overflow returns to captured owner. Checking drops unlock once both deploy 3 distinct types. No checking drop immediately after own checking drop. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 5 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":3,\"checkCooldown\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 5 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-6-quiet": {
+      "experiment": "balance-bench",
+      "bankCapacity": 6,
+      "allowCheckingDrops": false,
+      "unlock": 0,
+      "description": "Capture-to-bank capacity 6; overflow returns to captured owner. Quiet drops only. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 6 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":0}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 6 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-6-mutual-2": {
+      "experiment": "balance-bench",
+      "bankCapacity": 6,
+      "allowCheckingDrops": true,
+      "unlock": 2,
+      "description": "Capture-to-bank capacity 6; overflow returns to captured owner. Checking drops unlock once both deploy 2 distinct types. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 6 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":2}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 6 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-6-mutual-3": {
+      "experiment": "balance-bench",
+      "bankCapacity": 6,
+      "allowCheckingDrops": true,
+      "unlock": 3,
+      "description": "Capture-to-bank capacity 6; overflow returns to captured owner. Checking drops unlock once both deploy 3 distinct types. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 6 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":3}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 6 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-6-delay-1": {
+      "experiment": "balance-bench",
+      "bankCapacity": 6,
+      "allowCheckingDrops": false,
+      "captureDelay": 1,
+      "description": "Capture-to-bank capacity 6; overflow returns to captured owner. Quiet drops only. New captures cool down 1 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 6 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":1}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 6 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-6-delay-2": {
+      "experiment": "balance-bench",
+      "bankCapacity": 6,
+      "allowCheckingDrops": false,
+      "captureDelay": 2,
+      "description": "Capture-to-bank capacity 6; overflow returns to captured owner. Quiet drops only. New captures cool down 2 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 6 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":2}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 6 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-6-delay-weighted": {
+      "experiment": "balance-bench",
+      "bankCapacity": 6,
+      "allowCheckingDrops": false,
+      "captureDelay": "weighted",
+      "description": "Capture-to-bank capacity 6; overflow returns to captured owner. Quiet drops only. New captures cool down bishop/knight 3, rook 4 owner turns; existing reserve copies tick after own actions; no tick on new arrivals that turn. Forced wait only if no legal move and not in check. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 6 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"captureDelay\":\"weighted\"}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 6 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-6-mutual-2-check-cooldown": {
+      "experiment": "balance-bench",
+      "bankCapacity": 6,
+      "allowCheckingDrops": true,
+      "unlock": 2,
+      "checkCooldown": true,
+      "description": "Capture-to-bank capacity 6; overflow returns to captured owner. Checking drops unlock once both deploy 2 distinct types. No checking drop immediately after own checking drop. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 6 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":2,\"checkCooldown\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 6 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-6-mutual-3-check-cooldown": {
+      "experiment": "balance-bench",
+      "bankCapacity": 6,
+      "allowCheckingDrops": true,
+      "unlock": 3,
+      "checkCooldown": true,
+      "description": "Capture-to-bank capacity 6; overflow returns to captured owner. Checking drops unlock once both deploy 3 distinct types. No checking drop immediately after own checking drop. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 6 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":3,\"checkCooldown\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 6 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-quiet-earlyQuiet": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": false,
+      "unlock": 0,
+      "earlyQuiet": true,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Quiet drops only. Neither player can give any check on their first normal turn. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":0,\"earlyQuiet\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-quiet-whiteHome": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": false,
+      "unlock": 0,
+      "whiteHome": true,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Quiet drops only. White first deployment restricted to own half; king moves remain legal. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":0,\"whiteHome\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mutual-2-earlyQuiet": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "unlock": 2,
+      "earlyQuiet": true,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Checking drops unlock once both deploy 2 distinct types. Neither player can give any check on their first normal turn. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":2,\"earlyQuiet\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mutual-2-whiteHome": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "unlock": 2,
+      "whiteHome": true,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Checking drops unlock once both deploy 2 distinct types. White first deployment restricted to own half; king moves remain legal. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":2,\"whiteHome\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mutual-3-earlyQuiet": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "unlock": 3,
+      "earlyQuiet": true,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Checking drops unlock once both deploy 3 distinct types. Neither player can give any check on their first normal turn. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":3,\"earlyQuiet\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mutual-3-whiteHome": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": true,
+      "unlock": 3,
+      "whiteHome": true,
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Checking drops unlock once both deploy 3 distinct types. White first deployment restricted to own half; king moves remain legal. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"unlock\":3,\"whiteHome\":true}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mirrored-rook": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": false,
+      "mirrored": "rook",
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Quiet drops only. Both must open by dropping a rook; Black mirrors White by 180 degrees, no check on either king. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"mirrored\":\"rook\"}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mirrored-bishop": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": false,
+      "mirrored": "bishop",
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Quiet drops only. Both must open by dropping a bishop; Black mirrors White by 180 degrees, no check on either king. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"mirrored\":\"bishop\"}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bank-4-mirrored-knight": {
+      "experiment": "balance-bench",
+      "bankCapacity": 4,
+      "allowCheckingDrops": false,
+      "mirrored": "knight",
+      "description": "Capture-to-bank capacity 4; overflow returns to captured owner. Quiet drops only. Both must open by dropping a knight; Black mirrors White by 180 degrees, no check on either king. ",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: balance-bench.",
+        "Captures transfer to the capturer up to 4 held pieces; overflow returns to the captured side.",
+        "Bench options: {\"mirrored\":\"knight\"}. Delays tick after the reserve owner's completed play turns, excluding the capture turn for new arrivals. Forced wait only without legal actions and outside check; it consumes one ply. Initial reserves are ready.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    }
+  },
+  "ai": {
+    "learning": {
+      "version": 1,
+      "depth": 2,
+      "behavior": "Shallow alpha-beta; seeded random choice among equally scored moves."
+    },
+    "steady": {
+      "version": 1,
+      "depth": 3,
+      "behavior": "Medium alpha-beta; seeded random choice among equally scored moves."
+    },
+    "sharp": {
+      "version": 2,
+      "depth": 4,
+      "behavior": "Deep alpha-beta; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score."
+    }
+  },
+  "notes": "Balance-v1 Sharp-only fixed-depth screening, not AI training. Six fresh seeds by default. Target: >=80% decisive and White share of decisive games 45–55%. No automatic full expansion. Compare complete schedules only; do not pool with CI stages or historical engine snapshots."
+}
