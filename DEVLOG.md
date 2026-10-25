@@ -1134,3 +1134,210 @@ Full measurements, source snapshots, CPU profiles, all 160 round-four/five match
 and checksum manifests are under research/search-performance-v4 and research/search-performance-v5.
 Both verification scripts pass. See docs/search-performance-v4-report-2026-10-25.md,
 docs/search-performance-v5-report-2026-10-25.md and docs/how-the-game-engine-works.md.
+## 2026-10-25 — Completed frozen Sharp v2 balance screen
+
+Question: which of the 43 already authorized recipes meets both screening targets? All 4,128 games finished; the frozen runtime --resume verified source hashes and every checkpoint/replay after confirming both original runners had exited. No changed rules or new games were launched. Preserve this engine version separately from production Sharp v3 and the older 8,640-game screen.
+
+Three recipes met >=80% decisiveness and 45–55% White share among decisive games: bank-4-delay-1, bank-5-delay-1 and bank-6-delay-1. Each has 44 White wins, 36 Black wins and 16 draws in 96 games (83.3% decisive; White 55.0% of wins). Each draw breakdown is 13 threefold repetitions and 3 stalemates. These use quiet capture-to-bank drops with one owner-turn capture cooldown and overflow returned to the captured owner. Identical counts do not establish that capacities are generally equivalent.
+
+Reject declaring official balance from this screen: six seeds repeat the same 16 king starts, search is depth 4, 200 total plies, and 43 recipes create selection effects. Hits are provisional; fresh positions/seeds and deeper search would be the next measurement, requiring a separate run authorization. No new run started. Home-row supplement findings remain unchanged: quiet 0/0/96, checking 6/2/88 W/B/draws, with 84 setup-blocked draws each. Archive all manifests, exact runtime, replay bundles and final report/rates/progress with verified SHA-256 parts. Preserve the prior archive and supplement.
+
+## 2026-10-25 — Four-slot one-turn cooldown across all named AI levels
+
+Question: does the screening candidate remain decisive and color-balanced at different named
+AI levels, and do mixed levels show the expected strength separation? User authorized a full
+all-level test. Freeze the completed balance screen's rules and bot byte for byte; expand only
+the tournament schedule to all nine ordered Learning v1 / Steady v1 / Sharp v2 pairings.
+Use six fresh seeds 20261501–20261506 and all 16 king placements: 864 games, 96 per pairing,
+200 total plies, eight local workers. Do not mix production Sharp v3 or numeric strength 100
+into this follow-up: that would change the engine as well as the pairing. Initial reserves
+are ready, captured copies wait one owner turn, overflow returns to the captured side, quiet
+drops only. No new rule tuning or automatic adoption.
+
+Schedule tests verify all nine pairings and 16 starts per seed; byte equality checks preserve
+the screened rules/search/profiles; report tests keep equal and mixed levels separate and
+retain draw reasons. Run source/manifest is committed before completion. On completion, verify
+all frozen sources and replays, archive full replay bundles and readable reports/checksums,
+and publish to the same follow-up branch. Only equal-level games assess color balance; repeated
+starts and finite depth remain limitations. Next measurement is this completed batch, not an
+automatic expansion.
+
+## 2026-10-25 — Completed all-level four-slot cooldown test
+
+All 864 authorized games completed. After confirming the original runner exited, frozen
+runtime --resume verified the SHA-256 source fingerprint and all checkpoint/replay legality,
+position keys and final outcomes. The full compressed manifest/runtime/replay bundles and
+readable reports/rates/progress are archived with verified part and whole hashes.
+
+Equal-level results (White/Black/draws, 96 each): Sharp v2 45/39/12, 87.5% decisive,
+White 53.6% of wins; Steady v1 59/37/0, 100% decisive, White 61.5% of wins;
+Learning v1 42/30/24, 75% decisive, White 58.3% of wins. Only Sharp meets the
+screening target. Sharp draws: nine repetitions, three stalemates; Learning draws:
+24 repetitions. Steady has no draws. This is fresh-seed replication of the candidate
+at the same Sharp depth, not proof of stronger-search balance or all-skill balance.
+
+Mixed pairings (White AI first, W/B/D): Sharp-Steady 75/16/5;
+Steady-Sharp 10/83/3; Sharp-Learning 79/3/14; Learning-Sharp 2/85/9;
+Steady-Learning 84/12/0; Learning-Steady 3/93/0. All mixed draws are repetitions.
+Across reversed-color pairings, Sharp wins 158/192 against Steady (82.3%, eight draws)
+and 164/192 against Learning (85.4%, 23 draws); Steady wins 177/192 against Learning
+(92.2%, no draws). These are strength comparisons, not color-balance estimates.
+
+Keep this 200-ply fixed-depth frozen Sharp v2 dataset separate from the earlier screen,
+numeric strength profiles and production Sharp v3. Six seeds repeat 16 king starts;
+sample size, correlated starts, evaluator assumptions and search horizon limit inference.
+Do not adopt an official variant or launch a new experiment automatically. Next useful
+measurement would be a separately authorized deeper-search or multi-engine confirmation.
+
+## 2026-10-25 — Nine proposed variant options launched
+
+Question: can small reserve timing changes or new movement/objective constraints improve the
+four-slot one-turn cooldown candidate? User authorized testing every proposed direction.
+Run nine recipes: control 1/1 capture/return delay, 1/0 (also the stolen-only cooldown proposal),
+1/2, two-square rook/bishop move-and-attack range, three-check, five-check, center hold,
+mandatory king-safe captures, and own-half drops. Avoid duplicating the equivalent 1/0 ideas
+and avoid combining several unmeasured changes at once. All inherit the candidate's quiet
+drops and capture-bank semantics. Center hold means the same central square through one
+opponent reply, safe at the end; a checking reply cancels the claim. One checking action
+counts once even if double check. Objectives and timer/overflow rights are replay/hash state.
+
+Research Sharp uses a new explicit variant-objective-search-v1 identity for every recipe,
+including control: full repetition-history transposition keys, check progress 120 per count,
+center distance 60 and active claim 250. Reject blindly using an objective-unaware evaluator
+or presenting uncalibrated weights as optimal play. Keep this dataset separate from Sharp v2,
+production v3 and numeric strength. No mid-run tuning or automatic adoption.
+
+Six fresh seeds 20261601–20261606 × 16 starts × nine recipes = 864 Sharp-only depth-4 games,
+200 total plies, eight local workers. All 290 unit tests passed, including delay boundaries,
+range on moves/attacks/drop legality, check counters/double check/terminal search, center
+claim cancellation/search defense, pinned mandatory captures, schedule coverage, baseline
+rule identity and full replay/material conservation for each recipe. No app changes; no
+production browser acceptance claim. Preserve runtime/manifest before completion and append
+full replay archive/report/checksums on completion. Next measurement is the complete batch,
+with W/B/draws, draw reasons and checkmate versus objective victories; screening hits need
+independent stronger-search/human confirmation.
+
+## 2026-10-25 — Completed nine-option research screen
+
+All 864 authorized games completed; after confirming PID 89823 had exited, frozen runtime
+--resume verified source fingerprint 81aead8505cb836f29765f39cc86dac44c61cde5d7f04033145357810dbc595b
+and every checkpoint's legal replay, resulting keys, final state and result. Full replay
+bundles, manifest, exact runtime, readable report/rates/progress and verified SHA-256 archive
+parts are committed. No new experiments, changed frozen source or merge.
+
+Per recipe, 96 games (White/Black/draws; decisive%; White share of decisive games):
+- Control 1/1: 40/41/15; 84.4%; 49.4%.
+- Capture/return delay 1/0: 40/41/15; 84.4%; 49.4%.
+- Capture/return delay 1/2: 40/41/15; 84.4%; 49.4%.
+- Two-square sliders: 49/28/19; 80.2%; 63.6%.
+- Three-check: 59/35/2; 97.9%; 62.8%.
+- Five-check: 57/39/0; 100%; 59.4%.
+- Center hold: 96/0/0; 100%; 100%.
+- Mandatory captures: 12/3/81; 15.6%; 80.0%.
+- Own-half drops: 37/46/13; 86.5%; 44.6% (strictly below 45%, not a hit).
+
+Only the delay/control group meets both prespecified screening thresholds. All three
+have 11 repetition and four stalemate draws; all 81 wins are checkmate. No played overflow
+capture occurs in these 288 games, so return cooldown effects are not established. Delay
+1/2 matches all 96 control action sequences; 1/0 matches 94/96. Identical totals are not
+independent confirmations of three distinct effective mechanisms.
+
+Slider draws: 17 repetitions, two stalemates; 77 checkmates. Three-check: 88 check-count
+wins, six checkmates and two stalemate draws. Five-check: 76 check-count wins, 20 checkmates,
+no draws. Center hold: all 96 White objective wins on ply four (king placements, White
+central king entry, Black's first reply); reject this opening objective as balanced in
+its current form. Mandatory captures: 15 checkmates; 52 repetition, 28 stalemate and one
+ply-limit draw. Own-half: 83 checkmates and 13 repetition draws.
+
+These are the newly versioned objective-search-v1 depth-4 engine, not prior Sharp v2/v3
+or numeric strength. Six seeds repeat 16 starts; uncalibrated objective weights and the
+search/ply limits constrain inference. Keep separate data and matched control, do not
+claim proven balance or automatic official variants. Next measurement would require a
+separately specified confirmation; no automatic new experiments launched.
+
+## 2026-10-25 — Checking/drop-mate policy crossed with cooldown
+
+Question: does the four-slot candidate improve with checking drops, and does forbidding
+immediate drop mate change that result with or without capture cooldown? User authorized
+both checking policies and asked about zero delay. The older 8,640-game archive already
+contains zero-delay checking (48 equal Sharp games: 72.9% White, 8.3% Black, 18.8% draws);
+the 4,128-game screen contains quiet zero-delay 64/22/10. Do not compare these as a matched
+factorial experiment or pool engine versions.
+
+Launch six matched recipes: capture/return delay 0 or 1 crossed with quiet drops, unrestricted
+checking drops including mate, and checking without immediate drop mate. No new movement
+or victory objectives. Six fresh seeds 20261701–20261706 × 16 starts × six recipes = 576
+Research Sharp-only depth-4 games, 200 total plies, eight workers. Research objective-search-v2
+records the new noDropMate adapter identity; bot/evaluation code is byte-identical to v1 and
+objective progress bonuses are inactive. Include quiet controls under that same runtime.
+
+No-drop-mate checks legal replies under the same policy, including king escapes, captures,
+ready reserve blocks and legal counterchecks. Recursive checking-drop replies terminate as
+reserves are consumed without captures. Cooling reserves cannot delay checkmate and normal
+mating board moves remain legal. Source hashes include noDropMate/cooldown; validate no
+forbidden mating-drop replay on persistence/resume. Record checking and mating-drop usage.
+
+All 297 unit tests passed; focused tests verify allowed/forbidden drop mates, legal nonmating
+checks and captures, reserve blocks/readiness, normal mating moves, timing, full matrix
+coverage and replay/material conservation for every recipe. No app/UI changes. Freeze
+runtime/manifest before run; on completion replay-validate and commit full compressed
+archives/checksums and readable reports. Next measurement is this complete matrix; no
+automatic expansion, tuning, adoption or merge.
+
+## 2026-10-25 — Rechargeable checking-drop charge banks
+
+User authorized charge capacities 1/2/3, starting at zero, replenishing after one non-checking-
+drop own turn. Cross with capture/return delays 0/1: six recipes, six fresh seeds 20261801–06,
+16 starts per recipe, 576 Research Sharp-only depth-4 games, 200 total plies. Drop-mate remains
+allowed when charged. King placement does not charge; a checking drop spends one with no
+same-turn recharge. Other own play actions, including board checks and forced waits, restore
+one to the cap. Capture readiness and checking-drop charges are independent resources.
+
+Charge state is part of rules, immutable transitions, hashes/repetition/cache identity and
+replay validation. Use distinct adapter objective-search-v3 with unchanged search/evaluation
+code. No extra heuristic value for saved charges; mobility sees legal options, so tactical
+correctness does not establish optimal saving strategy. Keep data separate from earlier
+engines and the still-finishing drop-policy matrix. No mid-run tuning or automatic adoption.
+
+All 303 unit tests passed, including zero first-turn charges, no king-placement recharge,
+spending/no immediate recharge, normal checks regenerating, caps/identity/immutability,
+charged drop-mates, matched schedule and full replay/material conservation for all recipes.
+Freeze exact source and manifest; run locally and archive all replays/checksums/reports on
+completion. Next measurement is this complete batch. No production UI or Tutor change is
+implied; Tutor principal lines and explanations remain a separate proposed feature.
+
+
+## 2026-10-25 — Completed checking-drop charge-bank screen
+
+All 576 Research objective-search-v3 depth-4 games completed. Frozen source fingerprint 7f08da9419c99ab6235406e95a2ba73dad5a46d853dfd8350faf45499df56fc6; runner was confirmed inactive before frozen --resume verified every source hash and replay/checkpoint. Full runtime, manifest and replays are archived under research/data/check-charge-v1-2026-10-25 with verified part/whole SHA-256 df5281b8da2246cfc8dcc53dae8d5c0530a331b062f0b734659dce70898ea177.
+
+Each recipe has 96 games. Capacity/capture-cooldown: 1/0 = 20 White, 63 Black, 13 draws (86.5% decisive; White 24.1% of wins); 2/0 = 63/19/14 (85.4%; 76.8%); 3/0 = 60/24/12 (87.5%; 71.4%); 1/1 = 29/57/10 (89.6%; 33.7%); 2/1 = 47/44/5 (94.8%; 51.6%); 3/1 = 46/46/4 (95.8%; 50.0%). Only capacities 2 and 3 with one-turn capture cooldown meet the >=80% decisive, White 45–55% screen. All wins were checkmate. All draws repetition except three stalemates each for 2/0 and 3/0. Checking/mating-drop counts respectively: 564/37,398/44,409/48,547/31,387/57,391/58.
+
+Decision: retain 2/1 and 3/1 as provisional confirmation candidates, not official balanced variants. Capacity one strongly favors Black; higher capacities without capture cooldown favor White. Six seeds repeat the same 16 king starts, the heuristic has no stored-charge bonus, and finite-depth play is not an optimal-play proof. Do not pool with other engine identities. Next measurement, if authorized, is fresh starts/seeds and deeper matched-budget search. No new experiment started; no automatic merge.
+## 2026-10-25 — Completed checking/drop-mate × capture-cooldown matrix
+
+All 576 games finished and frozen runtime --resume verified the source fingerprint and
+all checkpoint/replay validity after original PID 6412 exited. Complete replay bundles,
+runtime/manifest, reports/rates/progress and SHA-256-verified compressed archive preserved.
+
+96 games each (White/Black/draws; decisive%; White share of wins):
+quiet delay 0: 57/28/11; 88.5%; 67.1%.
+quiet delay 1: 43/39/14; 85.4%; 52.4% — only screening hit.
+checking including mate delay 0: 68/10/18; 81.3%; 87.2%.
+checking including mate delay 1: 72/8/16; 83.3%; 90.0%.
+checking without drop-mate delay 0: 80/2/14; 85.4%; 97.6%.
+checking without drop-mate delay 1: 74/8/14; 85.4%; 90.2%.
+
+Draw reasons: quiet-0 has 11 repetitions; quiet-1 has 10 repetitions and four stalemates;
+checking-0 has 18 repetitions; checking-1 has 14 repetitions and two stalemates;
+no-drop-mate-0 and -1 each have 14 repetitions. All wins are checkmate.
+Checking/mating-drop usage respectively: quiet-0 0/0, quiet-1 0/0,
+checking-0 379/26, checking-1 380/24, no-drop-mate-0 366/0, no-drop-mate-1 360/0.
+Prohibiting immediate drop mate did not remove the observed White advantage.
+
+Keep this objective-search-v2 depth-4 dataset separate from earlier engines and the
+separately authorized charge-bank experiment. Six seeds repeat 16 starts, finite search
+and correlated samples prevent proven-balance claims. No rule tuning, new experiment or
+automatic merge follows these results. Full checking-drop charge-bank tests are independently
+authorized and tracked in PR #121; do not pool their results. Next measurement for this
+matrix would need separately specified deeper/multi-engine confirmation.

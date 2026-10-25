@@ -1,0 +1,20 @@
+{
+  "run": "bank-cooldown-levels-v1-2026-10-25",
+  "sourceFingerprint": "227dd933384f2098dab4a28cbfde1de3623d39081c4d7fdd13490ddfdaa78ec2",
+  "games": 864,
+  "archiveBytes": 1485741,
+  "archiveSha256": "8b3b3a13b0059683b935467539697310b9e0633e6734dc12d17239a84f5113ed",
+  "parts": [
+    {
+      "path": "bank-cooldown-levels-v1-2026-10-25.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "7233efd73a48026e6fdd4623fd394ae037790b21f097730dfaf70793e26462ed"
+    },
+    {
+      "path": "bank-cooldown-levels-v1-2026-10-25.tar.gz.part002",
+      "bytes": 437165,
+      "sha256": "b83e77de00d75e913f34056b415e075f60500cb83c8be1c54caa29d519e6e9ef"
+    }
+  ],
+  "restore": "cat bank-cooldown-levels-v1-2026-10-25.tar.gz.part* > bank-cooldown-levels-v1-2026-10-25.tar.gz; tar -xzf bank-cooldown-levels-v1-2026-10-25.tar.gz"
+}

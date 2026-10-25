@@ -1175,6 +1175,36 @@ rights are hashed and replayable; forced wait exists only outside check with no 
 Archive completed manifests, runtime and all JSONL replays under research/data with SHA-256 checksums
 and 1 MiB compressed parts. No new src modules or production shell changes belong to this screen.
 
+### All-level capture-cooldown confirmation (2026-10-25)
+
+research/bank-cooldown-levels-v1 preserves the screened rules and AI implementation from the
+frozen balance runtime. Only its schedule expands to all nine named-level pairings. Treat
+equal-level color balance and mixed-level strength separation as different measurements;
+never pool them. Numeric strength and production engine revisions require separate datasets.
+
+### Research variant options and objective identity (2026-10-25)
+
+research/variant-options-v1 is isolated from production and all earlier frozen runs. Nine
+one-change recipes share a newly versioned history/objective-aware research AI and include
+a matched control. New win conditions, check counters and pending center claims are state
+identity; slider range affects attacks as well as movement. Mandatory captures follow king
+safety filtering. Never pool this engine's data with Sharp v2/v3 or adopt rules automatically.
+
+### Capture cooldown crossed with checking policy (2026-10-25)
+
+research/drop-policy-cooldown-v1 isolates the 2×3 cooldown/drop-policy matrix. Immediate
+drop-mate prohibition is composable with capture banks and evaluates king-safe legal
+replies under that same rule. Board-move mates remain legal, and recursive reply drops
+strictly consume reserves. Freeze adapter identity as variant-objective-search-v2; keep
+all prior runtimes and datasets separate. No production app imports or official adoption.
+
+### Rechargeable checking-drop experiment (2026-10-25)
+
+research/check-charge-v1 isolates zero-initial-charge banks capped at 1/2/3. King placement
+never charges; checking drops spend one without same-turn recharge; other own play actions
+restore one. Charge rights participate in state identity independently of capture timers.
+Adapter objective-search-v3 is separate from production Sharp v3 and prior datasets. No
+extra charge heuristic is tuned mid-run and no automatic adoption or merge follows.
 ### Symmetric armies and adaptable search (2026-10-24)
 
 research/armies-v1 screens all 31 symmetric rook/bishop/knight multisets of size 2–4 under Classic

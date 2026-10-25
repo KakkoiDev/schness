@@ -1,0 +1,50 @@
+{
+  "run": "balance-v1-2026-10-24",
+  "sourceFingerprint": "65ea73a47c22786807eddf4edafd32a9763351214ff2f0990e2ef94418015ba8",
+  "games": 4128,
+  "archiveBytes": 7734355,
+  "archiveSha256": "728f5f1ff70a040741345361cc2a0ec890313761acc60c53d48b12c95b64ff2b",
+  "parts": [
+    {
+      "path": "balance-v1-2026-10-24.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "2ccfa987a6c5f53b09aaa71bf29d11a4349c74a984dc2cf31c14799dc496c820"
+    },
+    {
+      "path": "balance-v1-2026-10-24.tar.gz.part002",
+      "bytes": 1048576,
+      "sha256": "9d40d39063b502b0034d3d78309baae1b2fc98070cd61e798182bc3ed8376407"
+    },
+    {
+      "path": "balance-v1-2026-10-24.tar.gz.part003",
+      "bytes": 1048576,
+      "sha256": "31acb745d843703aa33ddab011a97da803ac147aca6176478151fe488ec39996"
+    },
+    {
+      "path": "balance-v1-2026-10-24.tar.gz.part004",
+      "bytes": 1048576,
+      "sha256": "e2c9d35ed021d696a3320bacec2ffd899110693a3c5c409bb54dc138be35f87d"
+    },
+    {
+      "path": "balance-v1-2026-10-24.tar.gz.part005",
+      "bytes": 1048576,
+      "sha256": "516a010ca495873e555a3df0c3c0b071a61cb50eeaca2a1d88bab1023bcdbce9"
+    },
+    {
+      "path": "balance-v1-2026-10-24.tar.gz.part006",
+      "bytes": 1048576,
+      "sha256": "a8403dacc1f1c4f270fe127d54a17ca19ee3331997e881d907ac4ca187ec8465"
+    },
+    {
+      "path": "balance-v1-2026-10-24.tar.gz.part007",
+      "bytes": 1048576,
+      "sha256": "087d8c49a2022cf480024ed5f67ce222aee0c59469e5cb229ab646d2da8f6755"
+    },
+    {
+      "path": "balance-v1-2026-10-24.tar.gz.part008",
+      "bytes": 394323,
+      "sha256": "6cfd8500a06ac751ccca529710090459a4db79aea7fce2ec3b696ea33a7c6d40"
+    }
+  ],
+  "restore": "cat balance-v1-2026-10-24.tar.gz.part* > balance-v1-2026-10-24.tar.gz; tar -xzf balance-v1-2026-10-24.tar.gz"
+}
