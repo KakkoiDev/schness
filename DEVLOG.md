@@ -922,3 +922,26 @@ exact tournament replay with monotonically decreasing material. Wave 5 schedules
 across three fresh seeds and four presets with the existing gate and conditional full expansions.
 Inspect low-material endings, reserve hoarding, capture timing and first-loss snowball before
 judging it superior to renewable or capturer-owned reserves. Classic stays unchanged.
+
+## 2026-10-24 — Explore all implemented variants locally
+
+**Question.** The user now has a stronger machine and requested local exploration alongside CI.
+How do we run all variants without tying results to a moving checkout or losing long searches?
+
+**Decision and alternatives.** Run all 36 implemented presets across fresh seeds 20261201–03,
+80 games per seed/preset, 8,640 pilots total at the existing 200-ply ceiling. Use eight workers on
+the detected 12-core Apple M6 / 32 GiB machine, retaining the existing fixed-depth AI profiles.
+Freeze the exact source and record dirty Git provenance rather than falsely labeling results as
+local HEAD. Checkpoint each completed game and validate exact replay. Resume missing tasks;
+reject changed runtimes and concurrent writers. Avoid a new AI algorithm, browser dashboard or
+automatic full expansion in this first local exploration: those require separate evaluation.
+
+**Validation and next measurement.** Tests verify schedule coverage, actual frozen execution,
+checkpoint export, idempotent resume, active-lock exclusion and source-tamper detection. A separate
+short smoke batch checks multi-worker execution; its clipped games are not balance evidence.
+Inspect real throughput and full color/matchup coverage before reporting results or finish times.
+Larger-board/fairy proposals are not implemented presets and remain outside this batch. Details:
+docs/local-experiments.md. The designer report arrived during this work; its patch was subsequently supplied and
+applied as a separate design-reference change. Its 4.5 contrast-floor correction
+is verified against test/contrast.test.js and reflected in the designer brief.
+
