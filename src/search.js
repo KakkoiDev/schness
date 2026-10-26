@@ -160,7 +160,7 @@ export function createSearchEngine(adapter) {
     let best = {value:maximizing ? -Infinity : Infinity,line:null};
     let moveIndex=0;
     for (const action of actions) {
-      const reduce=ctx.lateMoveReduction && depth>=3 && moveIndex>=3 && adapter.canReduce(p,action);
+      const reduce=ctx.lateMoveReduction && depth>=3 && moveIndex>=3 && adapter.canReduce(p,action,ctx.options);
       moveIndex++;
       const child = withChild(p,action,ctx,next=>{
         // Experimental selective search, never part of the exact default mode.

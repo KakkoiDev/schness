@@ -58,3 +58,12 @@ test('competitive evaluation preserves every independently verified mate fixture
   assert(result.score>=1_000_000,fixture.id);assert(fixture.winningActions.includes(r.actionKey(result.action)),fixture.id);
  }
 });
+test('quiet-drop reduction is explicit, saves work, and keeps legal immutable input',()=>{
+ const p=position(),saved=structuredClone(p),options={profile:'competitive',depth:5,quiescenceDepth:0,iterativeDeepening:true};
+ const prior=analyzeAction(p,options),reduced=analyzeAction(p,{...options,reduceQuietDrops:true});
+ assert(reduced.stats.reducedSearches>0);assert(reduced.nodes<prior.nodes);
+ assert(r.legalActions(p).some(a=>r.actionKey(a)===r.actionKey(reduced.action)));assert.deepEqual(p,saved);
+ const exact=analyzeAction(p,{...options,lateMoveReduction:false,reduceQuietDrops:true});
+ assert.equal(exact.score,analyzeAction(p,{...options,lateMoveReduction:false}).score);
+ assert.throws(()=>analyzeAction(p,{reduceQuietDrops:1}),/reduceQuietDrops/);
+});

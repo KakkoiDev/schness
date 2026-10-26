@@ -102,3 +102,38 @@ Generate readable results with `research/competitive-engine-v1/report.js RUN`.
 Archive completed attempts with `scripts/archive-local-experiments.py RUN research/data/NAME`.
 Publish every full runtime, replay bundle, checksum and readable report on the research
 branch, preserving the opponent source and GPL license. Do not modify older archives.
+
+
+## Completed r3 and next r4 — 26 October, 12:42 UTC
+
+The r3 screen completed all 32 games: 14 wins, 17 losses, 1 draw; **43.75% raw wins**.
+White: 10/5/1, Black: 4/12/0 (wins/losses/draws). The draw reached the 200-action ceiling.
+Candidate mean decision time was 9,999.54ms for each color; Fairy means were 96.19ms
+against candidate White and 96.24ms against candidate Black. Candidate median completed
+depth was 9 for both colors (White range 6–14, Black 7–14). This missed the target and
+no r3 confirmation was launched. Full source/replay validation and archive hash checks
+passed after the runner and queue exited. Data: research/data/competitive-r3-fairy-screen-2026-10-26.
+
+R4 tests an explicit `reduceQuietDrops:true` option. Late quiet drops can be searched
+one ply less initially, just as late quiet board moves already were. An improvement
+must be searched again at full depth. Captures, check evasions and moves giving check
+retain their existing safeguards. This remains selective: a reduced fail-low can miss
+a defense, so scores are not exact minimax/mate proofs. The reference/default behavior
+is unchanged and reductions can be disabled. Worker and frozen runner forward the flag;
+the campaign queue preserves it in any confirmation schedule.
+
+The fixed-depth-6, quiescence-2 ablation on four saved Black-loss opening positions
+used 243,151 versus 518,677 nodes (53% fewer) and all searches completed their requested
+horizon. This sample is selected and scores changed; it is evidence of reduced work,
+not improved playing strength. Full inputs, source hashes, legal PVs and measurements
+are in drop-reduction-ablation.json. All 348 unit tests passed.
+
+Active r4 screen: competitive-r4-fairy-screen-2026-10-26, source fingerprint
+`02737370b4a7b2043905f9c2bd973df2117783600bcf1507fe6d7b0107fafa19`.
+Same 16 starts, both colors, screen tie seed 20261801 and 10,000ms versus unchanged
+100ms Fairy, depth request20, quiescence4 with checks, LMR including quiet drops. The
+queue will run competitive-r4-fairy-confirmation-2026-10-26 with six fresh seeds starting
+20261901 only after a complete >=51% screen. Source fingerprint must remain identical.
+No winning claim is made. The older uncapped r2 probe continues separately; its latest
+completed first-move iteration was depth11 at 493,116,169 cumulative nodes. Depth20 has
+not completed, and ongoing CPU contention limits timing comparisons.

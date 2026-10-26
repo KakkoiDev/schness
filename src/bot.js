@@ -78,7 +78,8 @@ export const schnessSearch = createSearchEngine({
   prepare, make, unmake,
   scoreStep:1,
   isTactical:(p,a)=>a.type==='move' && Boolean(p.board[a.to]),
-  canReduce:(p,a)=>p.phase==='play' && a.type==='move' && !p.board[a.to] &&
+  canReduce:(p,a,options={})=>p.phase==='play' && ((a.type==='move' && !p.board[a.to]) ||
+    (a.type==='drop' && options.reduceQuietDrops===true)) &&
     !(searchState.has(p)?masksInCheck(searchState.get(p).masks,p.turn):isInCheck(p,p.turn)),
   actions: p=>legalActionsUnchecked(p,searchState.get(p)?.masks),
   countActions:p=>countLegalActionsUnchecked(p,searchState.get(p)?.masks),
@@ -120,6 +121,7 @@ export const COMPETITIVE_OPTIONS=Object.freeze({profile:'competitive',depth:20,
   lateMoveReduction:true,stopOnProvenWin:true,repetitionAversion:true,maxTableEntries:100000});
 export function chooseAction(position, options={}) { return analyzeAction(position,{...options,multiPv:1}).action; }
 export function analyzeAction(position, options={}) {
+  if(options.reduceQuietDrops!==undefined && typeof options.reduceQuietDrops!=='boolean')throw new TypeError('Invalid reduceQuietDrops');
   if(options.profile!==undefined && !['reference','competitive'].includes(options.profile))throw new RangeError('Unknown search profile');
   return schnessSearch.choose(position,options.profile==='competitive'?{...COMPETITIVE_OPTIONS,...options}:options);
 }
