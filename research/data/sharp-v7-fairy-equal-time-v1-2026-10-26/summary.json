@@ -1,0 +1,25 @@
+{
+  "games": 192,
+  "victoryReasons": {
+    "checkmate": 192
+  },
+  "meanTotalPlies": 32.760416666666664,
+  "minTotalPlies": 17,
+  "maxTotalPlies": 69,
+  "engines": {
+    "candidate": {
+      "decisions": 2905,
+      "meanMillis": 99.51949913942876,
+      "medianMillis": 99.49000000208616,
+      "meanReportedDepth": 6.186230636833047,
+      "medianReportedDepth": 6
+    },
+    "fairy": {
+      "decisions": 3001,
+      "meanMillis": 86.10637787402902,
+      "medianMillis": 101.83500000089407,
+      "meanReportedDepth": 71.21159613462179,
+      "medianReportedDepth": 18
+    }
+  }
+}

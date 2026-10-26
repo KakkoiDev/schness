@@ -1,0 +1,30 @@
+{
+  "run": "sharp-v7-fairy-equal-time-v1-2026-10-26",
+  "sourceFingerprint": "9e524e46a1f67d388f10d89a7957ece61a27d62a281f9165fe4c42e42daa7fc6",
+  "games": 192,
+  "archiveBytes": 4086220,
+  "archiveSha256": "75ea250ad971f9968657308810eb7f8715503255e2cdebd23e5f6e1f2af720c6",
+  "parts": [
+    {
+      "path": "sharp-v7-fairy-equal-time-v1-2026-10-26.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "567ea41e9199ef97c1c262e959b2b58e6945ba5f2090a67068055e8144b81859"
+    },
+    {
+      "path": "sharp-v7-fairy-equal-time-v1-2026-10-26.tar.gz.part002",
+      "bytes": 1048576,
+      "sha256": "9b427d33361b12709c89c9108455742e004d4f55b808a3ab568e8ce3cc02d5b9"
+    },
+    {
+      "path": "sharp-v7-fairy-equal-time-v1-2026-10-26.tar.gz.part003",
+      "bytes": 1048576,
+      "sha256": "1778ed8eff1f85a0054dbfbf4c2eeac03338543345335ce0755225ea7d32c931"
+    },
+    {
+      "path": "sharp-v7-fairy-equal-time-v1-2026-10-26.tar.gz.part004",
+      "bytes": 940492,
+      "sha256": "34cd24a166dde78c71f85ca76df27258af119b97ce2e118aaecb4615efe7e000"
+    }
+  ],
+  "restore": "cat sharp-v7-fairy-equal-time-v1-2026-10-26.tar.gz.part* > sharp-v7-fairy-equal-time-v1-2026-10-26.tar.gz; tar -xzf sharp-v7-fairy-equal-time-v1-2026-10-26.tar.gz"
+}
