@@ -1,0 +1,652 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-26T01:36:26.459Z",
+  "config": {
+    "candidateDepth": 5,
+    "candidateCommit": null,
+    "variants": [
+      "canonical",
+      "permanent-loss-quiet",
+      "permanent-loss-checking",
+      "capture-bank-3-quiet",
+      "capture-bank-3-checking",
+      "capture-bank-4-quiet",
+      "capture-bank-4-checking",
+      "capture-bank-5-quiet",
+      "capture-bank-5-checking",
+      "capture-bank-6-quiet",
+      "capture-bank-6-checking",
+      "home-half-check",
+      "distant-check",
+      "supported-check",
+      "countercheck-only",
+      "knight-check",
+      "bishop-check",
+      "rook-check",
+      "unrestricted",
+      "protected-recurring",
+      "protected-opening",
+      "first-turn-quiet",
+      "protected-first-turn",
+      "mutual-one",
+      "mutual-two",
+      "limited-check",
+      "cooldown",
+      "no-drop-mate",
+      "grace",
+      "quiet-return",
+      "setup-white-quiet",
+      "setup-white-checking",
+      "setup-black-quiet",
+      "setup-black-checking",
+      "hidden-quiet",
+      "hidden-checking"
+    ],
+    "seeds": [
+      20261501,
+      20261502,
+      20261503,
+      20261504,
+      20261505,
+      20261506
+    ],
+    "repetitions": 1,
+    "maxPlies": 200,
+    "workers": 4
+  },
+  "totalGames": 6912,
+  "sourceFingerprint": "4f24a0ef9deffc141f91fb27894968efbb1f95234773e77e0fd5965cec0de6b8",
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "f003742d38c6ae2269669903a5af0a03bfaefeb0520551d0a8d9fa9be6ee04cc"
+    },
+    {
+      "path": "scripts/run-engine-regression.js",
+      "sha256": "356aa7134fe2b87524d23f5803b5892aacdf8e9b7f7b96b4681fb617b573ad17"
+    },
+    {
+      "path": "research/engine-regression-v1/baseline/bot.js",
+      "sha256": "158a6de8ad27eb8ea3b1c995d85c65d3ff6ac084d0923468c6887c2da3ee3e89"
+    },
+    {
+      "path": "research/engine-regression-v1/baseline/rules.js",
+      "sha256": "8d8a4628cad97da1f21b1f731e55da74f5cc88c9a4d9c3e7a5b64b4ed3a46b9d"
+    },
+    {
+      "path": "research/engine-regression-v1/baseline/origin.json",
+      "sha256": "b93460fbe30ca6c32f36232ba4196bedb27431c38e801d22b340664072ad3de0"
+    },
+    {
+      "path": "src/bot.js",
+      "sha256": "7eeb9141a71a2e1d261ef8c3e6b2c0143408e41534d60cb86537d12f0beb727b"
+    },
+    {
+      "path": "src/rules.js",
+      "sha256": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7"
+    },
+    {
+      "path": "src/board-masks.js",
+      "sha256": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+    },
+    {
+      "path": "src/search.js",
+      "sha256": "c89a61268296815dc5be45a1a4b97f5d947a211753ab89cc06cef4f80a2fc438"
+    },
+    {
+      "path": "src/tournament.js",
+      "sha256": "6793dbeb479e7cd71701e3c1261274b679aa8f18d30a5c1bed7fe00074dc07e8"
+    },
+    {
+      "path": "src/history.js",
+      "sha256": "ea70d0d8f6357c87c09a7eb7ca550c924618918f5cc324f3ba5bf1a17a4b7103"
+    },
+    {
+      "path": "src/notation.js",
+      "sha256": "ee47d5a1f8dd05fe5f7fee6694c2a7d5f6e97118bde0e0ed5a0cf0d8c0f8029e"
+    },
+    {
+      "path": "src/watch.js",
+      "sha256": "70dcdc4d73dac27b5e6479b5b2fe3b6b1f7472e0364830191ea6948694b3c24c"
+    },
+    {
+      "path": "src/settings.js",
+      "sha256": "9044dd082e2d99bc75934edac5ed82000105ea8507ce47f3f7736e848ef045c8"
+    },
+    {
+      "path": "src/variants.js",
+      "sha256": "e054d23d9dbc96e4a67ff52afd47dc527340d8f924b190867e1d5d272289bdc0"
+    }
+  ],
+  "git": {
+    "head": "3b1c05050750e02516faf73688280defc184f01e",
+    "status": " M .gitignore\n M DECISIONS.md\n M DEVLOG.md\n M index.html\n M scripts/aggregate-tournament.js\n M scripts/run-tournament.js\n M src/board-ui.js\n M src/bot-worker.js\n M src/bot.js\n M src/history.js\n M src/i18n.js\n M src/rules.js\n M src/tournament.js\n M src/watch-ui.js\n M styles.css\n M sw.js\n M test/bot.test.js\n M test/decisions.test.js\n M test/tournament.test.js\n M watch.html\n?? .github/workflows/research-variants-v2.yml\n?? .github/workflows/research-variants-v3.yml\n?? .github/workflows/research-variants-v4.yml\n?? .github/workflows/research-variants-v5.yml\n?? .github/workflows/research-variants.yml\n?? design/README.md\n?? design/design.css\n?? design/designer-original.patch\n?? design/designer-report.txt\n?? design/index.html\n?? design/preview.js\n?? design/screens/\n?? design/system.html\n?? docs/army-builder-proposal.md\n?? docs/capture-bank-experiments.md\n?? docs/chess-variant-inspirations.md\n?? docs/countdown-variant-proposal.md\n?? docs/custom-game-builder-proposal.md\n?? docs/deployment-variant-experiments.md\n?? docs/deployment-variant-results.json\n?? docs/deployment-variant-results.md\n?? docs/designer-handoff-classic.md\n?? docs/engine-comparison-by-variant-2026-10-25.md\n?? docs/generalist-engine-report-2026-10-25.md\n?? docs/how-the-game-engine-works.md\n?? docs/local-experiments.md\n?? docs/local-variant-win-rates-2026-10-24.md\n?? docs/permanent-loss-experiments.md\n?? docs/search-performance-report-2026-10-25.md\n?? docs/search-performance-v3-report-2026-10-25.md\n?? docs/search-performance-v4-report-2026-10-25.md\n?? docs/search-performance-v5-report-2026-10-25.md\n?? docs/two-player-engine-priorities.md\n?? docs/variant-frontier-proposals.md\n?? docs/variant-search-engine.md\n?? docs/variant-selection.md\n?? docs/variant-wave2-experiments.md\n?? docs/variant-wave3-experiments.md\n?? e2e/engine-contract.spec.js\n?? e2e/variants.spec.js\n?? output/\n?? research/\n?? scripts/archive-local-experiments.py\n?? scripts/bench-browser-engines.js\n?? scripts/bench-browser-search-v3.js\n?? scripts/bench-browser-search-v4.js\n?? scripts/bench-browser-search-v5.js\n?? scripts/bench-depth-calibration.js\n?? scripts/bench-generalist-engine.js\n?? scripts/bench-search-performance.js\n?? scripts/bench-search-play-v3.js\n?? scripts/bench-search-play-v4.js\n?? scripts/bench-search-play-v5.js\n?? scripts/bench-search-play.js\n?? scripts/bench-search-v3.js\n?? scripts/bench-search-v4.js\n?? scripts/bench-search-v5.js\n?? scripts/build-tactical-corpus.js\n?? scripts/profile-search-v4.js\n?? scripts/report-browser-engines.js\n?? scripts/research-variants.js\n?? scripts/run-engine-regression.js\n?? scripts/run-local-experiments.js\n?? scripts/run-research-suite.js\n?? scripts/run-research-v2.js\n?? scripts/run-research-v3.js\n?? scripts/run-research-v4.js\n?? scripts/run-research-v5.js\n?? scripts/verify-browser-engines.js\n?? scripts/verify-generalist-bench.js\n?? scripts/verify-search-performance.js\n?? scripts/verify-search-v3.js\n?? scripts/verify-search-v4.js\n?? scripts/verify-search-v5.js\n?? src/board-masks.js\n?? src/search.js\n?? src/variants.js\n?? test/balance-bench.test.js\n?? test/bank-cooldown-levels.test.js\n?? test/bot-worker.test.js\n?? test/capture-bank.test.js\n?? test/check-charge.test.js\n?? test/drop-policy-cooldown.test.js\n?? test/engine-regression.test.js\n?? test/local-experiments.test.js\n?? test/permanent-loss.test.js\n?? test/research-variants.test.js\n?? test/research-wave2.test.js\n?? test/research-wave3.test.js\n?? test/search-generation.test.js\n?? test/search-reversible.test.js\n?? test/search-tactics.test.js\n?? test/search.test.js\n?? test/symmetric-armies.test.js\n?? test/variant-options.test.js\n?? test/variants.test.js\n?? vendor/fairy-stockfish/\n"
+  },
+  "node": "v24.21.0",
+  "machine": {
+    "model": "Apple M6",
+    "cpus": 12,
+    "memoryGiB": 32
+  },
+  "rules": {
+    "canonical": {
+      "allowCheckingDrops": false,
+      "description": "Canonical quiet drops.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "permanent-loss-quiet": {
+      "allowCheckingDrops": false,
+      "experiment": "permanent-loss",
+      "description": "Captured pieces leave the game permanently; unused reserves can still deploy. Checking drops forbidden.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: permanent-loss.",
+        "Captured non-kings leave the game permanently; unused reserves remain available for one deployment.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "permanent-loss-checking": {
+      "allowCheckingDrops": true,
+      "experiment": "permanent-loss",
+      "description": "Captured pieces leave the game permanently; unused reserves can still deploy. Checking drops allowed.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: permanent-loss.",
+        "Captured non-kings leave the game permanently; unused reserves remain available for one deployment.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "capture-bank-3-quiet": {
+      "allowCheckingDrops": false,
+      "experiment": "capture-bank",
+      "bankCapacity": 3,
+      "description": "Captured pieces join your bank up to 3 held pieces; overflow returns to the captured side. Checking drops forbidden.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: capture-bank.",
+        "Captured non-kings join the capturer’s reserve if fewer than 3 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "capture-bank-3-checking": {
+      "allowCheckingDrops": true,
+      "experiment": "capture-bank",
+      "bankCapacity": 3,
+      "description": "Captured pieces join your bank up to 3 held pieces; overflow returns to the captured side. Checking drops allowed.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: capture-bank.",
+        "Captured non-kings join the capturer’s reserve if fewer than 3 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "capture-bank-4-quiet": {
+      "allowCheckingDrops": false,
+      "experiment": "capture-bank",
+      "bankCapacity": 4,
+      "description": "Captured pieces join your bank up to 4 held pieces; overflow returns to the captured side. Checking drops forbidden.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: capture-bank.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "capture-bank-4-checking": {
+      "allowCheckingDrops": true,
+      "experiment": "capture-bank",
+      "bankCapacity": 4,
+      "description": "Captured pieces join your bank up to 4 held pieces; overflow returns to the captured side. Checking drops allowed.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: capture-bank.",
+        "Captured non-kings join the capturer’s reserve if fewer than 4 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "capture-bank-5-quiet": {
+      "allowCheckingDrops": false,
+      "experiment": "capture-bank",
+      "bankCapacity": 5,
+      "description": "Captured pieces join your bank up to 5 held pieces; overflow returns to the captured side. Checking drops forbidden.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: capture-bank.",
+        "Captured non-kings join the capturer’s reserve if fewer than 5 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "capture-bank-5-checking": {
+      "allowCheckingDrops": true,
+      "experiment": "capture-bank",
+      "bankCapacity": 5,
+      "description": "Captured pieces join your bank up to 5 held pieces; overflow returns to the captured side. Checking drops allowed.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: capture-bank.",
+        "Captured non-kings join the capturer’s reserve if fewer than 5 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "capture-bank-6-quiet": {
+      "allowCheckingDrops": false,
+      "experiment": "capture-bank",
+      "bankCapacity": 6,
+      "description": "Captured pieces join your bank up to 6 held pieces; overflow returns to the captured side. Checking drops forbidden.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: capture-bank.",
+        "Captured non-kings join the capturer’s reserve if fewer than 6 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "capture-bank-6-checking": {
+      "allowCheckingDrops": true,
+      "experiment": "capture-bank",
+      "bankCapacity": 6,
+      "description": "Captured pieces join your bank up to 6 held pieces; overflow returns to the captured side. Checking drops allowed.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: capture-bank.",
+        "Captured non-kings join the capturer’s reserve if fewer than 6 pieces are held; otherwise return to the captured side’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "home-half-check": {
+      "allowCheckingDrops": true,
+      "experiment": "home-half-check",
+      "description": "Checking drops allowed only onto your own half of the board.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: home-half-check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "distant-check": {
+      "allowCheckingDrops": true,
+      "experiment": "distant-check",
+      "description": "Checking drops must land at least two king-steps from the opposing king.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: distant-check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "supported-check": {
+      "allowCheckingDrops": true,
+      "experiment": "supported-check",
+      "description": "Checking drops must be supported by another friendly piece, including the king; pinned supporters count.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: supported-check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "countercheck-only": {
+      "allowCheckingDrops": true,
+      "experiment": "countercheck-only",
+      "description": "Checking drops allowed only when your king is already in check; the drop must also resolve that check.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: countercheck-only.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "knight-check": {
+      "allowCheckingDrops": true,
+      "experiment": "knight-check",
+      "description": "Only knights may give check on a drop; other pieces must drop quietly.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: knight-check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "bishop-check": {
+      "allowCheckingDrops": true,
+      "experiment": "bishop-check",
+      "description": "Only bishops may give check on a drop; other pieces must drop quietly.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: bishop-check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "rook-check": {
+      "allowCheckingDrops": true,
+      "experiment": "rook-check",
+      "description": "Only rooks may give check on a drop; other pieces must drop quietly.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: rook-check.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "unrestricted": {
+      "allowCheckingDrops": true,
+      "description": "Unrestricted checking drops.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "protected-recurring": {
+      "allowCheckingDrops": true,
+      "experiment": "protected-recurring",
+      "description": "Checking drops forbidden whenever the opponent has only a king deployed; protection returns after captures.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: protected-recurring.",
+        "No checking drop against a lone king, including after captures.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "protected-opening": {
+      "allowCheckingDrops": true,
+      "experiment": "protected-opening",
+      "description": "Checking drops forbidden until the opponent first deploys a non-king; protection never returns.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: protected-opening.",
+        "No checking drop before the opponent first deploys a non-king; protection never returns.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "first-turn-quiet": {
+      "allowCheckingDrops": true,
+      "experiment": "first-turn-quiet",
+      "description": "Each player’s first post-king turn forbids checking drops; later checking drops allowed.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: first-turn-quiet.",
+        "Neither player may check by drop on their first post-king turn.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "protected-first-turn": {
+      "allowCheckingDrops": true,
+      "experiment": "protected-first-turn",
+      "description": "Recurring lone-king protection plus a quiet first post-king turn for both players.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: protected-first-turn.",
+        "Neither player may check by drop on their first post-king turn, and checking drops against lone kings stay forbidden.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "mutual-one": {
+      "allowCheckingDrops": true,
+      "experiment": "mutual-one",
+      "description": "Checking drops unlock permanently for both players after both have first deployed one non-king.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: mutual-one.",
+        "Checking drops unlock permanently once both players have deployed a non-king.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "mutual-two": {
+      "allowCheckingDrops": true,
+      "experiment": "mutual-two",
+      "description": "Checking drops unlock permanently after both players have deployed two distinct non-kings.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: mutual-two.",
+        "Checking drops unlock permanently once both players have deployed two distinct non-kings.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "limited-check": {
+      "allowCheckingDrops": true,
+      "experiment": "limited-check",
+      "description": "Each player may make at most one checking drop per game.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: limited-check.",
+        "Each player may make at most one checking drop.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "cooldown": {
+      "allowCheckingDrops": true,
+      "experiment": "cooldown",
+      "description": "A checking drop must be followed on that player’s next turn by a move or quiet drop.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: cooldown.",
+        "No checking drop on the turn immediately following that player’s own checking drop.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "no-drop-mate": {
+      "allowCheckingDrops": true,
+      "experiment": "no-drop-mate",
+      "description": "Checking drops allowed unless the drop immediately checkmates.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: no-drop-mate.",
+        "A drop may check but cannot immediately checkmate.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "grace": {
+      "allowCheckingDrops": true,
+      "experiment": "grace",
+      "description": "Checking drops permitted only after both players have completed three turns following king placement.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: grace.",
+        "No checking drops until both players complete three post-king turns.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "quiet-return": {
+      "allowCheckingDrops": true,
+      "experiment": "quiet-return",
+      "description": "Same three-turn grace period; a piece that has previously been deployed can never check on a later drop.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: quiet-return.",
+        "No checking drops until both players complete three post-king turns.",
+        "Previously deployed pieces cannot give check on return drops.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "setup-white-quiet": {
+      "allowCheckingDrops": false,
+      "experiment": "setup",
+      "setup": true,
+      "firstPlayer": "white",
+      "description": "Alternate quiet drops of all pieces, with no moves or captures during setup. white takes the first normal turn. Later checking drops forbidden. No legal setup placement is a setup-blocked draw.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: setup.",
+        "Alternate all six non-king placements without check, moves or captures; white starts normal play. A blocked setup is a draw.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "setup-white-checking": {
+      "allowCheckingDrops": true,
+      "experiment": "setup",
+      "setup": true,
+      "firstPlayer": "white",
+      "description": "Alternate quiet drops of all pieces, with no moves or captures during setup. white takes the first normal turn. Later checking drops allowed. No legal setup placement is a setup-blocked draw.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: setup.",
+        "Alternate all six non-king placements without check, moves or captures; white starts normal play. A blocked setup is a draw.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "setup-black-quiet": {
+      "allowCheckingDrops": false,
+      "experiment": "setup",
+      "setup": true,
+      "firstPlayer": "black",
+      "description": "Alternate quiet drops of all pieces, with no moves or captures during setup. black takes the first normal turn. Later checking drops forbidden. No legal setup placement is a setup-blocked draw.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: setup.",
+        "Alternate all six non-king placements without check, moves or captures; black starts normal play. A blocked setup is a draw.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "setup-black-checking": {
+      "allowCheckingDrops": true,
+      "experiment": "setup",
+      "setup": true,
+      "firstPlayer": "black",
+      "description": "Alternate quiet drops of all pieces, with no moves or captures during setup. black takes the first normal turn. Later checking drops allowed. No legal setup placement is a setup-blocked draw.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: setup.",
+        "Alternate all six non-king placements without check, moves or captures; black starts normal play. A blocked setup is a draw.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "hidden-quiet": {
+      "allowCheckingDrops": false,
+      "experiment": "setup",
+      "setup": true,
+      "firstPlayer": "white",
+      "hiddenSetup": true,
+      "description": "Independently seeded private home-rank arrangements, no initial check, simultaneous reveal; White starts play; checking drops forbidden. Uniform legal arrangement sampling, not a hidden-information AI.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may not give check; a normal move may give check.",
+        "Research variant: setup.",
+        "Alternate all six non-king placements without check, moves or captures; white starts normal play. A blocked setup is a draw.",
+        "Each player privately samples a uniform legal arrangement on their home rank, independently of the other player’s pieces. Both reveal simultaneously; serialized setup drops are replay-only.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    },
+    "hidden-checking": {
+      "allowCheckingDrops": true,
+      "experiment": "setup",
+      "setup": true,
+      "firstPlayer": "white",
+      "hiddenSetup": true,
+      "description": "Independently seeded private home-rank arrangements, no initial check, simultaneous reveal; White starts play; checking drops allowed. Uniform legal arrangement sampling, not a hidden-information AI.",
+      "text": [
+        "The 4×4 board starts empty; White places a king on rank 1, then Black on rank 4.",
+        "On each later turn, move one deployed piece or drop one owned reserve piece on an empty square.",
+        "A drop may give check, just like a normal move.",
+        "Research variant: setup.",
+        "Alternate all six non-king placements without check, moves or captures; white starts normal play. A blocked setup is a draw.",
+        "Each player privately samples a uniform legal arrangement on their home rank, independently of the other player’s pieces. Both reveal simultaneously; serialized setup drops are replay-only.",
+        "A captured rook, bishop, or knight returns to its original owner’s reserve.",
+        "Normal king safety and checkmate apply; stalemate and threefold repetition are draws."
+      ]
+    }
+  },
+  "ai": {
+    "candidate": {
+      "version": 7,
+      "depth": 5,
+      "behavior": "Reversible alpha-beta/PVS with proved non-king legality, stack-reused masks, count-only mobility, linked continuations, bounded tables, aspiration windows and history ordering; deep search; among equally scored moves, prefers the resulting position seen fewer times, while retaining a draw that avoids a worse score."
+    },
+    "baseline": {
+      "version": 2,
+      "depth": 4
+    }
+  },
+  "schedule": "Candidate-white then candidate-black tasks; 6 seeds × 16 starts × 36 presets × 2 colors = 6912",
+  "notes": "Candidate depth 5 versus baseline depth four, no time/node cap, no speculative options. Six fresh seeds, all 16 starts and both fixed engine colors on 36 shared production presets. Candidate and frozen Sharp v2 have independent seeded tie streams. Other historical research objectives/armies require their own compatible adapter and are not pooled here. Not an equal-time match or proof of non-inferiority."
+}

@@ -1,0 +1,1266 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-26T01:38:26.249Z",
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "f003742d38c6ae2269669903a5af0a03bfaefeb0520551d0a8d9fa9be6ee04cc"
+    },
+    {
+      "path": "scripts/run-fairy-match.js",
+      "sha256": "131383892cd9606ccb36d5b9e6fded95811ba7914a9a29a4abe3d737d391c056"
+    },
+    {
+      "path": "research/fairy-match-v1/harness.html",
+      "sha256": "fceea4f0043f9fb818e40dee27231dc89bce0b65854c15e0ab538f37f83516d3"
+    },
+    {
+      "path": "research/fairy-match-v1/variant.ini",
+      "sha256": "59018f6cdea7d916a5071294fb6bc014bb36e0569d115f658154bc34ffd6d7d8"
+    },
+    {
+      "path": "src/bot.js",
+      "sha256": "7eeb9141a71a2e1d261ef8c3e6b2c0143408e41534d60cb86537d12f0beb727b"
+    },
+    {
+      "path": "src/rules.js",
+      "sha256": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7"
+    },
+    {
+      "path": "src/board-masks.js",
+      "sha256": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+    },
+    {
+      "path": "src/search.js",
+      "sha256": "c89a61268296815dc5be45a1a4b97f5d947a211753ab89cc06cef4f80a2fc438"
+    },
+    {
+      "path": "src/tournament.js",
+      "sha256": "6793dbeb479e7cd71701e3c1261274b679aa8f18d30a5c1bed7fe00074dc07e8"
+    },
+    {
+      "path": "src/history.js",
+      "sha256": "ea70d0d8f6357c87c09a7eb7ca550c924618918f5cc324f3ba5bf1a17a4b7103"
+    },
+    {
+      "path": "src/notation.js",
+      "sha256": "ee47d5a1f8dd05fe5f7fee6694c2a7d5f6e97118bde0e0ed5a0cf0d8c0f8029e"
+    },
+    {
+      "path": "src/watch.js",
+      "sha256": "70dcdc4d73dac27b5e6479b5b2fe3b6b1f7472e0364830191ea6948694b3c24c"
+    },
+    {
+      "path": "src/settings.js",
+      "sha256": "9044dd082e2d99bc75934edac5ed82000105ea8507ce47f3f7736e848ef045c8"
+    },
+    {
+      "path": "src/variants.js",
+      "sha256": "e054d23d9dbc96e4a67ff52afd47dc527340d8f924b190867e1d5d272289bdc0"
+    },
+    {
+      "path": "vendor/fairy-stockfish/stockfish.js",
+      "sha256": "9080a62e3133e50da0c47b88b186d9c29ed37cc5129401bdeed8bffb5b9a4ca9"
+    },
+    {
+      "path": "vendor/fairy-stockfish/stockfish.wasm",
+      "sha256": "7cea742b8ca1a324fbc500f89112f168134cf68eb49475df23be6c42336255c6"
+    },
+    {
+      "path": "vendor/fairy-stockfish/stockfish.worker.js",
+      "sha256": "067be484ac62f728b0dad28496997e5862f3c61f9091f59bb35d9d1b1ed14573"
+    },
+    {
+      "path": "vendor/fairy-stockfish/AUTHORS",
+      "sha256": "55a0a4599358308af8349344d79176469f04119558e85595efe0a39b583cdf00"
+    },
+    {
+      "path": "vendor/fairy-stockfish/Copying.txt",
+      "sha256": "0b383d5a63da644f628d99c33976ea6487ed89aaa59f0b3257992deac1171e6b"
+    },
+    {
+      "path": "vendor/fairy-stockfish/source.tar.gz",
+      "sha256": "5c10e40812e1045cb13677ff84b3cdd3fca5c381df76245cd4d8eb5312a61bea"
+    }
+  ],
+  "sourceFingerprint": "9e524e46a1f67d388f10d89a7957ece61a27d62a281f9165fe4c42e42daa7fc6",
+  "tasks": [
+    {
+      "id": "white__20261501__0",
+      "color": "white",
+      "seed": 20261501,
+      "index": 0
+    },
+    {
+      "id": "white__20261501__1",
+      "color": "white",
+      "seed": 20261501,
+      "index": 1
+    },
+    {
+      "id": "white__20261501__2",
+      "color": "white",
+      "seed": 20261501,
+      "index": 2
+    },
+    {
+      "id": "white__20261501__3",
+      "color": "white",
+      "seed": 20261501,
+      "index": 3
+    },
+    {
+      "id": "white__20261501__4",
+      "color": "white",
+      "seed": 20261501,
+      "index": 4
+    },
+    {
+      "id": "white__20261501__5",
+      "color": "white",
+      "seed": 20261501,
+      "index": 5
+    },
+    {
+      "id": "white__20261501__6",
+      "color": "white",
+      "seed": 20261501,
+      "index": 6
+    },
+    {
+      "id": "white__20261501__7",
+      "color": "white",
+      "seed": 20261501,
+      "index": 7
+    },
+    {
+      "id": "white__20261501__8",
+      "color": "white",
+      "seed": 20261501,
+      "index": 8
+    },
+    {
+      "id": "white__20261501__9",
+      "color": "white",
+      "seed": 20261501,
+      "index": 9
+    },
+    {
+      "id": "white__20261501__10",
+      "color": "white",
+      "seed": 20261501,
+      "index": 10
+    },
+    {
+      "id": "white__20261501__11",
+      "color": "white",
+      "seed": 20261501,
+      "index": 11
+    },
+    {
+      "id": "white__20261501__12",
+      "color": "white",
+      "seed": 20261501,
+      "index": 12
+    },
+    {
+      "id": "white__20261501__13",
+      "color": "white",
+      "seed": 20261501,
+      "index": 13
+    },
+    {
+      "id": "white__20261501__14",
+      "color": "white",
+      "seed": 20261501,
+      "index": 14
+    },
+    {
+      "id": "white__20261501__15",
+      "color": "white",
+      "seed": 20261501,
+      "index": 15
+    },
+    {
+      "id": "white__20261502__0",
+      "color": "white",
+      "seed": 20261502,
+      "index": 0
+    },
+    {
+      "id": "white__20261502__1",
+      "color": "white",
+      "seed": 20261502,
+      "index": 1
+    },
+    {
+      "id": "white__20261502__2",
+      "color": "white",
+      "seed": 20261502,
+      "index": 2
+    },
+    {
+      "id": "white__20261502__3",
+      "color": "white",
+      "seed": 20261502,
+      "index": 3
+    },
+    {
+      "id": "white__20261502__4",
+      "color": "white",
+      "seed": 20261502,
+      "index": 4
+    },
+    {
+      "id": "white__20261502__5",
+      "color": "white",
+      "seed": 20261502,
+      "index": 5
+    },
+    {
+      "id": "white__20261502__6",
+      "color": "white",
+      "seed": 20261502,
+      "index": 6
+    },
+    {
+      "id": "white__20261502__7",
+      "color": "white",
+      "seed": 20261502,
+      "index": 7
+    },
+    {
+      "id": "white__20261502__8",
+      "color": "white",
+      "seed": 20261502,
+      "index": 8
+    },
+    {
+      "id": "white__20261502__9",
+      "color": "white",
+      "seed": 20261502,
+      "index": 9
+    },
+    {
+      "id": "white__20261502__10",
+      "color": "white",
+      "seed": 20261502,
+      "index": 10
+    },
+    {
+      "id": "white__20261502__11",
+      "color": "white",
+      "seed": 20261502,
+      "index": 11
+    },
+    {
+      "id": "white__20261502__12",
+      "color": "white",
+      "seed": 20261502,
+      "index": 12
+    },
+    {
+      "id": "white__20261502__13",
+      "color": "white",
+      "seed": 20261502,
+      "index": 13
+    },
+    {
+      "id": "white__20261502__14",
+      "color": "white",
+      "seed": 20261502,
+      "index": 14
+    },
+    {
+      "id": "white__20261502__15",
+      "color": "white",
+      "seed": 20261502,
+      "index": 15
+    },
+    {
+      "id": "white__20261503__0",
+      "color": "white",
+      "seed": 20261503,
+      "index": 0
+    },
+    {
+      "id": "white__20261503__1",
+      "color": "white",
+      "seed": 20261503,
+      "index": 1
+    },
+    {
+      "id": "white__20261503__2",
+      "color": "white",
+      "seed": 20261503,
+      "index": 2
+    },
+    {
+      "id": "white__20261503__3",
+      "color": "white",
+      "seed": 20261503,
+      "index": 3
+    },
+    {
+      "id": "white__20261503__4",
+      "color": "white",
+      "seed": 20261503,
+      "index": 4
+    },
+    {
+      "id": "white__20261503__5",
+      "color": "white",
+      "seed": 20261503,
+      "index": 5
+    },
+    {
+      "id": "white__20261503__6",
+      "color": "white",
+      "seed": 20261503,
+      "index": 6
+    },
+    {
+      "id": "white__20261503__7",
+      "color": "white",
+      "seed": 20261503,
+      "index": 7
+    },
+    {
+      "id": "white__20261503__8",
+      "color": "white",
+      "seed": 20261503,
+      "index": 8
+    },
+    {
+      "id": "white__20261503__9",
+      "color": "white",
+      "seed": 20261503,
+      "index": 9
+    },
+    {
+      "id": "white__20261503__10",
+      "color": "white",
+      "seed": 20261503,
+      "index": 10
+    },
+    {
+      "id": "white__20261503__11",
+      "color": "white",
+      "seed": 20261503,
+      "index": 11
+    },
+    {
+      "id": "white__20261503__12",
+      "color": "white",
+      "seed": 20261503,
+      "index": 12
+    },
+    {
+      "id": "white__20261503__13",
+      "color": "white",
+      "seed": 20261503,
+      "index": 13
+    },
+    {
+      "id": "white__20261503__14",
+      "color": "white",
+      "seed": 20261503,
+      "index": 14
+    },
+    {
+      "id": "white__20261503__15",
+      "color": "white",
+      "seed": 20261503,
+      "index": 15
+    },
+    {
+      "id": "white__20261504__0",
+      "color": "white",
+      "seed": 20261504,
+      "index": 0
+    },
+    {
+      "id": "white__20261504__1",
+      "color": "white",
+      "seed": 20261504,
+      "index": 1
+    },
+    {
+      "id": "white__20261504__2",
+      "color": "white",
+      "seed": 20261504,
+      "index": 2
+    },
+    {
+      "id": "white__20261504__3",
+      "color": "white",
+      "seed": 20261504,
+      "index": 3
+    },
+    {
+      "id": "white__20261504__4",
+      "color": "white",
+      "seed": 20261504,
+      "index": 4
+    },
+    {
+      "id": "white__20261504__5",
+      "color": "white",
+      "seed": 20261504,
+      "index": 5
+    },
+    {
+      "id": "white__20261504__6",
+      "color": "white",
+      "seed": 20261504,
+      "index": 6
+    },
+    {
+      "id": "white__20261504__7",
+      "color": "white",
+      "seed": 20261504,
+      "index": 7
+    },
+    {
+      "id": "white__20261504__8",
+      "color": "white",
+      "seed": 20261504,
+      "index": 8
+    },
+    {
+      "id": "white__20261504__9",
+      "color": "white",
+      "seed": 20261504,
+      "index": 9
+    },
+    {
+      "id": "white__20261504__10",
+      "color": "white",
+      "seed": 20261504,
+      "index": 10
+    },
+    {
+      "id": "white__20261504__11",
+      "color": "white",
+      "seed": 20261504,
+      "index": 11
+    },
+    {
+      "id": "white__20261504__12",
+      "color": "white",
+      "seed": 20261504,
+      "index": 12
+    },
+    {
+      "id": "white__20261504__13",
+      "color": "white",
+      "seed": 20261504,
+      "index": 13
+    },
+    {
+      "id": "white__20261504__14",
+      "color": "white",
+      "seed": 20261504,
+      "index": 14
+    },
+    {
+      "id": "white__20261504__15",
+      "color": "white",
+      "seed": 20261504,
+      "index": 15
+    },
+    {
+      "id": "white__20261505__0",
+      "color": "white",
+      "seed": 20261505,
+      "index": 0
+    },
+    {
+      "id": "white__20261505__1",
+      "color": "white",
+      "seed": 20261505,
+      "index": 1
+    },
+    {
+      "id": "white__20261505__2",
+      "color": "white",
+      "seed": 20261505,
+      "index": 2
+    },
+    {
+      "id": "white__20261505__3",
+      "color": "white",
+      "seed": 20261505,
+      "index": 3
+    },
+    {
+      "id": "white__20261505__4",
+      "color": "white",
+      "seed": 20261505,
+      "index": 4
+    },
+    {
+      "id": "white__20261505__5",
+      "color": "white",
+      "seed": 20261505,
+      "index": 5
+    },
+    {
+      "id": "white__20261505__6",
+      "color": "white",
+      "seed": 20261505,
+      "index": 6
+    },
+    {
+      "id": "white__20261505__7",
+      "color": "white",
+      "seed": 20261505,
+      "index": 7
+    },
+    {
+      "id": "white__20261505__8",
+      "color": "white",
+      "seed": 20261505,
+      "index": 8
+    },
+    {
+      "id": "white__20261505__9",
+      "color": "white",
+      "seed": 20261505,
+      "index": 9
+    },
+    {
+      "id": "white__20261505__10",
+      "color": "white",
+      "seed": 20261505,
+      "index": 10
+    },
+    {
+      "id": "white__20261505__11",
+      "color": "white",
+      "seed": 20261505,
+      "index": 11
+    },
+    {
+      "id": "white__20261505__12",
+      "color": "white",
+      "seed": 20261505,
+      "index": 12
+    },
+    {
+      "id": "white__20261505__13",
+      "color": "white",
+      "seed": 20261505,
+      "index": 13
+    },
+    {
+      "id": "white__20261505__14",
+      "color": "white",
+      "seed": 20261505,
+      "index": 14
+    },
+    {
+      "id": "white__20261505__15",
+      "color": "white",
+      "seed": 20261505,
+      "index": 15
+    },
+    {
+      "id": "white__20261506__0",
+      "color": "white",
+      "seed": 20261506,
+      "index": 0
+    },
+    {
+      "id": "white__20261506__1",
+      "color": "white",
+      "seed": 20261506,
+      "index": 1
+    },
+    {
+      "id": "white__20261506__2",
+      "color": "white",
+      "seed": 20261506,
+      "index": 2
+    },
+    {
+      "id": "white__20261506__3",
+      "color": "white",
+      "seed": 20261506,
+      "index": 3
+    },
+    {
+      "id": "white__20261506__4",
+      "color": "white",
+      "seed": 20261506,
+      "index": 4
+    },
+    {
+      "id": "white__20261506__5",
+      "color": "white",
+      "seed": 20261506,
+      "index": 5
+    },
+    {
+      "id": "white__20261506__6",
+      "color": "white",
+      "seed": 20261506,
+      "index": 6
+    },
+    {
+      "id": "white__20261506__7",
+      "color": "white",
+      "seed": 20261506,
+      "index": 7
+    },
+    {
+      "id": "white__20261506__8",
+      "color": "white",
+      "seed": 20261506,
+      "index": 8
+    },
+    {
+      "id": "white__20261506__9",
+      "color": "white",
+      "seed": 20261506,
+      "index": 9
+    },
+    {
+      "id": "white__20261506__10",
+      "color": "white",
+      "seed": 20261506,
+      "index": 10
+    },
+    {
+      "id": "white__20261506__11",
+      "color": "white",
+      "seed": 20261506,
+      "index": 11
+    },
+    {
+      "id": "white__20261506__12",
+      "color": "white",
+      "seed": 20261506,
+      "index": 12
+    },
+    {
+      "id": "white__20261506__13",
+      "color": "white",
+      "seed": 20261506,
+      "index": 13
+    },
+    {
+      "id": "white__20261506__14",
+      "color": "white",
+      "seed": 20261506,
+      "index": 14
+    },
+    {
+      "id": "white__20261506__15",
+      "color": "white",
+      "seed": 20261506,
+      "index": 15
+    },
+    {
+      "id": "black__20261501__0",
+      "color": "black",
+      "seed": 20261501,
+      "index": 0
+    },
+    {
+      "id": "black__20261501__1",
+      "color": "black",
+      "seed": 20261501,
+      "index": 1
+    },
+    {
+      "id": "black__20261501__2",
+      "color": "black",
+      "seed": 20261501,
+      "index": 2
+    },
+    {
+      "id": "black__20261501__3",
+      "color": "black",
+      "seed": 20261501,
+      "index": 3
+    },
+    {
+      "id": "black__20261501__4",
+      "color": "black",
+      "seed": 20261501,
+      "index": 4
+    },
+    {
+      "id": "black__20261501__5",
+      "color": "black",
+      "seed": 20261501,
+      "index": 5
+    },
+    {
+      "id": "black__20261501__6",
+      "color": "black",
+      "seed": 20261501,
+      "index": 6
+    },
+    {
+      "id": "black__20261501__7",
+      "color": "black",
+      "seed": 20261501,
+      "index": 7
+    },
+    {
+      "id": "black__20261501__8",
+      "color": "black",
+      "seed": 20261501,
+      "index": 8
+    },
+    {
+      "id": "black__20261501__9",
+      "color": "black",
+      "seed": 20261501,
+      "index": 9
+    },
+    {
+      "id": "black__20261501__10",
+      "color": "black",
+      "seed": 20261501,
+      "index": 10
+    },
+    {
+      "id": "black__20261501__11",
+      "color": "black",
+      "seed": 20261501,
+      "index": 11
+    },
+    {
+      "id": "black__20261501__12",
+      "color": "black",
+      "seed": 20261501,
+      "index": 12
+    },
+    {
+      "id": "black__20261501__13",
+      "color": "black",
+      "seed": 20261501,
+      "index": 13
+    },
+    {
+      "id": "black__20261501__14",
+      "color": "black",
+      "seed": 20261501,
+      "index": 14
+    },
+    {
+      "id": "black__20261501__15",
+      "color": "black",
+      "seed": 20261501,
+      "index": 15
+    },
+    {
+      "id": "black__20261502__0",
+      "color": "black",
+      "seed": 20261502,
+      "index": 0
+    },
+    {
+      "id": "black__20261502__1",
+      "color": "black",
+      "seed": 20261502,
+      "index": 1
+    },
+    {
+      "id": "black__20261502__2",
+      "color": "black",
+      "seed": 20261502,
+      "index": 2
+    },
+    {
+      "id": "black__20261502__3",
+      "color": "black",
+      "seed": 20261502,
+      "index": 3
+    },
+    {
+      "id": "black__20261502__4",
+      "color": "black",
+      "seed": 20261502,
+      "index": 4
+    },
+    {
+      "id": "black__20261502__5",
+      "color": "black",
+      "seed": 20261502,
+      "index": 5
+    },
+    {
+      "id": "black__20261502__6",
+      "color": "black",
+      "seed": 20261502,
+      "index": 6
+    },
+    {
+      "id": "black__20261502__7",
+      "color": "black",
+      "seed": 20261502,
+      "index": 7
+    },
+    {
+      "id": "black__20261502__8",
+      "color": "black",
+      "seed": 20261502,
+      "index": 8
+    },
+    {
+      "id": "black__20261502__9",
+      "color": "black",
+      "seed": 20261502,
+      "index": 9
+    },
+    {
+      "id": "black__20261502__10",
+      "color": "black",
+      "seed": 20261502,
+      "index": 10
+    },
+    {
+      "id": "black__20261502__11",
+      "color": "black",
+      "seed": 20261502,
+      "index": 11
+    },
+    {
+      "id": "black__20261502__12",
+      "color": "black",
+      "seed": 20261502,
+      "index": 12
+    },
+    {
+      "id": "black__20261502__13",
+      "color": "black",
+      "seed": 20261502,
+      "index": 13
+    },
+    {
+      "id": "black__20261502__14",
+      "color": "black",
+      "seed": 20261502,
+      "index": 14
+    },
+    {
+      "id": "black__20261502__15",
+      "color": "black",
+      "seed": 20261502,
+      "index": 15
+    },
+    {
+      "id": "black__20261503__0",
+      "color": "black",
+      "seed": 20261503,
+      "index": 0
+    },
+    {
+      "id": "black__20261503__1",
+      "color": "black",
+      "seed": 20261503,
+      "index": 1
+    },
+    {
+      "id": "black__20261503__2",
+      "color": "black",
+      "seed": 20261503,
+      "index": 2
+    },
+    {
+      "id": "black__20261503__3",
+      "color": "black",
+      "seed": 20261503,
+      "index": 3
+    },
+    {
+      "id": "black__20261503__4",
+      "color": "black",
+      "seed": 20261503,
+      "index": 4
+    },
+    {
+      "id": "black__20261503__5",
+      "color": "black",
+      "seed": 20261503,
+      "index": 5
+    },
+    {
+      "id": "black__20261503__6",
+      "color": "black",
+      "seed": 20261503,
+      "index": 6
+    },
+    {
+      "id": "black__20261503__7",
+      "color": "black",
+      "seed": 20261503,
+      "index": 7
+    },
+    {
+      "id": "black__20261503__8",
+      "color": "black",
+      "seed": 20261503,
+      "index": 8
+    },
+    {
+      "id": "black__20261503__9",
+      "color": "black",
+      "seed": 20261503,
+      "index": 9
+    },
+    {
+      "id": "black__20261503__10",
+      "color": "black",
+      "seed": 20261503,
+      "index": 10
+    },
+    {
+      "id": "black__20261503__11",
+      "color": "black",
+      "seed": 20261503,
+      "index": 11
+    },
+    {
+      "id": "black__20261503__12",
+      "color": "black",
+      "seed": 20261503,
+      "index": 12
+    },
+    {
+      "id": "black__20261503__13",
+      "color": "black",
+      "seed": 20261503,
+      "index": 13
+    },
+    {
+      "id": "black__20261503__14",
+      "color": "black",
+      "seed": 20261503,
+      "index": 14
+    },
+    {
+      "id": "black__20261503__15",
+      "color": "black",
+      "seed": 20261503,
+      "index": 15
+    },
+    {
+      "id": "black__20261504__0",
+      "color": "black",
+      "seed": 20261504,
+      "index": 0
+    },
+    {
+      "id": "black__20261504__1",
+      "color": "black",
+      "seed": 20261504,
+      "index": 1
+    },
+    {
+      "id": "black__20261504__2",
+      "color": "black",
+      "seed": 20261504,
+      "index": 2
+    },
+    {
+      "id": "black__20261504__3",
+      "color": "black",
+      "seed": 20261504,
+      "index": 3
+    },
+    {
+      "id": "black__20261504__4",
+      "color": "black",
+      "seed": 20261504,
+      "index": 4
+    },
+    {
+      "id": "black__20261504__5",
+      "color": "black",
+      "seed": 20261504,
+      "index": 5
+    },
+    {
+      "id": "black__20261504__6",
+      "color": "black",
+      "seed": 20261504,
+      "index": 6
+    },
+    {
+      "id": "black__20261504__7",
+      "color": "black",
+      "seed": 20261504,
+      "index": 7
+    },
+    {
+      "id": "black__20261504__8",
+      "color": "black",
+      "seed": 20261504,
+      "index": 8
+    },
+    {
+      "id": "black__20261504__9",
+      "color": "black",
+      "seed": 20261504,
+      "index": 9
+    },
+    {
+      "id": "black__20261504__10",
+      "color": "black",
+      "seed": 20261504,
+      "index": 10
+    },
+    {
+      "id": "black__20261504__11",
+      "color": "black",
+      "seed": 20261504,
+      "index": 11
+    },
+    {
+      "id": "black__20261504__12",
+      "color": "black",
+      "seed": 20261504,
+      "index": 12
+    },
+    {
+      "id": "black__20261504__13",
+      "color": "black",
+      "seed": 20261504,
+      "index": 13
+    },
+    {
+      "id": "black__20261504__14",
+      "color": "black",
+      "seed": 20261504,
+      "index": 14
+    },
+    {
+      "id": "black__20261504__15",
+      "color": "black",
+      "seed": 20261504,
+      "index": 15
+    },
+    {
+      "id": "black__20261505__0",
+      "color": "black",
+      "seed": 20261505,
+      "index": 0
+    },
+    {
+      "id": "black__20261505__1",
+      "color": "black",
+      "seed": 20261505,
+      "index": 1
+    },
+    {
+      "id": "black__20261505__2",
+      "color": "black",
+      "seed": 20261505,
+      "index": 2
+    },
+    {
+      "id": "black__20261505__3",
+      "color": "black",
+      "seed": 20261505,
+      "index": 3
+    },
+    {
+      "id": "black__20261505__4",
+      "color": "black",
+      "seed": 20261505,
+      "index": 4
+    },
+    {
+      "id": "black__20261505__5",
+      "color": "black",
+      "seed": 20261505,
+      "index": 5
+    },
+    {
+      "id": "black__20261505__6",
+      "color": "black",
+      "seed": 20261505,
+      "index": 6
+    },
+    {
+      "id": "black__20261505__7",
+      "color": "black",
+      "seed": 20261505,
+      "index": 7
+    },
+    {
+      "id": "black__20261505__8",
+      "color": "black",
+      "seed": 20261505,
+      "index": 8
+    },
+    {
+      "id": "black__20261505__9",
+      "color": "black",
+      "seed": 20261505,
+      "index": 9
+    },
+    {
+      "id": "black__20261505__10",
+      "color": "black",
+      "seed": 20261505,
+      "index": 10
+    },
+    {
+      "id": "black__20261505__11",
+      "color": "black",
+      "seed": 20261505,
+      "index": 11
+    },
+    {
+      "id": "black__20261505__12",
+      "color": "black",
+      "seed": 20261505,
+      "index": 12
+    },
+    {
+      "id": "black__20261505__13",
+      "color": "black",
+      "seed": 20261505,
+      "index": 13
+    },
+    {
+      "id": "black__20261505__14",
+      "color": "black",
+      "seed": 20261505,
+      "index": 14
+    },
+    {
+      "id": "black__20261505__15",
+      "color": "black",
+      "seed": 20261505,
+      "index": 15
+    },
+    {
+      "id": "black__20261506__0",
+      "color": "black",
+      "seed": 20261506,
+      "index": 0
+    },
+    {
+      "id": "black__20261506__1",
+      "color": "black",
+      "seed": 20261506,
+      "index": 1
+    },
+    {
+      "id": "black__20261506__2",
+      "color": "black",
+      "seed": 20261506,
+      "index": 2
+    },
+    {
+      "id": "black__20261506__3",
+      "color": "black",
+      "seed": 20261506,
+      "index": 3
+    },
+    {
+      "id": "black__20261506__4",
+      "color": "black",
+      "seed": 20261506,
+      "index": 4
+    },
+    {
+      "id": "black__20261506__5",
+      "color": "black",
+      "seed": 20261506,
+      "index": 5
+    },
+    {
+      "id": "black__20261506__6",
+      "color": "black",
+      "seed": 20261506,
+      "index": 6
+    },
+    {
+      "id": "black__20261506__7",
+      "color": "black",
+      "seed": 20261506,
+      "index": 7
+    },
+    {
+      "id": "black__20261506__8",
+      "color": "black",
+      "seed": 20261506,
+      "index": 8
+    },
+    {
+      "id": "black__20261506__9",
+      "color": "black",
+      "seed": 20261506,
+      "index": 9
+    },
+    {
+      "id": "black__20261506__10",
+      "color": "black",
+      "seed": 20261506,
+      "index": 10
+    },
+    {
+      "id": "black__20261506__11",
+      "color": "black",
+      "seed": 20261506,
+      "index": 11
+    },
+    {
+      "id": "black__20261506__12",
+      "color": "black",
+      "seed": 20261506,
+      "index": 12
+    },
+    {
+      "id": "black__20261506__13",
+      "color": "black",
+      "seed": 20261506,
+      "index": 13
+    },
+    {
+      "id": "black__20261506__14",
+      "color": "black",
+      "seed": 20261506,
+      "index": 14
+    },
+    {
+      "id": "black__20261506__15",
+      "color": "black",
+      "seed": 20261506,
+      "index": 15
+    }
+  ],
+  "totalGames": 192,
+  "budgetMillis": 100,
+  "maxPlies": 200,
+  "port": 4188,
+  "rules": {
+    "allowCheckingDrops": false,
+    "experiment": "capture-bank",
+    "bankCapacity": 6
+  },
+  "candidate": {
+    "name": "Sharp v7",
+    "depthRequest": 100,
+    "maxNodes": 100000000,
+    "quiescenceDepth": 0,
+    "lateMoveReduction": false,
+    "repetitionAversion": true
+  },
+  "external": {
+    "package": "fairy-stockfish-nnue.wasm@1.1.12",
+    "reportedCommit": "b2e693ef",
+    "threads": 1,
+    "hashMiB": 16,
+    "NNUE": false
+  },
+  "notes": "Equal-time browser match on shared six-slot capture-bank quiet-drop rules, not Classic. Fixed candidate colors, six candidate tie seeds repeating 16 starts. Fairy is deterministic except timing; no seeded diversity claim. Full move history sent to Fairy. Root legal-move parity checked at every played position. Times include engine call overhead, exclude parity checks. Serial games, no Elo/proven-balance claim."
+}

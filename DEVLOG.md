@@ -1416,3 +1416,10 @@ research/data/sharp-v7-v2-full-v1-2026-10-25/thinking-times.json for counts and 
 ## 2026-10-25 — Same-position depth calibration
 
 Measured frozen Sharp v2 depth four against Sharp v7 depths four, five and six on 32 saved Classic positions, serial and warmed, three repetitions. Mean milliseconds per position (median full pass): v2 d4 70.86; v7 d4 4.58; v7 d5 24.93; v7 d6 104.10. With each position's measured v2 budget, iterative v7 completed depth five on 23 positions and depth six on nine (mean observed 71.46 ms). Prefer time budgets for comparable latency; fixed depth five is conservative and six can take longer. All selected actions and continuation lines replay-validated; source fingerprints recorded. This is timing calibration, not a strength test or a universal browser/variant budget. Full compressed raw data, summary, report and reproducible script committed under research/depth-calibration-v1 and scripts/bench-depth-calibration.js.
+
+
+## 2026-10-26 — Deeper v7 matches and queued Fairy comparison
+
+Launched two frozen, separate full schedules: v7 depth five and depth six versus frozen Sharp v2 depth four, 6,912 games each, 36 shared presets, six reused seeds, 16 starts, both fixed engine colors. Four workers per schedule; observed move wall times include parallel contention. Core engine hashes match the earlier v7 tournament; defaults unchanged. Extended the harness with explicit candidate depth and resume metadata checks, and reports with per-engine decision counts, mean times and win rates. Harness tests pass and actual opening searches completed at both requested depths.
+
+Prepared a 192-game serial equal-time browser follow-up against Fairy-Stockfish b2e693ef, 100 ms each, six-slot capture-bank quiet-drop rules only, no NNUE. This is not Classic or an all-variant Fairy adapter. Opening adapter verification passed 32 root move-list comparisons and 64 legal searches. Queue waits for both deeper schedules and completed replay verification. Freeze fingerprints and constraints are in research/depth-matches-v1. Complete game data and reports will be archived separately on completion; no results are claimed at launch.

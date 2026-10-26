@@ -20,7 +20,7 @@ async function atomic(path, value) { const tmp=`${path}.${randomUUID()}.tmp`; aw
 export function tasksFor(config) {
  return ['white','black'].flatMap(candidateColor=>config.variants.flatMap(variant=>config.seeds.flatMap(seed=>Array.from({length:16},(_,opening)=>({id:`${candidateColor}__${variant}__${seed}__${opening}`,candidateColor,variant,seed,index:opening,repetition:0,white:'sharp',black:'sharp'})))));
 }
-export function playGame(task,maxPlies){
+export function playGame(task,maxPlies,candidateDepth=4){
  const ruleset=VARIANTS[task.variant],kings={white:12+task.index%4,black:Math.floor(task.index/4)},transcript=[];
  const random={candidate:seededRandom(task.seed),baseline:seededRandom((task.seed^0x9e3779b9)>>>0)};
  let p=createInitialPosition(ruleset);
@@ -33,12 +33,12 @@ export function playGame(task,maxPlies){
   assert.deepEqual(legacyRules.getResult(p),result);
   const engine=p.turn===task.candidateColor?'candidate':'baseline',start=performance.now();
   let action,completedDepth;
-  if(engine==='candidate'){const r=analyzeAction(p,{depth:4,random:random.candidate,repetitionAversion:true,quiescenceDepth:0,lateMoveReduction:false});action=r.action;completedDepth=r.completedDepth;assert.equal(completedDepth,4);}
+  if(engine==='candidate'){const r=analyzeAction(p,{depth:candidateDepth,random:random.candidate,repetitionAversion:true,quiescenceDepth:0,lateMoveReduction:false});action=r.action;completedDepth=r.completedDepth;assert.equal(completedDepth,candidateDepth);}
   else action=sharpV2(p,{depth:4,random:random.baseline,repetitionAversion:true});
   assert(action);step(action,{engine,millis:performance.now()-start,...(completedDepth===undefined?{}:{completedDepth})});result=getResult(p);
  }
  assert.deepEqual(legacyRules.getResult(p),result);
- return {index:task.index,seed:task.seed,levels:{white:'sharp',black:'sharp'},engines:{candidate:{version:7,depth:4},baseline:{version:2,depth:4}},candidateColor:task.candidateColor,ruleset,startingKings:kings,...(hidden?{hiddenSetup:hidden}:{}),result:result??{type:'draw',reason:'ply-limit'},plies:transcript.length,transcript,finalPosition:p};
+ return {index:task.index,seed:task.seed,levels:{white:'sharp',black:'sharp'},engines:{candidate:{version:7,depth:candidateDepth},baseline:{version:2,depth:4}},candidateColor:task.candidateColor,ruleset,startingKings:kings,...(hidden?{hiddenSetup:hidden}:{}),result:result??{type:'draw',reason:'ply-limit'},plies:transcript.length,transcript,finalPosition:p};
 }
 function parse(values) {
   const a={};for(let i=0;i<values.length;i+=2){if(!values[i].startsWith('--')||values[i+1]===undefined)throw new Error('Use --option value');a[values[i].slice(2)]=values[i+1];}return a;
@@ -51,14 +51,16 @@ async function prepare(a) {
   const seeds=(a.seeds??'20261501,20261502,20261503,20261504,20261505,20261506').split(',').map(Number);
   if(new Set(seeds).size!==seeds.length||seeds.some(n=>!Number.isSafeInteger(n)||n<0||n>0xffffffff))throw new Error('Invalid or duplicate seeds');
   if(a['candidate-commit'] && !/^[0-9a-f]{40}$/.test(a['candidate-commit']))throw Error('Invalid candidate commit');
-  const config={candidateCommit:a['candidate-commit']??null,variants,seeds,repetitions:positive(a.repetitions,1),maxPlies:positive(a['max-plies'],200),workers:positive(a.workers,Math.max(1,Math.min(8,availableParallelism()-2)))};
+  const candidateDepth=positive(a['candidate-depth'],4);
+  if(candidateDepth>100)throw Error('Candidate depth must be at most 100');
+  const config={candidateDepth,candidateCommit:a['candidate-commit']??null,variants,seeds,repetitions:positive(a.repetitions,1),maxPlies:positive(a['max-plies'],200),workers:positive(a.workers,Math.max(1,Math.min(8,availableParallelism()-2)))};
   await mkdir(dirname(output),{recursive:true});await mkdir(output);await mkdir(`${output}/games`);
   const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
   const paths=['package.json','scripts/run-engine-regression.js','research/engine-regression-v1/baseline/bot.js','research/engine-regression-v1/baseline/rules.js','research/engine-regression-v1/baseline/origin.json',...['bot','rules','board-masks','search','tournament','history','notation','watch','settings','variants'].map(p=>`src/${p}.js`)];
   const files=[];
   for(const path of paths){const content=await readFile(`${root}/${path}`);await mkdir(dirname(`${output}/runtime/${path}`),{recursive:true});await writeFile(`${output}/runtime/${path}`,content);files.push({path,sha256:hash(content)});}
   let git={};try{git={head:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),status:execFileSync('git',['status','--short'],{cwd:root,encoding:'utf8'})};}catch{}
-  const manifest={schema:1,createdAt:new Date().toISOString(),config,totalGames:tasksFor(config).length,sourceFingerprint:hash(JSON.stringify(files)),files,git,node:process.version,machine:{model:cpus()[0]?.model,cpus:cpus().length,memoryGiB:totalmem()/2**30},rules:Object.fromEntries(variants.map(id=>[id,{...VARIANTS[id],description:description(VARIANTS[id]),text:tournamentRules(VARIANTS[id])}])),ai:{candidate:TOURNAMENT_AI.sharp,baseline:{version:2,depth:4}},schedule:`Candidate-white then candidate-black tasks; ${seeds.length} seeds × 16 starts × ${variants.length} presets × 2 colors = ${tasksFor(config).length}`,notes:'Fixed depth four, no time/node cap, no speculative options. Six fresh seeds, all 16 starts and both fixed engine colors on 36 shared production presets. Candidate and frozen Sharp v2 have independent seeded tie streams. Other historical research objectives/armies require their own compatible adapter and are not pooled here. Not an equal-time match or proof of non-inferiority.'};
+  const manifest={schema:1,createdAt:new Date().toISOString(),config,totalGames:tasksFor(config).length,sourceFingerprint:hash(JSON.stringify(files)),files,git,node:process.version,machine:{model:cpus()[0]?.model,cpus:cpus().length,memoryGiB:totalmem()/2**30},rules:Object.fromEntries(variants.map(id=>[id,{...VARIANTS[id],description:description(VARIANTS[id]),text:tournamentRules(VARIANTS[id])}])),ai:{candidate:{...TOURNAMENT_AI.sharp,depth:candidateDepth},baseline:{version:2,depth:4}},schedule:`Candidate-white then candidate-black tasks; ${seeds.length} seeds × 16 starts × ${variants.length} presets × 2 colors = ${tasksFor(config).length}`,notes:`Candidate depth ${candidateDepth} versus baseline depth four, no time/node cap, no speculative options. Six fresh seeds, all 16 starts and both fixed engine colors on 36 shared production presets. Candidate and frozen Sharp v2 have independent seeded tie streams. Other historical research objectives/armies require their own compatible adapter and are not pooled here. Not an equal-time match or proof of non-inferiority.`};
   await atomic(`${output}/manifest.json`,manifest);console.log(JSON.stringify({output,totalGames:manifest.totalGames,workers:config.workers,resume:`node ${output}/runtime/scripts/run-engine-regression.js --resume ${output}`},null,2));
 }
 async function run(output) {
@@ -74,6 +76,8 @@ async function run(output) {
   const summary={};for(const id of config.variants)summary[id]={games:0,white:0,black:0,draws:0,reasons:{},matchups:{},totalNormalPlies:0,totalNonKings:0,kingOnly:0,checkingDrops:0};
   function tally(game,task){const s=summary[task.variant],outcome=game.result.winner??game.result.reason;s.games++;s[game.result.winner??'draws']++;s.reasons[outcome]=(s.reasons[outcome]??0)+1;const key=task.candidateColor;s.matchups[key]??={white:0,black:0,draws:0};s.matchups[key][game.result.winner??'draws']++;s.totalNormalPlies+=game.transcript.filter(e=>e.phase==='play').length;const n=game.finalPosition.board.filter(p=>p&&p.piece!=='king').length+game.finalPosition.banks.white.length+game.finalPosition.banks.black.length;s.totalNonKings+=n;s.kingOnly+=Number(n===0);s.checkingDrops+=game.transcript.filter(e=>e.checkingDrop===true).length;completed++;}
   function verify(game,task){
+    assert.deepEqual(game.engines,{candidate:{version:7,depth:config.candidateDepth??4},baseline:{version:2,depth:4}});
+    for(const e of game.transcript)if(e.engine==='candidate')assert.equal(e.completedDepth,config.candidateDepth??4);
     assert.equal(game.index,task.index);assert.equal(game.candidateColor,task.candidateColor);assert.deepEqual(game.levels,{white:task.white,black:task.black});
     assert.deepEqual(game.ruleset,VARIANTS[task.variant]);assert.equal(game.plies,game.transcript.length);
     let p=createInitialPosition(VARIANTS[task.variant]);
@@ -91,7 +95,7 @@ async function run(output) {
       let stopped=false,active=0;
       const stop=()=>{if(stopped)return;stopped=true;status='stopped';for(const w of workers)w.worker.terminate();finish();};process.once('SIGTERM',stop);process.once('SIGINT',stop);
       function fail(e){if(stopped)return;stopped=true;status='failed';failure=String(e.stack??e);for(const w of workers)w.worker.terminate();reject(e);}
-      function assign(w){if(stopped)return;const task=pending[cursor++];if(!task){w.task=null;w.worker.terminate();if(active===0){process.removeListener('SIGTERM',stop);process.removeListener('SIGINT',stop);finish();}return;}w.task=task;w.startedAt=new Date().toISOString();active++;w.worker.postMessage({task,maxPlies:config.maxPlies});}
+      function assign(w){if(stopped)return;const task=pending[cursor++];if(!task){w.task=null;w.worker.terminate();if(active===0){process.removeListener('SIGTERM',stop);process.removeListener('SIGINT',stop);finish();}return;}w.task=task;w.startedAt=new Date().toISOString();active++;w.worker.postMessage({task,maxPlies:config.maxPlies,candidateDepth:config.candidateDepth??4});}
       for(let i=0;i<Math.min(config.workers,pending.length);i++){
         const worker=new Worker(new URL(import.meta.url),{workerData:{localExperimentWorker:true}});const w={worker,task:null};workers.push(w);
         worker.on('error',fail);worker.on('exit',code=>{if(!stopped&&w.task)fail(new Error(`Worker exited ${code} during ${w.task.id}`));});
@@ -105,5 +109,5 @@ async function run(output) {
     }
   }catch(e){status='failed';failure=String(e.stack??e);throw e;}finally{clearInterval(timer);await progress();for(const w of workers)await w.worker.terminate();await lock.close();await unlink(lockPath);}
 }
-if(!isMainThread){parentPort.on('message',({task,maxPlies})=>{try{const game=playGame(task,maxPlies);parentPort.postMessage({game});}catch(e){parentPort.postMessage({error:String(e.stack??e)});}});}
+if(!isMainThread){parentPort.on('message',({task,maxPlies,candidateDepth})=>{try{const game=playGame(task,maxPlies,candidateDepth);parentPort.postMessage({game});}catch(e){parentPort.postMessage({error:String(e.stack??e)});}});}
 else if(process.argv[1]&&realpathSync(process.argv[1])===realpathSync(fileURLToPath(import.meta.url))){const a=parse(process.argv.slice(2));if(a.resume)await run(resolve(a.resume));else await prepare(a);}
