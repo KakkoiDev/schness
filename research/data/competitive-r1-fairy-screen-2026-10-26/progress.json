@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "pid": 35993,
+  "startedAt": "2026-10-26T09:51:47.666Z",
+  "updatedAt": "2026-10-26T09:51:57.890Z",
+  "completed": 0,
+  "total": 32,
+  "failure": "Error: Server did not start\n    at file:///Users/kakkoidev/Documents/ChatGPT/Schness/output/local-experiments/competitive-r1-fairy-screen-2026-10-26/runtime/scripts/run-competitive-fairy.js:37:201",
+  "sourceFingerprint": "fa21a5c4cd5d0f2bf19d517a4d6a3eb60af2409742531159202ed8a48c154975"
+}

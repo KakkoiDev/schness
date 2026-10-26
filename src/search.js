@@ -1,7 +1,7 @@
 /** Two-player zero-sum search. The adapter owns all game-specific rules. */
 export function strengthOptions(strength) {
   if (!Number.isInteger(strength) || strength < 0 || strength > 100) throw new RangeError('Level must be an integer 0–100');
-  return {depth:strength, maxNodes:262144};
+  return {depth:strength, maxNodes:Infinity};
 }
 
 export function createSearchEngine(adapter) {
@@ -29,6 +29,9 @@ export function createSearchEngine(adapter) {
     merged.lateMoveReduction ??= false;
     if(typeof merged.lateMoveReduction!=='boolean')throw new TypeError('Invalid lateMoveReduction');
     if(merged.lateMoveReduction && typeof adapter.canReduce!=='function')throw new TypeError('Late move reduction requires adapter.canReduce');
+    if(merged.onIteration!==undefined && typeof merged.onIteration!=='function')throw new TypeError('Invalid onIteration');
+    merged.stopOnProvenWin ??= false;
+    if(typeof merged.stopOnProvenWin!=='boolean')throw new TypeError('Invalid stopOnProvenWin');
     merged.multiPv ??= 1;
     merged.maxTableEntries ??= 50000;
     merged.aspirationWindow ??= 50;
@@ -43,7 +46,7 @@ export function createSearchEngine(adapter) {
     const {maxNodes=Infinity, maxMillis=Infinity} = options;
     if (!(maxNodes === Infinity || Number.isInteger(maxNodes) && maxNodes >= 1)) throw new RangeError('Invalid node budget');
     if (!(maxMillis === Infinity || Number.isFinite(maxMillis) && maxMillis > 0)) throw new RangeError('Invalid time budget');
-    return {nodes:0, quiescenceNodes:0, cutoffs:0, cacheHits:0, tableCutoffs:0, hintHits:0,
+    return {options,nodes:0, quiescenceNodes:0, cutoffs:0, cacheHits:0, tableCutoffs:0, hintHits:0,
       rootResearches:0, aspirationResearches:0, pvsResearches:0, historyHits:0, evaluations:0, actionGenerations:0, countGenerations:0, transitions:0,
       reducedSearches:0,reductionResearches:0,lateMoveReduction:options.lateMoveReduction,
       maxNodes, deadline:maxMillis === Infinity ? Infinity : Date.now()+maxMillis,
@@ -63,6 +66,7 @@ export function createSearchEngine(adapter) {
   function factsFor(p,ctx,preferCount=false) {
     let actions,count;
     const facts={
+      options:ctx.options,
       actions(){if(actions===undefined){ctx.actionGenerations++;actions=adapter.actions(p);if(count!==undefined && count!==actions.length)throw new Error('Action count disagrees with legal actions');count=actions.length;}return actions;},
       actionCount(){
         if(count===undefined){
@@ -248,6 +252,9 @@ export function createSearchEngine(adapter) {
         completed={...selected,completedDepth:depth,stopped:false,variations:ranked.slice(0,options.multiPv)};
         // Publish and reorder only a fully completed, exact iteration.
         actions=ranked.map(line=>line.action);
+        options.onIteration?.({depth,score:completed.score,nodes:ctx.nodes,pv:[...completed.pv]});
+        // A selective fail-low may have skipped a defense: never call it a proof.
+        if(options.stopOnProvenWin && !options.lateMoveReduction && adapter.isProvenWin?.(completed.score))break;
       }
     } catch (error) {
       if (error !== STOP) throw error;

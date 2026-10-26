@@ -14,6 +14,8 @@ test('worker preserves move protocol and offers explicit analysis with correlate
   assert.equal(replies[2].request,'bad');assert.match(replies[2].error,/Level/);
   handler({data:{position:createInitialPosition(),depth:1,quiescenceDepth:1,quiescenceChecks:true,lateMoveReduction:true,analyze:true,request:'experimental'}});
   assert.equal(replies[3].request,'experimental');assert(replies[3].analysis);
+  handler({data:{position:createInitialPosition(),profile:'competitive',maxNodes:100,analyze:true,request:'competitive'}});
+  assert.equal(replies.at(-1).request,'competitive');assert.equal(replies.at(-1).analysis.requestedDepth,20);assert(replies.at(-1).analysis.stopped);
   for(const name of ['quiescenceChecks','lateMoveReduction']){
    handler({data:{position:createInitialPosition(),[name]:1,request:name}});
    assert.match(replies.at(-1).error,new RegExp(name));assert.equal(replies.at(-1).request,name);
