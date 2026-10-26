@@ -1,0 +1,1470 @@
+{
+  "complete": true,
+  "completed": 6912,
+  "total": 6912,
+  "sourceFingerprint": "4f24a0ef9deffc141f91fb27894968efbb1f95234773e77e0fd5965cec0de6b8",
+  "rows": {
+    "canonical": {
+      "white": {
+        "games": 96,
+        "candidateWins": 53,
+        "baselineWins": 5,
+        "draws": 38,
+        "drawReasons": {
+          "ply-limit": 29,
+          "threefold-repetition": 9
+        },
+        "totalPlies": 12969,
+        "candidateMillis": 318288.9497790007,
+        "baselineMillis": 800423.5281460022,
+        "candidateDecisions": 6419,
+        "baselineDecisions": 6358,
+        "candidateMeanMillis": 49.58544162315013,
+        "baselineMeanMillis": 125.89234478546747,
+        "candidateWinRate": 0.5520833333333334,
+        "candidateScore": 0.75,
+        "decisiveRate": 0.6041666666666666
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 45,
+        "baselineWins": 2,
+        "draws": 49,
+        "drawReasons": {
+          "ply-limit": 41,
+          "threefold-repetition": 8
+        },
+        "totalPlies": 13113,
+        "candidateMillis": 270877.93577704765,
+        "baselineMillis": 1142820.4143729676,
+        "candidateDecisions": 6459,
+        "baselineDecisions": 6462,
+        "candidateMeanMillis": 41.93806096563673,
+        "baselineMeanMillis": 176.8524318125917,
+        "candidateWinRate": 0.46875,
+        "candidateScore": 0.7239583333333334,
+        "decisiveRate": 0.4895833333333333
+      }
+    },
+    "permanent-loss-quiet": {
+      "white": {
+        "games": 96,
+        "candidateWins": 33,
+        "baselineWins": 8,
+        "draws": 55,
+        "drawReasons": {
+          "ply-limit": 28,
+          "threefold-repetition": 25,
+          "stalemate": 2
+        },
+        "totalPlies": 8730,
+        "candidateMillis": 124672.66853500064,
+        "baselineMillis": 151157.75654199952,
+        "candidateDecisions": 4296,
+        "baselineDecisions": 4242,
+        "candidateMeanMillis": 29.02063978933907,
+        "baselineMeanMillis": 35.63360597406872,
+        "candidateWinRate": 0.34375,
+        "candidateScore": 0.6302083333333334,
+        "decisiveRate": 0.4270833333333333
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 29,
+        "baselineWins": 7,
+        "draws": 60,
+        "drawReasons": {
+          "stalemate": 6,
+          "threefold-repetition": 41,
+          "ply-limit": 13
+        },
+        "totalPlies": 5655,
+        "candidateMillis": 49606.55886802543,
+        "baselineMillis": 252059.58542699646,
+        "candidateDecisions": 2716,
+        "baselineDecisions": 2747,
+        "candidateMeanMillis": 18.264565120775195,
+        "baselineMeanMillis": 91.75813084346431,
+        "candidateWinRate": 0.3020833333333333,
+        "candidateScore": 0.6145833333333334,
+        "decisiveRate": 0.375
+      }
+    },
+    "permanent-loss-checking": {
+      "white": {
+        "games": 96,
+        "candidateWins": 68,
+        "baselineWins": 0,
+        "draws": 28,
+        "drawReasons": {
+          "stalemate": 16,
+          "threefold-repetition": 8,
+          "ply-limit": 4
+        },
+        "totalPlies": 2641,
+        "candidateMillis": 64858.55337999988,
+        "baselineMillis": 32956.167951000854,
+        "candidateDecisions": 1266,
+        "baselineDecisions": 1183,
+        "candidateMeanMillis": 51.23108481832534,
+        "baselineMeanMillis": 27.858130136095397,
+        "candidateWinRate": 0.7083333333333334,
+        "candidateScore": 0.8541666666666666,
+        "decisiveRate": 0.7083333333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 23,
+        "baselineWins": 50,
+        "draws": 23,
+        "drawReasons": {
+          "ply-limit": 13,
+          "threefold-repetition": 9,
+          "stalemate": 1
+        },
+        "totalPlies": 4929,
+        "candidateMillis": 24316.006137998775,
+        "baselineMillis": 371643.7654120093,
+        "candidateDecisions": 2340,
+        "baselineDecisions": 2397,
+        "candidateMeanMillis": 10.391455614529391,
+        "baselineMeanMillis": 155.04537564122208,
+        "candidateWinRate": 0.23958333333333334,
+        "candidateScore": 0.359375,
+        "decisiveRate": 0.7604166666666666
+      }
+    },
+    "capture-bank-3-quiet": {
+      "white": {
+        "games": 96,
+        "candidateWins": 82,
+        "baselineWins": 10,
+        "draws": 4,
+        "drawReasons": {
+          "threefold-repetition": 4
+        },
+        "totalPlies": 3237,
+        "candidateMillis": 209149.99484099797,
+        "baselineMillis": 283431.09790100035,
+        "candidateDecisions": 1564,
+        "baselineDecisions": 1481,
+        "candidateMeanMillis": 133.7276181847813,
+        "baselineMeanMillis": 191.37818899459847,
+        "candidateWinRate": 0.8541666666666666,
+        "candidateScore": 0.875,
+        "decisiveRate": 0.9583333333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 88,
+        "baselineWins": 7,
+        "draws": 1,
+        "drawReasons": {
+          "threefold-repetition": 1
+        },
+        "totalPlies": 4567,
+        "candidateMillis": 136038.8944190303,
+        "baselineMillis": 482067.71673999913,
+        "candidateDecisions": 2184,
+        "baselineDecisions": 2191,
+        "candidateMeanMillis": 62.28887107098456,
+        "baselineMeanMillis": 220.02177852122279,
+        "candidateWinRate": 0.9166666666666666,
+        "candidateScore": 0.921875,
+        "decisiveRate": 0.9895833333333334
+      }
+    },
+    "capture-bank-3-checking": {
+      "white": {
+        "games": 96,
+        "candidateWins": 84,
+        "baselineWins": 0,
+        "draws": 12,
+        "drawReasons": {
+          "stalemate": 12
+        },
+        "totalPlies": 1230,
+        "candidateMillis": 129044.77775099932,
+        "baselineMillis": 46919.957114000164,
+        "candidateDecisions": 567,
+        "baselineDecisions": 471,
+        "candidateMeanMillis": 227.59220061904642,
+        "baselineMeanMillis": 99.61774334182626,
+        "candidateWinRate": 0.875,
+        "candidateScore": 0.9375,
+        "decisiveRate": 0.875
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 14,
+        "baselineWins": 74,
+        "draws": 8,
+        "drawReasons": {
+          "threefold-repetition": 8
+        },
+        "totalPlies": 1776,
+        "candidateMillis": 26037.484464017674,
+        "baselineMillis": 465813.7327000117,
+        "candidateDecisions": 751,
+        "baselineDecisions": 833,
+        "candidateMeanMillis": 34.67041872705416,
+        "baselineMeanMillis": 559.2001593037355,
+        "candidateWinRate": 0.14583333333333334,
+        "candidateScore": 0.1875,
+        "decisiveRate": 0.9166666666666666
+      }
+    },
+    "capture-bank-4-quiet": {
+      "white": {
+        "games": 96,
+        "candidateWins": 90,
+        "baselineWins": 6,
+        "draws": 0,
+        "drawReasons": {},
+        "totalPlies": 3760,
+        "candidateMillis": 191008.1982949992,
+        "baselineMillis": 330764.1793910004,
+        "candidateDecisions": 1829,
+        "baselineDecisions": 1739,
+        "candidateMeanMillis": 104.43313192728223,
+        "baselineMeanMillis": 190.2036684249571,
+        "candidateWinRate": 0.9375,
+        "candidateScore": 0.9375,
+        "decisiveRate": 1
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 70,
+        "baselineWins": 24,
+        "draws": 2,
+        "drawReasons": {
+          "threefold-repetition": 2
+        },
+        "totalPlies": 4727,
+        "candidateMillis": 121733.6789629953,
+        "baselineMillis": 494322.0050260145,
+        "candidateDecisions": 2255,
+        "baselineDecisions": 2280,
+        "candidateMeanMillis": 53.98389310997574,
+        "baselineMeanMillis": 216.80789694123445,
+        "candidateWinRate": 0.7291666666666666,
+        "candidateScore": 0.7395833333333334,
+        "decisiveRate": 0.9791666666666666
+      }
+    },
+    "capture-bank-4-checking": {
+      "white": {
+        "games": 96,
+        "candidateWins": 84,
+        "baselineWins": 0,
+        "draws": 12,
+        "drawReasons": {
+          "stalemate": 12
+        },
+        "totalPlies": 1360,
+        "candidateMillis": 77550.10348999884,
+        "baselineMillis": 39759.856964999926,
+        "candidateDecisions": 632,
+        "baselineDecisions": 536,
+        "candidateMeanMillis": 122.70585995252982,
+        "baselineMeanMillis": 74.17883762126851,
+        "candidateWinRate": 0.875,
+        "candidateScore": 0.9375,
+        "decisiveRate": 0.875
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 33,
+        "baselineWins": 60,
+        "draws": 3,
+        "drawReasons": {
+          "threefold-repetition": 3
+        },
+        "totalPlies": 2059,
+        "candidateMillis": 36757.39254001528,
+        "baselineMillis": 462613.23302099854,
+        "candidateDecisions": 902,
+        "baselineDecisions": 965,
+        "candidateMeanMillis": 40.750989512212065,
+        "baselineMeanMillis": 479.3919513170969,
+        "candidateWinRate": 0.34375,
+        "candidateScore": 0.359375,
+        "decisiveRate": 0.96875
+      }
+    },
+    "capture-bank-5-quiet": {
+      "white": {
+        "games": 96,
+        "candidateWins": 90,
+        "baselineWins": 6,
+        "draws": 0,
+        "drawReasons": {},
+        "totalPlies": 3762,
+        "candidateMillis": 191710.89701899688,
+        "baselineMillis": 328463.0337559985,
+        "candidateDecisions": 1830,
+        "baselineDecisions": 1740,
+        "candidateMeanMillis": 104.76005301584529,
+        "baselineMeanMillis": 188.7718584804589,
+        "candidateWinRate": 0.9375,
+        "candidateScore": 0.9375,
+        "decisiveRate": 1
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 70,
+        "baselineWins": 24,
+        "draws": 2,
+        "drawReasons": {
+          "threefold-repetition": 2
+        },
+        "totalPlies": 4693,
+        "candidateMillis": 122163.24334398005,
+        "baselineMillis": 492124.77963799704,
+        "candidateDecisions": 2238,
+        "baselineDecisions": 2263,
+        "candidateMeanMillis": 54.585899617506726,
+        "baselineMeanMillis": 217.46565604860675,
+        "candidateWinRate": 0.7291666666666666,
+        "candidateScore": 0.7395833333333334,
+        "decisiveRate": 0.9791666666666666
+      }
+    },
+    "capture-bank-5-checking": {
+      "white": {
+        "games": 96,
+        "candidateWins": 84,
+        "baselineWins": 0,
+        "draws": 12,
+        "drawReasons": {
+          "stalemate": 12
+        },
+        "totalPlies": 1352,
+        "candidateMillis": 74376.16473900061,
+        "baselineMillis": 39285.25445700018,
+        "candidateDecisions": 628,
+        "baselineDecisions": 532,
+        "candidateMeanMillis": 118.43338334235766,
+        "baselineMeanMillis": 73.84446326503793,
+        "candidateWinRate": 0.875,
+        "candidateScore": 0.9375,
+        "decisiveRate": 0.875
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 33,
+        "baselineWins": 60,
+        "draws": 3,
+        "drawReasons": {
+          "threefold-repetition": 3
+        },
+        "totalPlies": 2059,
+        "candidateMillis": 36674.077451002784,
+        "baselineMillis": 461542.4426029911,
+        "candidateDecisions": 902,
+        "baselineDecisions": 965,
+        "candidateMeanMillis": 40.6586224512226,
+        "baselineMeanMillis": 478.28232394092345,
+        "candidateWinRate": 0.34375,
+        "candidateScore": 0.359375,
+        "decisiveRate": 0.96875
+      }
+    },
+    "capture-bank-6-quiet": {
+      "white": {
+        "games": 96,
+        "candidateWins": 90,
+        "baselineWins": 6,
+        "draws": 0,
+        "drawReasons": {},
+        "totalPlies": 3762,
+        "candidateMillis": 191158.73251899786,
+        "baselineMillis": 327529.0385209996,
+        "candidateDecisions": 1830,
+        "baselineDecisions": 1740,
+        "candidateMeanMillis": 104.45832378087314,
+        "baselineMeanMillis": 188.23507960976988,
+        "candidateWinRate": 0.9375,
+        "candidateScore": 0.9375,
+        "decisiveRate": 1
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 70,
+        "baselineWins": 24,
+        "draws": 2,
+        "drawReasons": {
+          "threefold-repetition": 2
+        },
+        "totalPlies": 4693,
+        "candidateMillis": 121907.04054196179,
+        "baselineMillis": 491985.62607799284,
+        "candidateDecisions": 2238,
+        "baselineDecisions": 2263,
+        "candidateMeanMillis": 54.471421153691594,
+        "baselineMeanMillis": 217.4041653018086,
+        "candidateWinRate": 0.7291666666666666,
+        "candidateScore": 0.7395833333333334,
+        "decisiveRate": 0.9791666666666666
+      }
+    },
+    "capture-bank-6-checking": {
+      "white": {
+        "games": 96,
+        "candidateWins": 84,
+        "baselineWins": 0,
+        "draws": 12,
+        "drawReasons": {
+          "stalemate": 12
+        },
+        "totalPlies": 1352,
+        "candidateMillis": 74188.62882900017,
+        "baselineMillis": 38906.240541000036,
+        "candidateDecisions": 628,
+        "baselineDecisions": 532,
+        "candidateMeanMillis": 118.13475928184741,
+        "baselineMeanMillis": 73.13203109210534,
+        "candidateWinRate": 0.875,
+        "candidateScore": 0.9375,
+        "decisiveRate": 0.875
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 33,
+        "baselineWins": 60,
+        "draws": 3,
+        "drawReasons": {
+          "threefold-repetition": 3
+        },
+        "totalPlies": 2059,
+        "candidateMillis": 36539.27605900355,
+        "baselineMillis": 463171.648536996,
+        "candidateDecisions": 902,
+        "baselineDecisions": 965,
+        "candidateMeanMillis": 40.50917523171125,
+        "baselineMeanMillis": 479.9706202455917,
+        "candidateWinRate": 0.34375,
+        "candidateScore": 0.359375,
+        "decisiveRate": 0.96875
+      }
+    },
+    "home-half-check": {
+      "white": {
+        "games": 96,
+        "candidateWins": 83,
+        "baselineWins": 4,
+        "draws": 9,
+        "drawReasons": {
+          "ply-limit": 8,
+          "threefold-repetition": 1
+        },
+        "totalPlies": 7230,
+        "candidateMillis": 264095.16618400055,
+        "baselineMillis": 418279.5631299955,
+        "candidateDecisions": 3561,
+        "baselineDecisions": 3477,
+        "candidateMeanMillis": 74.16320308452697,
+        "baselineMeanMillis": 120.29898278113185,
+        "candidateWinRate": 0.8645833333333334,
+        "candidateScore": 0.9114583333333334,
+        "decisiveRate": 0.90625
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 49,
+        "baselineWins": 16,
+        "draws": 31,
+        "drawReasons": {
+          "ply-limit": 17,
+          "threefold-repetition": 14
+        },
+        "totalPlies": 11195,
+        "candidateMillis": 276857.4190950403,
+        "baselineMillis": 1391061.631743948,
+        "candidateDecisions": 5491,
+        "baselineDecisions": 5512,
+        "candidateMeanMillis": 50.42021837462034,
+        "baselineMeanMillis": 252.36967194193542,
+        "candidateWinRate": 0.5104166666666666,
+        "candidateScore": 0.671875,
+        "decisiveRate": 0.6770833333333334
+      }
+    },
+    "distant-check": {
+      "white": {
+        "games": 96,
+        "candidateWins": 73,
+        "baselineWins": 12,
+        "draws": 11,
+        "drawReasons": {
+          "ply-limit": 10,
+          "threefold-repetition": 1
+        },
+        "totalPlies": 7274,
+        "candidateMillis": 250205.33600299945,
+        "baselineMillis": 362461.67590999766,
+        "candidateDecisions": 3578,
+        "baselineDecisions": 3504,
+        "candidateMeanMillis": 69.92882504276116,
+        "baselineMeanMillis": 103.4422591067345,
+        "candidateWinRate": 0.7604166666666666,
+        "candidateScore": 0.8177083333333334,
+        "decisiveRate": 0.8854166666666666
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 29,
+        "baselineWins": 57,
+        "draws": 10,
+        "drawReasons": {
+          "threefold-repetition": 10
+        },
+        "totalPlies": 3315,
+        "candidateMillis": 92749.7066290211,
+        "baselineMillis": 923729.7217369936,
+        "candidateDecisions": 1533,
+        "baselineDecisions": 1590,
+        "candidateMeanMillis": 60.50209173452126,
+        "baselineMeanMillis": 580.9620891427633,
+        "candidateWinRate": 0.3020833333333333,
+        "candidateScore": 0.3541666666666667,
+        "decisiveRate": 0.8958333333333334
+      }
+    },
+    "supported-check": {
+      "white": {
+        "games": 96,
+        "candidateWins": 92,
+        "baselineWins": 1,
+        "draws": 3,
+        "drawReasons": {
+          "threefold-repetition": 3
+        },
+        "totalPlies": 2301,
+        "candidateMillis": 117205.09842100088,
+        "baselineMillis": 107440.29779899842,
+        "candidateDecisions": 1102,
+        "baselineDecisions": 1007,
+        "candidateMeanMillis": 106.3567136306723,
+        "baselineMeanMillis": 106.69344369314639,
+        "candidateWinRate": 0.9583333333333334,
+        "candidateScore": 0.9739583333333334,
+        "decisiveRate": 0.96875
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 0,
+        "baselineWins": 84,
+        "draws": 12,
+        "drawReasons": {
+          "threefold-repetition": 12
+        },
+        "totalPlies": 1920,
+        "candidateMillis": 25383.915082972497,
+        "baselineMillis": 809045.9401709959,
+        "candidateDecisions": 822,
+        "baselineDecisions": 906,
+        "candidateMeanMillis": 30.880675283421528,
+        "baselineMeanMillis": 892.9866889304591,
+        "candidateWinRate": 0,
+        "candidateScore": 0.0625,
+        "decisiveRate": 0.875
+      }
+    },
+    "countercheck-only": {
+      "white": {
+        "games": 96,
+        "candidateWins": 51,
+        "baselineWins": 3,
+        "draws": 42,
+        "drawReasons": {
+          "ply-limit": 41,
+          "threefold-repetition": 1
+        },
+        "totalPlies": 13570,
+        "candidateMillis": 432551.84800600377,
+        "baselineMillis": 1072730.7518200064,
+        "candidateDecisions": 6715,
+        "baselineDecisions": 6663,
+        "candidateMeanMillis": 64.4157629197325,
+        "baselineMeanMillis": 160.99816176197004,
+        "candidateWinRate": 0.53125,
+        "candidateScore": 0.75,
+        "decisiveRate": 0.5625
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 49,
+        "baselineWins": 5,
+        "draws": 42,
+        "drawReasons": {
+          "ply-limit": 37,
+          "threefold-repetition": 5
+        },
+        "totalPlies": 12973,
+        "candidateMillis": 363230.300772924,
+        "baselineMillis": 1409752.4601260647,
+        "candidateDecisions": 6388,
+        "baselineDecisions": 6393,
+        "candidateMeanMillis": 56.861349526130866,
+        "baselineMeanMillis": 220.51501018708973,
+        "candidateWinRate": 0.5104166666666666,
+        "candidateScore": 0.7291666666666666,
+        "decisiveRate": 0.5625
+      }
+    },
+    "knight-check": {
+      "white": {
+        "games": 96,
+        "candidateWins": 57,
+        "baselineWins": 5,
+        "draws": 34,
+        "drawReasons": {
+          "ply-limit": 23,
+          "threefold-repetition": 11
+        },
+        "totalPlies": 11037,
+        "candidateMillis": 282207.6246500062,
+        "baselineMillis": 666840.4824700123,
+        "candidateDecisions": 5455,
+        "baselineDecisions": 5390,
+        "candidateMeanMillis": 51.73375337305338,
+        "baselineMeanMillis": 123.71808580148651,
+        "candidateWinRate": 0.59375,
+        "candidateScore": 0.7708333333333334,
+        "decisiveRate": 0.6458333333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 69,
+        "baselineWins": 5,
+        "draws": 22,
+        "drawReasons": {
+          "ply-limit": 18,
+          "threefold-repetition": 4
+        },
+        "totalPlies": 8571,
+        "candidateMillis": 223459.48091304302,
+        "baselineMillis": 1061490.145892918,
+        "candidateDecisions": 4186,
+        "baselineDecisions": 4193,
+        "candidateMeanMillis": 53.38258024678524,
+        "baselineMeanMillis": 253.15767848626714,
+        "candidateWinRate": 0.71875,
+        "candidateScore": 0.8333333333333334,
+        "decisiveRate": 0.7708333333333334
+      }
+    },
+    "bishop-check": {
+      "white": {
+        "games": 96,
+        "candidateWins": 43,
+        "baselineWins": 8,
+        "draws": 45,
+        "drawReasons": {
+          "ply-limit": 37,
+          "threefold-repetition": 8
+        },
+        "totalPlies": 14101,
+        "candidateMillis": 433646.4613760172,
+        "baselineMillis": 978955.7389340105,
+        "candidateDecisions": 6978,
+        "baselineDecisions": 6931,
+        "candidateMeanMillis": 62.144806732017365,
+        "baselineMeanMillis": 141.2430729958174,
+        "candidateWinRate": 0.4479166666666667,
+        "candidateScore": 0.6822916666666666,
+        "decisiveRate": 0.53125
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 49,
+        "baselineWins": 2,
+        "draws": 45,
+        "drawReasons": {
+          "ply-limit": 41,
+          "threefold-repetition": 4
+        },
+        "totalPlies": 13714,
+        "candidateMillis": 363715.1644500494,
+        "baselineMillis": 1375258.5725250524,
+        "candidateDecisions": 6759,
+        "baselineDecisions": 6763,
+        "candidateMeanMillis": 53.81197876165844,
+        "baselineMeanMillis": 203.35037298906585,
+        "candidateWinRate": 0.5104166666666666,
+        "candidateScore": 0.7447916666666666,
+        "decisiveRate": 0.53125
+      }
+    },
+    "rook-check": {
+      "white": {
+        "games": 96,
+        "candidateWins": 59,
+        "baselineWins": 12,
+        "draws": 25,
+        "drawReasons": {
+          "ply-limit": 5,
+          "threefold-repetition": 20
+        },
+        "totalPlies": 8393,
+        "candidateMillis": 358399.2984999842,
+        "baselineMillis": 674450.891020996,
+        "candidateDecisions": 4134,
+        "baselineDecisions": 4067,
+        "candidateMeanMillis": 86.69552455248771,
+        "baselineMeanMillis": 165.83498672756235,
+        "candidateWinRate": 0.6145833333333334,
+        "candidateScore": 0.7447916666666666,
+        "decisiveRate": 0.7395833333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 44,
+        "baselineWins": 4,
+        "draws": 48,
+        "drawReasons": {
+          "threefold-repetition": 40,
+          "ply-limit": 8
+        },
+        "totalPlies": 8576,
+        "candidateMillis": 247647.07669400238,
+        "baselineMillis": 1284690.0314180404,
+        "candidateDecisions": 4185,
+        "baselineDecisions": 4199,
+        "candidateMeanMillis": 59.17492872019173,
+        "baselineMeanMillis": 305.9514244863159,
+        "candidateWinRate": 0.4583333333333333,
+        "candidateScore": 0.7083333333333334,
+        "decisiveRate": 0.5
+      }
+    },
+    "unrestricted": {
+      "white": {
+        "games": 96,
+        "candidateWins": 96,
+        "baselineWins": 0,
+        "draws": 0,
+        "drawReasons": {},
+        "totalPlies": 1570,
+        "candidateMillis": 119083.28550900472,
+        "baselineMillis": 38292.138873007614,
+        "candidateDecisions": 737,
+        "baselineDecisions": 641,
+        "candidateMeanMillis": 161.57840638942295,
+        "baselineMeanMillis": 59.73812616693856,
+        "candidateWinRate": 1,
+        "candidateScore": 1,
+        "decisiveRate": 1
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 9,
+        "baselineWins": 87,
+        "draws": 0,
+        "drawReasons": {},
+        "totalPlies": 2243,
+        "candidateMillis": 31069.816893983632,
+        "baselineMillis": 574938.4499099888,
+        "candidateDecisions": 982,
+        "baselineDecisions": 1069,
+        "candidateMeanMillis": 31.639324739290867,
+        "baselineMeanMillis": 537.8282973900737,
+        "candidateWinRate": 0.09375,
+        "candidateScore": 0.09375,
+        "decisiveRate": 1
+      }
+    },
+    "protected-recurring": {
+      "white": {
+        "games": 96,
+        "candidateWins": 85,
+        "baselineWins": 8,
+        "draws": 3,
+        "drawReasons": {
+          "threefold-repetition": 3
+        },
+        "totalPlies": 2914,
+        "candidateMillis": 160272.61718100496,
+        "baselineMillis": 581894.8503399999,
+        "candidateDecisions": 1405,
+        "baselineDecisions": 1317,
+        "candidateMeanMillis": 114.0730371395053,
+        "baselineMeanMillis": 441.8335993470007,
+        "candidateWinRate": 0.8854166666666666,
+        "candidateScore": 0.9010416666666666,
+        "decisiveRate": 0.96875
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 77,
+        "baselineWins": 15,
+        "draws": 4,
+        "drawReasons": {
+          "threefold-repetition": 4
+        },
+        "totalPlies": 2461,
+        "candidateMillis": 161718.3986499887,
+        "baselineMillis": 439200.8287750222,
+        "candidateDecisions": 1125,
+        "baselineDecisions": 1144,
+        "candidateMeanMillis": 143.74968768887885,
+        "baselineMeanMillis": 383.9168083697746,
+        "candidateWinRate": 0.8020833333333334,
+        "candidateScore": 0.8229166666666666,
+        "decisiveRate": 0.9583333333333334
+      }
+    },
+    "protected-opening": {
+      "white": {
+        "games": 96,
+        "candidateWins": 33,
+        "baselineWins": 53,
+        "draws": 10,
+        "drawReasons": {
+          "threefold-repetition": 10
+        },
+        "totalPlies": 4597,
+        "candidateMillis": 326993.2217039997,
+        "baselineMillis": 2844659.1996120047,
+        "candidateDecisions": 2224,
+        "baselineDecisions": 2181,
+        "candidateMeanMillis": 147.02932630575526,
+        "baselineMeanMillis": 1304.2912423713915,
+        "candidateWinRate": 0.34375,
+        "candidateScore": 0.3958333333333333,
+        "decisiveRate": 0.8958333333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 86,
+        "baselineWins": 9,
+        "draws": 1,
+        "drawReasons": {
+          "threefold-repetition": 1
+        },
+        "totalPlies": 2287,
+        "candidateMillis": 146138.76600198075,
+        "baselineMillis": 391129.07663600333,
+        "candidateDecisions": 1043,
+        "baselineDecisions": 1052,
+        "candidateMeanMillis": 140.11386960880225,
+        "baselineMeanMillis": 371.7957002243378,
+        "candidateWinRate": 0.8958333333333334,
+        "candidateScore": 0.9010416666666666,
+        "decisiveRate": 0.9895833333333334
+      }
+    },
+    "first-turn-quiet": {
+      "white": {
+        "games": 96,
+        "candidateWins": 85,
+        "baselineWins": 5,
+        "draws": 6,
+        "drawReasons": {
+          "threefold-repetition": 6
+        },
+        "totalPlies": 4117,
+        "candidateMillis": 245481.6998969945,
+        "baselineMillis": 252704.2231799881,
+        "candidateDecisions": 2005,
+        "baselineDecisions": 1920,
+        "candidateMeanMillis": 122.43476304089502,
+        "baselineMeanMillis": 131.6167829062438,
+        "candidateWinRate": 0.8854166666666666,
+        "candidateScore": 0.9166666666666666,
+        "decisiveRate": 0.9375
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 30,
+        "baselineWins": 66,
+        "draws": 0,
+        "drawReasons": {},
+        "totalPlies": 2018,
+        "candidateMillis": 71901.4817119874,
+        "baselineMillis": 656937.1663460005,
+        "candidateDecisions": 880,
+        "baselineDecisions": 946,
+        "candidateMeanMillis": 81.70622921816751,
+        "baselineMeanMillis": 694.4367508942923,
+        "candidateWinRate": 0.3125,
+        "candidateScore": 0.3125,
+        "decisiveRate": 1
+      }
+    },
+    "protected-first-turn": {
+      "white": {
+        "games": 96,
+        "candidateWins": 78,
+        "baselineWins": 4,
+        "draws": 14,
+        "drawReasons": {
+          "threefold-repetition": 13,
+          "ply-limit": 1
+        },
+        "totalPlies": 4224,
+        "candidateMillis": 220402.9257190111,
+        "baselineMillis": 413933.4665690074,
+        "candidateDecisions": 2056,
+        "baselineDecisions": 1976,
+        "candidateMeanMillis": 107.19986659484977,
+        "baselineMeanMillis": 209.48049927581346,
+        "candidateWinRate": 0.8125,
+        "candidateScore": 0.8854166666666666,
+        "decisiveRate": 0.8541666666666666
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 82,
+        "baselineWins": 5,
+        "draws": 9,
+        "drawReasons": {
+          "threefold-repetition": 9
+        },
+        "totalPlies": 3272,
+        "candidateMillis": 157232.10698001832,
+        "baselineMillis": 645994.7004930191,
+        "candidateDecisions": 1535,
+        "baselineDecisions": 1545,
+        "candidateMeanMillis": 102.4313400521292,
+        "baselineMeanMillis": 418.11954724467256,
+        "candidateWinRate": 0.8541666666666666,
+        "candidateScore": 0.9010416666666666,
+        "decisiveRate": 0.90625
+      }
+    },
+    "mutual-one": {
+      "white": {
+        "games": 96,
+        "candidateWins": 83,
+        "baselineWins": 6,
+        "draws": 7,
+        "drawReasons": {
+          "ply-limit": 1,
+          "threefold-repetition": 6
+        },
+        "totalPlies": 3797,
+        "candidateMillis": 235261.41353899147,
+        "baselineMillis": 252962.0639560027,
+        "candidateDecisions": 1844,
+        "baselineDecisions": 1761,
+        "candidateMeanMillis": 127.58211146366132,
+        "baselineMeanMillis": 143.64682791368693,
+        "candidateWinRate": 0.8645833333333334,
+        "candidateScore": 0.9010416666666666,
+        "decisiveRate": 0.9270833333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 36,
+        "baselineWins": 57,
+        "draws": 3,
+        "drawReasons": {
+          "threefold-repetition": 3
+        },
+        "totalPlies": 1978,
+        "candidateMillis": 79419.99807899445,
+        "baselineMillis": 739736.388898043,
+        "candidateDecisions": 863,
+        "baselineDecisions": 923,
+        "candidateMeanMillis": 92.02780773927515,
+        "baselineMeanMillis": 801.4478752958212,
+        "candidateWinRate": 0.375,
+        "candidateScore": 0.390625,
+        "decisiveRate": 0.96875
+      }
+    },
+    "mutual-two": {
+      "white": {
+        "games": 96,
+        "candidateWins": 87,
+        "baselineWins": 6,
+        "draws": 3,
+        "drawReasons": {
+          "threefold-repetition": 3
+        },
+        "totalPlies": 3974,
+        "candidateMillis": 249007.66296400968,
+        "baselineMillis": 344839.74727099994,
+        "candidateDecisions": 1935,
+        "baselineDecisions": 1847,
+        "candidateMeanMillis": 128.68613073075434,
+        "baselineMeanMillis": 186.70262440227393,
+        "candidateWinRate": 0.90625,
+        "candidateScore": 0.921875,
+        "decisiveRate": 0.96875
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 75,
+        "baselineWins": 12,
+        "draws": 9,
+        "drawReasons": {
+          "threefold-repetition": 8,
+          "ply-limit": 1
+        },
+        "totalPlies": 5072,
+        "candidateMillis": 217737.22312106937,
+        "baselineMillis": 708454.701281961,
+        "candidateDecisions": 2433,
+        "baselineDecisions": 2447,
+        "candidateMeanMillis": 89.49330995522786,
+        "baselineMeanMillis": 289.51969811277525,
+        "candidateWinRate": 0.78125,
+        "candidateScore": 0.828125,
+        "decisiveRate": 0.90625
+      }
+    },
+    "limited-check": {
+      "white": {
+        "games": 96,
+        "candidateWins": 37,
+        "baselineWins": 4,
+        "draws": 55,
+        "drawReasons": {
+          "ply-limit": 50,
+          "threefold-repetition": 5
+        },
+        "totalPlies": 15214,
+        "candidateMillis": 383635.53681907617,
+        "baselineMillis": 1036202.83950995,
+        "candidateDecisions": 7531,
+        "baselineDecisions": 7491,
+        "candidateMeanMillis": 50.94084939836359,
+        "baselineMeanMillis": 138.3263702456214,
+        "candidateWinRate": 0.3854166666666667,
+        "candidateScore": 0.671875,
+        "decisiveRate": 0.4270833333333333
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 46,
+        "baselineWins": 0,
+        "draws": 50,
+        "drawReasons": {
+          "ply-limit": 49,
+          "threefold-repetition": 1
+        },
+        "totalPlies": 14599,
+        "candidateMillis": 363085.8798099533,
+        "baselineMillis": 1459176.7251959927,
+        "candidateDecisions": 7203,
+        "baselineDecisions": 7204,
+        "candidateMeanMillis": 50.40759125502614,
+        "baselineMeanMillis": 202.55090577401342,
+        "candidateWinRate": 0.4791666666666667,
+        "candidateScore": 0.7395833333333334,
+        "decisiveRate": 0.4791666666666667
+      }
+    },
+    "cooldown": {
+      "white": {
+        "games": 96,
+        "candidateWins": 81,
+        "baselineWins": 11,
+        "draws": 4,
+        "drawReasons": {
+          "threefold-repetition": 4
+        },
+        "totalPlies": 5816,
+        "candidateMillis": 224785.07536798343,
+        "baselineMillis": 396517.8356640246,
+        "candidateDecisions": 2854,
+        "baselineDecisions": 2770,
+        "candidateMeanMillis": 78.76141393412173,
+        "baselineMeanMillis": 143.14723309170563,
+        "candidateWinRate": 0.84375,
+        "candidateScore": 0.8645833333333334,
+        "decisiveRate": 0.9583333333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 70,
+        "baselineWins": 4,
+        "draws": 22,
+        "drawReasons": {
+          "threefold-repetition": 22
+        },
+        "totalPlies": 5252,
+        "candidateMillis": 174692.96789194457,
+        "baselineMillis": 751541.6047820076,
+        "candidateDecisions": 2527,
+        "baselineDecisions": 2533,
+        "candidateMeanMillis": 69.13057692597728,
+        "baselineMeanMillis": 296.70019928227697,
+        "candidateWinRate": 0.7291666666666666,
+        "candidateScore": 0.84375,
+        "decisiveRate": 0.7708333333333334
+      }
+    },
+    "no-drop-mate": {
+      "white": {
+        "games": 96,
+        "candidateWins": 95,
+        "baselineWins": 0,
+        "draws": 1,
+        "drawReasons": {
+          "threefold-repetition": 1
+        },
+        "totalPlies": 2466,
+        "candidateMillis": 795469.837605983,
+        "baselineMillis": 265865.5300279921,
+        "candidateDecisions": 1185,
+        "baselineDecisions": 1089,
+        "candidateMeanMillis": 671.2825633805763,
+        "baselineMeanMillis": 244.13730948392296,
+        "candidateWinRate": 0.9895833333333334,
+        "candidateScore": 0.9947916666666666,
+        "decisiveRate": 0.9895833333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 7,
+        "baselineWins": 88,
+        "draws": 1,
+        "drawReasons": {
+          "threefold-repetition": 1
+        },
+        "totalPlies": 2459,
+        "candidateMillis": 234674.00529599562,
+        "baselineMillis": 2623402.1429609545,
+        "candidateDecisions": 1089,
+        "baselineDecisions": 1178,
+        "candidateMeanMillis": 215.4949543581227,
+        "baselineMeanMillis": 2226.996725773306,
+        "candidateWinRate": 0.07291666666666667,
+        "candidateScore": 0.078125,
+        "decisiveRate": 0.9895833333333334
+      }
+    },
+    "grace": {
+      "white": {
+        "games": 96,
+        "candidateWins": 89,
+        "baselineWins": 4,
+        "draws": 3,
+        "drawReasons": {
+          "threefold-repetition": 3
+        },
+        "totalPlies": 2735,
+        "candidateMillis": 211815.72451100126,
+        "baselineMillis": 287286.66883600317,
+        "candidateDecisions": 1317,
+        "baselineDecisions": 1226,
+        "candidateMeanMillis": 160.83198520197513,
+        "baselineMeanMillis": 234.3284411386649,
+        "candidateWinRate": 0.9270833333333334,
+        "candidateScore": 0.9427083333333334,
+        "decisiveRate": 0.96875
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 73,
+        "baselineWins": 15,
+        "draws": 8,
+        "drawReasons": {
+          "threefold-repetition": 8
+        },
+        "totalPlies": 4608,
+        "candidateMillis": 166407.01349397935,
+        "baselineMillis": 618953.797596015,
+        "candidateDecisions": 2197,
+        "baselineDecisions": 2219,
+        "candidateMeanMillis": 75.74283727536611,
+        "baselineMeanMillis": 278.93366272916404,
+        "candidateWinRate": 0.7604166666666666,
+        "candidateScore": 0.8020833333333334,
+        "decisiveRate": 0.9166666666666666
+      }
+    },
+    "quiet-return": {
+      "white": {
+        "games": 96,
+        "candidateWins": 52,
+        "baselineWins": 3,
+        "draws": 41,
+        "drawReasons": {
+          "ply-limit": 39,
+          "threefold-repetition": 2
+        },
+        "totalPlies": 12617,
+        "candidateMillis": 446283.07356902584,
+        "baselineMillis": 1038599.992889028,
+        "candidateDecisions": 6239,
+        "baselineDecisions": 6186,
+        "candidateMeanMillis": 71.53118665956497,
+        "baselineMeanMillis": 167.89524618316005,
+        "candidateWinRate": 0.5416666666666666,
+        "candidateScore": 0.7552083333333334,
+        "decisiveRate": 0.5729166666666666
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 52,
+        "baselineWins": 2,
+        "draws": 42,
+        "drawReasons": {
+          "ply-limit": 38,
+          "threefold-repetition": 4
+        },
+        "totalPlies": 13707,
+        "candidateMillis": 395825.82476807013,
+        "baselineMillis": 1374695.9545599986,
+        "candidateDecisions": 6756,
+        "baselineDecisions": 6759,
+        "candidateMeanMillis": 58.58878400948344,
+        "baselineMeanMillis": 203.38747663263774,
+        "candidateWinRate": 0.5416666666666666,
+        "candidateScore": 0.7604166666666666,
+        "decisiveRate": 0.5625
+      }
+    },
+    "setup-white-quiet": {
+      "white": {
+        "games": 96,
+        "candidateWins": 54,
+        "baselineWins": 2,
+        "draws": 40,
+        "drawReasons": {
+          "ply-limit": 37,
+          "threefold-repetition": 3
+        },
+        "totalPlies": 13151,
+        "candidateMillis": 283993.4233870199,
+        "baselineMillis": 721203.6453579785,
+        "candidateDecisions": 6507,
+        "baselineDecisions": 6452,
+        "candidateMeanMillis": 43.6442943579253,
+        "baselineMeanMillis": 111.77985823899233,
+        "candidateWinRate": 0.5625,
+        "candidateScore": 0.7708333333333334,
+        "decisiveRate": 0.5833333333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 50,
+        "baselineWins": 2,
+        "draws": 44,
+        "drawReasons": {
+          "ply-limit": 41,
+          "threefold-repetition": 3
+        },
+        "totalPlies": 13929,
+        "candidateMillis": 295085.7886089366,
+        "baselineMillis": 844016.8504579347,
+        "candidateDecisions": 6867,
+        "baselineDecisions": 6870,
+        "candidateMeanMillis": 42.9715725366152,
+        "baselineMeanMillis": 122.85543674787986,
+        "candidateWinRate": 0.5208333333333334,
+        "candidateScore": 0.75,
+        "decisiveRate": 0.5416666666666666
+      }
+    },
+    "setup-white-checking": {
+      "white": {
+        "games": 96,
+        "candidateWins": 66,
+        "baselineWins": 17,
+        "draws": 13,
+        "drawReasons": {
+          "threefold-repetition": 13
+        },
+        "totalPlies": 3855,
+        "candidateMillis": 110023.59467600286,
+        "baselineMillis": 139588.3476039823,
+        "candidateDecisions": 1868,
+        "baselineDecisions": 1795,
+        "candidateMeanMillis": 58.899140618845216,
+        "baselineMeanMillis": 77.76509615820741,
+        "candidateWinRate": 0.6875,
+        "candidateScore": 0.7552083333333334,
+        "decisiveRate": 0.8645833333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 73,
+        "baselineWins": 14,
+        "draws": 9,
+        "drawReasons": {
+          "threefold-repetition": 9
+        },
+        "totalPlies": 4467,
+        "candidateMillis": 116918.86329798028,
+        "baselineMillis": 198452.00793096796,
+        "candidateDecisions": 2129,
+        "baselineDecisions": 2146,
+        "candidateMeanMillis": 54.91726787129182,
+        "baselineMeanMillis": 92.47530658479401,
+        "candidateWinRate": 0.7604166666666666,
+        "candidateScore": 0.8072916666666666,
+        "decisiveRate": 0.90625
+      }
+    },
+    "setup-black-quiet": {
+      "white": {
+        "games": 96,
+        "candidateWins": 54,
+        "baselineWins": 2,
+        "draws": 40,
+        "drawReasons": {
+          "ply-limit": 37,
+          "threefold-repetition": 3
+        },
+        "totalPlies": 13658,
+        "candidateMillis": 301316.07145896833,
+        "baselineMillis": 766493.1734439842,
+        "candidateDecisions": 6732,
+        "baselineDecisions": 6734,
+        "candidateMeanMillis": 44.7587747265253,
+        "baselineMeanMillis": 113.82435008078174,
+        "candidateWinRate": 0.5625,
+        "candidateScore": 0.7708333333333334,
+        "decisiveRate": 0.5833333333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 76,
+        "baselineWins": 1,
+        "draws": 19,
+        "drawReasons": {
+          "ply-limit": 18,
+          "threefold-repetition": 1
+        },
+        "totalPlies": 7001,
+        "candidateMillis": 147444.5983370412,
+        "baselineMillis": 415701.1249639522,
+        "candidateDecisions": 3443,
+        "baselineDecisions": 3366,
+        "candidateMeanMillis": 42.824454933790655,
+        "baselineMeanMillis": 123.50003712535717,
+        "candidateWinRate": 0.7916666666666666,
+        "candidateScore": 0.890625,
+        "decisiveRate": 0.8020833333333334
+      }
+    },
+    "setup-black-checking": {
+      "white": {
+        "games": 96,
+        "candidateWins": 65,
+        "baselineWins": 21,
+        "draws": 10,
+        "drawReasons": {
+          "threefold-repetition": 10
+        },
+        "totalPlies": 4115,
+        "candidateMillis": 119953.45664501563,
+        "baselineMillis": 158357.30630501453,
+        "candidateDecisions": 1949,
+        "baselineDecisions": 1974,
+        "candidateMeanMillis": 61.54615528220402,
+        "baselineMeanMillis": 80.22153308258082,
+        "candidateWinRate": 0.6770833333333334,
+        "candidateScore": 0.7291666666666666,
+        "decisiveRate": 0.8958333333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 92,
+        "baselineWins": 1,
+        "draws": 3,
+        "drawReasons": {
+          "threefold-repetition": 3
+        },
+        "totalPlies": 2120,
+        "candidateMillis": 56008.670558972284,
+        "baselineMillis": 90139.33934102021,
+        "candidateDecisions": 1011,
+        "baselineDecisions": 917,
+        "candidateMeanMillis": 55.39927849552155,
+        "baselineMeanMillis": 98.2980799793023,
+        "candidateWinRate": 0.9583333333333334,
+        "candidateScore": 0.9739583333333334,
+        "decisiveRate": 0.96875
+      }
+    },
+    "hidden-quiet": {
+      "white": {
+        "games": 96,
+        "candidateWins": 52,
+        "baselineWins": 2,
+        "draws": 42,
+        "drawReasons": {
+          "threefold-repetition": 5,
+          "ply-limit": 37
+        },
+        "totalPlies": 12858,
+        "candidateMillis": 251872.69583897572,
+        "baselineMillis": 704226.3419999843,
+        "candidateDecisions": 6072,
+        "baselineDecisions": 6018,
+        "candidateMeanMillis": 41.481010513665304,
+        "baselineMeanMillis": 117.01999700897048,
+        "candidateWinRate": 0.5416666666666666,
+        "candidateScore": 0.7604166666666666,
+        "decisiveRate": 0.5625
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 44,
+        "baselineWins": 10,
+        "draws": 42,
+        "drawReasons": {
+          "ply-limit": 38,
+          "threefold-repetition": 4
+        },
+        "totalPlies": 12799,
+        "candidateMillis": 255765.00991407596,
+        "baselineMillis": 717154.1633790396,
+        "candidateDecisions": 6009,
+        "baselineDecisions": 6022,
+        "candidateMeanMillis": 42.56365616809385,
+        "baselineMeanMillis": 119.08903410478904,
+        "candidateWinRate": 0.4583333333333333,
+        "candidateScore": 0.6770833333333334,
+        "decisiveRate": 0.5625
+      }
+    },
+    "hidden-checking": {
+      "white": {
+        "games": 96,
+        "candidateWins": 82,
+        "baselineWins": 7,
+        "draws": 7,
+        "drawReasons": {
+          "threefold-repetition": 7
+        },
+        "totalPlies": 4080,
+        "candidateMillis": 94527.18097201269,
+        "baselineMillis": 89100.61033499986,
+        "candidateDecisions": 1699,
+        "baselineDecisions": 1613,
+        "candidateMeanMillis": 55.63695171984266,
+        "baselineMeanMillis": 55.239064063856084,
+        "candidateWinRate": 0.8541666666666666,
+        "candidateScore": 0.890625,
+        "decisiveRate": 0.9270833333333334
+      },
+      "black": {
+        "games": 96,
+        "candidateWins": 49,
+        "baselineWins": 29,
+        "draws": 18,
+        "drawReasons": {
+          "threefold-repetition": 18
+        },
+        "totalPlies": 4067,
+        "candidateMillis": 66594.81828601658,
+        "baselineMillis": 163437.8241219893,
+        "candidateDecisions": 1631,
+        "baselineDecisions": 1668,
+        "candidateMeanMillis": 40.83066725077657,
+        "baselineMeanMillis": 97.98430702757153,
+        "candidateWinRate": 0.5104166666666666,
+        "candidateScore": 0.6041666666666666,
+        "decisiveRate": 0.8125
+      }
+    }
+  }
+}

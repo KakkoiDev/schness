@@ -1,0 +1,80 @@
+{
+  "run": "sharp-v7-d5-v2-full-v1-2026-10-26",
+  "sourceFingerprint": "4f24a0ef9deffc141f91fb27894968efbb1f95234773e77e0fd5965cec0de6b8",
+  "games": 6912,
+  "archiveBytes": 13921598,
+  "archiveSha256": "42cedf0b4c2f78c139771bdee14247ac03065deee872b3c6a1804df1ba0750e5",
+  "parts": [
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "28cc1ed184ec29f9873aeff6f23f2dfc091e17c51b7f2df59b2a220b404903e7"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part002",
+      "bytes": 1048576,
+      "sha256": "3d31d783d7415779c2f9204c5be5d51bf1cc0bc0b2885ad1b8ea1295d01b926c"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part003",
+      "bytes": 1048576,
+      "sha256": "33852459daec07b7bb41c4de652c17e9226c86ce29275daf38c962c5a95b84a3"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part004",
+      "bytes": 1048576,
+      "sha256": "3f58120f6a90c0d350976c4f859c5397502ecb587af2d47d3165f56c44fb005e"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part005",
+      "bytes": 1048576,
+      "sha256": "35fe2bbd37fd5ec78ee702ea7482d65f6fdb72b061357d5512beee8163002112"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part006",
+      "bytes": 1048576,
+      "sha256": "cb8dae42d6262533499b1bac94ef831e9889c63b6a3c8a5377d568621fc5bd4f"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part007",
+      "bytes": 1048576,
+      "sha256": "b31c87eb39c611fefc6c11ba0f6b24891f87f545722e2eb338c0072b5605405e"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part008",
+      "bytes": 1048576,
+      "sha256": "e3b54e9bbff355b83467ee40ad8f63e03512689dcc231483516da01dc20fa3ad"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part009",
+      "bytes": 1048576,
+      "sha256": "49d98ffa781ecaab4096b3a8e581026a36bc0c84a8f091659a0f81c4065836af"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part010",
+      "bytes": 1048576,
+      "sha256": "4eac612b80f4c19cf5b791a872de176555e229311329add18f1dcebea22fca01"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part011",
+      "bytes": 1048576,
+      "sha256": "96a97f5205c35aac0547585581d03a823a09798309385ce1ef4fb0622980f24f"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part012",
+      "bytes": 1048576,
+      "sha256": "be6728a7a437ca4bb5130946d15530961368153bd3ab553e20a410ffff34e562"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part013",
+      "bytes": 1048576,
+      "sha256": "2a709695215cf8e07678af7040c57045008646283bada7d9f2c6c79367a57932"
+    },
+    {
+      "path": "sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part014",
+      "bytes": 290110,
+      "sha256": "0b5e5a3d4793c2e1cc4bfae549a4754b3bc92a06405105b0d8fad1a176c6c3e9"
+    }
+  ],
+  "restore": "cat sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz.part* > sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz; tar -xzf sharp-v7-d5-v2-full-v1-2026-10-26.tar.gz"
+}

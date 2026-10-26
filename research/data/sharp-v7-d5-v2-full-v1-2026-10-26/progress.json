@@ -1,0 +1,1009 @@
+{
+  "status": "completed",
+  "pid": 20301,
+  "startedAt": "2026-10-26T05:44:27.319Z",
+  "updatedAt": "2026-10-26T05:44:33.546Z",
+  "sourceFingerprint": "4f24a0ef9deffc141f91fb27894968efbb1f95234773e77e0fd5965cec0de6b8",
+  "completed": 6912,
+  "total": 6912,
+  "remaining": 0,
+  "workers": 4,
+  "inFlight": [],
+  "failure": null,
+  "variants": {
+    "canonical": {
+      "games": 192,
+      "white": 55,
+      "black": 50,
+      "draws": 87,
+      "reasons": {
+        "black": 50,
+        "ply-limit": 70,
+        "threefold-repetition": 17,
+        "white": 55
+      },
+      "matchups": {
+        "black": {
+          "white": 2,
+          "black": 45,
+          "draws": 49
+        },
+        "white": {
+          "white": 53,
+          "black": 5,
+          "draws": 38
+        }
+      },
+      "totalNormalPlies": 25698,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 0
+    },
+    "permanent-loss-quiet": {
+      "games": 192,
+      "white": 40,
+      "black": 37,
+      "draws": 115,
+      "reasons": {
+        "stalemate": 8,
+        "threefold-repetition": 66,
+        "black": 37,
+        "ply-limit": 41,
+        "white": 40
+      },
+      "matchups": {
+        "black": {
+          "white": 7,
+          "black": 29,
+          "draws": 60
+        },
+        "white": {
+          "white": 33,
+          "black": 8,
+          "draws": 55
+        }
+      },
+      "totalNormalPlies": 14001,
+      "totalNonKings": 252,
+      "kingOnly": 48,
+      "checkingDrops": 0
+    },
+    "permanent-loss-checking": {
+      "games": 192,
+      "white": 118,
+      "black": 23,
+      "draws": 51,
+      "reasons": {
+        "black": 23,
+        "white": 118,
+        "ply-limit": 17,
+        "threefold-repetition": 17,
+        "stalemate": 17
+      },
+      "matchups": {
+        "black": {
+          "white": 50,
+          "black": 23,
+          "draws": 23
+        },
+        "white": {
+          "white": 68,
+          "black": 0,
+          "draws": 28
+        }
+      },
+      "totalNormalPlies": 7186,
+      "totalNonKings": 708,
+      "kingOnly": 9,
+      "checkingDrops": 648
+    },
+    "capture-bank-3-quiet": {
+      "games": 192,
+      "white": 89,
+      "black": 98,
+      "draws": 5,
+      "reasons": {
+        "black": 98,
+        "threefold-repetition": 5,
+        "white": 89
+      },
+      "matchups": {
+        "black": {
+          "white": 7,
+          "black": 88,
+          "draws": 1
+        },
+        "white": {
+          "white": 82,
+          "black": 10,
+          "draws": 4
+        }
+      },
+      "totalNormalPlies": 7420,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 0
+    },
+    "capture-bank-3-checking": {
+      "games": 192,
+      "white": 158,
+      "black": 14,
+      "draws": 20,
+      "reasons": {
+        "black": 14,
+        "white": 158,
+        "threefold-repetition": 8,
+        "stalemate": 12
+      },
+      "matchups": {
+        "black": {
+          "white": 74,
+          "black": 14,
+          "draws": 8
+        },
+        "white": {
+          "white": 84,
+          "black": 0,
+          "draws": 12
+        }
+      },
+      "totalNormalPlies": 2622,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 973
+    },
+    "capture-bank-4-quiet": {
+      "games": 192,
+      "white": 114,
+      "black": 76,
+      "draws": 2,
+      "reasons": {
+        "white": 114,
+        "black": 76,
+        "threefold-repetition": 2
+      },
+      "matchups": {
+        "black": {
+          "white": 24,
+          "black": 70,
+          "draws": 2
+        },
+        "white": {
+          "white": 90,
+          "black": 6,
+          "draws": 0
+        }
+      },
+      "totalNormalPlies": 8103,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 0
+    },
+    "capture-bank-4-checking": {
+      "games": 192,
+      "white": 144,
+      "black": 33,
+      "draws": 15,
+      "reasons": {
+        "black": 33,
+        "white": 144,
+        "threefold-repetition": 3,
+        "stalemate": 12
+      },
+      "matchups": {
+        "black": {
+          "white": 60,
+          "black": 33,
+          "draws": 3
+        },
+        "white": {
+          "white": 84,
+          "black": 0,
+          "draws": 12
+        }
+      },
+      "totalNormalPlies": 3035,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 883
+    },
+    "capture-bank-5-quiet": {
+      "games": 192,
+      "white": 114,
+      "black": 76,
+      "draws": 2,
+      "reasons": {
+        "white": 114,
+        "black": 76,
+        "threefold-repetition": 2
+      },
+      "matchups": {
+        "black": {
+          "white": 24,
+          "black": 70,
+          "draws": 2
+        },
+        "white": {
+          "white": 90,
+          "black": 6,
+          "draws": 0
+        }
+      },
+      "totalNormalPlies": 8071,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 0
+    },
+    "capture-bank-5-checking": {
+      "games": 192,
+      "white": 144,
+      "black": 33,
+      "draws": 15,
+      "reasons": {
+        "black": 33,
+        "white": 144,
+        "threefold-repetition": 3,
+        "stalemate": 12
+      },
+      "matchups": {
+        "black": {
+          "white": 60,
+          "black": 33,
+          "draws": 3
+        },
+        "white": {
+          "white": 84,
+          "black": 0,
+          "draws": 12
+        }
+      },
+      "totalNormalPlies": 3027,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 885
+    },
+    "capture-bank-6-quiet": {
+      "games": 192,
+      "white": 114,
+      "black": 76,
+      "draws": 2,
+      "reasons": {
+        "white": 114,
+        "black": 76,
+        "threefold-repetition": 2
+      },
+      "matchups": {
+        "black": {
+          "white": 24,
+          "black": 70,
+          "draws": 2
+        },
+        "white": {
+          "white": 90,
+          "black": 6,
+          "draws": 0
+        }
+      },
+      "totalNormalPlies": 8071,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 0
+    },
+    "capture-bank-6-checking": {
+      "games": 192,
+      "white": 144,
+      "black": 33,
+      "draws": 15,
+      "reasons": {
+        "black": 33,
+        "white": 144,
+        "threefold-repetition": 3,
+        "stalemate": 12
+      },
+      "matchups": {
+        "black": {
+          "white": 60,
+          "black": 33,
+          "draws": 3
+        },
+        "white": {
+          "white": 84,
+          "black": 0,
+          "draws": 12
+        }
+      },
+      "totalNormalPlies": 3027,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 885
+    },
+    "home-half-check": {
+      "games": 192,
+      "white": 99,
+      "black": 53,
+      "draws": 40,
+      "reasons": {
+        "ply-limit": 25,
+        "black": 53,
+        "threefold-repetition": 15,
+        "white": 99
+      },
+      "matchups": {
+        "black": {
+          "white": 16,
+          "black": 49,
+          "draws": 31
+        },
+        "white": {
+          "white": 83,
+          "black": 4,
+          "draws": 9
+        }
+      },
+      "totalNormalPlies": 18041,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 2683
+    },
+    "distant-check": {
+      "games": 192,
+      "white": 130,
+      "black": 41,
+      "draws": 21,
+      "reasons": {
+        "white": 130,
+        "threefold-repetition": 11,
+        "black": 41,
+        "ply-limit": 10
+      },
+      "matchups": {
+        "black": {
+          "white": 57,
+          "black": 29,
+          "draws": 10
+        },
+        "white": {
+          "white": 73,
+          "black": 12,
+          "draws": 11
+        }
+      },
+      "totalNormalPlies": 10205,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1975
+    },
+    "supported-check": {
+      "games": 192,
+      "white": 176,
+      "black": 1,
+      "draws": 15,
+      "reasons": {
+        "white": 176,
+        "threefold-repetition": 15,
+        "black": 1
+      },
+      "matchups": {
+        "black": {
+          "white": 84,
+          "black": 0,
+          "draws": 12
+        },
+        "white": {
+          "white": 92,
+          "black": 1,
+          "draws": 3
+        }
+      },
+      "totalNormalPlies": 3837,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 820
+    },
+    "countercheck-only": {
+      "games": 192,
+      "white": 56,
+      "black": 52,
+      "draws": 84,
+      "reasons": {
+        "black": 52,
+        "ply-limit": 78,
+        "threefold-repetition": 6,
+        "white": 56
+      },
+      "matchups": {
+        "black": {
+          "white": 5,
+          "black": 49,
+          "draws": 42
+        },
+        "white": {
+          "white": 51,
+          "black": 3,
+          "draws": 42
+        }
+      },
+      "totalNormalPlies": 26159,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 109
+    },
+    "knight-check": {
+      "games": 192,
+      "white": 62,
+      "black": 74,
+      "draws": 56,
+      "reasons": {
+        "black": 74,
+        "white": 62,
+        "ply-limit": 41,
+        "threefold-repetition": 15
+      },
+      "matchups": {
+        "black": {
+          "white": 5,
+          "black": 69,
+          "draws": 22
+        },
+        "white": {
+          "white": 57,
+          "black": 5,
+          "draws": 34
+        }
+      },
+      "totalNormalPlies": 19224,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1275
+    },
+    "bishop-check": {
+      "games": 192,
+      "white": 45,
+      "black": 57,
+      "draws": 90,
+      "reasons": {
+        "ply-limit": 78,
+        "black": 57,
+        "white": 45,
+        "threefold-repetition": 12
+      },
+      "matchups": {
+        "black": {
+          "white": 2,
+          "black": 49,
+          "draws": 45
+        },
+        "white": {
+          "white": 43,
+          "black": 8,
+          "draws": 45
+        }
+      },
+      "totalNormalPlies": 27431,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1493
+    },
+    "rook-check": {
+      "games": 192,
+      "white": 63,
+      "black": 56,
+      "draws": 73,
+      "reasons": {
+        "threefold-repetition": 60,
+        "black": 56,
+        "ply-limit": 13,
+        "white": 63
+      },
+      "matchups": {
+        "black": {
+          "white": 4,
+          "black": 44,
+          "draws": 48
+        },
+        "white": {
+          "white": 59,
+          "black": 12,
+          "draws": 25
+        }
+      },
+      "totalNormalPlies": 16585,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 2719
+    },
+    "unrestricted": {
+      "games": 192,
+      "white": 183,
+      "black": 9,
+      "draws": 0,
+      "reasons": {
+        "white": 183,
+        "black": 9
+      },
+      "matchups": {
+        "black": {
+          "white": 87,
+          "black": 9,
+          "draws": 0
+        },
+        "white": {
+          "white": 96,
+          "black": 0,
+          "draws": 0
+        }
+      },
+      "totalNormalPlies": 3429,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 879
+    },
+    "protected-recurring": {
+      "games": 192,
+      "white": 100,
+      "black": 85,
+      "draws": 7,
+      "reasons": {
+        "white": 100,
+        "black": 85,
+        "threefold-repetition": 7
+      },
+      "matchups": {
+        "black": {
+          "white": 15,
+          "black": 77,
+          "draws": 4
+        },
+        "white": {
+          "white": 85,
+          "black": 8,
+          "draws": 3
+        }
+      },
+      "totalNormalPlies": 4991,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1397
+    },
+    "protected-opening": {
+      "games": 192,
+      "white": 42,
+      "black": 139,
+      "draws": 11,
+      "reasons": {
+        "black": 139,
+        "white": 42,
+        "threefold-repetition": 11
+      },
+      "matchups": {
+        "black": {
+          "white": 9,
+          "black": 86,
+          "draws": 1
+        },
+        "white": {
+          "white": 33,
+          "black": 53,
+          "draws": 10
+        }
+      },
+      "totalNormalPlies": 6500,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1389
+    },
+    "first-turn-quiet": {
+      "games": 192,
+      "white": 151,
+      "black": 35,
+      "draws": 6,
+      "reasons": {
+        "black": 35,
+        "white": 151,
+        "threefold-repetition": 6
+      },
+      "matchups": {
+        "black": {
+          "white": 66,
+          "black": 30,
+          "draws": 0
+        },
+        "white": {
+          "white": 85,
+          "black": 5,
+          "draws": 6
+        }
+      },
+      "totalNormalPlies": 5751,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1530
+    },
+    "protected-first-turn": {
+      "games": 192,
+      "white": 83,
+      "black": 86,
+      "draws": 23,
+      "reasons": {
+        "black": 86,
+        "threefold-repetition": 22,
+        "white": 83,
+        "ply-limit": 1
+      },
+      "matchups": {
+        "black": {
+          "white": 5,
+          "black": 82,
+          "draws": 9
+        },
+        "white": {
+          "white": 78,
+          "black": 4,
+          "draws": 14
+        }
+      },
+      "totalNormalPlies": 7112,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1778
+    },
+    "mutual-one": {
+      "games": 192,
+      "white": 140,
+      "black": 42,
+      "draws": 10,
+      "reasons": {
+        "threefold-repetition": 9,
+        "white": 140,
+        "black": 42,
+        "ply-limit": 1
+      },
+      "matchups": {
+        "black": {
+          "white": 57,
+          "black": 36,
+          "draws": 3
+        },
+        "white": {
+          "white": 83,
+          "black": 6,
+          "draws": 7
+        }
+      },
+      "totalNormalPlies": 5391,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1519
+    },
+    "mutual-two": {
+      "games": 192,
+      "white": 99,
+      "black": 81,
+      "draws": 12,
+      "reasons": {
+        "black": 81,
+        "white": 99,
+        "threefold-repetition": 11,
+        "ply-limit": 1
+      },
+      "matchups": {
+        "black": {
+          "white": 12,
+          "black": 75,
+          "draws": 9
+        },
+        "white": {
+          "white": 87,
+          "black": 6,
+          "draws": 3
+        }
+      },
+      "totalNormalPlies": 8662,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1681
+    },
+    "limited-check": {
+      "games": 192,
+      "white": 37,
+      "black": 50,
+      "draws": 105,
+      "reasons": {
+        "black": 50,
+        "ply-limit": 99,
+        "threefold-repetition": 6,
+        "white": 37
+      },
+      "matchups": {
+        "black": {
+          "white": 0,
+          "black": 46,
+          "draws": 50
+        },
+        "white": {
+          "white": 37,
+          "black": 4,
+          "draws": 55
+        }
+      },
+      "totalNormalPlies": 29429,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 384
+    },
+    "cooldown": {
+      "games": 192,
+      "white": 85,
+      "black": 81,
+      "draws": 26,
+      "reasons": {
+        "black": 81,
+        "threefold-repetition": 26,
+        "white": 85
+      },
+      "matchups": {
+        "black": {
+          "white": 4,
+          "black": 70,
+          "draws": 22
+        },
+        "white": {
+          "white": 81,
+          "black": 11,
+          "draws": 4
+        }
+      },
+      "totalNormalPlies": 10684,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 2036
+    },
+    "no-drop-mate": {
+      "games": 192,
+      "white": 183,
+      "black": 7,
+      "draws": 2,
+      "reasons": {
+        "white": 183,
+        "black": 7,
+        "threefold-repetition": 2
+      },
+      "matchups": {
+        "black": {
+          "white": 88,
+          "black": 7,
+          "draws": 1
+        },
+        "white": {
+          "white": 95,
+          "black": 0,
+          "draws": 1
+        }
+      },
+      "totalNormalPlies": 4541,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1116
+    },
+    "grace": {
+      "games": 192,
+      "white": 104,
+      "black": 77,
+      "draws": 11,
+      "reasons": {
+        "black": 77,
+        "white": 104,
+        "threefold-repetition": 11
+      },
+      "matchups": {
+        "black": {
+          "white": 15,
+          "black": 73,
+          "draws": 8
+        },
+        "white": {
+          "white": 89,
+          "black": 4,
+          "draws": 3
+        }
+      },
+      "totalNormalPlies": 6959,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1331
+    },
+    "quiet-return": {
+      "games": 192,
+      "white": 54,
+      "black": 55,
+      "draws": 83,
+      "reasons": {
+        "black": 55,
+        "ply-limit": 77,
+        "threefold-repetition": 6,
+        "white": 54
+      },
+      "matchups": {
+        "black": {
+          "white": 2,
+          "black": 52,
+          "draws": 42
+        },
+        "white": {
+          "white": 52,
+          "black": 3,
+          "draws": 41
+        }
+      },
+      "totalNormalPlies": 25940,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 211
+    },
+    "setup-white-quiet": {
+      "games": 192,
+      "white": 56,
+      "black": 52,
+      "draws": 84,
+      "reasons": {
+        "ply-limit": 78,
+        "black": 52,
+        "threefold-repetition": 6,
+        "white": 56
+      },
+      "matchups": {
+        "black": {
+          "white": 2,
+          "black": 50,
+          "draws": 44
+        },
+        "white": {
+          "white": 54,
+          "black": 2,
+          "draws": 40
+        }
+      },
+      "totalNormalPlies": 25544,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 0
+    },
+    "setup-white-checking": {
+      "games": 192,
+      "white": 80,
+      "black": 90,
+      "draws": 22,
+      "reasons": {
+        "black": 90,
+        "threefold-repetition": 22,
+        "white": 80
+      },
+      "matchups": {
+        "black": {
+          "white": 14,
+          "black": 73,
+          "draws": 9
+        },
+        "white": {
+          "white": 66,
+          "black": 17,
+          "draws": 13
+        }
+      },
+      "totalNormalPlies": 6786,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1335
+    },
+    "setup-black-quiet": {
+      "games": 192,
+      "white": 55,
+      "black": 78,
+      "draws": 59,
+      "reasons": {
+        "black": 78,
+        "ply-limit": 55,
+        "threefold-repetition": 4,
+        "white": 55
+      },
+      "matchups": {
+        "black": {
+          "white": 1,
+          "black": 76,
+          "draws": 19
+        },
+        "white": {
+          "white": 54,
+          "black": 2,
+          "draws": 40
+        }
+      },
+      "totalNormalPlies": 19123,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 0
+    },
+    "setup-black-checking": {
+      "games": 192,
+      "white": 66,
+      "black": 113,
+      "draws": 13,
+      "reasons": {
+        "black": 113,
+        "white": 66,
+        "threefold-repetition": 13
+      },
+      "matchups": {
+        "black": {
+          "white": 1,
+          "black": 92,
+          "draws": 3
+        },
+        "white": {
+          "white": 65,
+          "black": 21,
+          "draws": 10
+        }
+      },
+      "totalNormalPlies": 4699,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 857
+    },
+    "hidden-quiet": {
+      "games": 192,
+      "white": 62,
+      "black": 46,
+      "draws": 84,
+      "reasons": {
+        "ply-limit": 75,
+        "threefold-repetition": 9,
+        "black": 46,
+        "white": 62
+      },
+      "matchups": {
+        "black": {
+          "white": 10,
+          "black": 44,
+          "draws": 42
+        },
+        "white": {
+          "white": 52,
+          "black": 2,
+          "draws": 42
+        }
+      },
+      "totalNormalPlies": 24121,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 0
+    },
+    "hidden-checking": {
+      "games": 192,
+      "white": 111,
+      "black": 56,
+      "draws": 25,
+      "reasons": {
+        "black": 56,
+        "threefold-repetition": 25,
+        "white": 111
+      },
+      "matchups": {
+        "black": {
+          "white": 29,
+          "black": 49,
+          "draws": 18
+        },
+        "white": {
+          "white": 82,
+          "black": 7,
+          "draws": 7
+        }
+      },
+      "totalNormalPlies": 6611,
+      "totalNonKings": 1152,
+      "kingOnly": 0,
+      "checkingDrops": 1246
+    }
+  }
+}

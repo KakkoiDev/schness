@@ -1,0 +1,40 @@
+{
+  "white": {
+    "games": 3456,
+    "candidateWins": 2574,
+    "baselineWins": 241,
+    "draws": 641,
+    "candidateMillis": 8564496.999681085,
+    "baselineMillis": 17033483.494142972,
+    "candidateDecisions": 109171,
+    "baselineDecisions": 106584,
+    "winRate": 0.7447916666666666,
+    "score": 0.8375289351851852,
+    "candidateMeanMillis": 78.45029357321161,
+    "baselineMeanMillis": 159.81276264864306,
+    "drawReasons": {
+      "ply-limit": 387,
+      "threefold-repetition": 188,
+      "stalemate": 66
+    }
+  },
+  "black": {
+    "games": 3456,
+    "candidateWins": 1824,
+    "baselineWins": 982,
+    "draws": 650,
+    "candidateMillis": 5713415.88390312,
+    "baselineMillis": 27248256.300798897,
+    "candidateDecisions": 102974,
+    "baselineDecisions": 103895,
+    "winRate": 0.5277777777777778,
+    "score": 0.6218171296296297,
+    "candidateMeanMillis": 55.48406281103113,
+    "baselineMeanMillis": 262.26725348475765,
+    "drawReasons": {
+      "ply-limit": 373,
+      "threefold-repetition": 270,
+      "stalemate": 7
+    }
+  }
+}
