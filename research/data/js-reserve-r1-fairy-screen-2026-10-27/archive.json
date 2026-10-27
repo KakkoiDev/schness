@@ -1,0 +1,20 @@
+{
+  "run": "js-reserve-r1-fairy-screen-2026-10-27",
+  "sourceFingerprint": "2122691ea504a98efc486f5e91bb27ca7f437d19e0efcc8afa349832d2c25397",
+  "games": 32,
+  "archiveBytes": 1542020,
+  "archiveSha256": "281513eb8dbb72747d7c121793af24d7cf04e03849ec003ad225c383b25b1d29",
+  "parts": [
+    {
+      "path": "js-reserve-r1-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "a8ff56aaa2dfe0b6c9c60ee6a78bd95afd60b2e1966d06271103b02b2c7b6d19"
+    },
+    {
+      "path": "js-reserve-r1-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 493444,
+      "sha256": "d84dbfbb14d8e7ac3582010e23cd6f2b1944eaad99ad8476eb6263e7f7fffba2"
+    }
+  ],
+  "restore": "cat js-reserve-r1-fairy-screen-2026-10-27.tar.gz.part* > js-reserve-r1-fairy-screen-2026-10-27.tar.gz; tar -xzf js-reserve-r1-fairy-screen-2026-10-27.tar.gz"
+}
