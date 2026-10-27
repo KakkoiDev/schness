@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
+    "test:engine-contract": "node scripts/check-engine-contract.js",
     "test:e2e": "playwright test",
     "test:e2e:desktop": "playwright test --project=desktop",
     "tournament": "node scripts/run-tournament.js",
