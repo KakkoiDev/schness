@@ -1276,3 +1276,8 @@ See docs/search-performance-v5-report-2026-10-25.md for separate match results a
 ### Optional reserve-aware exchange ordering
 
 `exchange` estimates alternating king-safe captures on a single square, including capture-bank ownership/overflow and drop material accounting. It omits drops elsewhere, variant turn rights and repetition; it is only an opt-in competitive move-ordering heuristic, never pruning, adjudication, or proof. Defaults/reference evaluation remain unchanged. test/exchange-ordering.test.js checks transfer/overflow, pinned recaptures, optional recaptures, drop exposure, restoration and nonselective score equivalence.
+
+
+### Optional selective-reduction safeguards
+
+Research options reducePrincipalVariation:false and protectHistoryMoves:true respectively restrict reductions to null windows and protect learned killer/history moves. Defaults preserve prior behavior. They do not make selective search exact or prove mates. Generic trap/cancellation/restoration and actual protection telemetry are tested in test/competitive-search.test.js; playing acceptance requires complete frozen equal-time matches.

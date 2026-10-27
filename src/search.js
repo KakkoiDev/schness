@@ -32,6 +32,9 @@ export function createSearchEngine(adapter) {
     if(typeof merged.cacheQuiescence!=='boolean')throw new TypeError('Invalid cacheQuiescence');
     merged.quiescenceChecks ??= false;
     if(typeof merged.quiescenceChecks!=='boolean')throw new TypeError('Invalid quiescenceChecks');
+    merged.reducePrincipalVariation ??= true;
+    merged.protectHistoryMoves ??= false;
+    for(const name of ['reducePrincipalVariation','protectHistoryMoves'])if(typeof merged[name]!=='boolean')throw new TypeError(`Invalid ${name}`);
     merged.stagedMoveSelection ??= false;
     if(typeof merged.stagedMoveSelection!=='boolean')throw new TypeError('Invalid stagedMoveSelection');
     merged.lateMoveReduction ??= false;
@@ -56,7 +59,7 @@ export function createSearchEngine(adapter) {
     if (!(maxMillis === Infinity || Number.isFinite(maxMillis) && maxMillis > 0)) throw new RangeError('Invalid time budget');
     return {options,nodes:0, quiescenceNodes:0, cutoffs:0, cacheHits:0, tableCutoffs:0, hintHits:0,
       evaluationCacheHits:0,rootResearches:0, aspirationResearches:0, pvsResearches:0, historyHits:0, evaluations:0, actionGenerations:0, countGenerations:0, transitions:0,
-      reducedSearches:0,reductionResearches:0,lateMoveReduction:options.lateMoveReduction,
+      reducedSearches:0,reductionResearches:0,protectedReductions:0,lateMoveReduction:options.lateMoveReduction,
       maxNodes, deadline:maxMillis === Infinity ? Infinity : Date.now()+maxMillis,
       maxTableEntries:options.maxTableEntries, quiescenceDepth:options.quiescenceDepth ?? 0,
       noisyOptions:Object.freeze({includeChecks:options.quiescenceChecks}),
@@ -219,7 +222,14 @@ export function createSearchEngine(adapter) {
     let best = {value:maximizing ? -Infinity : Infinity,line:null};
     let moveIndex=0;
     for (const action of actions) {
-      const reduce=ctx.lateMoveReduction && depth>=3 && moveIndex>=3 && adapter.canReduce(p,action,ctx.options);
+      const id=ctx.options.protectHistoryMoves?actionIdentity(action):null;
+      const protectedMove=ctx.options.protectHistoryMoves && ((ctx.killers.get(depth)??[]).includes(id) ||
+        (ctx.history?.get(`${adapter.turn(p)}:${id}`)??0)>=depth*depth);
+      const eligible=ctx.lateMoveReduction && depth>=3 && moveIndex>=3 &&
+        (ctx.options.reducePrincipalVariation || beta-alpha<=(adapter.scoreStep??1)) &&
+        adapter.canReduce(p,action,ctx.options);
+      if(eligible && protectedMove)ctx.protectedReductions++;
+      const reduce=eligible && !protectedMove;
       moveIndex++;
       const child = withChild(p,action,ctx,next=>{
         // Experimental selective search, never part of the exact default mode.
@@ -322,7 +332,7 @@ export function createSearchEngine(adapter) {
     return {...completed,requestedDepth:options.depth,nodes:ctx.nodes,quiescenceNodes:ctx.quiescenceNodes,
       stats:{cutoffs:ctx.cutoffs,cacheHits:ctx.cacheHits,tableCutoffs:ctx.tableCutoffs,hintHits:ctx.hintHits,
         rootResearches:ctx.rootResearches,pvsResearches:ctx.pvsResearches,aspirationResearches:ctx.aspirationResearches,historyHits:ctx.historyHits,evaluations:ctx.evaluations,actionGenerations:ctx.actionGenerations,countGenerations:ctx.countGenerations,
-        reducedSearches:ctx.reducedSearches,reductionResearches:ctx.reductionResearches,
+        reducedSearches:ctx.reducedSearches,reductionResearches:ctx.reductionResearches,protectedReductions:ctx.protectedReductions,
         transitions:ctx.transitions,tableEntries:ctx.cache?.size ?? 0,hintEntries:ctx.hints?.size ?? 0}};
   }
   function score(position, player, depth=3, options={}) {

@@ -143,3 +143,24 @@ test('staged independent scoring skips quiet groups after tactical cutoffs',()=>
  const b=engine.choose('',{...options,stagedMoveSelection:true}),lazy=scored;
  assert.equal(a.score,b.score);assert.deepEqual(a.action,b.action);assert.equal(a.nodes,b.nodes);assert(lazy<eager,`${lazy} >= ${eager}`);
 });
+test('PV reduction safeguard recovers a defense hidden by reduced fail-low',()=>{
+ const next={root:['start'],start:['a','b','c','win'],win:['x'],x:['goal']};
+ const engine=createSearchEngine({scoreStep:1,actions:p=>next[p]??[],apply:(_p,a)=>a,turn:p=>p==='win'?1:0,key:String,terminal:p=>['a','b','c'].includes(p)?0:p==='goal'?20:null,evaluate:()=>-10,canReduce:()=>true});
+ const options={depth:4,lateMoveReduction:true,principalVariation:false,useCache:false,useHistory:false};
+ const prior=engine.choose('root',options),guard=engine.choose('root',{...options,reducePrincipalVariation:false});
+ assert.equal(prior.score,0);assert.equal(guard.score,20);assert.equal(guard.score,engine.choose('root',{...options,lateMoveReduction:false}).score);
+ assert.equal(guard.completedDepth,4);assert.equal(guard.stats.reducedSearches,0);
+ assert.throws(()=>engine.choose('root',{reducePrincipalVariation:0}),/reducePrincipalVariation/);
+ assert.throws(()=>engine.choose('root',{protectHistoryMoves:1}),/protectHistoryMoves/);
+});
+test('history protection is optional, bounded and preserves public inputs under cancellation',()=>{
+ const p=position(),saved=structuredClone(p),o={profile:'competitive',depth:9,maxNodes:1000,quiescenceDepth:0,lateMoveReduction:true,protectHistoryMoves:true};
+ const a=analyzeAction(p,o);assert(a.stopped);assert(a.nodes<=1000);assert.deepEqual(p,saved);assert(r.legalActions(p).some(x=>r.actionKey(x)===r.actionKey(a.action)));
+ const exact={...o,depth:3,maxNodes:Infinity,lateMoveReduction:false};assert.equal(analyzeAction(p,exact).score,analyzeAction(p,{...exact,protectHistoryMoves:false}).score);
+});
+test('history protection actually prevents eligible reductions on an early-loss fixture',async()=>{
+ const {readFile}=await import('node:fs/promises');const corpus=JSON.parse(await readFile(new URL('../research/competitive-engine-v1/rust-r5-early-swings.json',import.meta.url)));
+ const p=corpus.cases.find(c=>c.id==='black__20262001__1').position,saved=structuredClone(p);
+ const o={profile:'competitive',depth:6,iterativeDeepening:true,quiescenceDepth:4,quiescenceChecks:true,quiescenceEvasionDepth:2,cacheEvaluation:true,lateMoveReduction:true,stopOnProvenWin:false};
+ const a=analyzeAction(p,o),b=analyzeAction(p,{...o,protectHistoryMoves:true});assert.equal(a.stats.protectedReductions,0);assert(b.stats.protectedReductions>0);assert.equal(b.completedDepth,6);assert.equal(a.score,b.score);assert.deepEqual(p,saved);
+});
