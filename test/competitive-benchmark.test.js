@@ -17,3 +17,26 @@ test('competitive benchmark freezes uncapped budgets, both colors, rules and lic
   for(const file of m.files)assert.equal(createHash('sha256').update(await readFile(out+'/runtime/'+file.path)).digest('hex'),file.sha256);
  }finally{await rm(tmp,{recursive:true,force:true});}
 });
+
+test('native benchmark freezes PV reduction policy and rejects ambiguous values',async()=>{
+ const tmp=await mkdtemp(join(tmpdir(),'schness-rust-freeze-'));
+ try{
+  for(const flag of [undefined,'false']){
+   const out=join(tmp,flag??'default');
+   execFileSync(process.execPath,['scripts/run-rust-fairy.js','--output',out,'--seeds','1','--starts','1',...(flag===undefined?[]:['--reduce-pv',flag])]);
+   const m=JSON.parse(await readFile(out+'/manifest.json'));
+   assert.equal(m.candidate.reducePrincipalVariation,flag!=='false');
+   assert.equal(m.candidateMillis,100);assert.equal(m.budgetMillis,100);
+   assert.deepEqual(m.tasks.map(x=>x.color),['white','black']);
+   assert(m.files.some(x=>x.path==='engine-rust/src/pv-reduction-regression.json'));
+   for(const f of m.files)assert.equal(createHash('sha256').update(await readFile(out+'/runtime/'+f.path)).digest('hex'),f.sha256);
+   // The exact frozen options reach the process unchanged, including false.
+   const {nativeEngine}=await import('../scripts/native-engine-client.js');
+   const {createInitialPosition,applyAction}=await import('../src/rules.js');
+   let p=createInitialPosition(m.rules);p=applyAction(p,{type:'place-king',to:12});p=applyAction(p,{type:'place-king',to:0});
+   const client=nativeEngine(out+'/runtime/engine-rust/target/release/schness-engine');
+   try{const r=await client.request('schness-v1',p,{...m.candidate,depth:1,maxMillis:m.candidateMillis});assert.equal(r.completedDepth,1);assert(r.action);}finally{client.close();}
+  }
+  assert.throws(()=>execFileSync(process.execPath,['scripts/run-rust-fairy.js','--output',join(tmp,'bad'),'--reduce-pv','no'],{stdio:'pipe'}),/reduce-pv must be true or false/);
+ }finally{await rm(tmp,{recursive:true,force:true});}
+});

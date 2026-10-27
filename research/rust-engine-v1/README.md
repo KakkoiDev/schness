@@ -83,3 +83,6 @@ On ALL15completed selected positions, matched nonreduced/reduced depth6 singlePV
 
 
 Experimental `reducePrincipalVariation: false` restricts late-move reductions to null windows; default true preserves existing behavior. On all15 selected early-loss cases, all30 paired depth6 searches completed: four scores and one action changed. The Black start2 defense now matches the nonreduced depth6 action/score. This selected regression is tested; it does not establish universal equivalence or stronger play. Ten Rust tests and the external conformance batch pass. No new match launched or default promoted. Data: `rust-pv-reduction-ablation.json`.
+
+
+Frozen r6 screen explicitly records `reducePrincipalVariation:false` and forwards the full candidate options to native search. The preparation test checks default/false serialization, native invocation, frozen file hashes and rejection of malformed values. All367 JS tests pass. Same32 starts/colors/seed20262001 and100ms each versus pinned Fairy; requested20/q4/evasion2/LMR/staticcache. Fingerprint b8b0b13778233412da1d9ef2f24766a5a91bf6f7b321285683acf934db109e7a. Launch manifest retained. Results pending; no partial strength claim.

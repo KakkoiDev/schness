@@ -1559,3 +1559,8 @@ Matched reduction-off/on searches on all 15 completed cases finished all 30 sear
 ### 2026-10-27 — Experimental principal-variation reduction guard
 
 Added opt-in reducePrincipalVariation:false: late quiet reductions are restricted to null windows; default behavior remains unchanged. A selected Black-start-2 regression now recovers the nonreduced depth-6 king defense and score. Ten Rust tests pass, plus1555 rule positions,36 exact reference/36 nonreduced competitive comparisons,8 recovery checks and174 portable cases. All15 selected early-loss positions completed both bounded depth6 variants: four scores and one action changed. Full inputs/results/source/binary hashes retained. This is finite-horizon tactical evidence, not universal equivalence or improved playing strength. No new screen launched or app/default promotion.
+
+
+### 2026-10-27 — Frozen Rust r6 PV-guard screen
+
+Benchmark now explicitly freezes and forwards reducePrincipalVariation (CLI --reduce-pv true/false); invalid values rejected. New preparation/invocation tests and all367 JS tests pass. Regression fixture is included in frozen source set. Release rebuilt. Launched32 identical starts/colors/seed20262001 at100ms candidate and100ms unchanged Fairy, requested20/q4/evasion2/LMR/staticcache with reducePrincipalVariation:false. Fingerprint b8b0b13778233412da1d9ef2f24766a5a91bf6f7b321285683acf934db109e7a. Full result pending; no partial strength claim or automatic promotion.
