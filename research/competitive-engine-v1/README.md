@@ -251,3 +251,10 @@ On those40selected cases, q4withchecks/q4captures-only/q2withchecks all120depth6
 ## Capture-only quiescence result
 
 Complete2W29L1D (6.25%raw,7.8125%halfdraw), White1/15/0 Black1/14/1;drawthreefold. ActualJS99.53msboth,Fairy92.25/92.22ms. Request20,completedWhite3/7/10 Black4/7/9 min/median/max. Median depth rose from6to7 yet rawwins didnotimprove. Paired Whiteunchanged,Blackgained1/lost1. No confirmation/promotion. Runnerinactivebeforeownfrozenresumeverifiedallsources/replays. Archivewhole5ae2308b33aaa795e60c71a4bcfe8ff42bdccddc4bce0162aaa63ab5427c8ac2;allparts/whole/everyfilebytes/32bundledgamesverified. Retain fullfailedattempt;do notinterpretdepthaloneasstrength. Next diagnose three early bishop-deployment gaps at matched deeper horizons and profile remainingkey/evaluationcost,with boundedqueries.
+
+
+## Deeper bishop diagnosis and CPU profile
+
+Three selected deployment gaps were examined at depths6/7/8, nonreduced versus priorLMR/historysettings,500000nodes/1500ms perquery. All36best/forcedsearches completed. BaselineBlack13 nonreduced gaps206/210/82; historyBlack13 gaps302/0/64, playedbishopdrop is optimal atdepth7; historyBlack6 gaps602/587/735, alternative rookdrop15 remains preferred. Atdepth8 historyBlack13 LMRscore-458/bishop2 versus nonreduced-538/king3to2; finitehorizon/selectivity,notuniversalbug/mateproof. Do not blindlydisableLMR or penalizeallbishopdrops. Fullinputs/PVs/hashes in js-bishop-deployment-diagnosis.json.
+
+Bounded CPU sample over40earlylosspositions completed all depth6queries. Top selfsamples advancePosition15.2%,generateLegalActions14.3%,positionKey10.3%,visit7.4%,ordered5.9%; evaluator positionalScore2.1%. Sampling/JIT/GC affect fractions. Fullrawcpuprofile plus summary/source/inputhashes retained. Next exact optimization should target measured transitions/keygeneration and verify all36variantstate/history semantics beforestrengthscreen. No enginechange/newmatch/strengthgain thisdiagnosticturn.
