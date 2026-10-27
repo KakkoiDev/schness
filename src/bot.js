@@ -125,6 +125,7 @@ export const COMPETITIVE_OPTIONS=Object.freeze({profile:'competitive',depth:20,
   lateMoveReduction:true,stopOnProvenWin:true,repetitionAversion:true,maxTableEntries:100000});
 export function chooseAction(position, options={}) { return analyzeAction(position,{...options,multiPv:1}).action; }
 export function analyzeAction(position, options={}) {
+  if(options.reserveThreatEvaluation!==undefined && typeof options.reserveThreatEvaluation!=='boolean')throw new TypeError('Invalid reserveThreatEvaluation');
   if(options.exchangeOrdering!==undefined && typeof options.exchangeOrdering!=='boolean')throw new TypeError('Invalid exchangeOrdering');
   if(options.reduceQuietDrops!==undefined && typeof options.reduceQuietDrops!=='boolean')throw new TypeError('Invalid reduceQuietDrops');
   if(options.profile!==undefined && !['reference','competitive'].includes(options.profile))throw new RangeError('Unknown search profile');
@@ -137,11 +138,19 @@ function evaluate(position, player, facts) {
   const enemy = player === WHITE ? BLACK : WHITE;
   let score=(searchState.get(position)?.material ?? material(position))*(player===WHITE?1:-1);
   const masks=searchState.get(position)?.masks ?? boardMasks(position.board);
-  score += ((position.turn===player?facts.actionCount():countLegalActionsUnchecked({...position,turn:player},masks))-
+  let whiteActions,blackActions;
+  if(facts.options.profile==='competitive' && facts.options.reserveThreatEvaluation){
+    whiteActions=position.turn===WHITE?facts.actions():legalActionsUnchecked({...position,turn:WHITE},masks);
+    blackActions=position.turn===BLACK?facts.actions():legalActionsUnchecked({...position,turn:BLACK},masks);
+    score+=((player===WHITE?whiteActions.length:blackActions.length)-(player===WHITE?blackActions.length:whiteActions.length))*2;
+  }else score += ((position.turn===player?facts.actionCount():countLegalActionsUnchecked({...position,turn:player},masks))-
     (position.turn===enemy?facts.actionCount():countLegalActionsUnchecked({...position,turn:enemy},masks)))*2;
   if (masksInCheck(masks, enemy)) score += 30;
   if (masksInCheck(masks, player)) score -= 30;
-  if(facts.options.profile==='competitive')score+=positionalScore(position,masks)*(player===WHITE?1:-1);
+  if(facts.options.profile==='competitive'){
+    score+=positionalScore(position,masks)*(player===WHITE?1:-1);
+    if(facts.options.reserveThreatEvaluation)score+=(reservePressure(position,WHITE,masks,whiteActions)-reservePressure(position,BLACK,masks,blackActions))*(player===WHITE?1:-1);
+  }
   return score;
 }
 
@@ -195,4 +204,22 @@ function actionPriority(position, action) {
   if (action.type === 'move') return 20;
   if (action.type === 'drop') return 10 + VALUES[action.piece] / 100;
   return 0;
+}
+
+// Heuristic potential of one legal reserve deployment, not a forced threat.
+// Legal generation enforces checking-drop/cooldown/bank policy before scoring.
+export function reservePressure(p,who,masks=boardMasks(p.board),legal){
+  if(p.phase!=='play'||!p.banks[who].length)return 0;
+  const enemy=who===WHITE?BLACK:WHITE,king=p.board.findIndex(o=>o?.owner===enemy&&o.piece===KING);
+  if(king<0)return 0;
+  const ring=[];for(let to=0;to<16;to++)if(to!==king&&Math.abs((to&3)-(king&3))<=1&&Math.abs((to>>2)-(king>>2))<=1&&!masksAttack(masks,to,who))ring.push(to);
+  const scratch=new Uint16Array(9);let best=0;
+  const actions=legal??legalActionsUnchecked(p.turn===who?p:{...p,turn:who},masks);
+  for(const a of actions){if(a.type!=='drop')continue;
+    const next=masksAfter(masks,p.board,who,a,scratch);
+    let pressure=0;for(const to of ring)if(masksAttack(next,to,who))pressure++;
+    const value=pressure*12+(masksInCheck(next,enemy)?40:0)-(masksAttack(next,a.to,enemy)?12:0);
+    best=Math.max(best,value);
+  }
+  return Math.min(80,best);
 }

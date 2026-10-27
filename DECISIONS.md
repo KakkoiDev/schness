@@ -1281,3 +1281,8 @@ See docs/search-performance-v5-report-2026-10-25.md for separate match results a
 ### Optional selective-reduction safeguards
 
 Research options reducePrincipalVariation:false and protectHistoryMoves:true respectively restrict reductions to null windows and protect learned killer/history moves. Defaults preserve prior behavior. They do not make selective search exact or prove mates. Generic trap/cancellation/restoration and actual protection telemetry are tested in test/competitive-search.test.js; playing acceptance requires complete frozen equal-time matches.
+
+
+### Optional legal reserve-pressure evaluation
+
+Competitive reserveThreatEvaluation scores the best single legal reserve deployment's added king-ring control, checking potential and exposed landing square, bounded80 per side. Legal generation enforces checking-drop/cooldown policies. This is a heuristic potential, not a forced tactical sequence or variant-balance claim. Defaults/reference profile stay unchanged. test/reserve-threat-evaluation.test.js checks legal policy, duplicate reserves, color symmetry, bounds, input restoration and independently verified mates.
