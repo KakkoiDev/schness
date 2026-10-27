@@ -35,7 +35,7 @@ Three documents, deliberately separate:
 
 | layer | modules | property |
 |---|---|---|
-| **Pure core** | `rules` `bot` `search` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` `variants` | No DOM, no network. Directly unit-tested. |
+| **Pure core** | `rules` `bot` `search` `exchange` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` `variants` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `p2p-core`, which carries `trystero`) | WebRTC over public Nostr relays; also another tab of the same browser, and a local `p2p-core serve`. |
 | **DOM glue** | `main` `lobby` `lobby-board` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
 
@@ -1271,3 +1271,8 @@ deferred. Old frozen research runtimes are not rewritten.
 Guarded by test/search-generation.test.js, test/search-tactics.test.js,
 test/search-reversible.test.js, test/bot-worker.test.js and e2e/engine-contract.spec.js.
 See docs/search-performance-v5-report-2026-10-25.md for separate match results and limitations.
+
+
+### Optional reserve-aware exchange ordering
+
+`exchange` estimates alternating king-safe captures on a single square, including capture-bank ownership/overflow and drop material accounting. It omits drops elsewhere, variant turn rights and repetition; it is only an opt-in competitive move-ordering heuristic, never pruning, adjudication, or proof. Defaults/reference evaluation remain unchanged. test/exchange-ordering.test.js checks transfer/overflow, pinned recaptures, optional recaptures, drop exposure, restoration and nonselective score equivalence.

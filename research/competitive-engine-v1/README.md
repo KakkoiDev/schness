@@ -208,3 +208,10 @@ Initial opt-in `stagedMoveSelection` lazily performs the secondary hint/tactical
 
 
 Staged-group follow-up defers independent adapter base scoring until each hint/tactical/killer/history rank group is consumed, rather than scoring every action first. Nonindependent adapters retain the prior path. All15 selected fixeddepth5 scores/actions/91058nodes match; ABBA388/373/342/326ms remains mixed/warmup-sensitive,notstrength evidence. Corpus in js-staged-groups-ablation.json. No match launched; reserve-aware exchange ordering remains next.
+
+
+## Reserve-aware exchange ordering, JS experiment
+
+Optional exchangeOrdering estimates material from alternating king-safe captures on the landing square, allowing either side to decline recapture. Captures account for reserve ownership and capacity overflow; drops account for reserve material. It omits drops elsewhere, repetition, and variant extra-turn rights, so it is never pruning/adjudication/proof. Four focused tests cover accounting, pinned recaptures, declining exchanges, drop exposure, restoration and nonselective score equality. All373JS tests pass. Initial suite failures exposed the new frozen dependency and module-decision record; both fixed before launch.
+
+Fifteen selected fixeddepth5 ABBAexchange/eager/eager/exchange pairs all scores match:87883/91058/91058/87883nodes,464/351/360/407ms. Fewer nodes but slower evaluation of ordering; no strength claim. Fullinputs/results/hashdata js-exchange-ordering-ablation.json. A frozen32-game equal100ms screen isolates exchangeOrdering:true with stagedMoveSelection:false, otherwise matching precedingJSbaseline settings/starts/colors/seed20262001. Fingerprint0ba6c42beae72cd74304ff5b6bb8f212688c1d7e62effe5df2c0faab634181be. Complete results required; no partialclaim/promotion.

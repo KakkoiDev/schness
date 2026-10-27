@@ -1,3 +1,4 @@
+import {estimateExchange} from './exchange.js';
 import {boardMasks, masksAfter, masksInCheck, masksAttack} from './board-masks.js';
 import {createSearchEngine} from './search.js';
 import {
@@ -31,7 +32,7 @@ function prepare(position,options) {
   // IDs identify an ordered extension of this root's exact initial history.
   // Different histories never share an ID; equivalent reorderings may miss a hit.
   searchState.set(p,{material:material(p),masks:boardMasks(p.board),key:positionKey(p),history:1,nextHistory:2,
-    competitive:options.profile==='competitive',historyCounts:new Map(),
+    competitive:options.profile==='competitive',exchangeOrdering:options.exchangeOrdering===true,historyCounts:new Map(),
     maskStack:[],maskDepth:0,paths:new Map(),pathLimit:options.maxTableEntries ?? 50000});
   return p;
 }
@@ -124,6 +125,7 @@ export const COMPETITIVE_OPTIONS=Object.freeze({profile:'competitive',depth:20,
   lateMoveReduction:true,stopOnProvenWin:true,repetitionAversion:true,maxTableEntries:100000});
 export function chooseAction(position, options={}) { return analyzeAction(position,{...options,multiPv:1}).action; }
 export function analyzeAction(position, options={}) {
+  if(options.exchangeOrdering!==undefined && typeof options.exchangeOrdering!=='boolean')throw new TypeError('Invalid exchangeOrdering');
   if(options.reduceQuietDrops!==undefined && typeof options.reduceQuietDrops!=='boolean')throw new TypeError('Invalid reduceQuietDrops');
   if(options.profile!==undefined && !['reference','competitive'].includes(options.profile))throw new RangeError('Unknown search profile');
   return schnessSearch.choose(position,options.profile==='competitive'?{...COMPETITIVE_OPTIONS,...options}:options);
@@ -180,7 +182,8 @@ function orderActions(position, actions) {
       const check=masksInCheck(next,enemy)?2000:0;
       const central=(action.to%4===1||action.to%4===2?8:0)+((action.to>>2)===1||(action.to>>2)===2?8:0);
       const exposed=piece!==KING && masksAttack(next,action.to,enemy)?(VALUES[piece]??0)/2:0;
-      priority.set(action,capture+check+central-exposed);
+      const exchange=state.exchangeOrdering?estimateExchange(position,action):0;
+      priority.set(action,capture+check+central-exposed+(state.exchangeOrdering?exchange*8:0));
     }
     return [...actions].sort((a,b)=>priority.get(b)-priority.get(a));
   }
