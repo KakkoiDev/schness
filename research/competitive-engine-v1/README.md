@@ -239,3 +239,10 @@ Reserve-r1 completed 2W30L0D (6.25% raw), White1/15/0 Black1/15/0. No improvemen
 ## Completed isolated history and staged screens
 
 History-only:3W28L1D,9.375%raw/10.9375%halfdraw, White1/15/0 Black2/13/1. Baseline White unchanged; Black gained one win. Staged-only:1W29L2D,3.125%raw/6.25%halfdraw, White0/15/1 Black1/14/1. All draws threefold. Equal100ms budgets, same starts/colors/seed. Requested20, completed median6 for both. Small descriptive outcomes do not establish strength; neither reaches confirmation gate. Both inactive before frozen source/replay validation. Full archive SHA256 history644e2f791e2bb4cb915cddf4ee648d353f983b8c0cb10a2de1060a065ee8dcf4; staged b79d6b81a4d1a258000a4648bdd9ead4906b3410ea116e5288300c1e1001da74. Every part/whole/file byte verified; paired outcomes preserved. No promotion. Next inspect early JS losing decisions and bounded search-cost diagnostics.
+
+
+## Early JS loss and quiescence-cost diagnostics
+
+All55 losses across baseline/history contribute one selected early decision each. Nonreduced depth6 best versus forced depth5 child at100000nodes/500ms completed40pairs;15incomplete excluded. Three comparable gaps >=200, all early bishop deployments, but played depth differs and finite horizons do not isolate a bug. Full inputs/PVs/source hashes in js-early-swings.json.
+
+On those40selected cases, q4withchecks/q4captures-only/q2withchecks all120depth6searches completed. Nodes931524/787211/902026, qnodes765767/600293/704477; ordered elapsed3974/3526/3912ms. Capture-only saves15.5%nodes, changes horizon and may miss quiet-check tactics. Fifteen independent tactical mates and restoration pass,21focused search/benchmark tests pass. No strength claim. Isolated32game equal100ms capture-only q4 screen frozen on baseline starts/colors/seed20262001 with allnewoptionsoff; fingerprint2122691ea504a98efc486f5e91bb27ca7f437d19e0efcc8afa349832d2c25397. Fulldiagnostic script/data retained.
