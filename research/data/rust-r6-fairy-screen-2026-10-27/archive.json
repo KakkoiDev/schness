@@ -1,0 +1,20 @@
+{
+  "run": "rust-r6-fairy-screen-2026-10-27",
+  "sourceFingerprint": "b8b0b13778233412da1d9ef2f24766a5a91bf6f7b321285683acf934db109e7a",
+  "games": 32,
+  "archiveBytes": 1896535,
+  "archiveSha256": "6f284242d794a42e250020e7292d9a5d8c6e9c5ed7d9b1da338788549f00fbdf",
+  "parts": [
+    {
+      "path": "rust-r6-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "d53d3af6521ef6ef35daf1f2d647dc71ffe2d16eb641e39abcd8037739be7faa"
+    },
+    {
+      "path": "rust-r6-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 847959,
+      "sha256": "11b113d0c5443d02efe0ec62ad92e3c5cdc60f37cef92a8925c8127a8331be94"
+    }
+  ],
+  "restore": "cat rust-r6-fairy-screen-2026-10-27.tar.gz.part* > rust-r6-fairy-screen-2026-10-27.tar.gz; tar -xzf rust-r6-fairy-screen-2026-10-27.tar.gz"
+}

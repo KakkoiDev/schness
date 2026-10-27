@@ -96,7 +96,24 @@ export function createSearchEngine(adapter) {
     try {return fn(p);} finally {adapter.unmake(p,undo);}
   }
   function ordered(p,actions,hint,ctx,depth) {
-    const sorted=[...order(p,actions)],player=adapter.turn(p),killers=ctx.killers.get(depth) ?? [];
+    const player=adapter.turn(p),killers=ctx.killers.get(depth) ?? [];
+    if(ctx.options.stagedMoveSelection && adapter.orderIndependent===true){
+      // Only independent per-move base scoring may be deferred by groups.
+      // Each group owns its actions so nested searches cannot overwrite it.
+      const groups=new Map();let hasHint=false;
+      for(const action of actions){
+        const id=actionIdentity(action),history=ctx.history?.get(`${player}:${id}`)??0;
+        if(history)ctx.historyHits++;
+        if(hint!==undefined && id===hint)hasHint=true;
+        const killer=killers.indexOf(id),tactical=Number(Boolean(adapter.isTactical?.(p,action)));
+        const rank=((Number(id===hint)*2+tactical)*3+(killer<0?0:2-killer))*1000001+history;
+        const group=groups.get(rank)??[];group.push(action);groups.set(rank,group);
+      }
+      if(hasHint)ctx.hintHits++;
+      const ranks=[...groups.keys()].sort((a,b)=>b-a);
+      return (function*(){for(const rank of ranks)yield* order(p,groups.get(rank));})();
+    }
+    const sorted=[...order(p,actions)];
     const ranks=ctx.options.stagedMoveSelection?new Map():ctx.ranks,stride=sorted.length+1;
     ranks.clear();let hasHint=false;
     for(let index=0;index<sorted.length;index++){

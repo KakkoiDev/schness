@@ -86,3 +86,6 @@ Experimental `reducePrincipalVariation: false` restricts late-move reductions to
 
 
 Frozen r6 screen explicitly records `reducePrincipalVariation:false` and forwards the full candidate options to native search. The preparation test checks default/false serialization, native invocation, frozen file hashes and rejection of malformed values. All367 JS tests pass. Same32 starts/colors/seed20262001 and100ms each versus pinned Fairy; requested20/q4/evasion2/LMR/staticcache. Fingerprint b8b0b13778233412da1d9ef2f24766a5a91bf6f7b321285683acf934db109e7a. Launch manifest retained. Results pending; no partial strength claim.
+
+
+Rust r6 final2W27L3D6.25%raw10.9375%halfdraw,W1/14/1B1/13/2,allthreefold. Requested20 median6 W3–9 B4–11,actualcandidate101.33/101.35msFairy90.73/91.73ms. Inactivecheck/frozenresumeverifiedallsource/replays. Fullarchive2parts/whole/everyfilebytes32gamesverified,whole6f284242d794a42e250020e7292d9a5d8c6e9c5ed7d9b1da338788549f00fbdf. Pairedr5/r6 Wgained1lost1,Bgained1lost0;smallcorrelatedsample notstrengthproof. Rustdevelopmentpaused atuserrequest.

@@ -112,6 +112,7 @@ export const schnessSearch = createSearchEngine({
       masksInCheck(masksAfter(masks,p.board,p.turn,a,scratch),enemy));
   },
   order: orderActions,
+  orderIndependent:true,
   repetitions: p => p.repetitions[searchState.get(p)?.key ?? positionKey(p)] ?? 0,
 });
 

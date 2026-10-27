@@ -1569,3 +1569,10 @@ Benchmark now explicitly freezes and forwards reducePrincipalVariation (CLI --re
 ### 2026-10-27 — Redirect to JS100ms; five-minute improvement loop
 
 User paused Rust and authorized all four JS research directions with a five-minute loop. Added opt-in lazy secondary move ranking with private per-node ranks; default remains unchanged. Worker/manifest/confirmation forwarding included. All368 JS tests pass, including exact traversal/node/PV agreement and cancellation/restoration. Fifteen selected depth5 cases preserve91058nodes/scores/actions across ABBA lazy/sort/sort/lazy timings395/355/340/335ms. Mixed timing and warmup do not establish benefit; no new strength screen launched. Base adapter ordering remains eager. Development generator-length/root-facts errors were caught/fixed before validation; no frozen run affected. Next optimize actual staged adapter scoring and reserve-aware exchanges, then separately reduction/evaluation improvements. All evidence retained; no strength/default promotion.
+
+
+### 2026-10-27 — Staged adapter scoring and Rust r6 administrative archive
+
+JS optional staged move groups now defer independent adapter base scoring until consumed; exact traversal/cancellation and tactical-cutoff tests pass. All369 JS tests pass. Fifteen selected depth5 cases preserve91058nodes/actions/scores across ABBA388/373/342/326ms; warmup-sensitive mixed evidence, no strength claim or new match. Nonindependent adapters retain prior path; defaults unchanged. Next reserve-aware exchange ordering, then reduction/evaluation work separately.
+
+Completed paused-Rust r6 archive administration:2W27L3D6.25%raw10.9375%halfdraw,W1/14/1B1/13/2,allthreefold. Frozen resume/source/replay already verified after inactivecheck. Full runtime/source/binary/GPL/bundles/readables/logs archived; two parts/whole/every archived file bytes and32games verified. WholeSHA2566f284242d794a42e250020e7292d9a5d8c6e9c5ed7d9b1da338788549f00fbdf. Pairedr5/r6 White gained1lost1,Black gained1lost0; descriptive small correlated sample,not strength proof. Rust remains paused, no experiment active.

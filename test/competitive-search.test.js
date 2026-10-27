@@ -135,3 +135,11 @@ test('lazy ranked moves survive nested searches and preserve exact traversal and
  }
  assert.throws(()=>analyzeAction(p,{stagedMoveSelection:1}),/stagedMoveSelection/);
 });
+test('staged independent scoring skips quiet groups after tactical cutoffs',()=>{
+ let scored=0;
+ const engine=createSearchEngine({orderIndependent:true,scoreStep:1,actions:p=>p.length<4?[0,1,2,3]:[],apply:(p,a)=>p+String(a),turn:p=>p.length%2,key:String,terminal:p=>p.length===4?0:null,evaluate:()=>0,isTactical:(_p,a)=>a===0,order:(_p,a)=>{scored+=a.length;return a;}});
+ const options={depth:4,useCache:false,useHistory:false,aspiration:false,principalVariation:false};
+ const a=engine.choose('',options),eager=scored;scored=0;
+ const b=engine.choose('',{...options,stagedMoveSelection:true}),lazy=scored;
+ assert.equal(a.score,b.score);assert.deepEqual(a.action,b.action);assert.equal(a.nodes,b.nodes);assert(lazy<eager,`${lazy} >= ${eager}`);
+});
