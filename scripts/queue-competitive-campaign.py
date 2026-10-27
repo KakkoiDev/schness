@@ -36,7 +36,7 @@ try:
   state('preparing-confirmation')
   if confirmation.exists():raise RuntimeError('Confirmation directory already exists; inspect before continuing')
   manifest=read(screen/'manifest.json');candidate=manifest['candidate']
-  command=['node',str(screen/'runtime/scripts/run-competitive-fairy.js'),'--output',str(confirmation),'--seeds','6','--starts','16','--depth',str(candidate['depthRequest']),'--quiescence',str(candidate['quiescenceDepth']),'--evasion-depth',str(candidate.get('quiescenceEvasionDepth',0)),'--port','4193','--seed-base','20261901','--name',candidate['name'],'--reduce-drops',str(candidate.get('reduceQuietDrops',False)).lower(),'--checks',str(candidate.get('quiescenceChecks',True)).lower(),'--reductions',str(candidate.get('lateMoveReduction',False)).lower()]
+  command=['node',str(screen/'runtime/scripts/run-competitive-fairy.js'),'--output',str(confirmation),'--seeds','6','--starts','16','--depth',str(candidate['depthRequest']),'--quiescence',str(candidate['quiescenceDepth']),'--evasion-depth',str(candidate.get('quiescenceEvasionDepth',0)),'--port','4193','--seed-base','20261901','--name',candidate['name'],'--reduce-drops',str(candidate.get('reduceQuietDrops',False)).lower(),'--cache-quiescence',str(candidate.get('cacheQuiescence',False)).lower(),'--cache-evaluation',str(candidate.get('cacheEvaluation',False)).lower(),'--checks',str(candidate.get('quiescenceChecks',True)).lower(),'--reductions',str(candidate.get('lateMoveReduction',False)).lower()]
   if manifest['candidateMillis'] is not None:command+=['--candidate-millis',str(manifest['candidateMillis'])]
   subprocess.run(command,check=True)
   assert read(confirmation/'manifest.json')['sourceFingerprint']==manifest['sourceFingerprint']

@@ -92,6 +92,8 @@ export const schnessSearch = createSearchEngine({
     if(s?.competitive)return s.key+'|counts:'+JSON.stringify([...s.historyCounts].sort(([a],[b])=>a<b?-1:a>b?1:0));
     return s?`${s.key}|history-id:${s.history}`:`${positionKey(p)}|history:${JSON.stringify(Object.entries(p.repetitions ?? {}).sort(([a],[b])=>a<b?-1:a>b?1:0))}`;},
   hintKey: p => searchState.get(p)?.key ?? positionKey(p),
+  // Static evaluation excludes repetition; terminal adjudication runs first.
+  evaluationKey:p=>searchState.get(p)?.key ?? positionKey(p),
   terminal: (p, player, depth, facts) => {
     const state=searchState.get(p);
     const result=getResultUnchecked(p, facts.actionCount(),state?.key,state?.masks);

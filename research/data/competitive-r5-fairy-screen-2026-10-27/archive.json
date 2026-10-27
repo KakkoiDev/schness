@@ -1,0 +1,20 @@
+{
+  "run": "competitive-r5-fairy-screen-2026-10-27",
+  "sourceFingerprint": "924de3af2687a1964338a946c006f8a0f3fa5fd36f26de6be9e4accb8842002f",
+  "games": 32,
+  "archiveBytes": 1520634,
+  "archiveSha256": "6e5bfd659f0071b184bb09de5e543a5073ba6f66a48431e4f5ac01de7e5a01c7",
+  "parts": [
+    {
+      "path": "competitive-r5-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "ae61a05ad4335568382701c10e5107d3b3c36d4e408e5ae2aff499deb7047775"
+    },
+    {
+      "path": "competitive-r5-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 472058,
+      "sha256": "2e46dfadd0c6397d4e71c57a796967738d461d31cf4a184ca9788e28cebfabe7"
+    }
+  ],
+  "restore": "cat competitive-r5-fairy-screen-2026-10-27.tar.gz.part* > competitive-r5-fairy-screen-2026-10-27.tar.gz; tar -xzf competitive-r5-fairy-screen-2026-10-27.tar.gz"
+}

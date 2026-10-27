@@ -90,3 +90,38 @@ test('quiescence evasion allowance is bounded even for endless checks',()=>{
  const capped=engine.choose(0,{depth:1,quiescenceEvasionDepth:8,maxNodes:2});
  assert(capped.stopped);assert(capped.nodes<=2);
 });
+
+test('quiescence cache reuses exact-history states without changing results',()=>{
+ const engine=createSearchEngine({
+  actions:p=>p<7?[1,2]:[],apply:(p,a)=>Math.min(7,p+a),turn:p=>p%2,key:String,
+  terminal:(p,who)=>p===7?9:null,evaluate:p=>p-3,inDanger:p=>p===4,
+  noisyActions:(p,a)=>a,
+ });
+ const options={depth:2,quiescenceDepth:4,quiescenceEvasionDepth:2,principalVariation:false,iterativeDeepening:false};
+ const plain=engine.choose(0,options),cached=engine.choose(0,{...options,cacheQuiescence:true});
+ assert.equal(cached.score,plain.score);assert.equal(cached.action,plain.action);
+ assert(cached.nodes<plain.nodes);assert(cached.stats.cacheHits>plain.stats.cacheHits);
+ assert.equal(engine.choose(0,{...options,cacheQuiescence:true,useCache:false}).score,plain.score);
+ assert.equal(engine.choose(0,{...options,cacheQuiescence:true,maxTableEntries:1}).score,plain.score);
+ assert.throws(()=>engine.choose(0,{cacheQuiescence:1}),/cacheQuiescence/);
+});
+test('Schness quiescence cache preserves repeated-history evaluation and input',()=>{
+ const p=position(),saved=structuredClone(p);
+ for(const move of r.legalActions(p).slice(0,4))p.repetitions[r.positionKey(r.applyAction(p,move))]=2;
+ const before=structuredClone(p),options={profile:'competitive',depth:3,quiescenceDepth:2,quiescenceEvasionDepth:2,lateMoveReduction:false,iterativeDeepening:false};
+ const plain=analyzeAction(p,options),cached=analyzeAction(p,{...options,cacheQuiescence:true});
+ assert.equal(cached.score,plain.score);assert.deepEqual(p,before);
+ assert.equal(analyzeAction(p,{...options,cacheQuiescence:true,useMutable:false}).score,plain.score);
+ assert(saved.board.every((o,i)=>JSON.stringify(o)===JSON.stringify(p.board[i])));
+});
+
+test('static evaluation cache requires explicit history-independent key and preserves search',()=>{
+ const p=position(),before=structuredClone(p),options={profile:'competitive',depth:4,quiescenceDepth:2,quiescenceEvasionDepth:2,lateMoveReduction:false,iterativeDeepening:false};
+ const plain=analyzeAction(p,options),cached=analyzeAction(p,{...options,cacheEvaluation:true});
+ assert.equal(cached.score,plain.score);assert.deepEqual(cached.action,plain.action);assert.equal(cached.nodes,plain.nodes);
+ assert(cached.stats.evaluations<plain.stats.evaluations);assert.deepEqual(p,before);
+ assert.equal(analyzeAction(p,{...options,cacheEvaluation:true,maxTableEntries:1}).score,plain.score);
+ const generic=createSearchEngine({actions:()=>[0],apply:()=>1,turn:()=>0,key:String,terminal:()=>null,evaluate:()=>0});
+ assert.throws(()=>generic.choose(0,{cacheEvaluation:true}),/evaluationKey/);
+ assert.throws(()=>analyzeAction(p,{cacheEvaluation:1}),/cacheEvaluation/);
+});

@@ -25,6 +25,11 @@ export function createSearchEngine(adapter) {
     merged.depth ??= 4;
     merged.quiescenceDepth ??= 0;
     merged.quiescenceEvasionDepth ??= 0;
+    merged.cacheEvaluation ??= false;
+    if(typeof merged.cacheEvaluation!=='boolean')throw new TypeError('Invalid cacheEvaluation');
+    if(merged.cacheEvaluation && typeof adapter.evaluationKey!=='function')throw new TypeError('Evaluation cache requires adapter.evaluationKey');
+    merged.cacheQuiescence ??= false;
+    if(typeof merged.cacheQuiescence!=='boolean')throw new TypeError('Invalid cacheQuiescence');
     merged.quiescenceChecks ??= false;
     if(typeof merged.quiescenceChecks!=='boolean')throw new TypeError('Invalid quiescenceChecks');
     merged.lateMoveReduction ??= false;
@@ -48,7 +53,7 @@ export function createSearchEngine(adapter) {
     if (!(maxNodes === Infinity || Number.isInteger(maxNodes) && maxNodes >= 1)) throw new RangeError('Invalid node budget');
     if (!(maxMillis === Infinity || Number.isFinite(maxMillis) && maxMillis > 0)) throw new RangeError('Invalid time budget');
     return {options,nodes:0, quiescenceNodes:0, cutoffs:0, cacheHits:0, tableCutoffs:0, hintHits:0,
-      rootResearches:0, aspirationResearches:0, pvsResearches:0, historyHits:0, evaluations:0, actionGenerations:0, countGenerations:0, transitions:0,
+      evaluationCacheHits:0,rootResearches:0, aspirationResearches:0, pvsResearches:0, historyHits:0, evaluations:0, actionGenerations:0, countGenerations:0, transitions:0,
       reducedSearches:0,reductionResearches:0,lateMoveReduction:options.lateMoveReduction,
       maxNodes, deadline:maxMillis === Infinity ? Infinity : Date.now()+maxMillis,
       maxTableEntries:options.maxTableEntries, quiescenceDepth:options.quiescenceDepth ?? 0,
@@ -56,6 +61,8 @@ export function createSearchEngine(adapter) {
       pvs:options.principalVariation !== false && adapter.scoreStep !== undefined,
       history:options.useHistory === false ? null : new Map(),killers:new Map(),ranks:new Map(),
       reversible:options.useMutable !== false && typeof adapter.make === 'function',
+      evalCache:options.cacheEvaluation ? new Map() : null,
+      qCache:options.useCache === false || !options.cacheQuiescence ? null : new Map(),
       cache:options.useCache === false ? null : new Map(), hints:options.useCache === false ? null : new Map()};
   }
   const actionIdentity = adapter.actionKey ?? (action => JSON.stringify(action));
@@ -122,17 +129,35 @@ export function createSearchEngine(adapter) {
     if (result !== null) return {value:result, line:null};
     const maximizing = adapter.turn(p) === player;
     if (depth <= 0) {
-      ctx.evaluations++;
-      const standPat = finite(adapter.evaluate(p, player,facts), 'Evaluation');
+      const qKey=ctx.qCache ? JSON.stringify([adapter.key(p),remainingQ,remainingEvasions]) : null;
+      const startAlpha=alpha,startBeta=beta,cached=qKey===null?null:ctx.qCache.get(qKey);
+      if(cached){
+        ctx.cacheHits++;
+        if(cached.type==='exact')return {value:cached.value,line:cached.line};
+        if(cached.type==='lower')alpha=Math.max(alpha,cached.value);else beta=Math.min(beta,cached.value);
+        if(beta<=alpha){ctx.tableCutoffs++;return {value:cached.value,line:cached.line};}
+      }
+      const finish=best=>{
+        if(qKey!==null)boundedSet(ctx.qCache,qKey,{...best,type:best.value<=startAlpha?'upper':best.value>=startBeta?'lower':'exact'},ctx);
+        return best;
+      };
+      const evalKey=ctx.evalCache ? adapter.evaluationKey(p) : null;
+      let standPat=ctx.evalCache?.get(evalKey);
+      if(standPat!==undefined)ctx.evaluationCacheHits++;
+      else{
+        ctx.evaluations++;
+        standPat=finite(adapter.evaluate(p,player,facts),'Evaluation');
+        if(ctx.evalCache)boundedSet(ctx.evalCache,evalKey,standPat,ctx);
+      }
       const danger = Boolean(adapter.inDanger?.(p));
       // A separate bounded allowance resolves checks at the quiescence horizon.
       // It never permits stand-pat cutoffs while an evasion is being searched.
-      if ((!remainingQ && !(danger && remainingEvasions)) || (!adapter.noisyActions && !adapter.inDanger)) return {value:standPat,line:null};
+      if ((!remainingQ && !(danger && remainingEvasions)) || (!adapter.noisyActions && !adapter.inDanger)) return finish({value:standPat,line:null});
       let best = {value:danger ? (maximizing ? -Infinity : Infinity) : standPat, line:null};
       if (!danger) {
         if (maximizing) alpha = Math.max(alpha, standPat);
         else beta = Math.min(beta, standPat);
-        if (beta <= alpha) {ctx.cutoffs++;return best;}
+        if (beta <= alpha) {ctx.cutoffs++;return finish(best);}
       }
       const legal = facts.actions();
       if (!legal.length) throw new Error('Adapter must adjudicate a position without actions');
@@ -144,7 +169,7 @@ export function createSearchEngine(adapter) {
         else beta = Math.min(beta,best.value);
         if (beta <= alpha) {ctx.cutoffs++;break;}
       }
-      return best;
+      return finish(best);
     }
     const stateKey = ctx.cache ? adapter.key(p) : null;
     // Bounds require the same remaining depth: generic terminal scores may depend on depth.

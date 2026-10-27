@@ -166,3 +166,35 @@ same16starts/seed20261801/bothcolors. Frozen fingerprint
 Confirmation forwards the exact allowance and other flags and runs only after a
 complete successful screen. Reference/app defaults remain unchanged. The old
 uncapped probe is separate, and concurrentCPU affects timings.
+
+## r5 complete; r6 evaluation-cache experiment
+
+R5 completed13W/15L/4D (40.625% raw wins,46.875% half-draw score), White10/5/1
+and Black3/10/3. All four draws were repetition. Median completed depth9;
+White range6–13,Black6–20. A few nominal20 searches do not establish exhaustive20
+or practical20 on every position. Mean candidate9999.58ms White/9947.22ms Black,
+Fairy94.15/97.26ms. No confirmation launched. Full source/replay/archive hashes
+verified; archive whole6e5bfd659f0071b184bb09de5e543a5073ba6f66a48431e4f5ac01de7e5a01c7.
+
+Two optional caches were tested, both defaultfalse. `cacheQuiescence` uses a
+separate bounded table keyed by exact adapter history plus remaining q and evasion
+allowances. Fifteen selected r5 losing positions at depth5/q4/evasion2 withoutLMR
+completed with identical scores,122691 versus119202nodes, but600ms versus895ms;
+this overhead outweighed savings, so it is OFF in r6.
+
+`cacheEvaluation` requires the adapter to provide an explicitly history-independent
+`evaluationKey`. Schness keys the complete rules/board/banks/turn/phase state;
+terminal and repetition adjudication still precede evaluation lookup. The cache
+is per-search and bounded, and does not reuse game results or search bounds.
+Fifteen matched completed diagnostic pairs had identical scores/nodes,106548
+versus67689 evaluator calls,570ms versus475ms (~17%less). These selected timings
+include CPU contention and are not strength evidence. Full inputs/options/PVs/
+source hashes are in `evaluation-cache-ablation.json` and
+`quiescence-cache-ablation.json`. All353 unit tests passed, including cached/
+uncached equivalence, bounded tables, restoration and explicit key validation.
+
+R6 enables only static-evaluation caching on r5 settings, still10000ms versus
+unchanged100ms Fairy,32games/same16starts/seed20261801/bothcolors/requested20.
+Fingerprint`ab36feae4b2a2d9ca7442fd26c35b12169eea8af128fd156438cf9adf55b0a14`.
+Confirmation forwards exact cache/extension/reduction flags. No promotion or
+strength claim until completed evidence; production/reference defaults unchanged.
