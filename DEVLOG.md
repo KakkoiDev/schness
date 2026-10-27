@@ -1535,3 +1535,10 @@ Frozenr4 full32:2W28L2D=6.25%raw,9.375%halfdraw;W2/13/1 B0/15/1,boththreefold. C
 ### 2026-10-27 — Canonical native key allocation cleanup
 
 Cache immutable ruleJSON once perparse;reservekeys count kinds instead of clone/sort. Ruleconfiguration private,canonical keys/dynamicrights/repetitionunchanged. EightRusttests and1555rules/36reference/36competitive/8recovery/174portablepass. Selected18fixeddepth5nonreducedcases preserve125899nodes/allscore/action versusfrozenr4. ABBAnew/old/old/new558/618/621/558ms,initial561/620ms;JS535ms125809nodes. Noconcurrentmatch. Allinputs/source/binaryhashes/repeatedoutputsretained rust-key-allocation-ablation.json. Selectedallocationtiming,notwin-rateimprovement;nonewmatch.
+
+
+### 2026-10-27 — Borrowed native mobility counting and r5 freeze
+
+Share borrowed actionvisitor for both-color mobility count without cloningconfiguration/reserves or buildingsecondmovevector. NineRusttests pass (>2000bothcolorfixture/childcounts+unchangedstate);external1555rules/36reference/36competitive/8recovery/174portablepass. Combinedkey/mobilitycleanupvsfrozenr4 all18selecteddepth5scores/actions/125899nodes match;ABBAnew/old/old/new515/615/616/517ms,initial522/619JS526. Fullinputs/hashes/repeatedoutputs retained. Notstrength/languageproof.
+
+Frozen r5 launched32games/16identicalstarts/bothcolors/seed20262001/100mscandidateandFairy/request20/q4checks/evasion2/LMRtrue/dropsfalse/staticcachetrue. Fingerprinta1988a40d346f3b80d3af02129c39709e5621fbe922dde90d67f2bfed7a77496,exactlaunchmanifestpublished. No partialstrengthclaim,do notmutatefrozenruntime/duplicates. No confirmationunlesscomplete17/32threshold;fresh192required. AppstillJS.

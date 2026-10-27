@@ -215,17 +215,9 @@ impl Position {
         json!({"board":board,"banks":{"white":bank(0),"black":bank(1)},"turn":player(self.turn),"phase":self.phase,"repetitions":self.repetitions,"rules":self.rules,"research":self.research})
     }
     pub fn mobility_for(&self, c: usize) -> usize {
-        let other = Self {
-            board: self.board,
-            banks: self.banks.clone(),
-            turn: c,
-            phase: self.phase.clone(),
-            repetitions: HashMap::new(),
-            rules: self.rules.clone(),
-            key_rules: self.key_rules.clone(),
-            research: self.research.clone(),
-        };
-        other.actions().len()
+        let mut count = 0;
+        self.visit_actions(c, |_| count += 1);
+        count
     }
     pub fn experiment(&self) -> &str {
         self.rules["experiment"].as_str().unwrap_or("")
@@ -295,32 +287,38 @@ impl Position {
             .unwrap_or(false)
     }
     pub fn actions(&self) -> Vec<Action> {
+        let mut out = Vec::new();
+        self.visit_actions(self.turn, |a| out.push(a));
+        out
+    }
+    fn visit_actions(&self, who: usize, mut emit: impl FnMut(Action)) {
         if self.phase.starts_with("place-") {
             let row = if self.phase == "place-white-king" {
                 12
             } else {
                 0
             };
-            return (row..row + 4)
-                .filter(|&to| self.board[to] == 0)
-                .map(|to| Action {
-                    kind: 2,
-                    from: 0,
-                    to,
-                    piece: 1,
-                })
-                .collect();
+            for to in row..row + 4 {
+                if self.board[to] == 0 {
+                    emit(Action {
+                        kind: 2,
+                        from: 0,
+                        to,
+                        piece: 1,
+                    });
+                }
+            }
+            return;
         }
-        let mut out = Vec::new();
         if self.phase != "setup" {
             for from in 0..16 {
                 let o = self.board[from];
-                if o == 0 || owner(o) != self.turn {
+                if o == 0 || owner(o) != who {
                     continue;
                 }
                 for to in targets(&self.board, from, kind(o)) {
                     let victim = self.board[to];
-                    if victim != 0 && (owner(victim) == self.turn || kind(victim) == 1) {
+                    if victim != 0 && (owner(victim) == who || kind(victim) == 1) {
                         continue;
                     }
                     let a = Action {
@@ -329,14 +327,14 @@ impl Position {
                         to,
                         piece: 0,
                     };
-                    if self.safe(a) {
-                        out.push(a)
+                    if self.safe_for(a, who) {
+                        emit(a)
                     }
                 }
             }
         }
         let mut seen = 0u8;
-        for &p in &self.banks[self.turn] {
+        for &p in &self.banks[who] {
             if seen & (1 << p) != 0 {
                 continue;
             }
@@ -347,7 +345,7 @@ impl Position {
                 }
                 if self.phase == "setup"
                     && self.rules["hiddenSetup"] == true
-                    && (if self.turn == 0 { to < 12 } else { to >= 4 })
+                    && (if who == 0 { to < 12 } else { to >= 4 })
                 {
                     continue;
                 }
@@ -357,30 +355,30 @@ impl Position {
                     to,
                     piece: p,
                 };
-                if self.safe(a) {
-                    out.push(a)
+                if self.safe_for(a, who) {
+                    emit(a)
                 }
             }
         }
-        out
     }
-    fn safe(&self, a: Action) -> bool {
+    fn safe_for(&self, a: Action, who: usize) -> bool {
         let mut b = self.board;
         if a.kind == 0 {
             b[a.to] = b[a.from];
             b[a.from] = 0
         } else {
-            b[a.to] = a.piece + self.turn as u8 * 4
+            b[a.to] = a.piece + who as u8 * 4
         }
-        if board_check(&b, self.turn) {
+        if board_check(&b, who) {
             return false;
         }
-        if a.kind == 1 && board_check(&b, 1 - self.turn) {
-            if !self.drop_check(a, &b) {
+        if a.kind == 1 && board_check(&b, 1 - who) {
+            if !self.drop_check_for(a, &b, who) {
                 return false;
             }
             if self.experiment() == "no-drop-mate" {
                 let mut n = self.clone();
+                n.turn = who;
                 n.advance(a, false);
                 if n.actions().is_empty() {
                     return false;
@@ -389,16 +387,16 @@ impl Position {
         }
         true
     }
-    fn drop_check(&self, a: Action, n: &[u8; 16]) -> bool {
+    fn drop_check_for(&self, a: Action, n: &[u8; 16], who: usize) -> bool {
         if self.rules["allowCheckingDrops"] != true || self.phase == "setup" {
             return false;
         }
-        let p = player(self.turn);
-        let e = player(1 - self.turn);
+        let p = player(who);
+        let e = player(1 - who);
         let r = &self.research;
         match self.experiment() {
             "home-half-check" => {
-                if self.turn == 0 {
+                if who == 0 {
                     a.to >= 8
                 } else {
                     a.to < 8
@@ -408,12 +406,12 @@ impl Position {
                 let k = self
                     .board
                     .iter()
-                    .position(|&o| o == 1 + (1 - self.turn) as u8 * 4)
+                    .position(|&o| o == 1 + (1 - who) as u8 * 4)
                     .unwrap_or(0);
                 (a.to / 4).abs_diff(k / 4).max((a.to % 4).abs_diff(k % 4)) >= 2
             }
-            "supported-check" => attacked(n, a.to, self.turn),
-            "countercheck-only" => self.check(self.turn),
+            "supported-check" => attacked(n, a.to, who),
+            "countercheck-only" => self.check(who),
             "knight-check" => a.piece == 4,
             "bishop-check" => a.piece == 3,
             "rook-check" => a.piece == 2,
@@ -435,7 +433,7 @@ impl Position {
             "protected-recurring" | "protected-first-turn" => self
                 .board
                 .iter()
-                .any(|&o| o != 0 && owner(o) == 1 - self.turn && kind(o) != 1),
+                .any(|&o| o != 0 && owner(o) == 1 - who && kind(o) != 1),
             "protected-opening" => !r.deployed[e].as_array().unwrap().is_empty(),
             "grace" | "quiet-return" => {
                 r.turns["white"]
@@ -830,5 +828,39 @@ mod undo_tests {
             }
         }
         assert!(transitions > 1000);
+    }
+}
+
+#[cfg(test)]
+mod mobility_tests {
+    use super::*;
+    #[test]
+    fn borrowed_mobility_matches_cloned_side_generation_and_preserves_state() {
+        let corpus: Value = serde_json::from_str(include_str!(
+            "../../test/fixtures/engine-contract/rules.json"
+        ))
+        .unwrap();
+        let mut checked = 0;
+        for case in corpus["cases"].as_array().unwrap() {
+            let p = Position::parse(&case["state"]).unwrap();
+            let mut positions = vec![p.clone()];
+            for a in p.actions() {
+                let mut child = p.clone();
+                child.advance(a, true);
+                positions.push(child);
+            }
+            for position in positions {
+                let before = position.json();
+                for c in 0..2 {
+                    let mut legacy = position.clone();
+                    legacy.turn = c;
+                    legacy.repetitions.clear();
+                    assert_eq!(position.mobility_for(c), legacy.actions().len());
+                    checked += 1;
+                }
+                assert_eq!(position.json(), before);
+            }
+        }
+        assert!(checked > 2000);
     }
 }

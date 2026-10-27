@@ -51,3 +51,5 @@ Optional `cacheEvaluation: true` now enables a bounded per-search static evaluat
 Root actions are now reordered by the previous fully completed iteration, retaining the entire root set before Multi-PV truncation. `rootOrdering: false` disables this for diagnostics. Interrupted iterations never publish or reorder partial results. This changes selective move order, so playing strength still requires fresh matches.
 
 Immutable rule JSON is cached once per parsed position for key construction; bank keys use fixed piece counts instead of cloning/sorting reserve vectors. Public state and canonical repetition keys remain unchanged. Selected repeated diagnostics preserve all scores/actions/node counts; no playing improvement follows from this allocation change alone.
+
+Mobility evaluation uses the same borrowed action visitor as legal generation, counting callbacks rather than cloning rules/research/reserves and collecting a second move vector. Both-color counts over frozen fixtures and children are checked against cloned-side generation; public state remains untouched.
