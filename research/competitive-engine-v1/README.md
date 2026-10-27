@@ -198,3 +198,10 @@ unchanged100ms Fairy,32games/same16starts/seed20261801/bothcolors/requested20.
 Fingerprint`ab36feae4b2a2d9ca7442fd26c35b12169eea8af128fd156438cf9adf55b0a14`.
 Confirmation forwards exact cache/extension/reduction flags. No promotion or
 strength claim until completed evidence; production/reference defaults unchanged.
+
+
+## JavaScript100ms improvement loop
+
+Rust development is paused at user request. The loop now checks every five minutes and prioritizes JS at explicit100ms versus unchanged Fairy100ms. Work is separated into reserve-aware exchange ordering, staged move selection, history/PV-aware reductions, and reserve/king-threat evaluation. Each needs correctness tests, bounded diagnostics, then frozen paired equal-time strength comparisons; no automatic promotion.
+
+Initial opt-in `stagedMoveSelection` lazily performs the secondary hint/tactical/killer/history ranking, preserving eager adapter base ordering. Nested-search rank storage is private per node. Exact traversal/cancellation tests pass. Fifteen selected fixeddepth5 positions preserve scores/actions/91058nodes in all four ABBA trials: lazy395ms/sort355ms/sort340ms/lazy335ms. This is mixed timing evidence with warmup effects, not a demonstrated gain; no new match is justified yet. Initial development caught generator-length/root-facts errors before successful tests; neither affected frozen experiments. Full inputs/results/source hashes retained in js-staged-moves-ablation.json. Base ordering remains eager; further staged work should avoid that cost rather than claim a complete staged generator.

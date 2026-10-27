@@ -1564,3 +1564,8 @@ Added opt-in reducePrincipalVariation:false: late quiet reductions are restricte
 ### 2026-10-27 — Frozen Rust r6 PV-guard screen
 
 Benchmark now explicitly freezes and forwards reducePrincipalVariation (CLI --reduce-pv true/false); invalid values rejected. New preparation/invocation tests and all367 JS tests pass. Regression fixture is included in frozen source set. Release rebuilt. Launched32 identical starts/colors/seed20262001 at100ms candidate and100ms unchanged Fairy, requested20/q4/evasion2/LMR/staticcache with reducePrincipalVariation:false. Fingerprint b8b0b13778233412da1d9ef2f24766a5a91bf6f7b321285683acf934db109e7a. Full result pending; no partial strength claim or automatic promotion.
+
+
+### 2026-10-27 — Redirect to JS100ms; five-minute improvement loop
+
+User paused Rust and authorized all four JS research directions with a five-minute loop. Added opt-in lazy secondary move ranking with private per-node ranks; default remains unchanged. Worker/manifest/confirmation forwarding included. All368 JS tests pass, including exact traversal/node/PV agreement and cancellation/restoration. Fifteen selected depth5 cases preserve91058nodes/scores/actions across ABBA lazy/sort/sort/lazy timings395/355/340/335ms. Mixed timing and warmup do not establish benefit; no new strength screen launched. Base adapter ordering remains eager. Development generator-length/root-facts errors were caught/fixed before validation; no frozen run affected. Next optimize actual staged adapter scoring and reserve-aware exchanges, then separately reduction/evaluation improvements. All evidence retained; no strength/default promotion.

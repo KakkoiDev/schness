@@ -32,6 +32,8 @@ export function createSearchEngine(adapter) {
     if(typeof merged.cacheQuiescence!=='boolean')throw new TypeError('Invalid cacheQuiescence');
     merged.quiescenceChecks ??= false;
     if(typeof merged.quiescenceChecks!=='boolean')throw new TypeError('Invalid quiescenceChecks');
+    merged.stagedMoveSelection ??= false;
+    if(typeof merged.stagedMoveSelection!=='boolean')throw new TypeError('Invalid stagedMoveSelection');
     merged.lateMoveReduction ??= false;
     if(typeof merged.lateMoveReduction!=='boolean')throw new TypeError('Invalid lateMoveReduction');
     if(merged.lateMoveReduction && typeof adapter.canReduce!=='function')throw new TypeError('Late move reduction requires adapter.canReduce');
@@ -95,7 +97,7 @@ export function createSearchEngine(adapter) {
   }
   function ordered(p,actions,hint,ctx,depth) {
     const sorted=[...order(p,actions)],player=adapter.turn(p),killers=ctx.killers.get(depth) ?? [];
-    const ranks=ctx.ranks,stride=sorted.length+1;
+    const ranks=ctx.options.stagedMoveSelection?new Map():ctx.ranks,stride=sorted.length+1;
     ranks.clear();let hasHint=false;
     for(let index=0;index<sorted.length;index++){
       const action=sorted[index],id=actionIdentity(action),history=ctx.history?.get(`${player}:${id}`) ?? 0;
@@ -106,6 +108,18 @@ export function createSearchEngine(adapter) {
       ranks.set(action,((((Number(id===hint)*2+tactical)*3+(killer<0?0:2-killer))*1000001+history)*stride-index));
     }
     if(hasHint)ctx.hintHits++;
+    if(ctx.options.stagedMoveSelection){
+      // Per-node ranks must survive nested searches. Yield only as many moves
+      // as alpha-beta consumes; ties retain the original stable ordering.
+      return (function*(){
+        const remaining=sorted.slice();
+        while(remaining.length){
+          let best=0;
+          for(let i=1;i<remaining.length;i++)if(ranks.get(remaining[i])>ranks.get(remaining[best]))best=i;
+          const action=remaining[best];remaining.splice(best,1);yield action;
+        }
+      })();
+    }
     sorted.sort((a,b)=>ranks.get(b)-ranks.get(a));
     return sorted;
   }
@@ -184,7 +198,7 @@ export function createSearchEngine(adapter) {
       if (beta <= alpha) {ctx.tableCutoffs++;return {value:cached.value,line:cached.line};}
     }
     const actions = ordered(p,facts.actions(),ctx.hints?.get(hintKey),ctx,depth);
-    if (!actions.length) throw new Error('Adapter must adjudicate a position without actions');
+    if (!facts.actionCount()) throw new Error('Adapter must adjudicate a position without actions');
     let best = {value:maximizing ? -Infinity : Infinity,line:null};
     let moveIndex=0;
     for (const action of actions) {

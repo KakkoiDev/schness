@@ -125,3 +125,13 @@ test('static evaluation cache requires explicit history-independent key and pres
  assert.throws(()=>generic.choose(0,{cacheEvaluation:true}),/evaluationKey/);
  assert.throws(()=>analyzeAction(p,{cacheEvaluation:1}),/cacheEvaluation/);
 });
+test('lazy ranked moves survive nested searches and preserve exact traversal and cancellation',()=>{
+ const p=position(),saved=structuredClone(p);
+ for(const options of [{depth:4,quiescenceDepth:1,lateMoveReduction:false},{depth:7,maxNodes:400,quiescenceDepth:2,lateMoveReduction:true}]){
+  const base={profile:'competitive',stopOnProvenWin:false,random:()=>0.5,...options};
+  const a=analyzeAction(p,base),b=analyzeAction(p,{...base,stagedMoveSelection:true});
+  for(const field of ['score','nodes','completedDepth','stopped'])assert.equal(b[field],a[field],field);
+  assert.deepEqual(b.action,a.action);assert.deepEqual(b.pv,a.pv);assert.deepEqual(p,saved);
+ }
+ assert.throws(()=>analyzeAction(p,{stagedMoveSelection:1}),/stagedMoveSelection/);
+});
