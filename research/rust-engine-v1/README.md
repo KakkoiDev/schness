@@ -52,3 +52,13 @@ Ported optional bounded per-search static evaluation caching (default off). Term
 ## Root ordering follow-up
 
 Ported completed-iteration root ordering, preserving every root action before Multi-PV truncation. Six Rust tests pass, including cache checks and root-order off/on exact scores and Multi-PV score sets across sampled rule fixtures; external1555positions/36exactsearches/8recovery/174portable cases pass. On18selected depth5 iterative/q4/evasion2/cacheEval/non-LMR diagnostic pairs all final scores match:342976 versus247592 cumulative nodes,1701 versus1069ms in one ordered run. Ties may choose different actions. Data/source/binaryhashes are in rust-root-ordering-ablation.json. This is search-cost evidence on selected inputs, not win-rate evidence; no new match launched.
+
+## Search parity fixes and r4 retest
+
+Closed known native search gaps: same-depth repetition-safe transposition bounds, bounded hints, killer/history ordering, principal-variation search, aspiration windows, root repetition-aversion tie re-search, and exposed-piece ordering penalty. Static cache remains optional; quiescence caching remains off/unimplemented, native ties deterministic. Profile defaults for iterative budgets/proven-win/repetition preference now match JavaScript; this defaults-only adjustment occurred after r4 freeze and does not change its explicit settings. Eight Rust tests,366JS tests,1555generated rule positions,36reference plus36nonreduced competitive score comparisons,8invalid-recovery checks and174portable cases pass. These are sampled correctness checks, not proof of universal parity.
+
+Selected18depth5 iterative/q4/evasion2/noLMR positions: all final scores match oldRust/newRust/JS; nodes342976/125899/125809 and elapsed1690/630/544ms. Timings include IPC and concurrent screen contention, not isolated language superiority. Full inputs/source/binaryhashes rust-search-parity-ablation.json. Native still did not beat JS elapsed time here.
+
+Frozen r4 screen at100ms each,32same starts/colors/seed20262001:2W28L2D=6.25%raw,9.375%halfdraw;White2/13/1,Black0/15/1. Bothdraws threefold. Candidate meanWhite101.46ms/Black101.49ms versusFairy91.25/90.73ms; requested20,completedWhite3/6/11,Black3/6/9. Previous Rustr3 raw3.125%,JavaScriptbaseline6.25% (2/27/3); descriptive small correlated sample does not establish a strength gain or equivalence. Paired outcomes in js-rust-r4-paired.json. No confirmation or app promotion.
+
+Runner inactive before frozen source/replay resume verification; full archive/runtimes/source/binary/GPL/replays andreadables in research/data/rust-r4-fairy-screen-2026-10-27,wholeSHA2560452bb558392243d41c935ae3ce7bae0aae7dc04bd9f540e83b21c107051deeb. Everypart/whole/archivedfile/32gamesverified. No experiment active.

@@ -24,16 +24,19 @@ explicitly use 100 ms. Process IPC overhead is included in recorded times.
 
 The hot path uses typed actions and reversible state updates, keeping JSON at the process boundary.
 
-The first version favors a straightforward port over complete internal feature
-parity: JavaScript's transposition cache, PVS, aspiration windows,
-killer/history ordering and repetition-aversion tie preference are not yet
-implemented here. Cache/PVS tuning fields sent by the research harness have no
-effect. Do not attribute result differences solely to language, or call this
-an equivalent algorithm speed comparison. Exact nonselective score comparisons
-and independent rule fixtures must continue to pass before integration.
+The native search now includes repetition-safe, same-remaining-depth transposition
+bounds, bounded position hints, killer/history ordering, principal-variation
+search, aspiration windows, completed-iteration root ordering, and repetition
+aversion with full re-search before bound-equality tie selection. Competitive
+ordering includes the exposed-piece penalty used by JavaScript. Static evaluation
+caching is optional; quiescence caching remains unimplemented and its option is
+inert. Native ties are deterministic; JavaScript may use seeded random ties.
+This closes known feature gaps but does not prove identical selective trees,
+node counts, tie choices, timing, or playing strength. The reference/nonreduced
+score checks and independent rules/tactics remain mandatory.
 
 `test:rust` checks 1,555 generated positions across all presets, 36 depth-3 exact
-reference score comparisons, and the 174 portable cases. These are sampled
+reference and36 nonreduced competitive score comparisons, and the 174 portable cases. These are sampled
 conformance checks, not universal equivalence or strength proofs. Match logs,
 source hashes, the exact native binary and Fairy GPL sources are frozen with
 every screen. No strength improvement is claimed from compilation or test passes.
