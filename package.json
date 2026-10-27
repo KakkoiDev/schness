@@ -13,7 +13,8 @@
     "library:build": "node scripts/build-game-library.js",
     "puzzles:extract": "node scripts/extract-puzzle-shard.js",
     "puzzles:aggregate": "node scripts/aggregate-puzzles.js",
-    "test:e2e:a11y": "playwright test e2e/accessibility.spec.js"
+    "test:e2e:a11y": "playwright test e2e/accessibility.spec.js",
+    "test:rust": "node scripts/verify-rust-engine.js"
   },
   "engines": {
     "node": ">=20"

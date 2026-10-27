@@ -1,0 +1,11 @@
+{
+  "status": "stopped-by-user",
+  "pid": 2981,
+  "startedAt": "2026-10-27T00:20:50.681Z",
+  "updatedAt": "2026-10-27T06:59:24.584390+00:00",
+  "completed": 0,
+  "total": 2,
+  "failure": "page.evaluate: Target page, context or browser has been closed\n    at /Users/kakkoidev/Documents/ChatGPT/Schness/output/local-experiments/competitive-r2-fairy-uncapped-probe02-2026-10-26/runtime/scripts/run-competitive-fairy.js:41:24",
+  "sourceFingerprint": "5329707cdf29acd13b1859a2f9c11d8dff784f0e68c5c4166c97007d0f3ebdf6",
+  "stopReason": "User requested termination after more than six hours for inefficiency"
+}

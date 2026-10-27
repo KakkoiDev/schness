@@ -1,0 +1,10 @@
+{
+  "status": "completed",
+  "pid": 29625,
+  "startedAt": "2026-10-27T07:20:09.535Z",
+  "updatedAt": "2026-10-27T07:20:09.564Z",
+  "completed": 32,
+  "total": 32,
+  "failure": null,
+  "sourceFingerprint": "b2b845d474eee586c3fb505883af7be07c3cd149715902f6e859e8c27a7f573d"
+}

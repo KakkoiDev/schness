@@ -1,0 +1,3348 @@
+{
+  "purpose": "Selected diagnostic positions, not holdout strength evidence; fixed depth, exact nonreduced search. Timing includes process IPC.",
+  "options": {
+    "profile": "competitive",
+    "depth": 5,
+    "iterativeDeepening": false,
+    "quiescenceDepth": 4,
+    "quiescenceChecks": true,
+    "quiescenceEvasionDepth": 2,
+    "lateMoveReduction": false
+  },
+  "binaries": [
+    {
+      "path": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "sha256": "b7e769af7f99a8dea85491fd31708d616aea276cce3c5b8863a01286b457b842"
+    },
+    {
+      "path": "engine-rust/target/release/schness-engine",
+      "sha256": "193e1bd9800840de3c4f2aa48a8a87690759b3c12153f0ccb90e460027d621b0"
+    }
+  ],
+  "results": [
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 1,
+      "millis": 187.875792,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 4
+      },
+      "score": -1690,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20074,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          "score": -1690,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 2,
+      "millis": 112.87395799999999,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 8
+      },
+      "score": -1102,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13067,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 8
+          },
+          "score": -1102,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 3,
+      "millis": 31.186958000000004,
+      "action": {
+        "type": "move",
+        "from": 0,
+        "to": 1
+      },
+      "score": -492,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3629,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 0,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          "score": -492,
+          "pv": [
+            {
+              "type": "move",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 4,
+      "millis": 73.61066599999998,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 7
+      },
+      "score": -1657,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8475,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          "score": -1657,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 5,
+      "millis": 115.57054200000005,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 6
+      },
+      "score": -1386,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13112,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          "score": -1386,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 6,
+      "millis": 188.71462499999996,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 7
+      },
+      "score": -984,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20736,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 7
+          },
+          "score": -984,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 11
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 7,
+      "millis": 32.18708400000003,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 6
+      },
+      "score": -1308,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3418,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 15
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          "score": -1308,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 8,
+      "millis": 78.24804200000005,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 7
+      },
+      "score": -816,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 9464,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          "score": -816,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 9,
+      "millis": 69.75208399999997,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 15
+      },
+      "score": -992,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7662,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 15
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          "score": -992,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 10,
+      "millis": 65.37920800000006,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 3
+      },
+      "score": -1040,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7257,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 5
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 3
+          },
+          "score": -1040,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 14
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 11,
+      "millis": 884.2613329999999,
+      "action": {
+        "type": "move",
+        "from": 15,
+        "to": 0
+      },
+      "score": -1108,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 90118,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 15,
+          "to": 0
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 12
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 15,
+            "to": 0
+          },
+          "score": -1108,
+          "pv": [
+            {
+              "type": "move",
+              "from": 15,
+              "to": 0
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 12,
+      "millis": 189.27320799999984,
+      "action": {
+        "type": "move",
+        "from": 1,
+        "to": 6
+      },
+      "score": -1058,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 19537,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          "score": -1058,
+          "pv": [
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 13,
+      "millis": 87.26966700000003,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 10
+      },
+      "score": -716,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8278,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          "score": -716,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 14,
+      "millis": 185.47541599999977,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 11
+      },
+      "score": -1092,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 22092,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 5,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          "score": -1092,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 15,
+      "millis": 35.72287499999993,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 0
+      },
+      "score": -1042,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3710,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 0
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 0,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 0
+          },
+          "score": -1042,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 0
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 0,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 16,
+      "millis": 59.431583000000046,
+      "action": {
+        "type": "move",
+        "from": 12,
+        "to": 8
+      },
+      "score": -1090,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 6426,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 12,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 12
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          "score": -1090,
+          "pv": [
+            {
+              "type": "move",
+              "from": 12,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 17,
+      "millis": 151.10699999999997,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 4
+      },
+      "score": -1476,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 18440,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 4
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 14
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          "score": -1476,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 4
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r2-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 18,
+      "millis": 23.13733400000001,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 14
+      },
+      "score": -760,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 2926,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 12
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 13
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          "score": -760,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 1,
+      "millis": 100.13466699999981,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 4
+      },
+      "score": -1690,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20074,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          "score": -1690,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 2,
+      "millis": 63.96424999999999,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 8
+      },
+      "score": -1102,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13067,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 8
+          },
+          "score": -1102,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 3,
+      "millis": 17.846291000000292,
+      "action": {
+        "type": "move",
+        "from": 0,
+        "to": 1
+      },
+      "score": -492,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3629,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 0,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          "score": -492,
+          "pv": [
+            {
+              "type": "move",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 4,
+      "millis": 40.68437500000027,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 7
+      },
+      "score": -1657,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8475,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          "score": -1657,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 5,
+      "millis": 62.87770899999987,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 6
+      },
+      "score": -1386,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13112,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          "score": -1386,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 6,
+      "millis": 100.26224999999977,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 7
+      },
+      "score": -984,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20736,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 7
+          },
+          "score": -984,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 11
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 7,
+      "millis": 16.58849999999984,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 6
+      },
+      "score": -1308,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3418,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 15
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          "score": -1308,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 8,
+      "millis": 41.078791999999794,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 7
+      },
+      "score": -816,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 9464,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          "score": -816,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 9,
+      "millis": 37.86708300000009,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 15
+      },
+      "score": -992,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7662,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 15
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          "score": -992,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 10,
+      "millis": 33.18333299999995,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 3
+      },
+      "score": -1040,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7257,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 5
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 3
+          },
+          "score": -1040,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 14
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 11,
+      "millis": 459.0038749999999,
+      "action": {
+        "type": "move",
+        "from": 15,
+        "to": 0
+      },
+      "score": -1108,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 90118,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 15,
+          "to": 0
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 12
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 15,
+            "to": 0
+          },
+          "score": -1108,
+          "pv": [
+            {
+              "type": "move",
+              "from": 15,
+              "to": 0
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 12,
+      "millis": 97.31345799999963,
+      "action": {
+        "type": "move",
+        "from": 1,
+        "to": 6
+      },
+      "score": -1058,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 19537,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          "score": -1058,
+          "pv": [
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 13,
+      "millis": 41.322999999999865,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 10
+      },
+      "score": -716,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8278,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          "score": -716,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 14,
+      "millis": 103.37854199999992,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 11
+      },
+      "score": -1092,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 22092,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 5,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          "score": -1092,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 15,
+      "millis": 18.334333000000242,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 0
+      },
+      "score": -1042,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3710,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 0
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 0,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 0
+          },
+          "score": -1042,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 0
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 0,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 16,
+      "millis": 32.22287499999993,
+      "action": {
+        "type": "move",
+        "from": 12,
+        "to": 8
+      },
+      "score": -1090,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 6426,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 12,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 12
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          "score": -1090,
+          "pv": [
+            {
+              "type": "move",
+              "from": 12,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 17,
+      "millis": 84.299125,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 4
+      },
+      "score": -1476,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 18440,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 4
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 14
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          "score": -1476,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 4
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 18,
+      "millis": 13.234791000000314,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 14
+      },
+      "score": -760,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 2926,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 12
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 13
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          "score": -760,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 13
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

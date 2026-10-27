@@ -1,0 +1,46 @@
+# Native Rust engine research — 27 October 2026
+
+The Rust research backend implements rules and search behind the portable protocol. It is not promoted to the browser app. The win-rate goal remains unmet; these results do not demonstrate an improvement over JavaScript.
+
+## Completed equal-budget screens
+
+Pinned Fairy package1.1.12 commitb2e693ef,1thread16MiBhashNNUEoff100ms; candidate100ms, requested20plies/q4/checks/evasion2/LMR, quiet-drop reductions off. Shared4x4six-slot capture bank, quiet drops/no cooldown, not Classic. Same16starts/seed20262001, bothfixedcolors32games each. Native runs alternate colors per start. All played positions have JS/Fairy legal parity and native screens additionally check Rust legal/result parity. Full history is supplied; JS host adjudicates repetition and200actionceiling. IPC included in native actual times. Candidate ties are deterministic; seeds are schedule labels rather than independent native tie randomizations.
+
+| Version | Color | W/L/D | Raw wins | Half-draw score | Candidate mean ms | Fairy mean ms | Completed depth min/median/max | Draw reasons |
+|---|---|---|---:|---:|---:|---:|---|---|
+| rust-r1 | white | 0/15/1 | 0.000% | 3.125% | 100.80 | 88.18 | 2/4/7 | {'threefold-repetition': 1} |
+| rust-r1 | black | 0/16/0 | 0.000% | 0.000% | 100.82 | 88.40 | 2/4/7 | {} |
+
+rust-r1-fairy-screen-2026-10-27: fingerprint `e752618f13a3f8f62fa05485cdd4fb87a42647e16b9b25a4829ee1b171c52e08`, full archive/readables in `research/data/rust-r1-fairy-screen-2026-10-27/`.
+| rust-r2 | white | 0/14/2 | 0.000% | 6.250% | 101.01 | 87.20 | 3/4/7 | {'threefold-repetition': 2} |
+| rust-r2 | black | 0/16/0 | 0.000% | 0.000% | 100.88 | 89.18 | 3/5/7 | {} |
+
+rust-r2-fairy-screen-2026-10-27: fingerprint `b287e59df454c8812f20b97451724e578e19274a5e526ba219d265504b74602c`, full archive/readables in `research/data/rust-r2-fairy-screen-2026-10-27/`.
+| rust-r3 | white | 0/16/0 | 0.000% | 0.000% | 100.81 | 90.73 | 3/5/9 | {} |
+| rust-r3 | black | 1/13/2 | 6.250% | 12.500% | 100.38 | 90.98 | 3/5/20 | {'threefold-repetition': 2} |
+
+rust-r3-fairy-screen-2026-10-27: fingerprint `b2b845d474eee586c3fb505883af7be07c3cd149715902f6e859e8c27a7f573d`, full archive/readables in `research/data/rust-r3-fairy-screen-2026-10-27/`.
+| js-rust-baseline | white | 1/14/1 | 6.250% | 9.375% | 99.55 | 90.43 | 3/6/9 | {'threefold-repetition': 1} |
+| js-rust-baseline | black | 1/13/2 | 6.250% | 12.500% | 99.51 | 92.84 | 4/6/9 | {'threefold-repetition': 2} |
+
+js-rust-baseline-fairy-screen-2026-10-27: fingerprint `5547c6ec0c883abcc1adab491b10f85ee4fa45cdafdcd1bc351a45b51509ea61`, full archive/readables in `research/data/js-rust-baseline-fairy-screen-2026-10-27/`.
+
+Rust r1:0/31/1; r2:0/30/2; r3:1/29/2 (3.125% raw,6.25% half-draw score). JavaScript baseline:2/27/3 (6.25% raw,10.9375% half-draw score). No192-game confirmation launched. One or a few completed nominal20 searches do not establish practical or exhaustive depth20. Selective depths of different engines are not equivalent. A32-game correlated schedule cannot prove a small regression or intrinsic variant/color balance. Strength was tested only on this shared variant, despite correctness coverage across36presets.
+
+## Implementation and validation
+
+Rust r1 is a correctness-first port; r2 removes allocation-heavy attack scans and needless history clones in ordering; r3 uses typed actions and reversible state in the hot path. Common material-policy search does not update unused research counters; it preserves all fields relevant to legality/evaluation/repetition and restores exact private state. Public transitions retain full counters.
+
+366 JavaScript unit tests passed;3 Rust tests cover142frozen rule snapshots,32,000 generated attack queries, and restoration for every legal action in the frozen rule corpus. External verification checked1,555generated rule positions/all36presets,36depth3 exact reference score comparisons,8invalid-request/recovery cases,174portable contract cases. Release build succeeded with locked dependencies; compiler recorded in toolchain.txt. Tests are conformance evidence, not a strength guarantee.
+
+All four runners inactive before frozen resume validation; every replay/source hash validated. All archive part/whole hashes, every archived file byte, and32bundledgames perrun verified. R1 initial socket-permission failure is retained separately; it produced no games, and the identical frozen runtime was resumed with required local access.
+
+The previous uncapped JS probe was stopped by explicit user request after6+hours,0/2games. Partial data/runtime/logs/stop+interruption records preserved in research/data/competitive-r2-user-stopped-2026-10-27. No unfinished game was counted as a loss. Do not restart it.
+
+## Performance diagnostics and limitations
+
+On18selected old-loss positions at fixeddepth5/q4/evasion2 without reductions: allocation cleanup preserved278,421nodes and all scores while elapsed changed8184ms to2531ms(~3.2x). Typed reversible search preserved the same nodes/scores and changed2571ms to1364ms(~1.9x) in a separate paired diagnostic. These selected samples include process IPC and occasional concurrent benchmark contention; they are not strength holdouts. Full inputs are retained in r6-earlier-reduction-ablation.json; full result/binary hashes are in rust-allocation-ablation.json and rust-reversible-ablation.json.
+
+A JavaScript diagnostic completed the same requested-depth cases in900ms/181,166nodes with matching scores; algorithms/order/cache behavior differ, so this is not an isolated language speed comparison. The native prototype still lacks JavaScript transposition/evaluation caches, PVS/aspiration, killer/history ordering and repetition-aversion ties. Those fields are currently inert when sent by the inherited harness. This gap must be closed and separately validated before calling the migration equivalent or replacing the app engine. See engine-rust/README.md.
+
+Next work: port bounded repetition-safe search caches and ordering with exhaustive/cancellation/restoration tests, then repeat fixed-budget paired comparisons against JavaScript and pinned Fairy. Do not compensate by silently raising native time, weakening Fairy or pooling successful partial scores. Fresh confirmation required for any strength claim.

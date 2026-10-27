@@ -50,3 +50,5 @@ The portable batch totals 174 cases. Its assertions are shared by JavaScript and
 ## Rust acceptance
 
 Before switching backends, run the portable contract against the Rust executable, port adapter-specific restoration and cancellation tests, and add differential legal-action/transition tests over broad generated positions. Preserve all existing fixtures and independent oracles. Exercise the real browser/worker integration after wiring it up. Benchmark identical frozen positions and settings separately from correctness tests. Playing-strength acceptance still requires completed, preserved matches against the unchanged opponent; passing conformance tests does not meet the 51% win target.
+
+The experimental native implementation and build instructions are in [engine-rust/README.md](../engine-rust/README.md); completed match evidence and limitations are in [research/rust-engine-v1/README.md](../research/rust-engine-v1/README.md). Conformance passes do not authorize production promotion.
