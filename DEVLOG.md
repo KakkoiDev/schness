@@ -1542,3 +1542,8 @@ Cache immutable ruleJSON once perparse;reservekeys count kinds instead of clone/
 Share borrowed actionvisitor for both-color mobility count without cloningconfiguration/reserves or buildingsecondmovevector. NineRusttests pass (>2000bothcolorfixture/childcounts+unchangedstate);external1555rules/36reference/36competitive/8recovery/174portablepass. Combinedkey/mobilitycleanupvsfrozenr4 all18selecteddepth5scores/actions/125899nodes match;ABBAnew/old/old/new515/615/616/517ms,initial522/619JS526. Fullinputs/hashes/repeatedoutputs retained. Notstrength/languageproof.
 
 Frozen r5 launched32games/16identicalstarts/bothcolors/seed20262001/100mscandidateandFairy/request20/q4checks/evasion2/LMRtrue/dropsfalse/staticcachetrue. Fingerprinta1988a40d346f3b80d3af02129c39709e5621fbe922dde90d67f2bfed7a77496,exactlaunchmanifestpublished. No partialstrengthclaim,do notmutatefrozenruntime/duplicates. No confirmationunlesscomplete17/32threshold;fresh192required. AppstillJS.
+
+
+### 2026-10-27 — Complete r5 allocation screen, no strength gain
+
+Full32games1W29L2D=3.125%raw,6.25%halfdraw;White1/14/1Black0/15/1,boththreefold. Candidate101.39/101.44msFairy92.60/90.49msnominal100each. Requested20completedW3/6/9B4/6/11. Previousr4 2/28/2=6.25%,JSbaseline2/27/3=6.25%. Pairedr4/r5Whitegained1lost2wins,Blackunchanged0. No demonstratedstrengthgain,no confirmation/promotion. Allocationdiagnosticgains didnottranslateintobetterresults. Inactiverunnerconfirmed beforefrozenresumesource/replayvalidation;fullruntime/source/binary/GPL/bundles/readables/logsarchived,allpartwholefilebytes32gamesverified. Whole20510a0d248c788d936f36a78dbd953880451e90506690b93320d497c170da0c. Noactiveexperiment;nextinspectearlydecisivetactical/evaluationdifferencesratherthanallocation-onlyscreens.
