@@ -1,0 +1,3538 @@
+{
+  "purpose": "Selected diagnostic positions, not holdout strength evidence; fixed depth, exact nonreduced search. Timing includes process IPC.",
+  "options": {
+    "profile": "competitive",
+    "depth": 5,
+    "iterativeDeepening": false,
+    "quiescenceDepth": 4,
+    "quiescenceChecks": true,
+    "quiescenceEvasionDepth": 2,
+    "lateMoveReduction": false
+  },
+  "binaries": [
+    {
+      "path": "engine-rust/target/release/schness-engine",
+      "cacheEvaluation": false,
+      "sha256": "74497e27827795b37b35e99956e9b169af5dcb5a222eb64a3f19793187d08a59"
+    },
+    {
+      "path": "engine-rust/target/release/schness-engine",
+      "cacheEvaluation": true,
+      "sha256": "74497e27827795b37b35e99956e9b169af5dcb5a222eb64a3f19793187d08a59"
+    }
+  ],
+  "results": [
+    {
+      "cacheEvaluation": false,
+      "id": 1,
+      "millis": 98.645166,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 4
+      },
+      "score": -1690,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20074,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          "score": -1690,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 17630,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 2,
+      "millis": 62.70675,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 8
+      },
+      "score": -1102,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13067,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 8
+          },
+          "score": -1102,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 11573,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 3,
+      "millis": 17.396333,
+      "action": {
+        "type": "move",
+        "from": 0,
+        "to": 1
+      },
+      "score": -492,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3629,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 0,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          "score": -492,
+          "pv": [
+            {
+              "type": "move",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 3104,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 4,
+      "millis": 39.61933300000001,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 7
+      },
+      "score": -1657,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8475,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          "score": -1657,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 7310,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 5,
+      "millis": 61.723040999999995,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 6
+      },
+      "score": -1386,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13112,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          "score": -1386,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 11783,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 6,
+      "millis": 98.64883300000002,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 7
+      },
+      "score": -984,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20736,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 7
+          },
+          "score": -984,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 11
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 18738,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 7,
+      "millis": 16.82266599999997,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 6
+      },
+      "score": -1308,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3418,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 15
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          "score": -1308,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 15
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 2886,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 8,
+      "millis": 40.47279099999997,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 7
+      },
+      "score": -816,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 9464,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          "score": -816,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 5
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 8068,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 9,
+      "millis": 37.26999999999998,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 15
+      },
+      "score": -992,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7662,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 15
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          "score": -992,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 6657,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 10,
+      "millis": 33.14187499999997,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 3
+      },
+      "score": -1040,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7257,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 5
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 3
+          },
+          "score": -1040,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 14
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 5
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 6141,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 11,
+      "millis": 452.768333,
+      "action": {
+        "type": "move",
+        "from": 15,
+        "to": 0
+      },
+      "score": -1108,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 90118,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 15,
+          "to": 0
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 12
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 15,
+            "to": 0
+          },
+          "score": -1108,
+          "pv": [
+            {
+              "type": "move",
+              "from": 15,
+              "to": 0
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 4
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 83906,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 12,
+      "millis": 95.06074999999987,
+      "action": {
+        "type": "move",
+        "from": 1,
+        "to": 6
+      },
+      "score": -1058,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 19537,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          "score": -1058,
+          "pv": [
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 17492,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 13,
+      "millis": 41.56962499999986,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 10
+      },
+      "score": -716,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8278,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          "score": -716,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 4
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 7270,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 14,
+      "millis": 103.91708399999993,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 11
+      },
+      "score": -1092,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 22092,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 5,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          "score": -1092,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 20146,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 15,
+      "millis": 18.18420900000001,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 0
+      },
+      "score": -1042,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3710,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 0
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 0,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 0
+          },
+          "score": -1042,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 0
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 0,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 4
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 3216,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 16,
+      "millis": 32.22095800000011,
+      "action": {
+        "type": "move",
+        "from": 12,
+        "to": 8
+      },
+      "score": -1090,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 6426,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 12,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 12
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          "score": -1090,
+          "pv": [
+            {
+              "type": "move",
+              "from": 12,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 12
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 5733,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 17,
+      "millis": 84.14045800000008,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 4
+      },
+      "score": -1476,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 18440,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 4
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 14
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          "score": -1476,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 4
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 14
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 15940,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": false,
+      "id": 18,
+      "millis": 13.25570800000014,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 14
+      },
+      "score": -760,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 2926,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 12
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 13
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          "score": -760,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 13
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 2433,
+        "evaluationCacheHits": 0,
+        "evaluationTableEntries": 0
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 1,
+      "millis": 88.76204099999995,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 4
+      },
+      "score": -1690,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20074,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          "score": -1690,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 10481,
+        "evaluationCacheHits": 7149,
+        "evaluationTableEntries": 10481
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 2,
+      "millis": 61.830000000000155,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 8
+      },
+      "score": -1102,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13067,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 8
+          },
+          "score": -1102,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 8940,
+        "evaluationCacheHits": 2633,
+        "evaluationTableEntries": 8940
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 3,
+      "millis": 17.825417000000016,
+      "action": {
+        "type": "move",
+        "from": 0,
+        "to": 1
+      },
+      "score": -492,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3629,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 0,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          "score": -492,
+          "pv": [
+            {
+              "type": "move",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 2634,
+        "evaluationCacheHits": 470,
+        "evaluationTableEntries": 2634
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 4,
+      "millis": 38.84574999999995,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 7
+      },
+      "score": -1657,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8475,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          "score": -1657,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 5380,
+        "evaluationCacheHits": 1930,
+        "evaluationTableEntries": 5380
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 5,
+      "millis": 58.747458999999935,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 6
+      },
+      "score": -1386,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13112,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          "score": -1386,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 8104,
+        "evaluationCacheHits": 3679,
+        "evaluationTableEntries": 8104
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 6,
+      "millis": 91.343208,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 7
+      },
+      "score": -984,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20736,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 7
+          },
+          "score": -984,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 11
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 12183,
+        "evaluationCacheHits": 6555,
+        "evaluationTableEntries": 12183
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 7,
+      "millis": 16.32487500000002,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 6
+      },
+      "score": -1308,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3418,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 15
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          "score": -1308,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 15
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 2189,
+        "evaluationCacheHits": 697,
+        "evaluationTableEntries": 2189
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 8,
+      "millis": 37.49833400000011,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 7
+      },
+      "score": -816,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 9464,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          "score": -816,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 5
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 4904,
+        "evaluationCacheHits": 3164,
+        "evaluationTableEntries": 4904
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 9,
+      "millis": 36.594957999999906,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 15
+      },
+      "score": -992,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7662,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 15
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          "score": -992,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 5219,
+        "evaluationCacheHits": 1438,
+        "evaluationTableEntries": 5219
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 10,
+      "millis": 31.716707999999926,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 3
+      },
+      "score": -1040,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7257,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 5
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 3
+          },
+          "score": -1040,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 14
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 5
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 4207,
+        "evaluationCacheHits": 1934,
+        "evaluationTableEntries": 4207
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 11,
+      "millis": 372.96737499999995,
+      "action": {
+        "type": "move",
+        "from": 15,
+        "to": 0
+      },
+      "score": -1108,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 90118,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 15,
+          "to": 0
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 12
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 15,
+            "to": 0
+          },
+          "score": -1108,
+          "pv": [
+            {
+              "type": "move",
+              "from": 15,
+              "to": 0
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 4
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 38137,
+        "evaluationCacheHits": 45769,
+        "evaluationTableEntries": 38137
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 12,
+      "millis": 78.72350000000006,
+      "action": {
+        "type": "move",
+        "from": 1,
+        "to": 6
+      },
+      "score": -1058,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 19537,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          "score": -1058,
+          "pv": [
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 7622,
+        "evaluationCacheHits": 9870,
+        "evaluationTableEntries": 7622
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 13,
+      "millis": 39.018583000000035,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 10
+      },
+      "score": -716,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8278,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          "score": -716,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 4
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 5289,
+        "evaluationCacheHits": 1981,
+        "evaluationTableEntries": 5289
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 14,
+      "millis": 92.88675000000012,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 11
+      },
+      "score": -1092,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 22092,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 5,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          "score": -1092,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 12182,
+        "evaluationCacheHits": 7964,
+        "evaluationTableEntries": 12182
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 15,
+      "millis": 17.322417000000314,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 0
+      },
+      "score": -1042,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3710,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 0
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 0,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 0
+          },
+          "score": -1042,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 0
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 0,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 4
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 2223,
+        "evaluationCacheHits": 993,
+        "evaluationTableEntries": 2223
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 16,
+      "millis": 29.66283300000032,
+      "action": {
+        "type": "move",
+        "from": 12,
+        "to": 8
+      },
+      "score": -1090,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 6426,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 12,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 12
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          "score": -1090,
+          "pv": [
+            {
+              "type": "move",
+              "from": 12,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 12
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 3655,
+        "evaluationCacheHits": 2078,
+        "evaluationTableEntries": 3655
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 17,
+      "millis": 74.6023750000004,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 4
+      },
+      "score": -1476,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 18440,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 4
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 14
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          "score": -1476,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 4
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 14
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 9243,
+        "evaluationCacheHits": 6697,
+        "evaluationTableEntries": 9243
+      }
+    },
+    {
+      "cacheEvaluation": true,
+      "id": 18,
+      "millis": 12.427584000000024,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 14
+      },
+      "score": -760,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 2926,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 12
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 13
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          "score": -760,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 13
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "evaluations": 1618,
+        "evaluationCacheHits": 815,
+        "evaluationTableEntries": 1618
+      }
+    }
+  ],
+  "sourceHashes": {
+    "engine-rust/src/native_search.rs": "fd6852fac80b5939738719b5e6ae08bb52394755ef5fc7208b18769640f45863",
+    "engine-rust/src/rules.rs": "ee10c3b71a2f1555fdf6ceab2077812b0cc6b5b205fddd24ac6a9bc4a2476357",
+    "engine-rust/src/search.rs": "2073edecf918d66425ca43ae7eabcaf79d2cb593259f60d30875cb61263e9d91",
+    "engine-rust/src/main.rs": "09ddd149d7bc5e929fa63616065d066a730b5b509276e901c6b2645fcfb43a06",
+    "engine-rust/Cargo.lock": "4bdabf0ef7e85102ace7f73baa197070c2cf2460804e99791a2e28897ba1d72a",
+    "scripts/bench-rust-evaluation-cache.js": "60c9adb5984e37e74c4d067f9bd0ada422142ef8ba910d42c34ec7c0f2e17017"
+  }
+}

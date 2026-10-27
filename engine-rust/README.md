@@ -25,7 +25,7 @@ explicitly use 100 ms. Process IPC overhead is included in recorded times.
 The hot path uses typed actions and reversible state updates, keeping JSON at the process boundary.
 
 The first version favors a straightforward port over complete internal feature
-parity: JavaScript's transposition/evaluation caches, PVS, aspiration windows,
+parity: JavaScript's transposition cache, PVS, aspiration windows,
 killer/history ordering and repetition-aversion tie preference are not yet
 implemented here. Cache/PVS tuning fields sent by the research harness have no
 effect. Do not attribute result differences solely to language, or call this
@@ -42,3 +42,5 @@ Rust dependencies are locked in Cargo.lock. serde and serde_json are used for
 JSON transport; Cargo metadata identifies their licenses. Fairy remains a
 separate pinned GPL engine; its source, license and authors are preserved by the
 benchmark manifest/archive.
+
+Optional `cacheEvaluation: true` now enables a bounded per-search static evaluation table (default off, `maxTableEntries` default50000). Full position keys include rule rights and reserves; repetition is adjudicated before lookup. This stores neither search bounds nor game results. It does not establish a playing improvement.

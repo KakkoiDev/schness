@@ -2,6 +2,7 @@
 use crate::rules::*;
 use crate::search::evaluate_chess;
 use serde_json::{json, Value};
+use std::collections::{HashMap, VecDeque};
 use std::time::{Duration, Instant};
 struct Context {
     nodes: u64,
@@ -13,8 +14,37 @@ struct Context {
     competitive: bool,
     lmr: bool,
     drops: bool,
+    eval_cache: Option<HashMap<String, f64>>,
+    eval_fifo: VecDeque<String>,
+    capacity: usize,
+    evaluations: u64,
+    evaluation_hits: u64,
 }
 impl Context {
+    // Only static values are cached; terminal/repetition adjudication must run first.
+    fn evaluate(&mut self, p: &Position, who: usize, count: usize) -> f64 {
+        let key = self.eval_cache.as_ref().map(|_| p.key());
+        if let Some(v) = key
+            .as_ref()
+            .and_then(|k| self.eval_cache.as_ref().unwrap().get(k))
+        {
+            self.evaluation_hits += 1;
+            return *v;
+        }
+        self.evaluations += 1;
+        let value = evaluate_chess(p, who, self.competitive, count);
+        if let Some(k) = key {
+            let table = self.eval_cache.as_mut().unwrap();
+            if table.len() >= self.capacity {
+                if let Some(old) = self.eval_fifo.pop_front() {
+                    table.remove(&old);
+                }
+            }
+            self.eval_fifo.push_back(k.clone());
+            table.insert(k, value);
+        }
+        value
+    }
     fn enter(&mut self) -> Result<(), ()> {
         if self.nodes >= self.max || self.deadline.map(|t| Instant::now() >= t).unwrap_or(false) {
             return Err(());
@@ -101,7 +131,7 @@ fn visit(
     };
     let mut line = vec![];
     let selected = if d == 0 {
-        let stand = evaluate_chess(p, who, c.competitive, aa.len());
+        let stand = c.evaluate(p, who, aa.len());
         if q == 0 && !(danger && e > 0) {
             return Ok((stand, line));
         }
@@ -178,6 +208,14 @@ pub fn choose(
     time: Option<f64>,
     competitive: bool,
 ) -> Result<Value, String> {
+    if !o["cacheEvaluation"].is_null() && !o["cacheEvaluation"].is_boolean() {
+        return Err("Invalid cacheEvaluation".into());
+    }
+    let capacity = o["maxTableEntries"].as_u64().unwrap_or(50000) as usize;
+    if capacity == 0 || (!o["maxTableEntries"].is_null() && o["maxTableEntries"].as_u64().is_none())
+    {
+        return Err("Invalid table capacity".into());
+    }
     let mut c = Context {
         nodes: 0,
         max,
@@ -188,6 +226,15 @@ pub fn choose(
         competitive,
         lmr: o["lateMoveReduction"].as_bool().unwrap_or(competitive),
         drops: o["reduceQuietDrops"] == true,
+        eval_cache: if o["cacheEvaluation"] == true {
+            Some(HashMap::new())
+        } else {
+            None
+        },
+        eval_fifo: VecDeque::new(),
+        capacity,
+        evaluations: 0,
+        evaluation_hits: 0,
     };
     let who = p.turn;
     let aa = ordered(&p, p.actions(), competitive);
@@ -267,5 +314,112 @@ pub fn choose(
         }
     }
     out["nodes"] = json!(c.nodes);
+    out["stats"] = json!({"evaluations":c.evaluations,"evaluationCacheHits":c.evaluation_hits,
+        "evaluationTableEntries":c.eval_cache.as_ref().map_or(0, HashMap::len)});
     Ok(out)
+}
+
+#[cfg(test)]
+mod cache_tests {
+    use super::*;
+    fn context() -> Context {
+        Context {
+            nodes: 0,
+            max: u64::MAX,
+            deadline: None,
+            q: 0,
+            e: 0,
+            checks: false,
+            competitive: false,
+            lmr: false,
+            drops: false,
+            eval_cache: Some(HashMap::new()),
+            eval_fifo: VecDeque::new(),
+            capacity: 1,
+            evaluations: 0,
+            evaluation_hits: 0,
+        }
+    }
+    #[test]
+    fn static_cache_is_bounded_and_never_bypasses_repetition_terminal() {
+        let corpus: Value = serde_json::from_str(include_str!(
+            "../../test/fixtures/engine-contract/rules.json"
+        ))
+        .unwrap();
+        let mut p = corpus["cases"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|c| Position::parse(&c["state"]).unwrap())
+            .find(|p| p.phase == "play" && !p.actions().is_empty())
+            .unwrap();
+        let mut c = context();
+        let n = p.actions().len();
+        let v = c.evaluate(&p, p.turn, n);
+        assert_eq!(c.evaluate(&p, p.turn, n), v);
+        assert_eq!(c.evaluation_hits, 1);
+        let u = p.push_search(p.actions()[0]);
+        c.evaluate(&p, p.turn, n);
+        assert_eq!(c.eval_cache.as_ref().unwrap().len(), 1);
+        assert_eq!(c.eval_fifo.len(), 1);
+        p.pop_search(u);
+        c.evaluate(&p, p.turn, n);
+        assert_eq!(c.evaluations, 3);
+        p.repetitions.insert(p.key(), 3);
+        let before = c.evaluations;
+        let who = p.turn;
+        assert_eq!(
+            visit(
+                &mut p,
+                0,
+                0,
+                0,
+                f64::NEG_INFINITY,
+                f64::INFINITY,
+                who,
+                &mut c
+            )
+            .unwrap()
+            .0,
+            0.0
+        );
+        assert_eq!(c.evaluations, before);
+    }
+    #[test]
+    fn cached_search_matches_uncached_and_cancellation_keeps_legal_fallback() {
+        let corpus: Value = serde_json::from_str(include_str!(
+            "../../test/fixtures/engine-contract/rules.json"
+        ))
+        .unwrap();
+        for case in corpus["cases"].as_array().unwrap().iter().step_by(7) {
+            let p = Position::parse(&case["state"]).unwrap();
+            let plain = choose(
+                p.clone(),
+                &json!({"iterativeDeepening":false,"lateMoveReduction":false}),
+                3,
+                0,
+                0,
+                u64::MAX,
+                None,
+                false,
+            )
+            .unwrap();
+            let cached=choose(p.clone(),&json!({"iterativeDeepening":false,"lateMoveReduction":false,"cacheEvaluation":true,"maxTableEntries":8}),3,0,0,u64::MAX,None,false).unwrap();
+            assert_eq!(plain["score"], cached["score"]);
+            assert_eq!(plain["nodes"], cached["nodes"]);
+            assert_eq!(plain["action"], cached["action"]);
+            let stopped = choose(
+                p,
+                &json!({"cacheEvaluation":true}),
+                20,
+                0,
+                0,
+                1,
+                None,
+                false,
+            )
+            .unwrap();
+            assert_eq!(stopped["completedDepth"], 0);
+        }
+    }
 }
