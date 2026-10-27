@@ -1599,3 +1599,7 @@ Fourth JS direction implemented as opt-in legal reserve-pressure evaluation: bes
 
 ### 2026-10-27 — Archive reserve screen; freeze isolated history/staged screens
 Reserve evaluation completed2W30L0D (6.25% raw), White1/15/0 Black1/15/0; no strength gain or confirmation. Inactive/source/replay checks completed, full archive parts/whole/every file/32games verified; SHA256281513eb8dbb72747d7c121793af24d7cf04e03849ec003ad225c383b25b1d29. Retain paired baseline comparison. Freeze remaining history-only and staged-only32game equal100ms screens, identical starts/colors/seed; sequential operational queue, no live tuning or automatic promotion.379 correctness tests previously passed; pending games are not strength evidence. Rust remains paused.
+
+
+### 2026-10-27 — Complete isolated JS history/staged screens
+Both32game equal100ms screens completed and runners exited; own frozen resume validated all source hashes/replays. History3W28L1D9.375%raw, White1/15/0 Black2/13/1; baseline White unchanged, Black gained one win. Staged1W29L2D3.125%raw, White0/15/1 Black1/14/1. All draws threefold; median completed depth6 vs20requested. Small descriptive results, no established strength gain, confirmation or promotion. Full runtime/source/GPL/bundles/log archives verified part/whole/everyfile; history whole644e2f791e2bb4cb915cddf4ee648d353f983b8c0cb10a2de1060a065ee8dcf4, staged b79d6b81a4d1a258000a4648bdd9ead4906b3410ea116e5288300c1e1001da74. Preserve paired comparisons and all failed attempts. Next early JS loss/search-cost analysis, Rust remains paused.
