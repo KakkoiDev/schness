@@ -237,7 +237,10 @@ pub fn choose(
         evaluation_hits: 0,
     };
     let who = p.turn;
-    let aa = ordered(&p, p.actions(), competitive);
+    if !o["rootOrdering"].is_null() && !o["rootOrdering"].is_boolean() {
+        return Err("Invalid rootOrdering".into());
+    }
+    let mut aa = ordered(&p, p.actions(), competitive);
     if let Some(v) = terminal(&p, who, depth, &aa) {
         return Ok(
             json!({"action":null,"score":v,"requestedDepth":depth,"completedDepth":0,"nodes":0,"stopped":false,"pv":[],"variations":[]}),
@@ -265,6 +268,7 @@ pub fn choose(
             break;
         }
         let mut lines = vec![];
+        let mut ranked_actions = vec![];
         let mut alpha = f64::NEG_INFINITY;
         let mut stopped = false;
         for &a in &aa {
@@ -284,6 +288,7 @@ pub fn choose(
                 Ok((v, pv)) => {
                     let mut line = vec![a.json()];
                     line.extend(pv.into_iter().map(Action::json));
+                    ranked_actions.push((a, v));
                     lines.push(json!({"action":a.json(),"score":v,"pv":line}));
                     alpha = alpha.max(v)
                 }
@@ -303,6 +308,12 @@ pub fn choose(
                 .unwrap()
                 .total_cmp(&a["score"].as_f64().unwrap())
         });
+        // Reorder only after an entire iteration completes. Multi-PV truncation
+        // must never remove root actions from the next iteration's search.
+        if o["rootOrdering"] != false {
+            ranked_actions.sort_by(|a, b| b.1.total_cmp(&a.1));
+            aa = ranked_actions.into_iter().map(|(a, _)| a).collect();
+        }
         lines.truncate(multi);
         out["action"] = lines[0]["action"].clone();
         out["score"] = lines[0]["score"].clone();
@@ -420,6 +431,44 @@ mod cache_tests {
             )
             .unwrap();
             assert_eq!(stopped["completedDepth"], 0);
+        }
+    }
+}
+
+#[cfg(test)]
+mod root_tests {
+    use super::*;
+    #[test]
+    fn completed_root_order_preserves_exact_scores_and_full_search_set() {
+        let corpus: Value = serde_json::from_str(include_str!(
+            "../../test/fixtures/engine-contract/rules.json"
+        ))
+        .unwrap();
+        for case in corpus["cases"].as_array().unwrap().iter().step_by(5) {
+            let p = Position::parse(&case["state"]).unwrap();
+            for multi in [1, 3] {
+                let options = |enabled| json!({"rootOrdering":enabled,"lateMoveReduction":false,"multiPv":multi});
+                let a = choose(p.clone(), &options(false), 3, 0, 0, u64::MAX, None, false).unwrap();
+                let b = choose(p.clone(), &options(true), 3, 0, 0, u64::MAX, None, false).unwrap();
+                assert_eq!(a["score"], b["score"]);
+                assert_eq!(a["completedDepth"], b["completedDepth"]);
+                if multi > 1 {
+                    assert_eq!(
+                        a["variations"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .map(|x| x["score"].clone())
+                            .collect::<Vec<_>>(),
+                        b["variations"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .map(|x| x["score"].clone())
+                            .collect::<Vec<_>>()
+                    );
+                }
+            }
         }
     }
 }

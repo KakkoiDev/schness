@@ -44,3 +44,5 @@ separate pinned GPL engine; its source, license and authors are preserved by the
 benchmark manifest/archive.
 
 Optional `cacheEvaluation: true` now enables a bounded per-search static evaluation table (default off, `maxTableEntries` default50000). Full position keys include rule rights and reserves; repetition is adjudicated before lookup. This stores neither search bounds nor game results. It does not establish a playing improvement.
+
+Root actions are now reordered by the previous fully completed iteration, retaining the entire root set before Multi-PV truncation. `rootOrdering: false` disables this for diagnostics. Interrupted iterations never publish or reorder partial results. This changes selective move order, so playing strength still requires fresh matches.

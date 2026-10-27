@@ -1518,3 +1518,8 @@ Stopped old uncapped probe at the user's request after excessive runtime;0/2 gam
 ### 2026-10-27 — Bounded native static evaluation cache
 
 Ported optional cacheEvaluation (defaultfalse) using fullposition keys,per-search FIFO bounded by maxTableEntries; terminal/repetition runs before lookup. No searchbounds/gameoutcome reuse. Five Rust tests pass including cacheon/off score/node/action equality,capacityeviction,repetitionprecedence,cancellation; external1555rulepositions/36exactsearches/174portablecases pass. Eighteen selected fixeddepth5/q4/evasion2/noLMR pairs preserved all scores/actions/nodes:250026vs144210static evaluations,105816hits; single ordered elapsed1348vs1197ms. Full inputs/source/binaryhashes retained. Selected diagnostic timing is not win-rate improvement or holdout evidence. No new match launched,appremainsJS; remaining native search feature gaps remain.
+
+
+### 2026-10-27 — Completed-iteration native root ordering
+
+Ported root reorder from fully completed previousiteration,retainingallrootactionsbeforeMultiPVtruncation;rootOrderingfalse diagnostic switch. SixRusttests pass with sampled exactscore/MultiPVset equivalence,external1555positions/36exactsearches/8recovery/174portablecases pass.18selecteddepth5iterative/q4/evasion2/cacheEval/nonLMRpairs allscoresmatch:342976vs247592nodes,1701vs1069ms singleorderedrun. Fullinputs/source/binaryhashes retained in rust-root-ordering-ablation.json. Tiedactions maydiffer;selectiveorder changesrequirefreshmatches. No win-rateclaim/newmatch/appswitch.
