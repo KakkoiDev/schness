@@ -1547,3 +1547,10 @@ Frozen r5 launched32games/16identicalstarts/bothcolors/seed20262001/100mscandida
 ### 2026-10-27 — Complete r5 allocation screen, no strength gain
 
 Full32games1W29L2D=3.125%raw,6.25%halfdraw;White1/14/1Black0/15/1,boththreefold. Candidate101.39/101.44msFairy92.60/90.49msnominal100each. Requested20completedW3/6/9B4/6/11. Previousr4 2/28/2=6.25%,JSbaseline2/27/3=6.25%. Pairedr4/r5Whitegained1lost2wins,Blackunchanged0. No demonstratedstrengthgain,no confirmation/promotion. Allocationdiagnosticgains didnottranslateintobetterresults. Inactiverunnerconfirmed beforefrozenresumesource/replayvalidation;fullruntime/source/binary/GPL/bundles/readables/logsarchived,allpartwholefilebytes32gamesverified. Whole20510a0d248c788d936f36a78dbd953880451e90506690b93320d497c170da0c. Noactiveexperiment;nextinspectearlydecisivetactical/evaluationdifferencesratherthanallocation-onlyscreens.
+
+
+### 2026-10-27 — Bounded early Rust loss analysis
+
+Analyzed all 29 frozen Rust r5 losses, selecting early observed score swings within the first 12 candidate decisions. At explicit depth-6/200,000-node/1,500-ms diagnostic limits, 15 best-versus-forced-played pairs completed; 14 incomplete pairs are excluded from fixed-depth comparisons. Full inputs, trajectories, PVs, frozen binary identity and results are retained. These finite-horizon scores are not game-theoretic proofs or strength evidence.
+
+Matched reduction-off/on searches on all 15 completed cases finished all 30 searches: six scores and one action differed. At Black start 2, ply 7, reduction-on selected the played bishop move while the nonreduced depth-6 search preferred a king move. This identifies a selective-search discrepancy for further tested investigation, not grounds to disable reductions globally or claim improved win rate. No engine settings changed, new match launched, or production promotion occurred.
