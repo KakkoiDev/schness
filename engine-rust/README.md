@@ -53,3 +53,6 @@ Root actions are now reordered by the previous fully completed iteration, retain
 Immutable rule JSON is cached once per parsed position for key construction; bank keys use fixed piece counts instead of cloning/sorting reserve vectors. Public state and canonical repetition keys remain unchanged. Selected repeated diagnostics preserve all scores/actions/node counts; no playing improvement follows from this allocation change alone.
 
 Mobility evaluation uses the same borrowed action visitor as legal generation, counting callbacks rather than cloning rules/research/reserves and collecting a second move vector. Both-color counts over frozen fixtures and children are checked against cloned-side generation; public state remains untouched.
+
+
+Experimental `reducePrincipalVariation: false` restricts late-move reductions to null windows; default true preserves existing behavior. On all15 selected early-loss cases, all30 paired depth6 searches completed: four scores and one action changed. The Black start2 defense now matches the nonreduced depth6 action/score. This selected regression is tested; it does not establish universal equivalence or stronger play. Ten Rust tests and the external conformance batch pass. No new match launched or default promoted. Data: `rust-pv-reduction-ablation.json`.

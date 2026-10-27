@@ -21,6 +21,7 @@ struct Context {
     competitive: bool,
     lmr: bool,
     drops: bool,
+    reduce_pv: bool,
     eval_cache: Option<HashMap<String, f64>>,
     eval_fifo: VecDeque<String>,
     capacity: usize,
@@ -279,6 +280,7 @@ fn visit(
     };
     for (i, a) in selected.into_iter().enumerate() {
         let reducible = c.lmr
+            && (c.reduce_pv || beta - alpha <= 1.0)
             && d >= 3
             && i >= 3
             && !danger
@@ -455,6 +457,7 @@ pub fn choose(
         competitive,
         lmr: o["lateMoveReduction"].as_bool().unwrap_or(competitive),
         drops: o["reduceQuietDrops"] == true,
+        reduce_pv: o["reducePrincipalVariation"] != false,
         eval_cache: if o["cacheEvaluation"] == true {
             Some(HashMap::new())
         } else {
@@ -613,6 +616,7 @@ mod cache_tests {
             competitive: false,
             lmr: false,
             drops: false,
+            reduce_pv: true,
             eval_cache: Some(HashMap::new()),
             eval_fifo: VecDeque::new(),
             capacity: 1,
@@ -798,5 +802,25 @@ mod parity_tests {
         let mut other = p.clone();
         other.repetitions.insert(p.key(), 2);
         assert_ne!(a, c.search_key(&other, 2));
+    }
+}
+
+#[cfg(test)]
+mod pv_reduction_tests {
+    use super::*;
+    #[test]
+    fn wide_window_guard_recovers_nonreduced_early_defense() {
+        let state: Value = serde_json::from_str(include_str!("pv-reduction-regression.json")).unwrap();
+        let p = Position::parse(&state).unwrap();
+        let run = |lmr, pv| choose(p.clone(), &json!({"lateMoveReduction":lmr,"reducePrincipalVariation":pv,"quiescenceChecks":true,"cacheEvaluation":true,"stopOnProvenWin":false,"repetitionAversion":true}),6,4,2,200000,None,true).unwrap();
+        let exact = run(false,true);
+        let guarded = run(true,false);
+        let original = run(true,true);
+        assert_eq!(guarded["completedDepth"],6);
+        assert_eq!(guarded["score"],exact["score"]);
+        assert_eq!(guarded["action"],exact["action"]);
+        assert_eq!(guarded["action"],json!({"type":"move","from":0,"to":1}));
+        assert_ne!(original["action"],guarded["action"]);
+        // This is a selected finite-horizon regression, not universal LMR equivalence.
     }
 }

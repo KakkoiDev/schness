@@ -1554,3 +1554,8 @@ Full32games1W29L2D=3.125%raw,6.25%halfdraw;White1/14/1Black0/15/1,boththreefold.
 Analyzed all 29 frozen Rust r5 losses, selecting early observed score swings within the first 12 candidate decisions. At explicit depth-6/200,000-node/1,500-ms diagnostic limits, 15 best-versus-forced-played pairs completed; 14 incomplete pairs are excluded from fixed-depth comparisons. Full inputs, trajectories, PVs, frozen binary identity and results are retained. These finite-horizon scores are not game-theoretic proofs or strength evidence.
 
 Matched reduction-off/on searches on all 15 completed cases finished all 30 searches: six scores and one action differed. At Black start 2, ply 7, reduction-on selected the played bishop move while the nonreduced depth-6 search preferred a king move. This identifies a selective-search discrepancy for further tested investigation, not grounds to disable reductions globally or claim improved win rate. No engine settings changed, new match launched, or production promotion occurred.
+
+
+### 2026-10-27 — Experimental principal-variation reduction guard
+
+Added opt-in reducePrincipalVariation:false: late quiet reductions are restricted to null windows; default behavior remains unchanged. A selected Black-start-2 regression now recovers the nonreduced depth-6 king defense and score. Ten Rust tests pass, plus1555 rule positions,36 exact reference/36 nonreduced competitive comparisons,8 recovery checks and174 portable cases. All15 selected early-loss positions completed both bounded depth6 variants: four scores and one action changed. Full inputs/results/source/binary hashes retained. This is finite-horizon tactical evidence, not universal equivalence or improved playing strength. No new screen launched or app/default promotion.
