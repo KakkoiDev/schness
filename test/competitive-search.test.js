@@ -67,3 +67,26 @@ test('quiet-drop reduction is explicit, saves work, and keeps legal immutable in
  assert.equal(exact.score,analyzeAction(p,{...options,lateMoveReduction:false}).score);
  assert.throws(()=>analyzeAction(p,{reduceQuietDrops:1}),/reduceQuietDrops/);
 });
+
+test('bounded quiescence evasions resolve a checked horizon without stand-pat',()=>{
+ // The tempting checking line looks +100 at the horizon, but its forced reply
+ // loses. The safe alternative is +5. Static evaluation must not skip the reply.
+ const engine=createSearchEngine({
+  actions:p=>p==='root'?['check','safe']:p==='check'?['reply']:[],
+  apply:(p,a)=>p==='root'?a:'loss',turn:p=>p==='root'?0:1,key:String,
+  terminal:p=>p==='loss'?-1000:p==='safe'?5:null,
+  evaluate:()=>100,inDanger:p=>p==='check',noisyActions:()=>[],
+ });
+ const baseline=engine.choose('root',{depth:1,quiescenceDepth:0});
+ assert.equal(baseline.action,'check');
+ const fixed=engine.choose('root',{depth:1,quiescenceDepth:0,quiescenceEvasionDepth:2});
+ assert.equal(fixed.action,'safe');assert.equal(fixed.score,5);assert.equal(fixed.completedDepth,1);
+ assert.throws(()=>engine.choose('root',{quiescenceEvasionDepth:9}),/quiescenceEvasionDepth/);
+});
+test('quiescence evasion allowance is bounded even for endless checks',()=>{
+ const engine=createSearchEngine({actions:()=>[0],apply:p=>p+1,turn:p=>p%2,key:String,terminal:()=>null,evaluate:()=>7,inDanger:()=>true});
+ const result=engine.choose(0,{depth:1,quiescenceDepth:0,quiescenceEvasionDepth:2});
+ assert.equal(result.nodes,3);assert.equal(result.score,7);assert.equal(result.stopped,false);
+ const capped=engine.choose(0,{depth:1,quiescenceEvasionDepth:8,maxNodes:2});
+ assert(capped.stopped);assert(capped.nodes<=2);
+});

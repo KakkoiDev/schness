@@ -137,3 +137,32 @@ queue will run competitive-r4-fairy-confirmation-2026-10-26 with six fresh seeds
 No winning claim is made. The older uncapped r2 probe continues separately; its latest
 completed first-move iteration was depth11 at 493,116,169 cumulative nodes. Depth20 has
 not completed, and ongoing CPU contention limits timing comparisons.
+
+## 27 October: r4 result and r5 horizon-evasion experiment
+
+R4 completed 9 wins/20 losses/3 repetition draws (28.125% raw wins), White
+7/7/2 and Black 2/13/1. Median completed depth10 did not yield a successful
+screen. Full verified archive is committed; no confirmation was launched.
+
+R5 adds an explicit `quiescenceEvasionDepth` allowance (0–8, default0). At the
+ordinary quiescence boundary a checked position may search all legal evasions
+for at most this many additional actions. No stand-pat cutoff is allowed during
+that extension; node/time budgets still apply. At the final allowance boundary
+static evaluation remains a deliberate finite-horizon approximation. This is
+not an exhaustive mate proof or a demonstrated strength improvement.
+
+The generic checked-horizon trap test now chooses the safe line, and an endless
+check fixture confirms bounded termination/cancellation. All350 unit tests passed;
+focused benchmark/worker/search tests passed after freezing-option edits. In20
+selected first detected losing-mate positions from r4, depth4/q2 withoutLMR,
+allowance2 used29078 versus26469 nodes, changed8 scores and2 actions, with all
+40 analyses complete. Full inputs/PVs/source hashes are in
+`horizon-evasion-ablation.json`; selected diagnostics are not a holdout.
+
+R5 screen uses allowance2, q4/checks, existing board-move LMR, quiet-drop reduction
+disabled, requested20, 10000ms candidate versus unchanged100ms Fairy,32 games,
+same16starts/seed20261801/bothcolors. Frozen fingerprint
+`924de3af2687a1964338a946c006f8a0f3fa5fd36f26de6be9e4accb8842002f`.
+Confirmation forwards the exact allowance and other flags and runs only after a
+complete successful screen. Reference/app defaults remain unchanged. The old
+uncapped probe is separate, and concurrentCPU affects timings.

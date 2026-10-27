@@ -24,6 +24,7 @@ export function createSearchEngine(adapter) {
     const merged = {...(options.strength === undefined ? {} : strengthOptions(options.strength)), ...options};
     merged.depth ??= 4;
     merged.quiescenceDepth ??= 0;
+    merged.quiescenceEvasionDepth ??= 0;
     merged.quiescenceChecks ??= false;
     if(typeof merged.quiescenceChecks!=='boolean')throw new TypeError('Invalid quiescenceChecks');
     merged.lateMoveReduction ??= false;
@@ -36,7 +37,7 @@ export function createSearchEngine(adapter) {
     merged.maxTableEntries ??= 50000;
     merged.aspirationWindow ??= 50;
     if(!Number.isFinite(merged.aspirationWindow) || merged.aspirationWindow<=0)throw new RangeError('Invalid aspiration window');
-    for (const [name, min, max] of [['depth',0,100],['quiescenceDepth',0,8],['multiPv',1,10]]) {
+    for (const [name, min, max] of [['depth',0,100],['quiescenceDepth',0,8],['quiescenceEvasionDepth',0,8],['multiPv',1,10]]) {
       if (!Number.isInteger(merged[name]) || merged[name] < min || merged[name] > max) throw new RangeError(`Invalid ${name}`);
     }
     if (!Number.isInteger(merged.maxTableEntries) || merged.maxTableEntries < 1) throw new RangeError('Invalid table capacity');
@@ -114,8 +115,8 @@ export function createSearchEngine(adapter) {
     ctx.nodes++;
     if (tactical) ctx.quiescenceNodes++;
   }
-  function visit(p, depth, alpha, beta, player, ctx, remainingQ=ctx.quiescenceDepth) {
-    enter(ctx, depth <= 0 && ctx.quiescenceDepth > 0);
+  function visit(p, depth, alpha, beta, player, ctx, remainingQ=ctx.quiescenceDepth, remainingEvasions=ctx.options.quiescenceEvasionDepth) {
+    enter(ctx, depth <= 0 && (ctx.quiescenceDepth > 0 || ctx.options.quiescenceEvasionDepth > 0));
     const facts=factsFor(p,ctx,depth<=0 && !remainingQ);
     const result = terminal(p, player, Math.max(0,depth),facts);
     if (result !== null) return {value:result, line:null};
@@ -123,8 +124,10 @@ export function createSearchEngine(adapter) {
     if (depth <= 0) {
       ctx.evaluations++;
       const standPat = finite(adapter.evaluate(p, player,facts), 'Evaluation');
-      if (!remainingQ || (!adapter.noisyActions && !adapter.inDanger)) return {value:standPat,line:null};
       const danger = Boolean(adapter.inDanger?.(p));
+      // A separate bounded allowance resolves checks at the quiescence horizon.
+      // It never permits stand-pat cutoffs while an evasion is being searched.
+      if ((!remainingQ && !(danger && remainingEvasions)) || (!adapter.noisyActions && !adapter.inDanger)) return {value:standPat,line:null};
       let best = {value:danger ? (maximizing ? -Infinity : Infinity) : standPat, line:null};
       if (!danger) {
         if (maximizing) alpha = Math.max(alpha, standPat);
@@ -135,7 +138,7 @@ export function createSearchEngine(adapter) {
       if (!legal.length) throw new Error('Adapter must adjudicate a position without actions');
       const actions = danger ? legal : (adapter.noisyActions?.(p, legal, ctx.noisyOptions) ?? []);
       for (const action of order(p, actions)) {
-        const child = withChild(p,action,ctx,next=>visit(next, 0, alpha,beta,player,ctx,remainingQ-1));
+        const child = withChild(p,action,ctx,next=>visit(next, 0, alpha,beta,player,ctx,Math.max(0,remainingQ-1),remainingQ ? remainingEvasions : remainingEvasions-1));
         if (maximizing ? child.value > best.value : child.value < best.value) best = {value:child.value,line:{action,next:child.line}};
         if (maximizing) alpha = Math.max(alpha,best.value);
         else beta = Math.min(beta,best.value);
