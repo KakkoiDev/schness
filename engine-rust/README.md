@@ -49,3 +49,5 @@ benchmark manifest/archive.
 Optional `cacheEvaluation: true` now enables a bounded per-search static evaluation table (default off, `maxTableEntries` default50000). Full position keys include rule rights and reserves; repetition is adjudicated before lookup. This stores neither search bounds nor game results. It does not establish a playing improvement.
 
 Root actions are now reordered by the previous fully completed iteration, retaining the entire root set before Multi-PV truncation. `rootOrdering: false` disables this for diagnostics. Interrupted iterations never publish or reorder partial results. This changes selective move order, so playing strength still requires fresh matches.
+
+Immutable rule JSON is cached once per parsed position for key construction; bank keys use fixed piece counts instead of cloning/sorting reserve vectors. Public state and canonical repetition keys remain unchanged. Selected repeated diagnostics preserve all scores/actions/node counts; no playing improvement follows from this allocation change alone.

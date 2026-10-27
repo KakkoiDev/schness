@@ -87,7 +87,9 @@ pub struct Position {
     pub turn: usize,
     pub phase: String,
     pub repetitions: HashMap<String, u32>,
-    pub rules: Value,
+    rules: Value,
+    // Immutable configuration is serialized once rather than per search node.
+    key_rules: String,
     pub research: Research,
 }
 impl Position {
@@ -175,6 +177,11 @@ impl Position {
             .get("research")
             .cloned()
             .unwrap_or(json!({"turns":{"white":0,"black":0},"deployed":{"white":[],"black":[]}}));
+        let rules = v
+            .get("rules")
+            .cloned()
+            .unwrap_or(json!({"allowCheckingDrops":false}));
+        let key_rules = rules.to_string();
         Ok(Self {
             board,
             banks,
@@ -182,10 +189,8 @@ impl Position {
             phase: v["phase"].as_str().unwrap_or("play").into(),
             repetitions: serde_json::from_value(v.get("repetitions").cloned().unwrap_or(json!({})))
                 .map_err(|e| e.to_string())?,
-            rules: v
-                .get("rules")
-                .cloned()
-                .unwrap_or(json!({"allowCheckingDrops":false})),
+            rules,
+            key_rules,
             research: serde_json::from_value(r).map_err(|e| e.to_string())?,
         })
     }
@@ -217,6 +222,7 @@ impl Position {
             phase: self.phase.clone(),
             repetitions: HashMap::new(),
             rules: self.rules.clone(),
+            key_rules: self.key_rules.clone(),
             research: self.research.clone(),
         };
         other.actions().len()
@@ -225,7 +231,7 @@ impl Position {
         self.rules["experiment"].as_str().unwrap_or("")
     }
     pub fn key(&self) -> String {
-        let mut board = String::new();
+        let mut board = String::with_capacity(32);
         for &o in &self.board {
             if o == 0 {
                 board.push_str("--")
@@ -235,11 +241,17 @@ impl Position {
             }
         }
         let bank = |c: usize| {
-            let mut b = self.banks[c].clone();
-            b.sort_by_key(|&x| NAMES[x as usize]);
-            b.iter()
-                .map(|&x| ['-', 'K', 'R', 'B', 'N'][x as usize])
-                .collect::<String>()
+            let mut counts = [0usize; 5];
+            for &x in &self.banks[c] {
+                counts[x as usize] += 1;
+            }
+            let mut out = String::with_capacity(self.banks[c].len());
+            for x in [3, 4, 2] {
+                for _ in 0..counts[x] {
+                    out.push(['-', 'K', 'R', 'B', 'N'][x]);
+                }
+            }
+            out
         };
         let e = self.experiment();
         let r = &self.research;
@@ -258,7 +270,7 @@ impl Position {
         let extra = if e.is_empty() {
             String::new()
         } else {
-            format!("|{}|{}", self.rules, rights)
+            format!("|{}|{}", self.key_rules, rights)
         };
         format!(
             "{}{}|{}|{}|{}|{}|{}",
