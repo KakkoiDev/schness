@@ -6,7 +6,7 @@ import {analyzeAction,scorePosition} from '../src/bot.js';
 import {analyzeAction as baseline,scorePosition as oldScore} from '../research/search-performance-v3/baseline-bot.js';
 import {createSearchEngine} from '../src/search.js';
 import {VARIANTS} from '../src/variants.js';
-import {boardMasks,masksAfter} from '../src/board-masks.js';
+import {boardMasks,masksAfter,masksInCheck,masksCheckAfterDrop} from '../src/board-masks.js';
 
 function random(seed){return()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};}
 
@@ -120,4 +120,22 @@ test('key serialization preserves bank order equivalence and mutable nested rule
  p.banks.white=['rook','bishop','rook','knight','bishop'];
  assert.equal(rules.positionKey(p),old.positionKey(p));
  const before=rules.positionKey(p);p.banks.white.reverse();assert.equal(rules.positionKey(p),before);
+});
+
+
+test('direct drop checks match simulated masks with blockers, missing and multiple kings',()=>{
+ const rng=random(917),pieces=['king','rook','bishop','knight'];let comparisons=0;
+ for(let i=0;i<5000;i++){
+  const board=Array.from({length:16},()=>rng()<.6?null:{owner:rng()<.5?'white':'black',piece:pieces[Math.floor(rng()*4)]}),masks=boardMasks(board),saved=[...masks];
+  for(const player of ['white','black'])for(const piece of pieces.slice(1))for(let to=0;to<16;to++)if(!board[to]){
+   const expected=masksInCheck(masksAfter(masks,board,player,{type:'drop',piece,to}),rules.opponent(player));
+   assert.equal(masksCheckAfterDrop(masks,player,piece,to),expected);comparisons++;
+  }
+  assert.deepEqual([...masks],saved);
+ }
+ assert(comparisons>280000);
+ // An existing slider check can be blocked by the new piece: retain total occupancy.
+ const board=Array(16).fill(null);board[0]={owner:'black',piece:'king'};board[3]={owner:'white',piece:'rook'};
+ assert.equal(masksCheckAfterDrop(boardMasks(board),'white','bishop',1),false);
+ assert.equal(masksCheckAfterDrop(boardMasks(board),'white','knight',4),true);
 });

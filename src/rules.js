@@ -1,4 +1,4 @@
-import {boardMasks, masksAfter, masksAttack, masksInCheck, maskAttackers, betweenMask, alignedSliders} from './board-masks.js';
+import {boardMasks, masksCheckAfterDrop, masksAfter, masksAttack, masksInCheck, maskAttackers, betweenMask, alignedSliders} from './board-masks.js';
 export const BOARD_SIZE = 4;
 export const WHITE = 'white';
 export const BLACK = 'black';
@@ -164,11 +164,12 @@ function generateLegalActions(position, suppliedMasks, countOnly=false) {
     if(action.type==='move' && board[action.from].piece!==KING && singleKing){
       count++;if(actions)actions.push(action);return;
     }
-    const next=masksAfter(masks,board,player,action,scratch);
+    const simpleDrop=action.type==='drop' && singleKing;
+    const next=simpleDrop?null:masksAfter(masks,board,player,action,scratch);
     // Adding a piece cannot uncover an attack; drops must already block every
     // checking ray. King moves and malformed boards still need the full test.
     if((action.type!=='drop' || !singleKing) && masksInCheck(next,player))return;
-    if(action.type==='drop' && masksInCheck(next,enemy)){
+    if(action.type==='drop' && (simpleDrop?masksCheckAfterDrop(masks,player,action.piece,action.to):masksInCheck(next,enemy))){
       if(!checkingDropAllowed(position,action))return;
       // Checking-drop replies consume reserves, so recursive mate legality terminates.
       if(rules.experiment==='no-drop-mate' && !generateLegalActions(applyUnchecked(position,action,false),undefined,true))return;

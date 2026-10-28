@@ -267,3 +267,10 @@ Mutable search passes its already computed resulting masks to search-only transi
 Selected40depth6nonreduced ABBA masksonly new3966/old4020/old3984/new3978ms, no cleargain; combined new3924/old4042/old4032/new3882ms, all931524nodes/scores/actions match. Modest~3%timing,notstrength/languagespeedproof. Fullinputs/results/sourcehashes in js-transition-masks-ablation.json and js-key-transition-ablation.json. Isolated baselineoptions equal100ms32screen frozen, source7907d568d228ad8c022baf5c96926a85f54494211ebca71e24235a242f68a9f7. Complete results required; no playingclaim/defaultprofilepromotion.
 
 Complete key/transition screen: 2W28L2D, 6.25% raw wins, 9.375% half-draw score. White0/14/2, Black2/14/0; both draws threefold. JS99.56/99.49ms, Fairy93.03/89.97ms; requested20, completed3/6/9 both colors. No raw-win improvement or confirmation. Runner inactive and own frozen source/replay verification completed. Archive whole996e592cdddeeaa86c488dfa43b5950e84fe9924c7a3ddd5098687ed911f49cb; every part, extracted file and32 bundled games verified.
+
+
+## Exact direct drop-check geometry
+
+Drop legality now tests resulting enemy attacks directly using added piece and occupancy masks. Existing sliding attacks may be blocked; missing/multiple enemy kings preserve first-king behavior. Multiple own kings retain full simulation. All checking-drop policies and no-drop-mate recursion remain unchanged.381unit tests/174portable cases/all15independentmates and4desktop/mobile worker checks pass. New288594random checks agree with simulated masks, including missing/multiple kings; all36legacy/reversible presets remain covered.
+
+Forty selected depth6 cleanABBA3733/3959/3943/3726ms preserve931524nodes/scores/actions/restoration (~5.6%selectedtiming,notstrength). Initial overlapping-test timing3861/3933/3921/3712 retained separately, not used as clean measurement. Frozen directdrop-r1 equal100ms32game screen source2033d955b79b2e36adc3f58acbdb16f4f6c13cb44e72c172e2dedd73baf7a86b uses identical baseline starts/colors/seed/settings; no results or strength claim yet.

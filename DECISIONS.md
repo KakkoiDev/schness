@@ -1290,3 +1290,7 @@ Competitive reserveThreatEvaluation scores the best single legal reserve deploym
 
 ## Search-only exact transition/key cost reuse
 Search may supply resulting masks already computed incrementally to makeSearchAction; callers must supply masks for that legal resulting board. Public transitions retain independent fallback. Cache only primitive normalized frozen rule serialization; shallow nested extensions remain serialized live. Bank keys preserve B/N/R canonical order and unknown-piece fallback; repetition and dynamic rights remain live. Differential tests cover all36 presets and legacy snapshots. Equal-budget completed screen does not establish strength; no profile promotion.
+
+
+## Exact direct drop attack testing
+masksCheckAfterDrop accepts valid reserve-piece drops onto empty squares, preserves input masks, adds occupancy for blocker tests and combines existing attackers with the dropped piece. Enemy first-king semantics remain identical on malformed boards; multiple own kings retain full simulated safety. Checking-drop policies and recursive no-drop-mate checks remain unchanged. This is exact legality optimization, not pruning or evaluation.
