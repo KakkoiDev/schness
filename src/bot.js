@@ -126,6 +126,7 @@ export const COMPETITIVE_OPTIONS=Object.freeze({profile:'competitive',depth:20,
   lateMoveReduction:true,stopOnProvenWin:true,repetitionAversion:true,maxTableEntries:100000});
 export function chooseAction(position, options={}) { return analyzeAction(position,{...options,multiPv:1}).action; }
 export function analyzeAction(position, options={}) {
+  if(options.kingEscapeGeometry!==undefined && typeof options.kingEscapeGeometry!=='boolean')throw new TypeError('Invalid kingEscapeGeometry');
   if(options.reserveThreatEvaluation!==undefined && typeof options.reserveThreatEvaluation!=='boolean')throw new TypeError('Invalid reserveThreatEvaluation');
   if(options.exchangeOrdering!==undefined && typeof options.exchangeOrdering!=='boolean')throw new TypeError('Invalid exchangeOrdering');
   if(options.reduceQuietDrops!==undefined && typeof options.reduceQuietDrops!=='boolean')throw new TypeError('Invalid reduceQuietDrops');
@@ -149,7 +150,7 @@ function evaluate(position, player, facts) {
   if (masksInCheck(masks, enemy)) score += 30;
   if (masksInCheck(masks, player)) score -= 30;
   if(facts.options.profile==='competitive'){
-    score+=positionalScore(position,masks)*(player===WHITE?1:-1);
+    score+=positionalScore(position,masks,facts.options.kingEscapeGeometry)*(player===WHITE?1:-1);
     if(facts.options.reserveThreatEvaluation)score+=(reservePressure(position,WHITE,masks,whiteActions)-reservePressure(position,BLACK,masks,blackActions))*(player===WHITE?1:-1);
   }
   return score;
@@ -157,7 +158,7 @@ function evaluate(position, player, facts) {
 
 // Small-board king confinement and exposed material supplement the reference
 // material/mobility evaluation. Attacks are geometric, not legal captures.
-function positionalScore(p,masks){
+function positionalScore(p,masks,kingEscapeGeometry=false){
   let value=0;
   for(let square=0;square<16;square++){
     const o=p.board[square];if(!o)continue;
@@ -165,11 +166,15 @@ function positionalScore(p,masks){
     const x=square%4,y=square>>2;
     if(o.piece===KING){
       let safe=0,pressure=0;
+      const kings=masks[o.owner===WHITE?0:4];
+      const checked=kingEscapeGeometry && !(kings&(kings-1)) && masksInCheck(masks,o.owner);
+      let scratch;
       for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
         const xx=x+dx,yy=y+dy;if((!dx&&!dy)||xx<0||xx>3||yy<0||yy>3)continue;
         const to=yy*4+xx;
         if(masksAttack(masks,to,enemy))pressure++;
-        else if(p.board[to]?.owner!==o.owner)safe++;
+        else if(p.board[to]?.owner!==o.owner && (!checked ||
+          !masksAttack(masksAfter(masks,p.board,o.owner,{type:'move',from:square,to},scratch??=new Uint16Array(9)),to,enemy)))safe++;
       }
       value+=sign*(safe*14-pressure*20);
     }else{

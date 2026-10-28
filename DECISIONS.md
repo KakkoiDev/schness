@@ -1301,3 +1301,6 @@ forkThreatEvasions defaults false and requires adapter.quiescenceDanger. This op
 
 
 - 2026-10-28: Experimental rootPrincipalVariation:false preserves current root windows by default. Enabled later single-PV root moves use existing discrete-score PVS capability with full improving-bound re-search. Multi-PV/no-scoreStep and equality tie resolution retain previous behavior. This is research, not strength promotion.
+
+
+- 2026-10-28: Optional kingEscapeGeometry:false changes only competitive safe-square scoring for a checked singleking: test enemy attacks after moving the king so its origin cannot hide slider rays. Pressure/coefficient/reference/defaults/rules remain as before; multipleking geometry falls back. This is evaluation geometry, not complete legal-escape or strength proof. Worker/frozenmatch/confirmation carry the flag; SWv131.
