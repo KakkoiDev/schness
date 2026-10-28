@@ -1635,3 +1635,7 @@ Question: do the selected early bishop gaps justify arbitrary positional penalti
 
 ## Matched-horizon first opponent replies
 All55selected early-loss cases complete childdepth5 best vs actualreplychilddepth4, q4checks/evasion2/nonreduced100000nodes500ms.29actual replies match predicted best and score exactly; no actual reply is stronger under these bounded searches. One actualreply is weaker by458points, five others100–198. Full input/game/source/script hashes and legalPV replay checks retained. This fails to support a missed first-opponent-reply explanation or arbitrary coefficient tuning. No engine/default/match changes. Next bounded root-iteration move-ranking telemetry on persistent large gap, distinguishing incomplete iteration fallback from finite-horizon reversal.
+
+
+## Persistent gap is a completed horizon reversal
+Boundeddepth8 traces for nonreduced/baselineLMR/historyLMR all complete,choose bishop2depth4(-130),rook15depth5(-26) onward. Tenforcednonreducedqueries complete:depth4bishop/rook -130/-315,depth5 -576/-26,depth8 -883/-148. This case is finite-horizon reversal rather than incomplete iteration publication or LMR-specific fault. Bishop PV starts quiet rook3/rook4/knight11 deployments before knight captures2. Reject blanket bishop penalty/LMRdisable. Next narrowly bounded tactical reserve-drop continuation diagnosis on broader early cases (actual material forks), explicit quiescence budget/correctness contracts; no defaultchange/newmatch yet. FullPV/inputs/source/script hashes preserved.
