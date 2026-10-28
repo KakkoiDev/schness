@@ -1309,3 +1309,6 @@ forkThreatEvasions defaults false and requires adapter.quiescenceDanger. This op
 ## Checked-node static evaluation deferral (2026-10-28)
 
 Static evaluation is pure adapter data and need not run at a quiescence node whose danger response searches legal replies without stand-pat. The search must still evaluate when all relevant q/evasion allowance is exhausted. Terminal adjudication stays first; no new extension, pruning, option or cache identity is introduced. test/checked-evaluation.test.js guards the skip boundary, ordinary evaluation, budgets and restoration. Scores/actions remain unchanged in retained128case nonreduced ABBA; timing alone does not establish strength.
+
+
+- 2026-10-28: Optional rootTiePriority:false preserves legacy reservoir ties and seeded trajectories by default. Enabled single-PV searches shuffle fixed priorities once per root with provided RNG (or Math.random for explicit unseeded mode), validating samples in [0,1). Score then repetition then priority determine selection. Equal upper bounds are fully verified whenever the action could replace selected; worse strict priority cannot win. MultiPV retains legacy full windows/ties. New seeded trajectories and the flag must be recorded in frozen manifests and confirmations. No strength promotion; SWv133 and397unit/174portable/19mate/4browser checks pass.

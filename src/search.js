@@ -25,6 +25,9 @@ export function createSearchEngine(adapter) {
     merged.depth ??= 4;
     merged.quiescenceDepth ??= 0;
     merged.quiescenceEvasionDepth ??= 0;
+    merged.rootTiePriority ??= false;
+    if(typeof merged.rootTiePriority!=='boolean')throw new TypeError('Invalid rootTiePriority');
+    if(merged.rootTiePriority && merged.random!==undefined && typeof merged.random!=='function')throw new TypeError('Root tie priority requires a random function');
     merged.rootPrincipalVariation ??= false;
     if(typeof merged.rootPrincipalVariation!=='boolean')throw new TypeError('Invalid rootPrincipalVariation');
     merged.forkThreatEvasions ??= false;
@@ -281,6 +284,19 @@ export function createSearchEngine(adapter) {
     let completed={action:actions[0],score:null,completedDepth:0,stopped:false,pv:[],variations:[]};
     const iterative=Number.isFinite(options.maxNodes) || Number.isFinite(options.maxMillis) || options.iterativeDeepening === true;
     const rootChildren=new Map();
+    // A fixed random order makes tie preference independent of search bounds.
+    // An equal upper bound needs verification only if it could replace selected.
+    let tieRanks=null;
+    if(options.rootTiePriority && options.multiPv===1){
+      const shuffled=[...actions],random=options.random ?? Math.random;
+      for(let i=shuffled.length-1;i>0;i--){
+        const sample=random();
+        if(!Number.isFinite(sample)||sample<0||sample>=1)throw new RangeError('Invalid root tie priority random sample');
+        const j=Math.floor(sample*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+      }
+      tieRanks=new Map(shuffled.map((action,i)=>[actionIdentity(action),i]));
+    }
+    const tieBetter=(a,b)=>tieRanks.get(actionIdentity(a))<tieRanks.get(actionIdentity(b));
     try {
       for (let depth=iterative ? 1 : options.depth; depth<=options.depth; depth++) {
         const iteration=(lower,upper)=>{
@@ -303,7 +319,7 @@ export function createSearchEngine(adapter) {
             }
             // Fail-low equality is a bound. Resolve it before tie selection.
             if(selected && alpha!==-Infinity && child.value===selected.score &&
-                (rep<repetitions || typeof options.random==='function')){
+                (rep<repetitions || (tieRanks ? rep===repetitions && tieBetter(action,selected.action) : typeof options.random==='function'))){
               ctx.rootResearches++;
               child=visit(next,depth-1,-Infinity,Infinity,player,ctx);
             }
@@ -312,9 +328,9 @@ export function createSearchEngine(adapter) {
           const pv=[action];for(let link=child.line;link;link=link.next)pv.push(link.action);
           const line={action,score:child.value,pv};
           lines.push({line,rep});
-          if (!selected || line.score>selected.score || line.score===selected.score && rep<repetitions) {
+          if (!selected || line.score>selected.score || line.score===selected.score && (rep<repetitions || tieRanks && rep===repetitions && tieBetter(action,selected.action))) {
             selected=line; repetitions=rep; ties=1;
-          } else if (line.score===selected.score && rep===repetitions && typeof options.random==='function') {
+          } else if (!tieRanks && line.score===selected.score && rep===repetitions && typeof options.random==='function') {
             ties++;
             if (options.random()<1/ties) selected=line;
           }
