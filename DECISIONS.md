@@ -1304,3 +1304,8 @@ forkThreatEvasions defaults false and requires adapter.quiescenceDanger. This op
 
 
 - 2026-10-28: Optional kingEscapeGeometry:false changes only competitive safe-square scoring for a checked singleking: test enemy attacks after moving the king so its origin cannot hide slider rays. Pressure/coefficient/reference/defaults/rules remain as before; multipleking geometry falls back. This is evaluation geometry, not complete legal-escape or strength proof. Worker/frozenmatch/confirmation carry the flag; SWv131.
+
+
+## Checked-node static evaluation deferral (2026-10-28)
+
+Static evaluation is pure adapter data and need not run at a quiescence node whose danger response searches legal replies without stand-pat. The search must still evaluate when all relevant q/evasion allowance is exhausted. Terminal adjudication stays first; no new extension, pruning, option or cache identity is introduced. test/checked-evaluation.test.js guards the skip boundary, ordinary evaluation, budgets and restoration. Scores/actions remain unchanged in retained128case nonreduced ABBA; timing alone does not establish strength.

@@ -180,16 +180,21 @@ export function createSearchEngine(adapter) {
         if(qKey!==null)boundedSet(ctx.qCache,qKey,{...best,type:best.value<=startAlpha?'upper':best.value>=startBeta?'lower':'exact'},ctx);
         return best;
       };
-      const evalKey=ctx.evalCache ? adapter.evaluationKey(p) : null;
-      let standPat=ctx.evalCache?.get(evalKey);
-      if(standPat!==undefined)ctx.evaluationCacheHits++;
-      else{
-        ctx.evaluations++;
-        standPat=finite(adapter.evaluate(p,player,facts),'Evaluation');
-        if(ctx.evalCache)boundedSet(ctx.evalCache,evalKey,standPat,ctx);
-      }
       const danger = Boolean(adapter.inDanger?.(p)) || Boolean(ctx.options.forkThreatEvasions &&
         (remainingQ || remainingEvasions) && adapter.quiescenceDanger(p));
+      // Checked nodes search replies without stand-pat. Evaluate only if its
+      // value can be returned, including an exhausted evasion horizon.
+      let standPat;
+      if(!danger || (!remainingQ && !remainingEvasions)){
+        const evalKey=ctx.evalCache ? adapter.evaluationKey(p) : null;
+        standPat=ctx.evalCache?.get(evalKey);
+        if(standPat!==undefined)ctx.evaluationCacheHits++;
+        else{
+          ctx.evaluations++;
+          standPat=finite(adapter.evaluate(p,player,facts),'Evaluation');
+          if(ctx.evalCache)boundedSet(ctx.evalCache,evalKey,standPat,ctx);
+        }
+      }
       // A separate bounded allowance resolves checks at the quiescence horizon.
       // It never permits stand-pat cutoffs while an evasion is being searched.
       if ((!remainingQ && !(danger && remainingEvasions)) || (!adapter.noisyActions && !adapter.inDanger && !adapter.quiescenceDanger)) return finish({value:standPat,line:null});
