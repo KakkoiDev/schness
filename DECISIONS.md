@@ -1294,3 +1294,7 @@ Search may supply resulting masks already computed incrementally to makeSearchAc
 
 ## Exact direct drop attack testing
 masksCheckAfterDrop accepts valid reserve-piece drops onto empty squares, preserves input masks, adds occupancy for blocker tests and combines existing attackers with the dropped piece. Enemy first-king semantics remain identical on malformed boards; multiple own kings retain full simulated safety. Checking-drop policies and recursive no-drop-mate checks remain unchanged. This is exact legality optimization, not pruning or evaluation.
+
+
+## Optional quiescence-only fork responses
+forkThreatEvasions defaults false and requires adapter.quiescenceDanger. This optional geometric threat hook augments quiescence danger only; adapter.inDanger remains actual check for LMR. Existing quiescence/evasion budgets bound all legal response searches, standpat is disabled under the selected threat, and terminal rules stay unchanged. Same-attacker double nonking attacks are heuristic (pinned/capturable attackers can overtrigger). This selective mode must not enable early proven-win stopping. Worker/frozenmanifest/confirmation flags preserve exact settings. Default/reference behavior remains unchanged.

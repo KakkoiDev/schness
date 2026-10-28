@@ -1,5 +1,5 @@
 import {estimateExchange} from './exchange.js';
-import {boardMasks, masksAfter, masksInCheck, masksAttack} from './board-masks.js';
+import {boardMasks, masksAfter, masksInCheck, masksAttack, maskAttackers} from './board-masks.js';
 import {createSearchEngine} from './search.js';
 import {
   BISHOP,
@@ -103,6 +103,7 @@ export const schnessSearch = createSearchEngine({
   evaluate,
   isProvenWin:score=>score>=MATE,
   inDanger: p => searchState.has(p)?masksInCheck(searchState.get(p).masks,p.turn):isInCheck(p,p.turn),
+  quiescenceDanger: hasMaterialFork,
   noisyActions: (p, actions, options) => {
     if(!options.includeChecks)return actions.filter(a => a.type === 'move' && p.board[a.to]);
     const masks=searchState.get(p)?.masks ?? boardMasks(p.board),scratch=new Uint16Array(9);
@@ -222,4 +223,15 @@ export function reservePressure(p,who,masks=boardMasks(p.board),legal){
     best=Math.max(best,value);
   }
   return Math.min(80,best);
+}
+
+
+/** Geometric double-material threat, not a legal-capture or forced-loss proof. */
+export function hasMaterialFork(p){
+ const masks=searchState.get(p)?.masks??boardMasks(p.board),enemy=p.turn===WHITE?BLACK:WHITE,counts=new Uint8Array(16);
+ for(let to=0;to<16;to++)if(p.board[to]?.owner===p.turn && p.board[to].piece!==KING){
+  let attackers=maskAttackers(masks,to,enemy);
+  while(attackers){const bit=attackers&-attackers,from=31-Math.clz32(bit);if(++counts[from]>=2)return true;attackers^=bit;}
+ }
+ return false;
 }

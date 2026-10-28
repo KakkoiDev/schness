@@ -25,6 +25,9 @@ export function createSearchEngine(adapter) {
     merged.depth ??= 4;
     merged.quiescenceDepth ??= 0;
     merged.quiescenceEvasionDepth ??= 0;
+    merged.forkThreatEvasions ??= false;
+    if(typeof merged.forkThreatEvasions!=='boolean')throw new TypeError('Invalid forkThreatEvasions');
+    if(merged.forkThreatEvasions && typeof adapter.quiescenceDanger!=='function')throw new TypeError('Fork threat evasions require adapter.quiescenceDanger');
     merged.cacheEvaluation ??= false;
     if(typeof merged.cacheEvaluation!=='boolean')throw new TypeError('Invalid cacheEvaluation');
     if(merged.cacheEvaluation && typeof adapter.evaluationKey!=='function')throw new TypeError('Evaluation cache requires adapter.evaluationKey');
@@ -183,10 +186,11 @@ export function createSearchEngine(adapter) {
         standPat=finite(adapter.evaluate(p,player,facts),'Evaluation');
         if(ctx.evalCache)boundedSet(ctx.evalCache,evalKey,standPat,ctx);
       }
-      const danger = Boolean(adapter.inDanger?.(p));
+      const danger = Boolean(adapter.inDanger?.(p)) || Boolean(ctx.options.forkThreatEvasions &&
+        (remainingQ || remainingEvasions) && adapter.quiescenceDanger(p));
       // A separate bounded allowance resolves checks at the quiescence horizon.
       // It never permits stand-pat cutoffs while an evasion is being searched.
-      if ((!remainingQ && !(danger && remainingEvasions)) || (!adapter.noisyActions && !adapter.inDanger)) return finish({value:standPat,line:null});
+      if ((!remainingQ && !(danger && remainingEvasions)) || (!adapter.noisyActions && !adapter.inDanger && !adapter.quiescenceDanger)) return finish({value:standPat,line:null});
       let best = {value:danger ? (maximizing ? -Infinity : Infinity) : standPat, line:null};
       if (!danger) {
         if (maximizing) alpha = Math.max(alpha, standPat);
@@ -323,7 +327,7 @@ export function createSearchEngine(adapter) {
         actions=ranked.map(line=>line.action);
         options.onIteration?.({depth,score:completed.score,nodes:ctx.nodes,pv:[...completed.pv]});
         // A selective fail-low may have skipped a defense: never call it a proof.
-        if(options.stopOnProvenWin && !options.lateMoveReduction && adapter.isProvenWin?.(completed.score))break;
+        if(options.stopOnProvenWin && !options.lateMoveReduction && !options.forkThreatEvasions && adapter.isProvenWin?.(completed.score))break;
       }
     } catch (error) {
       if (error !== STOP) throw error;
