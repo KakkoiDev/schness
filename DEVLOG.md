@@ -1639,3 +1639,7 @@ All55selected early-loss cases complete childdepth5 best vs actualreplychilddept
 
 ## Persistent gap is a completed horizon reversal
 Boundeddepth8 traces for nonreduced/baselineLMR/historyLMR all complete,choose bishop2depth4(-130),rook15depth5(-26) onward. Tenforcednonreducedqueries complete:depth4bishop/rook -130/-315,depth5 -576/-26,depth8 -883/-148. This case is finite-horizon reversal rather than incomplete iteration publication or LMR-specific fault. Bishop PV starts quiet rook3/rook4/knight11 deployments before knight captures2. Reject blanket bishop penalty/LMRdisable. Next narrowly bounded tactical reserve-drop continuation diagnosis on broader early cases (actual material forks), explicit quiescence budget/correctness contracts; no defaultchange/newmatch yet. FullPV/inputs/source/script hashes preserved.
+
+
+## Reject geometric reserve-fork quiescence candidate
+Actual rook3 continuation attacks bishops2/7, motivating a temporary bounded q candidate including legal nonchecking drops whose dropped piece attacks>=2enemy nonkings. All40selecteddepth4queries complete baseline/candidate; persistentbishop2choice/score-130 unchanged. Nodes131052→142588(+8.8%); ordered481/504ms is not controlledABBA speed evidence. Reject adoption or match on this evidence, preserve defaults. Fullcandidatebot source/results/input/source hashes retained. No production engine change. Next candidate must target a demonstrated horizon mechanism more precisely or improve move ordering without adding an unbounded quiet-drop tree; avoid repeated speculative screens.
