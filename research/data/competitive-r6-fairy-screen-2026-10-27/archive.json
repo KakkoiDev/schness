@@ -1,0 +1,20 @@
+{
+  "run": "competitive-r6-fairy-screen-2026-10-27",
+  "sourceFingerprint": "ab36feae4b2a2d9ca7442fd26c35b12169eea8af128fd156438cf9adf55b0a14",
+  "games": 32,
+  "archiveBytes": 1597744,
+  "archiveSha256": "87ae1b9ce5826d263f8fc57c4ac6aee8f65b02fa60bc3976af3f729f690da01d",
+  "parts": [
+    {
+      "path": "competitive-r6-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "8d2fab0ab158296259c7096bde97375718e19474444fb026f2433367665e4e89"
+    },
+    {
+      "path": "competitive-r6-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 549168,
+      "sha256": "fb643f5a91f8d3ce3f10938ec37cf2223a220d975b18f741f35d906b9097a164"
+    }
+  ],
+  "restore": "cat competitive-r6-fairy-screen-2026-10-27.tar.gz.part* > competitive-r6-fairy-screen-2026-10-27.tar.gz; tar -xzf competitive-r6-fairy-screen-2026-10-27.tar.gz"
+}

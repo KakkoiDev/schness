@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "scorePerspective": "values are player A positive; results use the root player's perspective",
+  "games": {
+    "horizon": {"root":"root","nodes":{
+      "root":{"turn":"A","next":{"greedy":"trap","safe":"safe"}},
+      "trap":{"turn":"B","value":10,"next":{"reply":"loss"}},
+      "safe":{"turn":"B","value":2,"next":{"reply":"draw"}},
+      "loss":{"turn":"A","terminal":-100},"draw":{"turn":"A","terminal":0}
+    }},
+    "extra-turn": {"root":"root","nodes":{
+      "root":{"turn":"A","next":{"extra":"again","finish":"end"}},
+      "again":{"turn":"A","next":{"win":"win","blunder":"loss"}},
+      "end":{"turn":"B","terminal":10},"win":{"turn":"B","terminal":100},"loss":{"turn":"B","terminal":-100}
+    }},
+    "black-root": {"root":"root","nodes":{
+      "root":{"turn":"B","next":{"good":"negative","bad":"positive"}},
+      "negative":{"turn":"A","terminal":-20},"positive":{"turn":"A","terminal":10}
+    }},
+    "tie": {"root":"root","nodes":{
+      "root":{"turn":"A","next":{"left":"one","right":"two","worse":"three"}},
+      "one":{"turn":"B","terminal":7},"two":{"turn":"B","terminal":7},"three":{"turn":"B","terminal":-3}
+    }},
+    "terminal": {"root":"end","nodes":{"end":{"turn":"B","terminal":13}}},
+    "danger": {"root":"root","nodes":{
+      "root":{"turn":"A","next":{"tempting":"checked","safe":"end"}},
+      "checked":{"turn":"B","value":100,"danger":true,"next":{"forced":"loss"}},
+      "loss":{"turn":"A","terminal":-100},"end":{"turn":"B","terminal":5}
+    }},
+    "transposition": {"root":"root","nodes":{
+      "root":{"turn":"A","next":{"left":"left","right":"right"}},
+      "left":{"turn":"B","next":{"a":"plus","b":"shared"}},
+      "right":{"turn":"B","next":{"a":"shared","b":"minus"}},
+      "plus":{"turn":"A","terminal":9},"shared":{"turn":"A","terminal":3},"minus":{"turn":"A","terminal":-7}
+    }}
+  },
+  "cases": [
+    {"id":"horizon-one-action","game":"horizon","options":{"depth":1},"expected":{"score":10,"bestActions":["greedy"],"completedDepth":1}},
+    {"id":"horizon-two-actions","game":"horizon","options":{"depth":2},"expected":{"score":0,"bestActions":["safe"],"completedDepth":2}},
+    {"id":"same-player-extra-turn","game":"extra-turn","options":{"depth":2},"expected":{"score":100,"bestActions":["extra"],"completedDepth":2}},
+    {"id":"root-player-b-perspective","game":"black-root","options":{"depth":1},"expected":{"score":20,"bestActions":["good"],"completedDepth":1}},
+    {"id":"any-optimal-tie-is-valid","game":"tie","options":{"depth":1},"expected":{"score":7,"bestActions":["left","right"],"completedDepth":1}},
+    {"id":"rank-all-root-actions","game":"tie","options":{"depth":1,"multiPv":3},"expected":{"score":7,"bestActions":["left","right"],"completedDepth":1,"variationScores":[7,7,-3]}},
+    {"id":"terminal-before-zero-depth","game":"terminal","options":{"depth":0},"expected":{"score":-13,"bestActions":[null],"completedDepth":0}},
+    {"id":"level-zero-no-lookahead","game":"horizon","options":{"strength":0},"expected":{"score":null,"bestActions":["greedy","safe"],"completedDepth":0}},
+    {"id":"explicit-depth-overrides-level","game":"horizon","options":{"strength":0,"depth":2},"expected":{"score":0,"bestActions":["safe"],"completedDepth":2}},
+    {"id":"one-node-incomplete-fallback","game":"horizon","options":{"depth":20,"maxNodes":1},"expected":{"score":null,"bestActions":["greedy","safe"],"completedDepth":0,"stopped":true}},
+    {"id":"quiescence-check-evasion","game":"danger","options":{"depth":1,"quiescenceDepth":1},"expected":{"score":5,"bestActions":["safe"],"completedDepth":1}},
+    {"id":"bounded-evasion-beyond-q-limit","game":"danger","options":{"depth":1,"quiescenceEvasionDepth":2},"expected":{"score":5,"bestActions":["safe"],"completedDepth":1}},
+    {"id":"transposition-exact","game":"transposition","options":{"depth":2},"expected":{"score":3,"bestActions":["left"],"completedDepth":2}},
+    {"id":"transposition-small-table","game":"transposition","options":{"depth":2,"maxTableEntries":1},"expected":{"score":3,"bestActions":["left"],"completedDepth":2}},
+    {"id":"transposition-cache-off","game":"transposition","options":{"depth":2,"useCache":false},"expected":{"score":3,"bestActions":["left"],"completedDepth":2}},
+    {"id":"level-11-is-11-actions","game":"extra-turn","options":{"strength":11},"expected":{"score":100,"bestActions":["extra"],"completedDepth":11}},
+    {"id":"level-100-no-implicit-limit","game":"black-root","options":{"strength":100},"expected":{"score":20,"bestActions":["good"],"completedDepth":100}}
+  ]
+}

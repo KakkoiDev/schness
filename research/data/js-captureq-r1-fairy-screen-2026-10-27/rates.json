@@ -1,0 +1,62 @@
+{
+  "targetWinRate": 0.51,
+  "targetReached": false,
+  "candidateWins": 2,
+  "winRate": 0.0625,
+  "complete": true,
+  "completed": 32,
+  "total": 32,
+  "sourceFingerprint": "2122691ea504a98efc486f5e91bb27ca7f437d19e0efcc8afa349832d2c25397",
+  "rows": {
+    "white": {
+      "games": 16,
+      "candidateWins": 1,
+      "fairyWins": 15,
+      "draws": 0,
+      "drawReasons": {},
+      "candidateMillis": 33938.119999960065,
+      "fairyMillis": 31364.100000031292,
+      "candidateDecisions": 341,
+      "fairyDecisions": 340,
+      "candidateDepth": 2210,
+      "fairyDepth": 18602,
+      "winRate": 0.0625,
+      "score": 0.0625,
+      "candidateMeanMillis": 99.52527859225826,
+      "candidateMeanDepth": 6.480938416422287,
+      "fairyMeanMillis": 92.2473529412685,
+      "fairyMeanDepth": 54.71176470588235,
+      "candidateDepthRange": {
+        "min": 3,
+        "median": 7,
+        "max": 10
+      }
+    },
+    "black": {
+      "games": 16,
+      "candidateWins": 1,
+      "fairyWins": 14,
+      "draws": 1,
+      "drawReasons": {
+        "threefold-repetition": 1
+      },
+      "candidateMillis": 31352.650000028312,
+      "fairyMillis": 30431.435000024736,
+      "candidateDecisions": 315,
+      "fairyDecisions": 330,
+      "candidateDepth": 2048,
+      "fairyDepth": 18320,
+      "winRate": 0.0625,
+      "score": 0.09375,
+      "candidateMeanMillis": 99.5322222223121,
+      "candidateMeanDepth": 6.501587301587302,
+      "fairyMeanMillis": 92.21646969704466,
+      "fairyMeanDepth": 55.515151515151516,
+      "candidateDepthRange": {
+        "min": 4,
+        "median": 7,
+        "max": 9
+      }
+    }
+  }
+}

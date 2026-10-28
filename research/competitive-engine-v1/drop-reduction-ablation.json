@@ -1,0 +1,847 @@
+{
+  "createdAt": "2026-10-26T12:44:30.892Z",
+  "purpose": "Fixed-horizon selective work-cost ablation on four saved Black-loss opening positions. Positions are selected, not a holdout. No strength conclusion. Concurrent uncapped probe affects elapsed times. Scores may differ because reductions are selective.",
+  "files": [
+    {
+      "path": "src/search.js",
+      "sha256": "a234dbefda652d4d52618f0ce12d53e52a01050136f185beba2856a3c47dad31"
+    },
+    {
+      "path": "src/bot.js",
+      "sha256": "8aa478fb69d09357aa84dc900a53c7546cf3976f764624d1608b35c86520691e"
+    },
+    {
+      "path": "src/rules.js",
+      "sha256": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7"
+    },
+    {
+      "path": "src/board-masks.js",
+      "sha256": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+    }
+  ],
+  "cases": [
+    {
+      "id": "black__20261801__1",
+      "position": {
+        "board": [
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook",
+            "bishop"
+          ],
+          "black": [
+            "rook",
+            "bishop",
+            "knight"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------------------wK----|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------------------------wKwN--|BR|BNR": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 1,
+            "black": 0
+          },
+          "deployed": {
+            "white": [
+              "knight"
+            ],
+            "black": []
+          }
+        }
+      }
+    },
+    {
+      "id": "black__20261801__10",
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook",
+            "bishop"
+          ],
+          "black": [
+            "rook",
+            "bishop",
+            "knight"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------------------wK--|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------------wNwK--|BR|BNR": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 1,
+            "black": 0
+          },
+          "deployed": {
+            "white": [
+              "knight"
+            ],
+            "black": []
+          }
+        }
+      }
+    },
+    {
+      "id": "black__20261801__11",
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          }
+        ],
+        "banks": {
+          "white": [
+            "rook",
+            "knight"
+          ],
+          "black": [
+            "rook",
+            "bishop",
+            "knight"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------------------wK|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wB--------wK|NR|BNR": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 1,
+            "black": 0
+          },
+          "deployed": {
+            "white": [
+              "bishop"
+            ],
+            "black": []
+          }
+        }
+      }
+    },
+    {
+      "id": "black__20261801__14",
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook",
+            "bishop"
+          ],
+          "black": [
+            "rook",
+            "bishop",
+            "knight"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--------------------wK--|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------------------wNwK--|BR|BNR": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 1,
+            "black": 0
+          },
+          "deployed": {
+            "white": [
+              "knight"
+            ],
+            "black": []
+          }
+        }
+      }
+    }
+  ],
+  "results": [
+    {
+      "id": "black__20261801__1",
+      "reduceQuietDrops": false,
+      "millis": 756.402042,
+      "requestedDepth": 6,
+      "completedDepth": 6,
+      "stopped": false,
+      "nodes": 135930,
+      "score": -90,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 11
+      },
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 14
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 4
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        }
+      ],
+      "stats": {
+        "cutoffs": 81081,
+        "cacheHits": 5549,
+        "tableCutoffs": 4083,
+        "hintHits": 9153,
+        "rootResearches": 0,
+        "pvsResearches": 222,
+        "aspirationResearches": 5,
+        "historyHits": 293087,
+        "evaluations": 103879,
+        "actionGenerations": 113879,
+        "countGenerations": 22052,
+        "reducedSearches": 1232,
+        "reductionResearches": 48,
+        "transitions": 135660,
+        "tableEntries": 25844,
+        "hintEntries": 18145
+      }
+    },
+    {
+      "id": "black__20261801__1",
+      "reduceQuietDrops": true,
+      "millis": 267.1769999999999,
+      "requestedDepth": 6,
+      "completedDepth": 6,
+      "stopped": false,
+      "nodes": 56081,
+      "score": -14,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 4
+      },
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 15
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 2
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        }
+      ],
+      "stats": {
+        "cutoffs": 34069,
+        "cacheHits": 1888,
+        "tableCutoffs": 1602,
+        "hintHits": 2350,
+        "rootResearches": 0,
+        "pvsResearches": 233,
+        "aspirationResearches": 3,
+        "historyHits": 82616,
+        "evaluations": 45109,
+        "actionGenerations": 46709,
+        "countGenerations": 9373,
+        "reducedSearches": 2054,
+        "reductionResearches": 61,
+        "transitions": 55787,
+        "tableEntries": 8802,
+        "hintEntries": 6732
+      }
+    },
+    {
+      "id": "black__20261801__10",
+      "reduceQuietDrops": false,
+      "millis": 620.5220830000001,
+      "requestedDepth": 6,
+      "completedDepth": 6,
+      "stopped": false,
+      "nodes": 119832,
+      "score": -74,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 3
+      },
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 3
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 5,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 3
+        }
+      ],
+      "stats": {
+        "cutoffs": 71704,
+        "cacheHits": 5040,
+        "tableCutoffs": 3742,
+        "hintHits": 7366,
+        "rootResearches": 0,
+        "pvsResearches": 268,
+        "aspirationResearches": 5,
+        "historyHits": 239426,
+        "evaluations": 92845,
+        "actionGenerations": 100311,
+        "countGenerations": 19522,
+        "reducedSearches": 874,
+        "reductionResearches": 34,
+        "transitions": 119530,
+        "tableEntries": 21532,
+        "hintEntries": 15454
+      }
+    },
+    {
+      "id": "black__20261801__10",
+      "reduceQuietDrops": true,
+      "millis": 299.9415419999998,
+      "requestedDepth": 6,
+      "completedDepth": 6,
+      "stopped": false,
+      "nodes": 63072,
+      "score": -52,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 1
+      },
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 4
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        }
+      ],
+      "stats": {
+        "cutoffs": 37428,
+        "cacheHits": 3127,
+        "tableCutoffs": 2500,
+        "hintHits": 2966,
+        "rootResearches": 0,
+        "pvsResearches": 273,
+        "aspirationResearches": 5,
+        "historyHits": 95744,
+        "evaluations": 50192,
+        "actionGenerations": 52130,
+        "countGenerations": 10943,
+        "reducedSearches": 2398,
+        "reductionResearches": 85,
+        "transitions": 62714,
+        "tableEntries": 9614,
+        "hintEntries": 7236
+      }
+    },
+    {
+      "id": "black__20261801__11",
+      "reduceQuietDrops": false,
+      "millis": 679.743334,
+      "requestedDepth": 6,
+      "completedDepth": 6,
+      "stopped": false,
+      "nodes": 132139,
+      "score": -40,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 6
+      },
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 8
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 3
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 7
+        }
+      ],
+      "stats": {
+        "cutoffs": 79465,
+        "cacheHits": 7149,
+        "tableCutoffs": 5317,
+        "hintHits": 8166,
+        "rootResearches": 0,
+        "pvsResearches": 253,
+        "aspirationResearches": 5,
+        "historyHits": 271761,
+        "evaluations": 101977,
+        "actionGenerations": 111903,
+        "countGenerations": 20237,
+        "reducedSearches": 879,
+        "reductionResearches": 12,
+        "transitions": 131874,
+        "tableEntries": 22766,
+        "hintEntries": 16417
+      }
+    },
+    {
+      "id": "black__20261801__11",
+      "reduceQuietDrops": true,
+      "millis": 313.9252919999999,
+      "requestedDepth": 6,
+      "completedDepth": 6,
+      "stopped": false,
+      "nodes": 67519,
+      "score": 10,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 3
+      },
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 3
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 10
+        }
+      ],
+      "stats": {
+        "cutoffs": 41172,
+        "cacheHits": 2628,
+        "tableCutoffs": 2128,
+        "hintHits": 2762,
+        "rootResearches": 0,
+        "pvsResearches": 306,
+        "aspirationResearches": 3,
+        "historyHits": 99851,
+        "evaluations": 55241,
+        "actionGenerations": 55646,
+        "countGenerations": 11874,
+        "reducedSearches": 2343,
+        "reductionResearches": 79,
+        "transitions": 67134,
+        "tableEntries": 9491,
+        "hintEntries": 7203
+      }
+    },
+    {
+      "id": "black__20261801__14",
+      "reduceQuietDrops": false,
+      "millis": 678.643834,
+      "requestedDepth": 6,
+      "completedDepth": 6,
+      "stopped": false,
+      "nodes": 130776,
+      "score": -90,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 8
+      },
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 13
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 5
+        }
+      ],
+      "stats": {
+        "cutoffs": 77916,
+        "cacheHits": 5560,
+        "tableCutoffs": 4101,
+        "hintHits": 8902,
+        "rootResearches": 0,
+        "pvsResearches": 216,
+        "aspirationResearches": 5,
+        "historyHits": 284340,
+        "evaluations": 99558,
+        "actionGenerations": 109857,
+        "countGenerations": 20920,
+        "reducedSearches": 1208,
+        "reductionResearches": 48,
+        "transitions": 130512,
+        "tableEntries": 25011,
+        "hintEntries": 17555
+      }
+    },
+    {
+      "id": "black__20261801__14",
+      "reduceQuietDrops": true,
+      "millis": 260.8772920000001,
+      "requestedDepth": 6,
+      "completedDepth": 6,
+      "stopped": false,
+      "nodes": 56479,
+      "score": -14,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 7
+      },
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 5
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 12
+        },
+        {
+          "type": "move",
+          "from": 5,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        }
+      ],
+      "stats": {
+        "cutoffs": 34245,
+        "cacheHits": 1890,
+        "tableCutoffs": 1602,
+        "hintHits": 2344,
+        "rootResearches": 0,
+        "pvsResearches": 237,
+        "aspirationResearches": 3,
+        "historyHits": 83090,
+        "evaluations": 45467,
+        "actionGenerations": 46971,
+        "countGenerations": 9509,
+        "reducedSearches": 2054,
+        "reductionResearches": 62,
+        "transitions": 56180,
+        "tableEntries": 8838,
+        "hintEntries": 6776
+      }
+    }
+  ]
+}

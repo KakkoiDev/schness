@@ -1,0 +1,22 @@
+{
+  "rows": {
+    "white": {
+      "games": 16,
+      "previousWins": 10,
+      "currentWins": 9,
+      "gainedWins": 2,
+      "lostWins": 3,
+      "rawWinRateChange": -0.0625
+    },
+    "black": {
+      "games": 16,
+      "previousWins": 3,
+      "currentWins": 3,
+      "gainedWins": 1,
+      "lostWins": 1,
+      "rawWinRateChange": 0
+    }
+  },
+  "independentSamples": false,
+  "claim": "Descriptive paired outcomes only; requires identical rules/opponent/budgets and fresh confirmation for strength claims."
+}

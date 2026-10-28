@@ -1,0 +1,8 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+Error: Server did not start
+    at file:///Users/kakkoidev/Documents/ChatGPT/Schness/output/local-experiments/competitive-r1-fairy-screen-2026-10-26/runtime/scripts/run-competitive-fairy.js:37:201
+
+Node.js v24.21.0

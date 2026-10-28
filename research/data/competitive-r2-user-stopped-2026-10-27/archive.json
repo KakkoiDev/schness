@@ -1,0 +1,18 @@
+{
+  "run": "competitive-r2-fairy-uncapped-probe02-2026-10-26",
+  "status": "stopped-by-user",
+  "completed": 0,
+  "total": 2,
+  "sourceFingerprint": "5329707cdf29acd13b1859a2f9c11d8dff784f0e68c5c4166c97007d0f3ebdf6",
+  "archiveSha256": "430fed680990323841ad4d705dbb741cad84414642a3eea68bf9a425d5f1a2da",
+  "archiveBytes": 949217,
+  "parts": [
+    {
+      "path": "partial.tar.gz.part001",
+      "bytes": 949217,
+      "sha256": "430fed680990323841ad4d705dbb741cad84414642a3eea68bf9a425d5f1a2da"
+    }
+  ],
+  "restore": "cat partial.tar.gz.part* > partial.tar.gz; tar -xzf partial.tar.gz",
+  "note": "Stopped by explicit user request; no unfinished game counted as a loss/draw. No restart authorized."
+}

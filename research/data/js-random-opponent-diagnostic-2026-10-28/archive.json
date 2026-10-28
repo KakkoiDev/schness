@@ -1,0 +1,15 @@
+{
+  "archiveBytes": 1037867,
+  "archiveSha256": "78d4976b26010322c911071e353de77f208f92af0b4930cb630647d51b2ff7eb",
+  "parts": [
+    {
+      "path": "full.tar.gz.part001",
+      "bytes": 1037867,
+      "sha256": "78d4976b26010322c911071e353de77f208f92af0b4930cb630647d51b2ff7eb"
+    }
+  ],
+  "filesVerified": 18,
+  "diagnosticPositions": 32,
+  "gameCount": 0,
+  "purpose": "Diagnosticqueries only; not playingdata. Allruntime/source/GPL/input/results/log retained; every archive file byte verified."
+}

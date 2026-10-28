@@ -1,0 +1,20 @@
+{
+  "run": "js-exchange-r1-fairy-screen-2026-10-27",
+  "sourceFingerprint": "0ba6c42beae72cd74304ff5b6bb8f212688c1d7e62effe5df2c0faab634181be",
+  "games": 32,
+  "archiveBytes": 1514144,
+  "archiveSha256": "370e982fa928c9ca3b79fdd7ac4db9e433455f9af0badb433cc5c2ea3bef8090",
+  "parts": [
+    {
+      "path": "js-exchange-r1-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "62d511b7d3cf7608388ebdde8231025b1f52c5429a180a8d4f4a697ecf2b4b75"
+    },
+    {
+      "path": "js-exchange-r1-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 465568,
+      "sha256": "663d7bf6408ee562a6b24ab9593593f802be919036c7dd8d6f252568ec9c4480"
+    }
+  ],
+  "restore": "cat js-exchange-r1-fairy-screen-2026-10-27.tar.gz.part* > js-exchange-r1-fairy-screen-2026-10-27.tar.gz; tar -xzf js-exchange-r1-fairy-screen-2026-10-27.tar.gz"
+}

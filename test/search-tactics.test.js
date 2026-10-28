@@ -13,7 +13,7 @@ test('Schness tactical corpus has independently exhaustive mate answers and lega
   const p=c.position,saved=structuredClone(p);
   const winning=reference.legalActions(p).filter(a=>force(reference.applyLegalAction(p,a),p.turn,c.depth-1)).map(reference.actionKey);
   assert.deepEqual(winning,c.winningActions,c.id);
-  for(const options of [{},{useCache:false},{useMutable:false},{principalVariation:false},{iterativeDeepening:true},{quiescenceDepth:2}]){
+  for(const options of [{rootTiePriority:true,random:()=>.4},{},{useCache:false},{useMutable:false},{principalVariation:false},{iterativeDeepening:true},{quiescenceDepth:2}]){
    const r=analyzeAction(p,{depth:c.depth,...options});assert(winning.includes(rules.actionKey(r.action)),c.id+JSON.stringify(options));assert(r.score>=1e6);
    for(const line of r.variations){let q=p;for(const a of line.pv)q=rules.applyAction(q,a);}
    assert.deepEqual(p,saved);

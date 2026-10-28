@@ -35,7 +35,7 @@ Three documents, deliberately separate:
 
 | layer | modules | property |
 |---|---|---|
-| **Pure core** | `rules` `bot` `search` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` `variants` | No DOM, no network. Directly unit-tested. |
+| **Pure core** | `rules` `bot` `search` `exchange` `history` `notation` `game-message` `interaction` `keyboard` `clock` `matchmaking` `navigation` `chat` `settings` `communication` `drag` `theme` `watch` `arena` `puzzle` `training` `puzzle-settings` `tournament` `library` `qr` `variants` | No DOM, no network. Directly unit-tested. |
 | **Transport** | `net` (+ vendored `p2p-core`, which carries `trystero`) | WebRTC over public Nostr relays; also another tab of the same browser, and a local `p2p-core serve`. |
 | **DOM glue** | `main` `lobby` `lobby-board` `tutorial` `board-ui` `sound` `bot-worker` `analysis-worker` `analysis-ui` `watch-ui` `library-ui` `puzzle-ui` `i18n` | Touches the document. Thin by intention. |
 
@@ -1271,3 +1271,44 @@ deferred. Old frozen research runtimes are not rewritten.
 Guarded by test/search-generation.test.js, test/search-tactics.test.js,
 test/search-reversible.test.js, test/bot-worker.test.js and e2e/engine-contract.spec.js.
 See docs/search-performance-v5-report-2026-10-25.md for separate match results and limitations.
+
+
+### Optional reserve-aware exchange ordering
+
+`exchange` estimates alternating king-safe captures on a single square, including capture-bank ownership/overflow and drop material accounting. It omits drops elsewhere, variant turn rights and repetition; it is only an opt-in competitive move-ordering heuristic, never pruning, adjudication, or proof. Defaults/reference evaluation remain unchanged. test/exchange-ordering.test.js checks transfer/overflow, pinned recaptures, optional recaptures, drop exposure, restoration and nonselective score equivalence.
+
+
+### Optional selective-reduction safeguards
+
+Research options reducePrincipalVariation:false and protectHistoryMoves:true respectively restrict reductions to null windows and protect learned killer/history moves. Defaults preserve prior behavior. They do not make selective search exact or prove mates. Generic trap/cancellation/restoration and actual protection telemetry are tested in test/competitive-search.test.js; playing acceptance requires complete frozen equal-time matches.
+
+
+### Optional legal reserve-pressure evaluation
+
+Competitive reserveThreatEvaluation scores the best single legal reserve deployment's added king-ring control, checking potential and exposed landing square, bounded80 per side. Legal generation enforces checking-drop/cooldown policies. This is a heuristic potential, not a forced tactical sequence or variant-balance claim. Defaults/reference profile stay unchanged. test/reserve-threat-evaluation.test.js checks legal policy, duplicate reserves, color symmetry, bounds, input restoration and independently verified mates.
+
+
+## Search-only exact transition/key cost reuse
+Search may supply resulting masks already computed incrementally to makeSearchAction; callers must supply masks for that legal resulting board. Public transitions retain independent fallback. Cache only primitive normalized frozen rule serialization; shallow nested extensions remain serialized live. Bank keys preserve B/N/R canonical order and unknown-piece fallback; repetition and dynamic rights remain live. Differential tests cover all36 presets and legacy snapshots. Equal-budget completed screen does not establish strength; no profile promotion.
+
+
+## Exact direct drop attack testing
+masksCheckAfterDrop accepts valid reserve-piece drops onto empty squares, preserves input masks, adds occupancy for blocker tests and combines existing attackers with the dropped piece. Enemy first-king semantics remain identical on malformed boards; multiple own kings retain full simulated safety. Checking-drop policies and recursive no-drop-mate checks remain unchanged. This is exact legality optimization, not pruning or evaluation.
+
+
+## Optional quiescence-only fork responses
+forkThreatEvasions defaults false and requires adapter.quiescenceDanger. This optional geometric threat hook augments quiescence danger only; adapter.inDanger remains actual check for LMR. Existing quiescence/evasion budgets bound all legal response searches, standpat is disabled under the selected threat, and terminal rules stay unchanged. Same-attacker double nonking attacks are heuristic (pinned/capturable attackers can overtrigger). This selective mode must not enable early proven-win stopping. Worker/frozenmanifest/confirmation flags preserve exact settings. Default/reference behavior remains unchanged.
+
+
+- 2026-10-28: Experimental rootPrincipalVariation:false preserves current root windows by default. Enabled later single-PV root moves use existing discrete-score PVS capability with full improving-bound re-search. Multi-PV/no-scoreStep and equality tie resolution retain previous behavior. This is research, not strength promotion.
+
+
+- 2026-10-28: Optional kingEscapeGeometry:false changes only competitive safe-square scoring for a checked singleking: test enemy attacks after moving the king so its origin cannot hide slider rays. Pressure/coefficient/reference/defaults/rules remain as before; multipleking geometry falls back. This is evaluation geometry, not complete legal-escape or strength proof. Worker/frozenmatch/confirmation carry the flag; SWv131.
+
+
+## Checked-node static evaluation deferral (2026-10-28)
+
+Static evaluation is pure adapter data and need not run at a quiescence node whose danger response searches legal replies without stand-pat. The search must still evaluate when all relevant q/evasion allowance is exhausted. Terminal adjudication stays first; no new extension, pruning, option or cache identity is introduced. test/checked-evaluation.test.js guards the skip boundary, ordinary evaluation, budgets and restoration. Scores/actions remain unchanged in retained128case nonreduced ABBA; timing alone does not establish strength.
+
+
+- 2026-10-28: Optional rootTiePriority:false preserves legacy reservoir ties and seeded trajectories by default. Enabled single-PV searches shuffle fixed priorities once per root with provided RNG (or Math.random for explicit unseeded mode), validating samples in [0,1). Score then repetition then priority determine selection. Equal upper bounds are fully verified whenever the action could replace selected; worse strict priority cannot win. MultiPV retains legacy full windows/ties. New seeded trajectories and the flag must be recorded in frozen manifests and confirmations. No strength promotion; SWv133 and397unit/174portable/19mate/4browser checks pass.

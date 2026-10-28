@@ -1,0 +1,20 @@
+{
+  "run": "js-kingescape-r1-fairy-screen-2026-10-28",
+  "sourceFingerprint": "eb5bce37374473968483cd8728c97be28192d240453806405a0dc844cdfac70c",
+  "games": 32,
+  "archiveBytes": 1583173,
+  "archiveSha256": "4b725c5058aacc7d4ca1ecfdfff0a9e65a648a5c3d4e1be377599d4cfe233b32",
+  "parts": [
+    {
+      "path": "js-kingescape-r1-fairy-screen-2026-10-28.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "e6bff3ed8bfc0c514c6d603042750de77686bd6fac4200665cef72c9b0ee50e5"
+    },
+    {
+      "path": "js-kingescape-r1-fairy-screen-2026-10-28.tar.gz.part002",
+      "bytes": 534597,
+      "sha256": "50b808e57969fb1b31ecb9c13fbcbf82f97b6596d21e70d195c108c3dca4528d"
+    }
+  ],
+  "restore": "cat js-kingescape-r1-fairy-screen-2026-10-28.tar.gz.part* > js-kingescape-r1-fairy-screen-2026-10-28.tar.gz; tar -xzf js-kingescape-r1-fairy-screen-2026-10-28.tar.gz"
+}

@@ -1,0 +1,85 @@
+{
+  "board": [
+    {
+      "owner": "black",
+      "piece": "king"
+    },
+    null,
+    {
+      "owner": "black",
+      "piece": "knight"
+    },
+    {
+      "owner": "white",
+      "piece": "rook"
+    },
+    null,
+    {
+      "owner": "black",
+      "piece": "bishop"
+    },
+    null,
+    null,
+    null,
+    {
+      "owner": "white",
+      "piece": "bishop"
+    },
+    null,
+    null,
+    null,
+    null,
+    {
+      "owner": "white",
+      "piece": "king"
+    },
+    null
+  ],
+  "banks": {
+    "white": [
+      "knight"
+    ],
+    "black": [
+      "rook"
+    ]
+  },
+  "turn": "black",
+  "phase": "play",
+  "repetitions": {
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------------------------wK--|BNR|BNR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK----------------wB--------wK--|NR|BNR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------bB------wB--------wK--|NR|NR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--------bB--wR--wB--------wK--|N|NR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN----bB--wR--wB--------wK--|N|R": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bNwR--bB------wB--------wK--|N|R": 1
+  },
+  "rules": {
+    "allowCheckingDrops": false,
+    "experiment": "capture-bank",
+    "bankCapacity": 6
+  },
+  "research": {
+    "checkingDrops": {
+      "white": 0,
+      "black": 0
+    },
+    "lastCheckingDrop": {
+      "white": false,
+      "black": false
+    },
+    "turns": {
+      "white": 3,
+      "black": 2
+    },
+    "deployed": {
+      "white": [
+        "bishop",
+        "rook"
+      ],
+      "black": [
+        "bishop",
+        "knight"
+      ]
+    }
+  }
+}

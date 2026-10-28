@@ -1,0 +1,11 @@
+/** Bounded CPU sampling on selected early JS loss positions; no strength claim. */
+import inspector from 'node:inspector';import {promisify} from 'node:util';
+import {readFile,writeFile} from 'node:fs/promises';import {createHash} from 'node:crypto';
+import {analyzeAction} from '../../src/bot.js';
+const input=JSON.parse(await readFile('research/competitive-engine-v1/js-early-swings.json')),cases=input.cases.filter(c=>input.results.some(r=>r.id===c.id&&r.variant===c.variant&&r.comparable));
+const session=new inspector.Session();session.connect();const post=promisify(session.post.bind(session));await post('Profiler.enable');await post('Profiler.start');const results=[];
+for(const c of cases){const r=analyzeAction(c.position,{...input.options,maxMillis:1500});results.push({variant:c.variant,id:c.id,completedDepth:r.completedDepth,nodes:r.nodes,score:r.score,action:r.action});}
+const {profile}=await post('Profiler.stop');session.disconnect();await writeFile('research/competitive-engine-v1/js-early-search.cpuprofile',JSON.stringify(profile)+'\n');
+const nodes=new Map(profile.nodes.map(n=>[n.id,n])),counts=new Map();for(const id of profile.samples??[]){const f=nodes.get(id).callFrame,key=JSON.stringify([f.functionName,f.url,f.lineNumber+1]);counts.set(key,(counts.get(key)??0)+1);}
+const total=profile.samples.length,hotspots=[...counts].sort((a,b)=>b[1]-a[1]).slice(0,30).map(([key,samples])=>({frame:JSON.parse(key),samples,fraction:samples/total}));const hashes={};for(const p of ['src/search.js','src/bot.js','src/rules.js','src/board-masks.js'])hashes[p]=createHash('sha256').update(await readFile(p)).digest('hex');
+await writeFile('research/competitive-engine-v1/js-early-search-profile.json',JSON.stringify({purpose:'CPU sampling on40selected early JS loss cases, depth6/q4checks/nonreduced,100000nodes1500ms each. Sampling/GC/JIT affects timings. Not strength evidence.',hashes,scriptSha256:createHash('sha256').update(await readFile(new URL(import.meta.url))).digest('hex'),inputSha256:createHash('sha256').update(await readFile('research/competitive-engine-v1/js-early-swings.json')).digest('hex'),profileSha256:createHash('sha256').update(await readFile('research/competitive-engine-v1/js-early-search.cpuprofile')).digest('hex'),results,totalSamples:total,hotspots},null,2)+'\n');console.log(JSON.stringify(hotspots.slice(0,15)));

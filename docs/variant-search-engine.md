@@ -33,7 +33,7 @@ score, visited nodes, completed depth and whether the search stopped at a budget
 
     analyzeAction(position, {strength: 40, maxNodes: 10000})
 
-Integer level (`strength`) 0–100 maps directly to requested depth 0–100 with a default safety budget of 262144 nodes. Level 0 selects a legal ordered action without evaluating successors. One depth unit is one action by either player, including extra turns. Explicit depth and node
+Integer level (`strength`) 0–100 maps directly to requested depth 0–100 with no implicit node or time cap (the default node budget is Infinity). Level 0 selects a legal ordered action without evaluating successors. One depth unit is one action by either player, including extra turns. Explicit depth and node
 options override the mapped values. Strength is not Elo, and different variants have different
 branching factors. Use fixed node budgets for reproducible research. Optional maxMillis is a
 wall-clock responsiveness cap, unsuitable as the sole budget for comparisons across machines.
@@ -176,3 +176,5 @@ qualify moves according to their own rules. Exact reference mode keeps this opti
 Sharp v7 and Learning/Steady v6 retain their previous evaluation, requested depths and default
 zero tactical extension. The new exact work avoids redundant king-safety simulations and
 reuses distinct mask buffers by active search-stack depth. Multiplayer remains out of scope.
+
+The normative rewrite compatibility specification and portable backend test protocol are in [engine-behavior-contract.md](engine-behavior-contract.md).

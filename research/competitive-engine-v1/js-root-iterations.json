@@ -1,0 +1,2655 @@
+{
+  "purpose": "One previously selected historyBlack6 position; depth8 iterations and two forced root alternatives at matched totaldepth4..8.500000nodes1500ms perquery, nonreduced forced lines. Correlated finite-horizon diagnostics, not general bug/strength/mate proof. No clock-budget escalation in matches.",
+  "hashes": {
+    "src/search.js": "1c175a7fe5c045690ad5ecfd4c1fce2103de3e79eb920016853a0fa9b970f295",
+    "src/bot.js": "36d60deb432de0c339afeaa6a9a04c155de5d9a3407f30bc854ad25d65f897b1",
+    "src/rules.js": "b1361eb4950bcbe80e57c4c151457b9f618cff84f091b8631efe033165e44778",
+    "research/competitive-engine-v1/js-early-swings.json": "2754350022cfa59d818bc4a26983c3a2d922d0a5ee0c305ef9a4418c438bb62e"
+  },
+  "scriptSha256": "3fcda92a1be56420b0728450ccdb8127bd51d0a2cf12db38b87d44b1d4473129",
+  "case": {
+    "variant": "history",
+    "id": "black__20262001__6",
+    "sourceFingerprint": "2122691ea504a98efc486f5e91bb27ca7f437d19e0efcc8afa349832d2c25397",
+    "selection": "decision before first early >=300 observed drop",
+    "ply": 13,
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "knight",
+          "rook"
+        ],
+        "black": [
+          "bishop",
+          "rook"
+        ]
+      },
+      "turn": "black",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------------------wK--|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB--------wK--|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB--------wK--|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN--------wR--wB--------wK--|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------wR--bN--------wK--|N|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----------wR--wK------------|NN|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB--------wR--wK------------|NN|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbBwR----------wK------------|NN|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbBwR------bR--wK------------|NN|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB--------wR--wK------------|NNR|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------bB--wK------------|NNR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----------bB--wK--------wN--|NR|BR": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    "playedAction": {
+      "type": "drop",
+      "piece": "bishop",
+      "to": 2
+    },
+    "playedScore": -130,
+    "playedDepth": 4,
+    "trajectory": [
+      {
+        "ply": 3,
+        "score": -32,
+        "depth": 4
+      },
+      {
+        "ply": 5,
+        "score": 40,
+        "depth": 6
+      },
+      {
+        "ply": 7,
+        "score": 76,
+        "depth": 5
+      },
+      {
+        "ply": 9,
+        "score": -6,
+        "depth": 6
+      },
+      {
+        "ply": 11,
+        "score": -130,
+        "depth": 6
+      },
+      {
+        "ply": 13,
+        "score": -130,
+        "depth": 4
+      },
+      {
+        "ply": 15,
+        "score": -1088,
+        "depth": 7
+      },
+      {
+        "ply": 17,
+        "score": -1784,
+        "depth": 8
+      },
+      {
+        "ply": 19,
+        "score": -1840,
+        "depth": 7
+      },
+      {
+        "ply": 21,
+        "score": -1870,
+        "depth": 6
+      },
+      {
+        "ply": 23,
+        "score": -1798,
+        "depth": 4
+      },
+      {
+        "ply": 25,
+        "score": -1000001,
+        "depth": 5
+      }
+    ]
+  },
+  "rows": [
+    {
+      "name": "nonreduced",
+      "options": {
+        "profile": "competitive",
+        "depth": 8,
+        "iterativeDeepening": true,
+        "quiescenceDepth": 4,
+        "quiescenceChecks": true,
+        "quiescenceEvasionDepth": 2,
+        "lateMoveReduction": false,
+        "cacheEvaluation": true,
+        "stopOnProvenWin": false,
+        "repetitionAversion": true,
+        "maxNodes": 500000,
+        "maxMillis": 1500,
+        "protectHistoryMoves": false
+      },
+      "iterations": [
+        {
+          "depth": 1,
+          "score": 32,
+          "nodes": 58,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            }
+          ]
+        },
+        {
+          "depth": 2,
+          "score": 14,
+          "nodes": 191,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 13
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            }
+          ]
+        },
+        {
+          "depth": 3,
+          "score": 12,
+          "nodes": 1673,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            }
+          ]
+        },
+        {
+          "depth": 4,
+          "score": -130,
+          "nodes": 4689,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            }
+          ]
+        },
+        {
+          "depth": 5,
+          "score": -26,
+          "nodes": 19931,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 11
+            }
+          ]
+        },
+        {
+          "depth": 6,
+          "score": -118,
+          "nodes": 42328,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 14
+            }
+          ]
+        },
+        {
+          "depth": 7,
+          "score": -111,
+          "nodes": 77395,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 10
+            }
+          ]
+        },
+        {
+          "depth": 8,
+          "score": -148,
+          "nodes": 164249,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "result": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 15
+        },
+        "score": -148,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 7
+          }
+        ],
+        "completedDepth": 8,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            "score": -148,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 15
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 5
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 10
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 7
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 8,
+        "nodes": 164249,
+        "quiescenceNodes": 130328,
+        "stats": {
+          "cutoffs": 110875,
+          "cacheHits": 1456,
+          "tableCutoffs": 1038,
+          "hintHits": 16997,
+          "rootResearches": 0,
+          "pvsResearches": 60,
+          "aspirationResearches": 3,
+          "historyHits": 292191,
+          "evaluations": 63916,
+          "actionGenerations": 154802,
+          "countGenerations": 11730,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 164189,
+          "tableEntries": 32358,
+          "hintEntries": 15778
+        }
+      }
+    },
+    {
+      "name": "baselineLMR",
+      "options": {
+        "profile": "competitive",
+        "depth": 8,
+        "iterativeDeepening": true,
+        "quiescenceDepth": 4,
+        "quiescenceChecks": true,
+        "quiescenceEvasionDepth": 2,
+        "lateMoveReduction": true,
+        "cacheEvaluation": true,
+        "stopOnProvenWin": false,
+        "repetitionAversion": true,
+        "maxNodes": 500000,
+        "maxMillis": 1500,
+        "protectHistoryMoves": false
+      },
+      "iterations": [
+        {
+          "depth": 1,
+          "score": 32,
+          "nodes": 58,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            }
+          ]
+        },
+        {
+          "depth": 2,
+          "score": 14,
+          "nodes": 191,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 13
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            }
+          ]
+        },
+        {
+          "depth": 3,
+          "score": 12,
+          "nodes": 1673,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            }
+          ]
+        },
+        {
+          "depth": 4,
+          "score": -130,
+          "nodes": 4368,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            }
+          ]
+        },
+        {
+          "depth": 5,
+          "score": -26,
+          "nodes": 18293,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 11
+            }
+          ]
+        },
+        {
+          "depth": 6,
+          "score": -118,
+          "nodes": 37362,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 14
+            }
+          ]
+        },
+        {
+          "depth": 7,
+          "score": -114,
+          "nodes": 63207,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 1
+            }
+          ]
+        },
+        {
+          "depth": 8,
+          "score": -148,
+          "nodes": 128243,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "result": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 15
+        },
+        "score": -148,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 7
+          }
+        ],
+        "completedDepth": 8,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            "score": -148,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 15
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 5
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 10
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 7
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 8,
+        "nodes": 128243,
+        "quiescenceNodes": 102072,
+        "stats": {
+          "cutoffs": 84365,
+          "cacheHits": 2543,
+          "tableCutoffs": 2062,
+          "hintHits": 11516,
+          "rootResearches": 0,
+          "pvsResearches": 83,
+          "aspirationResearches": 3,
+          "historyHits": 203505,
+          "evaluations": 53832,
+          "actionGenerations": 119873,
+          "countGenerations": 10247,
+          "reducedSearches": 1462,
+          "reductionResearches": 7,
+          "protectedReductions": 0,
+          "transitions": 128153,
+          "tableEntries": 23517,
+          "hintEntries": 12479
+        }
+      }
+    },
+    {
+      "name": "historyLMR",
+      "options": {
+        "profile": "competitive",
+        "depth": 8,
+        "iterativeDeepening": true,
+        "quiescenceDepth": 4,
+        "quiescenceChecks": true,
+        "quiescenceEvasionDepth": 2,
+        "lateMoveReduction": true,
+        "cacheEvaluation": true,
+        "stopOnProvenWin": false,
+        "repetitionAversion": true,
+        "maxNodes": 500000,
+        "maxMillis": 1500,
+        "protectHistoryMoves": true
+      },
+      "iterations": [
+        {
+          "depth": 1,
+          "score": 32,
+          "nodes": 58,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            }
+          ]
+        },
+        {
+          "depth": 2,
+          "score": 14,
+          "nodes": 191,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 13
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            }
+          ]
+        },
+        {
+          "depth": 3,
+          "score": 12,
+          "nodes": 1673,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            }
+          ]
+        },
+        {
+          "depth": 4,
+          "score": -130,
+          "nodes": 4368,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            }
+          ]
+        },
+        {
+          "depth": 5,
+          "score": -26,
+          "nodes": 18579,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 11
+            }
+          ]
+        },
+        {
+          "depth": 6,
+          "score": -118,
+          "nodes": 38176,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 14
+            }
+          ]
+        },
+        {
+          "depth": 7,
+          "score": -114,
+          "nodes": 64936,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 1
+            }
+          ]
+        },
+        {
+          "depth": 8,
+          "score": -148,
+          "nodes": 134879,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "result": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 15
+        },
+        "score": -148,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 7
+          }
+        ],
+        "completedDepth": 8,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 15
+            },
+            "score": -148,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 15
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 5
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 10
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 7
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 8,
+        "nodes": 134879,
+        "quiescenceNodes": 107169,
+        "stats": {
+          "cutoffs": 89102,
+          "cacheHits": 2325,
+          "tableCutoffs": 1874,
+          "hintHits": 12511,
+          "rootResearches": 0,
+          "pvsResearches": 72,
+          "aspirationResearches": 3,
+          "historyHits": 222278,
+          "evaluations": 55913,
+          "actionGenerations": 126423,
+          "countGenerations": 10406,
+          "reducedSearches": 1192,
+          "reductionResearches": 4,
+          "protectedReductions": 350,
+          "transitions": 134803,
+          "tableEntries": 25258,
+          "hintEntries": 13195
+        }
+      }
+    }
+  ],
+  "forced": [
+    {
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 2
+      },
+      "depth": 4,
+      "complete": true,
+      "rootScore": -130,
+      "result": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 7
+        },
+        "score": 130,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 6
+          }
+        ],
+        "completedDepth": 3,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            "score": 130,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 7
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 6
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 3,
+        "nodes": 1679,
+        "quiescenceNodes": 1584,
+        "stats": {
+          "cutoffs": 995,
+          "cacheHits": 5,
+          "tableCutoffs": 0,
+          "hintHits": 25,
+          "rootResearches": 0,
+          "pvsResearches": 13,
+          "aspirationResearches": 1,
+          "historyHits": 128,
+          "evaluations": 894,
+          "actionGenerations": 1444,
+          "countGenerations": 280,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 1666,
+          "tableEntries": 90,
+          "hintEntries": 68
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 2
+      },
+      "depth": 5,
+      "complete": true,
+      "rootScore": -576,
+      "result": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 3
+        },
+        "score": 576,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 2
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 3
+            },
+            "score": 576,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 3
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 2
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 5302,
+        "quiescenceNodes": 4672,
+        "stats": {
+          "cutoffs": 3137,
+          "cacheHits": 114,
+          "tableCutoffs": 84,
+          "hintHits": 129,
+          "rootResearches": 0,
+          "pvsResearches": 17,
+          "aspirationResearches": 3,
+          "historyHits": 1250,
+          "evaluations": 2660,
+          "actionGenerations": 4718,
+          "countGenerations": 694,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 5285,
+          "tableEntries": 515,
+          "hintEntries": 413
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 2
+      },
+      "depth": 6,
+      "complete": true,
+      "rootScore": -720,
+      "result": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 3
+        },
+        "score": 720,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 13
+          }
+        ],
+        "completedDepth": 5,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 3
+            },
+            "score": 720,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 3
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 13
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 5,
+        "nodes": 11545,
+        "quiescenceNodes": 10075,
+        "stats": {
+          "cutoffs": 8041,
+          "cacheHits": 175,
+          "tableCutoffs": 118,
+          "hintHits": 606,
+          "rootResearches": 0,
+          "pvsResearches": 20,
+          "aspirationResearches": 4,
+          "historyHits": 3483,
+          "evaluations": 5144,
+          "actionGenerations": 10693,
+          "countGenerations": 1052,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 11525,
+          "tableEntries": 1290,
+          "hintEntries": 736
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 2
+      },
+      "depth": 7,
+      "complete": true,
+      "rootScore": -698,
+      "result": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 3
+        },
+        "score": 698,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 1
+          }
+        ],
+        "completedDepth": 6,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 3
+            },
+            "score": 698,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 3
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 2
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 1
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 6,
+        "nodes": 32891,
+        "quiescenceNodes": 26905,
+        "stats": {
+          "cutoffs": 21679,
+          "cacheHits": 196,
+          "tableCutoffs": 130,
+          "hintHits": 2465,
+          "rootResearches": 0,
+          "pvsResearches": 23,
+          "aspirationResearches": 4,
+          "historyHits": 24805,
+          "evaluations": 12528,
+          "actionGenerations": 30899,
+          "countGenerations": 2315,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 32868,
+          "tableEntries": 5771,
+          "hintEntries": 3367
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 2
+      },
+      "depth": 8,
+      "complete": true,
+      "rootScore": -883,
+      "result": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 3
+        },
+        "score": 883,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 7
+          }
+        ],
+        "completedDepth": 7,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 3
+            },
+            "score": 883,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 3
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 0,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 7
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 7,
+        "nodes": 87295,
+        "quiescenceNodes": 72943,
+        "stats": {
+          "cutoffs": 67317,
+          "cacheHits": 234,
+          "tableCutoffs": 152,
+          "hintHits": 8494,
+          "rootResearches": 0,
+          "pvsResearches": 24,
+          "aspirationResearches": 5,
+          "historyHits": 56919,
+          "evaluations": 28872,
+          "actionGenerations": 83931,
+          "countGenerations": 4246,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 87271,
+          "tableEntries": 14059,
+          "hintEntries": 5641
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 15
+      },
+      "depth": 4,
+      "complete": true,
+      "rootScore": -315,
+      "result": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 7
+        },
+        "score": 315,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          }
+        ],
+        "completedDepth": 3,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            "score": 315,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 7
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 10
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 3,
+        "nodes": 556,
+        "quiescenceNodes": 485,
+        "stats": {
+          "cutoffs": 397,
+          "cacheHits": 6,
+          "tableCutoffs": 1,
+          "hintHits": 26,
+          "rootResearches": 0,
+          "pvsResearches": 2,
+          "aspirationResearches": 2,
+          "historyHits": 70,
+          "evaluations": 361,
+          "actionGenerations": 526,
+          "countGenerations": 35,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 554,
+          "tableEntries": 64,
+          "hintEntries": 43
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 15
+      },
+      "depth": 5,
+      "complete": true,
+      "rootScore": -26,
+      "result": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 7
+        },
+        "score": 26,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 11
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 7
+            },
+            "score": 26,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 7
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 11
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 3950,
+        "quiescenceNodes": 3262,
+        "stats": {
+          "cutoffs": 2333,
+          "cacheHits": 294,
+          "tableCutoffs": 203,
+          "hintHits": 160,
+          "rootResearches": 0,
+          "pvsResearches": 9,
+          "aspirationResearches": 4,
+          "historyHits": 1483,
+          "evaluations": 2250,
+          "actionGenerations": 3569,
+          "countGenerations": 482,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 3941,
+          "tableEntries": 392,
+          "hintEntries": 322
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 15
+      },
+      "depth": 6,
+      "complete": true,
+      "rootScore": -118,
+      "result": {
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        "score": 118,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 14
+          }
+        ],
+        "completedDepth": 5,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            "score": 118,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 5
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 7
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 14
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 5,
+        "nodes": 8627,
+        "quiescenceNodes": 7234,
+        "stats": {
+          "cutoffs": 5828,
+          "cacheHits": 326,
+          "tableCutoffs": 225,
+          "hintHits": 448,
+          "rootResearches": 0,
+          "pvsResearches": 15,
+          "aspirationResearches": 5,
+          "historyHits": 4086,
+          "evaluations": 4845,
+          "actionGenerations": 8028,
+          "countGenerations": 762,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 8612,
+          "tableEntries": 1064,
+          "hintEntries": 716
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 15
+      },
+      "depth": 7,
+      "complete": true,
+      "rootScore": -111,
+      "result": {
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        "score": 111,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 10
+          }
+        ],
+        "completedDepth": 6,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            "score": 111,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 5
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 7
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 10
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 6,
+        "nodes": 25292,
+        "quiescenceNodes": 20752,
+        "stats": {
+          "cutoffs": 16425,
+          "cacheHits": 469,
+          "tableCutoffs": 327,
+          "hintHits": 1394,
+          "rootResearches": 0,
+          "pvsResearches": 24,
+          "aspirationResearches": 5,
+          "historyHits": 22147,
+          "evaluations": 13078,
+          "actionGenerations": 23543,
+          "countGenerations": 2118,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 25268,
+          "tableEntries": 4061,
+          "hintEntries": 2808
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 15
+      },
+      "depth": 8,
+      "complete": true,
+      "rootScore": -148,
+      "result": {
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        "score": 148,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 7
+          }
+        ],
+        "completedDepth": 7,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            "score": 148,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 5
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 10
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 7
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 7,
+        "nodes": 61471,
+        "quiescenceNodes": 50687,
+        "stats": {
+          "cutoffs": 45056,
+          "cacheHits": 655,
+          "tableCutoffs": 452,
+          "hintHits": 5012,
+          "rootResearches": 0,
+          "pvsResearches": 30,
+          "aspirationResearches": 5,
+          "historyHits": 53905,
+          "evaluations": 28378,
+          "actionGenerations": 58492,
+          "countGenerations": 3750,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 61441,
+          "tableEntries": 10092,
+          "hintEntries": 5282
+        }
+      }
+    }
+  ]
+}
