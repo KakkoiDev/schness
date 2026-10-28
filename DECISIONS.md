@@ -1298,3 +1298,6 @@ masksCheckAfterDrop accepts valid reserve-piece drops onto empty squares, preser
 
 ## Optional quiescence-only fork responses
 forkThreatEvasions defaults false and requires adapter.quiescenceDanger. This optional geometric threat hook augments quiescence danger only; adapter.inDanger remains actual check for LMR. Existing quiescence/evasion budgets bound all legal response searches, standpat is disabled under the selected threat, and terminal rules stay unchanged. Same-attacker double nonking attacks are heuristic (pinned/capturable attackers can overtrigger). This selective mode must not enable early proven-win stopping. Worker/frozenmanifest/confirmation flags preserve exact settings. Default/reference behavior remains unchanged.
+
+
+- 2026-10-28: Experimental rootPrincipalVariation:false preserves current root windows by default. Enabled later single-PV root moves use existing discrete-score PVS capability with full improving-bound re-search. Multi-PV/no-scoreStep and equality tie resolution retain previous behavior. This is research, not strength promotion.

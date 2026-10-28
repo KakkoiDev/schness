@@ -25,6 +25,8 @@ export function createSearchEngine(adapter) {
     merged.depth ??= 4;
     merged.quiescenceDepth ??= 0;
     merged.quiescenceEvasionDepth ??= 0;
+    merged.rootPrincipalVariation ??= false;
+    if(typeof merged.rootPrincipalVariation!=='boolean')throw new TypeError('Invalid rootPrincipalVariation');
     merged.forkThreatEvasions ??= false;
     if(typeof merged.forkThreatEvasions!=='boolean')throw new TypeError('Invalid forkThreatEvasions');
     if(merged.forkThreatEvasions && typeof adapter.quiescenceDanger!=='function')throw new TypeError('Fork threat evasions require adapter.quiescenceDanger');
@@ -288,7 +290,12 @@ export function createSearchEngine(adapter) {
           const {rep,child}=withChild(position,action,ctx,next=>{
             const rep=options.repetitionAversion ? (adapter.repetitions?.(next) ?? 0) : 0;
             const alpha=options.multiPv === 1 ? Math.max(lower,selected?.score ?? -Infinity) : -Infinity;
-            let child=visit(next,depth-1,alpha,upper,player,ctx);
+            const probe=options.rootPrincipalVariation && ctx.pvs && options.multiPv===1 && selected && Number.isFinite(alpha);
+            let child=visit(next,depth-1,alpha,probe?Math.min(upper,alpha+adapter.scoreStep):upper,player,ctx);
+            if(probe && child.value>alpha && child.value<upper){
+              ctx.pvsResearches++;
+              child=visit(next,depth-1,alpha,upper,player,ctx);
+            }
             // Fail-low equality is a bound. Resolve it before tie selection.
             if(selected && alpha!==-Infinity && child.value===selected.score &&
                 (rep<repetitions || typeof options.random==='function')){
