@@ -55,7 +55,7 @@ function make(position,action) {
   const scratch=state.maskStack[state.maskDepth] ??= new Uint16Array(9);
   state.maskDepth++;
   state.masks=masksAfter(state.masks,position.board,player,action,scratch);
-  const undo=makeSearchAction(position,action);
+  const undo=makeSearchAction(position,action,state.masks);
   state.key=undo.key ?? positionKey(position);
   if(state.competitive){
     if(undo.key)state.historyCounts.set(undo.key,(state.historyCounts.get(undo.key)??0)+1);

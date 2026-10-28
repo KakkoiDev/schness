@@ -6,6 +6,7 @@ import {analyzeAction,scorePosition} from '../src/bot.js';
 import {analyzeAction as baseline,scorePosition as oldScore} from '../research/search-performance-v3/baseline-bot.js';
 import {createSearchEngine} from '../src/search.js';
 import {VARIANTS} from '../src/variants.js';
+import {boardMasks,masksAfter} from '../src/board-masks.js';
 
 function random(seed){return()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};}
 
@@ -27,7 +28,7 @@ test('all production presets retain legal moves, results and reversible transiti
   for(let ply=0;ply<45;ply++){
    const actions=rules.legalActions(p);assert.deepEqual(actions,old.legalActions(legacy),`${id} ${ply}`);assert.deepEqual(rules.getResult(p),old.getResult(legacy));
    for(const action of actions){
-    const saved=structuredClone(mutable),undo=rules.makeSearchAction(mutable,action);
+    const saved=structuredClone(mutable),undo=rules.makeSearchAction(mutable,action,masksAfter(boardMasks(mutable.board),mutable.board,mutable.turn,action));
     assert.deepEqual(mutable,rules.applyAction(p,action),`${id} ${rules.actionKey(action)}`);
     rules.unmakeSearchAction(mutable,undo);assert.deepEqual(mutable,saved);transitions++;
    }
@@ -109,4 +110,14 @@ test('history-sensitive scoring and tactical extensions match the frozen engine'
    assert.equal(analyzeAction(p,options).score,baseline(p,options).score);assert.deepEqual(p,saved);
   }
  }
+});
+
+
+test('key serialization preserves bank order equivalence and mutable nested rule extensions',()=>{
+ const p=rules.createInitialPosition({allowCheckingDrops:false,experiment:'capture-bank',bankCapacity:6,extension:{value:1}});
+ assert.equal(rules.positionKey(p),old.positionKey(p));
+ p.rules.extension.value=2;assert.equal(rules.positionKey(p),old.positionKey(p));
+ p.banks.white=['rook','bishop','rook','knight','bishop'];
+ assert.equal(rules.positionKey(p),old.positionKey(p));
+ const before=rules.positionKey(p);p.banks.white.reverse();assert.equal(rules.positionKey(p),before);
 });

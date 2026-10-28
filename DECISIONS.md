@@ -1286,3 +1286,7 @@ Research options reducePrincipalVariation:false and protectHistoryMoves:true res
 ### Optional legal reserve-pressure evaluation
 
 Competitive reserveThreatEvaluation scores the best single legal reserve deployment's added king-ring control, checking potential and exposed landing square, bounded80 per side. Legal generation enforces checking-drop/cooldown policies. This is a heuristic potential, not a forced tactical sequence or variant-balance claim. Defaults/reference profile stay unchanged. test/reserve-threat-evaluation.test.js checks legal policy, duplicate reserves, color symmetry, bounds, input restoration and independently verified mates.
+
+
+## Search-only exact transition/key cost reuse
+Search may supply resulting masks already computed incrementally to makeSearchAction; callers must supply masks for that legal resulting board. Public transitions retain independent fallback. Cache only primitive normalized frozen rule serialization; shallow nested extensions remain serialized live. Bank keys preserve B/N/R canonical order and unknown-piece fallback; repetition and dynamic rights remain live. Differential tests cover all36 presets and legacy snapshots. Equal-budget completed screen does not establish strength; no profile promotion.
