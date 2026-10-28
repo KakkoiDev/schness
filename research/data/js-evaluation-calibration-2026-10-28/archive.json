@@ -1,0 +1,142 @@
+{
+  "archiveBytes": 1199784,
+  "archiveSha256": "7c646cb4f0c9ba12224c6fc6264e788f1eb7f75025620a40aec9dbadc4697316",
+  "parts": [
+    {
+      "path": "full.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "e2ef004ffca72bf7c5b6f457766fcd385c22b3ed4ae625202b413aa189066a1a"
+    },
+    {
+      "path": "full.tar.gz.part002",
+      "bytes": 151208,
+      "sha256": "6bba1ed388128f58140b78af60f8dc6c8ef10a706450d32c7fdaf18601607ed2"
+    }
+  ],
+  "files": {
+    "analysis.json": {
+      "bytes": 710770,
+      "sha256": "179c1ae232949e7f3e9ba5a477886d7bba79ed1b25fac3d1ffdc560dad63fbed"
+    },
+    "environment.json": {
+      "bytes": 3346,
+      "sha256": "8d3655197468bb3b45c1ea509a13d08498649155f94d392434defe20318cc9ad"
+    },
+    "initial-browser-failure.log": {
+      "bytes": 8805,
+      "sha256": "8b1a1d9fd99ddff2dd25eea7fd68aedd084664a4876fba20a98ca3e715486ba0"
+    },
+    "manifest.json": {
+      "bytes": 883589,
+      "sha256": "a47d5387aa7a518e06d3abe6869739b08a619adc6fda0bdf821e086053c828ea"
+    },
+    "offline-verification.log": {
+      "bytes": 101,
+      "sha256": "9dfae870236e8ab092619d40bc82c190cd8760387252ed55b17f07ebf4e60815"
+    },
+    "results.json": {
+      "bytes": 705053,
+      "sha256": "754327e18d21721f424610589f50bcc89296d078ca964a574c20c747bc9a0329"
+    },
+    "run.log": {
+      "bytes": 30,
+      "sha256": "38187f084543674afc5e73fff9772a40bebaa350ed64557bd04a2a703f2c3aab"
+    },
+    "runtime/research/fairy-match-v1/harness.html": {
+      "bytes": 647,
+      "sha256": "fceea4f0043f9fb818e40dee27231dc89bce0b65854c15e0ab538f37f83516d3"
+    },
+    "runtime/research/fairy-match-v1/variant.ini": {
+      "bytes": 229,
+      "sha256": "59018f6cdea7d916a5071294fb6bc014bb36e0569d115f658154bc34ffd6d7d8"
+    },
+    "runtime/src/board-masks.js": {
+      "bytes": 3681,
+      "sha256": "3333c23dd903317870bdd90cb0222943a31d81c2de340f3e1f6b7bf069d3f77b"
+    },
+    "runtime/src/bot.js": {
+      "bytes": 14170,
+      "sha256": "7edbba45f1a4a7304023478660d2d754fd0132f59fdb5c74ba18bb48cbf7b12e"
+    },
+    "runtime/src/exchange.js": {
+      "bytes": 1963,
+      "sha256": "e3c5f7a2c9e6b10e7e4cecaf5d29c774d93c1049c143bd243d119f6e7ca46c72"
+    },
+    "runtime/src/rules.js": {
+      "bytes": 26198,
+      "sha256": "b1361eb4950bcbe80e57c4c151457b9f618cff84f091b8631efe033165e44778"
+    },
+    "runtime/src/search.js": {
+      "bytes": 23721,
+      "sha256": "adaef00705aac920389bddc96ff7e5a857831ccbc592a20e228c4fc1d83cc1ed"
+    },
+    "runtime/vendor/fairy-stockfish/AUTHORS": {
+      "bytes": 4950,
+      "sha256": "55a0a4599358308af8349344d79176469f04119558e85595efe0a39b583cdf00"
+    },
+    "runtime/vendor/fairy-stockfish/Copying.txt": {
+      "bytes": 35821,
+      "sha256": "0b383d5a63da644f628d99c33976ea6487ed89aaa59f0b3257992deac1171e6b"
+    },
+    "runtime/vendor/fairy-stockfish/source.tar.gz": {
+      "bytes": 383237,
+      "sha256": "5c10e40812e1045cb13677ff84b3cdd3fca5c381df76245cd4d8eb5312a61bea"
+    },
+    "runtime/vendor/fairy-stockfish/stockfish.js": {
+      "bytes": 64273,
+      "sha256": "9080a62e3133e50da0c47b88b186d9c29ed37cc5129401bdeed8bffb5b9a4ca9"
+    },
+    "runtime/vendor/fairy-stockfish/stockfish.wasm": {
+      "bytes": 1636293,
+      "sha256": "7cea742b8ca1a324fbc500f89112f168134cf68eb49475df23be6c42336255c6"
+    },
+    "runtime/vendor/fairy-stockfish/stockfish.worker.js": {
+      "bytes": 3321,
+      "sha256": "067be484ac62f728b0dad28496997e5862f3c61f9091f59bb35d9d1b1ed14573"
+    },
+    "sources/prepare-calibration.mjs": {
+      "bytes": 1525,
+      "sha256": "66fb9286ccbb72d40d316f5e32080767bfd8825f02faf28f854e00abafe3d214"
+    },
+    "sources/research/competitive-engine-v1/collect-js-evaluation-calibration.js": {
+      "bytes": 7339,
+      "sha256": "3415c77b03c7ef783a310b5ec2d637eaabdccaf45925cf63f7e7de4201fee883"
+    },
+    "sources/research/competitive-engine-v1/evaluation-calibration-plan-2026-10-28.md": {
+      "bytes": 3212,
+      "sha256": "d20ee2e3b350839168dacf053b36c20184c1b0d150243496f09209a884f13b55"
+    },
+    "sources/research/competitive-engine-v1/js-evaluation-calibration-input.json": {
+      "bytes": 822394,
+      "sha256": "e487c8c5c8e6697e53369b2a91faa1aa095a815379559cc637f1552d184ba64c"
+    },
+    "sources/research/search-performance-v5/baseline-board-masks.js": {
+      "bytes": 2965,
+      "sha256": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+    },
+    "sources/research/search-performance-v5/baseline-rules.js": {
+      "bytes": 24514,
+      "sha256": "051abbe367f104b43b032144110304b2db55c9a27f8c9ca66f639a9033db4a66"
+    },
+    "sources/src/bot.js": {
+      "bytes": 13380,
+      "sha256": "e415801d0057f47164085c98a54188f71d5f54d99a752d19874387f6d029a98b"
+    },
+    "sources/verify-js-evaluation-calibration.js": {
+      "bytes": 1489,
+      "sha256": "4a903195490810c379ac72ef830fc9c848558a9de3faf25cdee2f5c89123ba16"
+    },
+    "uci-traffic.json": {
+      "bytes": 279997,
+      "sha256": "eca59ee5610ffa451406ee8ae99f26ea9c4f5f7343354c6e9bfa8ce918fa9f3e"
+    },
+    "verification.json": {
+      "bytes": 720,
+      "sha256": "29d8418dc1411a9d719eea2e3812c1c07bed5fa56adf54fee03ec57b35bbc8b0"
+    }
+  },
+  "filesVerified": 30,
+  "diagnosticPositions": 64,
+  "gameCount": 0,
+  "purpose": "Fixed finite-time teacher dataset, zero fits/games/strengthclaim. Allruntime/source/GPL/input/UCI/logs verified. Setup recorder boundary documented."
+}
