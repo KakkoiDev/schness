@@ -1,0 +1,324 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-28T03:38:14.789Z",
+  "files": [
+    {
+      "path": "package.json",
+      "sha256": "fde731dc4e32f0383fef9d0d12ba052ff81df9f937658ad709df8554e5e5fdd9"
+    },
+    {
+      "path": "scripts/run-competitive-fairy.js",
+      "sha256": "c067ceb14243b98954dc25c3d94530351292490cd2cb3f1d17db42b565492df0"
+    },
+    {
+      "path": "research/fairy-match-v1/harness.html",
+      "sha256": "fceea4f0043f9fb818e40dee27231dc89bce0b65854c15e0ab538f37f83516d3"
+    },
+    {
+      "path": "research/fairy-match-v1/variant.ini",
+      "sha256": "59018f6cdea7d916a5071294fb6bc014bb36e0569d115f658154bc34ffd6d7d8"
+    },
+    {
+      "path": "src/bot.js",
+      "sha256": "36d60deb432de0c339afeaa6a9a04c155de5d9a3407f30bc854ad25d65f897b1"
+    },
+    {
+      "path": "src/rules.js",
+      "sha256": "b1361eb4950bcbe80e57c4c151457b9f618cff84f091b8631efe033165e44778"
+    },
+    {
+      "path": "src/board-masks.js",
+      "sha256": "3333c23dd903317870bdd90cb0222943a31d81c2de340f3e1f6b7bf069d3f77b"
+    },
+    {
+      "path": "src/search.js",
+      "sha256": "1c175a7fe5c045690ad5ecfd4c1fce2103de3e79eb920016853a0fa9b970f295"
+    },
+    {
+      "path": "src/exchange.js",
+      "sha256": "e3c5f7a2c9e6b10e7e4cecaf5d29c774d93c1049c143bd243d119f6e7ca46c72"
+    },
+    {
+      "path": "src/tournament.js",
+      "sha256": "6793dbeb479e7cd71701e3c1261274b679aa8f18d30a5c1bed7fe00074dc07e8"
+    },
+    {
+      "path": "src/history.js",
+      "sha256": "ea70d0d8f6357c87c09a7eb7ca550c924618918f5cc324f3ba5bf1a17a4b7103"
+    },
+    {
+      "path": "src/notation.js",
+      "sha256": "ee47d5a1f8dd05fe5f7fee6694c2a7d5f6e97118bde0e0ed5a0cf0d8c0f8029e"
+    },
+    {
+      "path": "src/watch.js",
+      "sha256": "70dcdc4d73dac27b5e6479b5b2fe3b6b1f7472e0364830191ea6948694b3c24c"
+    },
+    {
+      "path": "src/settings.js",
+      "sha256": "9044dd082e2d99bc75934edac5ed82000105ea8507ce47f3f7736e848ef045c8"
+    },
+    {
+      "path": "src/variants.js",
+      "sha256": "e054d23d9dbc96e4a67ff52afd47dc527340d8f924b190867e1d5d272289bdc0"
+    },
+    {
+      "path": "vendor/fairy-stockfish/stockfish.js",
+      "sha256": "9080a62e3133e50da0c47b88b186d9c29ed37cc5129401bdeed8bffb5b9a4ca9"
+    },
+    {
+      "path": "vendor/fairy-stockfish/stockfish.wasm",
+      "sha256": "7cea742b8ca1a324fbc500f89112f168134cf68eb49475df23be6c42336255c6"
+    },
+    {
+      "path": "vendor/fairy-stockfish/stockfish.worker.js",
+      "sha256": "067be484ac62f728b0dad28496997e5862f3c61f9091f59bb35d9d1b1ed14573"
+    },
+    {
+      "path": "vendor/fairy-stockfish/AUTHORS",
+      "sha256": "55a0a4599358308af8349344d79176469f04119558e85595efe0a39b583cdf00"
+    },
+    {
+      "path": "vendor/fairy-stockfish/Copying.txt",
+      "sha256": "0b383d5a63da644f628d99c33976ea6487ed89aaa59f0b3257992deac1171e6b"
+    },
+    {
+      "path": "vendor/fairy-stockfish/source.tar.gz",
+      "sha256": "5c10e40812e1045cb13677ff84b3cdd3fca5c381df76245cd4d8eb5312a61bea"
+    }
+  ],
+  "sourceFingerprint": "2033d955b79b2e36adc3f58acbdb16f4f6c13cb44e72c172e2dedd73baf7a86b",
+  "tasks": [
+    {
+      "id": "white__20262001__0",
+      "color": "white",
+      "seed": 20262001,
+      "index": 0
+    },
+    {
+      "id": "white__20262001__1",
+      "color": "white",
+      "seed": 20262001,
+      "index": 1
+    },
+    {
+      "id": "white__20262001__2",
+      "color": "white",
+      "seed": 20262001,
+      "index": 2
+    },
+    {
+      "id": "white__20262001__3",
+      "color": "white",
+      "seed": 20262001,
+      "index": 3
+    },
+    {
+      "id": "white__20262001__4",
+      "color": "white",
+      "seed": 20262001,
+      "index": 4
+    },
+    {
+      "id": "white__20262001__5",
+      "color": "white",
+      "seed": 20262001,
+      "index": 5
+    },
+    {
+      "id": "white__20262001__6",
+      "color": "white",
+      "seed": 20262001,
+      "index": 6
+    },
+    {
+      "id": "white__20262001__7",
+      "color": "white",
+      "seed": 20262001,
+      "index": 7
+    },
+    {
+      "id": "white__20262001__8",
+      "color": "white",
+      "seed": 20262001,
+      "index": 8
+    },
+    {
+      "id": "white__20262001__9",
+      "color": "white",
+      "seed": 20262001,
+      "index": 9
+    },
+    {
+      "id": "white__20262001__10",
+      "color": "white",
+      "seed": 20262001,
+      "index": 10
+    },
+    {
+      "id": "white__20262001__11",
+      "color": "white",
+      "seed": 20262001,
+      "index": 11
+    },
+    {
+      "id": "white__20262001__12",
+      "color": "white",
+      "seed": 20262001,
+      "index": 12
+    },
+    {
+      "id": "white__20262001__13",
+      "color": "white",
+      "seed": 20262001,
+      "index": 13
+    },
+    {
+      "id": "white__20262001__14",
+      "color": "white",
+      "seed": 20262001,
+      "index": 14
+    },
+    {
+      "id": "white__20262001__15",
+      "color": "white",
+      "seed": 20262001,
+      "index": 15
+    },
+    {
+      "id": "black__20262001__0",
+      "color": "black",
+      "seed": 20262001,
+      "index": 0
+    },
+    {
+      "id": "black__20262001__1",
+      "color": "black",
+      "seed": 20262001,
+      "index": 1
+    },
+    {
+      "id": "black__20262001__2",
+      "color": "black",
+      "seed": 20262001,
+      "index": 2
+    },
+    {
+      "id": "black__20262001__3",
+      "color": "black",
+      "seed": 20262001,
+      "index": 3
+    },
+    {
+      "id": "black__20262001__4",
+      "color": "black",
+      "seed": 20262001,
+      "index": 4
+    },
+    {
+      "id": "black__20262001__5",
+      "color": "black",
+      "seed": 20262001,
+      "index": 5
+    },
+    {
+      "id": "black__20262001__6",
+      "color": "black",
+      "seed": 20262001,
+      "index": 6
+    },
+    {
+      "id": "black__20262001__7",
+      "color": "black",
+      "seed": 20262001,
+      "index": 7
+    },
+    {
+      "id": "black__20262001__8",
+      "color": "black",
+      "seed": 20262001,
+      "index": 8
+    },
+    {
+      "id": "black__20262001__9",
+      "color": "black",
+      "seed": 20262001,
+      "index": 9
+    },
+    {
+      "id": "black__20262001__10",
+      "color": "black",
+      "seed": 20262001,
+      "index": 10
+    },
+    {
+      "id": "black__20262001__11",
+      "color": "black",
+      "seed": 20262001,
+      "index": 11
+    },
+    {
+      "id": "black__20262001__12",
+      "color": "black",
+      "seed": 20262001,
+      "index": 12
+    },
+    {
+      "id": "black__20262001__13",
+      "color": "black",
+      "seed": 20262001,
+      "index": 13
+    },
+    {
+      "id": "black__20262001__14",
+      "color": "black",
+      "seed": 20262001,
+      "index": 14
+    },
+    {
+      "id": "black__20262001__15",
+      "color": "black",
+      "seed": 20262001,
+      "index": 15
+    }
+  ],
+  "totalGames": 32,
+  "budgetMillis": 100,
+  "candidateMillis": 100,
+  "maxPlies": 200,
+  "port": 4193,
+  "rules": {
+    "allowCheckingDrops": false,
+    "experiment": "capture-bank",
+    "bankCapacity": 6
+  },
+  "candidate": {
+    "name": "JS exact direct drop-check geometry",
+    "profile": "competitive",
+    "reserveThreatEvaluation": false,
+    "reducePrincipalVariation": true,
+    "protectHistoryMoves": false,
+    "stagedMoveSelection": false,
+    "exchangeOrdering": false,
+    "cacheEvaluation": true,
+    "cacheQuiescence": false,
+    "reduceQuietDrops": false,
+    "depthRequest": 20,
+    "iterativeDeepening": true,
+    "quiescenceDepth": 4,
+    "quiescenceEvasionDepth": 2,
+    "quiescenceChecks": true,
+    "lateMoveReduction": true,
+    "stopOnProvenWin": true,
+    "repetitionAversion": true,
+    "maxTableEntries": 100000
+  },
+  "external": {
+    "package": "fairy-stockfish-nnue.wasm@1.1.12",
+    "reportedCommit": "b2e693ef",
+    "threads": 1,
+    "hashMiB": 16,
+    "NNUE": false
+  },
+  "notes": "Competitive research screen on shared six-slot capture-bank quiet-drop rules, not Classic. Candidate has no node cap; candidateMillis null means uncapped time. Fairy has 100ms per move, one thread, 16MiB hash, NNUE off. Unequal-budget results do not establish equal-time superiority. Fixed colors and recorded tie seeds; repeated starts are correlated. Root legal parity checked every move; full history supplied. Requested depth counts plies, quiescence/reductions make this selective search. Proven mates may finish before requested depth. Every attempt is retained, not just successful screens. A successful screen requires a separate frozen confirmation schedule."
+}

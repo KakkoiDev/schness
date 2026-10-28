@@ -1,0 +1,20 @@
+{
+  "run": "js-directdrop-r1-fairy-screen-2026-10-28",
+  "sourceFingerprint": "2033d955b79b2e36adc3f58acbdb16f4f6c13cb44e72c172e2dedd73baf7a86b",
+  "games": 32,
+  "archiveBytes": 1550834,
+  "archiveSha256": "595b7a8518150cf516cd26321dbb563bb9fec4bdb7f6766bbe880d69c24ab46b",
+  "parts": [
+    {
+      "path": "js-directdrop-r1-fairy-screen-2026-10-28.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "42f0e4daa7e567f27b07f5ad20fa8bf807887c6add40064840e19559bffb661e"
+    },
+    {
+      "path": "js-directdrop-r1-fairy-screen-2026-10-28.tar.gz.part002",
+      "bytes": 502258,
+      "sha256": "d73feb1455ba6a3ceb3eff9421cf4dabd21d48fa877c940a295ed511178655f5"
+    }
+  ],
+  "restore": "cat js-directdrop-r1-fairy-screen-2026-10-28.tar.gz.part* > js-directdrop-r1-fairy-screen-2026-10-28.tar.gz; tar -xzf js-directdrop-r1-fairy-screen-2026-10-28.tar.gz"
+}
