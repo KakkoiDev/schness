@@ -1655,3 +1655,7 @@ Formalized forkThreatEvasions:false default using separate adapter.quiescenceDan
 
 ## Reject narrowed actionable-fork activation
 Temporary qdanger requires noncapturable geometric attacker and two king-safe hypothetical captures. Equal100ms40caseABBA narrow/off/off/narrow agreements31/34/33/32,meancompleteddepth5.975/6.075/6.1/6.025,nodes1016338/1034307/1038654/1029946. No benefit; reject adoption/match and stop refining this family absent new evidence. Fullcandidate source/results/input/source hashes retained. Broadoptional fork mode remains false. Next distinct exact-efficiency candidate: root full-window child calls versus existing internalPVS; verify scores,root equality/ties/bounds/restoration/oracles before any claim or match. ExistingPVS is not a new feature.
+
+
+## Existing PVS extended experimentally to root probes
+Temporary rootnullwindow after selectedfirstaction,fullre-search for improvements and unchanged fail-low-equality/tie resolution;MultiPV/fullwindow andscoreStep gating preserved. All384unit tests pass through selective ESM loader (only current search redirected).40selecteddepth6nonreducedABBA3513/3576/3562/3478ms,902154/931524/931524/902154nodes;all scores/actions/inputrestoration/legalPVs match. Modest selectedtiming/nodebenefit,notstrength. Fullcandidate searchsource/results/hashes/loghash preserved. No adoption/match yet. Next formaloptional rootPVS defaultfalse and scoreStep/MultiPV/tie/cache/aspiration tests plus100msdiagnostic; existing internalPVS is not new.
