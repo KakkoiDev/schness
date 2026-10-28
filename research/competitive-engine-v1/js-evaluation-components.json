@@ -1,0 +1,3059 @@
+{
+  "purpose": "Decompose exact current competitive static evaluation on all55 selected early loss roots/played children and matched depth8 principal-variation leaves for3selected cases. Assert totals against engine depth0 evaluation on nonterminal states. Search scores need not equal leaf static scores because quiescence/terminal/root perspective differ. No tuning, independent labels, strength or causal claim.",
+  "hashes": {
+    "src/bot.js": "36d60deb432de0c339afeaa6a9a04c155de5d9a3407f30bc854ad25d65f897b1",
+    "src/rules.js": "b1361eb4950bcbe80e57c4c151457b9f618cff84f091b8631efe033165e44778",
+    "src/board-masks.js": "3333c23dd903317870bdd90cb0222943a31d81c2de340f3e1f6b7bf069d3f77b",
+    "research/competitive-engine-v1/js-early-swings.json": "2754350022cfa59d818bc4a26983c3a2d922d0a5ee0c305ef9a4418c438bb62e",
+    "research/competitive-engine-v1/js-bishop-deployment-diagnosis.json": "450ec76bacb7a64040f0aa14166ddcd7d1ddec52b964fb5638264248557e5406"
+  },
+  "scriptSha256": "360a9681e39198ca1e4f7c3dbdb70c6b97e448185b4f1063ffe85fccb25b1d93",
+  "rows": [
+    {
+      "id": "black__20262001__0",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 3
+      },
+      "root": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -10,
+        "check": 0,
+        "king": -46,
+        "central": 18,
+        "defended": 24,
+        "exposed": -36,
+        "total": -30
+      },
+      "played": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 2,
+        "check": 0,
+        "king": -66,
+        "central": 18,
+        "defended": 12,
+        "exposed": -96,
+        "total": -130
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 15,
+        "to": 13
+      },
+      "best": {
+        "board": 0,
+        "reserve": -600,
+        "mobility": -8,
+        "check": -30,
+        "king": -46,
+        "central": 6,
+        "defended": 12,
+        "exposed": 225,
+        "total": -441
+      }
+    },
+    {
+      "id": "black__20262001__1",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 2
+      },
+      "root": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -4,
+        "check": 0,
+        "king": -18,
+        "central": 0,
+        "defended": 12,
+        "exposed": 22,
+        "total": 32
+      },
+      "played": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 4,
+        "check": 0,
+        "king": -52,
+        "central": -6,
+        "defended": 12,
+        "exposed": 22,
+        "total": -20
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 2
+      },
+      "best": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 4,
+        "check": 0,
+        "king": -52,
+        "central": -6,
+        "defended": 12,
+        "exposed": 22,
+        "total": -20
+      }
+    },
+    {
+      "id": "black__20262001__10",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 6
+      },
+      "root": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -18,
+        "check": 0,
+        "king": 20,
+        "central": 6,
+        "defended": 12,
+        "exposed": 0,
+        "total": 40
+      },
+      "played": {
+        "board": 20,
+        "reserve": -20,
+        "mobility": -4,
+        "check": 0,
+        "king": -20,
+        "central": -6,
+        "defended": 0,
+        "exposed": -38,
+        "total": -68
+      },
+      "best": null
+    },
+    {
+      "id": "black__20262001__12",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "move",
+        "from": 7,
+        "to": 2
+      },
+      "root": {
+        "board": 0,
+        "reserve": 600,
+        "mobility": 18,
+        "check": 0,
+        "king": -34,
+        "central": 0,
+        "defended": 12,
+        "exposed": 106,
+        "total": 702
+      },
+      "played": {
+        "board": 0,
+        "reserve": 600,
+        "mobility": 6,
+        "check": 0,
+        "king": -68,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 538
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 7,
+        "to": 2
+      },
+      "best": {
+        "board": 0,
+        "reserve": 600,
+        "mobility": 6,
+        "check": 0,
+        "king": -68,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 538
+      }
+    },
+    {
+      "id": "black__20262001__13",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 2
+      },
+      "root": {
+        "board": 520,
+        "reserve": -500,
+        "mobility": -4,
+        "check": 0,
+        "king": 14,
+        "central": 6,
+        "defended": 0,
+        "exposed": 36,
+        "total": 72
+      },
+      "played": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 14,
+        "check": 0,
+        "king": 8,
+        "central": 0,
+        "defended": -12,
+        "exposed": 0,
+        "total": 10
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 15
+      },
+      "best": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 6,
+        "check": 0,
+        "king": -20,
+        "central": 6,
+        "defended": 0,
+        "exposed": 36,
+        "total": 28
+      }
+    },
+    {
+      "id": "black__20262001__14",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "move",
+        "from": 8,
+        "to": 2
+      },
+      "root": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 8,
+        "check": 0,
+        "king": -48,
+        "central": 6,
+        "defended": 12,
+        "exposed": 144,
+        "total": 122
+      },
+      "played": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 16,
+        "check": 0,
+        "king": 0,
+        "central": 6,
+        "defended": 0,
+        "exposed": 0,
+        "total": 22
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 8,
+        "to": 2
+      },
+      "best": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 16,
+        "check": 0,
+        "king": 0,
+        "central": 6,
+        "defended": 0,
+        "exposed": 0,
+        "total": 22
+      }
+    },
+    {
+      "id": "black__20262001__15",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 6
+      },
+      "root": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -16,
+        "check": 0,
+        "king": 20,
+        "central": 12,
+        "defended": 12,
+        "exposed": 0,
+        "total": 48
+      },
+      "played": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 0,
+        "check": 0,
+        "king": 0,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 0
+      },
+      "best": null
+    },
+    {
+      "id": "black__20262001__2",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 5
+      },
+      "root": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -14,
+        "check": 0,
+        "king": 48,
+        "central": 6,
+        "defended": 12,
+        "exposed": 0,
+        "total": 72
+      },
+      "played": {
+        "board": -20,
+        "reserve": 20,
+        "mobility": 0,
+        "check": 0,
+        "king": -6,
+        "central": -6,
+        "defended": 0,
+        "exposed": 0,
+        "total": -12
+      },
+      "best": null
+    },
+    {
+      "id": "black__20262001__3",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 5
+      },
+      "root": {
+        "board": 520,
+        "reserve": -500,
+        "mobility": -12,
+        "check": 0,
+        "king": -14,
+        "central": 6,
+        "defended": 12,
+        "exposed": 0,
+        "total": 12
+      },
+      "played": {
+        "board": 200,
+        "reserve": -200,
+        "mobility": 4,
+        "check": 0,
+        "king": -54,
+        "central": -6,
+        "defended": 0,
+        "exposed": -60,
+        "total": -116
+      },
+      "best": null
+    },
+    {
+      "id": "black__20262001__5",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "move",
+        "from": 1,
+        "to": 5
+      },
+      "root": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 14,
+        "check": 30,
+        "king": -14,
+        "central": 12,
+        "defended": 0,
+        "exposed": 36,
+        "total": 78
+      },
+      "played": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 8,
+        "check": 0,
+        "king": 26,
+        "central": 12,
+        "defended": 0,
+        "exposed": -24,
+        "total": 22
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 1,
+        "to": 5
+      },
+      "best": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 8,
+        "check": 0,
+        "king": 26,
+        "central": 12,
+        "defended": 0,
+        "exposed": -24,
+        "total": 22
+      }
+    },
+    {
+      "id": "black__20262001__6",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 7
+      },
+      "root": {
+        "board": 320,
+        "reserve": -700,
+        "mobility": 20,
+        "check": 0,
+        "king": 28,
+        "central": 6,
+        "defended": 12,
+        "exposed": 0,
+        "total": -314
+      },
+      "played": {
+        "board": -20,
+        "reserve": -380,
+        "mobility": 32,
+        "check": 0,
+        "king": -12,
+        "central": 0,
+        "defended": 0,
+        "exposed": -36,
+        "total": -416
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 7
+      },
+      "best": {
+        "board": -20,
+        "reserve": -380,
+        "mobility": 32,
+        "check": 0,
+        "king": -12,
+        "central": 0,
+        "defended": 0,
+        "exposed": -36,
+        "total": -416
+      }
+    },
+    {
+      "id": "black__20262001__8",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 0
+      },
+      "root": {
+        "board": 660,
+        "reserve": -620,
+        "mobility": -24,
+        "check": 0,
+        "king": 54,
+        "central": 18,
+        "defended": 12,
+        "exposed": 0,
+        "total": 100
+      },
+      "played": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -4,
+        "check": 0,
+        "king": 68,
+        "central": 18,
+        "defended": 0,
+        "exposed": -144,
+        "total": -42
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 0
+      },
+      "best": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -4,
+        "check": 0,
+        "king": 68,
+        "central": 18,
+        "defended": 0,
+        "exposed": -144,
+        "total": -42
+      }
+    },
+    {
+      "id": "black__20262001__9",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "move",
+        "from": 12,
+        "to": 3
+      },
+      "root": {
+        "board": 180,
+        "reserve": -220,
+        "mobility": -6,
+        "check": 0,
+        "king": 8,
+        "central": 6,
+        "defended": 0,
+        "exposed": 144,
+        "total": 112
+      },
+      "played": {
+        "board": 180,
+        "reserve": -220,
+        "mobility": -4,
+        "check": 0,
+        "king": 22,
+        "central": 6,
+        "defended": -12,
+        "exposed": 0,
+        "total": -28
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 12,
+        "to": 6
+      },
+      "best": {
+        "board": 180,
+        "reserve": -220,
+        "mobility": -14,
+        "check": 0,
+        "king": -26,
+        "central": -6,
+        "defended": -12,
+        "exposed": 38,
+        "total": -60
+      }
+    },
+    {
+      "id": "white__20262001__0",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 2
+      },
+      "root": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": -4,
+        "check": 0,
+        "king": 26,
+        "central": 0,
+        "defended": 12,
+        "exposed": 0,
+        "total": 34
+      },
+      "played": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -12,
+        "check": 0,
+        "king": 26,
+        "central": 6,
+        "defended": 12,
+        "exposed": 0,
+        "total": 52
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 13,
+        "to": 14
+      },
+      "best": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": -6,
+        "check": 0,
+        "king": -28,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": -34
+      }
+    },
+    {
+      "id": "white__20262001__10",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 10
+      },
+      "root": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 0,
+        "check": 0,
+        "king": 0,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 0
+      },
+      "played": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -12,
+        "check": 0,
+        "king": 54,
+        "central": 12,
+        "defended": 12,
+        "exposed": 0,
+        "total": 86
+      },
+      "best": null
+    },
+    {
+      "id": "white__20262001__11",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 5
+      },
+      "root": {
+        "board": -180,
+        "reserve": 180,
+        "mobility": -4,
+        "check": 0,
+        "king": 54,
+        "central": 6,
+        "defended": 0,
+        "exposed": -38,
+        "total": 18
+      },
+      "played": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -12,
+        "check": 0,
+        "king": 74,
+        "central": 18,
+        "defended": 12,
+        "exposed": -62,
+        "total": 50
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 5
+      },
+      "best": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -12,
+        "check": 0,
+        "king": 74,
+        "central": 18,
+        "defended": 12,
+        "exposed": -62,
+        "total": 50
+      }
+    },
+    {
+      "id": "white__20262001__12",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "move",
+        "from": 13,
+        "to": 9
+      },
+      "root": {
+        "board": -340,
+        "reserve": -320,
+        "mobility": -32,
+        "check": 0,
+        "king": -62,
+        "central": -12,
+        "defended": -24,
+        "exposed": -165,
+        "total": -955
+      },
+      "played": {
+        "board": 180,
+        "reserve": 180,
+        "mobility": -2,
+        "check": 0,
+        "king": 26,
+        "central": 6,
+        "defended": 0,
+        "exposed": -22,
+        "total": 368
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 13,
+        "to": 9
+      },
+      "best": {
+        "board": 180,
+        "reserve": 180,
+        "mobility": -2,
+        "check": 0,
+        "king": 26,
+        "central": 6,
+        "defended": 0,
+        "exposed": -22,
+        "total": 368
+      }
+    },
+    {
+      "id": "white__20262001__14",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 9
+      },
+      "root": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 6,
+        "check": 0,
+        "king": 28,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 34
+      },
+      "played": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -6,
+        "check": 0,
+        "king": 82,
+        "central": 12,
+        "defended": 12,
+        "exposed": 0,
+        "total": 120
+      },
+      "best": null
+    },
+    {
+      "id": "white__20262001__15",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "move",
+        "from": 10,
+        "to": 15
+      },
+      "root": {
+        "board": -500,
+        "reserve": 520,
+        "mobility": 12,
+        "check": 0,
+        "king": 40,
+        "central": 6,
+        "defended": 0,
+        "exposed": -38,
+        "total": 40
+      },
+      "played": {
+        "board": -500,
+        "reserve": 520,
+        "mobility": 2,
+        "check": 0,
+        "king": -8,
+        "central": -6,
+        "defended": 0,
+        "exposed": 0,
+        "total": 8
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 13
+      },
+      "best": {
+        "board": -160,
+        "reserve": 200,
+        "mobility": -4,
+        "check": 0,
+        "king": 26,
+        "central": 12,
+        "defended": 12,
+        "exposed": -38,
+        "total": 48
+      }
+    },
+    {
+      "id": "white__20262001__2",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 10
+      },
+      "root": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 6,
+        "check": 0,
+        "king": 28,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 34
+      },
+      "played": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -8,
+        "check": 0,
+        "king": 82,
+        "central": 12,
+        "defended": 12,
+        "exposed": 0,
+        "total": 118
+      },
+      "best": null
+    },
+    {
+      "id": "white__20262001__3",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "move",
+        "from": 11,
+        "to": 10
+      },
+      "root": {
+        "board": -340,
+        "reserve": -320,
+        "mobility": -32,
+        "check": 0,
+        "king": -62,
+        "central": -12,
+        "defended": -24,
+        "exposed": -165,
+        "total": -955
+      },
+      "played": {
+        "board": 180,
+        "reserve": 180,
+        "mobility": -2,
+        "check": 0,
+        "king": 26,
+        "central": 6,
+        "defended": 0,
+        "exposed": -22,
+        "total": 368
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 11,
+        "to": 10
+      },
+      "best": {
+        "board": 180,
+        "reserve": 180,
+        "mobility": -2,
+        "check": 0,
+        "king": 26,
+        "central": 6,
+        "defended": 0,
+        "exposed": -22,
+        "total": 368
+      }
+    },
+    {
+      "id": "white__20262001__4",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 6
+      },
+      "root": {
+        "board": -180,
+        "reserve": 180,
+        "mobility": -4,
+        "check": 0,
+        "king": 54,
+        "central": 6,
+        "defended": 0,
+        "exposed": -38,
+        "total": 18
+      },
+      "played": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -12,
+        "check": 0,
+        "king": 74,
+        "central": 18,
+        "defended": 12,
+        "exposed": -62,
+        "total": 50
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 6
+      },
+      "best": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -12,
+        "check": 0,
+        "king": 74,
+        "central": 18,
+        "defended": 12,
+        "exposed": -62,
+        "total": 50
+      }
+    },
+    {
+      "id": "white__20262001__5",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "move",
+        "from": 13,
+        "to": 12
+      },
+      "root": {
+        "board": 220,
+        "reserve": -180,
+        "mobility": -2,
+        "check": 0,
+        "king": 40,
+        "central": -6,
+        "defended": -12,
+        "exposed": 0,
+        "total": 60
+      },
+      "played": {
+        "board": 220,
+        "reserve": -180,
+        "mobility": 0,
+        "check": 0,
+        "king": 26,
+        "central": -6,
+        "defended": -12,
+        "exposed": 0,
+        "total": 48
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 13,
+        "to": 12
+      },
+      "best": {
+        "board": 220,
+        "reserve": -180,
+        "mobility": 0,
+        "check": 0,
+        "king": 26,
+        "central": -6,
+        "defended": -12,
+        "exposed": 0,
+        "total": 48
+      }
+    },
+    {
+      "id": "white__20262001__6",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 6
+      },
+      "root": {
+        "board": -200,
+        "reserve": -200,
+        "mobility": 10,
+        "check": 0,
+        "king": 48,
+        "central": 6,
+        "defended": 0,
+        "exposed": -74,
+        "total": -410
+      },
+      "played": {
+        "board": 120,
+        "reserve": -500,
+        "mobility": 0,
+        "check": 0,
+        "king": 48,
+        "central": 18,
+        "defended": 12,
+        "exposed": -50,
+        "total": -352
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 6
+      },
+      "best": {
+        "board": 120,
+        "reserve": -500,
+        "mobility": 0,
+        "check": 0,
+        "king": 48,
+        "central": 18,
+        "defended": 12,
+        "exposed": -50,
+        "total": -352
+      }
+    },
+    {
+      "id": "white__20262001__7",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 13
+      },
+      "root": {
+        "board": -840,
+        "reserve": 800,
+        "mobility": 8,
+        "check": 0,
+        "king": -74,
+        "central": -18,
+        "defended": -24,
+        "exposed": 0,
+        "total": -148
+      },
+      "played": {
+        "board": -520,
+        "reserve": 500,
+        "mobility": -6,
+        "check": 0,
+        "king": -34,
+        "central": -12,
+        "defended": -12,
+        "exposed": 38,
+        "total": -46
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 13
+      },
+      "best": {
+        "board": -520,
+        "reserve": 500,
+        "mobility": -6,
+        "check": 0,
+        "king": -34,
+        "central": -12,
+        "defended": -12,
+        "exposed": 38,
+        "total": -46
+      }
+    },
+    {
+      "id": "white__20262001__8",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "move",
+        "from": 14,
+        "to": 4
+      },
+      "root": {
+        "board": 20,
+        "reserve": -20,
+        "mobility": -6,
+        "check": 0,
+        "king": -48,
+        "central": 0,
+        "defended": -12,
+        "exposed": -144,
+        "total": -210
+      },
+      "played": {
+        "board": 20,
+        "reserve": -20,
+        "mobility": -4,
+        "check": 0,
+        "king": -14,
+        "central": 0,
+        "defended": -12,
+        "exposed": 0,
+        "total": -30
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 14,
+        "to": 4
+      },
+      "best": {
+        "board": 20,
+        "reserve": -20,
+        "mobility": -4,
+        "check": 0,
+        "king": -14,
+        "central": 0,
+        "defended": -12,
+        "exposed": 0,
+        "total": -30
+      }
+    },
+    {
+      "id": "white__20262001__9",
+      "variant": "baseline",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 0
+      },
+      "root": {
+        "board": -20,
+        "reserve": 20,
+        "mobility": 8,
+        "check": 0,
+        "king": 48,
+        "central": 6,
+        "defended": 0,
+        "exposed": -36,
+        "total": 26
+      },
+      "played": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -4,
+        "check": 0,
+        "king": 82,
+        "central": 6,
+        "defended": 0,
+        "exposed": -36,
+        "total": 68
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 4
+      },
+      "best": {
+        "board": 500,
+        "reserve": -480,
+        "mobility": 8,
+        "check": 0,
+        "king": 136,
+        "central": 12,
+        "defended": 12,
+        "exposed": 2,
+        "total": 190
+      }
+    },
+    {
+      "id": "black__20262001__0",
+      "variant": "history",
+      "playedAction": {
+        "type": "move",
+        "from": 5,
+        "to": 12
+      },
+      "root": {
+        "board": 540,
+        "reserve": -480,
+        "mobility": 6,
+        "check": 0,
+        "king": 42,
+        "central": 6,
+        "defended": 0,
+        "exposed": -2,
+        "total": 112
+      },
+      "played": {
+        "board": 540,
+        "reserve": -480,
+        "mobility": 10,
+        "check": -30,
+        "king": 110,
+        "central": 18,
+        "defended": 0,
+        "exposed": -2,
+        "total": 166
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 5,
+        "to": 12
+      },
+      "best": {
+        "board": 540,
+        "reserve": -480,
+        "mobility": 10,
+        "check": -30,
+        "king": 110,
+        "central": 18,
+        "defended": 0,
+        "exposed": -2,
+        "total": 166
+      }
+    },
+    {
+      "id": "black__20262001__1",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 3
+      },
+      "root": {
+        "board": 840,
+        "reserve": -800,
+        "mobility": -6,
+        "check": 0,
+        "king": 74,
+        "central": 18,
+        "defended": 12,
+        "exposed": -74,
+        "total": 64
+      },
+      "played": {
+        "board": 520,
+        "reserve": -500,
+        "mobility": 10,
+        "check": 0,
+        "king": 88,
+        "central": 18,
+        "defended": 0,
+        "exposed": -74,
+        "total": 62
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 4
+      },
+      "best": {
+        "board": 520,
+        "reserve": -500,
+        "mobility": 4,
+        "check": 0,
+        "king": 40,
+        "central": 12,
+        "defended": 0,
+        "exposed": -38,
+        "total": 38
+      }
+    },
+    {
+      "id": "black__20262001__10",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 6
+      },
+      "root": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -18,
+        "check": 0,
+        "king": 20,
+        "central": 6,
+        "defended": 12,
+        "exposed": 0,
+        "total": 40
+      },
+      "played": {
+        "board": 20,
+        "reserve": -20,
+        "mobility": -4,
+        "check": 0,
+        "king": -20,
+        "central": -6,
+        "defended": 0,
+        "exposed": -38,
+        "total": -68
+      },
+      "best": null
+    },
+    {
+      "id": "black__20262001__12",
+      "variant": "history",
+      "playedAction": {
+        "type": "move",
+        "from": 7,
+        "to": 11
+      },
+      "root": {
+        "board": 320,
+        "reserve": 300,
+        "mobility": 18,
+        "check": 30,
+        "king": 0,
+        "central": 12,
+        "defended": 12,
+        "exposed": 0,
+        "total": 692
+      },
+      "played": {
+        "board": 320,
+        "reserve": 300,
+        "mobility": 22,
+        "check": 0,
+        "king": 20,
+        "central": 12,
+        "defended": 24,
+        "exposed": 0,
+        "total": 698
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 7,
+        "to": 11
+      },
+      "best": {
+        "board": 320,
+        "reserve": 300,
+        "mobility": 22,
+        "check": 0,
+        "king": 20,
+        "central": 12,
+        "defended": 24,
+        "exposed": 0,
+        "total": 698
+      }
+    },
+    {
+      "id": "black__20262001__13",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 2
+      },
+      "root": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -8,
+        "check": 0,
+        "king": -20,
+        "central": 6,
+        "defended": 24,
+        "exposed": 0,
+        "total": 22
+      },
+      "played": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 8,
+        "check": 0,
+        "king": -6,
+        "central": 0,
+        "defended": 12,
+        "exposed": 0,
+        "total": 14
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 3,
+        "to": 2
+      },
+      "best": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -14,
+        "check": 0,
+        "king": 20,
+        "central": 6,
+        "defended": 24,
+        "exposed": 0,
+        "total": 56
+      }
+    },
+    {
+      "id": "black__20262001__14",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 1
+      },
+      "root": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -8,
+        "check": 0,
+        "king": 14,
+        "central": 18,
+        "defended": 36,
+        "exposed": 46,
+        "total": 126
+      },
+      "played": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 8,
+        "check": 0,
+        "king": 14,
+        "central": 12,
+        "defended": 0,
+        "exposed": -24,
+        "total": 10
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 1
+      },
+      "best": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 8,
+        "check": 0,
+        "king": 14,
+        "central": 12,
+        "defended": 0,
+        "exposed": -24,
+        "total": 10
+      }
+    },
+    {
+      "id": "black__20262001__15",
+      "variant": "history",
+      "playedAction": {
+        "type": "move",
+        "from": 1,
+        "to": 6
+      },
+      "root": {
+        "board": -160,
+        "reserve": 100,
+        "mobility": 12,
+        "check": 0,
+        "king": 16,
+        "central": -12,
+        "defended": -12,
+        "exposed": 144,
+        "total": 88
+      },
+      "played": {
+        "board": -160,
+        "reserve": 100,
+        "mobility": 14,
+        "check": 0,
+        "king": 2,
+        "central": -18,
+        "defended": -24,
+        "exposed": 76,
+        "total": -10
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 1,
+        "to": 6
+      },
+      "best": {
+        "board": -160,
+        "reserve": 100,
+        "mobility": 14,
+        "check": 0,
+        "king": 2,
+        "central": -18,
+        "defended": -24,
+        "exposed": 76,
+        "total": -10
+      }
+    },
+    {
+      "id": "black__20262001__2",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 5
+      },
+      "root": {
+        "board": 180,
+        "reserve": 180,
+        "mobility": 14,
+        "check": 0,
+        "king": 36,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 410
+      },
+      "played": {
+        "board": -140,
+        "reserve": 480,
+        "mobility": 26,
+        "check": 0,
+        "king": 2,
+        "central": -12,
+        "defended": -12,
+        "exposed": -189,
+        "total": 155
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 5
+      },
+      "best": {
+        "board": -140,
+        "reserve": 480,
+        "mobility": 26,
+        "check": 0,
+        "king": 2,
+        "central": -12,
+        "defended": -12,
+        "exposed": -189,
+        "total": 155
+      }
+    },
+    {
+      "id": "black__20262001__3",
+      "variant": "history",
+      "playedAction": {
+        "type": "move",
+        "from": 1,
+        "to": 3
+      },
+      "root": {
+        "board": 340,
+        "reserve": 280,
+        "mobility": 18,
+        "check": 0,
+        "king": 42,
+        "central": 0,
+        "defended": 0,
+        "exposed": -144,
+        "total": 536
+      },
+      "played": {
+        "board": 0,
+        "reserve": -40,
+        "mobility": 6,
+        "check": 0,
+        "king": -40,
+        "central": 6,
+        "defended": 12,
+        "exposed": 0,
+        "total": -56
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 1,
+        "to": 3
+      },
+      "best": {
+        "board": 0,
+        "reserve": -40,
+        "mobility": 6,
+        "check": 0,
+        "king": -40,
+        "central": 6,
+        "defended": 12,
+        "exposed": 0,
+        "total": -56
+      }
+    },
+    {
+      "id": "black__20262001__5",
+      "variant": "history",
+      "playedAction": {
+        "type": "move",
+        "from": 6,
+        "to": 3
+      },
+      "root": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 10,
+        "check": 0,
+        "king": 20,
+        "central": 0,
+        "defended": 0,
+        "exposed": 36,
+        "total": 66
+      },
+      "played": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 4,
+        "check": 0,
+        "king": 6,
+        "central": 12,
+        "defended": 12,
+        "exposed": 36,
+        "total": 70
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 6,
+        "to": 3
+      },
+      "best": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 4,
+        "check": 0,
+        "king": 6,
+        "central": 12,
+        "defended": 12,
+        "exposed": 36,
+        "total": 70
+      }
+    },
+    {
+      "id": "black__20262001__6",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 2
+      },
+      "root": {
+        "board": -20,
+        "reserve": -20,
+        "mobility": 6,
+        "check": 0,
+        "king": -40,
+        "central": 0,
+        "defended": 12,
+        "exposed": 144,
+        "total": 82
+      },
+      "played": {
+        "board": -360,
+        "reserve": 300,
+        "mobility": 22,
+        "check": 0,
+        "king": -60,
+        "central": -6,
+        "defended": -12,
+        "exposed": 38,
+        "total": -78
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 15
+      },
+      "best": {
+        "board": -540,
+        "reserve": 480,
+        "mobility": 14,
+        "check": 0,
+        "king": -60,
+        "central": 0,
+        "defended": 0,
+        "exposed": 2,
+        "total": -104
+      }
+    },
+    {
+      "id": "black__20262001__8",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 7
+      },
+      "root": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -20,
+        "check": 0,
+        "king": 26,
+        "central": 12,
+        "defended": 12,
+        "exposed": 0,
+        "total": 50
+      },
+      "played": {
+        "board": 20,
+        "reserve": -20,
+        "mobility": -2,
+        "check": 0,
+        "king": 20,
+        "central": 6,
+        "defended": 0,
+        "exposed": -38,
+        "total": -14
+      },
+      "best": null
+    },
+    {
+      "id": "black__20262001__9",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 1
+      },
+      "root": {
+        "board": 520,
+        "reserve": -500,
+        "mobility": 4,
+        "check": 0,
+        "king": 102,
+        "central": 6,
+        "defended": 0,
+        "exposed": 0,
+        "total": 132
+      },
+      "played": {
+        "board": 180,
+        "reserve": -180,
+        "mobility": 18,
+        "check": 0,
+        "king": 116,
+        "central": 0,
+        "defended": -12,
+        "exposed": -225,
+        "total": -103
+      },
+      "best": null
+    },
+    {
+      "id": "white__20262001__0",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 9
+      },
+      "root": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -16,
+        "check": 0,
+        "king": 100,
+        "central": 12,
+        "defended": 12,
+        "exposed": -263,
+        "total": -135
+      },
+      "played": {
+        "board": 660,
+        "reserve": -620,
+        "mobility": -30,
+        "check": 0,
+        "king": 100,
+        "central": 24,
+        "defended": 36,
+        "exposed": 91,
+        "total": 261
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 9
+      },
+      "best": {
+        "board": 660,
+        "reserve": -620,
+        "mobility": -30,
+        "check": 0,
+        "king": 100,
+        "central": 24,
+        "defended": 36,
+        "exposed": 91,
+        "total": 261
+      }
+    },
+    {
+      "id": "white__20262001__10",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 10
+      },
+      "root": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 0,
+        "check": 0,
+        "king": 0,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 0
+      },
+      "played": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -12,
+        "check": 0,
+        "king": 54,
+        "central": 12,
+        "defended": 12,
+        "exposed": 0,
+        "total": 86
+      },
+      "best": null
+    },
+    {
+      "id": "white__20262001__11",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 5
+      },
+      "root": {
+        "board": -180,
+        "reserve": 180,
+        "mobility": -4,
+        "check": 0,
+        "king": 54,
+        "central": 6,
+        "defended": 0,
+        "exposed": -38,
+        "total": 18
+      },
+      "played": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -12,
+        "check": 0,
+        "king": 74,
+        "central": 18,
+        "defended": 12,
+        "exposed": -62,
+        "total": 50
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 5
+      },
+      "best": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -12,
+        "check": 0,
+        "king": 74,
+        "central": 18,
+        "defended": 12,
+        "exposed": -62,
+        "total": 50
+      }
+    },
+    {
+      "id": "white__20262001__12",
+      "variant": "history",
+      "playedAction": {
+        "type": "move",
+        "from": 12,
+        "to": 8
+      },
+      "root": {
+        "board": -20,
+        "reserve": 20,
+        "mobility": 2,
+        "check": 0,
+        "king": 48,
+        "central": 0,
+        "defended": 0,
+        "exposed": -36,
+        "total": 14
+      },
+      "played": {
+        "board": -20,
+        "reserve": 20,
+        "mobility": 8,
+        "check": 0,
+        "king": 76,
+        "central": 0,
+        "defended": 0,
+        "exposed": -36,
+        "total": 48
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 12,
+        "to": 8
+      },
+      "best": {
+        "board": -20,
+        "reserve": 20,
+        "mobility": 8,
+        "check": 0,
+        "king": 76,
+        "central": 0,
+        "defended": 0,
+        "exposed": -36,
+        "total": 48
+      }
+    },
+    {
+      "id": "white__20262001__13",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 9
+      },
+      "root": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 6,
+        "check": 0,
+        "king": 28,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 34
+      },
+      "played": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -8,
+        "check": 0,
+        "king": 82,
+        "central": 12,
+        "defended": 12,
+        "exposed": 0,
+        "total": 118
+      },
+      "best": null
+    },
+    {
+      "id": "white__20262001__14",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 9
+      },
+      "root": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 6,
+        "check": 0,
+        "king": 28,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 34
+      },
+      "played": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -6,
+        "check": 0,
+        "king": 82,
+        "central": 12,
+        "defended": 12,
+        "exposed": 0,
+        "total": 120
+      },
+      "best": null
+    },
+    {
+      "id": "white__20262001__15",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 5
+      },
+      "root": {
+        "board": 500,
+        "reserve": -520,
+        "mobility": -20,
+        "check": 0,
+        "king": 40,
+        "central": 18,
+        "defended": 24,
+        "exposed": -96,
+        "total": -54
+      },
+      "played": {
+        "board": 820,
+        "reserve": -820,
+        "mobility": -14,
+        "check": 0,
+        "king": 74,
+        "central": 30,
+        "defended": 36,
+        "exposed": -132,
+        "total": -6
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 5
+      },
+      "best": {
+        "board": 820,
+        "reserve": -820,
+        "mobility": -14,
+        "check": 0,
+        "king": 74,
+        "central": 30,
+        "defended": 36,
+        "exposed": -132,
+        "total": -6
+      }
+    },
+    {
+      "id": "white__20262001__2",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 7
+      },
+      "root": {
+        "board": -120,
+        "reserve": 140,
+        "mobility": -6,
+        "check": 0,
+        "king": -28,
+        "central": -12,
+        "defended": -24,
+        "exposed": 36,
+        "total": -14
+      },
+      "played": {
+        "board": 220,
+        "reserve": -180,
+        "mobility": -6,
+        "check": 0,
+        "king": -28,
+        "central": -6,
+        "defended": -12,
+        "exposed": -2,
+        "total": -14
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 7
+      },
+      "best": {
+        "board": 220,
+        "reserve": -180,
+        "mobility": -6,
+        "check": 0,
+        "king": -28,
+        "central": -6,
+        "defended": -12,
+        "exposed": -2,
+        "total": -14
+      }
+    },
+    {
+      "id": "white__20262001__3",
+      "variant": "history",
+      "playedAction": {
+        "type": "move",
+        "from": 15,
+        "to": 14
+      },
+      "root": {
+        "board": -20,
+        "reserve": 20,
+        "mobility": 2,
+        "check": 0,
+        "king": 48,
+        "central": 0,
+        "defended": 0,
+        "exposed": -36,
+        "total": 14
+      },
+      "played": {
+        "board": -20,
+        "reserve": 20,
+        "mobility": 8,
+        "check": 0,
+        "king": 76,
+        "central": 0,
+        "defended": 0,
+        "exposed": -36,
+        "total": 48
+      },
+      "bestAction": {
+        "type": "move",
+        "from": 15,
+        "to": 11
+      },
+      "best": {
+        "board": -20,
+        "reserve": 20,
+        "mobility": 8,
+        "check": 0,
+        "king": 76,
+        "central": 0,
+        "defended": 0,
+        "exposed": -36,
+        "total": 48
+      }
+    },
+    {
+      "id": "white__20262001__4",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 13
+      },
+      "root": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 0,
+        "check": 0,
+        "king": 46,
+        "central": 6,
+        "defended": 0,
+        "exposed": -74,
+        "total": -22
+      },
+      "played": {
+        "board": 520,
+        "reserve": -500,
+        "mobility": -14,
+        "check": 0,
+        "king": 32,
+        "central": 12,
+        "defended": 12,
+        "exposed": -74,
+        "total": -12
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 13
+      },
+      "best": {
+        "board": 520,
+        "reserve": -500,
+        "mobility": -14,
+        "check": 0,
+        "king": 32,
+        "central": 12,
+        "defended": 12,
+        "exposed": -74,
+        "total": -12
+      }
+    },
+    {
+      "id": "white__20262001__5",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 9
+      },
+      "root": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": 0,
+        "check": 0,
+        "king": 0,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": 0
+      },
+      "played": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -12,
+        "check": 0,
+        "king": 54,
+        "central": 12,
+        "defended": 12,
+        "exposed": 0,
+        "total": 86
+      },
+      "best": null
+    },
+    {
+      "id": "white__20262001__6",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 6
+      },
+      "root": {
+        "board": -200,
+        "reserve": -200,
+        "mobility": 10,
+        "check": 0,
+        "king": 48,
+        "central": 6,
+        "defended": 0,
+        "exposed": -74,
+        "total": -410
+      },
+      "played": {
+        "board": 120,
+        "reserve": -500,
+        "mobility": 0,
+        "check": 0,
+        "king": 48,
+        "central": 18,
+        "defended": 12,
+        "exposed": -50,
+        "total": -352
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 6
+      },
+      "best": {
+        "board": 120,
+        "reserve": -500,
+        "mobility": 0,
+        "check": 0,
+        "king": 48,
+        "central": 18,
+        "defended": 12,
+        "exposed": -50,
+        "total": -352
+      }
+    },
+    {
+      "id": "white__20262001__7",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 15
+      },
+      "root": {
+        "board": -840,
+        "reserve": 800,
+        "mobility": 4,
+        "check": 0,
+        "king": -108,
+        "central": -18,
+        "defended": -36,
+        "exposed": -84,
+        "total": -282
+      },
+      "played": {
+        "board": -320,
+        "reserve": 300,
+        "mobility": -4,
+        "check": 0,
+        "king": -108,
+        "central": -18,
+        "defended": -24,
+        "exposed": -144,
+        "total": -318
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 15
+      },
+      "best": {
+        "board": -320,
+        "reserve": 300,
+        "mobility": -4,
+        "check": 0,
+        "king": -108,
+        "central": -18,
+        "defended": -24,
+        "exposed": -144,
+        "total": -318
+      }
+    },
+    {
+      "id": "white__20262001__8",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 11
+      },
+      "root": {
+        "board": 0,
+        "reserve": 0,
+        "mobility": -6,
+        "check": 0,
+        "king": -28,
+        "central": 0,
+        "defended": 0,
+        "exposed": 0,
+        "total": -34
+      },
+      "played": {
+        "board": 340,
+        "reserve": -320,
+        "mobility": -14,
+        "check": 0,
+        "king": 40,
+        "central": 6,
+        "defended": 0,
+        "exposed": 0,
+        "total": 52
+      },
+      "best": null
+    },
+    {
+      "id": "white__20262001__9",
+      "variant": "history",
+      "playedAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 8
+      },
+      "root": {
+        "board": -200,
+        "reserve": 200,
+        "mobility": -10,
+        "check": 0,
+        "king": 14,
+        "central": 0,
+        "defended": 0,
+        "exposed": 45,
+        "total": 49
+      },
+      "played": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -12,
+        "check": 0,
+        "king": 48,
+        "central": 6,
+        "defended": 12,
+        "exposed": -15,
+        "total": 59
+      },
+      "bestAction": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 8
+      },
+      "best": {
+        "board": 320,
+        "reserve": -300,
+        "mobility": -12,
+        "check": 0,
+        "king": 48,
+        "central": 6,
+        "defended": 12,
+        "exposed": -15,
+        "total": 59
+      }
+    }
+  ],
+  "leaves": [
+    {
+      "id": "black__20262001__13",
+      "variant": "baseline",
+      "kind": "best",
+      "searchScore": -330,
+      "terminal": null,
+      "components": {
+        "board": 540,
+        "reserve": -120,
+        "mobility": -4,
+        "check": 0,
+        "king": 22,
+        "central": 0,
+        "defended": 0,
+        "exposed": -108,
+        "total": 330
+      },
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "knight"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------------------wK----|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--------wN--------wK----|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bNwN--------wK----|BR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bKwR----bNwN--------wK----|B|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bRbKwR----bNwN--------wK----|B|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bRbKwR----bNwN--wB----wK----||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bNbRbKwR------wN--wB----wK----||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bNbRbKwRwB----wN--------wK----||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bRbKwRwB----bN--------wK----||BN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----wBbKwR------bN--------wK----|R|BN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----wBbKwR--bN------------wK----|R|BN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----wBbKwR--bN----wK------------|R|BN": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "black__20262001__13",
+      "variant": "baseline",
+      "kind": "forced",
+      "searchScore": 412,
+      "terminal": null,
+      "components": {
+        "board": 360,
+        "reserve": 0,
+        "mobility": 12,
+        "check": 0,
+        "king": -12,
+        "central": -12,
+        "defended": -12,
+        "exposed": 76,
+        "total": 412
+      },
+      "position": {
+        "board": [
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "bishop"
+          },
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "knight"
+          },
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          {
+            "owner": "black",
+            "piece": "bishop"
+          },
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------------------wK----|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--------wN--------wK----|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bNwN--------wK----|BR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bKwR----bNwN--------wK----|B|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bBbKwR----bNwN--------wK----|B|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|wR--bBbK------bNwN--------wK----|B|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wR--bBbK------bNwN----bR--wK----|B|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|wR--bBbK------bNwN--wBbR--wK----||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wR--bBbK------bNwN--bR----wK----||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|wR--bBbK------bNwN--wK----------|R|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wR--bBbK------bNwNbBwK----------|R|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|wR--bBbK------bNwNbBwKwR--------||": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "black__20262001__13",
+      "variant": "history",
+      "kind": "best",
+      "searchScore": -538,
+      "terminal": null,
+      "components": {
+        "board": 520,
+        "reserve": -100,
+        "mobility": 10,
+        "check": 0,
+        "king": 102,
+        "central": 6,
+        "defended": 0,
+        "exposed": 0,
+        "total": 538
+      },
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook",
+            "bishop"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "knight"
+          ]
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------------------wK----|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--------wN--------wK----|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bNwN--------wK----|BR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------bNwN--wB----wK----|R|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKbR----bNwN--wB----wK----|R|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bKbR----bNwN--wB----wK--wR||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR----bNwN--wB----wK--wR||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--bR----wBwN--------wK--wR|N|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwN--------wK--wR|N|BB": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwN--------wKwR--|N|BB": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bRwN--------wKwR--|N|BB": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------bRwNwN------wKwR--||BB": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--bB--bRwNwN------wKwR--||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--bB--wNwN--------wKwR--|R|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------wNbB--------wKwR--|R|BN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------wNwK----------wR--|BR|BN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------------bKwK----------wR--|BR|BNN": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "black__20262001__13",
+      "variant": "history",
+      "kind": "forced",
+      "searchScore": 602,
+      "terminal": null,
+      "components": {
+        "board": 320,
+        "reserve": 300,
+        "mobility": 22,
+        "check": 0,
+        "king": 22,
+        "central": 0,
+        "defended": 12,
+        "exposed": -74,
+        "total": 602
+      },
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "bishop"
+          },
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          }
+        ],
+        "banks": {
+          "white": [
+            "knight"
+          ],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------------------wK----|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--------wN--------wK----|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bNwN--------wK----|BR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------bNwN--wB----wK----|R|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKbR----bNwN--wB----wK----|R|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bKbR----bNwN--wB----wK--wR||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bBbKbR----bNwN--wB----wK--wR||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bBbKbR----bN----wB----wKwNwR||": 2,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bBbK----bRbN----wB----wKwNwR||": 2,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bBbK----bRbN----wBwR--wKwN--||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bBbKbR----bN----wBwR--wKwN--||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bBbK----bRwN----wB----wK--wR|N|": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "black__20262001__6",
+      "variant": "history",
+      "kind": "best",
+      "searchScore": -148,
+      "terminal": null,
+      "components": {
+        "board": -20,
+        "reserve": 20,
+        "mobility": 6,
+        "check": 0,
+        "king": 28,
+        "central": -6,
+        "defended": 12,
+        "exposed": 108,
+        "total": 148
+      },
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          {
+            "owner": "black",
+            "piece": "bishop"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [
+            "bishop"
+          ],
+          "black": [
+            "knight"
+          ]
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------------------wK--|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB--------wK--|NR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB--------wK--|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN--------wR--wB--------wK--|N|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------wR--bN--------wK--|N|BBR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----------wR--wK------------|NN|BBR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB--------wR--wK------------|NN|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbBwR----------wK------------|NN|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbBwR------bR--wK------------|NN|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB--------wR--wK------------|NNR|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------bB--wK------------|NNR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----------bB--wK--------wN--|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------bB--wK--------wNbR|NR|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------wN--bB--wK--------wNbR|R|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------wN--bB--wKbB------wNbR|R|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wRwN--bB--wKbB------wNbR||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wRwN--bB--wK------bBwNbR||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------wN--bB--wK----wRbBwNbR||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------wN--bB--wKbB--wR--wNbR||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------wN--wN--wKbB--wR----bR|B|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------wN--bR--wKbB--wR------|B|N": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "black__20262001__6",
+      "variant": "history",
+      "kind": "forced",
+      "searchScore": 883,
+      "terminal": null,
+      "components": {
+        "board": 500,
+        "reserve": 520,
+        "mobility": 36,
+        "check": 0,
+        "king": 70,
+        "central": 6,
+        "defended": 12,
+        "exposed": -261,
+        "total": 883
+      },
+      "position": {
+        "board": [
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "bishop"
+          },
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook",
+            "bishop"
+          ],
+          "black": [
+            "knight"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------------------wK--|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB--------wK--|NR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB--------wK--|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN--------wR--wB--------wK--|N|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------wR--bN--------wK--|N|BBR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----------wR--wK------------|NN|BBR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB--------wR--wK------------|NN|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbBwR----------wK------------|NN|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbBwR------bR--wK------------|NN|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB--------wR--wK------------|NNR|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------bB--wK------------|NNR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----------bB--wK--------wN--|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB--------bB--wK--------wN--|NR|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbBwR------bB--wK--------wN--|N|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbBwRbR----bB--wK--------wN--|N|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbBwRbR--wNbB--wK--------wN--||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbBwR----bRbB--wK--------wN--||N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbBwR----bRbBwNwK------------||N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bBwR----bRbBwNwK------------||N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bBwR----wNbB--wK------------|R|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbBwR----wNbB--wK------------|R|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbBwR------bBwNwK------------|R|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bBwR------bBwNwK------------|R|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bB--------wRwNwK------------|BR|N": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
