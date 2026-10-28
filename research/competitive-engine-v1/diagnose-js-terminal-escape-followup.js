@@ -1,0 +1,5 @@
+import {readFile,writeFile} from 'node:fs/promises';import * as r from '../search-performance-v5/baseline-rules.js';
+const d=JSON.parse(await readFile('research/competitive-engine-v1/js-terminal-escapes.json')),c=d.cases.find(c=>c.id==='black__20262001__1');let nodes=0;const deadline=Date.now()+500,STOP=Symbol();
+function force(p,k){if(nodes>=50000||Date.now()>=deadline)throw STOP;nodes++;const e=r.getResult(p);if(e)return e.winner===c.winner;if(!k)return false;const a=r.legalActions(p);return p.turn===c.winner?a.some(a=>force(r.applyLegalAction(p,a),k-1)):a.every(a=>force(r.applyLegalAction(p,a),k-1));}
+const answers=[];for(const a of r.legalActions(c.position)){try{answers.push({action:a,mateWithin5:force(r.applyLegalAction(c.position,a),5)});}catch(e){if(e!==STOP)throw e;break;}}
+d.followup={id:c.id,nodes,answers,complete:answers.length===r.legalActions(c.position).length,purpose:'Only case with short-horizon alternatives; bounded50000nodes500ms depth5 continuation. No-mate within3 need not mean permanent escape.'};await writeFile('research/competitive-engine-v1/js-terminal-escapes.json',JSON.stringify(d,null,2)+'\n');
