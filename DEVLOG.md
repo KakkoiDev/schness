@@ -1983,3 +1983,10 @@ Archive: `research/competitive-engine-v1/js-cutoff-reply.tar.gz`, 241374 bytes, 
 A temporary candidate kept the best score, action and child line in locals, building the continuation only at return. All 57 targeted tests and 174 portable checks passed. Across 16 opening layouts in ABBA, all 64 fixed-depth calls completed at depth 3, with identical scores, actions, PVs and nodes. Candidate/control time was 438.194/421.668 ms (candidate 3.9% slower; gate required 3% faster). At 100 ms, mean completed depth was 3.15625/3.125. The fixed-depth gate failed, so the candidate is closed without tuning, a match, or production changes. This is efficiency evidence only.
 
 Archive: `research/competitive-engine-v1/js-continuation-allocation.tar.gz`, 232178 bytes, SHA-256 `1c6fdcc4ad214e3e0c2d576b0a96911c3240d29fc618240efcc45d4527c07c84`, 128 diagnostic rows. Includes sources, raw inputs and outputs, plan, scripts and logs.
+
+
+## 2026-11-05 — Normal-cache bound retention did not qualify
+
+An instrumentation-only audit tracked complementary bounds for each existing history-sensitive normal-cache key and remaining depth. The nonreduced depth-4 arm recorded 113 opposite-type replacements and 22 potential cutoffs across 13 of 32 roots, below the planned 32-cutoff gate. All 32 pairs completed depth 4 with identical action, score, PV and node count; no shadow intervals were inverted. The 100 ms LMR arm recorded 714 replacements and 136 potential cutoffs across 29 roots, plus one inverted interval. Selective bounds are not exact and opportunities are not measured savings. All 128 queries passed PV legality and input restoration. Stop this family without a prototype, retuning, opponent query or match. Production unchanged.
+
+Archive: `research/competitive-engine-v1/js-normal-bound-retention.tar.gz`, 77991 bytes, SHA-256 `31bac13f020a71a5e9386f5124e4c2a3cf141c4c6e7e0c5477fad7ce8c88aa89`. Includes plan, script, the five runtime modules per arm, inputs, all 128 results and the runner log.
