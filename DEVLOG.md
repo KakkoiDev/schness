@@ -2040,3 +2040,9 @@ An observation-only audit counted actual descendant visits in interior sibling s
 A frozen observation-only JavaScript audit used 32 fresh uniform legal paths (seed 20263421). All paired searches completed or adjudicated at the root (two terminal roots), with identical actions, scores, PVs, depths and node counts. In 30 roots, 19,516 of 83,314 check calls at the measured sites (23.42%) repeated the same side-to-move check fact within the same quiescence visit. Every paired boolean agreed. This passes the 15% and eight-root gate and permits one isolated timing prototype. These counts are not measured speed or strength; production is unchanged.
 
 [Audit archive](research/competitive-engine-v1/js-q-check-facts-audit.tar.gz), SHA-256: b609b3f79af27d0fbda27fabdca1f8fc494a994a68a05c1c16845eb246e02a66. Includes frozen sources, plan, harness, 64 queries, transcripts, counts and logs.
+
+### 2026-11-06 — Same-visit check reuse fails the timing gates
+
+The isolated prototype passed 174 portable cases and 55 targeted tests. All 32 fixed-depth roots completed or adjudicated with identical decisions, scores, PVs, nodes, depths and variations. Aggregate fixed-depth time fell from 352.747 to 336.776 ms (4.53%; required 5%). At 100 ms, mean completed depth fell from 6.53125 to 6.3125. Both gates failed. Stop without tuning, a rerun, a match, or production changes.
+
+[Prototype archive](research/competitive-engine-v1/js-q-check-facts-prototype.tar.gz), SHA-256: fd787f0e9f4a9af3d91c988d631d9969424f773d7544bba8a28a754fa40637b3. Includes frozen sources, plan, inputs, fixtures, preflight, all 256 timed queries, separate counters, and logs.
