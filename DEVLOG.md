@@ -2010,3 +2010,9 @@ All 32 instrumented and control pairs completed depth four with identical action
 Next plan a separate default-preserving prototype and measure all-36-preset exact parity and total cost, including duplicated generation. No production change, opponent query, match, or strength result.
 
 Archive: `research/competitive-engine-v1/js-terminal-existence.tar.gz`, 67585 bytes, SHA-256 `3ca7c34a43f5401e834490ce4a535f836ca0c6c26fe7e565e16b7cbc7883ec60`. Includes plan, script, five invoked engine modules per arm, exact inputs, 64 records and the runner log.
+
+### 2026-11-05 — First legal action prototype stops at the efficiency gate
+
+The temporary JavaScript prototype exits the exact legal generator after its first accepted action for internal terminal checks. Preflight passed 174 portable cases, existence parity on 142 rule snapshots and 2,044 successors, and 55 targeted tests. All 32 fixed-depth roots completed in both ABBA passes per arm with identical decisions, scores, nodes, PVs, and depths. Aggregate fixed-depth time was 757.647 ms control versus 765.852 ms prototype (1.08% slower; required 5% faster). Both reached mean completed depth 6.3125 at 100 ms. Stop this prototype without retuning or a match. No production change.
+
+Frozen source, fixtures, harnesses, inputs, all 256 timed query records, separate counters, and logs are in [the reproducibility archive](research/competitive-engine-v1/js-first-legal-terminal.tar.gz), SHA-256 `d7c48bcdf27609569143fca9eb93eb999da61823fac95028780e4d55e069586c`.
