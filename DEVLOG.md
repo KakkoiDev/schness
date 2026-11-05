@@ -2034,3 +2034,9 @@ The isolated prototype reused the exact positional subtotal in a bounded per-roo
 An observation-only audit counted actual descendant visits in interior sibling subtrees after the incumbent reached the best possible mate-band score. Across 32 fresh uniformly sampled legal paths (seed 20263319), all paired searches completed or adjudicated (four terminal roots), decisions, scores, PVs and nodes agreed, and no bound violations occurred. 14,902 of 77,634 visits (19.20%) fell in those tails, but all were in three roots. The 5% visit threshold passed; the eight-root threshold failed. Stop without a prototype, an alternate workload, or a match. The visit share is an opportunity count, not measured time savings or strength evidence. Production unchanged.
 
 [Audit archive](research/competitive-engine-v1/js-interior-mate-extremum.tar.gz), SHA-256: f5e618e3743586527bb149dde1f13df9e756570becf3cd1f73e396c69d2eb90a. Includes both frozen runtimes, plan, harness, all 64 query records, paths and logs.
+
+### 2026-11-06 — Same-visit check fact reuse clears the opportunity gate
+
+A frozen observation-only JavaScript audit used 32 fresh uniform legal paths (seed 20263421). All paired searches completed or adjudicated at the root (two terminal roots), with identical actions, scores, PVs, depths and node counts. In 30 roots, 19,516 of 83,314 check calls at the measured sites (23.42%) repeated the same side-to-move check fact within the same quiescence visit. Every paired boolean agreed. This passes the 15% and eight-root gate and permits one isolated timing prototype. These counts are not measured speed or strength; production is unchanged.
+
+[Audit archive](research/competitive-engine-v1/js-q-check-facts-audit.tar.gz), SHA-256: b609b3f79af27d0fbda27fabdca1f8fc494a994a68a05c1c16845eb246e02a66. Includes frozen sources, plan, harness, 64 queries, transcripts, counts and logs.
