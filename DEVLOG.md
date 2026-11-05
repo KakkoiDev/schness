@@ -1996,3 +1996,9 @@ Archive: `research/competitive-engine-v1/js-normal-bound-retention.tar.gz`, 7799
 The left–right reflection audit found 43 potential hits in 46,015 genuine static cache misses (0.0935%) across five of 32 roots. All 43 values agreed. All 32 paired depth-4 searches completed with identical action, score, PV and node count; all 64 searches passed PV legality and input restoration. The opportunity missed both planned thresholds (5% and eight roots). Stop without a prototype, other symmetry probes, opponent queries or a match. No production change.
 
 Archive: `research/competitive-engine-v1/js-static-reflection.tar.gz`, 64079 bytes, SHA-256 `9f344e537523d50587ced9f34e7f0423f0fec0f80025afad99538dc55561c0f5`. Includes the plan, script, five runtime modules per arm, inputs, all 64 results, runner log and wrapper note.
+
+## 2026-11-05 — Quiet immediate threefolds did not qualify for a search change
+
+An instrumentation-only pass checked quiet moves omitted by the positive-budget quiescence filter, using the exact history and public rules. There were 14 audited nodes with an immediate threefold, including two completed nodes in one root whose returned score favored the opponent. Narrow-window scores may be bounds; this does not establish a missed root win. The audit made 33,280 auxiliary transitions and skipped further work at 14,736 node visits under the per-root cap, so the counts are not exhaustive. All 128 paired searches completed depth 4 with identical scores, actions, PVs and node counts; all 256 searches passed legality and input restoration. The planned gate of 16 contradictions across eight roots failed. Stop without a prototype, larger probe, match, or engine change.
+
+Archive: `research/competitive-engine-v1/js-quiet-threefold.tar.gz`, 115258 bytes, SHA-256 `366c0f25cd34b767060b7b5e6e753430c2006a447245fbc900fa85a77bde6486`. Includes plan, script, five invoked engine modules per arm, exact inputs, all 256 records and the runner log.
