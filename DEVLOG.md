@@ -2016,3 +2016,9 @@ Archive: `research/competitive-engine-v1/js-terminal-existence.tar.gz`, 67585 by
 The temporary JavaScript prototype exits the exact legal generator after its first accepted action for internal terminal checks. Preflight passed 174 portable cases, existence parity on 142 rule snapshots and 2,044 successors, and 55 targeted tests. All 32 fixed-depth roots completed in both ABBA passes per arm with identical decisions, scores, nodes, PVs, and depths. Aggregate fixed-depth time was 757.647 ms control versus 765.852 ms prototype (1.08% slower; required 5% faster). Both reached mean completed depth 6.3125 at 100 ms. Stop this prototype without retuning or a match. No production change.
 
 Frozen source, fixtures, harnesses, inputs, all 256 timed query records, separate counters, and logs are in [the reproducibility archive](research/competitive-engine-v1/js-first-legal-terminal.tar.gz), SHA-256 `d7c48bcdf27609569143fca9eb93eb999da61823fac95028780e4d55e069586c`.
+
+### 2026-11-06 — Board positional subtotal reuse clears the opportunity gate
+
+One observation-only audit used 32 fresh uniform legal paths under the shared quiet six-slot capture-bank rules (seed 20263217). All paired searches completed or adjudicated at the root (three terminal roots) and preserved actions, scores, PVs, nodes, and caller state. Of 26,108 competitive positional subtotal calls, 2,758 repeated an exact board within the same root (10.56%, across 29 roots). Every repeated subtotal agreed. The result clears the 10% and eight-root opportunity gate. It allows one isolated prototype; lookup and storage costs remain unmeasured. No production change, match, or strength claim.
+
+[Audit archive](research/competitive-engine-v1/js-board-positional-reuse.tar.gz), SHA-256: eb5279136c9bea561e9114cca8c2a9bd8ddc0c2ea4a460c9bcf224c982972244. Includes both frozen runtimes, plan, harness, raw transcripts and observations, and logs.
