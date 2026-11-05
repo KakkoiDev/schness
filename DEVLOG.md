@@ -2022,3 +2022,9 @@ Frozen source, fixtures, harnesses, inputs, all 256 timed query records, separat
 One observation-only audit used 32 fresh uniform legal paths under the shared quiet six-slot capture-bank rules (seed 20263217). All paired searches completed or adjudicated at the root (three terminal roots) and preserved actions, scores, PVs, nodes, and caller state. Of 26,108 competitive positional subtotal calls, 2,758 repeated an exact board within the same root (10.56%, across 29 roots). Every repeated subtotal agreed. The result clears the 10% and eight-root opportunity gate. It allows one isolated prototype; lookup and storage costs remain unmeasured. No production change, match, or strength claim.
 
 [Audit archive](research/competitive-engine-v1/js-board-positional-reuse.tar.gz), SHA-256: eb5279136c9bea561e9114cca8c2a9bd8ddc0c2ea4a460c9bcf224c982972244. Includes both frozen runtimes, plan, harness, raw transcripts and observations, and logs.
+
+### 2026-11-06 — Positional subtotal cache fails both timing gates
+
+The isolated prototype reused the exact positional subtotal in a bounded per-root map. It passed 174 portable cases and 55 targeted tests. Untimed preflight checked 90,078 cache observations (24,916 hits) against direct board encoding and subtotal recomputation. All 32 fixed-depth roots completed or adjudicated in all four arms with identical actions, scores, PVs, nodes, depths and variations. Aggregate elapsed fell from 442.661 to 426.839 ms (3.57%; required 5%). At 100 ms, mean completed depth fell from 5.796875 to 5.78125. Both gates failed. Stop without another cache variant, a match or a production change.
+
+[Prototype archive](research/competitive-engine-v1/js-board-positional-prototype.tar.gz), SHA-256: 7760110f667aa818d94feb8ba0ffa75b99020d0a17b4c0f6751fea081e31b0ef. Includes frozen runtimes, plan, preflight, fixtures, inputs, all 256 timing records, separate counters, and logs.
