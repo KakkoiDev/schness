@@ -1990,3 +1990,9 @@ Archive: `research/competitive-engine-v1/js-continuation-allocation.tar.gz`, 232
 An instrumentation-only audit tracked complementary bounds for each existing history-sensitive normal-cache key and remaining depth. The nonreduced depth-4 arm recorded 113 opposite-type replacements and 22 potential cutoffs across 13 of 32 roots, below the planned 32-cutoff gate. All 32 pairs completed depth 4 with identical action, score, PV and node count; no shadow intervals were inverted. The 100 ms LMR arm recorded 714 replacements and 136 potential cutoffs across 29 roots, plus one inverted interval. Selective bounds are not exact and opportunities are not measured savings. All 128 queries passed PV legality and input restoration. Stop this family without a prototype, retuning, opponent query or match. Production unchanged.
 
 Archive: `research/competitive-engine-v1/js-normal-bound-retention.tar.gz`, 77991 bytes, SHA-256 `31bac13f020a71a5e9386f5124e4c2a3cf141c4c6e7e0c5477fad7ce8c88aa89`. Includes plan, script, the five runtime modules per arm, inputs, all 128 results and the runner log.
+
+## 2026-11-05 — Static evaluation reflection reuse did not qualify
+
+The left–right reflection audit found 43 potential hits in 46,015 genuine static cache misses (0.0935%) across five of 32 roots. All 43 values agreed. All 32 paired depth-4 searches completed with identical action, score, PV and node count; all 64 searches passed PV legality and input restoration. The opportunity missed both planned thresholds (5% and eight roots). Stop without a prototype, other symmetry probes, opponent queries or a match. No production change.
+
+Archive: `research/competitive-engine-v1/js-static-reflection.tar.gz`, 64079 bytes, SHA-256 `9f344e537523d50587ced9f34e7f0423f0fec0f80025afad99538dc55561c0f5`. Includes the plan, script, five runtime modules per arm, inputs, all 64 results, runner log and wrapper note.
