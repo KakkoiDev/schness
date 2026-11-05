@@ -1,0 +1,735 @@
+{
+  "bins": {
+    "all": {
+      "plies": 964,
+      "agreement": 643,
+      "fairyTop3": 888,
+      "fairyBest": 681,
+      "deepPrefersFairy": 65,
+      "deepPrefersSchness": 227,
+      "deepTie": 672,
+      "benchNoDepth": 0,
+      "deepSix": 807
+    },
+    "first 12 decisions": {
+      "plies": 192,
+      "agreement": 107,
+      "fairyTop3": 163,
+      "fairyBest": 110,
+      "deepPrefersFairy": 18,
+      "deepPrefersSchness": 66,
+      "deepTie": 108,
+      "benchNoDepth": 0,
+      "deepSix": 123
+    },
+    "Fairy drop": {
+      "plies": 355,
+      "agreement": 170,
+      "fairyTop3": 302,
+      "fairyBest": 194,
+      "deepPrefersFairy": 43,
+      "deepPrefersSchness": 130,
+      "deepTie": 182,
+      "benchNoDepth": 0,
+      "deepSix": 243
+    },
+    "not in check": {
+      "plies": 822,
+      "agreement": 520,
+      "fairyTop3": 747,
+      "fairyBest": 552,
+      "deepPrefersFairy": 60,
+      "deepPrefersSchness": 217,
+      "deepTie": 545,
+      "benchNoDepth": 0,
+      "deepSix": 665
+    },
+    "white": {
+      "plies": 485,
+      "agreement": 325,
+      "fairyTop3": 449,
+      "fairyBest": 344,
+      "deepPrefersFairy": 31,
+      "deepPrefersSchness": 115,
+      "deepTie": 339,
+      "benchNoDepth": 0,
+      "deepSix": 399
+    },
+    "black": {
+      "plies": 479,
+      "agreement": 318,
+      "fairyTop3": 439,
+      "fairyBest": 337,
+      "deepPrefersFairy": 34,
+      "deepPrefersSchness": 112,
+      "deepTie": 333,
+      "benchNoDepth": 0,
+      "deepSix": 408
+    },
+    "Fairy quiet move": {
+      "plies": 308,
+      "agreement": 211,
+      "fairyTop3": 292,
+      "fairyBest": 230,
+      "deepPrefersFairy": 17,
+      "deepPrefersSchness": 65,
+      "deepTie": 226,
+      "benchNoDepth": 0,
+      "deepSix": 281
+    },
+    "Fairy capture": {
+      "plies": 301,
+      "agreement": 262,
+      "fairyTop3": 294,
+      "fairyBest": 257,
+      "deepPrefersFairy": 5,
+      "deepPrefersSchness": 32,
+      "deepTie": 264,
+      "benchNoDepth": 0,
+      "deepSix": 283
+    },
+    "decisions 13–32": {
+      "plies": 306,
+      "agreement": 215,
+      "fairyTop3": 286,
+      "fairyBest": 218,
+      "deepPrefersFairy": 15,
+      "deepPrefersSchness": 73,
+      "deepTie": 218,
+      "benchNoDepth": 0,
+      "deepSix": 276
+    },
+    "in check": {
+      "plies": 142,
+      "agreement": 123,
+      "fairyTop3": 141,
+      "fairyBest": 129,
+      "deepPrefersFairy": 5,
+      "deepPrefersSchness": 10,
+      "deepTie": 127,
+      "benchNoDepth": 0,
+      "deepSix": 142
+    },
+    "decision 33 onward": {
+      "plies": 466,
+      "agreement": 321,
+      "fairyTop3": 439,
+      "fairyBest": 353,
+      "deepPrefersFairy": 32,
+      "deepPrefersSchness": 88,
+      "deepTie": 346,
+      "benchNoDepth": 0,
+      "deepSix": 408
+    }
+  },
+  "pairs": {
+    "drop → drop": 307,
+    "quiet move → quiet move": 255,
+    "capture → drop": 11,
+    "capture → capture": 275,
+    "quiet move → capture": 11,
+    "drop → quiet move": 41,
+    "drop → capture": 7,
+    "capture → quiet move": 15,
+    "quiet move → drop": 42
+  },
+  "fairyTypes": {
+    "drop": 355,
+    "quiet move": 308,
+    "capture": 301
+  },
+  "jsTypes": {
+    "drop": 360,
+    "quiet move": 311,
+    "capture": 293
+  },
+  "highlights": {
+    "favorsFairy": [
+      {
+        "game": "fairy__8",
+        "ply": 58,
+        "side": "black",
+        "fairy": "knight@c4",
+        "js": "knight@d1",
+        "depth": 6,
+        "delta": 998156,
+        "fairyRank": 1,
+        "scoreFairy": 1000000,
+        "scoreJS": 1844,
+        "fairyPV": [
+          "knight@c4",
+          "a2–c2",
+          "c3–c2",
+          "b1–a1",
+          "c4–d2",
+          "knight@a2",
+          "c2–a2"
+        ],
+        "jsPV": [
+          "knight@d1",
+          "b1–c1",
+          "c2–b4",
+          "a2–c2",
+          "b4–d3",
+          "c1–d2",
+          "c3–c2",
+          "d2–d3",
+          "d1–b2",
+          "d3–d4"
+        ]
+      },
+      {
+        "game": "fairy__7",
+        "ply": 42,
+        "side": "black",
+        "fairy": "rook@a1",
+        "js": "bishop@b3",
+        "depth": 5,
+        "delta": 618,
+        "fairyRank": 1,
+        "scoreFairy": 2486,
+        "scoreJS": 1868,
+        "fairyPV": [
+          "rook@a1",
+          "bishop@b1",
+          "c1–b1",
+          "b2–c2",
+          "bishop@c4"
+        ],
+        "jsPV": [
+          "bishop@b3",
+          "bishop@d1",
+          "b3–d1",
+          "b2–a2",
+          "bishop@c3"
+        ]
+      },
+      {
+        "game": "fairy__4",
+        "ply": 70,
+        "side": "black",
+        "fairy": "rook@b4",
+        "js": "rook@d1",
+        "depth": 6,
+        "delta": 423,
+        "fairyRank": 1,
+        "scoreFairy": 1718,
+        "scoreJS": 1295,
+        "fairyPV": [
+          "rook@b4",
+          "b2–c1",
+          "rook@d2",
+          "knight@a1",
+          "b3–a4",
+          "knight@c2",
+          "a4–c2",
+          "a1–c2",
+          "d2–c2",
+          "c1–d1"
+        ],
+        "jsPV": [
+          "rook@d1",
+          "knight@a1",
+          "b3–a4",
+          "knight@a3",
+          "rook@c1",
+          "a3–c4",
+          "c1–a1"
+        ]
+      },
+      {
+        "game": "fairy__3",
+        "ply": 27,
+        "side": "white",
+        "fairy": "rook@b2",
+        "js": "d4–b2",
+        "depth": 6,
+        "delta": 372,
+        "fairyRank": 1,
+        "scoreFairy": -1044,
+        "scoreJS": -1416,
+        "fairyPV": [
+          "rook@b2",
+          "knight@a3",
+          "b2–c2",
+          "b4–c2",
+          "d4–b2",
+          "rook@d3"
+        ],
+        "jsPV": [
+          "d4–b2",
+          "c4–b3",
+          "c1–d2",
+          "b3–b2",
+          "rook@c4",
+          "rook@a4"
+        ]
+      }
+    ],
+    "favorsSchness": [
+      {
+        "game": "fairy__1",
+        "ply": 139,
+        "side": "white",
+        "fairy": "c4–d2",
+        "js": "a1–a2",
+        "depth": 6,
+        "delta": -998182,
+        "fairyRank": 3,
+        "scoreFairy": 1818,
+        "scoreJS": 1000000,
+        "fairyPV": [
+          "c4–d2",
+          "b3–b4",
+          "c3–a2",
+          "b4–a3",
+          "bishop@c1",
+          "b2–c1",
+          "a2–c1",
+          "a3–b4"
+        ],
+        "jsPV": [
+          "a1–a2",
+          "b2–c3",
+          "a2–a3",
+          "b3–b4",
+          "bishop@c2",
+          "knight@d1",
+          "a3–b3",
+          "b4–a4",
+          "b3–b1"
+        ]
+      },
+      {
+        "game": "fairy__8",
+        "ply": 56,
+        "side": "black",
+        "fairy": "a1–c2",
+        "js": "bishop@a3",
+        "depth": 5,
+        "delta": -998166,
+        "fairyRank": 4,
+        "scoreFairy": 1834,
+        "scoreJS": 1000000,
+        "fairyPV": [
+          "a1–c2",
+          "rook@a2",
+          "knight@c4",
+          "a2–c2",
+          "c4–a3",
+          "b1–c1",
+          "c3–c2",
+          "c1–d1"
+        ],
+        "jsPV": [
+          "bishop@a3",
+          "rook@d1",
+          "knight@c4",
+          "d1–d2",
+          "c4–d2",
+          "b1–a1",
+          "c3–c1",
+          "knight@b1",
+          "c1–b1"
+        ]
+      },
+      {
+        "game": "fairy__15",
+        "ply": 43,
+        "side": "white",
+        "fairy": "knight@a3",
+        "js": "knight@a1",
+        "depth": 6,
+        "delta": -998098,
+        "fairyRank": 2,
+        "scoreFairy": -1000000,
+        "scoreJS": -1902,
+        "fairyPV": [
+          "knight@a3",
+          "rook@c3",
+          "b2–c3",
+          "c4–c3",
+          "a3–c4",
+          "b1–c2"
+        ],
+        "jsPV": [
+          "knight@a1",
+          "b3–a1",
+          "b2–a1",
+          "knight@b3",
+          "a1–c3",
+          "c4–c3"
+        ]
+      },
+      {
+        "game": "fairy__13",
+        "ply": 29,
+        "side": "white",
+        "fairy": "c3–c2",
+        "js": "a4–a3",
+        "depth": 6,
+        "delta": -997524,
+        "fairyRank": 2,
+        "scoreFairy": 2476,
+        "scoreJS": 1000000,
+        "fairyPV": [
+          "c3–c2",
+          "d2–d1",
+          "b1–b2",
+          "bishop@b1",
+          "c2–c4",
+          "b1–d3",
+          "b4–d3"
+        ],
+        "jsPV": [
+          "a4–a3",
+          "d2–d1",
+          "knight@d3",
+          "c4–a2",
+          "b4–a2",
+          "bishop@b3",
+          "d3–b2",
+          "d1–d2",
+          "c3–d3"
+        ]
+      }
+    ]
+  },
+  "deep": {
+    "status": "completed",
+    "games": 16,
+    "plies": 964,
+    "atTarget": 807,
+    "nodeCapped": 157,
+    "deepOptimal": 681,
+    "deepOutsideTop3": 76,
+    "deepPrefersFairy": 65,
+    "deepPrefersBench": 227,
+    "equalFairyBench": 672,
+    "benchAgreement": 643,
+    "scoredBranches": 85234,
+    "depths": {
+      "4": 21,
+      "5": 136,
+      "6": 807
+    },
+    "byMoveType": {
+      "drop": {
+        "plies": 355,
+        "optimal": 194,
+        "prefersFairy": 43,
+        "prefersBench": 130,
+        "agrees": 170
+      },
+      "quiet": {
+        "plies": 308,
+        "optimal": 230,
+        "prefersFairy": 17,
+        "prefersBench": 65,
+        "agrees": 211
+      },
+      "capture": {
+        "plies": 301,
+        "optimal": 257,
+        "prefersFairy": 5,
+        "prefersBench": 32,
+        "agrees": 262
+      }
+    },
+    "groups": {
+      "fairy__0": {
+        "plies": 57,
+        "atTarget": 44,
+        "nodeCapped": 13,
+        "deepOptimal": 37,
+        "deepPrefersFairy": 4,
+        "deepPrefersBench": 16,
+        "benchAgreement": 34
+      },
+      "fairy__1": {
+        "plies": 147,
+        "atTarget": 131,
+        "nodeCapped": 16,
+        "deepOptimal": 99,
+        "deepPrefersFairy": 11,
+        "deepPrefersBench": 34,
+        "benchAgreement": 99
+      },
+      "fairy__2": {
+        "plies": 50,
+        "atTarget": 42,
+        "nodeCapped": 8,
+        "deepOptimal": 35,
+        "deepPrefersFairy": 3,
+        "deepPrefersBench": 14,
+        "benchAgreement": 33
+      },
+      "fairy__3": {
+        "plies": 48,
+        "atTarget": 37,
+        "nodeCapped": 11,
+        "deepOptimal": 33,
+        "deepPrefersFairy": 4,
+        "deepPrefersBench": 14,
+        "benchAgreement": 28
+      },
+      "fairy__4": {
+        "plies": 82,
+        "atTarget": 71,
+        "nodeCapped": 11,
+        "deepOptimal": 58,
+        "deepPrefersFairy": 4,
+        "deepPrefersBench": 21,
+        "benchAgreement": 54
+      },
+      "fairy__5": {
+        "plies": 116,
+        "atTarget": 88,
+        "nodeCapped": 28,
+        "deepOptimal": 84,
+        "deepPrefersFairy": 10,
+        "deepPrefersBench": 26,
+        "benchAgreement": 78
+      },
+      "fairy__6": {
+        "plies": 61,
+        "atTarget": 47,
+        "nodeCapped": 14,
+        "deepOptimal": 43,
+        "deepPrefersFairy": 5,
+        "deepPrefersBench": 14,
+        "benchAgreement": 39
+      },
+      "fairy__7": {
+        "plies": 48,
+        "atTarget": 39,
+        "nodeCapped": 9,
+        "deepOptimal": 37,
+        "deepPrefersFairy": 4,
+        "deepPrefersBench": 9,
+        "benchAgreement": 34
+      },
+      "fairy__8": {
+        "plies": 66,
+        "atTarget": 53,
+        "nodeCapped": 13,
+        "deepOptimal": 46,
+        "deepPrefersFairy": 3,
+        "deepPrefersBench": 18,
+        "benchAgreement": 41
+      },
+      "fairy__9": {
+        "plies": 18,
+        "atTarget": 13,
+        "nodeCapped": 5,
+        "deepOptimal": 14,
+        "deepPrefersFairy": 3,
+        "deepPrefersBench": 4,
+        "benchAgreement": 11
+      },
+      "fairy__10": {
+        "plies": 56,
+        "atTarget": 52,
+        "nodeCapped": 4,
+        "deepOptimal": 43,
+        "deepPrefersFairy": 4,
+        "deepPrefersBench": 10,
+        "benchAgreement": 42
+      },
+      "fairy__11": {
+        "plies": 50,
+        "atTarget": 47,
+        "nodeCapped": 3,
+        "deepOptimal": 38,
+        "deepPrefersFairy": 1,
+        "deepPrefersBench": 8,
+        "benchAgreement": 38
+      },
+      "fairy__12": {
+        "plies": 41,
+        "atTarget": 36,
+        "nodeCapped": 5,
+        "deepOptimal": 29,
+        "deepPrefersFairy": 4,
+        "deepPrefersBench": 7,
+        "benchAgreement": 30
+      },
+      "fairy__13": {
+        "plies": 37,
+        "atTarget": 32,
+        "nodeCapped": 5,
+        "deepOptimal": 27,
+        "deepPrefersFairy": 3,
+        "deepPrefersBench": 8,
+        "benchAgreement": 24
+      },
+      "fairy__14": {
+        "plies": 37,
+        "atTarget": 28,
+        "nodeCapped": 9,
+        "deepOptimal": 24,
+        "deepPrefersFairy": 1,
+        "deepPrefersBench": 12,
+        "benchAgreement": 22
+      },
+      "fairy__15": {
+        "plies": 50,
+        "atTarget": 47,
+        "nodeCapped": 3,
+        "deepOptimal": 34,
+        "deepPrefersFairy": 1,
+        "deepPrefersBench": 12,
+        "benchAgreement": 36
+      }
+    }
+  },
+  "bench": {
+    "status": "completed",
+    "games": 16,
+    "plies": 964,
+    "agree": 643,
+    "fullComparable": 89,
+    "fairyOptimal": 72,
+    "fairyOutsideTop3": 6,
+    "noCompletedDepth": 0,
+    "byMoveType": {
+      "drop": {
+        "moves": 355,
+        "agree": 170,
+        "fullComparable": 15,
+        "fairyOptimal": 6
+      },
+      "quiet": {
+        "moves": 308,
+        "agree": 211,
+        "fullComparable": 45,
+        "fairyOptimal": 38
+      },
+      "capture": {
+        "moves": 301,
+        "agree": 262,
+        "fullComparable": 29,
+        "fairyOptimal": 28
+      }
+    },
+    "results": {
+      "white": 5,
+      "black": 9,
+      "threefold-repetition": 2
+    },
+    "groups": {
+      "fairy__0": {
+        "plies": 57,
+        "agree": 34,
+        "fullComparable": 5,
+        "fairyOptimal": 5,
+        "fairyOutsideTop3": 0
+      },
+      "fairy__1": {
+        "plies": 147,
+        "agree": 99,
+        "fullComparable": 6,
+        "fairyOptimal": 4,
+        "fairyOutsideTop3": 1
+      },
+      "fairy__2": {
+        "plies": 50,
+        "agree": 33,
+        "fullComparable": 5,
+        "fairyOptimal": 3,
+        "fairyOutsideTop3": 0
+      },
+      "fairy__3": {
+        "plies": 48,
+        "agree": 28,
+        "fullComparable": 4,
+        "fairyOptimal": 3,
+        "fairyOutsideTop3": 1
+      },
+      "fairy__4": {
+        "plies": 82,
+        "agree": 54,
+        "fullComparable": 2,
+        "fairyOptimal": 2,
+        "fairyOutsideTop3": 0
+      },
+      "fairy__5": {
+        "plies": 116,
+        "agree": 78,
+        "fullComparable": 10,
+        "fairyOptimal": 9,
+        "fairyOutsideTop3": 0
+      },
+      "fairy__6": {
+        "plies": 61,
+        "agree": 39,
+        "fullComparable": 5,
+        "fairyOptimal": 5,
+        "fairyOutsideTop3": 0
+      },
+      "fairy__7": {
+        "plies": 48,
+        "agree": 34,
+        "fullComparable": 7,
+        "fairyOptimal": 6,
+        "fairyOutsideTop3": 0
+      },
+      "fairy__8": {
+        "plies": 66,
+        "agree": 41,
+        "fullComparable": 6,
+        "fairyOptimal": 4,
+        "fairyOutsideTop3": 0
+      },
+      "fairy__9": {
+        "plies": 18,
+        "agree": 11,
+        "fullComparable": 4,
+        "fairyOptimal": 4,
+        "fairyOutsideTop3": 0
+      },
+      "fairy__10": {
+        "plies": 56,
+        "agree": 42,
+        "fullComparable": 8,
+        "fairyOptimal": 6,
+        "fairyOutsideTop3": 1
+      },
+      "fairy__11": {
+        "plies": 50,
+        "agree": 38,
+        "fullComparable": 7,
+        "fairyOptimal": 6,
+        "fairyOutsideTop3": 0
+      },
+      "fairy__12": {
+        "plies": 41,
+        "agree": 30,
+        "fullComparable": 3,
+        "fairyOptimal": 2,
+        "fairyOutsideTop3": 1
+      },
+      "fairy__13": {
+        "plies": 37,
+        "agree": 24,
+        "fullComparable": 7,
+        "fairyOptimal": 4,
+        "fairyOutsideTop3": 1
+      },
+      "fairy__14": {
+        "plies": 37,
+        "agree": 22,
+        "fullComparable": 4,
+        "fairyOptimal": 3,
+        "fairyOutsideTop3": 1
+      },
+      "fairy__15": {
+        "plies": 50,
+        "agree": 36,
+        "fullComparable": 6,
+        "fairyOptimal": 6,
+        "fairyOutsideTop3": 0
+      }
+    }
+  }
+}
