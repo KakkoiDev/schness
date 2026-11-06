@@ -2094,3 +2094,7 @@ The isolated undo prototype preserved immutable transition parity and full resto
 ### 2026-11-06 — Final continuation allocation misses the timing gate
 
 Allocating only the final continuation per search node passed 174 portable cases and eight tactical tests covering 19 mates. All 32 paths and 256 queries verified with identical fixed-depth search results. Aggregate time saved 4.05% (5% required); at 100 ms mean completed depth was 6.734375 control and 6.75 candidate. Stop without tuning, reruns or matches. No production or benchmark change. [Plan](research/competitive-engine-v1/final-continuation-link-plan-2026-11-06.md), [report](research/competitive-engine-v1/final-continuation-link-report-2026-11-06.md), [archive](research/competitive-engine-v1/js-final-continuation-link.tar.gz) SHA-256 `bcf88d22ac6e96692ffaf81ca4a2d7608fe0ea9b355eeb8c749858e8eeac1973`.
+
+### Continuation allocation: correction to the November 6 entry
+
+The November 6 probe repeated the mechanism already closed in the November 4 entry “Deferring continuation allocation failed the speed gate”: retain the best score, action and child link in locals, then build the continuation at return. The later probe used a different position set and gate, but was not a distinct hypothesis. Keep both results as separate records, do not pool them, and keep this family closed. Check the full remote DEVLOG for prior mechanisms before preregistering another probe.
