@@ -1,0 +1,6439 @@
+{
+  "total": 964,
+  "unchanged": 904,
+  "games": 16,
+  "gained": 22,
+  "lost": 16,
+  "deepPreferences": {
+    "challenger": 47,
+    "incumbent": 13
+  },
+  "passed": false,
+  "changes": [
+    {
+      "game": "fairy__0",
+      "ply": 2,
+      "target": 4,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 4,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 1
+          }
+        ],
+        "score": -16,
+        "nodes": 1919,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 4,
+        "action": {
+          "type": "move",
+          "from": 12,
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 12,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 6
+          }
+        ],
+        "score": -6,
+        "nodes": 1509,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": -6,
+      "deepIncumbentScore": -16
+    },
+    {
+      "game": "fairy__0",
+      "ply": 3,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          }
+        ],
+        "score": -18,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "move",
+          "from": 0,
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 0
+          }
+        ],
+        "score": 16,
+        "nodes": 686,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 16,
+      "deepIncumbentScore": -18
+    },
+    {
+      "game": "fairy__0",
+      "ply": 26,
+      "target": 7,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 6,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          }
+        ],
+        "score": 126,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 2
+          }
+        ],
+        "score": 206,
+        "nodes": 174,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 34,
+      "deepIncumbentScore": 62
+    },
+    {
+      "game": "fairy__0",
+      "ply": 41,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          }
+        ],
+        "score": -786,
+        "nodes": 3784,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          }
+        ],
+        "score": -782,
+        "nodes": 5625,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": -841,
+      "deepIncumbentScore": -786
+    },
+    {
+      "game": "fairy__0",
+      "ply": 46,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 8
+          }
+        ],
+        "score": 1217,
+        "nodes": 948,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 13
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 10
+          }
+        ],
+        "score": 1236,
+        "nodes": 1820,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 1188,
+      "deepIncumbentScore": 1217
+    },
+    {
+      "game": "fairy__0",
+      "ply": 48,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 6,
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 6,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          }
+        ],
+        "score": 1786,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 10
+          }
+        ],
+        "score": 2446,
+        "nodes": 2597,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 2446,
+      "deepIncumbentScore": 1786
+    },
+    {
+      "game": "fairy__1",
+      "ply": 18,
+      "target": 8,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 8,
+        "action": {
+          "type": "move",
+          "from": 12,
+          "to": 8
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          }
+        ],
+        "score": -24,
+        "nodes": 4796,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 8,
+        "action": {
+          "type": "move",
+          "from": 6,
+          "to": 3
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 6,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 2
+          }
+        ],
+        "score": 56,
+        "nodes": 4993,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": -131,
+      "deepIncumbentScore": 26
+    },
+    {
+      "game": "fairy__1",
+      "ply": 37,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 1
+          }
+        ],
+        "score": 28,
+        "nodes": 879,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 12
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 10
+          }
+        ],
+        "score": 56,
+        "nodes": 5746,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 66,
+      "deepIncumbentScore": 78
+    },
+    {
+      "game": "fairy__1",
+      "ply": 44,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 15
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 13
+          }
+        ],
+        "score": -410,
+        "nodes": 4136,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 6
+          }
+        ],
+        "score": -398,
+        "nodes": 5775,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": -398,
+      "deepIncumbentScore": -448
+    },
+    {
+      "game": "fairy__1",
+      "ply": 57,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 1
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 7
+          }
+        ],
+        "score": -70,
+        "nodes": 1529,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 4
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 13
+          }
+        ],
+        "score": -58,
+        "nodes": 3908,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": -58,
+      "deepIncumbentScore": -70
+    },
+    {
+      "game": "fairy__1",
+      "ply": 95,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 6
+          }
+        ],
+        "score": -6,
+        "nodes": 3865,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 12
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          }
+        ],
+        "score": 22,
+        "nodes": 3576,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 22,
+      "deepIncumbentScore": -6
+    },
+    {
+      "game": "fairy__1",
+      "ply": 108,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 3
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 6
+          }
+        ],
+        "score": 314,
+        "nodes": 1717,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 7,
+          "to": 10
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 7,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 0
+          }
+        ],
+        "score": 316,
+        "nodes": 4480,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 324,
+      "deepIncumbentScore": 314
+    },
+    {
+      "game": "fairy__1",
+      "ply": 122,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 6
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          }
+        ],
+        "score": 736,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 7
+          }
+        ],
+        "score": 750,
+        "nodes": 2638,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 750,
+      "deepIncumbentScore": 736
+    },
+    {
+      "game": "fairy__1",
+      "ply": 128,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 1
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 4
+          }
+        ],
+        "score": 836,
+        "nodes": 2165,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          }
+        ],
+        "score": 862,
+        "nodes": 7210,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 862,
+      "deepIncumbentScore": 836
+    },
+    {
+      "game": "fairy__1",
+      "ply": 130,
+      "target": 7,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 6
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 14
+          }
+        ],
+        "score": 1140,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 10
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 13
+          }
+        ],
+        "score": 1234,
+        "nodes": 1094,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 1104,
+      "deepIncumbentScore": 1140
+    },
+    {
+      "game": "fairy__1",
+      "ply": 132,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 12
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 8
+          }
+        ],
+        "score": 1108,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 15
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 2
+          }
+        ],
+        "score": 1370,
+        "nodes": 1321,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 1370,
+      "deepIncumbentScore": 1108
+    },
+    {
+      "game": "fairy__10",
+      "ply": 14,
+      "target": 8,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 8,
+        "action": {
+          "type": "move",
+          "from": 13,
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 13,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 2
+          }
+        ],
+        "score": -78,
+        "nodes": 1386,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 8,
+        "action": {
+          "type": "move",
+          "from": 7,
+          "to": 14
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 7,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 8
+          }
+        ],
+        "score": -52,
+        "nodes": 6291,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": -60,
+      "deepIncumbentScore": -184
+    },
+    {
+      "game": "fairy__10",
+      "ply": 43,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 0
+          }
+        ],
+        "score": 1750,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 5
+          }
+        ],
+        "score": 1862,
+        "nodes": 9569,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 1862,
+      "deepIncumbentScore": 1750
+    },
+    {
+      "game": "fairy__11",
+      "ply": 17,
+      "target": 7,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "move",
+          "from": 8,
+          "to": 12
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 8,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          }
+        ],
+        "score": 80,
+        "nodes": 2111,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 2
+          }
+        ],
+        "score": 160,
+        "nodes": 5538,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": -20,
+      "deepIncumbentScore": 105
+    },
+    {
+      "game": "fairy__11",
+      "ply": 35,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 10
+          }
+        ],
+        "score": 1130,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 0
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 7
+          }
+        ],
+        "score": 1390,
+        "nodes": 919,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 1390,
+      "deepIncumbentScore": 1164
+    },
+    {
+      "game": "fairy__11",
+      "ply": 41,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 10,
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 11
+          }
+        ],
+        "score": 1752,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 10,
+          "to": 8
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 10,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 4
+          }
+        ],
+        "score": 1860,
+        "nodes": 3192,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 1860,
+      "deepIncumbentScore": 1752
+    },
+    {
+      "game": "fairy__12",
+      "ply": 2,
+      "target": 4,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 4,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 6
+          }
+        ],
+        "score": -58,
+        "nodes": 1837,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 4,
+        "action": {
+          "type": "move",
+          "from": 12,
+          "to": 8
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 6
+          }
+        ],
+        "score": -56,
+        "nodes": 1958,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": -56,
+      "deepIncumbentScore": -58
+    },
+    {
+      "game": "fairy__13",
+      "ply": 3,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 6
+          }
+        ],
+        "score": -44,
+        "nodes": 4216,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 14
+          }
+        ],
+        "score": -18,
+        "nodes": 4328,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": -18,
+      "deepIncumbentScore": -44
+    },
+    {
+      "game": "fairy__13",
+      "ply": 4,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 7
+          }
+        ],
+        "score": 0,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 5
+          }
+        ],
+        "score": 74,
+        "nodes": 607,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 74,
+      "deepIncumbentScore": 0
+    },
+    {
+      "game": "fairy__14",
+      "ply": 10,
+      "target": 7,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 0
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          }
+        ],
+        "score": 378,
+        "nodes": 3249,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "move",
+          "from": 8,
+          "to": 0
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 8,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 5
+          }
+        ],
+        "score": 406,
+        "nodes": 3084,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 341,
+      "deepIncumbentScore": 348
+    },
+    {
+      "game": "fairy__15",
+      "ply": 2,
+      "target": 4,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 4,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 2
+          }
+        ],
+        "score": -16,
+        "nodes": 1916,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 4,
+        "action": {
+          "type": "move",
+          "from": 15,
+          "to": 10
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 15,
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 5
+          }
+        ],
+        "score": -6,
+        "nodes": 1515,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": -6,
+      "deepIncumbentScore": -16
+    },
+    {
+      "game": "fairy__15",
+      "ply": 3,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 6
+          }
+        ],
+        "score": -18,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "move",
+          "from": 3,
+          "to": 6
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 3,
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 3
+          }
+        ],
+        "score": 16,
+        "nodes": 639,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 16,
+      "deepIncumbentScore": -18
+    },
+    {
+      "game": "fairy__15",
+      "ply": 29,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          }
+        ],
+        "score": 964,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 11
+          }
+        ],
+        "score": 1126,
+        "nodes": 2190,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 1126,
+      "deepIncumbentScore": 964
+    },
+    {
+      "game": "fairy__15",
+      "ply": 31,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 9
+          }
+        ],
+        "score": 636,
+        "nodes": 4338,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 1
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 11
+          }
+        ],
+        "score": 652,
+        "nodes": 1346,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 555,
+      "deepIncumbentScore": 544
+    },
+    {
+      "game": "fairy__2",
+      "ply": 21,
+      "target": 7,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          }
+        ],
+        "score": 144,
+        "nodes": 3721,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 0
+          }
+        ],
+        "score": 182,
+        "nodes": 2462,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": -2,
+      "deepIncumbentScore": 74
+    },
+    {
+      "game": "fairy__2",
+      "ply": 31,
+      "target": 7,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 14
+          }
+        ],
+        "score": 698,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "move",
+          "from": 13,
+          "to": 15
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 13,
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 5
+          }
+        ],
+        "score": 766,
+        "nodes": 5316,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 686,
+      "deepIncumbentScore": 698
+    },
+    {
+      "game": "fairy__2",
+      "ply": 33,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 8
+          }
+        ],
+        "score": 758,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 5,
+          "to": 6
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 5,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 9
+          }
+        ],
+        "score": 816,
+        "nodes": 5210,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 750,
+      "deepIncumbentScore": 766
+    },
+    {
+      "game": "fairy__2",
+      "ply": 35,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 11
+          }
+        ],
+        "score": 1008,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 11
+          }
+        ],
+        "score": 1074,
+        "nodes": 375,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 1074,
+      "deepIncumbentScore": 1008
+    },
+    {
+      "game": "fairy__3",
+      "ply": 2,
+      "target": 4,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 4,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 10
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          }
+        ],
+        "score": -58,
+        "nodes": 1827,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 4,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 13
+          }
+        ],
+        "score": -32,
+        "nodes": 2516,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": -32,
+      "deepIncumbentScore": -58
+    },
+    {
+      "game": "fairy__3",
+      "ply": 5,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          }
+        ],
+        "score": -10,
+        "nodes": 2848,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          }
+        ],
+        "score": 2,
+        "nodes": 6976,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 2,
+      "deepIncumbentScore": -10
+    },
+    {
+      "game": "fairy__3",
+      "ply": 20,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 7
+          }
+        ],
+        "score": -422,
+        "nodes": 3640,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 4
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 6
+          }
+        ],
+        "score": -412,
+        "nodes": 5980,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": -386,
+      "deepIncumbentScore": -396
+    },
+    {
+      "game": "fairy__3",
+      "ply": 29,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 4
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 4
+          }
+        ],
+        "score": 982,
+        "nodes": 1319,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 10,
+          "to": 0
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 10,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          }
+        ],
+        "score": 1018,
+        "nodes": 775,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 1018,
+      "deepIncumbentScore": 938
+    },
+    {
+      "game": "fairy__4",
+      "ply": 16,
+      "target": 7,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 0
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 8
+          }
+        ],
+        "score": -6,
+        "nodes": 4968,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 7,
+        "action": {
+          "type": "move",
+          "from": 8,
+          "to": 14
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 8,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 13
+          }
+        ],
+        "score": 0,
+        "nodes": 6286,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": -62,
+      "deepIncumbentScore": -18
+    },
+    {
+      "game": "fairy__4",
+      "ply": 37,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          }
+        ],
+        "score": 94,
+        "nodes": 551,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 1
+          }
+        ],
+        "score": 100,
+        "nodes": 2779,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 100,
+      "deepIncumbentScore": 94
+    },
+    {
+      "game": "fairy__4",
+      "ply": 40,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 4
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 13
+          }
+        ],
+        "score": -103,
+        "nodes": 1932,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 8
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 13
+          }
+        ],
+        "score": -70,
+        "nodes": 2978,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": -70,
+      "deepIncumbentScore": -124
+    },
+    {
+      "game": "fairy__4",
+      "ply": 57,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 12
+          }
+        ],
+        "score": 348,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 7,
+          "to": 1
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 7,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 0
+          }
+        ],
+        "score": 618,
+        "nodes": 6132,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": 618,
+      "deepIncumbentScore": 348
+    },
+    {
+      "game": "fairy__5",
+      "ply": 35,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 5,
+          "to": 0
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 5,
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          }
+        ],
+        "score": -244,
+        "nodes": 5293,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 5,
+          "to": 4
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 13
+          }
+        ],
+        "score": -120,
+        "nodes": 7609,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": -120,
+      "deepIncumbentScore": -297
+    },
+    {
+      "game": "fairy__5",
+      "ply": 55,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 9
+          }
+        ],
+        "score": 14,
+        "nodes": 5680,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 1
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 4
+          }
+        ],
+        "score": 18,
+        "nodes": 5302,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 18,
+      "deepIncumbentScore": 14
+    },
+    {
+      "game": "fairy__5",
+      "ply": 65,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 2
+          }
+        ],
+        "score": 86,
+        "nodes": 925,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 1
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          }
+        ],
+        "score": 130,
+        "nodes": 3474,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 130,
+      "deepIncumbentScore": 86
+    },
+    {
+      "game": "fairy__5",
+      "ply": 67,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          }
+        ],
+        "score": -24,
+        "nodes": 288,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          }
+        ],
+        "score": 290,
+        "nodes": 743,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 290,
+      "deepIncumbentScore": -32
+    },
+    {
+      "game": "fairy__5",
+      "ply": 72,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          }
+        ],
+        "score": -358,
+        "nodes": 3326,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          }
+        ],
+        "score": -342,
+        "nodes": 4954,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": -342,
+      "deepIncumbentScore": -358
+    },
+    {
+      "game": "fairy__5",
+      "ply": 83,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 10
+          }
+        ],
+        "score": 594,
+        "nodes": 1387,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 10
+          }
+        ],
+        "score": 604,
+        "nodes": 2025,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 604,
+      "deepIncumbentScore": 538
+    },
+    {
+      "game": "fairy__5",
+      "ply": 103,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 5
+          }
+        ],
+        "score": 1356,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          }
+        ],
+        "score": 1390,
+        "nodes": 1664,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 1390,
+      "deepIncumbentScore": 1356
+    },
+    {
+      "game": "fairy__6",
+      "ply": 8,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 10,
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 1
+          }
+        ],
+        "score": -209,
+        "nodes": 982,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 10,
+          "to": 11
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 10,
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 8
+          }
+        ],
+        "score": -174,
+        "nodes": 7754,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": -174,
+      "deepIncumbentScore": -318
+    },
+    {
+      "game": "fairy__6",
+      "ply": 25,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 9
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          }
+        ],
+        "score": -78,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 1
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 2
+          }
+        ],
+        "score": -26,
+        "nodes": 3121,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": -26,
+      "deepIncumbentScore": -78
+    },
+    {
+      "game": "fairy__6",
+      "ply": 26,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 9
+          }
+        ],
+        "score": 128,
+        "nodes": 2419,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 13
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 2
+          }
+        ],
+        "score": 180,
+        "nodes": 2852,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 152,
+      "deepIncumbentScore": 128
+    },
+    {
+      "game": "fairy__7",
+      "ply": 10,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 12
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 10
+          }
+        ],
+        "score": -62,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          }
+        ],
+        "score": 2,
+        "nodes": 4643,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 2,
+      "deepIncumbentScore": -62
+    },
+    {
+      "game": "fairy__7",
+      "ply": 21,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 0
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 6
+          }
+        ],
+        "score": 336,
+        "nodes": 2645,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 1
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 14
+          }
+        ],
+        "score": 362,
+        "nodes": 4809,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 197,
+      "deepIncumbentScore": 336
+    },
+    {
+      "game": "fairy__7",
+      "ply": 43,
+      "target": 4,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 4,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 13
+          }
+        ],
+        "score": 1850,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 4,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 12
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 10
+          }
+        ],
+        "score": 2428,
+        "nodes": 401,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 2486,
+      "deepIncumbentScore": 1868
+    },
+    {
+      "game": "fairy__8",
+      "ply": 3,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          }
+        ],
+        "score": 22,
+        "nodes": 4222,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 0
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          }
+        ],
+        "score": 28,
+        "nodes": 3919,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 28,
+      "deepIncumbentScore": 22
+    },
+    {
+      "game": "fairy__8",
+      "ply": 5,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 9
+          }
+        ],
+        "score": -72,
+        "nodes": 3357,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 0
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 2
+          }
+        ],
+        "score": -70,
+        "nodes": 5624,
+        "bound": "inside-window"
+      },
+      "oldMatch": true,
+      "newMatch": false,
+      "deepScore": -70,
+      "deepIncumbentScore": -72
+    },
+    {
+      "game": "fairy__8",
+      "ply": 39,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 4
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          }
+        ],
+        "score": 644,
+        "nodes": 1208,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 3
+          }
+        ],
+        "score": 720,
+        "nodes": 8049,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 718,
+      "deepIncumbentScore": 616
+    },
+    {
+      "game": "fairy__8",
+      "ply": 51,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 6
+          }
+        ],
+        "score": 1724,
+        "nodes": 2620,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          }
+        ],
+        "score": 1732,
+        "nodes": 2518,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": false,
+      "deepScore": 1780,
+      "deepIncumbentScore": 1724
+    },
+    {
+      "game": "fairy__9",
+      "ply": 10,
+      "target": 5,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 12
+        },
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 10
+          }
+        ],
+        "score": -82,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 5,
+        "action": {
+          "type": "move",
+          "from": 6,
+          "to": 8
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 6,
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          }
+        ],
+        "score": 18,
+        "nodes": 5695,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 18,
+      "deepIncumbentScore": -82
+    },
+    {
+      "game": "fairy__9",
+      "ply": 19,
+      "target": 6,
+      "incumbent": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 6,
+          "to": 7
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 6,
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 8
+          }
+        ],
+        "score": -54,
+        "nodes": 4206,
+        "bound": "upper"
+      },
+      "challenger": {
+        "kind": "finish",
+        "depth": 6,
+        "action": {
+          "type": "move",
+          "from": 6,
+          "to": 5
+        },
+        "pv": [
+          {
+            "type": "move",
+            "from": 6,
+            "to": 5
+          }
+        ],
+        "score": 0,
+        "nodes": 1,
+        "bound": "inside-window"
+      },
+      "oldMatch": false,
+      "newMatch": true,
+      "deepScore": 0,
+      "deepIncumbentScore": -60
+    }
+  ]
+}

@@ -2057,3 +2057,8 @@ Pinned Fairy played both sides across 16 layouts at 100 ms, one thread, 16 MiB, 
 ### Fairy self-play: archived drop continuations
 
 Of 66 drop disagreements where the full-root replay favored the timed Schness choice at matching depth and completed a deeper horizon, 27 favored Fairy at the final horizon. Twenty-six first reversed one ply later; one took two. Immediate reply changes did not clearly separate reversals from other cases. This was an archive-only analysis: no new engine queries, match, or engine change. See the [reproducible diagnostic](research/data/fairy-selfplay-2026-11-06/drop-diagnostic/README.md).
+
+
+### Fairy self-play: interrupted-pass shadow rule fails gate
+
+Archived traces suggested the last incomplete pass already preferred the Fairy drop in 12 of 27 deeper reversal cases versus 1 of 39 comparison cases. The frozen teacher-blind rule changed 60 of 964 archived decisions across all 16 games, gaining 22 Fairy matches and losing 16. It missed the required two-to-one ratio. Deep full-root Schness preferred the challenger in 47 and the incumbent in 13, a separate finite-horizon diagnostic. Stop this rule without retuning or fresh runs; the 100 ms benchmark remains unchanged. [Plan and gate](research/data/fairy-selfplay-2026-11-06/drop-diagnostic/interrupted-pass-plan.md), [shadow results](research/data/fairy-selfplay-2026-11-06/drop-diagnostic/shadow.json).
