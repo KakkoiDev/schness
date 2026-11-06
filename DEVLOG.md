@@ -2072,3 +2072,8 @@ All 32 fresh control/observation pairs completed or adjudicated identically. Of 
 ### 2026-11-06 — Ordered child mask reuse fails timing gates
 
 All 174 portable cases and 177 preflight pairs passed. All 293,163 reused masks matched recomputation, with 129 fallbacks. The 32 fixed-depth roots matched across all four passes; aggregate candidate time was 0.25% slower. At 100 ms, mean completed depth was 6.078 versus 6.125 control. Both preset performance gates failed. Stop without tuning, promotion or a match. No production or benchmark changes. [Plan](research/competitive-engine-v1/ordered-child-masks-plan-2026-11-06.md) and [archive](research/competitive-engine-v1/js-ordered-child-masks.tar.gz), SHA-256 f00b06b4c3bca8e4dc432cfb7eada624d17e2eb3cb72c1cd78b558ef8c2860a1.
+
+
+### 2026-11-06 — Knight bitset mobility count fails timing gate
+
+All 4382 count comparisons across 36 presets, successors and directed cases passed. The isolated prototype passed 174 portable cases and eight targeted tests covering the mate fixtures. The 32 fixed-depth roots matched in all four passes, but the candidate was 12.3% slower in aggregate. At 100 ms, mean completed depth was 6.250 versus 6.172 control. The fixed-depth gate failed; stop without tuning, extending to other pieces, or a match. No production or benchmark changes. [Plan](research/competitive-engine-v1/knight-mobility-count-plan-2026-11-06.md) and [archive](research/competitive-engine-v1/js-knight-mobility-count.tar.gz), SHA-256 be107197f3d2c63d36e73c0fb49e8340d9aeca383d977ccc61011ebabb583b07.
