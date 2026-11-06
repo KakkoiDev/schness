@@ -2062,3 +2062,8 @@ Of 66 drop disagreements where the full-root replay favored the timed Schness ch
 ### Fairy self-play: interrupted-pass shadow rule fails gate
 
 Archived traces suggested the last incomplete pass already preferred the Fairy drop in 12 of 27 deeper reversal cases versus 1 of 39 comparison cases. The frozen teacher-blind rule changed 60 of 964 archived decisions across all 16 games, gaining 22 Fairy matches and losing 16. It missed the required two-to-one ratio. Deep full-root Schness preferred the challenger in 47 and the incumbent in 13, a separate finite-horizon diagnostic. Stop this rule without retuning or fresh runs; the 100 ms benchmark remains unchanged. [Plan and gate](research/data/fairy-selfplay-2026-11-06/drop-diagnostic/interrupted-pass-plan.md), [shadow results](research/data/fairy-selfplay-2026-11-06/drop-diagnostic/shadow.json).
+
+
+### 2026-11-06 — Interior move ordering headroom gate fails
+
+All 32 fresh control/observation pairs completed or adjudicated identically. Of 30 sampled interior states, 19 had the same strict best action at depths 3 and 4, and only 2 ranked fourth or later in the recorded actual order. The preset gate required 20 stable and at least 8 late. Stop without training a ranker, expanding the workload or running matches. Search and 100 ms benchmark unchanged. [Plan](research/competitive-engine-v1/interior-ordering-headroom-plan-2026-11-06.md) and [frozen audit archive](research/competitive-engine-v1/js-interior-ordering-headroom.tar.gz), SHA-256 7f98b5e82d1711f552b77e5e123d0fbcd5d9c6b05bc3f2d8775eeb0477c90a9f.
