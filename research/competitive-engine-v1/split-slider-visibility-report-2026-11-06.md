@@ -1,0 +1,5 @@
+# Split occupancy slider visibility: timing gate failed
+
+The isolated candidate replaces the blocker loop in the boolean board-mask attack predicate with two half-occupancy visibility lookups. It passed 1,048,576 comparisons against an independent ray walk, 174 portable contract cases, and eight targeted tests including 19 independently checked mates. A missing frozen oracle import was repaired before timing; the initial harness failure is retained.
+
+All 32 fresh paths replayed and all fixed-depth results matched, including nodes, scores, PVs and variations. The aggregate fixed-depth control/candidate times were 452.205/433.095 ms (4.23% saving; required 5%). At 100 ms, both arms reached mean completed depth 6.296875. There were 64 queries per arm at 100 ms, including two terminal roots per pass; their mean measured call times were 93.623 ms control and 93.603 ms candidate. No games ran. The timing gate failed; stop without tuning, a second timing run, or an extension. Production, Rust, and the competitive benchmark are unchanged.

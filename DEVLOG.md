@@ -2082,3 +2082,7 @@ All 4382 count comparisons across 36 presets, successors and directed cases pass
 ### 2026-11-06 - Reserve duplicate comparison misses gate
 
 The archive-only comparison joined all 964 decisions across 16 games and retained all 321 disagreements. Only seven comparable pairs across five games differed on net duplicate reserves: Fairy chose fewer in four and more in three. This missed the preset gate of 24 pairs, eight games, and two-to-one preference. Stop without fitting weights or new searches. See the [plan](research/data/fairy-selfplay-2026-11-06/drop-diagnostic/reserve-duplicates-plan.md) and [raw rows](research/data/fairy-selfplay-2026-11-06/drop-diagnostic/reserve-duplicates.json).
+
+### 2026-11-06 — Split occupancy slider lookup misses timing gate
+
+The isolated boolean attack prototype passed 1,048,576 geometric comparisons, 174 portable cases, and eight targeted tests covering the 19 mates. All 32 fresh paths and 256 query records were verified; fixed-depth search results matched exactly. Fixed-depth aggregate time fell 4.23% (required 5%), and mean depth at 100 ms was 6.296875 for both arms. Stop without tuning, a rerun, or a match. No production or benchmark changes. [Plan](research/competitive-engine-v1/split-slider-visibility-plan-2026-11-06.md), [report](research/competitive-engine-v1/split-slider-visibility-report-2026-11-06.md), [archive](research/competitive-engine-v1/js-split-slider-visibility.tar.gz) SHA-256 `15225e5defddef0e11f1eda9e4a43d95b21810e45c458df86da7e9bb19ebad0e`.
