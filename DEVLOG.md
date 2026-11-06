@@ -2067,3 +2067,8 @@ Archived traces suggested the last incomplete pass already preferred the Fairy d
 ### 2026-11-06 — Interior move ordering headroom gate fails
 
 All 32 fresh control/observation pairs completed or adjudicated identically. Of 30 sampled interior states, 19 had the same strict best action at depths 3 and 4, and only 2 ranked fourth or later in the recorded actual order. The preset gate required 20 stable and at least 8 late. Stop without training a ranker, expanding the workload or running matches. Search and 100 ms benchmark unchanged. [Plan](research/competitive-engine-v1/interior-ordering-headroom-plan-2026-11-06.md) and [frozen audit archive](research/competitive-engine-v1/js-interior-ordering-headroom.tar.gz), SHA-256 7f98b5e82d1711f552b77e5e123d0fbcd5d9c6b05bc3f2d8775eeb0477c90a9f.
+
+
+### 2026-11-06 — Ordered child mask reuse fails timing gates
+
+All 174 portable cases and 177 preflight pairs passed. All 293,163 reused masks matched recomputation, with 129 fallbacks. The 32 fixed-depth roots matched across all four passes; aggregate candidate time was 0.25% slower. At 100 ms, mean completed depth was 6.078 versus 6.125 control. Both preset performance gates failed. Stop without tuning, promotion or a match. No production or benchmark changes. [Plan](research/competitive-engine-v1/ordered-child-masks-plan-2026-11-06.md) and [archive](research/competitive-engine-v1/js-ordered-child-masks.tar.gz), SHA-256 f00b06b4c3bca8e4dc432cfb7eada624d17e2eb3cb72c1cd78b558ef8c2860a1.
