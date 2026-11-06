@@ -2077,3 +2077,8 @@ All 174 portable cases and 177 preflight pairs passed. All 293,163 reused masks 
 ### 2026-11-06 — Knight bitset mobility count fails timing gate
 
 All 4382 count comparisons across 36 presets, successors and directed cases passed. The isolated prototype passed 174 portable cases and eight targeted tests covering the mate fixtures. The 32 fixed-depth roots matched in all four passes, but the candidate was 12.3% slower in aggregate. At 100 ms, mean completed depth was 6.250 versus 6.172 control. The fixed-depth gate failed; stop without tuning, extending to other pieces, or a match. No production or benchmark changes. [Plan](research/competitive-engine-v1/knight-mobility-count-plan-2026-11-06.md) and [archive](research/competitive-engine-v1/js-knight-mobility-count.tar.gz), SHA-256 be107197f3d2c63d36e73c0fb49e8340d9aeca383d977ccc61011ebabb583b07.
+
+
+### 2026-11-06 - Reserve duplicate comparison misses gate
+
+The archive-only comparison joined all 964 decisions across 16 games and retained all 321 disagreements. Only seven comparable pairs across five games differed on net duplicate reserves: Fairy chose fewer in four and more in three. This missed the preset gate of 24 pairs, eight games, and two-to-one preference. Stop without fitting weights or new searches. See the [plan](research/data/fairy-selfplay-2026-11-06/drop-diagnostic/reserve-duplicates-plan.md) and [raw rows](research/data/fairy-selfplay-2026-11-06/drop-diagnostic/reserve-duplicates.json).
