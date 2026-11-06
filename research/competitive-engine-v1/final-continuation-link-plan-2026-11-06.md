@@ -1,0 +1,5 @@
+# Materialize only the final continuation at each search node
+
+An improving child currently allocates a new result and a linked continuation even if a later child supersedes it. Keep the best score, action and child link in locals inside each normal and quiescence node, and materialize its result and immutable continuation exactly once when returning. This changes no score, ordering, bounds, cache lifetime, or deadline checks. No production edits.
+
+Require the 174-case portable oracle and eight targeted tests covering 19 mates. Use 32 new quiet six-slot capture-bank paths with seed 20264277 and the fixed 8/16/24/32-ply schedule. Run one ABBA per mode: depth four with the prior 100000-node and 200 ms caps and LMR off, then the unchanged 100 ms JS benchmark. Require complete fixed-depth output equality, legal continuation replay and exact input restoration; require at least 5% fixed-depth aggregate wall time saving and no mean completed depth loss at 100 ms. Close on any failed gate without tuning, reruns or matches. Timing evidence alone does not establish strength.
