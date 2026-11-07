@@ -97,9 +97,13 @@
     <section class="ref-proposal">
       <h2 class="ref-h2">Still open</h2>
       <dl class="ref-copy">
-        <dt>Named levels or 0&ndash;100 <span class="ref-flag">for you</span></dt>
-        <dd>This screen assumes named: <strong>Learning</strong>, <strong>Steady</strong>,
-          <strong>Sharp</strong>, which is what ships. A number reads as precision the bot cannot honour.</dd>
+        <dt>Decided: numeric 0&ndash;100 <span class="ref-flag">8 Nov</span></dt>
+        <dd>The user chose to show the engine&rsquo;s numeric strength rather than named levels; the chip above
+          still reads <strong>Steady</strong> and is superseded. The number is <strong>requested search depth</strong>,
+          not a linear skill scale, and every request is capped at 262,144 nodes, so past some depth the bot stops
+          getting stronger and only gets slower. The control has to show what was actually searched (completed
+          depth, time) or mark where the range saturates. Not yet exposed in <strong>watch-ui.js</strong>: an
+          engineering prerequisite.</dd>
         <dt>Advantage bar default <span class="ref-flag">for you</span></dt>
         <dd>Drawn off, one tap away in the tools. On by default makes every game a graded one.</dd>
       </dl>
