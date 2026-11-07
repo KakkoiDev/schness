@@ -2135,3 +2135,49 @@ announces `DROP_REFUSAL` and keeps the reserve selection. The Playwright suite w
 **Next.** Per-policy refusal reasons for the eighteen restriction presets, and refusals during the
 setup phase (all four full-setup presets require quiet setup drops, but the guard exits outside
 `play`). Both are listed for the design pass's implementation handoff.
+
+## 2026-11-08 — A capture bank gets slots, not a badge
+
+**Question.** A capture bank holds three to six pieces and behaves differently once it is full: the
+next capture goes back to its owner instead of to the capturer. Today it is drawn with Classic's
+three-slot reserve plus a `×N` duplicate badge, which shows neither the capacity nor how close to it
+you are. What should the tray look like?
+
+**Alternatives.** (1) Keep the badge and add a `4 / 6` label — cheapest, but the badge is what
+compresses the count in the first place, so the number has to do all the work alone. (2) One slot
+per *piece type*, badge retained, capacity as text. Compact, but you cannot see the ceiling without
+reading. (3) **One slot per unit of capacity.** Six slots for a capacity-6 bank, filled left to
+right; a duplicate is simply another slot, because that is what it costs you. Chose 3, and dropped
+the badge with it.
+
+**Evidence.** Measured in Chromium at 1280×800, 390×812, 360 and 320. At capacity 6 in one row the
+tiles shrink to **46px**, two pixels over the 44px floor with no margin, so the tray wraps
+three to a row below 560px: Classic stays one row, a deep bank becomes two, and the shape itself
+carries the capacity. Tiles are **50px at every width** after the change, and the page has no
+horizontal overflow at 320, 360 or 390. All new text clears the 4.5:1 floor in both themes (lowest
+5.23:1). The permanently-lost slot is hatched in `--muted` (5.80:1 light, 6.17:1 dark); its border
+matches the shipped empty slot exactly (1.44:1 light, 1.33:1 dark), so the *state* is carried by the
+hatch rather than by an outline that no shipped slot could clear either.
+
+Ground truth came from running `applyAction`, not from reading it: a capture goes to the **capturer**
+while `banks[player].length < bankCapacity` and to the **victim** otherwise, and a bank entry is a
+piece *type* — `["rook","rook","knight"]` — with no owner and no origin. `occupantOf(WHITE, ROOK)`
+returns a **white** rook, so a piece taken from Black returns to the board as yours.
+
+**Decision.** Slots equal capacity; the count is the redundant non-colour signal; a full bank is
+drawn as a state, not inferred from a number; a permanently-lost slot is distinct from an empty one.
+Origin is **not** drawn, because the engine does not track it and drawing it would be a lie about
+what a drop produces — the transfer animation carries "where it went" instead.
+
+**Next measurement.** Four renderer prerequisites before any of this can be built: `bankCapacity`
+reaching `board-ui.js` and `watch-ui.js` (it appears in neither), an at-capacity flag, a
+permanently-lost slot state derived from the ruleset, and a capture animation whose destination is
+the recipient the engine chose rather than `victim.owner`. Whether bank entries should gain an
+origin field is a product decision, not a design one, and is carried to the user.
+
+**Correction on review.** Capacity counts bank entries only, and the game has six non-kings, two of
+each type, with both banks starting at rook, bishop and knight. The first draft drew three rooks in one
+bank and an overflow from a full capacity-6 bank, which is impossible: a 6/6 bank holds every
+non-king, so there is nothing to capture. The full and overflow examples now use capacity 4 and every
+tray holds at most two of a type. The draft also missed the commonest full bank: capacity 3 starts full,
+so every capture returns to its owner until that player deploys.

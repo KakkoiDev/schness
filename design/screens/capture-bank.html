@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="icon" href="../../icon.svg">
+  <title>Capture-bank tray · Schness design reference</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../ui.css">
+  <link rel="stylesheet" href="../design.css">
+</head>
+<body class="game-page ref-body">
+  <div class="game ref-screen">
+    <p class="eyebrow">Deliverable 3 · component</p>
+    <h1 class="ref-h1">The capture-bank tray</h1>
+    <p class="ref-lede ref-narrow">Classic&rsquo;s tray holds three fixed slots because Classic always returns a
+      piece to the player who owned it. A capture bank holds between three and six pieces you took from your
+      opponent, and when it is full the next capture goes back to them instead. None of that is currently
+      visible: the tray is the Classic tray with a <strong>&times;N</strong> badge.</p>
+
+    <div class="ref-tcases">
+<section class="ref-tcase"><h3 class="ref-tcase-h">Classic &mdash; the baseline</h3><div class="ref-tray"><div class="ref-tray-head"><span class="reserve-label">Your reserve</span></div><div class="bank ref-cap-3"><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in your bank"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="bishop" data-owner="white" aria-label="white bishop in your bank"><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot" aria-label="Empty bank slot"></span></div></div><p class="ref-case-note">Three slots, always three. Capacity is implicit and never changes, so no number is needed. An empty slot is a piece on the board, and it can come back.</p></section>
+<section class="ref-tcase"><h3 class="ref-tcase-h">Bank, partly full</h3><div class="ref-tray"><div class="ref-tray-head"><span class="reserve-label">Your bank</span><span class="ref-count">3 / 6</span></div><div class="bank ref-cap-6"><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in your bank"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in your bank"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in your bank"><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot" aria-label="Empty bank slot"></span><span class="bank-slot" aria-label="Empty bank slot"></span><span class="bank-slot" aria-label="Empty bank slot"></span></div></div><p class="ref-case-note">Slots are drawn to the capacity, not to the piece types. Three of six held: you can read both the count and the ceiling without a number &mdash; and the number is there anyway, because colour and position are never the only signal.</p></section>
+<section class="ref-tcase"><h3 class="ref-tcase-h">Bank, full<span class="ref-flag">changes the rules</span></h3><div class="ref-tray ref-tray-full"><div class="ref-tray-head"><span class="reserve-label">Your bank</span><span class="ref-count">4 / 4</span></div><div class="bank ref-cap-4"><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in your bank"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in your bank"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="bishop" data-owner="white" aria-label="white bishop in your bank"><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in your bank"><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button></div></div><p class="ref-case-note">Every slot taken. This state changes what a capture does, so it is drawn, not merely counted: the next piece you take will go back to its owner rather than to you. It is also where a capacity-3 bank <strong>starts</strong>: both sides begin holding a rook, bishop and knight, so every capture returns to its owner until you deploy. A full bank at capacity 6 cannot overflow &mdash; it holds all six non-kings, so there is nothing left to take.</p></section>
+<section class="ref-tcase"><h3 class="ref-tcase-h">Duplicates</h3><div class="ref-tray"><div class="ref-tray-head"><span class="reserve-label">Your bank</span><span class="ref-count">4 / 6</span></div><div class="bank ref-cap-6"><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in your bank"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in your bank"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="bishop" data-owner="white" aria-label="white bishop in your bank"><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in your bank"><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot" aria-label="Empty bank slot"></span><span class="bank-slot" aria-label="Empty bank slot"></span></div></div><p class="ref-case-note">Two rooks occupy two slots &mdash; yours and the one you took. Each type exists twice in the whole game, so two is the most a tray can hold. The shipped &times;N badge compressed exactly the thing you need to read, so this drops the badge: a duplicate is another slot, because that is what it costs you.</p></section>
+<section class="ref-tcase"><h3 class="ref-tcase-h">Empty</h3><div class="ref-tray"><div class="ref-tray-head"><span class="reserve-label">Your bank</span><span class="ref-count">0 / 4</span></div><div class="bank ref-cap-4"><span class="bank-slot" aria-label="Empty bank slot"></span><span class="bank-slot" aria-label="Empty bank slot"></span><span class="bank-slot" aria-label="Empty bank slot"></span><span class="bank-slot" aria-label="Empty bank slot"></span></div></div><p class="ref-case-note">Capacity still legible with nothing held. Four dashed slots say &ldquo;four, when you take them&rdquo; &mdash; a bank you have not filled yet, not a bank that cannot fill.</p></section>
+<section class="ref-tcase"><h3 class="ref-tcase-h">Permanent loss<span class="ref-flag">new state</span></h3><div class="ref-tray"><div class="ref-tray-head"><span class="reserve-label">Your reserve</span><span class="ref-count">1 left of 3</span></div><div class="bank ref-cap-3"><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in your bank"><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot ref-slot-gone" aria-label="Piece permanently out of the game"></span><span class="bank-slot ref-slot-gone" aria-label="Piece permanently out of the game"></span></div></div><p class="ref-case-note">The one state that must not look like &ldquo;empty&rdquo;. Here two pieces have left the game and will not return; one knight remains. A dashed slot can refill, a struck slot cannot, and today both would be drawn the same dashed box.</p></section>
+    </div>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">The moment of overflow</h2>
+      <p class="ref-lede ref-narrow">The only place the rule is legible is when it fires. Capture bank 4, bank full, and you take Black&rsquo;s bishop. The captured piece
+        animates to the tray that actually receives it &mdash; which is the opponent&rsquo;s, once yours is full.</p>
+<div class="ref-flow"><div class="ref-tray ref-tray-full"><div class="ref-tray-head"><span class="reserve-label">Your bank</span><span class="ref-count">4 / 4</span></div><div class="bank ref-cap-4"><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in your bank"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in your bank"><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="bishop" data-owner="white" aria-label="white bishop in your bank"><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in your bank"><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button></div></div><div class="ref-arrow" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"></path></svg></div><div class="ref-tray"><div class="ref-tray-head"><span class="reserve-label">Black reserve</span><span class="ref-count">1</span></div><div class="bank ref-cap-1"><button type="button" class="bank-piece" data-piece="bishop" data-owner="black" aria-label="black bishop in reserve"><img class="piece piece-black piece-bishop" src="../../assets/pieces/bB.svg" alt="" draggable="false" aria-hidden="true"></button></div></div></div><p class="ref-live" role="status">Your bank is full &mdash; the bishop went back to Black.</p>
+      <p class="ref-case-note">This keeps the existing invariant honest: the taken piece flies to the tray that
+        gets it. Classic, the owner&rsquo;s. Capture bank with room, yours. Capture bank when full, the
+        owner&rsquo;s again. Permanent loss, nowhere &mdash; it fades on the square.</p>
+    </section>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">What the engine does not track</h2>
+      <p class="ref-lede ref-narrow">Verified by running <strong>applyAction</strong>, not by reading it. Capacity counts bank entries only; a deployed piece frees its slot. There are six non-kings in the game, two of each type, and both banks start holding one of each.</p>
+      <dl class="ref-copy">
+        <dt>A bank holds types, not pieces</dt>
+        <dd><strong>banks.white</strong> is <strong>["rook","rook","knight"]</strong>. There is no owner and no
+          origin on a bank entry.</dd>
+        <dt>A dropped piece is yours</dt>
+        <dd><strong>occupantOf(WHITE, ROOK)</strong> &rarr; <strong>{owner:"white", piece:"rook"}</strong>. A rook
+          taken from Black returns to the board white.</dd>
+        <dt>So &ldquo;opponent-origin pieces&rdquo; do not exist</dt>
+        <dd>The brief asks the tray to show a piece&rsquo;s colour and owner after a transfer, and to show a drop
+          from a bank holding opponent-origin pieces. Neither is in the data. Drawing a captured piece in Black&rsquo;s
+          colour would be a lie about what happens when you drop it.</dd>
+        <dt>Which leaves a decision <span class="ref-flag">for you</span></dt>
+        <dd>Either the transfer animation carries &ldquo;where it went&rdquo; and the tray stays in your colour
+          &mdash; what is drawn above, and free &mdash; or bank entries gain an origin field so the tray can show it
+          permanently, which is engine state, a migration, and a rule the player must then be taught.</dd>
+      </dl>
+    </section>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">Engineering prerequisites</h2>
+      <ul class="ref-list">
+        <li><strong>bankCapacity reaches the renderer.</strong> <strong>renderReserve</strong> takes the pieces
+          and nothing else; <strong>bankCapacity</strong> appears nowhere in <strong>board-ui.js</strong> or
+          <strong>watch-ui.js</strong>. Capacity has to be passed before any of this can be drawn.</li>
+        <li><strong>A full bank is a state, not a count.</strong> The renderer needs to know it is at capacity so
+          the tray can say what the next capture will do.</li>
+        <li><strong>Permanent loss needs its own slot state.</strong> Distinguishable from empty, and derived
+          from the ruleset rather than from the number of pieces held.</li>
+        <li><strong>The transfer animation needs a destination.</strong> It already flies to
+          <strong>victim.owner</strong>; under capture-bank it must fly to the recipient the engine chose, which
+          is the capturer when <strong>banks[player].length &lt; bankCapacity</strong> and the victim otherwise.</li>
+      </ul>
+    </section>
+  </div>
+  <p class="ref-note">Proposed. Trays are drawn with the shipped <strong>.bank</strong>, <strong>.bank-piece</strong>
+    and <strong>.bank-slot</strong> classes; the count, the full state and the struck slot are new and marked
+    PROPOSED in design.css.</p>
+  <script src="../preview.js" type="module"></script>
+</body>
+</html>

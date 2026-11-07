@@ -141,3 +141,71 @@
 .ref-flag { display: inline-block; margin-left: .4rem; padding: 1px 7px; border-radius: 999px;
   background: var(--warn); color: var(--inverse); font-size: .6rem; font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase; vertical-align: 1px; }
+
+/* ---- deliverable 3: capture-bank tray ------------------------------------ */
+/* PROPOSED. Nothing below has shipped. The tray reuses the real .bank,
+   .bank-piece and .bank-slot from styles.css; what is new is the capacity
+   count, the at-capacity state, and a slot for a piece that has left the
+   game for good. bankCapacity reaches neither board-ui.js nor watch-ui.js
+   today, so all three need renderer support before they can be built. */
+.ref-tcases { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+  gap: var(--space-5, 24px); margin-top: var(--space-5, 24px); }
+.ref-tcase { border: 1px solid var(--line); border-radius: var(--radius-card, 10px);
+  background: var(--surface); padding: var(--space-4, 16px); }
+.ref-tcase-h { margin: 0 0 var(--space-4, 16px); font-size: .9rem; font-weight: 640; }
+
+.ref-tray { display: grid; gap: 8px; justify-items: start; }
+/* Slots are drawn to the capacity, so a six-slot bank is twice as wide as
+   Classic's three. On a phone that bank shrinks its own tiles under the 44px
+   floor, so instead it wraps three to a row: Classic stays one row, a deep
+   bank becomes two, and the tray's shape carries the capacity on its own. */
+.ref-tray .bank { display: grid; }
+.ref-tray .bank-piece, .ref-tray .bank-slot { width: auto; }
+.ref-cap-1 { grid-template-columns: repeat(1, 50px); }
+.ref-cap-2 { grid-template-columns: repeat(2, 50px); }
+.ref-cap-3 { grid-template-columns: repeat(3, 50px); }
+.ref-cap-4 { grid-template-columns: repeat(4, 50px); }
+.ref-cap-5 { grid-template-columns: repeat(5, 50px); }
+.ref-cap-6 { grid-template-columns: repeat(6, 50px); }
+@media (max-width: 560px) {
+  .ref-cap-4, .ref-cap-5, .ref-cap-6 { grid-template-columns: repeat(3, 50px); }
+}
+.ref-tray-head { display: flex; align-items: baseline; gap: var(--space-3, 12px); }
+/* The count is the non-colour signal: a full tray must never be readable
+   by its fill alone. */
+.ref-count { font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  font-variant-numeric: tabular-nums; color: var(--muted); }
+.ref-tray-full .ref-count { color: var(--warn); }
+.ref-tray-full .bank { position: relative; padding-bottom: 7px; }
+.ref-tray-full .bank::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 2px; border-radius: 2px; background: var(--warn); }
+
+/* A dashed slot can refill. A struck slot cannot: the piece is out of the
+   game. Today both would be drawn as the same dashed box. */
+.ref-slot-gone { border-style: solid !important; border-color: var(--line) !important;
+  background: repeating-linear-gradient(135deg, transparent 0 4px,
+    var(--muted) 4px 6px) !important; }
+
+.ref-flow { display: flex; flex-wrap: wrap; align-items: flex-end;
+  gap: var(--space-4, 16px); margin-top: var(--space-4, 16px); }
+.ref-arrow { display: grid; place-items: center; height: 50px; color: var(--muted); }
+
+.ref-list { margin: var(--space-4, 16px) 0 0; padding-left: 1.1rem; }
+.ref-list li { margin-bottom: var(--space-3, 12px); font-size: .85rem; line-height: 1.6;
+  color: var(--muted); }
+.ref-list strong { color: var(--ink); font-weight: 600; }
+/* Engine identifiers and literals are quoted inline; some have no space to
+   break at, so they wrap anywhere rather than pushing the page sideways. */
+.ref-copy strong, .ref-list strong { overflow-wrap: anywhere; }
+/* The status line is centred under a board elsewhere; here it belongs under
+   the tray it is talking about. */
+.ref-flow + .ref-live { margin-left: 0; }
+
+/* The term/definition grid squeezes its definitions to a ribbon on a phone.
+   Below 640px the term becomes a heading and the definition runs full width.
+   This also fixes the copy tables on the refused-drop screen. */
+@media (max-width: 640px) {
+  .ref-copy { grid-template-columns: 1fr; }
+  .ref-copy dd { border-top: 0; padding-top: 0; }
+  .ref-copy dt { padding-bottom: .35rem; }
+}
