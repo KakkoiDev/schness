@@ -532,14 +532,16 @@
 /* PROPOSED. styles.css rejected capping the board by height, rightly: it cost
    a third of the board and the page scrolled anyway. So the board keeps its
    width and the chrome above it gets shorter. */
+/* The summary carries its value at every width, so a closed mix still says
+   what it is set to. */
+.ref-puz .puzzle-settings summary { display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; min-height: 44px; padding: 0 12px; cursor: pointer; font-size: .85rem; font-weight: 640; }
+.ref-puz .ref-puz-mix:not([open]) { padding: 0; }
+.ref-puz-mix-value { color: var(--muted); font-weight: 560; }
 @media (max-width: 760px) {
   /* Shipped: .puzzle-settings{display:block!important} and the summary hidden,
      so six controls sit above the board on every visit. Closed, with the
      current mix as its value, it is one 44px row. */
-  .ref-puz .puzzle-settings summary { display: flex; align-items: center; justify-content: space-between;
-    min-height: 44px; padding: 0 12px; cursor: pointer; font-size: .85rem; font-weight: 640; }
-  .ref-puz .ref-puz-mix:not([open]) { padding: 0; }
-  .ref-puz-mix-value { color: var(--muted); font-weight: 560; }
   .ref-puz .puzzle-heading .eyebrow { display: none; }
   /* "Find the checkmate" above "White to move · mate in 2" says it twice. On a
      phone the prompt is the visible heading; the h1 stays for the outline and
