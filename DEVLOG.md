@@ -2105,3 +2105,33 @@ The November 6 probe repeated the mechanism already closed in the November 4 ent
 Publish the Claude engine handoff, remaining local research readables, Fairy browser distribution and scripts, design/reference outputs and Classic mobile/refused-drop UI work. Most engine sources already match this branch. Preserve the newer remote log and frozen staged-move diagnostic; older divergent local logs, README and diagnostic are retained in research/workspace-handoff-2026-11-07.tar.gz. No probes, matches, Rust work, merge or engine promotion. Shell CACHE advances to v134. The project unit suite passed 397 tests. The broad npm test command also discovered archived local prototype tests with missing historical imports; those are outside the project test directory. The full desktop/mobile browser suite reported UI failures; see the retained validation log. This checkpoint is not a claim of passing browser validation.
 
 Validation completion: desktop/mobile Playwright finished with 97 passed, 18 failed and 5 skipped (120 total). The full final browser log and counts are retained in research/workspace-publication-2026-11-07/. The source checkpoint is published with these failures disclosed; no merge or promotion.
+
+## 2026-11-08 — Refused drops explained in every quiet-drop preset
+
+**Question.** The 2026-11-07 publication shipped `watch-ui.js` importing `refusedDrops` and `DROP_REFUSAL`
+without the `interaction.js`, `lobby-board.js` and `main.js` changes that define and use them, so the
+Bot arena failed to load. The designer's re-run of the UI audit then found that, once restored, the
+explanation appeared only in Classic: Capture bank 4 · quiet refused 0 squares against Classic's 6,
+with identical drop rules and identical legal targets.
+
+**Cause.** The guard returned nothing whenever `rules.experiment` was set. That flag marks capture
+policy, setup and check restrictions alike, so it hid correct refusals in eight presets whose drop
+legality is exactly Classic's.
+
+**Alternatives rejected.** Dropping the experiment check entirely: correct for today's presets only
+because every check-restricting preset also sets `allowCheckingDrops`, and it would silently apply
+the Classic message to any future preset that breaks that pattern. Writing per-policy reasons for all
+36 now: nine presets never refuse a drop for giving check, and the eighteen restriction policies need
+new legality comparisons, not just copy — that belongs to the design pass's implementation handoff.
+
+**Decision.** Allow-list `permanent-loss`, `capture-bank` and `setup`. Restore the local unit test,
+and add one that enumerates the eight quiet presets from `variants.js` and asserts the five checking
+presets sampled still return nothing.
+
+**Evidence.** 396 of 398 unit tests pass; the two failures are engine-benchmark tests that need
+`npm install` and are unrelated. In Chromium, Capture bank 4 · quiet now marks six refused squares,
+announces `DROP_REFUSAL` and keeps the reserve selection. The Playwright suite was not rerun.
+
+**Next.** Per-policy refusal reasons for the eighteen restriction presets, and refusals during the
+setup phase (all four full-setup presets require quiet setup drops, but the guard exits outside
+`play`). Both are listed for the design pass's implementation handoff.

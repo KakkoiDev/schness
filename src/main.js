@@ -6,7 +6,7 @@ import {
 import { colorName, pieceName, squareName } from './notation.js';
 import { gameText, moveCount, pairMoves, pliesToUndo, recordAction } from './history.js';
 import { isCursorKey, moveCursor, readEntry } from './keyboard.js';
-import { actionAt, bankSelection, boardSelection, destinations, setupActionAt, setupDestinations } from './interaction.js';
+import { refusedDrops, DROP_REFUSAL, actionAt, bankSelection, boardSelection, destinations, setupActionAt, setupDestinations } from './interaction.js';
 import { applyActionMessage, makeActionMessage, outcomeSummary } from './game-message.js';
 import { createGameId, gameRoute, gameUrl } from './navigation.js';
 import { createChatMessage, parseChatMessage } from './chat.js';
@@ -1000,6 +1000,7 @@ function onSquare(square) {
   }
   const chosen = actionAt(position, selection, square);
   if (chosen) return play(chosen);
+  if (refusedDrops(position, selection).has(square)) { announce(DROP_REFUSAL); return; }
   const occupant = position.board[square];
   selection = occupant?.owner === humanColor ? boardSelection(square) : null;
   render();
@@ -1060,8 +1061,10 @@ function endPointerDrag(event) {
   setTimeout(() => { suppressClick = false; }, 0);
   if (action) play(action);
   else {
-    selection = null;
+    const refused = target && refusedDrops(position, drag.selection).has(Number(target.dataset.square));
+    selection = refused ? drag.selection : null;
     render();
+    if (refused) announce(DROP_REFUSAL);
   }
 }
 
@@ -1419,6 +1422,7 @@ function render() {
   const checked = checkedSquares(shown);
   renderBoard(board, shown, {
     selected: selection?.type === 'board' ? selection.square : null, targets,
+    refused: canHumanAct() ? refusedDrops(position, selection) : new Set(),
     placements: placingKing ? targets : new Set(), last, checked,
     cursor: keyboardActive ? squareAtCursor() : null,
     dragging: pointerDrag?.active ? pointerDrag.sourceSquare : null, disabled: !canHumanAct(),

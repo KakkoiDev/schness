@@ -1,5 +1,5 @@
 import { BLACK, WHITE, applyAction, createInitialPosition, getResult } from './rules.js';
-import { actionAt, bankSelection, boardSelection, setupActionAt } from './interaction.js';
+import { refusedDrops, DROP_REFUSAL, actionAt, bankSelection, boardSelection, setupActionAt } from './interaction.js';
 import { createBoard, renderBoard, renderReserve } from './board-ui.js';
 import { tutorialHighlights } from './tutorial.js';
 import { difficultyDepth } from './settings.js';
@@ -66,6 +66,11 @@ export function initLobbyBoard() {
       ? actionAt(position, selection, square)
       : setupActionAt(position, square);
     if (action) return play(action);
+    if (refusedDrops(position, selection).has(square)) {
+      render();
+      status.textContent = DROP_REFUSAL;
+      return;
+    }
     const occupant = position.board[square];
     selection = occupant?.owner === WHITE ? boardSelection(square) : null;
     render();
@@ -94,7 +99,7 @@ export function initLobbyBoard() {
     const { targets, placements } = tutorialHighlights(position, selection);
     renderBoard(board, position, {
       selected: selection?.type === 'board' ? selection.square : null,
-      targets,
+      targets, refused: canAct() ? refusedDrops(position, selection) : new Set(),
       placements: canAct() ? placements : new Set(),
       disabled: !canAct(),
     });

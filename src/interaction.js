@@ -41,3 +41,20 @@ export function isLegalAction(position, action) {
   const key = actionKey(action);
   return legalActions(position).some((candidate) => actionKey(candidate) === key);
 }
+
+// Experiments that change captures or the opening, never which drops may check. With quiet drops
+// they refuse exactly what Classic refuses, so the Classic comparison and copy are correct for them.
+const QUIET_DROP_EXPERIMENTS = new Set(['permanent-loss', 'capture-bank', 'setup']);
+
+/** Quiet-drop rules only: compare legal drops with checking enabled, preserving king safety. */
+export function refusedDrops(position, selection) {
+  const experiment = position.rules?.experiment;
+  if (position.phase !== 'play' || selection?.type !== 'bank' || position.rules?.allowCheckingDrops
+      || (experiment && !QUIET_DROP_EXPERIMENTS.has(experiment))) return new Set();
+  const allowed = destinations(position, selection);
+  const relaxed = { ...position, rules: { ...position.rules, allowCheckingDrops: true } };
+  return new Set(actionsForSelection(relaxed, selection)
+    .filter(action => !allowed.has(action.to)).map(action => action.to));
+}
+
+export const DROP_REFUSAL = 'A dropped piece may not give check. Your piece is still in reserve.';
