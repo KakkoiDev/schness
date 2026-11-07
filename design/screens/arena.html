@@ -97,13 +97,13 @@
     <section class="ref-proposal">
       <h2 class="ref-h2">Still open</h2>
       <dl class="ref-copy">
-        <dt>Decided: numeric 0&ndash;100 <span class="ref-flag">8 Nov</span></dt>
-        <dd>The user chose to show the engine&rsquo;s numeric strength rather than named levels; the chip above
-          still reads <strong>Steady</strong> and is superseded. The number is <strong>requested search depth</strong>,
-          not a linear skill scale, and every request is capped at 262,144 nodes, so past some depth the bot stops
-          getting stronger and only gets slower. The control has to show what was actually searched (completed
-          depth, time) or mark where the range saturates. Not yet exposed in <strong>watch-ui.js</strong>: an
-          engineering prerequisite.</dd>
+        <dt>Decided: level 0&ndash;7 plus a think-time cap <span class="ref-flag">8 Nov</span></dt>
+        <dd>Two sliders replace the named levels; the <strong>Steady</strong> chip above is superseded. Level is
+          search depth: 0&ndash;3 answer in under 3&nbsp;ms, 4 in about 5, 5 in 25, 6 in 83 (worst 420), and 7 in a median
+          1.3&nbsp;s with a worst case of 8.2&nbsp;s, which is why the range stops at 7. Think time caps every move
+          so no level can stall the game. Marked stops: Learning&nbsp;2, Steady&nbsp;3 (default), Sharp&nbsp;4,
+          Strong&nbsp;6, Max&nbsp;7; default cap 1&nbsp;s. Speeds from one Mac, not a phone, and not a skill measure.
+          Not yet in <strong>watch-ui.js</strong>: an engineering prerequisite.</dd>
         <dt>Advantage bar default <span class="ref-flag">for you</span></dt>
         <dd>Drawn off, one tap away in the tools. On by default makes every game a graded one.</dd>
       </dl>

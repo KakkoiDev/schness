@@ -2220,3 +2220,27 @@ tools open in the rail.
 **Next measurement.** The IA is still not implemented into `watch.html`: that reverses a `DECISIONS.md` entry
 and is its own commit, with these fold numbers as evidence, a `CACHE` bump and the e2e specs updated. No real
 device has run any of this.
+
+## 2026-11-08 — Arena strength: level 0–7 and a think-time cap
+
+**Question.** The user wants players to fine-tune the bot's difficulty or resource use with a range,
+with sensible defaults. Earlier the same day a 0–100 numeric control was chosen, because the engine's
+`strength` accepts 0–100. What range is real?
+
+**Evidence.** `research/strength-range-2026-11-08/`: one warmed pass over the 32 saved Classic
+positions, default node cap, on a Mac. Median per move: depths 0–3 under 1 ms, 4 at 4.9 ms, 5 at 24.5,
+6 at 82.6 (p95 270, max 420), and 7 at 1,273 ms (p95 4,761, max 8,154), averaging 163,838 nodes against
+the 262,144 cap. The run was stopped during depth 8; deeper levels are expected to hit the cap and
+gain only waiting.
+
+**Alternatives rejected.** 0–100: 8 useful steps and 92 that only add waiting. Named levels only: no
+fine-tuning, which is what was asked for. A think-time slider alone: hides difficulty behind hardware
+speed, so the same setting plays differently on a phone and a desktop.
+
+**Decision.** Two sliders. Level 0–7 (depth) and think time (`maxMillis`, already supported by the
+worker). Marked stops Learning 2, Steady 3 (default), Sharp 4, Strong 6, Max 7; default cap 1 s.
+Recorded in DECISIONS.md, replacing the 0–100 line.
+
+**Next measurement.** Bot-vs-bot games per level to check that each step is actually stronger: the
+move-agreement column is not a strength measure, and it is not even monotonic. Timing on a real phone,
+to set the think-time default there.

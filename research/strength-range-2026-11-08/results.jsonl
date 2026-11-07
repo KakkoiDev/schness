@@ -1,0 +1,8 @@
+{"strength":0,"medianMs":0,"p95Ms":0,"maxMs":0.1,"meanCompletedDepth":0,"minCompleted":0,"meanNodes":0,"agreeWithD8":3}
+{"strength":1,"medianMs":0,"p95Ms":0.1,"maxMs":0.1,"meanCompletedDepth":1,"minCompleted":1,"meanNodes":14,"agreeWithD8":5}
+{"strength":2,"medianMs":0.2,"p95Ms":0.4,"maxMs":0.4,"meanCompletedDepth":2,"minCompleted":2,"meanNodes":67,"agreeWithD8":7}
+{"strength":3,"medianMs":1,"p95Ms":2.7,"maxMs":2.8,"meanCompletedDepth":3,"minCompleted":3,"meanNodes":422,"agreeWithD8":9}
+{"strength":4,"medianMs":4.9,"p95Ms":9.6,"maxMs":11.2,"meanCompletedDepth":4,"minCompleted":4,"meanNodes":1588,"agreeWithD8":14}
+{"strength":5,"medianMs":24.5,"p95Ms":64.7,"maxMs":82.1,"meanCompletedDepth":5,"minCompleted":5,"meanNodes":8828,"agreeWithD8":13}
+{"strength":6,"medianMs":82.6,"p95Ms":269.8,"maxMs":420,"meanCompletedDepth":6,"minCompleted":6,"meanNodes":30578,"agreeWithD8":21}
+{"strength":7,"medianMs":1272.6,"p95Ms":4761.2,"maxMs":8153.7,"meanCompletedDepth":7,"minCompleted":7,"meanNodes":163838,"agreeWithD8":13}
