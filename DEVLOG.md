@@ -8,6 +8,31 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-11-08 — Home: four doors, beside the board
+
+**Question.** At 1280×800 the shipped home shows the board and no way off the page: the first card starts
+at y = 884. Five cards now sit there, with Random variant above the primary Bot arena card. What should the
+home page offer, and where?
+
+**Alternatives.** (1) Keep five cards and shrink them. (2) Keep Random variant but move it last. (3) **Fold
+Random variant into the arena card** — "stronger bots, rule variants, replay" — and put the four doors beside
+the board from 900px. Chose 3: two doors to one page with two promises is the problem, not their order, and
+Random is the first row of the arena's picker anyway.
+
+**Evidence.** Measured at 1440×900, 1280×800, 1024×768, 1280×650 and 390×812. The whole board column — your
+reserve and the status line included — and all four cards now clear the window on every desktop size; at
+1280×800 the first card is at **228** and the status line ends at 696. Two render-only causes: `.menu`'s
+`gap: clamp(2rem, 7vw, 7rem)` applies to rows too, which put 89px between the intro and the board; and
+`.mode` never declares its columns, so the five arrows sat in columns 118, 78, 204, 195 and 189px wide. The
+header fits one row once the page takes the 66rem every other page uses instead of the lobby's 42rem.
+
+**Stale entry.** `DECISIONS.md` says the phone home board is `display: none`. It has not been since
+`954ceff` removed `.lobby-play{display:none}`; phones get a 272px board. The behaviour is better — it makes
+"take this position further" true where that card is the only door — but the entry needs rewriting with
+whichever commit ships this.
+
+**Next measurement.** None on a device.
+
 ## 2026-11-08 — game-page moves off <body> on the October reference screens
 
 **Question.** Five reference screens (play, game, result, settings, refused-drop) carried `game-page` on

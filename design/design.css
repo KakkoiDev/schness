@@ -385,3 +385,46 @@
   .ref-pick { width: 100%; max-height: 100dvh; min-height: 100dvh; border: 0;
     border-radius: 0; }
 }
+
+/* ---- deliverable 3: home ------------------------------------------------- */
+/* PROPOSED. The shipped lobby markup, with four doors instead of five. */
+
+/* .mode never declares its columns, so the arrow column was sized by the text
+   beside it and the arrows wandered: 118, 78, 204, 195 and 189px at 1280. */
+.ref-home .mode { grid-template-columns: minmax(0, 1fr) auto; }
+
+/* .lobby-seat has no player row either; see the .ref-seat rule above. */
+@media (max-width: 760px) {
+  .ref-home .lobby-seat .reserve-label { position: static; width: auto; height: auto;
+    clip: auto; border: 0; padding: 0; white-space: normal; }
+}
+
+/* From 900px the page takes the 66rem every other page uses, which also puts
+   the header on one row, and the doors sit beside the board instead of 884px
+   down the page. */
+@media (min-width: 900px) {
+  .lobby-page .ref-home { width: min(100%, 66rem); }
+  /* .lobby-page .menu sets display: block, so these need the page class too. */
+  .lobby-page .ref-home-menu { display: grid;
+    grid-template-columns: minmax(0, 22rem) minmax(18rem, 26rem);
+    column-gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  /* The whole board column, your own reserve and the status line included,
+     has to clear an 800px window; the headline and its margins pay for it. */
+  .lobby-page .ref-home header { margin-bottom: var(--space-4, 16px); }
+  .lobby-page .ref-home-menu .lobby-intro { grid-column: 1 / -1; margin-bottom: var(--space-4, 16px); }
+  .lobby-page .ref-home-menu .lobby-intro h1 { margin-bottom: .35rem; font-size: clamp(2rem, 3.4vw, 2.6rem); }
+  .lobby-page .ref-home-menu .lobby-intro > p { max-width: 44rem; }
+  /* The board is bounded by the window here too. 360px is everything in the
+     page that is not the board, measured: header and intro above it (228px),
+     your reserve and the status line below it (116px), and a margin. At 800px
+     and taller the 22rem cap wins; on a short laptop the board gives way. */
+  .lobby-page .ref-home-menu .lobby-play { margin: 0;
+    width: clamp(16rem, calc(100dvh - 360px), 22rem); }
+  /* .menu carries gap: clamp(2rem, 7vw, 7rem) for both axes, which put 89px
+     between the intro and the board at 1280. Only the columns want a gap, and
+     the columns sit together rather than spreading across the page. */
+  .lobby-page .ref-home-menu { grid-template-columns: auto minmax(18rem, 26rem);
+    row-gap: 0; justify-content: start; }
+  .lobby-page .ref-home-menu .lobby-foot button { white-space: nowrap; }
+  .lobby-page .ref-home-menu .mode-buttons { margin-top: calc(3.25rem + var(--space-2, 8px)); }
+}

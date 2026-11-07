@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="icon" href="../../icon.svg">
+  <title>Home &middot; Schness design reference</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../ui.css">
+  <link rel="stylesheet" href="../design.css">
+</head>
+<body class="lobby-page ref-body">
+  <main class="game ref-home">
+    <header>
+      <a class="brand" href="../../index.html" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><span class="brand-word">Schness</span></a>
+      <nav class="site-nav" aria-label="Schness"><a href="../../index.html#online" data-online-link>Play online</a><a href="../../watch.html">Bot arena</a><a href="../../puzzles.html">Puzzles</a><a href="../../library.html">Library</a></nav>
+      <div class="header-actions">
+        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
+        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
+        <button id="install" class="text-button btn" type="button" hidden data-variant="ghost">Install</button>
+        <span class="header-rule" aria-hidden="true"></span>
+      </div>
+    </header>
+    <section id="menu" class="menu ref-home-menu" aria-labelledby="play-title">
+      <div class="lobby-intro">
+        <h1 id="play-title">Play Schness</h1>
+        <p>Move a piece, or deploy one from your reserve. Every capture comes back.</p>
+      </div>
+      <section id="lobby-play" class="lobby-play" aria-labelledby="lobby-play-title">
+        <h2 id="lobby-play-title" class="visually-hidden">Play against the bot</h2>
+        <div class="lobby-seat"><span class="reserve-label" id="lobby-black-label">Black reserve</span><div class="bank" aria-labelledby="lobby-black-label"><button type="button" class="bank-piece" data-piece="rook" data-owner="black" aria-label="black rook in reserve" disabled><img class="piece piece-black piece-rook" src="../../assets/pieces/bR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="bishop" data-owner="black" aria-label="black bishop in reserve" disabled><img class="piece piece-black piece-bishop" src="../../assets/pieces/bB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="black" aria-label="black knight in reserve" disabled><img class="piece piece-black piece-knight" src="../../assets/pieces/bN.svg" alt="" draggable="false" aria-hidden="true"></button></div></div>
+        <div id="lobby-board" class="board" role="grid" aria-label="Schness board" data-orientation="white"><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="0" aria-label="Empty square 1"><span class="square-coordinate" aria-hidden="true">a4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="1" aria-label="Empty square 2"><span class="square-coordinate" aria-hidden="true">b4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="2" aria-label="Empty square 3"><span class="square-coordinate" aria-hidden="true">c4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="3" aria-label="Empty square 4"><span class="square-coordinate" aria-hidden="true">d4</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="4" aria-label="Empty square 5"><span class="square-coordinate" aria-hidden="true">a3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="5" aria-label="Empty square 6"><span class="square-coordinate" aria-hidden="true">b3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="6" aria-label="Empty square 7"><span class="square-coordinate" aria-hidden="true">c3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="7" aria-label="Empty square 8"><span class="square-coordinate" aria-hidden="true">d3</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="8" aria-label="Empty square 9"><span class="square-coordinate" aria-hidden="true">a2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="9" aria-label="Empty square 10"><span class="square-coordinate" aria-hidden="true">b2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="10" aria-label="Empty square 11"><span class="square-coordinate" aria-hidden="true">c2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="11" aria-label="Empty square 12"><span class="square-coordinate" aria-hidden="true">d2</span></button></div><div class="board-row" role="row"><button class="square target placement" type="button" role="gridcell" tabindex="-1" data-square="12" aria-label="Empty square 13"><span class="square-coordinate" aria-hidden="true">a1</span></button><button class="square target placement" type="button" role="gridcell" tabindex="-1" data-square="13" aria-label="Empty square 14"><span class="square-coordinate" aria-hidden="true">b1</span></button><button class="square target placement" type="button" role="gridcell" tabindex="-1" data-square="14" aria-label="Empty square 15"><span class="square-coordinate" aria-hidden="true">c1</span></button><button class="square target placement" type="button" role="gridcell" tabindex="-1" data-square="15" aria-label="Empty square 16"><span class="square-coordinate" aria-hidden="true">d1</span></button></div></div>
+        <div class="lobby-seat"><span class="reserve-label" id="lobby-white-label">Your reserve</span><div class="bank" aria-labelledby="lobby-white-label"><button type="button" class="bank-piece" data-piece="rook" data-owner="white" aria-label="white rook in reserve" disabled><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="bishop" data-owner="white" aria-label="white bishop in reserve" disabled><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in reserve" disabled><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button></div></div>
+        <p class="lobby-foot"><span role="status">Place your king on rank 1 and the game runs.</span><button class="text-button btn" type="button" data-variant="ghost">Start again</button></p>
+      </section>
+      <div class="mode-buttons">
+        <a class="mode mode-primary btn" href="../../watch.html" data-variant="secondary"><strong>Bot arena</strong><small>Take this position further &mdash; stronger bots, rule variants, replay</small></a>
+        <div class="mode-group">
+          <button class="mode btn" type="button" data-variant="secondary"><strong>Create an online game</strong><small>Get a link to send a friend</small></button>
+          <a class="mode btn" href="../../library.html" data-variant="secondary"><strong>Browse recorded games</strong><small>Study 1,099 unique AI games</small></a>
+          <a class="mode btn" href="../../puzzles.html" data-variant="secondary"><strong>Checkmate puzzles</strong><small>Mate in one, two, three, or four</small></a>
+        </div>
+      </div>
+    </section>
+    <footer class="site-foot">
+      <nav aria-label="More">
+        <button class="foot-link btn" type="button" data-open-rules data-variant="ghost">How to play</button>
+        <a href="https://github.com/KakkoiDev/schness">Source</a>
+        <a href="https://github.com/KakkoiDev/schness/releases">Tournament data</a>
+        <a href="https://github.com/KakkoiDev/schness/blob/master/DEVLOG.md">Dev log</a>
+      </nav>
+      <p class="foot-note">Peer-to-peer, no accounts, no tracking.</p>
+    </footer>
+  </main>
+
+  <div class="game game-page ref-screen ref-anotes">
+    <p class="eyebrow">Deliverable 3 &middot; screen</p>
+    <h1 class="ref-h1">Home</h1>
+    <p class="ref-lede ref-narrow">The home page stays what <strong>DECISIONS.md</strong> says it is: a board,
+      not a picture of one, playing Classic against the same bot worker as every other surface. What changes
+      is where the doors are, and how many.</p>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">The shipped home, measured</h2>
+      <dl class="ref-copy">
+        <dt>No door above the fold on a laptop</dt>
+        <dd>At 1280&times;800 the first card starts at <strong>y&nbsp;=&nbsp;884</strong>. The board is
+          visible; every way off the page is not.</dd>
+        <dt>Five cards, and the primary is second</dt>
+        <dd><strong>Random variant</strong> was added above <strong>Bot arena</strong>, as its own bordered
+          card. The page now offers an experimental ruleset before the default one, and has two doors to the
+          same arena with two different promises. <strong>DECISIONS.md</strong> describes four.</dd>
+        <dt>Five arrows at five positions</dt>
+        <dd><strong>.mode</strong> never declares its columns, so the arrow column is sized by the text
+          beside it: 118, 78, 204, 195 and 189px wide at 1280. The arrows wander down the stack.</dd>
+        <dt>The header wraps at 1280</dt>
+        <dd><strong>.lobby-page .game</strong> caps the page at 42rem, so on the widest screens the brand,
+          the four destinations and Rules / Dark / &#26085;&#26412;&#35486; do not fit one row.</dd>
+        <dt>A stale entry <span class="ref-flag">DECISIONS.md</span></dt>
+        <dd>&ldquo;At phone width the board is <strong>display: none</strong>, on purpose.&rdquo; It has not
+          been since <strong>954ceff</strong> removed <strong>.lobby-play{display:none}</strong>; a phone
+          gets a 272px board. The behaviour is the better one &mdash; it makes &ldquo;take this position
+          further&rdquo; true on the device where that card is the only door &mdash; but the entry needs
+          rewriting in the commit that ships this.</dd>
+      </dl>
+    </section>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">What this screen changes</h2>
+      <ul class="ref-list">
+        <li><strong>Four doors again.</strong> Random variant folds into the arena card, whose line becomes
+          &ldquo;stronger bots, rule variants, replay&rdquo;. Random stays one tap away, as the first row of
+          the arena&rsquo;s picker. One changed string, in two languages.</li>
+        <li><strong>Board and doors side by side from 900px.</strong> The page widens to the 66rem every
+          other page uses, and every card sits beside the board, above an 800px fold.</li>
+        <li><strong>Arrows in one column.</strong> <strong>minmax(0, 1fr) auto</strong> on the card, so the
+          arrow is always at the card&rsquo;s edge.</li>
+        <li><strong>The reserves are named on a phone.</strong> The same <strong>styles.css:1534</strong>
+          gap as the arena: <strong>.lobby-seat</strong> has no player row, so its labels come back.</li>
+        <li><strong>Unchanged:</strong> Classic only, no setup, no strength control, no variant chip. The
+          home page starts a game; the arena is where you change it.</li>
+      </ul>
+    </section>
+    <p class="ref-note">Proposed. Header, footer, board, reserves and cards are the shipped markup and
+      classes, copied from <strong>index.html</strong> at build time. The two-column layout, the card columns
+      and the restored labels are new and marked PROPOSED in design.css.</p>
+  </div>
+  <script src="../preview.js" type="module"></script>
+</body>
+</html>
