@@ -2181,3 +2181,42 @@ bank and an overflow from a full capacity-6 bank, which is impossible: a 6/6 ban
 non-king, so there is nothing to capture. The full and overflow examples now use capacity 4 and every
 tray holds at most two of a type. The draft also missed the commonest full bank: capacity 3 starts full,
 so every capture returns to its owner until that player deploys.
+
+## 2026-11-08 — The arena board is sized from the window, not from a column
+
+**Question.** `.watch-layout` gives the board a `minmax(0,37rem)` column and nothing else, so the board is as
+tall as the column is wide. Measured at 1280×800 the board's bottom edge is at **1073**, White's own reserve
+is at **y = 1091**, and on a 390×812 phone they are at **977** and **991**. `DECISIONS.md` says the board is
+bounded by the window. What should the arena look like when it is?
+
+**Alternatives.** (1) Shrink the 37rem cap — helps one viewport and breaks the next. (2) Put the trays beside
+the board on desktop, freeing vertical space; mirrors the real geometry but diverges from the shipped
+above/below arrangement and has to be undone on a phone. (3) **Give the board the height that is left over**
+after the bar, the turn line and both trays, capped at 37rem and at the column width. Chose 3, and spent the
+177px freed by dropping the 70px `Bot arena` headline, which the nav already carries and highlights.
+
+**Evidence.** Measured in Chromium at 1280×800, 1280×700, 1024×768, 390×812, 390×760, 360×700 and 360×640.
+The lower tray's bottom edge now lands inside the window at every one: **736 of 800**, 636 of 700, 704 of 768,
+**611 of 812**, 611 of 760, 581 of 700 and **577 of 640**. Board widths run 490 down to 324. All new text
+clears 4.5:1 in both themes (lowest 5.23:1), every control is 44px or more, every board cell keeps its
+`aria-label`, and the page has no inline styles, so the CSP is untouched.
+
+Two things turned up only by rendering. `styles.css` pins `.game-page .board-frame` to `grid-row: 4` above
+900px for the online match layout; inside a grid stage that silently hoisted both trays above the board. And
+`styles.css:1534` visually hides `.reserve-label` below 760px, because the shipped match layout names each
+side in its own player row — the arena has no such row, so its two trays were left to be told apart by
+position and piece colour alone.
+
+A 2×2 block for a capacity-4 bank on phones was built and then **rejected on measurement**: it costs 44px of
+height in each of the two trays, and on a 640px phone the board fell from 324px to 184px. The rule is now one
+row, wrapping only when a row will not fit — six tiles span 330px and a 360px phone leaves 328, so capacity 6
+wraps to 3+3 below 375px, while 3, 4 and 5 (162, 218 and 274px) never do.
+
+**Decision.** The headline goes and the setup form becomes three chips; on a phone only the variant chip
+stays, which also keeps the bar to one row, since a wrapping bar changes the height the board is sized from.
+Both banks carry a count, because a full opponent bank changes where your captured piece lands. Training
+tools open in the rail.
+
+**Next measurement.** The IA is still not implemented into `watch.html`: that reverses a `DECISIONS.md` entry
+and is its own commit, with these fold numbers as evidence, a `CACHE` bump and the e2e specs updated. No real
+device has run any of this.

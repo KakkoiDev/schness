@@ -167,8 +167,14 @@
 .ref-cap-4 { grid-template-columns: repeat(4, 50px); }
 .ref-cap-5 { grid-template-columns: repeat(5, 50px); }
 .ref-cap-6 { grid-template-columns: repeat(6, 50px); }
-@media (max-width: 560px) {
-  .ref-cap-4, .ref-cap-5, .ref-cap-6 { grid-template-columns: repeat(3, 50px); }
+/* A bank wraps only when a single row will not fit, which measurement puts at
+   capacity 6 below 375px: 6 tiles and their gaps are 330px, and a 360px phone
+   leaves 328. Capacities 3, 4 and 5 are 162, 218 and 274px and fit every phone,
+   so they stay one row. A 2x2 block for capacity 4 was tried and rejected: it
+   reads well in isolation but costs 44px of height in each of the arena's two
+   trays, which on a 640px-tall phone takes the board from 324px down to 184. */
+@media (max-width: 374px) {
+  .ref-cap-6 { grid-template-columns: repeat(3, 50px); }
 }
 .ref-tray-head { display: flex; align-items: baseline; gap: var(--space-3, 12px); }
 /* The count is the non-colour signal: a full tray must never be readable
@@ -209,3 +215,89 @@
   .ref-copy dd { border-top: 0; padding-top: 0; }
   .ref-copy dt { padding-bottom: .35rem; }
 }
+
+/* ---- deliverable 3: the arena screen ------------------------------------ */
+/* PROPOSED. The board, squares, pieces, banks and refusals are shipped
+   classes. New here: the chip bar that replaces the headline and the setup
+   form, the rail, and a board bounded by the window rather than by a 37rem
+   column. */
+.ref-arena-body { padding: 0; }
+.ref-arena { display: grid; gap: var(--space-3, 12px);
+  padding: var(--space-4, 16px) var(--space-4, 16px) var(--space-5, 24px);
+  border-bottom: 1px solid var(--hairline); }
+
+.ref-arena-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3, 12px); }
+.ref-abar-end { display: flex; gap: var(--space-3, 12px); margin-left: auto; }
+/* A chip is a sentence with its question above it, so the bar reads
+   "You play White" rather than asking three times in three boxes. */
+.ref-abtn { display: grid; gap: 1px; min-height: 44px; padding: 5px 12px; text-align: left;
+  border: 1px solid var(--line); border-radius: var(--radius-control, 8px);
+  background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; }
+.ref-abtn:hover { border-color: var(--ink); }
+.ref-abit { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); }
+.ref-abtn-main { font-size: .85rem; font-weight: 640; }
+.ref-caret { grid-column: 2; grid-row: 1 / span 2; align-self: center; margin-left: 6px;
+  color: var(--muted); }
+.ref-abtn:has(.ref-caret) { grid-template-columns: minmax(0, 1fr) auto; }
+.ref-abtn-variant { border-color: var(--accent); }
+.ref-abtn-variant .ref-abtn-main { color: var(--accent-text); }
+
+.ref-arena-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(14rem, 17rem);
+  gap: var(--space-5, 24px); align-items: start; justify-content: center; }
+.ref-arena-stage { display: grid; gap: var(--space-3, 12px); justify-items: center; min-width: 0; }
+.ref-aturn { min-width: 0; }
+.ref-aturn-line { margin: 2px 0 0; font-size: .95rem; font-weight: 640; line-height: 1.4; }
+
+/* The invariant, applied: the board is bounded by the window. --arena-chrome
+   is the bar, turn line, both trays and the gaps between them, so the board
+   can never push its own trays off the bottom of the screen. */
+.ref-arena-stage { --arena-chrome: 310px; }
+/* Rows span the column, label left and tiles right, which is the shape the
+   shipped .watch-player already uses. Only the board is bounded by height. */
+.ref-arena-stage > * { width: min(37rem, 100%); }
+.ref-arena-stage .board { width: min(37rem, 100%, calc(100dvh - var(--arena-chrome))); }
+.ref-arena-stage .board-frame { display: grid; justify-items: center; }
+/* styles.css pins .game-page .board-frame to grid-row 4 above 900px, for the
+   online match layout. Inside the arena stage that would hoist both trays
+   above the board, so the placement is released here. */
+.ref-arena-stage .board-frame { grid-column: auto; grid-row: auto; max-width: none; }
+
+.ref-arena-tray { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+.ref-arena-tray .ref-tray-head { grid-column: 1; }
+.ref-arena-tray .bank { grid-column: 2; grid-row: 1; }
+
+.ref-arail { display: grid; gap: var(--space-4, 16px); padding: var(--space-4, 16px);
+  border: 1px solid var(--line); border-radius: var(--radius-card, 10px); background: var(--surface); }
+.ref-arail-transport { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.ref-amoves { display: grid; gap: 2px; font-size: .82rem; font-variant-numeric: tabular-nums; }
+.ref-amove { display: grid; grid-template-columns: 1.6rem 1fr 1fr; gap: 6px; padding: 3px 0; }
+.ref-amove-n { color: var(--muted); }
+.ref-atools { border-top: 1px solid var(--hairline); padding-top: var(--space-3, 12px); }
+.ref-atools summary { font-size: .85rem; font-weight: 640; cursor: pointer; }
+.ref-atool { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: .82rem;
+  color: var(--muted); }
+
+.ref-anotes { padding-top: var(--space-6, 32px); }
+
+/* On a phone the rail follows the board instead of flanking it, and the bar
+   collapses to the one chip that changes how the game plays. The rest moves
+   behind a single button, which also keeps the bar to one row: a wrapping bar
+   would change the chrome above the board, and the board is sized from it. */
+@media (max-width: 860px) {
+  .ref-arena-main { grid-template-columns: minmax(0, 1fr); }
+  .ref-arena-stage { --arena-chrome: 316px; }
+  .ref-abtn-seat, .ref-abtn-bot, .ref-abar-end .btn { display: none; }
+  /* styles.css visually hides .reserve-label below 760px, because the shipped
+     match layout already names each side in its own player row. The arena has
+     no such row: without the label its two trays are told apart by position
+     and piece colour alone, and colour is never the only signal. */
+  .ref-arena-tray .reserve-label { position: static; width: auto; height: auto;
+    clip: auto; border: 0; padding: 0; white-space: normal; }
+  .ref-abar-phone { display: inline-flex; }
+  .ref-arena-bar { flex-wrap: nowrap; }
+  .ref-abtn-variant { min-width: 0; }
+  .ref-abtn-variant .ref-abtn-main { overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap; }
+}
+.ref-abar-phone { display: none; }
