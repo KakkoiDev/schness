@@ -155,6 +155,15 @@
 .ref-tcase-h { margin: 0 0 var(--space-4, 16px); font-size: .9rem; font-weight: 640; }
 
 .ref-tray { display: grid; gap: 8px; justify-items: start; }
+/* styles.css:1534 visually hides .reserve-label below 760px, because the
+   shipped match layout already names each side in its own player row. A tray
+   drawn on its own has no such row: without the label, two trays are told
+   apart by position and piece colour alone, and colour is never the only
+   signal. Restored for every tray here, arena and reference screen alike. */
+@media (max-width: 760px) {
+  .ref-tray .reserve-label { position: static; width: auto; height: auto;
+    clip: auto; border: 0; padding: 0; white-space: normal; }
+}
 /* Slots are drawn to the capacity, so a six-slot bank is twice as wide as
    Classic's three. On a phone that bank shrinks its own tiles under the 44px
    floor, so instead it wraps three to a row: Classic stays one row, a deep
@@ -258,9 +267,11 @@
 .ref-arena-stage > * { width: min(37rem, 100%); }
 .ref-arena-stage .board { width: min(37rem, 100%, calc(100dvh - var(--arena-chrome))); }
 .ref-arena-stage .board-frame { display: grid; justify-items: center; }
-/* styles.css pins .game-page .board-frame to grid-row 4 above 900px, for the
-   online match layout. Inside the arena stage that would hoist both trays
-   above the board, so the placement is released here. */
+/* Defensive. styles.css pins .game-page .board-frame to grid-row 4 above
+   900px for the online match layout; inside a grid stage that hoists both
+   trays above the board. These screens no longer put .game-page on <body>,
+   which is where the app never puts it, but the stage is meant to drop into
+   a real container one day, so the placement stays released. */
 .ref-arena-stage .board-frame { grid-column: auto; grid-row: auto; max-width: none; }
 
 .ref-arena-tray { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
@@ -288,12 +299,7 @@
   .ref-arena-main { grid-template-columns: minmax(0, 1fr); }
   .ref-arena-stage { --arena-chrome: 316px; }
   .ref-abtn-seat, .ref-abtn-bot, .ref-abar-end .btn { display: none; }
-  /* styles.css visually hides .reserve-label below 760px, because the shipped
-     match layout already names each side in its own player row. The arena has
-     no such row: without the label its two trays are told apart by position
-     and piece colour alone, and colour is never the only signal. */
-  .ref-arena-tray .reserve-label { position: static; width: auto; height: auto;
-    clip: auto; border: 0; padding: 0; white-space: normal; }
+
   .ref-abar-phone { display: inline-flex; }
   .ref-arena-bar { flex-wrap: nowrap; }
   .ref-abtn-variant { min-width: 0; }
@@ -301,3 +307,80 @@
     white-space: nowrap; }
 }
 .ref-abar-phone { display: none; }
+
+/* ---- deliverable 3: the variant picker ---------------------------------- */
+/* PROPOSED. A sheet over the arena, opened from the variant chip. Rows and
+   descriptions are generated from src/variants.js, so the page cannot drift
+   from the engine. */
+.ref-pick-body-page { padding: 0; }
+.ref-pick-scrim { display: grid; place-items: center; min-height: 100dvh;
+  padding: var(--space-4, 16px); background: var(--sunk); }
+.ref-pick { display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(34rem, 100%); max-height: min(44rem, calc(100dvh - 32px));
+  border: 1px solid var(--line); border-radius: var(--radius-card, 10px);
+  background: var(--paper); overflow: hidden; }
+
+.ref-pick-head { display: flex; align-items: flex-start; justify-content: space-between;
+  gap: var(--space-4, 16px); padding: var(--space-4, 16px);
+  border-bottom: 1px solid var(--hairline); }
+.ref-pick-title { margin: 0; font-size: 1.15rem; letter-spacing: -.03em; }
+
+/* The list scrolls inside the sheet, never the page behind it. No padding at
+   the top: a sticky heading sticks to the content edge, so any padding above
+   it becomes a gap that rows scroll through, which reads as a rendering
+   fault. The first row carries that space as a margin instead. */
+.ref-pick-body { overflow-y: auto; padding: 0 var(--space-4, 16px) var(--space-3, 12px); }
+/* Group names stay put while their own rows scroll past, so you always know
+   which of the four you are in. The hairline matters: without it the row
+   passing underneath reads as a rendering fault rather than as scrolled-away
+   content. */
+.ref-pick-top { position: sticky; top: 0; z-index: 2;
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin: var(--space-5, 24px) 0 0; padding: 10px 0 8px;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--paper); font-size: .95rem; letter-spacing: -.02em; }
+.ref-pick-top:first-child { margin-top: 0; }
+/* Sub-headings scroll, so they need room to clear the sticky group name when
+   the list is jumped to rather than dragged. */
+.ref-pick-sub { scroll-margin-top: 3rem; }
+.ref-pick-row { scroll-margin-top: 3rem; }
+.ref-pick-n { font-size: 11px; font-weight: 700; color: var(--muted);
+  font-variant-numeric: tabular-nums; }
+.ref-pick-sub { margin: var(--space-3, 12px) 0 4px; font-size: 10px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+.ref-pick-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center; gap: 8px; width: 100%; min-height: 44px; padding: 7px 10px;
+  border: 1px solid transparent; border-radius: var(--radius-control, 8px);
+  background: none; color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+.ref-pick-row:hover { border-color: var(--line); background: var(--surface); }
+.ref-pick-name { grid-column: 2; font-size: .88rem; font-weight: 560; }
+.ref-pick-tick { grid-column: 1; color: var(--accent-text); }
+.ref-pick-row:not(.is-on) .ref-pick-name { grid-column: 1 / 3; }
+/* The chosen row is the only one that spends space on a sentence. */
+.ref-pick-row.is-on { border-color: var(--accent); background: var(--surface); }
+.ref-pick-desc { grid-column: 2 / -1; margin-top: 3px; font-size: .78rem; line-height: 1.5;
+  color: var(--muted); }
+
+/* Quiet or checking is the one fact that changes how a turn feels, so it is a
+   tag on every row rather than a word buried in the middle of a label. */
+.ref-pick-tag { grid-column: 3; justify-self: end; padding: 2px 7px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--paper);
+  font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--muted);
+  white-space: nowrap; }
+.ref-pick-tag-check { border-color: var(--accent); color: var(--accent-text); }
+
+.ref-pick-random { margin: var(--space-3, 12px) 0; border-color: var(--line);
+  border-style: dashed; }
+
+.ref-pick-foot { display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--space-3, 12px); padding: var(--space-4, 16px);
+  border-top: 1px solid var(--hairline); background: var(--surface); }
+.ref-pick-footnote { margin: 0; flex: 1 1 12rem; font-size: .78rem; color: var(--muted); }
+
+/* On a phone the sheet is the screen, as the shipped dialogs already are. */
+@media (max-width: 560px) {
+  .ref-pick-scrim { padding: 0; }
+  .ref-pick { width: 100%; max-height: 100dvh; min-height: 100dvh; border: 0;
+    border-radius: 0; }
+}

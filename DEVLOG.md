@@ -2244,3 +2244,49 @@ Recorded in DECISIONS.md, replacing the 0–100 line.
 **Next measurement.** Bot-vs-bot games per level to check that each step is actually stronger: the
 move-agreement column is not a strength measure, and it is not even monotonic. Timing on a real phone,
 to set the think-time default there.
+
+## 2026-11-08 — Thirty-six presets become four groups, generated from the engine
+
+**Question.** `#game-variant` is one select with **37 options** — 36 presets and Random — in source order,
+each a bare label, with a single description line underneath that updates after you choose. How should a
+player pick one?
+
+**Alternatives.** (1) Keep the select, add `<optgroup>`: cheapest, but a native select cannot carry a
+description, and on a phone it is still the platform's own scrolling wheel. (2) A two-axis grid, capture
+policy against drop legality: tidier, and a lie — the presets are not a cross product. Capture policy and
+setup each come in quiet/checking pairs, but the eighteen drop restrictions are fixed at
+`allowCheckingDrops: true` and combine with nothing, so a grid would draw an empty cell where a player would
+expect "Capture bank 4 · knight checks only". (3) **A grouped list in a sheet**, with the engine's own
+sentence on the chosen row only. Chose 3.
+
+**Evidence.** Grouping derived from `VARIANTS`, not from reading the labels: Classic 1, Captures 10,
+Checking drops 19, Setup 6 — **36, each preset in exactly one place**, and the generator refuses to emit the
+page unless it finds 37 radios. It cross-checks against the refusal taxonomy, which splits the same 36 as 1
+Classic + 8 quiet + 9 never-refuse + 18 restricted. Rows are the shipped `VARIANT_LABELS` and the sentence
+is the shipped `description()`, so the picker adds **ten new strings** to translate (four group names, six
+sub-headings) rather than thirty-six.
+
+Measured at 1280×800, 390×812 and 360×640 in both themes: the sheet fits the viewport, the list scrolls
+inside it, the page behind never scrolls, every row is 44px, all text clears 4.5:1 (lowest 5.23:1), and the
+page has no inline styles. Two render-only faults were found and fixed: the scroll container's top padding
+let rows paint above the sticky heading, and all four headings stuck at `top: 0` simultaneously until each
+group was given its own `<section>`.
+
+A copy audit of `description()` found three things for deliverable 6: all four full-setup presets render
+"**black** takes the first normal turn" from the internal `firstPlayer` token; descriptions run to **201
+characters**, built for a research log rather than a picker row; and both hidden-army presets end "Uniform
+legal arrangement sampling, not a hidden-information AI", a researcher's disclaimer shown under a button a
+player is about to press.
+
+**Decision.** Four groups with sticky names and counts, one tag per row (`quiet` 9, `checks` 9, `limited`
+18), Random as its own dashed row, and the description only on the chosen row. No filter field: thirty-six
+rows is enough to want one, but a filter serves someone who already knows the preset's name, which is not
+who opens a picker. Carried to the user as an open question.
+
+Separately: every design screen since October carried `game-page` on `<body>`, where the app never puts it —
+`game.html` uses `<main class="game game-page">`. On a body it caps the page at 66rem and drags in the match
+layout's `@media(min-width:900px)` grid placements. That is what hoisted the arena's trays above its board,
+and what hid every tray label on the capture-bank screen below 760px. The three November screens drop it.
+
+**Next measurement.** The five October screens still carry `game-page` on `<body>` and need the same change
+with a re-measure. The picker is not wired to anything: no real device has run it.

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="icon" href="../../icon.svg">
+  <title>Variant picker &middot; Schness design reference</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../ui.css">
+  <link rel="stylesheet" href="../design.css">
+</head>
+<body class="ref-body ref-pick-body-page">
+<div class="ref-pick-scrim"><div class="ref-sheet ref-pick" role="dialog" aria-modal="true" aria-labelledby="pick-title"><div class="ref-pick-head"><div><p class="eyebrow">Bot arena</p><h2 id="pick-title" class="ref-pick-title">Game variant</h2></div><button type="button" class="btn dialog-close" data-variant="ghost" aria-label="Close">&#10005;</button></div><div class="ref-pick-body" role="radiogroup" aria-labelledby="pick-title"><button type="button" class="ref-pick-row ref-pick-random" role="radio" aria-checked="false" value="random"><span class="ref-pick-name">Random variant</span><span class="ref-pick-tag">any of the 36</span></button><section class="ref-pick-group" aria-label="Classic"><h3 class="ref-pick-top">Classic<span class="ref-pick-n">1</span></h3><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="canonical"><span class="ref-pick-name">Classic Schness</span><span class="ref-pick-tag ref-pick-tag-quiet">quiet</span></button></section><section class="ref-pick-group" aria-label="Captures"><h3 class="ref-pick-top">Captures<span class="ref-pick-n">10</span></h3><p class="ref-pick-sub">Pieces change hands</p><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="capture-bank-3-quiet"><span class="ref-pick-name">Capture bank 3 · quiet drops</span><span class="ref-pick-tag ref-pick-tag-quiet">quiet</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="capture-bank-3-checking"><span class="ref-pick-name">Capture bank 3 · checking drops</span><span class="ref-pick-tag ref-pick-tag-checking">checks</span></button><button type="button" class="ref-pick-row is-on" role="radio" aria-checked="true" value="capture-bank-4-quiet"><svg class="ref-pick-tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span class="ref-pick-name">Capture bank 4 · quiet drops</span><span class="ref-pick-tag ref-pick-tag-quiet">quiet</span><span class="ref-pick-desc">Captured pieces join your bank up to 4 held pieces; overflow returns to the captured side. Checking drops forbidden.</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="capture-bank-4-checking"><span class="ref-pick-name">Capture bank 4 · checking drops</span><span class="ref-pick-tag ref-pick-tag-checking">checks</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="capture-bank-5-quiet"><span class="ref-pick-name">Capture bank 5 · quiet drops</span><span class="ref-pick-tag ref-pick-tag-quiet">quiet</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="capture-bank-5-checking"><span class="ref-pick-name">Capture bank 5 · checking drops</span><span class="ref-pick-tag ref-pick-tag-checking">checks</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="capture-bank-6-quiet"><span class="ref-pick-name">Capture bank 6 · quiet drops</span><span class="ref-pick-tag ref-pick-tag-quiet">quiet</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="capture-bank-6-checking"><span class="ref-pick-name">Capture bank 6 · checking drops</span><span class="ref-pick-tag ref-pick-tag-checking">checks</span></button><p class="ref-pick-sub">Pieces leave the game</p><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="permanent-loss-quiet"><span class="ref-pick-name">Permanent captures · quiet drops</span><span class="ref-pick-tag ref-pick-tag-quiet">quiet</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="permanent-loss-checking"><span class="ref-pick-name">Permanent captures · checking drops</span><span class="ref-pick-tag ref-pick-tag-checking">checks</span></button></section><section class="ref-pick-group" aria-label="Checking drops"><h3 class="ref-pick-top">Checking drops<span class="ref-pick-n">19</span></h3><p class="ref-pick-sub">Allowed outright</p><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="unrestricted"><span class="ref-pick-name">Checking drops</span><span class="ref-pick-tag ref-pick-tag-checking">checks</span></button><p class="ref-pick-sub">Where one may land</p><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="home-half-check"><span class="ref-pick-name">Checking drops from home half</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="distant-check"><span class="ref-pick-name">Distant checking drops</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="supported-check"><span class="ref-pick-name">Supported checking drops</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><p class="ref-pick-sub">Which piece may give it</p><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="knight-check"><span class="ref-pick-name">Knight checking drops only</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="bishop-check"><span class="ref-pick-name">Bishop checking drops only</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="rook-check"><span class="ref-pick-name">Rook checking drops only</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><p class="ref-pick-sub">When they unlock</p><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="countercheck-only"><span class="ref-pick-name">Counterchecking drops only</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="first-turn-quiet"><span class="ref-pick-name">Quiet first turn</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="protected-first-turn"><span class="ref-pick-name">Quiet first turn + king protection</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="mutual-one"><span class="ref-pick-name">Both deploy one</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="mutual-two"><span class="ref-pick-name">Both deploy two</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="grace"><span class="ref-pick-name">Three-turn grace</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="quiet-return"><span class="ref-pick-name">Quiet return drops</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="protected-recurring"><span class="ref-pick-name">Lone-king protection</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="protected-opening"><span class="ref-pick-name">Opening king protection</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><p class="ref-pick-sub">How many you get</p><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="limited-check"><span class="ref-pick-name">One checking drop</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="cooldown"><span class="ref-pick-name">Checking-drop cooldown</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="no-drop-mate"><span class="ref-pick-name">No drop mate</span><span class="ref-pick-tag ref-pick-tag-limited">limited</span></button></section><section class="ref-pick-group" aria-label="Setup"><h3 class="ref-pick-top">Setup<span class="ref-pick-n">6</span></h3><p class="ref-pick-sub">Full setup</p><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="setup-white-quiet"><span class="ref-pick-name">Full setup · quiet drops · White first</span><span class="ref-pick-tag ref-pick-tag-quiet">quiet</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="setup-white-checking"><span class="ref-pick-name">Full setup · checking drops · White first</span><span class="ref-pick-tag ref-pick-tag-checking">checks</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="setup-black-quiet"><span class="ref-pick-name">Full setup · quiet drops · Black first</span><span class="ref-pick-tag ref-pick-tag-quiet">quiet</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="setup-black-checking"><span class="ref-pick-name">Full setup · checking drops · Black first</span><span class="ref-pick-tag ref-pick-tag-checking">checks</span></button><p class="ref-pick-sub">Hidden armies</p><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="hidden-quiet"><span class="ref-pick-name">Random hidden armies · quiet drops</span><span class="ref-pick-tag ref-pick-tag-quiet">quiet</span></button><button type="button" class="ref-pick-row" role="radio" aria-checked="false" value="hidden-checking"><span class="ref-pick-name">Random hidden armies · checking drops</span><span class="ref-pick-tag ref-pick-tag-checking">checks</span></button></section></div><div class="ref-pick-foot"><p class="ref-pick-footnote">Classic stays the default. A new game keeps your last choice.</p><button type="button" class="btn" data-variant="primary">Use this variant</button></div></div></div>
+
+  <div class="game ref-screen ref-anotes">
+    <p class="eyebrow">Deliverable 3 &middot; screen</p>
+    <h1 class="ref-h1">The variant picker</h1>
+    <p class="ref-lede ref-narrow">One <strong>select</strong> holds <strong>37 options</strong> today:
+      36 presets and Random, in source order, each one a bare label. This is that list opened out
+      &mdash; grouped by what a preset actually changes, with the engine&rsquo;s own sentence on the one
+      you have chosen. Every group below was derived from <strong>VARIANTS</strong>, and the build
+      refuses to emit the page unless all 36 appear exactly once.</p>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">The grouping, and why it is a list and not a grid</h2>
+      <p class="ref-lede ref-narrow">Four groups, Classic 1 &middot; Captures 10 &middot; Checking drops 19 &middot; Setup 6, summing to 36.</p>
+      <p class="ref-case-note">A two-axis grid &mdash; capture policy against drop legality &mdash; would be
+        tidier, and it would lie. The presets are not a cross product: capture policy and setup each come in
+        quiet and checking pairs, but the eighteen drop restrictions are fixed at
+        <strong>allowCheckingDrops: true</strong> and combine with nothing. There is no
+        &ldquo;Capture bank 4 &middot; knight checks only&rdquo;, and a grid would draw an empty cell where a
+        player would expect one. A grouped list says what exists.</p>
+      <dl class="ref-copy">
+        <dt>It cross-checks against the engine split</dt>
+        <dd>Grouped by what a player chooses: 1 Classic, 10 captures, 19 checking drops, 6 setup. Grouped by
+          what the refusal guard does: 1 Classic, 8 quiet experiments, 9 that never refuse, 18 that need a
+          reason of their own. Both reach 36, and no preset is in two places.</dd>
+        <dt>It needs almost no new copy</dt>
+        <dd>The rows are the shipped <strong>VARIANT_LABELS</strong> and the sentence is the shipped
+          <strong>description()</strong>. Only the four group names and six sub-headings are new &mdash; ten
+          strings to translate, not thirty-six.</dd>
+        <dt>Every row carries one of three tags</dt>
+        <dd><strong>quiet</strong> (9), <strong>checks</strong> (9), <strong>limited</strong> (18). Derived
+          from <strong>allowCheckingDrops</strong> and whether the preset carries a restricting experiment,
+          and it is the same split the refusal guard makes. It is also the one fact that changes how a turn
+          feels, and in the current list it is buried mid-label or absent &mdash; &ldquo;Three-turn
+          grace&rdquo; does not say that it ever allows a check.</dd>
+        <dt>A defect in these reference screens <span class="ref-flag">fixed here</span></dt>
+        <dd>Every design screen since October has carried <strong>game-page</strong> on
+          <strong>&lt;body&gt;</strong>. The app puts it on <strong>&lt;main class="game game-page"&gt;</strong>
+          and nowhere else. On a body it caps the page at <strong>66rem</strong> and drags in the match
+          layout&rsquo;s grid placements, which is what hid the arena&rsquo;s trays above its board and what
+          was hiding every tray label on the capture-bank screen below 760px. The three November screens drop
+          it; the five from October still carry it and need the same change with a re-measure.</dd>
+      </dl>
+    </section>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">Three things the copy audit found <span class="ref-flag">for deliverable 6</span></h2>
+      <ul class="ref-list">
+        <li><strong>A lower-case side, mid-sentence.</strong> All four full-setup presets render
+          &ldquo;<strong>black takes the first normal turn.</strong>&rdquo; from
+          <strong>${rules.firstPlayer}</strong>, because the value is the internal token. Four strings.</li>
+        <li><strong>Descriptions run to 201 characters.</strong> The longest is Random hidden armies; the
+          four full-setup strings are 191&ndash;193. They are built for a research log, not a row in a
+          picker, which is why this screen shows one at a time rather than all 36.</li>
+        <li><strong>A research disclaimer is shown to players.</strong> Both hidden-army presets end
+          &ldquo;Uniform legal arrangement sampling, not a hidden-information AI.&rdquo; That belongs in the
+          library, not under a button someone is about to press.</li>
+      </ul>
+    </section>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">Still open</h2>
+      <dl class="ref-copy">
+        <dt>No filter field <span class="ref-flag">for you</span></dt>
+        <dd>Thirty-six rows is enough to want one, and the groups are the argument against: a filter serves
+          someone who already knows the preset&rsquo;s name, which is not who opens a picker. It is one input
+          to add later if the groups do not carry it. Drawn without.</dd>
+        <dt>Where the picker lives</dt>
+        <dd>Arena only, per the November recommendation &mdash; a chip in the game bar, not a nav
+          destination. Online matchmaking stays canonical, as the first line of
+          <strong>variants.js</strong> says.</dd>
+      </dl>
+    </section>
+    <p class="ref-note">Proposed. Rows and descriptions are generated from <strong>src/variants.js</strong>
+      at build time, so this page cannot drift from the engine without failing to build. The sheet, rows and
+      tags are new and marked PROPOSED in design.css.</p>
+  </div>
+  <script src="../preview.js" type="module"></script>
+</body>
+</html>
