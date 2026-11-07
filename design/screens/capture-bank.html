@@ -52,10 +52,11 @@
         <dd>The brief asks the tray to show a piece&rsquo;s colour and owner after a transfer, and to show a drop
           from a bank holding opponent-origin pieces. Neither is in the data. Drawing a captured piece in Black&rsquo;s
           colour would be a lie about what happens when you drop it.</dd>
-        <dt>Which leaves a decision <span class="ref-flag">for you</span></dt>
-        <dd>Either the transfer animation carries &ldquo;where it went&rdquo; and the tray stays in your colour
-          &mdash; what is drawn above, and free &mdash; or bank entries gain an origin field so the tray can show it
-          permanently, which is engine state, a migration, and a rule the player must then be taught.</dd>
+        <dt>Decided: animation only <span class="ref-flag">8 Nov</span></dt>
+        <dd>The user chose to keep bank entries as plain piece types. The transfer animation carries &ldquo;where it
+          went&rdquo; and the tray stays in your colour, because under capture-bank rules the piece really is yours. No
+          origin field: it would add engine state that replays and research archives hash, for a mark with no
+          effect on play.</dd>
       </dl>
     </section>
 
