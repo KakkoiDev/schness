@@ -159,10 +159,11 @@
    shipped match layout already names each side in its own player row. A tray
    drawn on its own has no such row: without the label, two trays are told
    apart by position and piece colour alone, and colour is never the only
-   signal. Restored for every tray here, arena and reference screen alike. */
+   signal. Restored for every tray and seat in these screens. The shipped
+   arena (.watch-player) and home board (.lobby-seat) have the same gap. */
 @media (max-width: 760px) {
-  .ref-tray .reserve-label { position: static; width: auto; height: auto;
-    clip: auto; border: 0; padding: 0; white-space: normal; }
+  .ref-tray .reserve-label, .ref-seat .reserve-label { position: static; width: auto;
+    height: auto; clip: auto; border: 0; padding: 0; white-space: normal; }
 }
 /* Slots are drawn to the capacity, so a six-slot bank is twice as wide as
    Classic's three. On a phone that bank shrinks its own tiles under the 44px

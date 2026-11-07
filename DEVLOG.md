@@ -8,6 +8,33 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-11-08 — game-page moves off <body> on the October reference screens
+
+**Question.** Five reference screens (play, game, result, settings, refused-drop) carried `game-page` on
+`<body>`. The app puts it only on `<main class="game game-page">`. What changes when it moves?
+
+**Alternatives.** (1) Leave it and keep patching symptoms per screen. (2) Drop it entirely, as the November
+screens did. (3) **Move it onto each screen's existing `<div class="game ref-screen">`**, which is the app's
+own structure. Chose 3: every rule that targets descendants of `.game-page` still matches the same elements,
+so only the width cap and centring move.
+
+**Evidence.** Measured before and after at 1280×800 and 390×812. At 1280 every screen was left-aligned with a
+224px gap on the right; after, the 1056px container is centred (112px each side) and every board, turn card
+and bank keeps its size and vertical position, shifted right by exactly 112px. Page heights are unchanged at
+1280. At 390 the reserve labels went from **0 of 2** (0 of 4 on refused-drop) to all visible, banks move to
+the right of their label, and nothing overflows.
+
+The labels were hidden by `styles.css:1534`, which visually hides `.reserve-label` below 760px everywhere,
+on the reasoning that the match layout names each side in its own player row. None of these screens has that
+row, so the restore now covers `.ref-seat` as well as `.ref-tray`.
+
+**Finding for deliverable 6.** The shipped pages have the same gap. On `watch.html` at 390 both reserve
+labels render 1px wide and nothing else visible names either side, so the arena's two reserves are told
+apart by position and piece colour alone; the home board's `.lobby-seat` rows behave the same. Only the
+match layout, with `.player-identity`, justifies the rule. Scoping it to `.game-page .player` would fix both.
+
+**Next measurement.** None of this has run on a real device.
+
 ## 2026-10-03 — Online play moves onto p2p-core
 
 **Question.** Schness, kakkoi-online and asakura each vendored trystero 0.21.5 and each grew its own
