@@ -452,3 +452,55 @@
 .ref-reveal-side { display: flex; flex-wrap: wrap; gap: 4px 10px; }
 .ref-reveal-who { min-width: 3rem; color: var(--muted); }
 .ref-amove-next .ref-amove-w { color: var(--muted); }
+
+/* ---- deliverable 3: training tools in use -------------------------------- */
+/* PROPOSED. The hint moves to where the eyes are, the score stays with its
+   switch, and the advantage bar takes its room from the board rather than
+   lying across the a-file, which the shipped rule below 700px does. */
+.ref-thint { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px;
+  margin: 8px 0 0; padding: 6px 10px; border-radius: var(--radius-control, 8px);
+  border-left: 3px solid var(--line); font-size: .85rem; line-height: 1.4; }
+/* The shipped tints and edges from .analysis-panel p[data-state]. */
+.ref-thint[data-state="opportunity"] { background: rgb(91 143 110 / .15); border-left-color: #5b8f6e; }
+.ref-thint[data-state="danger"] { background: rgb(183 75 70 / .14); border-left-color: var(--danger); }
+.ref-thint[data-state="caution"] { background: rgb(186 133 72 / .13); border-left-color: #bb884a; }
+/* --muted on the opportunity tint measured exactly 4.50:1 in the light theme,
+   on the floor with no margin, so the tag uses ink and leans on case and size. */
+.ref-thint-tag { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink); }
+.ref-tscore { margin: 4px 0 0; padding: 4px 8px; border-left: 2px solid var(--line);
+  font-size: .78rem; color: var(--ink); }
+
+/* The bar stands beside the board at every width. */
+/* .ref-arena-stage .board-frame is a grid; this needs the stage class to win. */
+.ref-arena-stage .ref-tframe { display: flex; justify-content: center; gap: .5rem; }
+.ref-arena-stage .ref-tframe .analysis-bar { position: relative; inset: auto; flex: 0 0 1.125rem; width: 1.125rem;
+  align-self: stretch; }
+.ref-arena-stage .ref-tframe .board { width: min(37rem - 1.625rem, 100% - 1.625rem,
+  calc(100dvh - var(--arena-chrome))); }
+/* The worker sets this height through the CSSOM; the reference cannot carry
+   an inline style under the CSP, so the state it measured is a class. */
+.ref-tfill-92 { height: 92%; }
+/* The turn card carries a second line here, so the chrome above the board is
+   taller than on the plain arena screen. */
+.ref-tstage { --arena-chrome: 330px; }
+@media (max-width: 860px) { .ref-tstage { --arena-chrome: 330px; } }
+
+/* The bot chip, opened. */
+.ref-strength { display: grid; gap: 6px; max-width: 26rem; margin-top: var(--space-4, 16px);
+  padding: var(--space-4, 16px); border: 1px solid var(--line); border-radius: var(--radius-card, 10px);
+  background: var(--surface); }
+.ref-slider { display: grid; gap: 2px; margin-top: var(--space-3, 12px); }
+.ref-slider-head { display: flex; justify-content: space-between; font-size: .85rem; }
+.ref-slider-head strong { font-variant-numeric: tabular-nums; }
+.ref-slider input[type="range"] { width: 100%; min-height: 44px; margin: 0; accent-color: var(--accent); }
+/* The thumb's centre travels from 8px to width - 8px, not edge to edge, so a
+   plain n-column grid puts the end labels about 20px off their ticks. Each
+   list is widened and shifted so label i sits exactly on value i:
+   n labels over n - 1 intervals of (100% - 16px). */
+.ref-stops { display: grid; grid-template-columns: repeat(8, 1fr);
+  width: calc((100% - 16px) * 8 / 7); margin: -6px 0 0 calc(8px - (100% - 16px) / 14); padding: 0;
+  list-style: none; font-size: 10px; color: var(--muted); text-align: center; }
+.ref-stops-6 { grid-template-columns: repeat(6, 1fr);
+  width: calc((100% - 16px) * 6 / 5); margin-left: calc(8px - (100% - 16px) / 10); }
+.ref-stops .is-on { color: var(--ink); font-weight: 700; }

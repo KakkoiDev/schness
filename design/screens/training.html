@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="icon" href="../../icon.svg">
+  <title>Training tools &middot; Schness design reference</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../ui.css">
+  <link rel="stylesheet" href="../design.css">
+</head>
+<body class="ref-body ref-arena-body">
+<div class="ref-arena"><div class="ref-arena-bar"><button type="button" class="ref-abtn ref-abtn-variant"><span class="ref-abit">Variant</span><span class="ref-abtn-main">Classic Schness</span><svg class="ref-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button><button type="button" class="ref-abtn ref-abtn-seat"><span class="ref-abit">You play</span><span class="ref-abtn-main">White</span><svg class="ref-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button><button type="button" class="ref-abtn ref-abtn-bot"><span class="ref-abit">Black bot</span><span class="ref-abtn-main">Level&nbsp;3 &middot; Steady</span><svg class="ref-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button><div class="ref-abar-end"><button type="button" class="btn ref-abar-phone" data-variant="secondary">Game &amp; tools</button><button type="button" class="btn" data-variant="primary">New game</button></div></div><div class="ref-arena-main"><div class="ref-arena-stage ref-tstage"><div class="ref-aturn"><p class="eyebrow">Your move</p><p class="ref-aturn-line">White to move.</p><p class="ref-thint" data-state="opportunity" role="status"><span class="ref-thint-tag">Training</span>White can force mate in 2.</p></div><div class="ref-tray ref-arena-tray"><div class="ref-tray-head"><span class="reserve-label">Black reserve</span></div><div class="bank ref-cap-3"><button type="button" class="bank-piece" data-piece="rook" data-owner="black" aria-label="black rook in reserve"><img class="piece piece-black piece-rook" src="../../assets/pieces/bR.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot" aria-label="Empty reserve slot"></span><span class="bank-slot" aria-label="Empty reserve slot"></span></div></div><div class="board-frame ref-tframe"><div id="watch-analysis-bar" class="analysis-bar ref-tbar" role="meter" aria-label="Estimated White advantage" aria-valuemin="-100" aria-valuemax="100" aria-valuenow="84" aria-valuetext="White has mate" data-state="ready"><span class="analysis-side analysis-side-black" aria-hidden="true">B</span><div class="analysis-track"><div class="analysis-fill ref-tfill-92"></div><span class="analysis-midline" aria-hidden="true"></span></div><span class="analysis-side analysis-side-white" aria-hidden="true">W</span></div><div class="board" role="grid" aria-label="Schness board" data-orientation="white"><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="0" aria-label="white bishop, square 1"><span class="square-coordinate" aria-hidden="true">a4</span><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="1" aria-label="black bishop, square 2"><span class="square-coordinate" aria-hidden="true">b4</span><img class="piece piece-black piece-bishop" src="../../assets/pieces/bB.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square last-to" type="button" role="gridcell" tabindex="-1" data-square="2" aria-label="black king, square 3"><span class="square-coordinate" aria-hidden="true">c4</span><img class="piece piece-black piece-king" src="../../assets/pieces/bK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="3" aria-label="Empty square 4"><span class="square-coordinate" aria-hidden="true">d4</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="4" aria-label="Empty square 5"><span class="square-coordinate" aria-hidden="true">a3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="5" aria-label="Empty square 6"><span class="square-coordinate" aria-hidden="true">b3</span></button><button class="square last-from" type="button" role="gridcell" tabindex="-1" data-square="6" aria-label="Empty square 7"><span class="square-coordinate" aria-hidden="true">c3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="7" aria-label="white knight, square 8"><span class="square-coordinate" aria-hidden="true">d3</span><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="8" aria-label="Empty square 9"><span class="square-coordinate" aria-hidden="true">a2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="9" aria-label="black knight, square 10"><span class="square-coordinate" aria-hidden="true">b2</span><img class="piece piece-black piece-knight" src="../../assets/pieces/bN.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="10" aria-label="Empty square 11"><span class="square-coordinate" aria-hidden="true">c2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="11" aria-label="Empty square 12"><span class="square-coordinate" aria-hidden="true">d2</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="12" aria-label="white king, square 13"><span class="square-coordinate" aria-hidden="true">a1</span><img class="piece piece-white piece-king" src="../../assets/pieces/wK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="13" aria-label="Empty square 14"><span class="square-coordinate" aria-hidden="true">b1</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="14" aria-label="Empty square 15"><span class="square-coordinate" aria-hidden="true">c1</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="15" aria-label="white rook, square 16"><span class="square-coordinate" aria-hidden="true">d1</span><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button></div></div></div><div class="ref-tray ref-arena-tray"><div class="ref-tray-head"><span class="reserve-label">Your reserve</span></div><div class="bank ref-cap-3"><span class="bank-slot" aria-label="Empty reserve slot"></span><span class="bank-slot" aria-label="Empty reserve slot"></span><span class="bank-slot" aria-label="Empty reserve slot"></span></div></div></div><aside class="ref-arail" aria-label="Game tools"><div class="ref-arail-transport" role="group" aria-label="Replay"><button type="button" class="btn" data-variant="secondary" aria-label="Back to the first move">&#9198;</button><button type="button" class="btn" data-variant="secondary" aria-label="Step back one move">&#9664;</button><button type="button" class="btn" data-variant="secondary" aria-label="Step forward one move" disabled>&#9654;</button><button type="button" class="btn" data-variant="secondary" aria-label="Forward to the last move" disabled>&#9197;</button></div><div class="ref-amoves" role="table" aria-label="Move transcript"><div class="ref-amove" role="row"><span class="ref-amove-n">4</span><span class="ref-amove-w">@Nc1</span><span class="ref-amove-b">Kc3</span></div><div class="ref-amove" role="row"><span class="ref-amove-n">5</span><span class="ref-amove-w">Ba4</span><span class="ref-amove-b">@Rd3</span></div><div class="ref-amove" role="row"><span class="ref-amove-n">6</span><span class="ref-amove-w">Nxd3</span><span class="ref-amove-b">Kc4</span></div></div><details class="ref-atools" open><summary>Training tools</summary><label class="ref-atool"><input type="checkbox" checked> Forced-mate hints (1&ndash;4 moves)</label><label class="ref-atool"><input type="checkbox" checked> White / Black advantage</label><p class="ref-tscore">White has mate &middot; estimate</p></details></aside></div></div>
+
+  <div class="game game-page ref-screen ref-anotes">
+    <p class="eyebrow">Deliverable 3 &middot; screen</p>
+    <h1 class="ref-h1">Training tools in use</h1>
+    <p class="ref-lede ref-narrow">Classic, twelve plies in, White to move with a forced mate in two &mdash;
+      <strong>mateOutlookAtDepth</strong> finds none at depth 1 and an opportunity at depth 2, and none of
+      White&rsquo;s eleven legal actions allows a black mate in two. Both tools are on: they are off by default
+      and one tap away, as decided on 8 November.</p>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">The shipped arena with the same position</h2>
+      <dl class="ref-copy">
+        <dt>The hint is nowhere near the board</dt>
+        <dd>&ldquo;White can force mate in 2.&rdquo; renders in the rail at <strong>y&nbsp;=&nbsp;906</strong>
+          on a 1280&times;800 screen, below the fold, and at <strong>y&nbsp;=&nbsp;1629</strong> on a 390 phone
+          &mdash; 817px below it. The thing a player switched on to see is the thing they cannot see.</dd>
+        <dt>It says it twice</dt>
+        <dd>&ldquo;White has mate&rdquo; as the score label and &ldquo;White can force mate in 2.&rdquo; as
+          the hint, stacked, in two different places from the bar they describe.</dd>
+        <dt>On a phone the bar covers the a-file</dt>
+        <dd>At 390 the bar is drawn at x&nbsp;16&ndash;32 over a board that starts at x&nbsp;12: sixteen pixels
+          of every a-file square, the bishop on a4 included, sit under it. At 1280 it sits outside the board,
+          at x&nbsp;142&ndash;160.</dd>
+      </dl>
+    </section>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">What this screen changes</h2>
+      <ul class="ref-list">
+        <li><strong>The hint lives in the turn card.</strong> One line under &ldquo;White to move&rdquo;,
+          tagged <em>Training</em> so it never reads as the game speaking. Its four states keep the shipped
+          wording and <strong>data-state</strong>: opportunity, danger, caution, clear.</li>
+        <li><strong>The score stays with its switch.</strong> &ldquo;White has mate &middot; estimate&rdquo; sits
+          under the toggles; the bar&rsquo;s <strong>aria-valuetext</strong> carries the same words, so nothing
+          is said twice on screen.</li>
+        <li><strong>The bar takes its width from the board, never from a file.</strong> When it is on, the
+          board gives up the bar&rsquo;s width plus a gap and the bar stands beside it at every size.</li>
+        <li><strong>Strength is the chip.</strong> &ldquo;Level 3 &middot; Steady&rdquo;, and tapping it opens
+          the two sliders below.</li>
+      </ul>
+    </section>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">The bot chip, opened</h2>
+      <p class="ref-lede ref-narrow">Level 0&ndash;7 with the five named stops, and a think-time cap. Default
+        level 3 and 1&nbsp;s, as decided. The think-time range is proposed: &frac14;&nbsp;s to 8&nbsp;s on a
+        doubling scale, because level 7&rsquo;s worst measured move was 8.15&nbsp;s and a linear slider would
+        spend most of its travel on waits nobody chooses.</p>
+
+      <div class="ref-strength" role="group" aria-labelledby="strength-title">
+        <p class="eyebrow" id="strength-title">Black bot</p>
+        <label class="ref-slider"><span class="ref-slider-head"><span>Level</span><strong>3 &middot; Steady</strong></span>
+          <input type="range" min="0" max="7" step="1" value="3" list="level-stops" aria-valuetext="Level 3, Steady"></label>
+        <datalist id="level-stops"><option value="2" label="Learning"></option><option value="3" label="Steady"></option>
+          <option value="4" label="Sharp"></option><option value="6" label="Strong"></option><option value="7" label="Max"></option></datalist>
+        <ol class="ref-stops" aria-hidden="true"><li>0</li><li>1</li><li>Learning</li><li class="is-on">Steady</li><li>Sharp</li><li>5</li><li>Strong</li><li>Max</li></ol>
+        <label class="ref-slider"><span class="ref-slider-head"><span>Think time, at most</span><strong>1&nbsp;s</strong></span>
+          <input type="range" min="0" max="5" step="1" value="2" aria-valuetext="1 second"></label>
+        <ol class="ref-stops ref-stops-6" aria-hidden="true"><li>&frac14;&nbsp;s</li><li>&frac12;&nbsp;s</li><li class="is-on">1&nbsp;s</li><li>2&nbsp;s</li><li>4&nbsp;s</li><li>8&nbsp;s</li></ol>
+        <p class="ref-case-note">A higher level searches deeper; the cap stops it from waiting longer than you
+          asked. At level 7 on one Mac the median move took 1.3&nbsp;s and the worst 8.2&nbsp;s.</p>
+      </div>
+    </section>
+    <p class="ref-note">Proposed. The bar is the shipped <strong>.analysis-bar</strong> markup in the state the
+      worker leaves it for a forced mate (92%, the clamp). The hint line, the score placement, the bar&rsquo;s
+      room on a phone and the strength panel are new and marked PROPOSED in design.css. No real device has run
+      any of this.</p>
+  </div>
+  <script src="../preview.js" type="module"></script>
+</body>
+</html>

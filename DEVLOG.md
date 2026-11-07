@@ -8,6 +8,37 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-11-08 — Training output goes where the eyes are
+
+**Question.** With both training tools on, where should their output appear, and what should the strength
+control look like now that it is level 0–7 plus a think-time cap?
+
+**Evidence.** A Classic position reproduced from the engine (twelve plies, White to move,
+`mateOutlookAtDepth` none at depth 1 and an opportunity at depth 2; eleven legal actions, none allowing a
+black mate in two), loaded into the shipped arena through the `?position=library` handoff with both tools
+on. "White can force mate in 2." renders in the rail at **y = 906** on 1280×800 and **y = 1629** on a
+390×812 phone — 817px below the fold. The score label "White has mate" says nearly the same thing in a
+second place. Below 700px `styles.css` moves the bar inside the board frame: at 390 it is drawn at x 16–32
+over a board starting at x 12, covering sixteen pixels of every a-file square.
+
+**Alternatives.** (1) Move the training panel above the board: pushes the board down. (2) Overlay hints on
+squares: the worker proves existence, not a move, and a mark would claim more than it knows. (3) **One
+hint line in the turn card**, tagged Training, keeping the shipped wording and four `data-state` tints; the
+score stays under its toggle and in the bar's `aria-valuetext`; the bar takes its width from the board at
+every size. Chose 3.
+
+**Measured.** The board column clears the window at all nine arena viewports with the bar on (board 470px
+at 1280×800, 332 at 390×812, 302 at 360×640) and the bar never overlaps a square. Hint text 13.15:1 light
+and 12.78:1 dark; the Training tag first measured exactly 4.50:1 in `--muted` on the tint and now uses ink.
+
+**Strength panel.** Level slider with the five decided stops and a think-time slider defaulting to 1 s. The
+think-time range is proposed: ¼ s to 8 s on a doubling scale, because level 7's worst measured move was
+8.15 s and a linear slider would spend most of its travel on waits nobody chooses. A plain n-column label
+grid drifted about 20px from the native ticks at the ends, since the thumb's centre travels from 8px to
+width − 8px; widened and shifted lists now land every label on its value with 0px measured offset.
+
+**Next measurement.** Neither slider exists in `watch-ui.js` yet; no device has run any of this.
+
 ## 2026-11-08 — A hidden-army reveal is one event, not six moves
 
 **Question.** In Random hidden armies, `hiddenSetupPlacements` samples both home ranks independently once
