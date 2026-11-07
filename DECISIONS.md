@@ -518,9 +518,12 @@ The Bot arena card inherits whatever is on that board, through the same
 this position further" a true sentence. Without JavaScript the card is still a plain link to the
 arena.
 
-**At phone width the board is `display: none`, on purpose.** It is not a label being hidden from the
-screen — the feature genuinely is not there, because at 390px it pushes the four actions below the
-fold and the mobile home has to stay a menu.
+**The board shows at every width, phones included.** It was `display: none` below 761px until
+2026-10-24, when the Classic design pass found that a phone had no home game at all; since then
+`.lobby-play` renders at phone width (narrowed to 17rem, `styles.css` `max-width:760px` block) above
+the destination cards. The cost that once justified hiding it is real: at 390px the cards start
+below the fold. The November design pass's home screen addresses that; until it ships, this is
+the trade-off in effect. (Corrected 2026-11-08; this paragraph said the board was hidden on phones.)
 
 The four destinations are one primary card and three quiet ones in a single bordered group. The
 arrow affordance is back: `.mode::after` had existed for a long time and was switched off by
@@ -890,6 +893,9 @@ Newest first. One line per decision that changed how the app behaves.
   anything fit. A fixed bar is cleared by reserving space below the content, not by shrinking it.
   Guarded by an e2e test that asserts the board fills the available width at four heights and that
   nothing in the flow sits under the bar or the feedback strip.
+  *Correction 2026-11-08:* no longer true. At 390×700 the fixed bar covers 163px of the board
+  (about 1.6 ranks), and that e2e test failed in the 2026-11-07 desktop/mobile run
+  (`research/workspace-publication-2026-11-07/browser.log`).
 
 - Accessibility is audited by axe-core in CI across five pages, two themes and every dialog, with
   the focus ring, dialog focus and the theme switch checked separately.
