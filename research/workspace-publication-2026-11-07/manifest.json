@@ -632,5 +632,10 @@
     "research/competitive-engine-v1/README.md",
     "research/competitive-engine-v1/js-staged-moves-ablation.json"
   ],
-  "browserTests": "Full suite reported UI failures; run log retained, checkpoint not promoted."
+  "browserTests": {
+    "passed": 97,
+    "failed": 18,
+    "skipped": 5,
+    "total": 120
+  }
 }

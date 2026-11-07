@@ -17206,3 +17206,210 @@ Running 120 tests using 6 workers
     ────────────────────────────────────────────────────────────────────────────────────────────────
 
 
+  18) [desktop] › e2e/online-connect.spec.js:3:1 › two independent browsers join the same online invite and exchange a move 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: browserContext.close: Test ended.
+    Browser logs:
+
+    [pid=65389][err] [1107/232035.727428:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun2.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727428:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9f180:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727433:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun2.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727436:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9f880:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727437:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun2.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727443:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun2.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727443:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d0700:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727448:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun2.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727452:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d0e00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727460:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d1500:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727469:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d1c00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727504:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d2300:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727530:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d2a00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727549:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3100:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727561:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3800:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727570:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3f00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727579:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d4600:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727595:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d4d00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727605:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d5400:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727615:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d5b00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727621:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d6200:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727664:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727674:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727679:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727686:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727700:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9d580:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727727:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9dc80:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727726:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727737:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9e380:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727739:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727744:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9ea80:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727747:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727751:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9f180:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727753:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727759:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727764:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727769:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727775:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727778:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9f880:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727780:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727785:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727789:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727793:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727798:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727802:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727806:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727810:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.cloudflare.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727841:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d0700:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727872:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d0e00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727879:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d1500:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727891:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727898:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d1c00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727901:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727907:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727908:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d2300:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727912:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727915:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d2a00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727917:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727921:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3100:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727923:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727929:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3800:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727934:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727937:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3f00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727943:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727944:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d4600:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727949:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727950:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d4d00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727956:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727959:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d5400:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727961:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727964:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d5b00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727966:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727970:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727972:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d6200:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727975:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727979:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.727982:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9d580:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.727984:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728023:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9dc80:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728078:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9e380:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728077:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728085:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9ea80:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728091:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9f180:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728097:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9f880:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728097:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728103:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d0700:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728110:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d0e00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728111:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728119:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d1500:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728119:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728127:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d1c00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728171:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d2300:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728189:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d2a00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728202:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3100:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728209:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3800:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728216:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3f00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728210:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728223:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d4600:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728226:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728228:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d4d00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728232:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728235:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d5400:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728240:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728247:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728241:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d5b00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728252:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728257:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728263:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728268:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728276:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728283:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728288:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728294:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728298:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728306:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728311:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728316:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728322:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728327:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728334:ERROR:services/network/p2p/socket_manager.cc:145] Failed to resolve address for stun1.l.google.com., errorcode: -105
+    [pid=65389][err] [1107/232035.728347:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d6200:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728365:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9d580:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728377:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9dc80:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728388:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9e380:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728397:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9ea80:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728406:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9f180:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728416:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[3c9f880:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728424:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d0700:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728434:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d0e00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728442:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d1500:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728449:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d1c00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728460:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d2300:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728473:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d2a00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728481:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3100:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728529:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3800:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728540:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d3f00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728549:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d4600:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728557:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d4d00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728671:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d5400:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728684:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d5b00:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232035.728691:WARNING:third_party/webrtc/p2p/base/stun_port.cc:470] Port[40d6200:0:1:0:host:Net[any:0:0:0:x:x:x:x:x/0:Wildcard:id=0]]: StunPort: stun host lookup received error -1
+    [pid=65389][err] [1107/232156.440865:INFO:CONSOLE:2] "Trystero: relay failure from wss://offchain.pub/ - Policy violated and pubkey is not in our web of trust.", source: http://127.0.0.1:4173/vendor/p2p-core/vendor/trystero/nostr.js (2)
+    [pid=65389][err] [1107/232201.832972:INFO:CONSOLE:2] "Trystero: relay failure from wss://offchain.pub/ - Policy violated and pubkey is not in our web of trust.", source: http://127.0.0.1:4173/vendor/p2p-core/vendor/trystero/nostr.js (2)
+    [pid=65389][err] [1107/232207.116467:INFO:CONSOLE:2] "Trystero: relay failure from wss://offchain.pub/ - Policy violated and pubkey is not in our web of trust.", source: http://127.0.0.1:4173/vendor/p2p-core/vendor/trystero/nostr.js (2)
+    [pid=65389][err] [1107/232212.448671:INFO:CONSOLE:2] "Trystero: relay failure from wss://offchain.pub/ - Policy violated and pubkey is not in our web of trust.", source: http://127.0.0.1:4173/vendor/p2p-core/vendor/trystero/nostr.js (2)
+    [pid=65389][err] [1107/232217.792375:INFO:CONSOLE:2] "Trystero: relay failure from wss://offchain.pub/ - Policy violated and pubkey is not in our web of trust.", source: http://127.0.0.1:4173/vendor/p2p-core/vendor/trystero/nostr.js (2)
+    [pid=65389][err] [1107/232223.156460:INFO:CONSOLE:2] "Trystero: relay failure from wss://offchain.pub/ - Policy violated and pubkey is not in our web of trust.", source: http://127.0.0.1:4173/vendor/p2p-core/vendor/trystero/nostr.js (2)
+    [pid=65389][err] [1107/232228.468912:INFO:CONSOLE:2] "Trystero: relay failure from wss://offchain.pub/ - Policy violated and pubkey is not in our web of trust.", source: http://127.0.0.1:4173/vendor/p2p-core/vendor/trystero/nostr.js (2)
+    [pid=65389][err] [1107/232233.806992:INFO:CONSOLE:2] "Trystero: relay failure from wss://offchain.pub/ - Policy violated and pubkey is not in our web of trust.", source: http://127.0.0.1:4173/vendor/p2p-core/vendor/trystero/nostr.js (2)
+    [pid=65389] <gracefully close start>
+
+      37 |     await expect(black.locator('#board .piece-white')).toHaveCount(1, { timeout: 10_000 });
+      38 |   } finally {
+    > 39 |     await first.close();
+         |     ^
+      40 |     await second.close();
+      41 |   }
+      42 | });
+        at /Users/kakkoidev/Documents/ChatGPT/Schness/e2e/online-connect.spec.js:39:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/online-connect-two-indepen-28dc1--invite-and-exchange-a-move-desktop/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/online-connect-two-indepen-28dc1--invite-and-exchange-a-move-desktop/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/online-connect-two-indepen-28dc1--invite-and-exchange-a-move-desktop/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/online-connect-two-indepen-28dc1--invite-and-exchange-a-move-desktop/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/online-connect-two-indepen-28dc1--invite-and-exchange-a-move-desktop/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  18 failed
+    [desktop] › e2e/accessibility.spec.js:27:3 › no accessibility violations in light ──────────────
+    [desktop] › e2e/accessibility.spec.js:60:1 › every tab stop shows the focus ring, and the board draws its own 
+    [desktop] › e2e/accessibility.spec.js:89:1 › a dialog takes focus, gives it back, and closes on Escape 
+    [desktop] › e2e/happy-paths.spec.js:36:1 › the homepage opens the arena with visible training controls 
+    [desktop] › e2e/happy-paths.spec.js:130:1 › bot game supports White and Black with the same board and reserves 
+    [desktop] › e2e/happy-paths.spec.js:144:1 › bot training toggles mate search and the estimated advantage independently 
+    [desktop] › e2e/happy-paths.spec.js:470:1 › the arena splits replay from setup and keeps a transcript you can read 
+    [desktop] › e2e/online-connect.spec.js:3:1 › two independent browsers join the same online invite and exchange a move 
+    [desktop] › e2e/ui-migration.spec.js:111:3 › the header is one order and the wordmark never vanishes in en 
+    [desktop] › e2e/ui-migration.spec.js:304:1 › the board in the rules dialog and the board in a game are the same object 
+    [mobile] › e2e/happy-paths.spec.js:240:1 › a real checked position highlights its king in Bot Arena, not just the status 
+    [mobile] › e2e/happy-paths.spec.js:364:1 › the home page is already a game, and the arena inherits the position 
+    [mobile] › e2e/happy-paths.spec.js:384:1 › the rules never open themselves, even on a first visit 
+    [mobile] › e2e/happy-paths.spec.js:493:1 › library cards lead with a colour and a position, and can be sorted 
+    [mobile] › e2e/happy-paths.spec.js:554:1 › the puzzle board keeps its width on a phone, and nothing hides behind the action bar 
+    [mobile] › e2e/ui-migration.spec.js:6:5 › shared UI fits all five pages in en / light ──────────
+    [mobile] › e2e/ui-migration.spec.js:111:3 › the header is one order and the wordmark never vanishes in en 
+    [mobile] › e2e/variants.spec.js:40:1 › hidden setup reveals all eight pieces and returns normal play to White 
+  5 skipped
+  97 passed (2.2m)
