@@ -8,6 +8,38 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-11-08 — A hidden-army reveal is one event, not six moves
+
+**Question.** In Random hidden armies, `hiddenSetupPlacements` samples both home ranks independently once
+both kings are down. How should the arena show that?
+
+**Evidence first.** Driven in the shipped arena at seed 20261108 and reproduced from the engine (White K b1,
+N a1 B c1 R d1; Black K a4, B b4 R c4 N d4; White to move, ten legal actions). One click on b1 and the next
+frame holds eight pieces; the status goes from "place your king" to "White to move · Your seat". The
+transcript reads `2 @Na1 @Bb4 3 @Bc1 @Rc4 4 @Rd1 @Nd4` — six sampled drops numbered and paired as though
+they were alternating choices, which `DECISIONS.md` says they never are. Each entry already carries
+`simultaneousReveal: true`; nothing reads it. Replay steps back through six positions nobody faced
+("Reviewing ply 5 of 8"), with Branch disabled and Edit this position enabled.
+
+**Alternatives.** (1) Animate the six drops one by one: makes the false sequence vivid. (2) Leave the board
+and fix only the transcript. (3) **Treat the reveal as one event everywhere**: a turn card that names it, a
+one-turn mark on the six drawn squares (not the kings, which were placed), one unnumbered transcript row
+with both armies as positions rather than `@` drops, and a transport that steps over it. Chose 3. With no
+half-revealed position to land on, "a replay cannot branch halfway through a hidden reveal" stops being a
+disabled button and becomes a position that does not exist.
+
+**Measured.** The board column clears the window at all nine arena viewports, unchanged from the arena
+screen. The first notch, accent alone, measured **1.06:1** against a dark square in the light theme; it now
+carries a paper band along its inner edge, so it is bounded by accent on paper at 5.04:1 light and 6.65:1
+dark on any square.
+
+**Also corrected.** The arena screen's transcript used invented notation (`B@a1`, `Ba1–c3`). `history.js`
+writes drops as `@Ba1` and moves without a from-square; recomputed with `actionNotation` it reads
+`7. @Ba1 Kxd2 8. Bc3+ Kxd1 9. Ba1 @Nb4` — including a check the screen had dropped. Both arena screens are
+also capped at 72rem now that the body is full width, which leaves every fold figure unchanged.
+
+**Next measurement.** None on a device.
+
 ## 2026-11-08 — Home: four doors, beside the board
 
 **Question.** At 1280×800 the shipped home shows the board and no way off the page: the first card starts

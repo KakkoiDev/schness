@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="icon" href="../../icon.svg">
+  <title>Hidden-army reveal &middot; Schness design reference</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../ui.css">
+  <link rel="stylesheet" href="../design.css">
+</head>
+<body class="ref-body ref-arena-body">
+<div class="ref-arena"><div class="ref-arena-bar"><button type="button" class="ref-abtn ref-abtn-variant"><span class="ref-abit">Variant</span><span class="ref-abtn-main">Random hidden armies &middot; quiet drops</span><svg class="ref-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button><button type="button" class="ref-abtn ref-abtn-seat"><span class="ref-abit">You play</span><span class="ref-abtn-main">White</span><svg class="ref-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button><button type="button" class="ref-abtn ref-abtn-bot"><span class="ref-abit">Black bot</span><span class="ref-abtn-main">Steady&nbsp;3</span><svg class="ref-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button><div class="ref-abar-end"><button type="button" class="btn ref-abar-phone" data-variant="secondary">Game &amp; tools</button><button type="button" class="btn" data-variant="primary">New game</button></div></div><div class="ref-arena-main"><div class="ref-arena-stage"><div class="ref-aturn ref-reveal-turn"><p class="eyebrow">Armies revealed</p><p class="ref-aturn-line">Both armies were drawn at random, out of sight of each other. <strong>White to move.</strong></p></div><div class="ref-tray ref-arena-tray"><div class="ref-tray-head"><span class="reserve-label">Black reserve</span></div><div class="bank ref-cap-3"><span class="bank-slot" aria-label="Empty reserve slot"></span><span class="bank-slot" aria-label="Empty reserve slot"></span><span class="bank-slot" aria-label="Empty reserve slot"></span></div></div><div class="board-frame"><div class="board" role="grid" aria-label="Schness board" data-orientation="white"><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="0" aria-label="black king, square 1"><span class="square-coordinate" aria-hidden="true">a4</span><img class="piece piece-black piece-king" src="../../assets/pieces/bK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square ref-revealed" type="button" role="gridcell" tabindex="-1" data-square="1" aria-label="black bishop, square 2, revealed"><span class="square-coordinate" aria-hidden="true">b4</span><img class="piece piece-black piece-bishop" src="../../assets/pieces/bB.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square ref-revealed" type="button" role="gridcell" tabindex="-1" data-square="2" aria-label="black rook, square 3, revealed"><span class="square-coordinate" aria-hidden="true">c4</span><img class="piece piece-black piece-rook" src="../../assets/pieces/bR.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square ref-revealed" type="button" role="gridcell" tabindex="-1" data-square="3" aria-label="black knight, square 4, revealed"><span class="square-coordinate" aria-hidden="true">d4</span><img class="piece piece-black piece-knight" src="../../assets/pieces/bN.svg" alt="" draggable="false" aria-hidden="true"></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="4" aria-label="Empty square 5"><span class="square-coordinate" aria-hidden="true">a3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="5" aria-label="Empty square 6"><span class="square-coordinate" aria-hidden="true">b3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="6" aria-label="Empty square 7"><span class="square-coordinate" aria-hidden="true">c3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="7" aria-label="Empty square 8"><span class="square-coordinate" aria-hidden="true">d3</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="8" aria-label="Empty square 9"><span class="square-coordinate" aria-hidden="true">a2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="9" aria-label="Empty square 10"><span class="square-coordinate" aria-hidden="true">b2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="10" aria-label="Empty square 11"><span class="square-coordinate" aria-hidden="true">c2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="11" aria-label="Empty square 12"><span class="square-coordinate" aria-hidden="true">d2</span></button></div><div class="board-row" role="row"><button class="square ref-revealed" type="button" role="gridcell" tabindex="-1" data-square="12" aria-label="white knight, square 13, revealed"><span class="square-coordinate" aria-hidden="true">a1</span><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="13" aria-label="white king, square 14"><span class="square-coordinate" aria-hidden="true">b1</span><img class="piece piece-white piece-king" src="../../assets/pieces/wK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square ref-revealed" type="button" role="gridcell" tabindex="-1" data-square="14" aria-label="white bishop, square 15, revealed"><span class="square-coordinate" aria-hidden="true">c1</span><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square ref-revealed" type="button" role="gridcell" tabindex="-1" data-square="15" aria-label="white rook, square 16, revealed"><span class="square-coordinate" aria-hidden="true">d1</span><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button></div></div></div><div class="ref-tray ref-arena-tray"><div class="ref-tray-head"><span class="reserve-label">Your reserve</span></div><div class="bank ref-cap-3"><span class="bank-slot" aria-label="Empty reserve slot"></span><span class="bank-slot" aria-label="Empty reserve slot"></span><span class="bank-slot" aria-label="Empty reserve slot"></span></div></div></div><aside class="ref-arail" aria-label="Game tools"><div class="ref-arail-transport" role="group" aria-label="Replay"><button type="button" class="btn" data-variant="secondary" aria-label="Back to the first move">&#9198;</button><button type="button" class="btn" data-variant="secondary" aria-label="Step back over the reveal">&#9664;</button><button type="button" class="btn" data-variant="secondary" aria-label="Step forward one move" disabled>&#9654;</button><button type="button" class="btn" data-variant="secondary" aria-label="Forward to the last move" disabled>&#9197;</button></div><div class="ref-amoves" role="table" aria-label="Move transcript"><div class="ref-amove" role="row"><span class="ref-amove-n">1</span><span class="ref-amove-w">@Kb1</span><span class="ref-amove-b">@Ka4</span></div><div class="ref-amove ref-reveal-row" role="row" aria-label="Reveal: White knight a1, bishop c1, rook d1. Black bishop b4, rook c4, knight d4."><span class="ref-amove-n" aria-hidden="true">&#8727;</span><span class="ref-reveal-body"><span class="ref-reveal-title">Reveal</span><span class="ref-reveal-side"><span class="ref-reveal-who">White</span><span class="ref-reveal-piece">N&thinsp;a1</span> <span class="ref-reveal-piece">B&thinsp;c1</span> <span class="ref-reveal-piece">R&thinsp;d1</span></span><span class="ref-reveal-side"><span class="ref-reveal-who">Black</span><span class="ref-reveal-piece">B&thinsp;b4</span> <span class="ref-reveal-piece">R&thinsp;c4</span> <span class="ref-reveal-piece">N&thinsp;d4</span></span></span></div><div class="ref-amove ref-amove-next" role="row"><span class="ref-amove-n">2</span><span class="ref-amove-w">&hellip;</span><span class="ref-amove-b"></span></div></div><details class="ref-atools"><summary>Training tools</summary><label class="ref-atool"><input type="checkbox"> Forced-mate hints (1&ndash;4 moves)</label><label class="ref-atool"><input type="checkbox"> White / Black advantage</label></details></aside></div></div>
+
+  <div class="game game-page ref-screen ref-anotes">
+    <p class="eyebrow">Deliverable 3 &middot; screen</p>
+    <h1 class="ref-h1">The hidden-army reveal</h1>
+    <p class="ref-lede ref-narrow">Random hidden armies, quiet drops, seed 20261108: White&rsquo;s king on b1,
+      Black&rsquo;s on a4, then both home ranks filled by <strong>hiddenSetupPlacements</strong>. The position
+      above was reproduced from the engine and matches what the shipped arena draws for the same seed.</p>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">What the shipped arena does with it</h2>
+      <dl class="ref-copy">
+        <dt>The reveal has no moment</dt>
+        <dd>One click places White&rsquo;s king, and the next frame holds eight pieces. The status goes straight
+          from &ldquo;place your king&rdquo; to <strong>&ldquo;White to move &middot; Your seat&rdquo;</strong>.
+          Nothing says the armies were drawn, or that yours was not your choice.</dd>
+        <dt>The transcript invents three moves</dt>
+        <dd>It reads <strong>2 @Na1 @Bb4 &nbsp;3 @Bc1 @Rc4 &nbsp;4 @Rd1 @Nd4</strong>: six drops, paired and
+          numbered as though White chose a knight on a1 and Black answered with a bishop on b4.
+          <strong>DECISIONS.md</strong>: the six-drop serialization &ldquo;is for replay, never a sequence of
+          informed setup choices&rdquo;. History already carries <strong>simultaneousReveal: true</strong> on
+          each of them; nothing reads it.</dd>
+        <dt>Replay walks through positions that never existed</dt>
+        <dd>Stepping back from live shows <strong>&ldquo;Reviewing ply 5 of 8&rdquo;</strong> with two white
+          pieces down and one black &mdash; six intermediate boards no one ever faced. Branch is correctly
+          disabled there; <strong>Edit this position</strong> is not.</dd>
+      </dl>
+    </section>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">What this screen changes</h2>
+      <ul class="ref-list">
+        <li><strong>The turn card names the event.</strong> &ldquo;Armies revealed&rdquo;, and one sentence on
+          what that means. It stays until White&rsquo;s first move.</li>
+        <li><strong>The six revealed squares are marked</strong> for the same turn, with a corner notch and
+          &ldquo;revealed&rdquo; in each square&rsquo;s name. The kings are not marked: they were placed, not
+          drawn.</li>
+        <li><strong>The transcript has one reveal row</strong>, both armies side by side, unnumbered and
+          written as positions rather than as <strong>@</strong> drops, because nobody dropped them. Moves
+          resume at 2. The row is the honest unit: two simultaneous draws, not six alternating choices.</li>
+        <li><strong>Replay steps over it.</strong> Back from here goes to kings-only, forward from there goes
+          to the full board. With no half-revealed position to land on, &ldquo;a replay cannot branch halfway
+          through a hidden reveal&rdquo; stops being a rule enforced by a disabled button and becomes a
+          position that does not exist. Edit follows for free.</li>
+        <li><strong>Both reserves are empty and drawn that way</strong>: three dashed slots each, Classic
+          capture policy, so every piece that is taken comes back to its owner.</li>
+      </ul>
+    </section>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">Engineering prerequisites <span class="ref-flag">for deliverable 6</span></h2>
+      <ul class="ref-list">
+        <li><strong>The transcript reads simultaneousReveal.</strong> The flag exists on all six history
+          entries; the renderer groups them into one row.</li>
+        <li><strong>The transport treats the group as one ply.</strong> Review indices skip from before the
+          first reveal entry to after the last.</li>
+        <li><strong>A one-turn &ldquo;revealed&rdquo; state for squares</strong>, cleared on the next action,
+          plus the eyebrow and status strings in EN and JA.</li>
+      </ul>
+    </section>
+    <p class="ref-note">Proposed. Board, pieces, reserves, rail and bar are the shipped classes and the arena
+      screen&rsquo;s. The revealed mark, the reveal row and the turn copy are new and marked PROPOSED in
+      design.css. No real device has run any of this.</p>
+  </div>
+  <script src="../preview.js" type="module"></script>
+</body>
+</html>

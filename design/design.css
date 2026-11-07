@@ -232,7 +232,7 @@
    form, the rail, and a board bounded by the window rather than by a 37rem
    column. */
 .ref-arena-body { padding: 0; }
-.ref-arena { display: grid; gap: var(--space-3, 12px);
+.ref-arena { display: grid; gap: var(--space-3, 12px); max-width: 72rem; margin-inline: auto;
   padding: var(--space-4, 16px) var(--space-4, 16px) var(--space-5, 24px);
   border-bottom: 1px solid var(--hairline); }
 
@@ -428,3 +428,27 @@
   .lobby-page .ref-home-menu .lobby-foot button { white-space: nowrap; }
   .lobby-page .ref-home-menu .mode-buttons { margin-top: calc(3.25rem + var(--space-2, 8px)); }
 }
+
+/* ---- deliverable 3: the hidden-army reveal ------------------------------- */
+/* PROPOSED. A reveal is one event, not six moves: a turn card that names it,
+   a one-turn mark on the six drawn squares, and one transcript row. */
+.ref-reveal-turn { padding-left: 12px; border-left: 3px solid var(--accent); }
+
+/* A corner notch, so the mark never competes with a target dot, a capture
+   ring or a refusal hatch. Accent alone measured 1.06:1 against a dark square
+   in the light theme, so its inner edge carries a band of paper: the notch is
+   always bounded by accent on paper, 5.04:1 light and 6.65:1 dark, whatever
+   square it sits on. The square's name says "revealed" too. A gradient rather
+   than clip-path, because clip-path would cut the band off with the rest. */
+.board .board-row .square.ref-revealed::before { content: ""; position: absolute; top: 0; right: 0;
+  z-index: 2; width: 30%; aspect-ratio: 1; pointer-events: none;
+  background: linear-gradient(to bottom left, var(--accent) 0 42%, var(--paper) 42% 54%, transparent 54%); }
+
+.ref-reveal-row { grid-template-columns: 1.6rem minmax(0, 1fr); align-items: start;
+  margin: 4px 0; padding: 8px 0; border-block: 1px solid var(--hairline); }
+.ref-reveal-body { display: grid; gap: 3px; }
+.ref-reveal-title { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent-text); }
+.ref-reveal-side { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.ref-reveal-who { min-width: 3rem; color: var(--muted); }
+.ref-amove-next .ref-amove-w { color: var(--muted); }
