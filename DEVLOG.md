@@ -8,6 +8,30 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-11-08 — A phone puzzle starts its board higher, not smaller
+
+**Question.** On phones the fixed Next / Solution bar still covers the puzzle board at rest. How do we clear
+it without the board cap `styles.css` already rejected?
+
+**Evidence.** Re-measured at rest: 19px of board under the bar at 390×844, 51 at 390×812, 163 at 390×700,
+193 at 360×640. At 390×812 your reserve sits at y = 791 under a bar starting at 728. Puzzle 802 (White to
+move, mate in two, one solution) begins with a knight dropped from that reserve onto b2. `DECISIONS.md`
+says the board "no longer sits under the fixed action bar"; at rest it does, at every phone height
+measured — what is true is that the page reserves room to scroll it clear.
+
+**Alternatives.** (1) Cap the board by height: already tried and recorded in `styles.css` — 188px at
+390×700, 128px at 360×640, and the page scrolled anyway. (2) Make the bar static: loses the one-thumb
+Next. (3) **Shorten what is above the board**: the puzzle mix closes into its shipped `<details>` with the
+current mix as its value, the eyebrow goes as on the match page, the duplicate h1 is visually hidden behind
+the prompt, and the resting feedback strip hides as the rules stepper's does. Chose 3.
+
+**Measured.** The board starts at 281 instead of 413 at the same 366px width. Board under the bar: 0 at
+390×844 and 390×812, 31 at 390×700, 61 at 360×640. Your reserve and b2 are above the bar at 390×844 and
+390×812.
+
+**Next measurement.** The desktop puzzle board also ends below an 800px fold (877 at 1280×800); out of scope
+for this screen. None of it has run on a device.
+
 ## 2026-11-08 — The library opens on wins
 
 **Question.** Players lead and the research archive moves to a second tab, per the November recommendation

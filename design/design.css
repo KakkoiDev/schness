@@ -527,3 +527,27 @@
    advantage bar already uses for the same reason, each with an --ink ring. */
 .ref-lib .library-game[data-result="white-won"] .library-result::before { background: #f3f2ed; border-color: var(--ink); }
 .ref-lib .library-game[data-result="black-won"] .library-result::before { background: #27332e; border-color: var(--ink); }
+
+/* ---- deliverable 3: a puzzle on a phone ---------------------------------- */
+/* PROPOSED. styles.css rejected capping the board by height, rightly: it cost
+   a third of the board and the page scrolled anyway. So the board keeps its
+   width and the chrome above it gets shorter. */
+@media (max-width: 760px) {
+  /* Shipped: .puzzle-settings{display:block!important} and the summary hidden,
+     so six controls sit above the board on every visit. Closed, with the
+     current mix as its value, it is one 44px row. */
+  .ref-puz .puzzle-settings summary { display: flex; align-items: center; justify-content: space-between;
+    min-height: 44px; padding: 0 12px; cursor: pointer; font-size: .85rem; font-weight: 640; }
+  .ref-puz .ref-puz-mix:not([open]) { padding: 0; }
+  .ref-puz-mix-value { color: var(--muted); font-weight: 560; }
+  .ref-puz .puzzle-heading .eyebrow { display: none; }
+  /* "Find the checkmate" above "White to move · mate in 2" says it twice. On a
+     phone the prompt is the visible heading; the h1 stays for the outline and
+     for screen readers, visually hidden, and the board gains 41px. */
+  .ref-puz .puzzle-heading { position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; margin: 0; }
+  /* At rest the feedback strip repeats the prompt and sat half under the bar.
+     The rules stepper already hides its resting strip for the same reason;
+     it comes back the moment there is something to say. */
+  .ref-puz #puzzle-feedback[data-state="ready"] { display: none; }
+}

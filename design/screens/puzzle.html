@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="icon" href="../../icon.svg">
+  <title>Puzzle on a phone &middot; Schness design reference</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../../ui.css">
+  <link rel="stylesheet" href="../design.css">
+</head>
+<body class="puzzle-page ref-body">
+  <main class="game ref-puz">
+    <header>
+      <a class="brand" href="../../index.html" aria-label="Schness home"><svg class="brand-glyph" viewBox="-24 0 148 148" aria-hidden="true" focusable="false"><path fill="var(--ink)" d="M8 52H48V100H96V140a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V60a8 8 0 0 1 8-8Z"/><rect fill="var(--accent)" x="52" y="0" width="48" height="48" rx="6"/></svg><span class="brand-word">Schness</span></a>
+      <nav class="site-nav" aria-label="Schness"><a href="../../index.html#online" data-online-link>Play online</a><a href="../../watch.html">Bot arena</a><a href="../../puzzles.html" aria-current="page">Puzzles</a><a href="../../library.html">Library</a></nav>
+      <div class="header-actions">
+        <button class="text-button rules-button btn" type="button" data-open-rules data-variant="ghost">Rules</button>
+        <button class="text-button theme-button btn" type="button" data-theme-toggle aria-label="Switch to dark mode" data-variant="ghost">Dark</button>
+        <span class="header-rule" aria-hidden="true"></span>
+      </div>
+    </header>
+    <div class="puzzle-heading"><div><p class="eyebrow">Tactics</p><h1>Find the checkmate</h1></div></div>
+    <section class="puzzle-layout">
+      <div class="puzzle-stage">
+        <div class="replay-seat"><div class="replay-player">Black &middot; Defense</div><div class="reserve"><span class="reserve-label">Their reserve &middot; 2</span><div class="bank"><button type="button" class="bank-piece" data-piece="rook" data-owner="black" aria-label="black rook in reserve"><img class="piece piece-black piece-rook" src="../../assets/pieces/bR.svg" alt="" draggable="false" aria-hidden="true"></button><span class="bank-slot" role="img" aria-label="Empty bishop slot"></span><button type="button" class="bank-piece" data-piece="knight" data-owner="black" aria-label="black knight in reserve"><img class="piece piece-black piece-knight" src="../../assets/pieces/bN.svg" alt="" draggable="false" aria-hidden="true"></button></div></div></div>
+        <div id="puzzle-board" class="board" role="grid" aria-label="Checkmate puzzle board" data-orientation="white"><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="0" aria-label="Empty square 1"><span class="square-coordinate" aria-hidden="true">a4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="1" aria-label="Empty square 2"><span class="square-coordinate" aria-hidden="true">b4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="2" aria-label="Empty square 3"><span class="square-coordinate" aria-hidden="true">c4</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="3" aria-label="black king, square 4"><span class="square-coordinate" aria-hidden="true">d4</span><img class="piece piece-black piece-king" src="../../assets/pieces/bK.svg" alt="" draggable="false" aria-hidden="true"></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="4" aria-label="Empty square 5"><span class="square-coordinate" aria-hidden="true">a3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="5" aria-label="Empty square 6"><span class="square-coordinate" aria-hidden="true">b3</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="6" aria-label="white rook, square 7"><span class="square-coordinate" aria-hidden="true">c3</span><img class="piece piece-white piece-rook" src="../../assets/pieces/wR.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="7" aria-label="Empty square 8"><span class="square-coordinate" aria-hidden="true">d3</span></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="8" aria-label="Empty square 9"><span class="square-coordinate" aria-hidden="true">a2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="9" aria-label="Empty square 10"><span class="square-coordinate" aria-hidden="true">b2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="10" aria-label="Empty square 11"><span class="square-coordinate" aria-hidden="true">c2</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="11" aria-label="white bishop, square 12"><span class="square-coordinate" aria-hidden="true">d2</span><img class="piece piece-white piece-bishop" src="../../assets/pieces/wB.svg" alt="" draggable="false" aria-hidden="true"></button></div><div class="board-row" role="row"><button class="square" type="button" role="gridcell" tabindex="-1" data-square="12" aria-label="white king, square 13"><span class="square-coordinate" aria-hidden="true">a1</span><img class="piece piece-white piece-king" src="../../assets/pieces/wK.svg" alt="" draggable="false" aria-hidden="true"></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="13" aria-label="Empty square 14"><span class="square-coordinate" aria-hidden="true">b1</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="14" aria-label="Empty square 15"><span class="square-coordinate" aria-hidden="true">c1</span></button><button class="square" type="button" role="gridcell" tabindex="-1" data-square="15" aria-label="black bishop, square 16"><span class="square-coordinate" aria-hidden="true">d1</span><img class="piece piece-black piece-bishop" src="../../assets/pieces/bB.svg" alt="" draggable="false" aria-hidden="true"></button></div></div>
+        <div class="replay-seat"><div class="replay-player">White &middot; You</div><div class="reserve"><span class="reserve-label">Your reserve &middot; 1</span><div class="bank"><span class="bank-slot" role="img" aria-label="Empty rook slot"></span><span class="bank-slot" role="img" aria-label="Empty bishop slot"></span><button type="button" class="bank-piece" data-piece="knight" data-owner="white" aria-label="white knight in reserve"><img class="piece piece-white piece-knight" src="../../assets/pieces/wN.svg" alt="" draggable="false" aria-hidden="true"></button></div></div></div>
+      </div>
+      <aside class="puzzle-panel">
+        <details class="puzzle-settings ref-puz-mix">
+          <summary><span>Puzzle mix</span><span class="ref-puz-mix-value">Mate 1&ndash;4</span></summary>
+          <fieldset class="puzzle-levels"><legend>Include</legend><label><input type="checkbox" name="puzzle-level" value="1" checked><span>Mate 1</span></label><label><input type="checkbox" name="puzzle-level" value="2" checked><span>Mate 2</span></label><label><input type="checkbox" name="puzzle-level" value="3" checked><span>Mate 3</span></label><label><input type="checkbox" name="puzzle-level" value="4" checked><span>Mate 4</span></label></fieldset>
+          <div class="puzzle-toggles"><label><input type="checkbox"> Hide mate depth</label><label><input type="checkbox"> Auto-next when solved</label></div>
+        </details>
+        <p class="eyebrow" id="puzzle-progress">Puzzle 802 of 1,526</p>
+        <h2 id="puzzle-prompt">White to move &middot; mate in 2</h2>
+        <div id="puzzle-feedback" class="puzzle-feedback" data-state="ready" role="status" aria-live="polite"><span aria-hidden="true">&#9679;</span><p>Find the forced checkmate.</p></div>
+        <div class="puzzle-actions"><button type="button" class="btn" data-variant="primary">Next</button><button type="button" class="btn" data-variant="secondary">Solution</button></div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="game game-page ref-screen ref-anotes">
+    <p class="eyebrow">Deliverable 3 &middot; screen</p>
+    <h1 class="ref-h1">A puzzle on a phone</h1>
+    <p class="ref-lede ref-narrow">Puzzle 802 from <strong>data/puzzles.json</strong>: White to move, mate in
+      two, one solution &mdash; and its first move is a knight dropped from your reserve onto b2. Both of the
+      things the answer needs are what the shipped phone layout puts under its fixed action bar.</p>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">The shipped page, re-measured</h2>
+      <dl class="ref-copy">
+        <dt>The bar still covers the board</dt>
+        <dd>At rest, the fixed Next / Solution bar covers <strong>51px</strong> of board at 390&times;812,
+          <strong>163px</strong> at 390&times;700 and <strong>193px</strong> at 360&times;640 &mdash; on the
+          smallest of those, more than two ranks. At 390&times;812 your own reserve sits at
+          <strong>y&nbsp;=&nbsp;791</strong>, under a bar that starts at 728.</dd>
+        <dt>A stale entry <span class="ref-flag">DECISIONS.md</span></dt>
+        <dd>&ldquo;<strong>puzzles.html</strong> joins the rest of the design: its board no longer sits under
+          the fixed action bar.&rdquo; At rest it does, at every phone height measured. What is true is that
+          the page reserves room below the content, so the board can be scrolled clear of it.</dd>
+        <dt>Why not cap the board <span class="ref-flag">respected</span></dt>
+        <dd><strong>styles.css</strong> records the rejected alternative: capping the board at
+          <strong>calc(100svh - 32rem)</strong> took it to 188px at 390&times;700 and 128px at 360&times;640,
+          and the page scrolled anyway. That reasoning holds. The fix has to come out of what is above the
+          board, not out of the board.</dd>
+      </dl>
+    </section>
+
+    <section class="ref-proposal">
+      <h2 class="ref-h2">What this screen changes</h2>
+      <ul class="ref-list">
+        <li><strong>The puzzle mix closes into one row.</strong> On a phone the shipped page forces the
+          settings open and hides their summary: four level toggles and two switches, every visit, above the
+          board. Here it is the shipped <strong>&lt;details&gt;</strong>, closed, with its summary saying what
+          is set &mdash; &ldquo;Mate 1&ndash;4&rdquo;.</li>
+        <li><strong>One heading on a phone, not two.</strong> &ldquo;Find the checkmate&rdquo; above
+          &ldquo;White to move &middot; mate in 2&rdquo; says it twice; the prompt is the visible heading and the
+          h1 stays for the outline and screen readers, visually hidden.</li>
+        <li><strong>The resting feedback strip hides</strong> until there is something to say, as the rules
+          stepper&rsquo;s already does: at rest it repeats the prompt, and it sat half under the bar.</li>
+        <li><strong>Nothing else moves.</strong> The board keeps the full width, the bar stays fixed, the room
+          reserved below the content stays. The board starts at <strong>281</strong> instead of 413.</li>
+      </ul>
+      <dl class="ref-copy">
+        <dt>Board under the bar, at rest</dt>
+        <dd>390&times;844: 19 &rarr; <strong>0</strong>. 390&times;812: 51 &rarr; <strong>0</strong>.
+          390&times;700: 163 &rarr; <strong>31</strong>. 360&times;640: 193 &rarr; <strong>61</strong>.</dd>
+        <dt>Your reserve above the bar</dt>
+        <dd>Now at 390&times;844 and 390&times;812, so puzzle 802&rsquo;s answer &mdash; a knight from that
+          reserve onto b2 &mdash; is on screen without scrolling. Below 760px tall the page still scrolls, which
+          the shipped reasoning already accepts.</dd>
+      </dl>
+    </section>
+    <p class="ref-note">Proposed. Header, heading, seats, board, panel and bar are the shipped markup from
+      <strong>puzzles.html</strong>. The closed puzzle mix and its value are new and marked PROPOSED in
+      design.css. No real device has run any of this.</p>
+  </div>
+  <script src="../preview.js" type="module"></script>
+</body>
+</html>
