@@ -2290,3 +2290,7 @@ and what hid every tray label on the capture-bank screen below 760px. The three 
 
 **Next measurement.** The five October screens still carry `game-page` on `<body>` and need the same change
 with a re-measure. The picker is not wired to anything: no real device has run it.
+
+**Review note.** Dropping `game-page` from the arena screen's `<body>` moved its lower tray from 611 to
+**625** of 812 at 390×812 (board 358px, both tray labels visible): still inside the window. Commit
+ab55203's message says "unchanged at 611"; that is wrong, and this is the measured value.
