@@ -8,6 +8,36 @@ were reached.
 Future contributors must add an entry in the same commit when they run an experiment, change product
 direction, tune an AI, or accept/reject a meaningful alternative.
 
+## 2026-11-08 — The library opens on wins
+
+**Question.** Players lead and the research archive moves to a second tab, per the November recommendation
+(not yet an entry in `DECISIONS.md`). What does a player see first?
+
+**Evidence.** `data/games.json`: 462 threefold draws, 303 White wins, 270 Black wins, 64 ply-limit draws.
+"As recorded" is the default and its first sixteen records are threefold draws; the first decisive game is
+card 17. At 1280×800 the shipped page shows three whole cards, none decisive; at 390×812 the first card
+starts at y = 776 and none is whole. Before any game come "AI archive", "981 repeated records collapsed by
+exact move sequence", four statistics and four filters, one of which picks a Sharp engine version. Each card
+lists one game under every engine version it was recorded with ("Sharp v1 vs Steady v1 · Sharp v2 vs
+Steady v1"), plus plies, moves, a repeat count and a record number.
+
+**Alternatives.** (1) Change only the default sort. (2) A curated "best games" list: needs judgement data
+the archive does not have. (3) **Two tabs: Watch, defaulting to decisive games shortest first with one
+question (who wins), and Archive, unchanged.** Chose 3; it is built from `matchesFilters` and `sortGames`
+plus one new filter value, "either side won".
+
+**Measured.** With the shipped card markup captured from the live library and given player copy ("White won
+in 7 moves", "Sharp vs Steady"): nine whole cards at 1280×800, all decisive; three whole at 390×812, all
+decisive. 573 decisive games, 86 of them 30 plies or fewer.
+
+**Finding for deliverable 6.** In dark theme the result swatches for a White win and a Black win measured
+**1.38:1** apart: the Black swatch is `--ink`, which turns light, so a Black win is drawn as a near-white
+disc. `DECISIONS.md` says a card leads with a colour; in dark mode the colour inverts. The reference pins
+them to the fixed pair the advantage bar already uses (#f3f2ed, #27332e) with an `--ink` ring: 11.71:1 apart
+in both themes.
+
+**Next measurement.** None on a device.
+
 ## 2026-11-08 — Training output goes where the eyes are
 
 **Question.** With both training tools on, where should their output appear, and what should the strength
