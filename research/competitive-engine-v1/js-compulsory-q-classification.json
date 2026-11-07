@@ -1,0 +1,3946 @@
+{
+  "purpose": "Classify all six changed depth4 decisions with already complete independent frozen mate5 answers at identical positions,20000nodes200ms original caps. No new queries or cap/horizon increase. Short mate membership does not prove a winning save, improved strength, or baseline missed win; Black13baselinebishop5 previously proved mate7. Two candidate-only mate5, one both, three neither. No actionable winning-save proof; keep temporary policy unadopted and stop this family rather than optimize mate delay.",
+  "hashes": {
+    "research/competitive-engine-v1/js-compulsory-q-ablation.json": "9ffce5ce8a27c45a1f2ddd1491023f002cfdbc1f84f99fe390b8a4c6439724d7",
+    "research/competitive-engine-v1/js-broad-mate-five.json": "bb5c41a667bb33876e1b90688e3ef4e122c9a09e60d7580b98bb16d3894b29ca",
+    "research/competitive-engine-v1/js-random-tactics.json": "6afba8607c1145ef0f7fc07a7dceb9bc3a5632b754c97d3116dafb951c50296c"
+  },
+  "script": "/** Reuse complete independent frozen answers; no extra search or horizon escalation. */\nimport {readFile,writeFile} from 'node:fs/promises';import {createHash} from 'node:crypto';import assert from 'node:assert/strict';\nconst paths=['research/competitive-engine-v1/js-compulsory-q-ablation.json','research/competitive-engine-v1/js-broad-mate-five.json','research/competitive-engine-v1/js-random-tactics.json'];const inputs=await Promise.all(paths.map(async path=>({path,bytes:await readFile(path)})));const [ablation,broad,random]=inputs.map(x=>JSON.parse(x.bytes));const rows=[];\nfor(const change of ablation.actionChanges){const position=ablation.cases.find(c=>c.id===change.id).position;const source=[...broad.cases,...random.cases].find(c=>JSON.stringify(c.position)===JSON.stringify(position));assert(source?.complete);const answer=action=>{const a=source.answers.find(x=>JSON.stringify(x.action)===JSON.stringify(action));assert(a);return a.mateWithin5;};rows.push({id:change.id,position,candidate:change.candidate,baseline:change.base,candidateMate5:answer(change.candidate.action),baselineMate5:answer(change.base.action),independentSource:source});}\nconst out={purpose:'Classify all six changed depth4 decisions with already complete independent frozen mate5 answers at identical positions,20000nodes200ms original caps. No new queries or cap/horizon increase. Short mate membership does not prove a winning save, improved strength, or baseline missed win; Black13baselinebishop5 previously proved mate7. Two candidate-only mate5, one both, three neither. No actionable winning-save proof; keep temporary policy unadopted and stop this family rather than optimize mate delay.',hashes:Object.fromEntries(inputs.map(x=>[x.path,createHash('sha256').update(x.bytes).digest('hex')])),script:await readFile(new URL(import.meta.url),'utf8'),rows};await writeFile('research/competitive-engine-v1/js-compulsory-q-classification.json',JSON.stringify(out,null,2)+'\\n');console.log(JSON.stringify({cases:rows.length,candidateOnly:rows.filter(x=>x.candidateMate5&&!x.baselineMate5).length,both:rows.filter(x=>x.candidateMate5&&x.baselineMate5).length,neither:rows.filter(x=>!x.candidateMate5&&!x.baselineMate5).length,newSearchQueries:0}));\n",
+  "rows": [
+    {
+      "id": "black__20262001__13:38",
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "knight"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null
+        ],
+        "banks": {
+          "white": [
+            "bishop",
+            "bishop",
+            "rook"
+          ],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------------------wK----|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--------wN--------wK----|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bNwN--------wK----|BR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------bNwN--wB----wK----|R|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKbR----bNwN--wB----wK----|R|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bKbR----bNwN--wB----wK--wR||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bBbKbR----bNwN--wB----wK--wR||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbBbKbR----bN----wB----wK--wR||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbBbK----bRbN----wB----wK--wR||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbBbK----bRbN----wBwR--wK----||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbBbKbR----bN----wBwR--wK----||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbBbKbR----wB------wR--wK----|N|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbBbK------bR------wR--wK----|N|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bBbK------wN------wR--wK----|NR|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bB------wR--wK----|NR|BN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------bB--wK--wR--------|NR|BN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bB--wK--wR--bN----|NR|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------wR--wK------bN----|BNR|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------------bK--wK------bN----|BNR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--------------bK----------wK----|BNNR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------------bBbK----------wK----|BNNR|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------wRbBbK----------wK----|BNN|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bR------wRbBbK----------wK----|BNN|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--------bBbK----------wK----|BNNR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bB----------bK----------wK----|BNNR|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bB----------bKwN--------wK----|BNR|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------------bBbKwN--------wK----|BNR|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--------wR--bBbKwN--------wK----|BN|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKwR--bB--wN--------wK----|BN|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK----wR--wN--------wK----|BBN|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK----wRbRwN--------wK----|BBN|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------bRwN--------wKwR--|BBN|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--bR----wN--------wKwR--|BBN|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--bR----wNwN------wKwR--|BB|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--------wNbR------wKwR--|BB|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--------wNwK--------wR--|BBR|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK----bN--wNwK--------wR--|BBR|": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      },
+      "candidate": {
+        "action": {
+          "type": "move",
+          "from": 8,
+          "to": 6
+        },
+        "score": 1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 8,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 7
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 1
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 8,
+              "to": 6
+            },
+            "score": 1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 8,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 7
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 1
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 9415,
+        "quiescenceNodes": 8687,
+        "stats": {
+          "cutoffs": 5786,
+          "cacheHits": 5,
+          "tableCutoffs": 2,
+          "hintHits": 168,
+          "rootResearches": 0,
+          "pvsResearches": 2,
+          "aspirationResearches": 4,
+          "historyHits": 1240,
+          "evaluations": 3479,
+          "actionGenerations": 7761,
+          "countGenerations": 1821,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 9413,
+          "tableEntries": 720,
+          "hintEntries": 555
+        }
+      },
+      "baseline": {
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 5
+        },
+        "score": 1000000,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 15
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 5
+            },
+            "score": 1000000,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 15
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 8841,
+        "quiescenceNodes": 8095,
+        "stats": {
+          "cutoffs": 5474,
+          "cacheHits": 13,
+          "tableCutoffs": 5,
+          "hintHits": 170,
+          "rootResearches": 0,
+          "pvsResearches": 5,
+          "aspirationResearches": 4,
+          "historyHits": 1416,
+          "evaluations": 3487,
+          "actionGenerations": 7363,
+          "countGenerations": 1630,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 8836,
+          "tableEntries": 729,
+          "hintEntries": 567
+        }
+      },
+      "candidateMate5": true,
+      "baselineMate5": false,
+      "independentSource": {
+        "id": "black__20262001__13:38",
+        "position": {
+          "board": [
+            null,
+            null,
+            null,
+            {
+              "owner": "black",
+              "piece": "king"
+            },
+            null,
+            null,
+            {
+              "owner": "black",
+              "piece": "knight"
+            },
+            null,
+            {
+              "owner": "white",
+              "piece": "knight"
+            },
+            {
+              "owner": "white",
+              "piece": "king"
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "owner": "white",
+              "piece": "rook"
+            },
+            null
+          ],
+          "banks": {
+            "white": [
+              "bishop",
+              "bishop",
+              "rook"
+            ],
+            "black": []
+          },
+          "turn": "white",
+          "phase": "play",
+          "repetitions": {
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------------------wK----|BNR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--------wN--------wK----|BR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bNwN--------wK----|BR|BR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------bNwN--wB----wK----|R|BR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKbR----bNwN--wB----wK----|R|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bKbR----bNwN--wB----wK--wR||B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bBbKbR----bNwN--wB----wK--wR||": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbBbKbR----bN----wB----wK--wR||": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbBbK----bRbN----wB----wK--wR||": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbBbK----bRbN----wBwR--wK----||": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbBbKbR----bN----wBwR--wK----||": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbBbKbR----wB------wR--wK----|N|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbBbK------bR------wR--wK----|N|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bBbK------wN------wR--wK----|NR|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bB------wR--wK----|NR|BN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------bB--wK--wR--------|NR|BN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bB--wK--wR--bN----|NR|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------wR--wK------bN----|BNR|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------------bK--wK------bN----|BNR|BR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--------------bK----------wK----|BNNR|BR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------------bBbK----------wK----|BNNR|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------wRbBbK----------wK----|BNN|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bR------wRbBbK----------wK----|BNN|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--------bBbK----------wK----|BNNR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bB----------bK----------wK----|BNNR|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bB----------bKwN--------wK----|BNR|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------------bBbKwN--------wK----|BNR|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--------wR--bBbKwN--------wK----|BN|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKwR--bB--wN--------wK----|BN|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK----wR--wN--------wK----|BBN|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK----wRbRwN--------wK----|BBN|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK------bRwN--------wKwR--|BBN|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--bR----wN--------wKwR--|BBN|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--bR----wNwN------wKwR--|BB|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--------wNbR------wKwR--|BB|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--------wNwK--------wR--|BBR|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK----bN--wNwK--------wR--|BBR|": 1
+          },
+          "rules": {
+            "allowCheckingDrops": false,
+            "experiment": "capture-bank",
+            "bankCapacity": 6
+          },
+          "research": {
+            "checkingDrops": {
+              "white": 0,
+              "black": 0
+            },
+            "lastCheckingDrop": {
+              "white": false,
+              "black": false
+            },
+            "turns": {
+              "white": 3,
+              "black": 3
+            },
+            "deployed": {
+              "white": [
+                "bishop",
+                "knight",
+                "rook"
+              ],
+              "black": [
+                "bishop",
+                "knight",
+                "rook"
+              ]
+            }
+          }
+        },
+        "gameId": "black__20262001__13",
+        "outcome": {
+          "type": "win",
+          "winner": "white",
+          "reason": "checkmate"
+        },
+        "candidateColor": "black",
+        "gameSha256": "762891327025a4f65869443d73a3597d5384e2ddb4aca863988bed29814e01f1",
+        "complete": true,
+        "nodes": 12925,
+        "totalActions": 27,
+        "answers": [
+          {
+            "action": {
+              "type": "move",
+              "from": 8,
+              "to": 1
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 8,
+              "to": 6
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 5
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 10
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 4
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 12
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 10
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 6
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 13
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 12
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 15
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 0
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 1
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 4
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 5
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 7
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 11
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 12
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 13
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 15
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 5
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 10
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 13
+            },
+            "mateWithin5": false
+          }
+        ],
+        "winningActions": [
+          "move:8:6"
+        ],
+        "search": {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          "score": 1000000,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 0
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 0
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 0,
+              "to": 5
+            }
+          ],
+          "completedDepth": 5,
+          "stopped": true,
+          "variations": [
+            {
+              "action": {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 5
+              },
+              "score": 1000000,
+              "pv": [
+                {
+                  "type": "drop",
+                  "piece": "bishop",
+                  "to": 5
+                },
+                {
+                  "type": "move",
+                  "from": 6,
+                  "to": 0
+                },
+                {
+                  "type": "move",
+                  "from": 5,
+                  "to": 0
+                },
+                {
+                  "type": "move",
+                  "from": 3,
+                  "to": 7
+                },
+                {
+                  "type": "move",
+                  "from": 14,
+                  "to": 15
+                },
+                {
+                  "type": "move",
+                  "from": 7,
+                  "to": 2
+                },
+                {
+                  "type": "move",
+                  "from": 0,
+                  "to": 5
+                }
+              ]
+            }
+          ],
+          "requestedDepth": 20,
+          "nodes": 33247,
+          "quiescenceNodes": 30869,
+          "stats": {
+            "cutoffs": 21494,
+            "cacheHits": 156,
+            "tableCutoffs": 150,
+            "hintHits": 765,
+            "rootResearches": 0,
+            "pvsResearches": 5,
+            "aspirationResearches": 4,
+            "historyHits": 3392,
+            "evaluations": 12245,
+            "actionGenerations": 27826,
+            "countGenerations": 6609,
+            "reducedSearches": 158,
+            "reductionResearches": 0,
+            "protectedReductions": 0,
+            "transitions": 33243,
+            "tableEntries": 2151,
+            "hintEntries": 1397
+          }
+        },
+        "found": false,
+        "previousMateWithin3": []
+      }
+    },
+    {
+      "id": "black__20262001__6:44",
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          {
+            "owner": "black",
+            "piece": "knight"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "knight"
+          ]
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------------------wK--|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB--------wK--|NR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB--------wK--|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwR----------wB--------wK--|N|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwR----bB----wB--------wK--|N|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwR------bB----wB--------wK--|NN|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------bB----wB--------wK--|NN|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------bB----wB------wNwK--|N|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------bB------wNwK--|N|BRR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wK------wN----|BN|BRR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bB--wK------wN----|BN|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bB--wK------------|BN|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----bB--wK------------|BN|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN----bB--wK--------wN--|B|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB--wN--------wK--------wN--|B|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbBwBwN--------wK--------wN--||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbBwBwN--------wK--------wNbR||R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB--wN--wB----wK--------wNbR||R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bB--wN--wB----wK--------wNbR||R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--wN------wB----wK--------wNbR|B|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--wN------wB----wK--------bR--|B|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--wN------wB--------------wK--|BR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----wN----bKwB--------------wK--|BR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----wN----bKwB------wR------wK--|B|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------wB------wR------wK--|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwR------wK--|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK------wBwR------wK--|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bKwR----wB--------wK--|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK----------wR----wB--------wK--|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wR--------wB--------wK--|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wR--------wB--------wK--|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wR--------wBwB------wK--||NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wR--------wBwB------wK--||NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------wR--wBwB------wK--||NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------wR--wBwB------wK--||NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------wBwR----wB------wK--||NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------bK--wBwR----wB------wK--||NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--------bK----wR----wBwB----wK--||NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------bKbR--wR----wBwB----wK--||NN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--------bKwR--------wBwB----wK--|R|NN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------wR----bK--wBwB----wK--|R|NN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR------wR----bK--wBwB----wK--||NN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wRbN----wR----bK--wBwB----wK--||N": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      },
+      "candidate": {
+        "action": {
+          "type": "move",
+          "from": 1,
+          "to": 2
+        },
+        "score": 1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 0
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 1,
+              "to": 2
+            },
+            "score": 1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 1,
+                "to": 2
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 0
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 5647,
+        "quiescenceNodes": 5366,
+        "stats": {
+          "cutoffs": 2938,
+          "cacheHits": 6,
+          "tableCutoffs": 0,
+          "hintHits": 65,
+          "rootResearches": 0,
+          "pvsResearches": 0,
+          "aspirationResearches": 3,
+          "historyHits": 463,
+          "evaluations": 1560,
+          "actionGenerations": 4163,
+          "countGenerations": 1790,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 5647,
+          "tableEntries": 271,
+          "hintEntries": 209
+        }
+      },
+      "baseline": {
+        "action": {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        "score": 1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 9
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            "score": 1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 11,
+                "to": 6
+              },
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 9
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 5904,
+        "quiescenceNodes": 5636,
+        "stats": {
+          "cutoffs": 3102,
+          "cacheHits": 11,
+          "tableCutoffs": 2,
+          "hintHits": 59,
+          "rootResearches": 0,
+          "pvsResearches": 3,
+          "aspirationResearches": 5,
+          "historyHits": 408,
+          "evaluations": 1773,
+          "actionGenerations": 4309,
+          "countGenerations": 2001,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 5901,
+          "tableEntries": 256,
+          "hintEntries": 201
+        }
+      },
+      "candidateMate5": true,
+      "baselineMate5": false,
+      "independentSource": {
+        "id": "black__20262001__6:44",
+        "position": {
+          "board": [
+            null,
+            {
+              "owner": "white",
+              "piece": "rook"
+            },
+            {
+              "owner": "black",
+              "piece": "knight"
+            },
+            null,
+            null,
+            {
+              "owner": "white",
+              "piece": "rook"
+            },
+            null,
+            null,
+            {
+              "owner": "black",
+              "piece": "king"
+            },
+            null,
+            {
+              "owner": "white",
+              "piece": "bishop"
+            },
+            {
+              "owner": "white",
+              "piece": "bishop"
+            },
+            null,
+            null,
+            {
+              "owner": "white",
+              "piece": "king"
+            },
+            null
+          ],
+          "banks": {
+            "white": [],
+            "black": [
+              "knight"
+            ]
+          },
+          "turn": "white",
+          "phase": "play",
+          "repetitions": {
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------------------wK--|BNR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB--------wK--|NR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB--------wK--|NR|BR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwR----------wB--------wK--|N|BR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwR----bB----wB--------wK--|N|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwR------bB----wB--------wK--|NN|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------bB----wB--------wK--|NN|RR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------bB----wB------wNwK--|N|RR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------bB------wNwK--|N|BRR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wK------wN----|BN|BRR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bB--wK------wN----|BN|RR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bB--wK------------|BN|RR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----bB--wK------------|BN|RR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN----bB--wK--------wN--|B|RR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB--wN--------wK--------wN--|B|RR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbBwBwN--------wK--------wN--||RR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbBwBwN--------wK--------wNbR||R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB--wN--wB----wK--------wNbR||R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bB--wN--wB----wK--------wNbR||R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--wN------wB----wK--------wNbR|B|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--wN------wB----wK--------bR--|B|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--wN------wB--------------wK--|BR|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----wN----bKwB--------------wK--|BR|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----wN----bKwB------wR------wK--|B|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------wB------wR------wK--|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwR------wK--|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK------wBwR------wK--|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bKwR----wB--------wK--|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK----------wR----wB--------wK--|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wR--------wB--------wK--|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wR--------wB--------wK--|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wR--------wBwB------wK--||NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wR--------wBwB------wK--||NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------wR--wBwB------wK--||NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------wR--wBwB------wK--||NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------wBwR----wB------wK--||NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------bK--wBwR----wB------wK--||NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--------bK----wR----wBwB----wK--||NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------bKbR--wR----wBwB----wK--||NN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--------bKwR--------wBwB----wK--|R|NN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------wR----bK--wBwB----wK--|R|NN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR------wR----bK--wBwB----wK--||NN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wRbN----wR----bK--wBwB----wK--||N": 1
+          },
+          "rules": {
+            "allowCheckingDrops": false,
+            "experiment": "capture-bank",
+            "bankCapacity": 6
+          },
+          "research": {
+            "checkingDrops": {
+              "white": 0,
+              "black": 0
+            },
+            "lastCheckingDrop": {
+              "white": false,
+              "black": false
+            },
+            "turns": {
+              "white": 3,
+              "black": 3
+            },
+            "deployed": {
+              "white": [
+                "bishop",
+                "knight",
+                "rook"
+              ],
+              "black": [
+                "bishop",
+                "knight",
+                "rook"
+              ]
+            }
+          }
+        },
+        "gameId": "black__20262001__6",
+        "outcome": {
+          "type": "win",
+          "winner": "white",
+          "reason": "checkmate"
+        },
+        "candidateColor": "black",
+        "gameSha256": "58b6282499a4edd4489d88cc0c783963bba04f7d51cbc76e4bec829c4667e725",
+        "complete": true,
+        "nodes": 3532,
+        "totalActions": 12,
+        "answers": [
+          {
+            "action": {
+              "type": "move",
+              "from": 1,
+              "to": 0
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 1,
+              "to": 2
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 9
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 13
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 4
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 6
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 7
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 10,
+              "to": 15
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 15
+            },
+            "mateWithin5": false
+          }
+        ],
+        "winningActions": [
+          "move:1:0",
+          "move:1:2",
+          "move:10:13"
+        ],
+        "search": {
+          "action": {
+            "type": "move",
+            "from": 10,
+            "to": 13
+          },
+          "score": 1000001,
+          "pv": [
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 4
+            }
+          ],
+          "completedDepth": 6,
+          "stopped": true,
+          "variations": [
+            {
+              "action": {
+                "type": "move",
+                "from": 10,
+                "to": 13
+              },
+              "score": 1000001,
+              "pv": [
+                {
+                  "type": "move",
+                  "from": 10,
+                  "to": 13
+                },
+                {
+                  "type": "move",
+                  "from": 8,
+                  "to": 12
+                },
+                {
+                  "type": "move",
+                  "from": 1,
+                  "to": 2
+                },
+                {
+                  "type": "drop",
+                  "piece": "knight",
+                  "to": 4
+                },
+                {
+                  "type": "move",
+                  "from": 5,
+                  "to": 4
+                }
+              ]
+            }
+          ],
+          "requestedDepth": 20,
+          "nodes": 36568,
+          "quiescenceNodes": 33960,
+          "stats": {
+            "cutoffs": 20121,
+            "cacheHits": 181,
+            "tableCutoffs": 170,
+            "hintHits": 797,
+            "rootResearches": 0,
+            "pvsResearches": 4,
+            "aspirationResearches": 5,
+            "historyHits": 5228,
+            "evaluations": 10135,
+            "actionGenerations": 28340,
+            "countGenerations": 10326,
+            "reducedSearches": 274,
+            "reductionResearches": 0,
+            "protectedReductions": 0,
+            "transitions": 36565,
+            "tableEntries": 2336,
+            "hintEntries": 1550
+          }
+        },
+        "found": true,
+        "previousMateWithin3": []
+      }
+    },
+    {
+      "id": "white__20262001__14:48",
+      "position": {
+        "board": [
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "knight"
+          },
+          {
+            "owner": "black",
+            "piece": "knight"
+          },
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--------------------wK--|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK----------wN--------wK--|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKbB--------wN--------wK--|BR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bKbBwR------wN--------wK--|B|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--wR------bB--------wK--|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--wR------wK------------|BB|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--wR------wK--bN--------|BB|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--bK----------wK--bN--------|BB|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wRbRbK----------wK--bN--------|BB|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wRbRbKwB--------wK--bN--------|B|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wRbR--wB----bK--wK--bN--------|B|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wRbR--wB----bK--wK--bN------wB||N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wR----wB--bRbK--wK--bN------wB||N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR----wB--bRbKwK----bN------wB||N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wRbN--wB--bRbKwK----bN------wB||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wRbN------bRbKwKwB--bN------wB||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wR--------bRbKwKbN--bN------wB||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--------bRbK--wK--bN------wB|N|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wR--bB----bRbK--wK--bN------wB|N|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--bB----bRbKwK----bN------wB|N|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wR--bB------bKwK----bN----bRwB|N|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--bB--wN--bKwK----bN----bRwB||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wR--bB--bN--bKwK----------bRwB||N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bB--wR--bKwK----------bRwB|N|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bB--wR----wK----bK----bRwB|N|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bB--wR----wKwN--bK----bRwB||N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------wR----wKbB--bK----bRwB||NN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------------wKwR--bK----bRwB|B|NN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------------wKwR--------bRbK|B|BNN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------------wKwR--wB----bRbK||BNN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------------wKwRbRwB------bK||BNN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------------wK--wRwB------bK|R|BNN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------------wK--bKwB--------|R|BNNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------wR--------wK--bKwB--------||BNNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------wR------bBwK--bKwB--------||NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wB--wR------bBwK--bK----------||NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wBbRwR------bBwK--bK----------||NN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wBbR--------wRwK--bK----------|B|NN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wBbR--------bKwK--------------|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bR--wB----bKwK--------------|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wB----bKwK--bR----------|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--------wBwK--bK----bR----------|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN--wBwK--bK----bR----------|B|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|wK--bN--wB----bK----bR----------|B|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wK--bN--wB----bK----bR--bR------|B|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|wK--bN--wBwB--bK----bR--bR------||N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wK--bNbNwBwB--bK----bR--bR------||": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      },
+      "candidate": {
+        "action": {
+          "type": "move",
+          "from": 0,
+          "to": 1
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 10
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 0,
+              "to": 1
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 0,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 0,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 10
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 1413,
+        "quiescenceNodes": 1276,
+        "stats": {
+          "cutoffs": 781,
+          "cacheHits": 57,
+          "tableCutoffs": 24,
+          "hintHits": 57,
+          "rootResearches": 0,
+          "pvsResearches": 4,
+          "aspirationResearches": 6,
+          "historyHits": 108,
+          "evaluations": 499,
+          "actionGenerations": 1128,
+          "countGenerations": 425,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 1409,
+          "tableEntries": 78,
+          "hintEntries": 53
+        }
+      },
+      "baseline": {
+        "action": {
+          "type": "move",
+          "from": 5,
+          "to": 10
+        },
+        "score": -1836,
+        "pv": [
+          {
+            "type": "move",
+            "from": 5,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 10
+            },
+            "score": -1836,
+            "pv": [
+              {
+                "type": "move",
+                "from": 5,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 10
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 8
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 848,
+        "quiescenceNodes": 769,
+        "stats": {
+          "cutoffs": 483,
+          "cacheHits": 20,
+          "tableCutoffs": 5,
+          "hintHits": 31,
+          "rootResearches": 0,
+          "pvsResearches": 4,
+          "aspirationResearches": 3,
+          "historyHits": 49,
+          "evaluations": 350,
+          "actionGenerations": 715,
+          "countGenerations": 190,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 844,
+          "tableEntries": 57,
+          "hintEntries": 41
+        }
+      },
+      "candidateMate5": false,
+      "baselineMate5": false,
+      "independentSource": {
+        "id": "white__20262001__14:48",
+        "position": {
+          "board": [
+            {
+              "owner": "white",
+              "piece": "king"
+            },
+            null,
+            {
+              "owner": "black",
+              "piece": "knight"
+            },
+            {
+              "owner": "black",
+              "piece": "knight"
+            },
+            {
+              "owner": "white",
+              "piece": "bishop"
+            },
+            {
+              "owner": "white",
+              "piece": "bishop"
+            },
+            null,
+            {
+              "owner": "black",
+              "piece": "king"
+            },
+            null,
+            null,
+            {
+              "owner": "black",
+              "piece": "rook"
+            },
+            null,
+            {
+              "owner": "black",
+              "piece": "rook"
+            },
+            null,
+            null,
+            null
+          ],
+          "banks": {
+            "white": [],
+            "black": []
+          },
+          "turn": "white",
+          "phase": "play",
+          "repetitions": {
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--------------------wK--|BNR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK----------wN--------wK--|BR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKbB--------wN--------wK--|BR|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bKbBwR------wN--------wK--|B|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--wR------bB--------wK--|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--wR------wK------------|BB|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--wR------wK--bN--------|BB|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--bK----------wK--bN--------|BB|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wRbRbK----------wK--bN--------|BB|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wRbRbKwB--------wK--bN--------|B|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wRbR--wB----bK--wK--bN--------|B|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wRbR--wB----bK--wK--bN------wB||N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wR----wB--bRbK--wK--bN------wB||N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR----wB--bRbKwK----bN------wB||N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wRbN--wB--bRbKwK----bN------wB||": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wRbN------bRbKwKwB--bN------wB||": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wR--------bRbKwKbN--bN------wB||B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--------bRbK--wK--bN------wB|N|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wR--bB----bRbK--wK--bN------wB|N|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--bB----bRbKwK----bN------wB|N|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wR--bB------bKwK----bN----bRwB|N|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--bB--wN--bKwK----bN----bRwB||": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wR--bB--bN--bKwK----------bRwB||N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bB--wR--bKwK----------bRwB|N|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bB--wR----wK----bK----bRwB|N|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bB--wR----wKwN--bK----bRwB||N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------wR----wKbB--bK----bRwB||NN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------------wKwR--bK----bRwB|B|NN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------------wKwR--------bRbK|B|BNN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------------wKwR--wB----bRbK||BNN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------------wKwRbRwB------bK||BNN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------------wK--wRwB------bK|R|BNN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------------wK--bKwB--------|R|BNNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------wR--------wK--bKwB--------||BNNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------wR------bBwK--bKwB--------||NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wB--wR------bBwK--bK----------||NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wBbRwR------bBwK--bK----------||NN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wBbR--------wRwK--bK----------|B|NN": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wBbR--------bKwK--------------|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bR--wB----bKwK--------------|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wB----bKwK--bR----------|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--------wBwK--bK----bR----------|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN--wBwK--bK----bR----------|B|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|wK--bN--wB----bK----bR----------|B|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wK--bN--wB----bK----bR--bR------|B|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|wK--bN--wBwB--bK----bR--bR------||N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wK--bNbNwBwB--bK----bR--bR------||": 1
+          },
+          "rules": {
+            "allowCheckingDrops": false,
+            "experiment": "capture-bank",
+            "bankCapacity": 6
+          },
+          "research": {
+            "checkingDrops": {
+              "white": 0,
+              "black": 0
+            },
+            "lastCheckingDrop": {
+              "white": false,
+              "black": false
+            },
+            "turns": {
+              "white": 3,
+              "black": 3
+            },
+            "deployed": {
+              "white": [
+                "bishop",
+                "knight",
+                "rook"
+              ],
+              "black": [
+                "bishop",
+                "knight",
+                "rook"
+              ]
+            }
+          }
+        },
+        "gameId": "white__20262001__14",
+        "outcome": {
+          "type": "win",
+          "winner": "black",
+          "reason": "checkmate"
+        },
+        "candidateColor": "white",
+        "gameSha256": "1353461002338159260dc733cc8f600fd07854368e3dbcc5724543237f6a7f55",
+        "complete": true,
+        "nodes": 230,
+        "totalActions": 4,
+        "answers": [
+          {
+            "action": {
+              "type": "move",
+              "from": 0,
+              "to": 1
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 2
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 8
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 10
+            },
+            "mateWithin5": false
+          }
+        ],
+        "winningActions": [],
+        "search": null,
+        "found": null,
+        "previousMateWithin3": []
+      }
+    },
+    {
+      "id": "white__20262001__2:30",
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "knight"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          {
+            "owner": "black",
+            "piece": "rook"
+          }
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "bishop"
+          ]
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------------------------wK--|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------------------wN------wK--|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------bB--------wN------wK--|BR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--------bBwR------wN------wK--|B|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK----------wR------bB------wK--|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------------------wR------wK--|BB|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bKbN----------------wR------wK--|BB|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bKbN------------------wR----wK--|BB|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bKbNbN----------------wR----wK--|BB|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bKbNbNwR--------------------wK--|BB|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bNbNwR--bK----------------wK--|BB|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bNbNwR--bK--wB------------wK--|B|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bNwR--bK--wBbN----------wK--|B|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwR--bK--wBbN--------wK----|B|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------wRbNbK--wBbN--------wK----|B|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------wRbNbK--wBbN------wK------|B|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------wRbNbK--wBbN----bRwK------|B|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----wBwRbNbK----bN----bRwK------|B|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bNwR--bK----bN----bRwK------|B|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bN----bK----bN----wRwK------|BR|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK----bN----bNwK------|BR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------wR--bK----bN----bNwK------|B|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------wR--bK----bNbR--bNwK------|B|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK----bNbR--wRwK------|BN|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK----bN----bRwK------|BN|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK----bN----bRwKwN----|B|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK----bN----bRwKwN--bR|B|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK----bN----bRwKwNwBbR||B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK----bN--bR--wKwNwBbR||B": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      },
+      "candidate": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 11
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 8
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 11
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 8
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 1122,
+        "quiescenceNodes": 975,
+        "stats": {
+          "cutoffs": 706,
+          "cacheHits": 54,
+          "tableCutoffs": 32,
+          "hintHits": 54,
+          "rootResearches": 0,
+          "pvsResearches": 4,
+          "aspirationResearches": 5,
+          "historyHits": 147,
+          "evaluations": 507,
+          "actionGenerations": 994,
+          "countGenerations": 162,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 1118,
+          "tableEntries": 88,
+          "hintEntries": 52
+        }
+      },
+      "baseline": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 9
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 8
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 9
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 3
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 8
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 1387,
+        "quiescenceNodes": 1231,
+        "stats": {
+          "cutoffs": 880,
+          "cacheHits": 40,
+          "tableCutoffs": 25,
+          "hintHits": 58,
+          "rootResearches": 0,
+          "pvsResearches": 3,
+          "aspirationResearches": 5,
+          "historyHits": 77,
+          "evaluations": 591,
+          "actionGenerations": 1212,
+          "countGenerations": 227,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 1384,
+          "tableEntries": 112,
+          "hintEntries": 68
+        }
+      },
+      "candidateMate5": false,
+      "baselineMate5": false,
+      "independentSource": {
+        "id": "white__20262001__2:30",
+        "position": {
+          "board": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "owner": "black",
+              "piece": "king"
+            },
+            null,
+            null,
+            {
+              "owner": "black",
+              "piece": "knight"
+            },
+            null,
+            {
+              "owner": "black",
+              "piece": "rook"
+            },
+            null,
+            {
+              "owner": "white",
+              "piece": "king"
+            },
+            {
+              "owner": "white",
+              "piece": "knight"
+            },
+            {
+              "owner": "white",
+              "piece": "bishop"
+            },
+            {
+              "owner": "black",
+              "piece": "rook"
+            }
+          ],
+          "banks": {
+            "white": [],
+            "black": [
+              "bishop"
+            ]
+          },
+          "turn": "white",
+          "phase": "play",
+          "repetitions": {
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------------------------wK--|BNR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------------------wN------wK--|BR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------bB--------wN------wK--|BR|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--------bBwR------wN------wK--|B|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK----------wR------bB------wK--|B|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------------------wR------wK--|BB|NNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bKbN----------------wR------wK--|BB|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bKbN------------------wR----wK--|BB|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bKbNbN----------------wR----wK--|BB|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bKbNbNwR--------------------wK--|BB|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bNbNwR--bK----------------wK--|BB|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bNbNwR--bK--wB------------wK--|B|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bNwR--bK--wBbN----------wK--|B|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwR--bK--wBbN--------wK----|B|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------wRbNbK--wBbN--------wK----|B|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------wRbNbK--wBbN------wK------|B|R": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------wRbNbK--wBbN----bRwK------|B|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----wBwRbNbK----bN----bRwK------|B|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bNwR--bK----bN----bRwK------|B|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bN----bK----bN----wRwK------|BR|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK----bN----bNwK------|BR|BR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------wR--bK----bN----bNwK------|B|BR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------wR--bK----bNbR--bNwK------|B|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK----bNbR--wRwK------|BN|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK----bN----bRwK------|BN|BR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK----bN----bRwKwN----|B|BR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK----bN----bRwKwN--bR|B|B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK----bN----bRwKwNwBbR||B": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK----bN--bR--wKwNwBbR||B": 1
+          },
+          "rules": {
+            "allowCheckingDrops": false,
+            "experiment": "capture-bank",
+            "bankCapacity": 6
+          },
+          "research": {
+            "checkingDrops": {
+              "white": 0,
+              "black": 0
+            },
+            "lastCheckingDrop": {
+              "white": false,
+              "black": false
+            },
+            "turns": {
+              "white": 3,
+              "black": 3
+            },
+            "deployed": {
+              "white": [
+                "bishop",
+                "knight",
+                "rook"
+              ],
+              "black": [
+                "bishop",
+                "knight",
+                "rook"
+              ]
+            }
+          }
+        },
+        "gameId": "white__20262001__2",
+        "outcome": {
+          "type": "win",
+          "winner": "black",
+          "reason": "checkmate"
+        },
+        "candidateColor": "white",
+        "gameSha256": "fc64a2802be30fee432c67093c9d8d2a13a461f285fc1f89f135723c376473e8",
+        "complete": true,
+        "nodes": 179,
+        "totalActions": 6,
+        "answers": [
+          {
+            "action": {
+              "type": "move",
+              "from": 13,
+              "to": 4
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 13,
+              "to": 6
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 13,
+              "to": 11
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 9
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 4
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 11
+            },
+            "mateWithin5": false
+          }
+        ],
+        "winningActions": [],
+        "search": null,
+        "found": null,
+        "previousMateWithin3": []
+      }
+    },
+    {
+      "id": "white__20262001__3:10",
+      "position": {
+        "board": [
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "bishop"
+          },
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          {
+            "owner": "black",
+            "piece": "knight"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [
+            "bishop"
+          ],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK----------------------------wK|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------------------wN--------wK|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------bB--------wN--------wK|BR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--------bB--------wN------wK--|BR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------bBbR------wN------wK--|BR|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--------bBbR------wNwR----wK--|B|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------bNbBbR------wNwR----wK--|B|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK----wRbNbBbR------wN------wK--|B|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bBwRbN--bR------wN------wK--|B|": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      },
+      "candidate": {
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 13
+        },
+        "score": -54,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 4
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 13
+            },
+            "score": -54,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 13
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 4
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 1474,
+        "quiescenceNodes": 1249,
+        "stats": {
+          "cutoffs": 855,
+          "cacheHits": 30,
+          "tableCutoffs": 19,
+          "hintHits": 61,
+          "rootResearches": 0,
+          "pvsResearches": 12,
+          "aspirationResearches": 1,
+          "historyHits": 190,
+          "evaluations": 537,
+          "actionGenerations": 1333,
+          "countGenerations": 174,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 1462,
+          "tableEntries": 193,
+          "hintEntries": 142
+        }
+      },
+      "baseline": {
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 15
+        },
+        "score": -8,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 15
+            },
+            "score": -8,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 15
+              },
+              {
+                "type": "move",
+                "from": 0,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 7
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 1183,
+        "quiescenceNodes": 993,
+        "stats": {
+          "cutoffs": 667,
+          "cacheHits": 20,
+          "tableCutoffs": 15,
+          "hintHits": 55,
+          "rootResearches": 0,
+          "pvsResearches": 9,
+          "aspirationResearches": 1,
+          "historyHits": 147,
+          "evaluations": 397,
+          "actionGenerations": 1049,
+          "countGenerations": 166,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 1174,
+          "tableEntries": 168,
+          "hintEntries": 117
+        }
+      },
+      "candidateMate5": false,
+      "baselineMate5": false,
+      "independentSource": {
+        "id": "white__20262001__3:10",
+        "position": {
+          "board": [
+            {
+              "owner": "black",
+              "piece": "king"
+            },
+            null,
+            {
+              "owner": "black",
+              "piece": "bishop"
+            },
+            {
+              "owner": "white",
+              "piece": "rook"
+            },
+            {
+              "owner": "black",
+              "piece": "knight"
+            },
+            null,
+            {
+              "owner": "black",
+              "piece": "rook"
+            },
+            null,
+            null,
+            null,
+            {
+              "owner": "white",
+              "piece": "knight"
+            },
+            null,
+            null,
+            null,
+            {
+              "owner": "white",
+              "piece": "king"
+            },
+            null
+          ],
+          "banks": {
+            "white": [
+              "bishop"
+            ],
+            "black": []
+          },
+          "turn": "white",
+          "phase": "play",
+          "repetitions": {
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK----------------------------wK|BNR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------------------wN--------wK|BR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------bB--------wN--------wK|BR|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--------bB--------wN------wK--|BR|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------bBbR------wN------wK--|BR|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--------bBbR------wNwR----wK--|B|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------bNbBbR------wNwR----wK--|B|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK----wRbNbBbR------wN------wK--|B|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bBwRbN--bR------wN------wK--|B|": 1
+          },
+          "rules": {
+            "allowCheckingDrops": false,
+            "experiment": "capture-bank",
+            "bankCapacity": 6
+          },
+          "research": {
+            "checkingDrops": {
+              "white": 0,
+              "black": 0
+            },
+            "lastCheckingDrop": {
+              "white": false,
+              "black": false
+            },
+            "turns": {
+              "white": 3,
+              "black": 3
+            },
+            "deployed": {
+              "white": [
+                "knight",
+                "rook"
+              ],
+              "black": [
+                "bishop",
+                "knight",
+                "rook"
+              ]
+            }
+          }
+        },
+        "gameId": "white__20262001__3",
+        "outcome": {
+          "type": "win",
+          "winner": "black",
+          "reason": "checkmate"
+        },
+        "candidateColor": "white",
+        "gameSha256": "77d593704318c114d5b18c65b0ad6daee0dc322c8a2d67c4b1ae912e820e5561",
+        "complete": true,
+        "nodes": 1759,
+        "totalActions": 15,
+        "answers": [
+          {
+            "action": {
+              "type": "move",
+              "from": 3,
+              "to": 7
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 3,
+              "to": 11
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 3,
+              "to": 15
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 3,
+              "to": 2
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 15
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 9
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 11
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 1
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 7
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 9
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 11
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 12
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 13
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 15
+            },
+            "mateWithin5": false
+          }
+        ],
+        "winningActions": [],
+        "search": null,
+        "found": null,
+        "previousMateWithin3": []
+      }
+    },
+    {
+      "id": 18,
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "bishop"
+          }
+        ],
+        "banks": {
+          "white": [
+            "rook",
+            "knight",
+            "bishop",
+            "knight"
+          ],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------------------wK--|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------------------wKwB|NR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------------bB--wKwB|NR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------wN------bB--wKwB|R|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bRbK----------wN------bB--wKwB|R|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbK------------------bB--wKwB|RR|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbK----------------bNbB--wKwB|RR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbK----------------wKbB----wB|NRR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbK------bB--------wK------wB|NRR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbK------bB--------------wKwB|NRR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbK------------bB--------wKwB|NRR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbK------------wK----------wB|BNRR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------wK----------wB|BNRR|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wR--------wK----------wB|BNR|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wR--------wK----bN----wB|BNR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wK----wR----wB|BNNR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wK----wR----wB|BNNR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wR--------wK----------wB|BNNR|": 2,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wR--------wK----------wB|BNNR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------wRwK----------wB|BNNR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------wRwK----------wB|BNNR|": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKwR--------wK----------wB|BNNR|": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      },
+      "candidate": {
+        "action": {
+          "type": "move",
+          "from": 9,
+          "to": 10
+        },
+        "score": 1000001,
+        "pv": [
+          {
+            "type": "move",
+            "from": 9,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 0
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 10
+            },
+            "score": 1000001,
+            "pv": [
+              {
+                "type": "move",
+                "from": 9,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 0
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 28782,
+        "quiescenceNodes": 27290,
+        "stats": {
+          "cutoffs": 13906,
+          "cacheHits": 0,
+          "tableCutoffs": 0,
+          "hintHits": 473,
+          "rootResearches": 0,
+          "pvsResearches": 1,
+          "aspirationResearches": 0,
+          "historyHits": 2342,
+          "evaluations": 4590,
+          "actionGenerations": 20529,
+          "countGenerations": 10798,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 28781,
+          "tableEntries": 1414,
+          "hintEntries": 941
+        }
+      },
+      "baseline": {
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        "score": 1000001,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 0
+          }
+        ],
+        "completedDepth": 4,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 14
+            },
+            "score": 1000001,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 0
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 4,
+        "nodes": 21832,
+        "quiescenceNodes": 20340,
+        "stats": {
+          "cutoffs": 10884,
+          "cacheHits": 0,
+          "tableCutoffs": 0,
+          "hintHits": 473,
+          "rootResearches": 0,
+          "pvsResearches": 1,
+          "aspirationResearches": 0,
+          "historyHits": 2300,
+          "evaluations": 4892,
+          "actionGenerations": 15995,
+          "countGenerations": 6169,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 21831,
+          "tableEntries": 1414,
+          "hintEntries": 941
+        }
+      },
+      "candidateMate5": true,
+      "baselineMate5": true,
+      "independentSource": {
+        "id": 18,
+        "target": 24,
+        "position": {
+          "board": [
+            null,
+            null,
+            null,
+            {
+              "owner": "black",
+              "piece": "king"
+            },
+            {
+              "owner": "white",
+              "piece": "rook"
+            },
+            null,
+            null,
+            null,
+            null,
+            {
+              "owner": "white",
+              "piece": "king"
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            {
+              "owner": "white",
+              "piece": "bishop"
+            }
+          ],
+          "banks": {
+            "white": [
+              "rook",
+              "knight",
+              "bishop",
+              "knight"
+            ],
+            "black": []
+          },
+          "turn": "white",
+          "phase": "play",
+          "repetitions": {
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------------------wK--|BNR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------------------wKwB|NR|BNR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------------bB--wKwB|NR|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------wN------bB--wKwB|R|NR": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bRbK----------wN------bB--wKwB|R|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbK------------------bB--wKwB|RR|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbK----------------bNbB--wKwB|RR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbK----------------wKbB----wB|NRR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbK------bB--------wK------wB|NRR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbK------bB--------------wKwB|NRR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wNbK------------bB--------wKwB|NRR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wNbK------------wK----------wB|BNRR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------wK----------wB|BNRR|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wR--------wK----------wB|BNR|N": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wR--------wK----bN----wB|BNR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wK----wR----wB|BNNR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wK----wR----wB|BNNR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wR--------wK----------wB|BNNR|": 2,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wR--------wK----------wB|BNNR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------wRwK----------wB|BNNR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------wRwK----------wB|BNNR|": 1,
+            "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKwR--------wK----------wB|BNNR|": 1
+          },
+          "rules": {
+            "allowCheckingDrops": false,
+            "experiment": "capture-bank",
+            "bankCapacity": 6
+          },
+          "research": {
+            "checkingDrops": {
+              "white": 0,
+              "black": 0
+            },
+            "lastCheckingDrop": {
+              "white": false,
+              "black": false
+            },
+            "turns": {
+              "white": 3,
+              "black": 3
+            },
+            "deployed": {
+              "white": [
+                "bishop",
+                "knight",
+                "rook"
+              ],
+              "black": [
+                "bishop",
+                "knight",
+                "rook"
+              ]
+            }
+          }
+        },
+        "transcript": [
+          {
+            "type": "place-king",
+            "to": 14
+          },
+          {
+            "type": "place-king",
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          }
+        ],
+        "terminalBeforeTarget": false,
+        "result": null,
+        "nodes": 10629,
+        "complete": true,
+        "totalActions": 43,
+        "answers": [
+          {
+            "action": {
+              "type": "move",
+              "from": 4,
+              "to": 0
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 4,
+              "to": 12
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 4,
+              "to": 5
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 4,
+              "to": 6
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 4,
+              "to": 7
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 5
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 13
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 10
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 12
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 9,
+              "to": 14
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 15,
+              "to": 10
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 15,
+              "to": 5
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "move",
+              "from": 15,
+              "to": 0
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 5
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 8
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 10
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 13
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 14
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 0
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 1
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 6
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 7
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 8
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 12
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 13
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 14
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 0
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 1
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 5
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 7
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            "mateWithin5": false
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 11
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 12
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 13
+            },
+            "mateWithin5": true
+          },
+          {
+            "action": {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 14
+            },
+            "mateWithin5": true
+          }
+        ],
+        "winningActions": [
+          "move:4:0",
+          "move:4:8",
+          "move:4:12",
+          "move:4:5",
+          "move:9:5",
+          "move:9:13",
+          "move:9:8",
+          "move:9:10",
+          "move:9:12",
+          "move:9:14",
+          "move:15:10",
+          "move:15:5",
+          "move:15:0",
+          "drop:rook:5",
+          "drop:rook:8",
+          "drop:rook:12",
+          "drop:rook:13",
+          "drop:knight:0",
+          "drop:knight:1",
+          "drop:knight:6",
+          "drop:knight:7",
+          "drop:knight:8",
+          "drop:knight:12",
+          "drop:knight:13",
+          "drop:knight:14",
+          "drop:bishop:0",
+          "drop:bishop:1",
+          "drop:bishop:5",
+          "drop:bishop:10",
+          "drop:bishop:11",
+          "drop:bishop:12",
+          "drop:bishop:13",
+          "drop:bishop:14"
+        ],
+        "search": {
+          "action": {
+            "type": "drop",
+            "piece": "knight",
+            "to": 14
+          },
+          "score": 1000001,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 0
+            }
+          ],
+          "completedDepth": 4,
+          "stopped": true,
+          "variations": [
+            {
+              "action": {
+                "type": "drop",
+                "piece": "knight",
+                "to": 14
+              },
+              "score": 1000001,
+              "pv": [
+                {
+                  "type": "drop",
+                  "piece": "knight",
+                  "to": 14
+                },
+                {
+                  "type": "move",
+                  "from": 3,
+                  "to": 2
+                },
+                {
+                  "type": "move",
+                  "from": 4,
+                  "to": 0
+                }
+              ]
+            }
+          ],
+          "requestedDepth": 20,
+          "nodes": 37160,
+          "quiescenceNodes": 35068,
+          "stats": {
+            "cutoffs": 20105,
+            "cacheHits": 104,
+            "tableCutoffs": 104,
+            "hintHits": 734,
+            "rootResearches": 0,
+            "pvsResearches": 1,
+            "aspirationResearches": 0,
+            "historyHits": 2672,
+            "evaluations": 9667,
+            "actionGenerations": 28661,
+            "countGenerations": 10996,
+            "reducedSearches": 105,
+            "reductionResearches": 0,
+            "protectedReductions": 0,
+            "transitions": 37160,
+            "tableEntries": 1882,
+            "hintEntries": 1151
+          }
+        },
+        "found": true
+      }
+    }
+  ]
+}

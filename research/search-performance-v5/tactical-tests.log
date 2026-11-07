@@ -1,0 +1,12 @@
+✔ Schness tactical corpus has independently exhaustive mate answers and legal search lines (130.640375ms)
+✔ optimized safety proof matches full simulation on 5,000 sparse and malformed boards (55.939875ms)
+✔ optional checking extensions agree with an exhaustive capture/check/evasion oracle (24.899875ms)
+✔ late-move reductions are opt-in, re-search improvements, and expose their tactical risk (0.698709ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 255.879542

@@ -1,0 +1,32 @@
+[WebServer] 127.0.0.1 - - [25/Oct/2026 10:16:06] "GET / HTTP/1.1" 200 -
+
+
+Running 2 tests using 2 workers
+
+(node:14523) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:14524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/2] [mobile] › e2e/engine-contract.spec.js:3:1 › real browser worker supports exact requested levels, legal lines and legacy replies
+[2/2] [desktop] › e2e/engine-contract.spec.js:3:1 › real browser worker supports exact requested levels, legal lines and legacy replies
+[WebServer] 127.0.0.1 - - [25/Oct/2026 10:16:06] "GET /src/search.js HTTP/1.1" 200 -
+
+[WebServer] 127.0.0.1 - - [25/Oct/2026 10:16:06] "GET /src/search.js HTTP/1.1" 200 -
+
+[WebServer] 127.0.0.1 - - [25/Oct/2026 10:16:06] "GET /src/rules.js HTTP/1.1" 200 -
+
+[WebServer] 127.0.0.1 - - [25/Oct/2026 10:16:06] "GET /src/rules.js HTTP/1.1" 200 -
+
+[WebServer] 127.0.0.1 - - [25/Oct/2026 10:16:06] "GET /src/bot-worker.js HTTP/1.1" 200 -
+
+[WebServer] 127.0.0.1 - - [25/Oct/2026 10:16:06] "GET /src/bot-worker.js HTTP/1.1" 200 -
+
+[WebServer] 127.0.0.1 - - [25/Oct/2026 10:16:06] "GET /src/bot.js HTTP/1.1" 200 -
+
+[WebServer] 127.0.0.1 - - [25/Oct/2026 10:16:06] "GET /src/bot.js HTTP/1.1" 200 -
+
+  2 passed (531ms)

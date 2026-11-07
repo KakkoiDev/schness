@@ -2098,3 +2098,8 @@ Allocating only the final continuation per search node passed 174 portable cases
 ### Continuation allocation: correction to the November 6 entry
 
 The November 6 probe repeated the mechanism already closed in the November 4 entry “Deferring continuation allocation failed the speed gate”: retain the best score, action and child link in locals, then build the continuation at return. The later probe used a different position set and gate, but was not a distinct hypothesis. Keep both results as separate records, do not pool them, and keep this family closed. Check the full remote DEVLOG for prior mechanisms before preregistering another probe.
+
+
+## 2026-11-07 — Claude handoff and pending workspace publication
+
+Publish the Claude engine handoff, remaining local research readables, Fairy browser distribution and scripts, design/reference outputs and Classic mobile/refused-drop UI work. Most engine sources already match this branch. Preserve the newer remote log and frozen staged-move diagnostic; older divergent local logs, README and diagnostic are retained in research/workspace-handoff-2026-11-07.tar.gz. No probes, matches, Rust work, merge or engine promotion. Shell CACHE advances to v134. The project unit suite passed 397 tests. The broad npm test command also discovered archived local prototype tests with missing historical imports; those are outside the project test directory. The full desktop/mobile browser suite reported UI failures; see the retained validation log. This checkpoint is not a claim of passing browser validation.

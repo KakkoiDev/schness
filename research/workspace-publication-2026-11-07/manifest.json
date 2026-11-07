@@ -1,0 +1,636 @@
+{
+  "base": "b55c06fe6133d1e056a2f691117262efe912f86f",
+  "files": [
+    {
+      "path": "DECISIONS.md",
+      "bytes": 94685,
+      "sha256": "2fcb83913284106cdb43eb6f9ae98aa889c43551b82f75ecbea014f8f9c240e6"
+    },
+    {
+      "path": "DEVLOG.md",
+      "bytes": 241135,
+      "sha256": "2d4b1df757a1e120eec1b180d81174e84b7b80a88b93dcb38577d9395927928f"
+    },
+    {
+      "path": "docs/claude-engine-handoff.md",
+      "bytes": 9927,
+      "sha256": "3e001859c3b34a7b99fe6047b42fd51e51355ce2889c234d6430bec673f2fa37"
+    },
+    {
+      "path": "docs/designer-handoff-classic.md",
+      "bytes": 13020,
+      "sha256": "40f5cd9b56b8e24f0ee51536c17c005aa51746ef6093d3dcd221dc1cb879d98c"
+    },
+    {
+      "path": "index.html",
+      "bytes": 11794,
+      "sha256": "7c0906737969c9a71ff08ddd1007866554f03677a9a931ee16f0cf4214618d93"
+    },
+    {
+      "path": "output/decision-core-specs/README.md",
+      "bytes": 1491,
+      "sha256": "f339db603103ae416113c1e6b5c3a207bd79f0593543c983be99a23b5fa93461"
+    },
+    {
+      "path": "output/decision-core-specs/specs/architecture.md",
+      "bytes": 2414,
+      "sha256": "570497528abb291f0e2b6498e6f7ea626e9c3fe02ef83e7f8a4f552a045e7ab1"
+    },
+    {
+      "path": "output/decision-core-specs/specs/evaluation.md",
+      "bytes": 2880,
+      "sha256": "fe0a2a99983816acd112e13e3fd538b8c1ab599ca687503fb35dbd6bc418bd89"
+    },
+    {
+      "path": "output/decision-core-specs/specs/pi-local-harness.md",
+      "bytes": 2004,
+      "sha256": "95ad9feb968920eaeec51dc471e521ed6b431d7b7a611294aa1bf9f9ee5e2b9a"
+    },
+    {
+      "path": "output/decision-core-specs/specs/vision.md",
+      "bytes": 1872,
+      "sha256": "b2835d008284d08478b7dba3a5c784039f805a926f10f2076aa127bee104c45c"
+    },
+    {
+      "path": "output/design-review/play-1440-dark.png",
+      "bytes": 60125,
+      "sha256": "31cbae7e2f03711945d3ad0137496c4a8738558695b9f6aac1c1a16223846a1a"
+    },
+    {
+      "path": "output/design-review/play-1440-light.png",
+      "bytes": 60924,
+      "sha256": "105b766842c31ae3ec3ae2c0d95201e1b8d5af38a2990062ec10f4a82bdfc27c"
+    },
+    {
+      "path": "output/design-review/play-390-dark.png",
+      "bytes": 40844,
+      "sha256": "6f66c26d85685e35dc3834e75a2fb382512c270ead080159bb5e5c82a634907e"
+    },
+    {
+      "path": "output/design-review/play-390-light.png",
+      "bytes": 40519,
+      "sha256": "fd66d7da65cac5bf9f5ab80da4f76cd02e5c04e8684e40a52da9c960942cfeac"
+    },
+    {
+      "path": "research/browser-engine-v1/results.json",
+      "bytes": 311021,
+      "sha256": "66c5189b7d09ba46548c6d513dd35ecdd35cfb8d36e386c1b170e27400b4f703"
+    },
+    {
+      "path": "research/competitive-engine-v1/board-positional-prototype-plan-2026-11-06.md",
+      "bytes": 2448,
+      "sha256": "f19a756d62a6b71fddcd031aeb236d0641b690a076572f4d0c6a70baf1237761"
+    },
+    {
+      "path": "research/competitive-engine-v1/board-positional-reuse-plan-2026-11-05.md",
+      "bytes": 2351,
+      "sha256": "b9c27bdef87013703b25037d112d169fbb11e2924c2a4d77c4a385dcea121e89"
+    },
+    {
+      "path": "research/competitive-engine-v1/evaluation-ridge-result.json",
+      "bytes": 721836,
+      "sha256": "ceff1a97d382626c5636b242a78fac976661ef33e11c0519887c8b9922a197d4"
+    },
+    {
+      "path": "research/competitive-engine-v1/high-upside-directions-2026-11-06.md",
+      "bytes": 4280,
+      "sha256": "c48d0a90a29d3038528ab486ca3f770d38fc1b1944b33630a12b7b7309d0a67a"
+    },
+    {
+      "path": "research/competitive-engine-v1/interior-mate-extremum-audit-plan-2026-11-06.md",
+      "bytes": 2551,
+      "sha256": "2d3c5bba8b6e752d730c356285fc55e4cd7d5695a9f6572d934c8aaf785f4dab"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-broad-mate-five.json",
+      "bytes": 1114554,
+      "sha256": "bb5c41a667bb33876e1b90688e3ef4e122c9a09e60d7580b98bb16d3894b29ca"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-broad-material.json",
+      "bytes": 1819119,
+      "sha256": "d7de793970afcfa577b256868586b9a9a0453b083888c788f8f889ae5d2301df"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-broad-tactical-corpus.json",
+      "bytes": 1478293,
+      "sha256": "23eb2590b4abcb1caa48d54706cc095c50739cd6fe81b5087d96417506aca8e4"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-compulsory-q-ablation.json",
+      "bytes": 2840440,
+      "sha256": "9ffce5ce8a27c45a1f2ddd1491023f002cfdbc1f84f99fe390b8a4c6439724d7"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-compulsory-q-classification.json",
+      "bytes": 145304,
+      "sha256": "e49a5a9b68295c6c5f00d820235b8f8b1ee29b2f90cc0a0f669bab8e0cee0ec1"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-cutoff-costs.json",
+      "bytes": 2097659,
+      "sha256": "0f23cb1a035567eb8328af61ab9af74d719ed3a03e2509e6eca7a8e6d8689dca"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-cutoff-ranks.json",
+      "bytes": 2059736,
+      "sha256": "6e6b917781aa92c5f69942c0dd4cf733f2b2b3f15607d0f43a6785ebaa1a8850"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-defer-checked-eval-diagnostic.json",
+      "bytes": 2830777,
+      "sha256": "8444a348b6c6f5bf8100372ebfd879aaed08bb2bc95bcd212937b7eda4dbe1f6"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-directdrop-late-swings.json",
+      "bytes": 284996,
+      "sha256": "6a23bdef83b495861ffa6cbdde70d507d39218d3586f0996dd854097338120fb"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-directional-aspiration-ablation.json",
+      "bytes": 1500172,
+      "sha256": "5aa8c28d0ff16bf3c2a6fd0719db08cc4454f144132822a10041fd6d47bad71c"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-evaluation-bounds-opportunity.json",
+      "bytes": 1885283,
+      "sha256": "ccb953f3e052d9f64b82f663c9004f1cb6c86879f8bf0e1c9f41825c63a901bf"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-evaluation-calibration-input.json",
+      "bytes": 822394,
+      "sha256": "e487c8c5c8e6697e53369b2a91faa1aa095a815379559cc637f1552d184ba64c"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-forced-quiet-audit.json",
+      "bytes": 1377220,
+      "sha256": "9d970813ca77e5bd20e6e9bd1eb9e9c75772cd95987033015dfb8c04c76322f1"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-history-alias.json",
+      "bytes": 2966981,
+      "sha256": "64e9c273bd951b204cdf1eb5477c05859907d577ffa727062eeb31b456983850"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-king-escape-ablation.json",
+      "bytes": 2943677,
+      "sha256": "d648417453490d5e2c1bb70cb29cd7b6f2ce41df251b41a653db5fc8836f2918"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-king-escape-formal-ablation.json",
+      "bytes": 2968724,
+      "sha256": "0e452b086767587bc7816418198b54577aba97c775013ff7b988301029a44a77"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-king-escape-geometry.json",
+      "bytes": 979767,
+      "sha256": "d9612e94029a9621506b6ea44a0476d9583068ab1ea9e824017b445e957d3215"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-king-reductions-ablation.json",
+      "bytes": 1472494,
+      "sha256": "35bacfc24510b25229dbfcbfede82c07398c49add954ae5ecb2f061e7cca39c9"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-late-horizons.json",
+      "bytes": 117229,
+      "sha256": "4edfb1d11ddf26d767000505a1e642e0802ea400c00a8b4d82211be94de3c5e6"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-late-reductions.json",
+      "bytes": 166703,
+      "sha256": "f6dc59b070c27fefb02a031a30d61396bd4a66bb93a2a2a6c91de3559571599c"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-lazy-evaluation-diagnostic.json",
+      "bytes": 2875299,
+      "sha256": "b794b687c0889e1e4a60a0d95bc1ca4d07d6e44836792115552d3e492d9827ce"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-legal-defense-ablation.json",
+      "bytes": 2786691,
+      "sha256": "e24a3d691053cc6c39721f64a39ea0ef70523852682728a970a19a24bc4744a3"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-legal-defense-static.json",
+      "bytes": 971661,
+      "sha256": "e9eec80e3d121eade03ab3191a3f4498b466f362d67c3034d5454c48a0d4a8cf"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-legal-recaptures.json",
+      "bytes": 1084761,
+      "sha256": "4807804cad6fedff8313070a893262e4e17cdc9da9d1367cad4108c5f526af77"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-mate-onset-depth5.json",
+      "bytes": 260725,
+      "sha256": "d26bf9aac4ea0bd3b814a79dab6727247e1dcc0ad0b246dee4b00d68d669a8b6"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-mate-onset-search-comparison.json",
+      "bytes": 22711,
+      "sha256": "2f66fbafc0eabddf7a2b4acf92524fc4d3f6a533ce016c3feae9c089b14d2709"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-mate-onset.json",
+      "bytes": 1053956,
+      "sha256": "9aaa3b3bdfba19a62105be62a226d2f47000ec6f2ee51872c4f5beea139b4692"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-material-horizon-five.json",
+      "bytes": 21550,
+      "sha256": "a00a823e2b77163164968a396030a2d9328982830e2962e67a5511d2cbb16aab"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-noisy-drop-diagnostic.json",
+      "bytes": 692918,
+      "sha256": "009dc8794fa031ef2d83316845edfe70a02b2395ee761817893403dc9292f51d"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-normal-hint-depth.json",
+      "bytes": 2139383,
+      "sha256": "f62117a2f35ee2dfd47416cc4f0936eda0f19abca48c2b19f61e26c40ce60de0"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-quiescence-cache-ablation.json",
+      "bytes": 2825590,
+      "sha256": "d0019ef2d21acd8b2f962f6af7af9efd94f18a42418c9149b55cf929afbac36f"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-quiescence-hints-diagnostic.json",
+      "bytes": 2842044,
+      "sha256": "a91163b60220d6404f24a6d8e36982da9e4a6026e70a42630cb1bd132999502d"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-random-reductions.json",
+      "bytes": 469237,
+      "sha256": "121eb4810387db23b1c077f63acc3b3a241a1d0bf64943b62cc7dac03768a38f"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-random-tactics.json",
+      "bytes": 298026,
+      "sha256": "6afba8607c1145ef0f7fc07a7dceb9bc3a5632b754c97d3116dafb951c50296c"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-recapture-mechanisms.json",
+      "bytes": 210053,
+      "sha256": "e20156df79025ac4939d39b46a4444c6be7f3ef11a943f5505f69c7ab985d952"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-root-pvs-ablation.json",
+      "bytes": 1170828,
+      "sha256": "a022ba828e66ef00e0d1a8bdb056d9e0e05e00d7b69fd165cc0ffd54f6260cc7"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-root-tie-cost.json",
+      "bytes": 2885006,
+      "sha256": "eebcc812aec54c1044c87d2baa038c49a7f328efb6677599f7815b9e749c352b"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-root-tie-priority-ablation.json",
+      "bytes": 2882362,
+      "sha256": "a29dd1c9780c6880bacc296bb59651c371dcada1b5e5079b4ad5af78d89352f2"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-root-tie-priority-formal-timed.json",
+      "bytes": 2985500,
+      "sha256": "5b228fce9ccbc78425579e37e716deaef899612db1bf70543fdeebd9af7d8ad9"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-root-tie-priority-formal.json",
+      "bytes": 2834807,
+      "sha256": "70916baab99345102f44ce8e54eb8c92a0bc7ea6c93578cdc16ef5495a84227b"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-root-tie-priority-proof.json",
+      "bytes": 756406,
+      "sha256": "58f77c5464808687412d454fdf11ba34bc3ac63eae43cd50c8add25454f66864"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-root-tie-priority-timed.json",
+      "bytes": 3032868,
+      "sha256": "42577f4981d3e05331752819eb1b767494f4dffe3c02828f238bf51e8a351896"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-root-tie-priority-validation.json",
+      "bytes": 748925,
+      "sha256": "1fd655e6777b6e3eb54ae03df0e64d7682911b07f2fb9e040fb26d54dab5eaf1"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-shallow-king-reductions-ablation.json",
+      "bytes": 1497269,
+      "sha256": "594982a2a820d69171117eecaf1aaccf1f12e20c9b69de3a8d6bff72629930cc"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-terminal-escapes.json",
+      "bytes": 265464,
+      "sha256": "60eb39a940454bc15531eb85a6bb935c121f3d9dcc4814af124b648de4ad5506"
+    },
+    {
+      "path": "research/competitive-engine-v1/js-typed-history-ablation.json",
+      "bytes": 2861136,
+      "sha256": "7c286fb1834142bf340f502bde71c4030385d112781e7b60645690d0bcfc3b30"
+    },
+    {
+      "path": "research/competitive-engine-v1/q-check-facts-audit-plan-2026-11-06.md",
+      "bytes": 2306,
+      "sha256": "e2a22e73b806011fc487383b4eb83460071e649a0dde14afdf04d98cdb96dfce"
+    },
+    {
+      "path": "research/competitive-engine-v1/q-check-facts-prototype-plan-2026-11-06.md",
+      "bytes": 1326,
+      "sha256": "3aa8ab1872ff4c57d7742a57b3aa42c0cd0a38ad29d2ae04e471092bcc9bec0e"
+    },
+    {
+      "path": "research/competitive-engine-v1/terminal-existence-prototype-plan-2026-11-05.md",
+      "bytes": 2568,
+      "sha256": "7cfab6e8891fbc04d8770aa7c7a6908d187b275bc801fb5577de4ca2424c66d2"
+    },
+    {
+      "path": "research/competitive-engine-v1/three-piece-retrograde-verification.json",
+      "bytes": 2248,
+      "sha256": "6c1eef0dd79431ac2bd8c5db1a381d6fe6d9d30933be1fd56011992d7a3539aa"
+    },
+    {
+      "path": "research/competitive-engine-v1/three-piece-retrograde.json",
+      "bytes": 20384962,
+      "sha256": "23590db7701b6facc13a2db1a2242d7ece9173738124b55799d69a92042bf66c"
+    },
+    {
+      "path": "research/competitive-engine-v1/three-piece-search-comparison.json",
+      "bytes": 155521,
+      "sha256": "11d49870b0c3af6ae2c4b96a030c452ff47dff6e8d1818a0b4fc547d86a6bbbe"
+    },
+    {
+      "path": "research/depth-calibration-v1/results.json",
+      "bytes": 788965,
+      "sha256": "25b49b972259b923b8749ec2e00dd87bf741f2ff22211786e5c022a26b67c08a"
+    },
+    {
+      "path": "research/engine-generalist-v1/games.jsonl",
+      "bytes": 549285,
+      "sha256": "2d026c75479031235924440b5654ae976c2bf5f9f88c1ec77282efd9e3e4b715"
+    },
+    {
+      "path": "research/engine-generalist-v1/progress.json",
+      "bytes": 1210,
+      "sha256": "aa561d2bc89ce99de22634937d5359c3585868a2cc1b2fe3d22e4eee392ffb11"
+    },
+    {
+      "path": "research/engine-generalist-v1/validation/baseline-happy-paths.log",
+      "bytes": 393372,
+      "sha256": "512527e298e3b322566f5e1f0a47f172c61da74ece5cc029ca211aeedbecafa6"
+    },
+    {
+      "path": "research/engine-generalist-v1/validation/browser-worker.log",
+      "bytes": 1425,
+      "sha256": "b8795f416637384646b2e7c1b99104ea8ffa20bd4d078c79c74c73873c41f2cf"
+    },
+    {
+      "path": "research/engine-generalist-v1/validation/candidate-happy-paths.log",
+      "bytes": 406171,
+      "sha256": "41a4c54a2f6d20d777fc375dd7312b4cc9a8a84119595912415f1da5140ac1b6"
+    },
+    {
+      "path": "research/engine-generalist-v1/validation/serial-recheck.log",
+      "bytes": 23349,
+      "sha256": "dba231709beb26aafb061b3964820a5c97a0d392994c919e4221884c02767c73"
+    },
+    {
+      "path": "research/engine-generalist-v1/validation/unit.log",
+      "bytes": 25264,
+      "sha256": "8b9fe3069270eb99c8b7207e7d2961ffa69eeebdcd348e38c588fc5ba7eeffd2"
+    },
+    {
+      "path": "research/search-performance-v2/baseline.cpuprofile",
+      "bytes": 134113,
+      "sha256": "67ccf2bfd2a9a5fa6bf4fef58d7c132974586d524f10d5e71e2b278df6499cfa"
+    },
+    {
+      "path": "research/search-performance-v2/optimized.cpuprofile",
+      "bytes": 76224,
+      "sha256": "7043f9a2c54ec728fe3f15de22ef832d7c09633c6ba061958d2d3d2e2c118723"
+    },
+    {
+      "path": "research/search-performance-v2/play-progress.json",
+      "bytes": 500,
+      "sha256": "9aeb1e52c8791cc444de4db40513685e451bb394f1c8ff7b6e0ffd01ec9435ea"
+    },
+    {
+      "path": "research/search-performance-v2/results.json",
+      "bytes": 452770,
+      "sha256": "99e58a4e78d586542f81a634238b7c0a3cbc0debfaf295bc6e77fc22e6734c6c"
+    },
+    {
+      "path": "research/search-performance-v3/browser-results.json",
+      "bytes": 418638,
+      "sha256": "9b56d0bf9285704d26da400ae114ccd53d5948449ded77f8662a26b272628aa4"
+    },
+    {
+      "path": "research/search-performance-v3/browser-worker.log",
+      "bytes": 907,
+      "sha256": "52d2768e9912222cb79249189fa2f51ce486acf9bf58b474658325a74ca3ff93"
+    },
+    {
+      "path": "research/search-performance-v3/play.log",
+      "bytes": 747,
+      "sha256": "1eaa01153c551f194a342a4cfff2ead08a1d01de75d54592807aebcec243b988"
+    },
+    {
+      "path": "research/search-performance-v3/results.json",
+      "bytes": 516064,
+      "sha256": "99db1f74ca91ea65a61b962d790237b8998e61f7e5f17500ae94994ae7a33d5d"
+    },
+    {
+      "path": "research/search-performance-v3/unit.log",
+      "bytes": 26489,
+      "sha256": "e89b81818d35800cdd3eec8e36c3bff325a6074e300ca54c91e553361bcda0d9"
+    },
+    {
+      "path": "research/search-performance-v4/browser-results.json",
+      "bytes": 455080,
+      "sha256": "ddb66fbfb9bbaa77893d9ea1cc499221a5ea7ed44bec82d409451b48f49c1cea"
+    },
+    {
+      "path": "research/search-performance-v4/browser-worker.log",
+      "bytes": 907,
+      "sha256": "328fdfcecbd62aa335fc1a1d9fffc6b23bddda45785ab136b927e2778876a9e3"
+    },
+    {
+      "path": "research/search-performance-v4/play.log",
+      "bytes": 818,
+      "sha256": "cfd119135ef7353b03ab3f7a88cb6f7c8d6fbfa4cba69741d8d81a50a3b4a53f"
+    },
+    {
+      "path": "research/search-performance-v4/results.json",
+      "bytes": 883849,
+      "sha256": "f241b44c609baa00f7b9d2fced8af4df2ce8fb37f3c7c742f355a45d99202469"
+    },
+    {
+      "path": "research/search-performance-v4/unit.log",
+      "bytes": 26980,
+      "sha256": "476f1ad098ec61aa3dc0c3cc8de7e88f195f6d12a07353da2a0e0b98e80936f2"
+    },
+    {
+      "path": "research/search-performance-v5/browser-results.json",
+      "bytes": 471380,
+      "sha256": "4d5b9230a696e93f6ddbb14972334fa646166ead9c0697361c4300454136feca"
+    },
+    {
+      "path": "research/search-performance-v5/browser-worker.log",
+      "bytes": 907,
+      "sha256": "1e4c904118978a7a3513d9409ef1dae54609f7320004d153f01bf9b30d767258"
+    },
+    {
+      "path": "research/search-performance-v5/exact-play.log",
+      "bytes": 820,
+      "sha256": "dc3172285071978fa71758a228b39c7c429a60ea178e00330b45b14b16d6ad7e"
+    },
+    {
+      "path": "research/search-performance-v5/final-results.json",
+      "bytes": 970969,
+      "sha256": "f580eb45f6c06e52a9ec3f287b5323f65c3d44edf9d35390cb742609dd8e7165"
+    },
+    {
+      "path": "research/search-performance-v5/king-safety-play.log",
+      "bytes": 821,
+      "sha256": "b043e2fe2497b86a79746f328c55b06315b2e5298e8887b825d2aea1ba9dca4f"
+    },
+    {
+      "path": "research/search-performance-v5/reduced-play.log",
+      "bytes": 808,
+      "sha256": "31f8f04e729a4c3d5cb09ad32364244fef93c7b17d57bd3b40b8aad920c2edc9"
+    },
+    {
+      "path": "research/search-performance-v5/step-1-results.json",
+      "bytes": 954978,
+      "sha256": "ddab34114178dee73eaac3e88e463ddbb1c01f0c09eb6489403c51537a1cca2e"
+    },
+    {
+      "path": "research/search-performance-v5/step-1-tests.log",
+      "bytes": 1280,
+      "sha256": "5ed02598906f7b68bfe052b13ff431d3d5fa8592eeec2890754d7c3094e8b25d"
+    },
+    {
+      "path": "research/search-performance-v5/step-2-results.json",
+      "bytes": 954976,
+      "sha256": "7abcd9041e75ed49cbea127a5ca66262ee4e1fc4f054881af4ebdda38653495f"
+    },
+    {
+      "path": "research/search-performance-v5/step-2-tests.log",
+      "bytes": 1285,
+      "sha256": "34a5bf60e1e449ed8a3d354e63671abfd32c48b397658d2da1deb3aa80182eff"
+    },
+    {
+      "path": "research/search-performance-v5/step-3-tests.log",
+      "bytes": 3229,
+      "sha256": "dcd86e87944e770229e0cc273840e1ef0e250e4ca010e0ee4201a651cd72b30e"
+    },
+    {
+      "path": "research/search-performance-v5/tactical-play.log",
+      "bytes": 812,
+      "sha256": "dbe82fe8915a628268908e691152d373f90e755132badb87dae1a03227bd317f"
+    },
+    {
+      "path": "research/search-performance-v5/tactical-tests.log",
+      "bytes": 531,
+      "sha256": "849a564e59b85cf9bda59bd4422c4e2a7935287bd6ad2408dfe33bb37dd4f8eb"
+    },
+    {
+      "path": "research/search-performance-v5/unit.log",
+      "bytes": 27402,
+      "sha256": "9b01391c6c89ec279c0b8a5033381e019dda62798096a471bf7ce030612e4b31"
+    },
+    {
+      "path": "research/workspace-handoff-2026-11-07.tar.gz",
+      "bytes": 97612,
+      "sha256": "41734b77bb0f2b86fe438971f3a9abbec11f11228dfb1d92cfbd64fe2dcfb974"
+    },
+    {
+      "path": "scripts/analyze-fairy-selfplay-research.js",
+      "bytes": 8050,
+      "sha256": "94cad75e7e95fd626ff5f8e749c4e201300c9fa8f0ee7a74a9e8b36da36cb68b"
+    },
+    {
+      "path": "scripts/deep-analyze-fairy-selfplay-research.js",
+      "bytes": 6029,
+      "sha256": "70cec8c8e1527828fa7a21fa1112f297a8f4f6bbf2293c23df16bec09390d0b7"
+    },
+    {
+      "path": "scripts/report-fairy-selfplay-research.js",
+      "bytes": 5812,
+      "sha256": "202ebd93ca00cc6110fdb79f452aafb2c79075d4cc2d182575a9e9b5382909c2"
+    },
+    {
+      "path": "scripts/run-fairy-selfplay-research.js",
+      "bytes": 11217,
+      "sha256": "d3272152e93b391bb48726a75878c3f3cb4d8a50446d8b20fb05c2418517acd9"
+    },
+    {
+      "path": "src/board-ui.js",
+      "bytes": 7739,
+      "sha256": "a81bb8c330567c8d126d459076696045473001bf6c32bd416160dd52edf69810"
+    },
+    {
+      "path": "src/i18n.js",
+      "bytes": 49175,
+      "sha256": "788fd13a40b3d47aa44f80c698cdbbe45917210884283d9619f514f92f17af73"
+    },
+    {
+      "path": "src/watch-ui.js",
+      "bytes": 21301,
+      "sha256": "175932c5e23f77b6d9911d65499c86b33e619c131c382de080f162d4785052ee"
+    },
+    {
+      "path": "styles.css",
+      "bytes": 79256,
+      "sha256": "998abd502374de87040561276ab1de7f208777783e7e87397be3ada51a61ba1c"
+    },
+    {
+      "path": "sw.js",
+      "bytes": 4436,
+      "sha256": "4fc9b2f2e9b29cbfaf7a64fb12b700fdc656bb9c8d2b6a59853dbb1e84a58d0f"
+    },
+    {
+      "path": "vendor/fairy-stockfish/AUTHORS",
+      "bytes": 4950,
+      "sha256": "55a0a4599358308af8349344d79176469f04119558e85595efe0a39b583cdf00"
+    },
+    {
+      "path": "vendor/fairy-stockfish/Copying.txt",
+      "bytes": 35821,
+      "sha256": "0b383d5a63da644f628d99c33976ea6487ed89aaa59f0b3257992deac1171e6b"
+    },
+    {
+      "path": "vendor/fairy-stockfish/source.tar.gz",
+      "bytes": 383237,
+      "sha256": "5c10e40812e1045cb13677ff84b3cdd3fca5c381df76245cd4d8eb5312a61bea"
+    },
+    {
+      "path": "vendor/fairy-stockfish/stockfish.js",
+      "bytes": 64273,
+      "sha256": "9080a62e3133e50da0c47b88b186d9c29ed37cc5129401bdeed8bffb5b9a4ca9"
+    },
+    {
+      "path": "vendor/fairy-stockfish/stockfish.wasm",
+      "bytes": 1636293,
+      "sha256": "7cea742b8ca1a324fbc500f89112f168134cf68eb49475df23be6c42336255c6"
+    },
+    {
+      "path": "vendor/fairy-stockfish/stockfish.worker.js",
+      "bytes": 3321,
+      "sha256": "067be484ac62f728b0dad28496997e5862f3c61f9091f59bb35d9d1b1ed14573"
+    }
+  ],
+  "unitTests": {
+    "passed": 397
+  },
+  "excludedGeneratedCache": "scripts/__pycache__/queue-competitive-campaign.cpython-314.pyc",
+  "preservedRemoteCanonical": [
+    "DECISIONS.md",
+    "DEVLOG.md",
+    "research/competitive-engine-v1/README.md",
+    "research/competitive-engine-v1/js-staged-moves-ablation.json"
+  ],
+  "browserTests": "Full suite reported UI failures; run log retained, checkpoint not promoted."
+}
