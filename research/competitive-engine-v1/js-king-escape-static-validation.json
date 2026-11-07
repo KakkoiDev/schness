@@ -1,0 +1,24 @@
+{
+  "purpose": "Actual competitive depth0 evaluator delta equals independently measured resulting safe-count difference times existing14 coefficient; all128positions unchanged inputs.",
+  "rows": [
+    {
+      "id": "black__20262001__0:20",
+      "base": 308,
+      "candidate": 294,
+      "expected": -14
+    },
+    {
+      "id": "black__20262001__10:35",
+      "base": 1045,
+      "candidate": 1059,
+      "expected": 14
+    },
+    {
+      "id": "white__20262001__0:24",
+      "base": -544,
+      "candidate": -558,
+      "expected": -14
+    }
+  ],
+  "checked": 128
+}

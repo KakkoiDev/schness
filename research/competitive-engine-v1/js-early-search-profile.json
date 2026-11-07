@@ -1,0 +1,767 @@
+{
+  "purpose": "CPU sampling on40selected early JS loss cases, depth6/q4checks/nonreduced,100000nodes1500ms each. Sampling/GC/JIT affects timings. Not strength evidence.",
+  "hashes": {
+    "src/search.js": "1c175a7fe5c045690ad5ecfd4c1fce2103de3e79eb920016853a0fa9b970f295",
+    "src/bot.js": "67a2fd15402194afcf9d63e7c1fb8084b8786b35ec8053bd50865239bfefae3c",
+    "src/rules.js": "9b7bf59b80ac20852db66ed71fc33aac9917bf4890a6ded34b55208c7cb908f7",
+    "src/board-masks.js": "12d0a5ea4eb804035a82f0d38cc36cab5227bc3500c093c0192c0d30f55d8d00"
+  },
+  "scriptSha256": "8ff14ac4f0aacb1c8a6ee7fcc6b294f8bb94ab935c0f7444342982f7a53e896f",
+  "inputSha256": "2754350022cfa59d818bc4a26983c3a2d922d0a5ee0c305ef9a4418c438bb62e",
+  "profileSha256": "b324df238a40b0b148934d3740f9630336168781ba16bf4b6e397af324daac8a",
+  "results": [
+    {
+      "variant": "baseline",
+      "id": "black__20262001__0",
+      "completedDepth": 6,
+      "nodes": 14252,
+      "score": -480,
+      "action": {
+        "type": "move",
+        "from": 15,
+        "to": 13
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "black__20262001__1",
+      "completedDepth": 6,
+      "nodes": 8419,
+      "score": -552,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 2
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "black__20262001__12",
+      "completedDepth": 6,
+      "nodes": 7153,
+      "score": -790,
+      "action": {
+        "type": "move",
+        "from": 7,
+        "to": 2
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "black__20262001__13",
+      "completedDepth": 6,
+      "nodes": 20609,
+      "score": -194,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 15
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "black__20262001__14",
+      "completedDepth": 6,
+      "nodes": 60179,
+      "score": -226,
+      "action": {
+        "type": "move",
+        "from": 8,
+        "to": 2
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "black__20262001__5",
+      "completedDepth": 6,
+      "nodes": 9315,
+      "score": -117,
+      "action": {
+        "type": "move",
+        "from": 1,
+        "to": 5
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "black__20262001__6",
+      "completedDepth": 6,
+      "nodes": 41480,
+      "score": 238,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 7
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "black__20262001__8",
+      "completedDepth": 6,
+      "nodes": 42785,
+      "score": -138,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 0
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "black__20262001__9",
+      "completedDepth": 6,
+      "nodes": 39073,
+      "score": -104,
+      "action": {
+        "type": "move",
+        "from": 12,
+        "to": 6
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__0",
+      "completedDepth": 6,
+      "nodes": 48143,
+      "score": -442,
+      "action": {
+        "type": "move",
+        "from": 13,
+        "to": 14
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__11",
+      "completedDepth": 6,
+      "nodes": 13324,
+      "score": -67,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 5
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__12",
+      "completedDepth": 6,
+      "nodes": 9446,
+      "score": -72,
+      "action": {
+        "type": "move",
+        "from": 13,
+        "to": 9
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__15",
+      "completedDepth": 6,
+      "nodes": 42013,
+      "score": -547,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 13
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__3",
+      "completedDepth": 6,
+      "nodes": 9571,
+      "score": -72,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 10
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__4",
+      "completedDepth": 6,
+      "nodes": 13451,
+      "score": -67,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 6
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__5",
+      "completedDepth": 6,
+      "nodes": 16899,
+      "score": -223,
+      "action": {
+        "type": "move",
+        "from": 13,
+        "to": 12
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__6",
+      "completedDepth": 6,
+      "nodes": 14687,
+      "score": -72,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 6
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__7",
+      "completedDepth": 6,
+      "nodes": 12923,
+      "score": -232,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 13
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__8",
+      "completedDepth": 6,
+      "nodes": 80663,
+      "score": -170,
+      "action": {
+        "type": "move",
+        "from": 14,
+        "to": 4
+      }
+    },
+    {
+      "variant": "baseline",
+      "id": "white__20262001__9",
+      "completedDepth": 6,
+      "nodes": 45182,
+      "score": -8,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 4
+      }
+    },
+    {
+      "variant": "history",
+      "id": "black__20262001__0",
+      "completedDepth": 6,
+      "nodes": 13449,
+      "score": -134,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 12
+      }
+    },
+    {
+      "variant": "history",
+      "id": "black__20262001__1",
+      "completedDepth": 6,
+      "nodes": 13567,
+      "score": -102,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 4
+      }
+    },
+    {
+      "variant": "history",
+      "id": "black__20262001__12",
+      "completedDepth": 6,
+      "nodes": 11229,
+      "score": -1444,
+      "action": {
+        "type": "move",
+        "from": 7,
+        "to": 11
+      }
+    },
+    {
+      "variant": "history",
+      "id": "black__20262001__13",
+      "completedDepth": 6,
+      "nodes": 8398,
+      "score": -126,
+      "action": {
+        "type": "move",
+        "from": 3,
+        "to": 2
+      }
+    },
+    {
+      "variant": "history",
+      "id": "black__20262001__14",
+      "completedDepth": 6,
+      "nodes": 8395,
+      "score": -24,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 1
+      }
+    },
+    {
+      "variant": "history",
+      "id": "black__20262001__15",
+      "completedDepth": 6,
+      "nodes": 11495,
+      "score": -188,
+      "action": {
+        "type": "move",
+        "from": 1,
+        "to": 6
+      }
+    },
+    {
+      "variant": "history",
+      "id": "black__20262001__2",
+      "completedDepth": 6,
+      "nodes": 29461,
+      "score": -440,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 5
+      }
+    },
+    {
+      "variant": "history",
+      "id": "black__20262001__3",
+      "completedDepth": 6,
+      "nodes": 22016,
+      "score": -185,
+      "action": {
+        "type": "move",
+        "from": 1,
+        "to": 3
+      }
+    },
+    {
+      "variant": "history",
+      "id": "black__20262001__5",
+      "completedDepth": 6,
+      "nodes": 11678,
+      "score": -108,
+      "action": {
+        "type": "move",
+        "from": 6,
+        "to": 3
+      }
+    },
+    {
+      "variant": "history",
+      "id": "black__20262001__6",
+      "completedDepth": 6,
+      "nodes": 42328,
+      "score": -118,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 15
+      }
+    },
+    {
+      "variant": "history",
+      "id": "white__20262001__0",
+      "completedDepth": 6,
+      "nodes": 9757,
+      "score": -368,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 9
+      }
+    },
+    {
+      "variant": "history",
+      "id": "white__20262001__11",
+      "completedDepth": 6,
+      "nodes": 13324,
+      "score": -67,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 5
+      }
+    },
+    {
+      "variant": "history",
+      "id": "white__20262001__12",
+      "completedDepth": 6,
+      "nodes": 58094,
+      "score": -322,
+      "action": {
+        "type": "move",
+        "from": 12,
+        "to": 8
+      }
+    },
+    {
+      "variant": "history",
+      "id": "white__20262001__15",
+      "completedDepth": 6,
+      "nodes": 6275,
+      "score": -153,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 5
+      }
+    },
+    {
+      "variant": "history",
+      "id": "white__20262001__2",
+      "completedDepth": 6,
+      "nodes": 14454,
+      "score": -78,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 7
+      }
+    },
+    {
+      "variant": "history",
+      "id": "white__20262001__3",
+      "completedDepth": 6,
+      "nodes": 58055,
+      "score": -322,
+      "action": {
+        "type": "move",
+        "from": 15,
+        "to": 11
+      }
+    },
+    {
+      "variant": "history",
+      "id": "white__20262001__4",
+      "completedDepth": 6,
+      "nodes": 10438,
+      "score": -106,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 13
+      }
+    },
+    {
+      "variant": "history",
+      "id": "white__20262001__6",
+      "completedDepth": 6,
+      "nodes": 14687,
+      "score": -72,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 6
+      }
+    },
+    {
+      "variant": "history",
+      "id": "white__20262001__7",
+      "completedDepth": 6,
+      "nodes": 17302,
+      "score": -282,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 15
+      }
+    },
+    {
+      "variant": "history",
+      "id": "white__20262001__9",
+      "completedDepth": 6,
+      "nodes": 7555,
+      "score": -106,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 8
+      }
+    }
+  ],
+  "totalSamples": 2701,
+  "hotspots": [
+    {
+      "frame": [
+        "advancePosition",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        333
+      ],
+      "samples": 411,
+      "fraction": 0.15216586449463163
+    },
+    {
+      "frame": [
+        "generateLegalActions",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        120
+      ],
+      "samples": 386,
+      "fraction": 0.14291003332099222
+    },
+    {
+      "frame": [
+        "positionKey",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        247
+      ],
+      "samples": 279,
+      "fraction": 0.10329507589781563
+    },
+    {
+      "frame": [
+        "visit",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/search.js",
+        159
+      ],
+      "samples": 199,
+      "fraction": 0.07367641614216956
+    },
+    {
+      "frame": [
+        "ordered",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/search.js",
+        101
+      ],
+      "samples": 160,
+      "fraction": 0.059237319511292116
+    },
+    {
+      "frame": [
+        "accept",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        143
+      ],
+      "samples": 142,
+      "fraction": 0.05257312106627175
+    },
+    {
+      "frame": [
+        "orderActions",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/bot.js",
+        183
+      ],
+      "samples": 141,
+      "fraction": 0.05220288781932617
+    },
+    {
+      "frame": [
+        "masksAfter",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/board-masks.js",
+        24
+      ],
+      "samples": 129,
+      "fraction": 0.047760088855979266
+    },
+    {
+      "frame": [
+        "",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/bot.js",
+        197
+      ],
+      "samples": 72,
+      "fraction": 0.026656793780081452
+    },
+    {
+      "frame": [
+        "",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/search.js",
+        143
+      ],
+      "samples": 61,
+      "fraction": 0.022584228063680118
+    },
+    {
+      "frame": [
+        "masksInCheck",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/board-masks.js",
+        41
+      ],
+      "samples": 60,
+      "fraction": 0.022213994816734542
+    },
+    {
+      "frame": [
+        "key",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/bot.js",
+        90
+      ],
+      "samples": 59,
+      "fraction": 0.021843761569788966
+    },
+    {
+      "frame": [
+        "positionalScore",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/bot.js",
+        159
+      ],
+      "samples": 58,
+      "fraction": 0.021473528322843393
+    },
+    {
+      "frame": [
+        "make",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/bot.js",
+        39
+      ],
+      "samples": 48,
+      "fraction": 0.017771195853387635
+    },
+    {
+      "frame": [
+        "withChild",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/search.js",
+        95
+      ],
+      "samples": 43,
+      "fraction": 0.015920029618659754
+    },
+    {
+      "frame": [
+        "(program)",
+        "",
+        0
+      ],
+      "samples": 38,
+      "fraction": 0.014068863383931877
+    },
+    {
+      "frame": [
+        "normalizeRules",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        474
+      ],
+      "samples": 37,
+      "fraction": 0.0136986301369863
+    },
+    {
+      "frame": [
+        "makeSearchAction",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        311
+      ],
+      "samples": 34,
+      "fraction": 0.012587930396149574
+    },
+    {
+      "frame": [
+        "(garbage collector)",
+        "",
+        0
+      ],
+      "samples": 31,
+      "fraction": 0.011477230655312847
+    },
+    {
+      "frame": [
+        "unmakeSearchAction",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        323
+      ],
+      "samples": 29,
+      "fraction": 0.010736764161421697
+    },
+    {
+      "frame": [
+        "unmake",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/bot.js",
+        70
+      ],
+      "samples": 25,
+      "fraction": 0.009255831173639394
+    },
+    {
+      "frame": [
+        "legalActionsUnchecked",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        116
+      ],
+      "samples": 23,
+      "fraction": 0.008515364679748241
+    },
+    {
+      "frame": [
+        "countLegalActionsUnchecked",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        181
+      ],
+      "samples": 22,
+      "fraction": 0.008145131432802665
+    },
+    {
+      "frame": [
+        "boundedSet",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/search.js",
+        74
+      ],
+      "samples": 21,
+      "fraction": 0.00777489818585709
+    },
+    {
+      "frame": [
+        "rulesOf",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        489
+      ],
+      "samples": 20,
+      "fraction": 0.0074046649389115145
+    },
+    {
+      "frame": [
+        "order",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/search.js",
+        14
+      ],
+      "samples": 20,
+      "fraction": 0.0074046649389115145
+    },
+    {
+      "frame": [
+        "noisyActions",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/bot.js",
+        106
+      ],
+      "samples": 17,
+      "fraction": 0.006293965198074787
+    },
+    {
+      "frame": [
+        "target",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        164
+      ],
+      "samples": 15,
+      "fraction": 0.0055534987041836355
+    },
+    {
+      "frame": [
+        "actionKey",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        292
+      ],
+      "samples": 14,
+      "fraction": 0.00518326545723806
+    },
+    {
+      "frame": [
+        "checkingDropAllowed",
+        "file:///Users/kakkoidev/Documents/ChatGPT/Schness/src/rules.js",
+        499
+      ],
+      "samples": 12,
+      "fraction": 0.004442798963346909
+    }
+  ]
+}

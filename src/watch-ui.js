@@ -4,7 +4,7 @@ import {
 import { VARIANTS, VARIANT_IDS, VARIANT_LABELS, resolveVariant, description, variantSettings } from './variants.js';
 import { hiddenSetupPlacements } from './tournament.js';
 import { pairMoves, recordAction } from './history.js';
-import { actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
+import { refusedDrops, DROP_REFUSAL, actionAt, actionsForSelection, bankSelection, boardSelection, setupActionAt, setupDestinations } from './interaction.js';
 import { buildEditedPosition, controllerSearch, humanSeatControllers, putEditorPiece } from './arena.js';
 import { movedEnough } from './drag.js';
 import { createBoard, pieceElement, renderBoard, renderReserve as renderPieceReserve } from './board-ui.js';
@@ -215,6 +215,7 @@ function chooseSquare(square) {
   }
   const action = actionAt(position, selection, square);
   if (action) return playAction(action);
+  if (refusedDrops(position, selection).has(square)) { status.textContent = DROP_REFUSAL; return; }
   const occupant = position.board[square];
   selection = occupant?.owner === position.turn ? boardSelection(square) : null;
   render();
@@ -297,6 +298,7 @@ function render() {
   const last = history[reviewIndex - 1]?.action;
   renderBoard(board, position, {
     last, selected: selection?.type === 'board' ? selection.square : null, targets,
+    refused: humanTurn ? refusedDrops(position, selection) : new Set(),
     placements: humanTurn ? placements : new Set(),
     dragging: pointerDrag?.active ? pointerDrag.selection?.square : null, disabled: !humanTurn,
   });
@@ -397,7 +399,12 @@ function endPointerDrag(event) {
   event.preventDefault();
   suppressClick = true;
   setTimeout(() => { suppressClick = false; }, 0);
-  if (action) playAction(action); else { selection = null; render(); }
+  if (action) playAction(action); else {
+    const refused = target && refusedDrops(current(), ended.selection).has(Number(target.dataset.square));
+    selection = refused ? ended.selection : null;
+    render();
+    if (refused) status.textContent = DROP_REFUSAL;
+  }
 }
 
 function cancelPointerDrag() {

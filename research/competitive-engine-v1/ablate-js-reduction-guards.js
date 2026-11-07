@@ -1,0 +1,7 @@
+import {readFile,writeFile} from 'node:fs/promises';import {createHash} from 'node:crypto';import {analyzeAction} from '../../src/bot.js';
+const corpus=JSON.parse(await readFile('research/competitive-engine-v1/rust-r5-early-swings.json')),cases=corpus.cases.filter(c=>corpus.results.find(r=>r.id===c.id).comparable),results=[];
+for(const c of cases)for(const extra of [{lateMoveReduction:false},{lateMoveReduction:true},{lateMoveReduction:true,reducePrincipalVariation:false},{lateMoveReduction:true,protectHistoryMoves:true}]){
+ const options={profile:'competitive',depth:6,iterativeDeepening:true,quiescenceDepth:4,quiescenceChecks:true,quiescenceEvasionDepth:2,cacheEvaluation:true,stopOnProvenWin:false,maxNodes:200000,maxMillis:1500,...extra},start=performance.now(),r=analyzeAction(c.position,options);results.push({id:c.id,options,millis:performance.now()-start,...r});
+}
+const hashes={};for(const path of ['src/search.js','src/bot.js','src/exchange.js'])hashes[path]=createHash('sha256').update(await readFile(path)).digest('hex');
+await writeFile('research/competitive-engine-v1/js-reduction-guards-ablation.json',JSON.stringify({purpose:'All15 earlier completed selected cases from29Rustlosses; not strength evidence or independent holdout. Four variants independently compared; only equal completed depths comparable. Explicit200000nodes1500ms.',hashes,cases,results},null,2)+'\n');console.log(JSON.stringify({complete:results.filter(r=>r.completedDepth===6).length,total:results.length,protected:results.reduce((a,r)=>a+(r.stats.protectedReductions??0),0)}));

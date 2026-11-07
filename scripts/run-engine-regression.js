@@ -56,7 +56,7 @@ async function prepare(a) {
   const config={candidateDepth,candidateCommit:a['candidate-commit']??null,variants,seeds,repetitions:positive(a.repetitions,1),maxPlies:positive(a['max-plies'],200),workers:positive(a.workers,Math.max(1,Math.min(8,availableParallelism()-2)))};
   await mkdir(dirname(output),{recursive:true});await mkdir(output);await mkdir(`${output}/games`);
   const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
-  const paths=['package.json','scripts/run-engine-regression.js','research/engine-regression-v1/baseline/bot.js','research/engine-regression-v1/baseline/rules.js','research/engine-regression-v1/baseline/origin.json',...['bot','rules','board-masks','search','tournament','history','notation','watch','settings','variants'].map(p=>`src/${p}.js`)];
+  const paths=['package.json','scripts/run-engine-regression.js','research/engine-regression-v1/baseline/bot.js','research/engine-regression-v1/baseline/rules.js','research/engine-regression-v1/baseline/origin.json',...['bot','rules','board-masks','search','exchange','tournament','history','notation','watch','settings','variants'].map(p=>`src/${p}.js`)];
   const files=[];
   for(const path of paths){const content=await readFile(`${root}/${path}`);await mkdir(dirname(`${output}/runtime/${path}`),{recursive:true});await writeFile(`${output}/runtime/${path}`,content);files.push({path,sha256:hash(content)});}
   let git={};try{git={head:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),status:execFileSync('git',['status','--short'],{cwd:root,encoding:'utf8'})};}catch{}

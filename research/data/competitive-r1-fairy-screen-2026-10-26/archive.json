@@ -1,0 +1,16 @@
+{
+  "run": "competitive-r1-fairy-screen-2026-10-26",
+  "status": "failed",
+  "games": 0,
+  "sourceFingerprint": "fa21a5c4cd5d0f2bf19d517a4d6a3eb60af2409742531159202ed8a48c154975",
+  "archiveBytes": 946322,
+  "archiveSha256": "1c0aea056367f3723def0b3e899bb2709f567b668316ad0879851f2153ec770a",
+  "parts": [
+    {
+      "path": "competitive-r1-fairy-screen-2026-10-26.tar.gz.part001",
+      "bytes": 946322,
+      "sha256": "1c0aea056367f3723def0b3e899bb2709f567b668316ad0879851f2153ec770a"
+    }
+  ],
+  "failure": "Server did not start: port 4190 is blocked by Node/browser fetch (bad port). No games were played."
+}

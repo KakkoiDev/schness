@@ -1,0 +1,20 @@
+{
+  "run": "competitive-r3-fairy-screen-2026-10-26",
+  "sourceFingerprint": "eea7cc1186c818ab49d335c334d1b045fa79f10c756666fa9c16d116e131395c",
+  "games": 32,
+  "archiveBytes": 1608465,
+  "archiveSha256": "12549f81ac55a07671f72fadb5fa38a754eed37f542cee0c59c1cee5496dd8e8",
+  "parts": [
+    {
+      "path": "competitive-r3-fairy-screen-2026-10-26.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "936555107c73bd72d647416e47c6521cc4d2f42347ca042271b93c78ffa5f01a"
+    },
+    {
+      "path": "competitive-r3-fairy-screen-2026-10-26.tar.gz.part002",
+      "bytes": 559889,
+      "sha256": "d14da22193a8087d779e3d3d787a505fe28a256e3ed8ec8fa81968de58618486"
+    }
+  ],
+  "restore": "cat competitive-r3-fairy-screen-2026-10-26.tar.gz.part* > competitive-r3-fairy-screen-2026-10-26.tar.gz; tar -xzf competitive-r3-fairy-screen-2026-10-26.tar.gz"
+}

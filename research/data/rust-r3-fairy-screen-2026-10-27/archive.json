@@ -1,0 +1,20 @@
+{
+  "run": "rust-r3-fairy-screen-2026-10-27",
+  "sourceFingerprint": "b2b845d474eee586c3fb505883af7be07c3cd149715902f6e859e8c27a7f573d",
+  "games": 32,
+  "archiveBytes": 1817176,
+  "archiveSha256": "b80310cca4cae7b48f9ee807b6dcbb739605d9dc7db437b6b4759e09872a89a5",
+  "parts": [
+    {
+      "path": "rust-r3-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "4f2a67fe71878acb149c1b97045ecae34306b2941105b2bc06d27752af10f171"
+    },
+    {
+      "path": "rust-r3-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 768600,
+      "sha256": "be5ac1b982219e6dec36902bbe5a1caa5983dc6624fb64f93c50d482707775b6"
+    }
+  ],
+  "restore": "cat rust-r3-fairy-screen-2026-10-27.tar.gz.part* > rust-r3-fairy-screen-2026-10-27.tar.gz; tar -xzf rust-r3-fairy-screen-2026-10-27.tar.gz"
+}

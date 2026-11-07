@@ -1,0 +1,5336 @@
+{
+  "purpose": "Selected diagnostic positions, not holdout strength evidence; fixed depth, exact nonreduced search. Timing includes process IPC.",
+  "options": {
+    "profile": "competitive",
+    "depth": 5,
+    "iterativeDeepening": false,
+    "quiescenceDepth": 4,
+    "quiescenceChecks": true,
+    "quiescenceEvasionDepth": 2,
+    "lateMoveReduction": false
+  },
+  "binaries": [
+    {
+      "path": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "sha256": "ffbee475107e4783e187a98b451b35a04534336d5935d61dce0170338359ddfc"
+    },
+    {
+      "path": "engine-rust/target/release/schness-engine",
+      "sha256": "b7e769af7f99a8dea85491fd31708d616aea276cce3c5b8863a01286b457b842"
+    }
+  ],
+  "results": [
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 1,
+      "millis": 613.506125,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 4
+      },
+      "score": -1690,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20074,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          "score": -1690,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 2,
+      "millis": 329.9186659999999,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 8
+      },
+      "score": -1102,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13067,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 8
+          },
+          "score": -1102,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 3,
+      "millis": 86.7934160000001,
+      "action": {
+        "type": "move",
+        "from": 0,
+        "to": 1
+      },
+      "score": -492,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3629,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 0,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          "score": -492,
+          "pv": [
+            {
+              "type": "move",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 4,
+      "millis": 206.91866600000003,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 7
+      },
+      "score": -1657,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8475,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          "score": -1657,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 5,
+      "millis": 340.983291,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 6
+      },
+      "score": -1386,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13112,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          "score": -1386,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 6,
+      "millis": 597.183875,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 7
+      },
+      "score": -984,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20736,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 7
+          },
+          "score": -984,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 11
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 7,
+      "millis": 97.81287500000008,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 6
+      },
+      "score": -1308,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3418,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 15
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          "score": -1308,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 8,
+      "millis": 245.4668340000003,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 7
+      },
+      "score": -816,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 9464,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          "score": -816,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 9,
+      "millis": 212.80949999999984,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 15
+      },
+      "score": -992,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7662,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 15
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          "score": -992,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 10,
+      "millis": 202.7524159999998,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 3
+      },
+      "score": -1040,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7257,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 5
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 3
+          },
+          "score": -1040,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 14
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 11,
+      "millis": 2974.6221250000003,
+      "action": {
+        "type": "move",
+        "from": 15,
+        "to": 0
+      },
+      "score": -1108,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 90118,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 15,
+          "to": 0
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 12
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 15,
+            "to": 0
+          },
+          "score": -1108,
+          "pv": [
+            {
+              "type": "move",
+              "from": 15,
+              "to": 0
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 12,
+      "millis": 641.9762920000003,
+      "action": {
+        "type": "move",
+        "from": 1,
+        "to": 6
+      },
+      "score": -1058,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 19537,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          "score": -1058,
+          "pv": [
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 13,
+      "millis": 306.95537500000046,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 10
+      },
+      "score": -716,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8278,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          "score": -716,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 14,
+      "millis": 531.8860409999998,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 11
+      },
+      "score": -1092,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 22092,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 5,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          "score": -1092,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 15,
+      "millis": 123.8462499999996,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 0
+      },
+      "score": -1042,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3710,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 0
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 0,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 0
+          },
+          "score": -1042,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 0
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 0,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 16,
+      "millis": 171.88087499999983,
+      "action": {
+        "type": "move",
+        "from": 12,
+        "to": 8
+      },
+      "score": -1090,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 6426,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 12,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 12
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          "score": -1090,
+          "pv": [
+            {
+              "type": "move",
+              "from": 12,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 17,
+      "millis": 433.0457919999999,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 4
+      },
+      "score": -1476,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 18440,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 4
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 14
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          "score": -1476,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 4
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "output/local-experiments/rust-r1-fairy-screen-2026-10-27/runtime/engine-rust/target/release/schness-engine",
+      "id": 18,
+      "millis": 65.6791659999999,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 14
+      },
+      "score": -760,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 2926,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 12
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 13
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          "score": -760,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 1,
+      "millis": 185.78241699999853,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 4
+      },
+      "score": -1690,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20074,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          "score": -1690,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 2,
+      "millis": 112.63637500000004,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 8
+      },
+      "score": -1102,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13067,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 8
+          },
+          "score": -1102,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 3,
+      "millis": 31.126541999999972,
+      "action": {
+        "type": "move",
+        "from": 0,
+        "to": 1
+      },
+      "score": -492,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3629,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 0,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          "score": -492,
+          "pv": [
+            {
+              "type": "move",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 4,
+      "millis": 72.12062500000138,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 7
+      },
+      "score": -1657,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8475,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          "score": -1657,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 5,
+      "millis": 110.60241700000006,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 6
+      },
+      "score": -1386,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 13112,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          "score": -1386,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 6,
+      "millis": 185.92454200000066,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 7
+      },
+      "score": -984,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 20736,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 7
+          },
+          "score": -984,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 11
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 7,
+      "millis": 31.545333000000028,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 6
+      },
+      "score": -1308,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3418,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 15
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          "score": -1308,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 8,
+      "millis": 75.7016249999997,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 7
+      },
+      "score": -816,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 9464,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          "score": -816,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 9,
+      "millis": 67.90370799999982,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 15
+      },
+      "score": -992,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7662,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 15
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          "score": -992,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 10,
+      "millis": 64.57704100000046,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 3
+      },
+      "score": -1040,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 7257,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 5
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 5
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 3
+          },
+          "score": -1040,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 14
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 11,
+      "millis": 872.5720829999991,
+      "action": {
+        "type": "move",
+        "from": 15,
+        "to": 0
+      },
+      "score": -1108,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 90118,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 15,
+          "to": 0
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 12
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 15,
+            "to": 0
+          },
+          "score": -1108,
+          "pv": [
+            {
+              "type": "move",
+              "from": 15,
+              "to": 0
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 12,
+      "millis": 185.58899999999994,
+      "action": {
+        "type": "move",
+        "from": 1,
+        "to": 6
+      },
+      "score": -1058,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 19537,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          "score": -1058,
+          "pv": [
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 13,
+      "millis": 85.5776249999999,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 10
+      },
+      "score": -716,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 8278,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          "score": -716,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 14,
+      "millis": 183.46950000000106,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 11
+      },
+      "score": -1092,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 22092,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 5,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          "score": -1092,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 15,
+      "millis": 35.701750000000175,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 0
+      },
+      "score": -1042,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 3710,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 0
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 0,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 0
+          },
+          "score": -1042,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 0
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 0,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 16,
+      "millis": 59.04033299999901,
+      "action": {
+        "type": "move",
+        "from": 12,
+        "to": 8
+      },
+      "score": -1090,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 6426,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 12,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 12
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          "score": -1090,
+          "pv": [
+            {
+              "type": "move",
+              "from": 12,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 17,
+      "millis": 148.6004580000008,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 4
+      },
+      "score": -1476,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 18440,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 4
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 14
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          "score": -1476,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 4
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "binary": "engine-rust/target/release/schness-engine",
+      "id": 18,
+      "millis": 22.90479199999936,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 14
+      },
+      "score": -760,
+      "requestedDepth": 5,
+      "completedDepth": 5,
+      "nodes": 2926,
+      "stopped": false,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 12
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 13
+        }
+      ],
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          "score": -760,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 13
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "javascript": [
+    {
+      "id": "black__20261801__1",
+      "millis": 126.71354200000002,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 4
+      },
+      "score": -1690,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          "score": -1690,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 21092,
+      "quiescenceNodes": 18492,
+      "stats": {
+        "cutoffs": 11775,
+        "cacheHits": 222,
+        "tableCutoffs": 128,
+        "hintHits": 576,
+        "rootResearches": 0,
+        "pvsResearches": 49,
+        "aspirationResearches": 0,
+        "historyHits": 8190,
+        "evaluations": 18301,
+        "actionGenerations": 17248,
+        "countGenerations": 3981,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 21043,
+        "tableEntries": 2350,
+        "hintEntries": 1868
+      }
+    },
+    {
+      "id": "black__20261801__10",
+      "millis": 44.08891600000001,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 8
+      },
+      "score": -1102,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 8
+          },
+          "score": -1102,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 7965,
+      "quiescenceNodes": 6788,
+      "stats": {
+        "cutoffs": 4705,
+        "cacheHits": 21,
+        "tableCutoffs": 10,
+        "hintHits": 98,
+        "rootResearches": 0,
+        "pvsResearches": 12,
+        "aspirationResearches": 0,
+        "historyHits": 4755,
+        "evaluations": 6706,
+        "actionGenerations": 6975,
+        "countGenerations": 1072,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 7953,
+        "tableEntries": 1149,
+        "hintEntries": 1062
+      }
+    },
+    {
+      "id": "black__20261801__11",
+      "millis": 20.597458000000017,
+      "action": {
+        "type": "move",
+        "from": 0,
+        "to": 1
+      },
+      "score": -492,
+      "pv": [
+        {
+          "type": "move",
+          "from": 0,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          "score": -492,
+          "pv": [
+            {
+              "type": "move",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 3819,
+      "quiescenceNodes": 3315,
+      "stats": {
+        "cutoffs": 2234,
+        "cacheHits": 62,
+        "tableCutoffs": 20,
+        "hintHits": 64,
+        "rootResearches": 0,
+        "pvsResearches": 27,
+        "aspirationResearches": 0,
+        "historyHits": 1032,
+        "evaluations": 3245,
+        "actionGenerations": 3301,
+        "countGenerations": 575,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 3792,
+        "tableEntries": 430,
+        "hintEntries": 408
+      }
+    },
+    {
+      "id": "black__20261801__12",
+      "millis": 39.50008399999999,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 7
+      },
+      "score": -1657,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 7
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          "score": -1657,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 8217,
+      "quiescenceNodes": 7158,
+      "stats": {
+        "cutoffs": 4912,
+        "cacheHits": 107,
+        "tableCutoffs": 58,
+        "hintHits": 200,
+        "rootResearches": 0,
+        "pvsResearches": 32,
+        "aspirationResearches": 0,
+        "historyHits": 2135,
+        "evaluations": 6941,
+        "actionGenerations": 7198,
+        "countGenerations": 1116,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 8185,
+        "tableEntries": 940,
+        "hintEntries": 789
+      }
+    },
+    {
+      "id": "black__20261801__13",
+      "millis": 45.95875000000001,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 6
+      },
+      "score": -1386,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          "score": -1386,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 9911,
+      "quiescenceNodes": 8733,
+      "stats": {
+        "cutoffs": 5551,
+        "cacheHits": 144,
+        "tableCutoffs": 83,
+        "hintHits": 164,
+        "rootResearches": 0,
+        "pvsResearches": 30,
+        "aspirationResearches": 0,
+        "historyHits": 3520,
+        "evaluations": 8654,
+        "actionGenerations": 8284,
+        "countGenerations": 1723,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 9881,
+        "tableEntries": 1032,
+        "hintEntries": 929
+      }
+    },
+    {
+      "id": "black__20261801__14",
+      "millis": 97.02087499999999,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 7
+      },
+      "score": -984,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 11
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 7
+          },
+          "score": -984,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 11
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 20288,
+      "quiescenceNodes": 18083,
+      "stats": {
+        "cutoffs": 11515,
+        "cacheHits": 204,
+        "tableCutoffs": 96,
+        "hintHits": 346,
+        "rootResearches": 0,
+        "pvsResearches": 51,
+        "aspirationResearches": 0,
+        "historyHits": 10110,
+        "evaluations": 17991,
+        "actionGenerations": 16735,
+        "countGenerations": 3883,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 20237,
+        "tableEntries": 1999,
+        "hintEntries": 1761
+      }
+    },
+    {
+      "id": "black__20261801__2",
+      "millis": 18.276542000000006,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 6
+      },
+      "score": -1308,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 15
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          "score": -1308,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 15
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 3447,
+      "quiescenceNodes": 2932,
+      "stats": {
+        "cutoffs": 2117,
+        "cacheHits": 63,
+        "tableCutoffs": 36,
+        "hintHits": 78,
+        "rootResearches": 0,
+        "pvsResearches": 20,
+        "aspirationResearches": 0,
+        "historyHits": 1470,
+        "evaluations": 2881,
+        "actionGenerations": 3159,
+        "countGenerations": 324,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 3427,
+        "tableEntries": 451,
+        "hintEntries": 400
+      }
+    },
+    {
+      "id": "black__20261801__3",
+      "millis": 17.692416999999978,
+      "action": {
+        "type": "move",
+        "from": 2,
+        "to": 7
+      },
+      "score": -816,
+      "pv": [
+        {
+          "type": "move",
+          "from": 2,
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 5
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          "score": -816,
+          "pv": [
+            {
+              "type": "move",
+              "from": 2,
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 5
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 3704,
+      "quiescenceNodes": 3089,
+      "stats": {
+        "cutoffs": 2156,
+        "cacheHits": 72,
+        "tableCutoffs": 27,
+        "hintHits": 137,
+        "rootResearches": 0,
+        "pvsResearches": 18,
+        "aspirationResearches": 0,
+        "historyHits": 1604,
+        "evaluations": 3016,
+        "actionGenerations": 3356,
+        "countGenerations": 415,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 3686,
+        "tableEntries": 515,
+        "hintEntries": 423
+      }
+    },
+    {
+      "id": "black__20261801__4",
+      "millis": 24.91979200000003,
+      "action": {
+        "type": "move",
+        "from": 11,
+        "to": 15
+      },
+      "score": -992,
+      "pv": [
+        {
+          "type": "move",
+          "from": 11,
+          "to": 15
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 2
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 15,
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 11,
+          "to": 7
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          "score": -992,
+          "pv": [
+            {
+              "type": "move",
+              "from": 11,
+              "to": 15
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 15,
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 4813,
+      "quiescenceNodes": 3989,
+      "stats": {
+        "cutoffs": 2776,
+        "cacheHits": 114,
+        "tableCutoffs": 71,
+        "hintHits": 122,
+        "rootResearches": 0,
+        "pvsResearches": 35,
+        "aspirationResearches": 0,
+        "historyHits": 3184,
+        "evaluations": 3901,
+        "actionGenerations": 4374,
+        "countGenerations": 524,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 4778,
+        "tableEntries": 697,
+        "hintEntries": 618
+      }
+    },
+    {
+      "id": "black__20261801__5",
+      "millis": 16.671667000000014,
+      "action": {
+        "type": "move",
+        "from": 5,
+        "to": 3
+      },
+      "score": -1040,
+      "pv": [
+        {
+          "type": "move",
+          "from": 5,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 3,
+          "to": 5
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 14
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 5
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 5,
+            "to": 3
+          },
+          "score": -1040,
+          "pv": [
+            {
+              "type": "move",
+              "from": 5,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 3,
+              "to": 5
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 14
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 5
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 3243,
+      "quiescenceNodes": 2591,
+      "stats": {
+        "cutoffs": 2094,
+        "cacheHits": 83,
+        "tableCutoffs": 54,
+        "hintHits": 77,
+        "rootResearches": 0,
+        "pvsResearches": 27,
+        "aspirationResearches": 0,
+        "historyHits": 1305,
+        "evaluations": 2582,
+        "actionGenerations": 3026,
+        "countGenerations": 253,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 3216,
+        "tableEntries": 566,
+        "hintEntries": 518
+      }
+    },
+    {
+      "id": "black__20261801__6",
+      "millis": 215.57733399999995,
+      "action": {
+        "type": "move",
+        "from": 15,
+        "to": 0
+      },
+      "score": -1108,
+      "pv": [
+        {
+          "type": "move",
+          "from": 15,
+          "to": 0
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 12
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 6
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 3
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 4
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 15,
+            "to": 0
+          },
+          "score": -1108,
+          "pv": [
+            {
+              "type": "move",
+              "from": 15,
+              "to": 0
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 12
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 6
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 3
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 4
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 45384,
+      "quiescenceNodes": 40716,
+      "stats": {
+        "cutoffs": 26161,
+        "cacheHits": 396,
+        "tableCutoffs": 271,
+        "hintHits": 774,
+        "rootResearches": 0,
+        "pvsResearches": 50,
+        "aspirationResearches": 0,
+        "historyHits": 26577,
+        "evaluations": 40589,
+        "actionGenerations": 37556,
+        "countGenerations": 8259,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 45334,
+        "tableEntries": 4264,
+        "hintEntries": 3615
+      }
+    },
+    {
+      "id": "black__20261801__9",
+      "millis": 45.68045900000004,
+      "action": {
+        "type": "move",
+        "from": 1,
+        "to": 4
+      },
+      "score": -1058,
+      "pv": [
+        {
+          "type": "move",
+          "from": 1,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 1
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 7
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 1
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 1,
+            "to": 4
+          },
+          "score": -1058,
+          "pv": [
+            {
+              "type": "move",
+              "from": 1,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 1
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 7
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 1
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 8919,
+      "quiescenceNodes": 7460,
+      "stats": {
+        "cutoffs": 5439,
+        "cacheHits": 203,
+        "tableCutoffs": 86,
+        "hintHits": 455,
+        "rootResearches": 0,
+        "pvsResearches": 51,
+        "aspirationResearches": 0,
+        "historyHits": 6490,
+        "evaluations": 7413,
+        "actionGenerations": 8227,
+        "countGenerations": 784,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 8868,
+        "tableEntries": 1256,
+        "hintEntries": 918
+      }
+    },
+    {
+      "id": "white__20261801__4",
+      "millis": 34.23545899999999,
+      "action": {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 10
+      },
+      "score": -716,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 10,
+          "to": 7
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 13,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 4
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 10
+          },
+          "score": -716,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 10,
+              "to": 7
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 13,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 4
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 7458,
+      "quiescenceNodes": 6447,
+      "stats": {
+        "cutoffs": 4333,
+        "cacheHits": 176,
+        "tableCutoffs": 64,
+        "hintHits": 142,
+        "rootResearches": 0,
+        "pvsResearches": 73,
+        "aspirationResearches": 0,
+        "historyHits": 2704,
+        "evaluations": 6337,
+        "actionGenerations": 6642,
+        "countGenerations": 1043,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 7385,
+        "tableEntries": 820,
+        "hintEntries": 790
+      }
+    },
+    {
+      "id": "white__20261801__5",
+      "millis": 64.69229199999995,
+      "action": {
+        "type": "drop",
+        "piece": "knight",
+        "to": 11
+      },
+      "score": -1092,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 11
+        },
+        {
+          "type": "move",
+          "from": 5,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 9,
+          "to": 7
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "knight",
+            "to": 11
+          },
+          "score": -1092,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 11
+            },
+            {
+              "type": "move",
+              "from": 5,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 10
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 9,
+              "to": 7
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 14185,
+      "quiescenceNodes": 12752,
+      "stats": {
+        "cutoffs": 8272,
+        "cacheHits": 287,
+        "tableCutoffs": 140,
+        "hintHits": 307,
+        "rootResearches": 0,
+        "pvsResearches": 77,
+        "aspirationResearches": 0,
+        "historyHits": 4723,
+        "evaluations": 12577,
+        "actionGenerations": 11831,
+        "countGenerations": 2479,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 14108,
+        "tableEntries": 1137,
+        "hintEntries": 977
+      }
+    },
+    {
+      "id": "white__20261801__6",
+      "millis": 8.55920900000001,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 0
+      },
+      "score": -1042,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 0
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 10
+        },
+        {
+          "type": "move",
+          "from": 0,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 4
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 0
+          },
+          "score": -1042,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 0
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 10
+            },
+            {
+              "type": "move",
+              "from": 0,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "bishop",
+              "to": 4
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 1458,
+      "quiescenceNodes": 1109,
+      "stats": {
+        "cutoffs": 867,
+        "cacheHits": 42,
+        "tableCutoffs": 27,
+        "hintHits": 32,
+        "rootResearches": 0,
+        "pvsResearches": 12,
+        "aspirationResearches": 0,
+        "historyHits": 1661,
+        "evaluations": 1094,
+        "actionGenerations": 1412,
+        "countGenerations": 51,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 1446,
+        "tableEntries": 305,
+        "hintEntries": 288
+      }
+    },
+    {
+      "id": "white__20261801__7",
+      "millis": 20.176333,
+      "action": {
+        "type": "move",
+        "from": 12,
+        "to": 8
+      },
+      "score": -1090,
+      "pv": [
+        {
+          "type": "move",
+          "from": 12,
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 6,
+          "to": 9
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 1,
+          "to": 9
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 12
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          "score": -1090,
+          "pv": [
+            {
+              "type": "move",
+              "from": 12,
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 9
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 1,
+              "to": 9
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 12
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 4250,
+      "quiescenceNodes": 3529,
+      "stats": {
+        "cutoffs": 2614,
+        "cacheHits": 128,
+        "tableCutoffs": 82,
+        "hintHits": 201,
+        "rootResearches": 0,
+        "pvsResearches": 27,
+        "aspirationResearches": 0,
+        "historyHits": 1809,
+        "evaluations": 3473,
+        "actionGenerations": 3905,
+        "countGenerations": 385,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 4223,
+        "tableEntries": 592,
+        "hintEntries": 437
+      }
+    },
+    {
+      "id": "white__20261801__8",
+      "millis": 45.22466600000007,
+      "action": {
+        "type": "drop",
+        "piece": "rook",
+        "to": 4
+      },
+      "score": -1476,
+      "pv": [
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 8,
+          "to": 4
+        },
+        {
+          "type": "move",
+          "from": 14,
+          "to": 4
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 8
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 7,
+          "to": 14
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          "score": -1476,
+          "pv": [
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 8,
+              "to": 4
+            },
+            {
+              "type": "move",
+              "from": 14,
+              "to": 4
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 8
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 7,
+              "to": 14
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 10106,
+      "quiescenceNodes": 8790,
+      "stats": {
+        "cutoffs": 6070,
+        "cacheHits": 78,
+        "tableCutoffs": 39,
+        "hintHits": 369,
+        "rootResearches": 0,
+        "pvsResearches": 30,
+        "aspirationResearches": 0,
+        "historyHits": 3476,
+        "evaluations": 8680,
+        "actionGenerations": 8789,
+        "countGenerations": 1402,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 10076,
+        "tableEntries": 1221,
+        "hintEntries": 891
+      }
+    },
+    {
+      "id": "white__20261801__9",
+      "millis": 14.08670799999993,
+      "action": {
+        "type": "move",
+        "from": 9,
+        "to": 14
+      },
+      "score": -760,
+      "pv": [
+        {
+          "type": "move",
+          "from": 9,
+          "to": 14
+        },
+        {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        {
+          "type": "drop",
+          "piece": "rook",
+          "to": 12
+        },
+        {
+          "type": "drop",
+          "piece": "knight",
+          "to": 5
+        },
+        {
+          "type": "move",
+          "from": 12,
+          "to": 13
+        },
+        {
+          "type": "move",
+          "from": 4,
+          "to": 13
+        }
+      ],
+      "completedDepth": 5,
+      "stopped": false,
+      "variations": [
+        {
+          "action": {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          "score": -760,
+          "pv": [
+            {
+              "type": "move",
+              "from": 9,
+              "to": 14
+            },
+            {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            {
+              "type": "drop",
+              "piece": "rook",
+              "to": 12
+            },
+            {
+              "type": "drop",
+              "piece": "knight",
+              "to": 5
+            },
+            {
+              "type": "move",
+              "from": 12,
+              "to": 13
+            },
+            {
+              "type": "move",
+              "from": 4,
+              "to": 13
+            }
+          ]
+        }
+      ],
+      "requestedDepth": 5,
+      "nodes": 2907,
+      "quiescenceNodes": 2434,
+      "stats": {
+        "cutoffs": 1792,
+        "cacheHits": 30,
+        "tableCutoffs": 14,
+        "hintHits": 30,
+        "rootResearches": 0,
+        "pvsResearches": 7,
+        "aspirationResearches": 0,
+        "historyHits": 764,
+        "evaluations": 2354,
+        "actionGenerations": 2693,
+        "countGenerations": 219,
+        "reducedSearches": 0,
+        "reductionResearches": 0,
+        "transitions": 2900,
+        "tableEntries": 437,
+        "hintEntries": 423
+      }
+    }
+  ]
+}

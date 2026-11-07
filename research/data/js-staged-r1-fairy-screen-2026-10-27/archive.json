@@ -1,0 +1,20 @@
+{
+  "run": "js-staged-r1-fairy-screen-2026-10-27",
+  "sourceFingerprint": "2122691ea504a98efc486f5e91bb27ca7f437d19e0efcc8afa349832d2c25397",
+  "games": 32,
+  "archiveBytes": 1565297,
+  "archiveSha256": "b79d6b81a4d1a258000a4648bdd9ead4906b3410ea116e5288300c1e1001da74",
+  "parts": [
+    {
+      "path": "js-staged-r1-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "eb81de96ee63e71c0738620d7f8e3081364d9cdb8a335fb286be6b3a78f20adf"
+    },
+    {
+      "path": "js-staged-r1-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 516721,
+      "sha256": "0aee3a980d4110a88eb342c4a16b45d6c474372267ea6cd447cc26c68e647fbb"
+    }
+  ],
+  "restore": "cat js-staged-r1-fairy-screen-2026-10-27.tar.gz.part* > js-staged-r1-fairy-screen-2026-10-27.tar.gz; tar -xzf js-staged-r1-fairy-screen-2026-10-27.tar.gz"
+}

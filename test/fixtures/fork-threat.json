@@ -1,0 +1,89 @@
+{
+  "board": [
+    null,
+    {
+      "owner": "black",
+      "piece": "king"
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "owner": "black",
+      "piece": "bishop"
+    },
+    null,
+    {
+      "owner": "white",
+      "piece": "king"
+    },
+    null,
+    null,
+    null,
+    null,
+    {
+      "owner": "white",
+      "piece": "knight"
+    },
+    null
+  ],
+  "banks": {
+    "white": [
+      "knight",
+      "rook"
+    ],
+    "black": [
+      "bishop",
+      "rook"
+    ]
+  },
+  "turn": "black",
+  "phase": "play",
+  "repetitions": {
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------------------wK--|BNR|BNR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB--------wK--|NR|BNR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB--------wK--|NR|BR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN--------wR--wB--------wK--|N|BR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------wR--bN--------wK--|N|BBR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----------wR--wK------------|NN|BBR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB--------wR--wK------------|NN|BR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbBwR----------wK------------|NN|BR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbBwR------bR--wK------------|NN|B": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB--------wR--wK------------|NNR|B": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----------bB--wK------------|NNR|BR": 1,
+    "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----------bB--wK--------wN--|NR|BR": 1
+  },
+  "rules": {
+    "allowCheckingDrops": false,
+    "experiment": "capture-bank",
+    "bankCapacity": 6
+  },
+  "research": {
+    "checkingDrops": {
+      "white": 0,
+      "black": 0
+    },
+    "lastCheckingDrop": {
+      "white": false,
+      "black": false
+    },
+    "turns": {
+      "white": 3,
+      "black": 3
+    },
+    "deployed": {
+      "white": [
+        "bishop",
+        "knight",
+        "rook"
+      ],
+      "black": [
+        "bishop",
+        "knight",
+        "rook"
+      ]
+    }
+  }
+}

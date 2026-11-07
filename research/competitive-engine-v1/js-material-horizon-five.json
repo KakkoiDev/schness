@@ -1,0 +1,705 @@
+{
+  "purpose": "Three explicitly selected neutral-score large material-gap snapshots from prior outcome-inclusive audit. Frozen independent exhaustive5ply root material minimax,20000nodes200ms shared perposition; terminalwin/loss\u00b11000000/draw0; board plus actual bank ownership, deploymentneutral, no deploymentbonus/exposure/mobility. Actual capture/overflow transfers from frozenrules. Completeonly gap conclusions. Production100ms q4check/evasion2/LMR decision is a different horizon/evaluation; finite material gaps are not mistakes/strength/calibration proof. No coefficient tuning justified.",
+  "hashes": {
+    "research/competitive-engine-v1/js-broad-tactical-corpus.json": "23eb2590b4abcb1caa48d54706cc095c50739cd6fe81b5087d96417506aca8e4",
+    "src/search.js": "abee4713c1a43f527a302f4a30d845b2b82348e8d0c7715f9b394425db31ebb7",
+    "src/bot.js": "e415801d0057f47164085c98a54188f71d5f54d99a752d19874387f6d029a98b",
+    "src/rules.js": "b1361eb4950bcbe80e57c4c151457b9f618cff84f091b8631efe033165e44778",
+    "research/search-performance-v5/baseline-rules.js": "051abbe367f104b43b032144110304b2db55c9a27f8c9ca66f639a9033db4a66"
+  },
+  "scriptSha256": "b86c6cb0beacce130b536d9d6925dd3796205ed5cb2c4e2a2e48380b5569d0fc",
+  "summary": {
+    "cases": 3,
+    "complete": 0,
+    "finiteMaterialGaps": []
+  },
+  "cases": [
+    {
+      "id": "white__20262001__1:9",
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook",
+            "bishop"
+          ],
+          "black": [
+            "knight",
+            "knight"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------------------wK----|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------------------wN----wK----|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------bB--------wN----wK----|BR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK----wN--bB--------------wK----|BR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK----wN--bB--bR----------wK----|BR|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--------wN--bR----------wK----|BBR|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------bK--bR----------wK----|BBR|NN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--bR----------wKwB--|BR|NN": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight"
+            ],
+            "black": [
+              "bishop",
+              "rook"
+            ]
+          }
+        }
+      },
+      "outcome": {
+        "type": "win",
+        "winner": "black",
+        "reason": "checkmate"
+      },
+      "candidateColor": "white",
+      "gameSha256": "c3e2cb8f46cd32e085ef5dd0f135f29e090f3c4fecb9cafaa7f0a67a54b32a43",
+      "rootMaterial": -40,
+      "nodes": 20000,
+      "complete": false,
+      "answers": [],
+      "search": {
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 8
+        },
+        "score": 114,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 8
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 11
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          }
+        ],
+        "completedDepth": 5,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 8
+            },
+            "score": 114,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 8
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 11
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 7
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 25793,
+        "quiescenceNodes": 22625,
+        "stats": {
+          "cutoffs": 15684,
+          "cacheHits": 570,
+          "tableCutoffs": 432,
+          "hintHits": 906,
+          "rootResearches": 0,
+          "pvsResearches": 55,
+          "aspirationResearches": 2,
+          "historyHits": 13266,
+          "evaluations": 9264,
+          "actionGenerations": 22576,
+          "countGenerations": 3931,
+          "reducedSearches": 257,
+          "reductionResearches": 2,
+          "protectedReductions": 0,
+          "transitions": 25737,
+          "tableEntries": 2585,
+          "hintEntries": 1820
+        }
+      },
+      "bestMaterial": null,
+      "chosenMaterial": null,
+      "gap": null
+    },
+    {
+      "id": "white__20262001__14:13",
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "knight"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "bishop"
+          }
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "knight"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--------------------wK--|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK----------wN--------wK--|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bKbB--------wN--------wK--|BR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bKbBwR------wN--------wK--|B|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--wR------bB--------wK--|B|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|------bK--wR------wK------------|BB|NNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK--wR------wK--bN--------|BB|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR--bK----------wK--bN--------|BB|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wRbRbK----------wK--bN--------|BB|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wRbRbKwB--------wK--bN--------|B|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wRbR--wB----bK--wK--bN--------|B|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wRbR--wB----bK--wK--bN------wB||N": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      },
+      "outcome": {
+        "type": "win",
+        "winner": "black",
+        "reason": "checkmate"
+      },
+      "candidateColor": "white",
+      "gameSha256": "1353461002338159260dc733cc8f600fd07854368e3dbcc5724543237f6a7f55",
+      "rootMaterial": -40,
+      "nodes": 20000,
+      "complete": false,
+      "answers": [
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          "value": 360,
+          "pv": [
+            {
+              "type": "move",
+              "from": 1,
+              "to": 0
+            },
+            {
+              "type": "move",
+              "from": 11,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 0,
+              "to": 2
+            },
+            {
+              "type": "move",
+              "from": 6,
+              "to": 2
+            }
+          ]
+        },
+        {
+          "action": {
+            "type": "move",
+            "from": 2,
+            "to": 10
+          },
+          "value": -1000000,
+          "pv": [
+            {
+              "type": "move",
+              "from": 15,
+              "to": 10
+            }
+          ]
+        }
+      ],
+      "search": {
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 10
+        },
+        "score": 42,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 9
+          }
+        ],
+        "completedDepth": 6,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 10
+            },
+            "score": 42,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 12
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 9
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 26062,
+        "quiescenceNodes": 22019,
+        "stats": {
+          "cutoffs": 16137,
+          "cacheHits": 539,
+          "tableCutoffs": 424,
+          "hintHits": 1434,
+          "rootResearches": 0,
+          "pvsResearches": 42,
+          "aspirationResearches": 3,
+          "historyHits": 15792,
+          "evaluations": 9288,
+          "actionGenerations": 23106,
+          "countGenerations": 3885,
+          "reducedSearches": 363,
+          "reductionResearches": 4,
+          "protectedReductions": 0,
+          "transitions": 26017,
+          "tableEntries": 3484,
+          "hintEntries": 2166
+        }
+      },
+      "bestMaterial": null,
+      "chosenMaterial": null,
+      "gap": null
+    },
+    {
+      "id": "white__20262001__9:15",
+      "position": {
+        "board": [
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "bishop"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "bishop"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": [
+            "knight"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------------------wK----|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wB----wK----|NR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----bB--------wB----wK----|NR|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----bB--------wB--wNwK----|R|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------------bB--wNwK----|R|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wN----wK----|BR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR----wN----wK----|BR|BN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bR--wBwN----wK----|R|BN": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----bB--bR--wBwN----wK----|R|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wNbB--bR--wB------wK----|R|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wNbB--bR--wB------wK----|R|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------bB--bR--wBwN----wK----|R|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--------bB--bR--wBwN----wK----|R|N": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK----wN--bB--bR--wB------wK----|R|N": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight"
+            ],
+            "black": [
+              "bishop",
+              "rook"
+            ]
+          }
+        }
+      },
+      "outcome": {
+        "type": "win",
+        "winner": "black",
+        "reason": "checkmate"
+      },
+      "candidateColor": "white",
+      "gameSha256": "ac80ad974abf577600ce0af3635a778c68372f504fd0903f5cc4b6954b822b90",
+      "rootMaterial": 0,
+      "nodes": 20000,
+      "complete": false,
+      "answers": [],
+      "search": {
+        "action": {
+          "type": "drop",
+          "piece": "knight",
+          "to": 2
+        },
+        "score": 181,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "knight",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          }
+        ],
+        "completedDepth": 6,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "knight",
+              "to": 2
+            },
+            "score": 181,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "knight",
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 15
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 14
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 27944,
+        "quiescenceNodes": 23863,
+        "stats": {
+          "cutoffs": 16871,
+          "cacheHits": 525,
+          "tableCutoffs": 428,
+          "hintHits": 1385,
+          "rootResearches": 0,
+          "pvsResearches": 30,
+          "aspirationResearches": 2,
+          "historyHits": 16598,
+          "evaluations": 9828,
+          "actionGenerations": 24571,
+          "countGenerations": 4119,
+          "reducedSearches": 377,
+          "reductionResearches": 5,
+          "protectedReductions": 0,
+          "transitions": 27910,
+          "tableEntries": 3540,
+          "hintEntries": 2256
+        }
+      },
+      "bestMaterial": null,
+      "chosenMaterial": null,
+      "gap": null
+    }
+  ],
+  "validationLog": "{\"cases\":3,\"complete\":0,\"finiteMaterialGaps\":[]}\n",
+  "decision": "All3hit20000nodecap before complete action sets; no deeper gap/sacrifice conclusion; no cap increase or candidate justified. Stop this material-horizon family."
+}

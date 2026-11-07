@@ -1,0 +1,20 @@
+{
+  "run": "competitive-r4-fairy-screen-2026-10-26",
+  "sourceFingerprint": "02737370b4a7b2043905f9c2bd973df2117783600bcf1507fe6d7b0107fafa19",
+  "games": 32,
+  "archiveBytes": 1569194,
+  "archiveSha256": "86f5459ade0c8841a11e48e9027bfc8bbe68a26fc0848abbd875c4234eb5adb9",
+  "parts": [
+    {
+      "path": "competitive-r4-fairy-screen-2026-10-26.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "df26fc58da0c7222bb0edacf29a3a316233a8fddfe901811a8a97514cb98c766"
+    },
+    {
+      "path": "competitive-r4-fairy-screen-2026-10-26.tar.gz.part002",
+      "bytes": 520618,
+      "sha256": "77722a6eca2c1ca441019583a2c2e93ba9abd11a9c200a1ff5c98757c6968318"
+    }
+  ],
+  "restore": "cat competitive-r4-fairy-screen-2026-10-26.tar.gz.part* > competitive-r4-fairy-screen-2026-10-26.tar.gz; tar -xzf competitive-r4-fairy-screen-2026-10-26.tar.gz"
+}

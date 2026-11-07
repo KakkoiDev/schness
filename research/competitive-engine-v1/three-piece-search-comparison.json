@@ -1,0 +1,6769 @@
+{
+  "purpose": "One preregistered32root100ms comparison plus8 terminal controls. Freshhistory only; synthetic outcomes not game wins or strength. Rank/shorter-mate changes in losing roots are not saves. No reruns or candidate.",
+  "options": {
+    "profile": "competitive",
+    "depth": 20,
+    "maxMillis": 100,
+    "quiescenceDepth": 4,
+    "quiescenceChecks": true,
+    "quiescenceEvasionDepth": 2,
+    "lateMoveReduction": true,
+    "cacheEvaluation": true,
+    "cacheQuiescence": false,
+    "reduceQuietDrops": false,
+    "reducePrincipalVariation": true,
+    "rootTiePriority": false,
+    "kingEscapeGeometry": false,
+    "rootPrincipalVariation": false,
+    "forkThreatEvasions": false,
+    "exchangeOrdering": false,
+    "stagedOrdering": false,
+    "reserveThreatEvaluation": false,
+    "protectHistoryMoves": false,
+    "stopOnProvenWin": false
+  },
+  "hashes": {
+    "research/competitive-engine-v1/three-piece-retrograde.json": "23590db7701b6facc13a2db1a2242d7ece9173738124b55799d69a92042bf66c",
+    "research/competitive-engine-v1/three-piece-search-plan-2026-10-28.md": "3ebda04bab3173517998c9b842f55226eff79a1b407a399c635aa5296af421aa",
+    "src/bot.js": "e415801d0057f47164085c98a54188f71d5f54d99a752d19874387f6d029a98b",
+    "src/search.js": "adaef00705aac920389bddc96ff7e5a857831ccbc592a20e228c4fc1d83cc1ed",
+    "src/rules.js": "b1361eb4950bcbe80e57c4c151457b9f618cff84f091b8631efe033165e44778"
+  },
+  "script": "/** Execute the published deterministic32-root plan once. */\nimport {readFile,writeFile} from 'node:fs/promises';import {createHash} from 'node:crypto';import assert from 'node:assert/strict';import {performance} from 'node:perf_hooks';import {analyzeAction} from '../../src/bot.js';import * as r from '../../src/rules.js';import * as f from '../search-performance-v5/baseline-rules.js';\nconst source='research/competitive-engine-v1/three-piece-retrograde.json',bytes=await readFile(source),g=JSON.parse(bytes),selected=[],strata=[];assert(g.summary.complete);for(const turn of ['white','black'])for(const location of ['board','bank'])for(const outcome of ['win','loss']){const ids=g.states.flatMap((s,i)=>!s.result&&s.position.turn===turn&&(s.descriptor.loc===16?'bank':'board')===location&&(g.certificates.winner[i]===turn?'win':'loss')===outcome?[i]:[]);const picks=[0,1,2,3].map(k=>ids[Math.floor((k+.5)*ids.length/4)]);assert(ids.length>=4&&new Set(picks).size===4);strata.push({turn,location,outcome,count:ids.length,picks});selected.push(...picks);}\nconst options={profile:'competitive',depth:20,maxMillis:100,quiescenceDepth:4,quiescenceChecks:true,quiescenceEvasionDepth:2,lateMoveReduction:true,cacheEvaluation:true,cacheQuiescence:false,reduceQuietDrops:false,reducePrincipalVariation:true,rootTiePriority:false,kingEscapeGeometry:false,rootPrincipalVariation:false,forkThreatEvasions:false,exchangeOrdering:false,stagedOrdering:false,reserveThreatEvaluation:false,protectHistoryMoves:false,stopOnProvenWin:false};const rows=[];\nfor(const index of selected){const s=g.states[index],before=JSON.stringify(s.position),start=performance.now(),search=analyzeAction(s.position,options),elapsed=performance.now()-start;assert.equal(JSON.stringify(s.position),before);const edge=s.edges.find(e=>r.actionKey(e.action)===r.actionKey(search.action));assert(edge);let p=s.position;for(const a of search.pv){assert(f.legalActions(p).some(x=>f.actionKey(x)===f.actionKey(a)));const next=r.applyAction(p,a),fnext=f.applyLegalAction(p,a);assert.equal(r.positionKey(next),f.positionKey(fnext));p=next;}const winner=g.certificates.winner[index],nextWinner=g.certificates.winner[edge.to];rows.push({index,position:s.position,winner,rank:g.certificates.rank[index],search,elapsed,successor:edge.to,successorWinner:nextWinner,successorRank:g.certificates.rank[edge.to],outcomeChanged:winner===s.position.turn&&nextWinner!==winner});}\nconst controls=[];for(const turn of ['white','black']){const ids=g.states.flatMap((s,i)=>s.result?.type==='draw'&&s.position.turn===turn?[i]:[]).slice(0,4);assert.equal(ids.length,4);for(const index of ids){const s=g.states[index];assert.deepEqual(r.getResult(s.position),s.result);assert.deepEqual(f.getResult(s.position),s.result);controls.push({index,position:s.position,result:s.result});}}\nconst hashes={};for(const p of [source,'research/competitive-engine-v1/three-piece-search-plan-2026-10-28.md','src/bot.js','src/search.js','src/rules.js'])hashes[p]=createHash('sha256').update(await readFile(p)).digest('hex');const summary={queries:rows.length,terminalControls:controls.length,winningRoots:rows.filter(x=>x.winner===x.position.turn).length,outcomeChanged:rows.filter(x=>x.outcomeChanged).map(x=>x.index),nodes:rows.reduce((n,x)=>n+x.search.nodes,0),meanDepth:rows.reduce((n,x)=>n+x.search.completedDepth,0)/rows.length};await writeFile('research/competitive-engine-v1/three-piece-search-comparison.json',JSON.stringify({purpose:'One preregistered32root100ms comparison plus8 terminal controls. Freshhistory only; synthetic outcomes not game wins or strength. Rank/shorter-mate changes in losing roots are not saves. No reruns or candidate.',options,hashes,script:await readFile(new URL(import.meta.url),'utf8'),strata,selected,rows,controls,summary},null,2)+'\\n');console.log(JSON.stringify(summary));\n",
+  "strata": [
+    {
+      "turn": "white",
+      "location": "board",
+      "outcome": "win",
+      "count": 1888,
+      "picks": [
+        1026,
+        2934,
+        4681,
+        6593
+      ]
+    },
+    {
+      "turn": "white",
+      "location": "board",
+      "outcome": "loss",
+      "count": 1532,
+      "picks": [
+        914,
+        2777,
+        4859,
+        6722
+      ]
+    },
+    {
+      "turn": "white",
+      "location": "bank",
+      "outcome": "win",
+      "count": 156,
+      "picks": [
+        951,
+        2855,
+        4758,
+        6661
+      ]
+    },
+    {
+      "turn": "white",
+      "location": "bank",
+      "outcome": "loss",
+      "count": 156,
+      "picks": [
+        976,
+        2880,
+        4783,
+        6686
+      ]
+    },
+    {
+      "turn": "black",
+      "location": "board",
+      "outcome": "win",
+      "count": 1888,
+      "picks": [
+        918,
+        2780,
+        4835,
+        6715
+      ]
+    },
+    {
+      "turn": "black",
+      "location": "board",
+      "outcome": "loss",
+      "count": 1532,
+      "picks": [
+        979,
+        2886,
+        4703,
+        6611
+      ]
+    },
+    {
+      "turn": "black",
+      "location": "bank",
+      "outcome": "win",
+      "count": 156,
+      "picks": [
+        977,
+        2881,
+        4784,
+        6687
+      ]
+    },
+    {
+      "turn": "black",
+      "location": "bank",
+      "outcome": "loss",
+      "count": 156,
+      "picks": [
+        952,
+        2856,
+        4759,
+        6662
+      ]
+    }
+  ],
+  "selected": [
+    1026,
+    2934,
+    4681,
+    6593,
+    914,
+    2777,
+    4859,
+    6722,
+    951,
+    2855,
+    4758,
+    6661,
+    976,
+    2880,
+    4783,
+    6686,
+    918,
+    2780,
+    4835,
+    6715,
+    979,
+    2886,
+    4703,
+    6611,
+    977,
+    2881,
+    4784,
+    6687,
+    952,
+    2856,
+    4759,
+    6662
+  ],
+  "rows": [
+    {
+      "index": 1026,
+      "position": {
+        "board": [
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          }
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wRwK--------------------------bK||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 3,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        "score": 1000006,
+        "pv": [
+          {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 12
+          }
+        ],
+        "completedDepth": 9,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            "score": 1000006,
+            "pv": [
+              {
+                "type": "move",
+                "from": 1,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 0,
+                "to": 12
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 36973,
+        "quiescenceNodes": 29635,
+        "stats": {
+          "cutoffs": 20533,
+          "cacheHits": 833,
+          "tableCutoffs": 829,
+          "hintHits": 5406,
+          "rootResearches": 0,
+          "pvsResearches": 0,
+          "aspirationResearches": 3,
+          "historyHits": 10801,
+          "evaluations": 1339,
+          "actionGenerations": 32134,
+          "countGenerations": 5621,
+          "reducedSearches": 1549,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 36974,
+          "tableEntries": 6420,
+          "hintEntries": 1022
+        }
+      },
+      "elapsed": 99.51754199999999,
+      "successor": 3273,
+      "successorWinner": "white",
+      "successorRank": 2,
+      "outcomeChanged": false
+    },
+    {
+      "index": 2934,
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          }
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----wR----wK------------------bK||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 3,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 5,
+          "to": 9
+        },
+        "score": 1000005,
+        "pv": [
+          {
+            "type": "move",
+            "from": 5,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          }
+        ],
+        "completedDepth": 8,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 9
+            },
+            "score": 1000005,
+            "pv": [
+              {
+                "type": "move",
+                "from": 5,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 3
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 44189,
+        "quiescenceNodes": 35470,
+        "stats": {
+          "cutoffs": 24555,
+          "cacheHits": 886,
+          "tableCutoffs": 882,
+          "hintHits": 6481,
+          "rootResearches": 0,
+          "pvsResearches": 0,
+          "aspirationResearches": 3,
+          "historyHits": 11057,
+          "evaluations": 1471,
+          "actionGenerations": 38518,
+          "countGenerations": 6548,
+          "reducedSearches": 1781,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 44190,
+          "tableEntries": 7629,
+          "hintEntries": 1155
+        }
+      },
+      "elapsed": 99.410291,
+      "successor": 4595,
+      "successorWinner": "white",
+      "successorRank": 2,
+      "outcomeChanged": false
+    },
+    {
+      "index": 4681,
+      "position": {
+        "board": [
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------------wK------bR--||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 11,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 10,
+          "to": 14
+        },
+        "score": 1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 10,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 2
+          }
+        ],
+        "completedDepth": 11,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 10,
+              "to": 14
+            },
+            "score": 1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 10,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 0,
+                "to": 5
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 0,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 2
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 36389,
+        "quiescenceNodes": 26581,
+        "stats": {
+          "cutoffs": 21041,
+          "cacheHits": 752,
+          "tableCutoffs": 688,
+          "hintHits": 7954,
+          "rootResearches": 0,
+          "pvsResearches": 28,
+          "aspirationResearches": 5,
+          "historyHits": 19586,
+          "evaluations": 1358,
+          "actionGenerations": 32870,
+          "countGenerations": 4215,
+          "reducedSearches": 1243,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 36362,
+          "tableEntries": 8988,
+          "hintEntries": 1105
+        }
+      },
+      "elapsed": 99.86479199999997,
+      "successor": 6565,
+      "successorWinner": "white",
+      "successorRank": 10,
+      "outcomeChanged": false
+    },
+    {
+      "index": 6593,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wR------------------wK--||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 11,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 9
+        },
+        "score": 1000002,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 3
+          }
+        ],
+        "completedDepth": 9,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 9
+            },
+            "score": 1000002,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 0,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 3
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 40922,
+        "quiescenceNodes": 30991,
+        "stats": {
+          "cutoffs": 23462,
+          "cacheHits": 1059,
+          "tableCutoffs": 1051,
+          "hintHits": 7810,
+          "rootResearches": 0,
+          "pvsResearches": 2,
+          "aspirationResearches": 3,
+          "historyHits": 13589,
+          "evaluations": 1310,
+          "actionGenerations": 36657,
+          "countGenerations": 5033,
+          "reducedSearches": 2043,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 40921,
+          "tableEntries": 8764,
+          "hintEntries": 967
+        }
+      },
+      "elapsed": 99.58945799999998,
+      "successor": 4348,
+      "successorWinner": "white",
+      "successorRank": 6,
+      "outcomeChanged": false
+    },
+    {
+      "index": 914,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wK------------bR------bK------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 12,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 1,
+          "to": 5
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 1,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 0
+          }
+        ],
+        "completedDepth": 11,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 1,
+              "to": 5
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 1,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 0
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 39058,
+        "quiescenceNodes": 28885,
+        "stats": {
+          "cutoffs": 22597,
+          "cacheHits": 750,
+          "tableCutoffs": 668,
+          "hintHits": 8382,
+          "rootResearches": 0,
+          "pvsResearches": 32,
+          "aspirationResearches": 4,
+          "historyHits": 26587,
+          "evaluations": 1257,
+          "actionGenerations": 35297,
+          "countGenerations": 4490,
+          "reducedSearches": 1388,
+          "reductionResearches": 5,
+          "protectedReductions": 0,
+          "transitions": 39022,
+          "tableEntries": 9337,
+          "hintEntries": 1043
+        }
+      },
+      "elapsed": 99.85375000000005,
+      "successor": 2818,
+      "successorWinner": "black",
+      "successorRank": 11,
+      "outcomeChanged": false
+    },
+    {
+      "index": 2777,
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------wK----------bK----bR--||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 12,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 5,
+          "to": 9
+        },
+        "score": -1000001,
+        "pv": [
+          {
+            "type": "move",
+            "from": 5,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          }
+        ],
+        "completedDepth": 11,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 9
+            },
+            "score": -1000001,
+            "pv": [
+              {
+                "type": "move",
+                "from": 5,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 4
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 41181,
+        "quiescenceNodes": 31314,
+        "stats": {
+          "cutoffs": 23667,
+          "cacheHits": 690,
+          "tableCutoffs": 634,
+          "hintHits": 7949,
+          "rootResearches": 0,
+          "pvsResearches": 30,
+          "aspirationResearches": 4,
+          "historyHits": 21514,
+          "evaluations": 1368,
+          "actionGenerations": 36805,
+          "countGenerations": 5205,
+          "reducedSearches": 1488,
+          "reductionResearches": 2,
+          "protectedReductions": 0,
+          "transitions": 41150,
+          "tableEntries": 9096,
+          "hintEntries": 1207
+        }
+      },
+      "elapsed": 99.83504200000004,
+      "successor": 4585,
+      "successorWinner": "black",
+      "successorRank": 11,
+      "outcomeChanged": false
+    },
+    {
+      "index": 4859,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bR----bK----------wK----------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 10,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 10,
+          "to": 6
+        },
+        "score": -1000001,
+        "pv": [
+          {
+            "type": "move",
+            "from": 10,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 11
+          }
+        ],
+        "completedDepth": 11,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 10,
+              "to": 6
+            },
+            "score": -1000001,
+            "pv": [
+              {
+                "type": "move",
+                "from": 10,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 3
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 3
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 11
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 41275,
+        "quiescenceNodes": 31336,
+        "stats": {
+          "cutoffs": 23577,
+          "cacheHits": 776,
+          "tableCutoffs": 722,
+          "hintHits": 8004,
+          "rootResearches": 0,
+          "pvsResearches": 29,
+          "aspirationResearches": 4,
+          "historyHits": 22474,
+          "evaluations": 1286,
+          "actionGenerations": 36864,
+          "countGenerations": 5235,
+          "reducedSearches": 1467,
+          "reductionResearches": 3,
+          "protectedReductions": 0,
+          "transitions": 41244,
+          "tableEntries": 9049,
+          "hintEntries": 1105
+        }
+      },
+      "elapsed": 99.82520799999998,
+      "successor": 3055,
+      "successorWinner": "black",
+      "successorRank": 9,
+      "outcomeChanged": false
+    },
+    {
+      "index": 6722,
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|------bK------bR------------wK--||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 12,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 15
+          }
+        ],
+        "completedDepth": 11,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 10
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 15
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 39325,
+        "quiescenceNodes": 29140,
+        "stats": {
+          "cutoffs": 22481,
+          "cacheHits": 645,
+          "tableCutoffs": 566,
+          "hintHits": 8516,
+          "rootResearches": 0,
+          "pvsResearches": 29,
+          "aspirationResearches": 4,
+          "historyHits": 25937,
+          "evaluations": 1221,
+          "actionGenerations": 35301,
+          "countGenerations": 4767,
+          "reducedSearches": 1357,
+          "reductionResearches": 1,
+          "protectedReductions": 0,
+          "transitions": 39296,
+          "tableEntries": 9453,
+          "hintEntries": 1024
+        }
+      },
+      "elapsed": 99.83987499999989,
+      "successor": 4820,
+      "successorWinner": "black",
+      "successorRank": 11,
+      "outcomeChanged": false
+    },
+    {
+      "index": 951,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wK----------------------bK----|R|": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 5,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 1,
+          "to": 5
+        },
+        "score": 1000003,
+        "pv": [
+          {
+            "type": "move",
+            "from": 1,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 15
+          }
+        ],
+        "completedDepth": 8,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 1,
+              "to": 5
+            },
+            "score": 1000003,
+            "pv": [
+              {
+                "type": "move",
+                "from": 1,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 12
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 15
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 48702,
+        "quiescenceNodes": 39624,
+        "stats": {
+          "cutoffs": 27272,
+          "cacheHits": 818,
+          "tableCutoffs": 804,
+          "hintHits": 6984,
+          "rootResearches": 0,
+          "pvsResearches": 7,
+          "aspirationResearches": 5,
+          "historyHits": 12171,
+          "evaluations": 1403,
+          "actionGenerations": 42114,
+          "countGenerations": 7521,
+          "reducedSearches": 1354,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 48696,
+          "tableEntries": 8045,
+          "hintEntries": 1077
+        }
+      },
+      "elapsed": 99.81849999999997,
+      "successor": 2856,
+      "successorWinner": "white",
+      "successorRank": 4,
+      "outcomeChanged": false
+    },
+    {
+      "index": 2855,
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------wK--------------bK----|R|": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 3,
+      "search": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 6
+        },
+        "score": 1000004,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 14
+          }
+        ],
+        "completedDepth": 7,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 6
+            },
+            "score": 1000004,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 14
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 48737,
+        "quiescenceNodes": 39748,
+        "stats": {
+          "cutoffs": 27741,
+          "cacheHits": 932,
+          "tableCutoffs": 931,
+          "hintHits": 6847,
+          "rootResearches": 0,
+          "pvsResearches": 0,
+          "aspirationResearches": 3,
+          "historyHits": 11687,
+          "evaluations": 1356,
+          "actionGenerations": 42715,
+          "countGenerations": 7126,
+          "reducedSearches": 1609,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 48738,
+          "tableEntries": 7859,
+          "hintEntries": 1019
+        }
+      },
+      "elapsed": 99.84695899999986,
+      "successor": 2842,
+      "successorWinner": "white",
+      "successorRank": 2,
+      "outcomeChanged": false
+    },
+    {
+      "index": 4758,
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------------wK----------|R|": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 3,
+      "search": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 9
+        },
+        "score": 1000004,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 1
+          }
+        ],
+        "completedDepth": 7,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 9
+            },
+            "score": 1000004,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 3
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 1
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 49711,
+        "quiescenceNodes": 40682,
+        "stats": {
+          "cutoffs": 28295,
+          "cacheHits": 920,
+          "tableCutoffs": 919,
+          "hintHits": 6902,
+          "rootResearches": 0,
+          "pvsResearches": 0,
+          "aspirationResearches": 3,
+          "historyHits": 11727,
+          "evaluations": 1364,
+          "actionGenerations": 43447,
+          "countGenerations": 7477,
+          "reducedSearches": 1594,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 49712,
+          "tableEntries": 7938,
+          "hintEntries": 1044
+        }
+      },
+      "elapsed": 99.85983299999998,
+      "successor": 4747,
+      "successorWinner": "white",
+      "successorRank": 2,
+      "outcomeChanged": false
+    },
+    {
+      "index": 6661,
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------------------wK--|R|": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 5,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 10
+        },
+        "score": 1000003,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 0
+          }
+        ],
+        "completedDepth": 8,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 10
+            },
+            "score": 1000003,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 3
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 0
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 49529,
+        "quiescenceNodes": 40072,
+        "stats": {
+          "cutoffs": 27664,
+          "cacheHits": 888,
+          "tableCutoffs": 872,
+          "hintHits": 7317,
+          "rootResearches": 0,
+          "pvsResearches": 7,
+          "aspirationResearches": 5,
+          "historyHits": 13771,
+          "evaluations": 1388,
+          "actionGenerations": 42963,
+          "countGenerations": 7481,
+          "reducedSearches": 1504,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 49523,
+          "tableEntries": 8364,
+          "hintEntries": 1068
+        }
+      },
+      "elapsed": 99.88420900000006,
+      "successor": 4759,
+      "successorWinner": "white",
+      "successorRank": 4,
+      "outcomeChanged": false
+    },
+    {
+      "index": 976,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "rook"
+          ]
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--wK----------------------bK----||R": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 10,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 1
+          }
+        ],
+        "completedDepth": 10,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 1,
+                "to": 6
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 3
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 3
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 1
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 40233,
+        "quiescenceNodes": 29518,
+        "stats": {
+          "cutoffs": 23332,
+          "cacheHits": 874,
+          "tableCutoffs": 797,
+          "hintHits": 8713,
+          "rootResearches": 0,
+          "pvsResearches": 46,
+          "aspirationResearches": 5,
+          "historyHits": 23631,
+          "evaluations": 1441,
+          "actionGenerations": 36455,
+          "countGenerations": 4549,
+          "reducedSearches": 1436,
+          "reductionResearches": 2,
+          "protectedReductions": 0,
+          "transitions": 40186,
+          "tableEntries": 9773,
+          "hintEntries": 1142
+        }
+      },
+      "elapsed": 99.89941699999986,
+      "successor": 3220,
+      "successorWinner": "black",
+      "successorRank": 9,
+      "outcomeChanged": false
+    },
+    {
+      "index": 2880,
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "rook"
+          ]
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----------wK--------------bK----||R": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 10,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 5,
+          "to": 6
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 5,
+            "to": 6
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 1
+          }
+        ],
+        "completedDepth": 10,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 5,
+              "to": 6
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 5,
+                "to": 6
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 3
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 3
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 1
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 40977,
+        "quiescenceNodes": 30667,
+        "stats": {
+          "cutoffs": 23610,
+          "cacheHits": 898,
+          "tableCutoffs": 817,
+          "hintHits": 8170,
+          "rootResearches": 0,
+          "pvsResearches": 29,
+          "aspirationResearches": 4,
+          "historyHits": 22865,
+          "evaluations": 1569,
+          "actionGenerations": 36786,
+          "countGenerations": 4993,
+          "reducedSearches": 1391,
+          "reductionResearches": 3,
+          "protectedReductions": 0,
+          "transitions": 40946,
+          "tableEntries": 9333,
+          "hintEntries": 1248
+        }
+      },
+      "elapsed": 99.84741600000007,
+      "successor": 3220,
+      "successorWinner": "black",
+      "successorRank": 9,
+      "outcomeChanged": false
+    },
+    {
+      "index": 4783,
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "rook"
+          ]
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------------wK----------||R": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 10,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 10,
+          "to": 9
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 14
+          }
+        ],
+        "completedDepth": 10,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 10,
+              "to": 9
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 10,
+                "to": 9
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 14
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 40963,
+        "quiescenceNodes": 30540,
+        "stats": {
+          "cutoffs": 23509,
+          "cacheHits": 857,
+          "tableCutoffs": 756,
+          "hintHits": 8398,
+          "rootResearches": 0,
+          "pvsResearches": 45,
+          "aspirationResearches": 4,
+          "historyHits": 24427,
+          "evaluations": 1390,
+          "actionGenerations": 36740,
+          "countGenerations": 4973,
+          "reducedSearches": 1345,
+          "reductionResearches": 5,
+          "protectedReductions": 0,
+          "transitions": 40914,
+          "tableEntries": 9487,
+          "hintEntries": 1197
+        }
+      },
+      "elapsed": 99.87537499999985,
+      "successor": 4442,
+      "successorWinner": "black",
+      "successorRank": 9,
+      "outcomeChanged": false
+    },
+    {
+      "index": 6686,
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "rook"
+          ]
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------------------wK--||R": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 10,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 9
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 14
+          }
+        ],
+        "completedDepth": 10,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 9
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 9
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 14
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 39574,
+        "quiescenceNodes": 28841,
+        "stats": {
+          "cutoffs": 22970,
+          "cacheHits": 808,
+          "tableCutoffs": 730,
+          "hintHits": 8810,
+          "rootResearches": 0,
+          "pvsResearches": 39,
+          "aspirationResearches": 5,
+          "historyHits": 24465,
+          "evaluations": 1372,
+          "actionGenerations": 35853,
+          "countGenerations": 4412,
+          "reducedSearches": 1338,
+          "reductionResearches": 4,
+          "protectedReductions": 0,
+          "transitions": 39532,
+          "tableEntries": 9859,
+          "hintEntries": 1132
+        }
+      },
+      "elapsed": 99.85633299999995,
+      "successor": 4442,
+      "successorWinner": "black",
+      "successorRank": 9,
+      "outcomeChanged": false
+    },
+    {
+      "index": 918,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wK----------------bR--bK------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 3,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 12,
+          "to": 9
+        },
+        "score": 1000006,
+        "pv": [
+          {
+            "type": "move",
+            "from": 12,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 2
+          }
+        ],
+        "completedDepth": 9,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 12,
+              "to": 9
+            },
+            "score": 1000006,
+            "pv": [
+              {
+                "type": "move",
+                "from": 12,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 2
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 46612,
+        "quiescenceNodes": 37359,
+        "stats": {
+          "cutoffs": 25627,
+          "cacheHits": 1037,
+          "tableCutoffs": 1036,
+          "hintHits": 7154,
+          "rootResearches": 0,
+          "pvsResearches": 0,
+          "aspirationResearches": 3,
+          "historyHits": 10285,
+          "evaluations": 1069,
+          "actionGenerations": 40436,
+          "countGenerations": 7111,
+          "reducedSearches": 1972,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 46613,
+          "tableEntries": 7907,
+          "hintEntries": 762
+        }
+      },
+      "elapsed": 99.85575000000017,
+      "successor": 770,
+      "successorWinner": "black",
+      "successorRank": 2,
+      "outcomeChanged": false
+    },
+    {
+      "index": 2780,
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          }
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------wK----------bK------bR||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 9,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 15,
+          "to": 13
+        },
+        "score": 1000001,
+        "pv": [
+          {
+            "type": "move",
+            "from": 15,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 0
+          }
+        ],
+        "completedDepth": 10,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 15,
+              "to": 13
+            },
+            "score": 1000001,
+            "pv": [
+              {
+                "type": "move",
+                "from": 15,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 0
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 40166,
+        "quiescenceNodes": 29993,
+        "stats": {
+          "cutoffs": 23028,
+          "cacheHits": 861,
+          "tableCutoffs": 830,
+          "hintHits": 8093,
+          "rootResearches": 0,
+          "pvsResearches": 12,
+          "aspirationResearches": 4,
+          "historyHits": 19195,
+          "evaluations": 1391,
+          "actionGenerations": 36047,
+          "countGenerations": 4888,
+          "reducedSearches": 1712,
+          "reductionResearches": 1,
+          "protectedReductions": 0,
+          "transitions": 40154,
+          "tableEntries": 9228,
+          "hintEntries": 1168
+        }
+      },
+      "elapsed": 99.94679100000008,
+      "successor": 2776,
+      "successorWinner": "black",
+      "successorRank": 8,
+      "outcomeChanged": false
+    },
+    {
+      "index": 4835,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wR----bK----------wK----------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 9,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 4,
+          "to": 1
+        },
+        "score": 1000001,
+        "pv": [
+          {
+            "type": "move",
+            "from": 4,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 9
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 14
+          }
+        ],
+        "completedDepth": 10,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 4,
+              "to": 1
+            },
+            "score": 1000001,
+            "pv": [
+              {
+                "type": "move",
+                "from": 4,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 9
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 14
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 43408,
+        "quiescenceNodes": 33894,
+        "stats": {
+          "cutoffs": 24789,
+          "cacheHits": 708,
+          "tableCutoffs": 620,
+          "hintHits": 7590,
+          "rootResearches": 0,
+          "pvsResearches": 30,
+          "aspirationResearches": 5,
+          "historyHits": 19048,
+          "evaluations": 1419,
+          "actionGenerations": 38411,
+          "countGenerations": 5860,
+          "reducedSearches": 1562,
+          "reductionResearches": 7,
+          "protectedReductions": 0,
+          "transitions": 43372,
+          "tableEntries": 8686,
+          "hintEntries": 1188
+        }
+      },
+      "elapsed": 99.83879100000013,
+      "successor": 4732,
+      "successorWinner": "black",
+      "successorRank": 8,
+      "outcomeChanged": false
+    },
+    {
+      "index": 6715,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bR--bK--------------------wK--||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 3,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 3,
+          "to": 6
+        },
+        "score": 1000006,
+        "pv": [
+          {
+            "type": "move",
+            "from": 3,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 13
+          }
+        ],
+        "completedDepth": 9,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 3,
+              "to": 6
+            },
+            "score": 1000006,
+            "pv": [
+              {
+                "type": "move",
+                "from": 3,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 15
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 13
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 48798,
+        "quiescenceNodes": 38980,
+        "stats": {
+          "cutoffs": 26889,
+          "cacheHits": 1226,
+          "tableCutoffs": 1225,
+          "hintHits": 7580,
+          "rootResearches": 0,
+          "pvsResearches": 0,
+          "aspirationResearches": 3,
+          "historyHits": 11393,
+          "evaluations": 1011,
+          "actionGenerations": 42366,
+          "countGenerations": 7399,
+          "reducedSearches": 2170,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 48799,
+          "tableEntries": 8255,
+          "hintEntries": 682
+        }
+      },
+      "elapsed": 99.88091700000018,
+      "successor": 6859,
+      "successorWinner": "black",
+      "successorRank": 2,
+      "outcomeChanged": false
+    },
+    {
+      "index": 979,
+      "position": {
+        "board": [
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|wRwK------------------------bK--||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 10,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 9
+        },
+        "score": -1000001,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 15
+          }
+        ],
+        "completedDepth": 11,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 9
+            },
+            "score": -1000001,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 0,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 3
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 15
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 36958,
+        "quiescenceNodes": 25908,
+        "stats": {
+          "cutoffs": 21600,
+          "cacheHits": 742,
+          "tableCutoffs": 644,
+          "hintHits": 9473,
+          "rootResearches": 0,
+          "pvsResearches": 32,
+          "aspirationResearches": 5,
+          "historyHits": 26032,
+          "evaluations": 1075,
+          "actionGenerations": 33870,
+          "countGenerations": 3632,
+          "reducedSearches": 1461,
+          "reductionResearches": 4,
+          "protectedReductions": 0,
+          "transitions": 36923,
+          "tableEntries": 10187,
+          "hintEntries": 819
+        }
+      },
+      "elapsed": 99.95266600000014,
+      "successor": 733,
+      "successorWinner": "white",
+      "successorRank": 9,
+      "outcomeChanged": false
+    },
+    {
+      "index": 2886,
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----wR----wK----------------bK--||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 6,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 14,
+          "to": 11
+        },
+        "score": -1000004,
+        "pv": [
+          {
+            "type": "move",
+            "from": 14,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 3
+          }
+        ],
+        "completedDepth": 10,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 14,
+              "to": 11
+            },
+            "score": -1000004,
+            "pv": [
+              {
+                "type": "move",
+                "from": 14,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 3
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 44628,
+        "quiescenceNodes": 34519,
+        "stats": {
+          "cutoffs": 25280,
+          "cacheHits": 1090,
+          "tableCutoffs": 1084,
+          "hintHits": 7745,
+          "rootResearches": 0,
+          "pvsResearches": 3,
+          "aspirationResearches": 3,
+          "historyHits": 13509,
+          "evaluations": 1369,
+          "actionGenerations": 39677,
+          "countGenerations": 5720,
+          "reducedSearches": 2055,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 44626,
+          "tableEntries": 8829,
+          "hintEntries": 1097
+        }
+      },
+      "elapsed": 99.88783400000011,
+      "successor": 2739,
+      "successorWinner": "white",
+      "successorRank": 5,
+      "outcomeChanged": false
+    },
+    {
+      "index": 4703,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----------------wK----wR----||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 6,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 1,
+          "to": 4
+        },
+        "score": -1000004,
+        "pv": [
+          {
+            "type": "move",
+            "from": 1,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 8
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 12
+          }
+        ],
+        "completedDepth": 10,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 1,
+              "to": 4
+            },
+            "score": -1000004,
+            "pv": [
+              {
+                "type": "move",
+                "from": 1,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 8
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 8,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 12
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 44558,
+        "quiescenceNodes": 34449,
+        "stats": {
+          "cutoffs": 25204,
+          "cacheHits": 1096,
+          "tableCutoffs": 1090,
+          "hintHits": 7683,
+          "rootResearches": 0,
+          "pvsResearches": 4,
+          "aspirationResearches": 3,
+          "historyHits": 13256,
+          "evaluations": 1424,
+          "actionGenerations": 39585,
+          "countGenerations": 5768,
+          "reducedSearches": 2067,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 44555,
+          "tableEntries": 8809,
+          "hintEntries": 1139
+        }
+      },
+      "elapsed": 99.92124999999987,
+      "successor": 4849,
+      "successorWinner": "white",
+      "successorRank": 5,
+      "outcomeChanged": false
+    },
+    {
+      "index": 6611,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          {
+            "owner": "white",
+            "piece": "rook"
+          }
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------------------wKwR||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 12,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 1,
+          "to": 6
+        },
+        "score": -1000001,
+        "pv": [
+          {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 0
+          }
+        ],
+        "completedDepth": 11,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 1,
+              "to": 6
+            },
+            "score": -1000001,
+            "pv": [
+              {
+                "type": "move",
+                "from": 1,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 0
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 37308,
+        "quiescenceNodes": 26174,
+        "stats": {
+          "cutoffs": 21818,
+          "cacheHits": 738,
+          "tableCutoffs": 654,
+          "hintHits": 9573,
+          "rootResearches": 0,
+          "pvsResearches": 32,
+          "aspirationResearches": 5,
+          "historyHits": 26362,
+          "evaluations": 1060,
+          "actionGenerations": 34225,
+          "countGenerations": 3616,
+          "reducedSearches": 1471,
+          "reductionResearches": 4,
+          "protectedReductions": 0,
+          "transitions": 37273,
+          "tableEntries": 10270,
+          "hintEntries": 788
+        }
+      },
+      "elapsed": 99.92699999999968,
+      "successor": 6853,
+      "successorWinner": "white",
+      "successorRank": 9,
+      "outcomeChanged": false
+    },
+    {
+      "index": 977,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "rook"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wK----------------------bK----||R": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 5,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 13,
+          "to": 9
+        },
+        "score": 1000003,
+        "pv": [
+          {
+            "type": "move",
+            "from": 13,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 3
+          }
+        ],
+        "completedDepth": 8,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 13,
+              "to": 9
+            },
+            "score": 1000003,
+            "pv": [
+              {
+                "type": "move",
+                "from": 13,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 0
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 0,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 3
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 49488,
+        "quiescenceNodes": 40153,
+        "stats": {
+          "cutoffs": 27586,
+          "cacheHits": 873,
+          "tableCutoffs": 857,
+          "hintHits": 7163,
+          "rootResearches": 0,
+          "pvsResearches": 7,
+          "aspirationResearches": 5,
+          "historyHits": 13686,
+          "evaluations": 1452,
+          "actionGenerations": 42835,
+          "countGenerations": 7591,
+          "reducedSearches": 1478,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 49482,
+          "tableEntries": 8255,
+          "hintEntries": 1112
+        }
+      },
+      "elapsed": 99.88454200000024,
+      "successor": 782,
+      "successorWinner": "black",
+      "successorRank": 4,
+      "outcomeChanged": false
+    },
+    {
+      "index": 2881,
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "rook"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------wK--------------bK----||R": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 7,
+      "search": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 14
+        },
+        "score": 1000001,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 13,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 12
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 0
+          }
+        ],
+        "completedDepth": 8,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 14
+            },
+            "score": 1000001,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 13,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 12
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 0
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 47256,
+        "quiescenceNodes": 37473,
+        "stats": {
+          "cutoffs": 26938,
+          "cacheHits": 907,
+          "tableCutoffs": 876,
+          "hintHits": 7943,
+          "rootResearches": 0,
+          "pvsResearches": 16,
+          "aspirationResearches": 4,
+          "historyHits": 16197,
+          "evaluations": 1069,
+          "actionGenerations": 41374,
+          "countGenerations": 6906,
+          "reducedSearches": 1681,
+          "reductionResearches": 1,
+          "protectedReductions": 0,
+          "transitions": 47240,
+          "tableEntries": 8772,
+          "hintEntries": 867
+        }
+      },
+      "elapsed": 99.98516700000027,
+      "successor": 2876,
+      "successorWinner": "black",
+      "successorRank": 6,
+      "outcomeChanged": false
+    },
+    {
+      "index": 4784,
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "rook"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----------||R": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 7,
+      "search": {
+        "action": {
+          "type": "drop",
+          "piece": "rook",
+          "to": 1
+        },
+        "score": 1000002,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 3
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 15
+          }
+        ],
+        "completedDepth": 9,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "drop",
+              "piece": "rook",
+              "to": 1
+            },
+            "score": 1000002,
+            "pv": [
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 3
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 15
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 45257,
+        "quiescenceNodes": 35062,
+        "stats": {
+          "cutoffs": 25951,
+          "cacheHits": 945,
+          "tableCutoffs": 914,
+          "hintHits": 8109,
+          "rootResearches": 0,
+          "pvsResearches": 17,
+          "aspirationResearches": 4,
+          "historyHits": 16463,
+          "evaluations": 1341,
+          "actionGenerations": 40227,
+          "countGenerations": 6025,
+          "reducedSearches": 1732,
+          "reductionResearches": 2,
+          "protectedReductions": 0,
+          "transitions": 45239,
+          "tableEntries": 9141,
+          "hintEntries": 1069
+        }
+      },
+      "elapsed": 99.8181669999999,
+      "successor": 4762,
+      "successorWinner": "black",
+      "successorRank": 6,
+      "outcomeChanged": false
+    },
+    {
+      "index": 6687,
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": [
+            "rook"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------------------wK--||R": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "black",
+      "rank": 5,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 2,
+          "to": 6
+        },
+        "score": 1000003,
+        "pv": [
+          {
+            "type": "move",
+            "from": 2,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 15
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 12
+          }
+        ],
+        "completedDepth": 8,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 2,
+              "to": 6
+            },
+            "score": 1000003,
+            "pv": [
+              {
+                "type": "move",
+                "from": 2,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 15
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 12
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 49962,
+        "quiescenceNodes": 40647,
+        "stats": {
+          "cutoffs": 27923,
+          "cacheHits": 863,
+          "tableCutoffs": 849,
+          "hintHits": 7176,
+          "rootResearches": 0,
+          "pvsResearches": 7,
+          "aspirationResearches": 5,
+          "historyHits": 12372,
+          "evaluations": 1384,
+          "actionGenerations": 43265,
+          "countGenerations": 7658,
+          "reducedSearches": 1409,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 49956,
+          "tableEntries": 8214,
+          "hintEntries": 1056
+        }
+      },
+      "elapsed": 99.89708400000018,
+      "successor": 6881,
+      "successorWinner": "black",
+      "successorRank": 4,
+      "outcomeChanged": false
+    },
+    {
+      "index": 952,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wK----------------------bK----|R|": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 10,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 13,
+          "to": 10
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 13,
+            "to": 10
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 11
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 15,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 15
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 13
+          }
+        ],
+        "completedDepth": 10,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 13,
+              "to": 10
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 13,
+                "to": 10
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 11
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 15
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 15,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 15
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 13
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 39287,
+        "quiescenceNodes": 28926,
+        "stats": {
+          "cutoffs": 22698,
+          "cacheHits": 781,
+          "tableCutoffs": 702,
+          "hintHits": 8459,
+          "rootResearches": 0,
+          "pvsResearches": 40,
+          "aspirationResearches": 5,
+          "historyHits": 24339,
+          "evaluations": 1383,
+          "actionGenerations": 35511,
+          "countGenerations": 4483,
+          "reducedSearches": 1291,
+          "reductionResearches": 4,
+          "protectedReductions": 0,
+          "transitions": 39244,
+          "tableEntries": 9510,
+          "hintEntries": 1137
+        }
+      },
+      "elapsed": 99.92291699999987,
+      "successor": 806,
+      "successorWinner": "white",
+      "successorRank": 9,
+      "outcomeChanged": false
+    },
+    {
+      "index": 2856,
+      "position": {
+        "board": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------wK--------------bK----|R|": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 4,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 13,
+          "to": 12
+        },
+        "score": -1000005,
+        "pv": [
+          {
+            "type": "move",
+            "from": 13,
+            "to": 12
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 7
+          },
+          {
+            "type": "move",
+            "from": 12,
+            "to": 13
+          },
+          {
+            "type": "move",
+            "from": 7,
+            "to": 15
+          }
+        ],
+        "completedDepth": 9,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 13,
+              "to": 12
+            },
+            "score": -1000005,
+            "pv": [
+              {
+                "type": "move",
+                "from": 13,
+                "to": 12
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 7
+              },
+              {
+                "type": "move",
+                "from": 12,
+                "to": 13
+              },
+              {
+                "type": "move",
+                "from": 7,
+                "to": 15
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 50062,
+        "quiescenceNodes": 41142,
+        "stats": {
+          "cutoffs": 27971,
+          "cacheHits": 1066,
+          "tableCutoffs": 1061,
+          "hintHits": 6554,
+          "rootResearches": 0,
+          "pvsResearches": 3,
+          "aspirationResearches": 4,
+          "historyHits": 10764,
+          "evaluations": 1403,
+          "actionGenerations": 43149,
+          "countGenerations": 7943,
+          "reducedSearches": 1695,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 50060,
+          "tableEntries": 7564,
+          "hintEntries": 1021
+        }
+      },
+      "elapsed": 99.88500000000022,
+      "successor": 2805,
+      "successorWinner": "white",
+      "successorRank": 3,
+      "outcomeChanged": false
+    },
+    {
+      "index": 4759,
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----------|R|": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 4,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 2,
+          "to": 3
+        },
+        "score": -1000005,
+        "pv": [
+          {
+            "type": "move",
+            "from": 2,
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 3,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 0
+          }
+        ],
+        "completedDepth": 9,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 2,
+              "to": 3
+            },
+            "score": -1000005,
+            "pv": [
+              {
+                "type": "move",
+                "from": 2,
+                "to": 3
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 3,
+                "to": 2
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 0
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 49277,
+        "quiescenceNodes": 40189,
+        "stats": {
+          "cutoffs": 27950,
+          "cacheHits": 981,
+          "tableCutoffs": 974,
+          "hintHits": 6727,
+          "rootResearches": 0,
+          "pvsResearches": 2,
+          "aspirationResearches": 4,
+          "historyHits": 11050,
+          "evaluations": 1479,
+          "actionGenerations": 43023,
+          "countGenerations": 7555,
+          "reducedSearches": 1824,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 49276,
+          "tableEntries": 7851,
+          "hintEntries": 1136
+        }
+      },
+      "elapsed": 99.93066700000008,
+      "successor": 4807,
+      "successorWinner": "white",
+      "successorRank": 3,
+      "outcomeChanged": false
+    },
+    {
+      "index": 6662,
+      "position": {
+        "board": [
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------------------wK--|R|": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "winner": "white",
+      "rank": 12,
+      "search": {
+        "action": {
+          "type": "move",
+          "from": 2,
+          "to": 5
+        },
+        "score": -1000000,
+        "pv": [
+          {
+            "type": "move",
+            "from": 2,
+            "to": 5
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 5,
+            "to": 4
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 6
+          },
+          {
+            "type": "move",
+            "from": 4,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 9
+          },
+          {
+            "type": "move",
+            "from": 0,
+            "to": 1
+          },
+          {
+            "type": "move",
+            "from": 6,
+            "to": 10
+          },
+          {
+            "type": "move",
+            "from": 1,
+            "to": 0
+          },
+          {
+            "type": "move",
+            "from": 10,
+            "to": 2
+          }
+        ],
+        "completedDepth": 10,
+        "stopped": true,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 2,
+              "to": 5
+            },
+            "score": -1000000,
+            "pv": [
+              {
+                "type": "move",
+                "from": 2,
+                "to": 5
+              },
+              {
+                "type": "drop",
+                "piece": "rook",
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 5,
+                "to": 4
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 6
+              },
+              {
+                "type": "move",
+                "from": 4,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 9
+              },
+              {
+                "type": "move",
+                "from": 0,
+                "to": 1
+              },
+              {
+                "type": "move",
+                "from": 6,
+                "to": 10
+              },
+              {
+                "type": "move",
+                "from": 1,
+                "to": 0
+              },
+              {
+                "type": "move",
+                "from": 10,
+                "to": 2
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 20,
+        "nodes": 40380,
+        "quiescenceNodes": 29674,
+        "stats": {
+          "cutoffs": 23425,
+          "cacheHits": 861,
+          "tableCutoffs": 788,
+          "hintHits": 8708,
+          "rootResearches": 0,
+          "pvsResearches": 44,
+          "aspirationResearches": 5,
+          "historyHits": 24453,
+          "evaluations": 1445,
+          "actionGenerations": 36552,
+          "countGenerations": 4621,
+          "reducedSearches": 1435,
+          "reductionResearches": 2,
+          "protectedReductions": 0,
+          "transitions": 40335,
+          "tableEntries": 9782,
+          "hintEntries": 1153
+        }
+      },
+      "elapsed": 99.93624999999975,
+      "successor": 6806,
+      "successorWinner": "white",
+      "successorRank": 9,
+      "outcomeChanged": false
+    }
+  ],
+  "controls": [
+    {
+      "index": 29,
+      "position": {
+        "board": [
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wK--bK----bR--------------------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "result": {
+        "type": "draw",
+        "reason": "stalemate"
+      }
+    },
+    {
+      "index": 31,
+      "position": {
+        "board": [
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wK--bK------bR------------------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "result": {
+        "type": "draw",
+        "reason": "stalemate"
+      }
+    },
+    {
+      "index": 33,
+      "position": {
+        "board": [
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wK--bK--------bR----------------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "result": {
+        "type": "draw",
+        "reason": "stalemate"
+      }
+    },
+    {
+      "index": 129,
+      "position": {
+        "board": [
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "white",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|wK--------bRbK------------------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "result": {
+        "type": "draw",
+        "reason": "stalemate"
+      }
+    },
+    {
+      "index": 590,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wK--bKwR----------------------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "result": {
+        "type": "draw",
+        "reason": "stalemate"
+      }
+    },
+    {
+      "index": 592,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wK--bK--wR--------------------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "result": {
+        "type": "draw",
+        "reason": "stalemate"
+      }
+    },
+    {
+      "index": 594,
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--wK--bK----wR------------------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "result": {
+        "type": "draw",
+        "reason": "stalemate"
+      }
+    },
+    {
+      "index": 1079,
+      "position": {
+        "board": [
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          null,
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--wK----wR--------------------||": 1
+        },
+        "research": {
+          "turns": {
+            "white": 0,
+            "black": 0
+          },
+          "deployed": {
+            "white": [],
+            "black": []
+          },
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          }
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        }
+      },
+      "result": {
+        "type": "draw",
+        "reason": "stalemate"
+      }
+    }
+  ],
+  "summary": {
+    "queries": 32,
+    "terminalControls": 8,
+    "winningRoots": 16,
+    "outcomeChanged": [],
+    "nodes": 1391143,
+    "meanDepth": 9.4375
+  }
+}

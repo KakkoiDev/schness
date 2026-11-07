@@ -2,6 +2,8 @@ const STORAGE_KEY = 'schness-language';
 const SUPPORTED = new Set(['en', 'ja']);
 
 const JA = new Map(Object.entries({
+  'A dropped piece may not give check.': '配置した駒で王手はできません。',
+  'A dropped piece may not give check. Your piece is still in reserve.': '配置した駒で王手はできません。持ち駒の選択はそのままです。',
   "Permanent captures · quiet drops": "捕獲駒は除去・王手配置なし",
   "Permanent captures · checking drops": "捕獲駒は除去・王手配置あり",
   "Captured pieces leave the game permanently; unused reserves can still deploy. Checking drops allowed.": "取られた駒は対局から永久に除去。未使用の持ち駒は配置できます。王手配置は許可。",

@@ -1,0 +1,16 @@
+{
+  "observedAt": "2026-10-27T00:20:18.317613+00:00",
+  "event": "runner absent with incomplete checkpoint",
+  "cause": "unknown; no recorded exception",
+  "preservedProgress": {
+    "status": "running",
+    "pid": 36357,
+    "startedAt": "2026-10-26T09:56:55.011Z",
+    "updatedAt": "2026-10-26T09:56:55.011Z",
+    "completed": 0,
+    "total": 2,
+    "failure": null,
+    "sourceFingerprint": "5329707cdf29acd13b1859a2f9c11d8dff784f0e68c5c4166c97007d0f3ebdf6"
+  },
+  "recovery": "resume identical frozen runtime and existing checkpoints"
+}

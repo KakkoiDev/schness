@@ -133,7 +133,7 @@ modes are first-class. Theme selection must never change game rules.
 
 - Preserve keyboard board navigation, visible focus, usable dialog focus/escape behavior and
   screen-reader labels/status announcements. Specify the order of reserve and board interaction.
-- Follow existing measured contrast constraints (text at least the project's 4.5:1 floor where
+- Follow existing measured contrast constraints (text at least the project's 4.6:1 floor where
   applicable) and usable non-text state contrast. Measure both Classic color modes.
 - Use at least 44×44 CSS-pixel touch targets for primary touch interactions, including reserves;
   allow sufficient separation and actual phone testing. Do not shrink targets merely to fit.

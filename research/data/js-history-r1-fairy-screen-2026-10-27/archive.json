@@ -1,0 +1,20 @@
+{
+  "run": "js-history-r1-fairy-screen-2026-10-27",
+  "sourceFingerprint": "2122691ea504a98efc486f5e91bb27ca7f437d19e0efcc8afa349832d2c25397",
+  "games": 32,
+  "archiveBytes": 1535668,
+  "archiveSha256": "644e2f791e2bb4cb915cddf4ee648d353f983b8c0cb10a2de1060a065ee8dcf4",
+  "parts": [
+    {
+      "path": "js-history-r1-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "af7b7820baa57f9b219250fb7999faa86a2e9420dd8cc13b75f51a3c61778d7a"
+    },
+    {
+      "path": "js-history-r1-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 487092,
+      "sha256": "619470de8f6db8fc2d47a624a002f77b0d88356d4eb6bb6083f267580cdcdb08"
+    }
+  ],
+  "restore": "cat js-history-r1-fairy-screen-2026-10-27.tar.gz.part* > js-history-r1-fairy-screen-2026-10-27.tar.gz; tar -xzf js-history-r1-fairy-screen-2026-10-27.tar.gz"
+}

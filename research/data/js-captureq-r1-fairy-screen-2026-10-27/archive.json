@@ -1,0 +1,20 @@
+{
+  "run": "js-captureq-r1-fairy-screen-2026-10-27",
+  "sourceFingerprint": "2122691ea504a98efc486f5e91bb27ca7f437d19e0efcc8afa349832d2c25397",
+  "games": 32,
+  "archiveBytes": 1533201,
+  "archiveSha256": "5ae2308b33aaa795e60c71a4bcfe8ff42bdccddc4bce0162aaa63ab5427c8ac2",
+  "parts": [
+    {
+      "path": "js-captureq-r1-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "ced49d02fed4ba7d46ecacbef9b23cc4b677a098092aab3b95903b4888897d83"
+    },
+    {
+      "path": "js-captureq-r1-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 484625,
+      "sha256": "0f12509fcb53eb9de56794c4b1cf424dc5441cdcc234375cb2a9a78e37e60c41"
+    }
+  ],
+  "restore": "cat js-captureq-r1-fairy-screen-2026-10-27.tar.gz.part* > js-captureq-r1-fairy-screen-2026-10-27.tar.gz; tar -xzf js-captureq-r1-fairy-screen-2026-10-27.tar.gz"
+}

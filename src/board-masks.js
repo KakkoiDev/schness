@@ -57,3 +57,15 @@ export function maskAttackers(masks,square,player){
  while(sliders){const bit=sliders&-sliders,from=31-Math.clz32(bit);if(!(BETWEEN[square][from]&masks[8]))result|=bit;sliders^=bit;}
  return result;
 }
+
+/** Exact check after adding a reserve piece to an empty square; input masks stay untouched. */
+export function masksCheckAfterDrop(masks,player,piece,to){
+ const offset=player==='white'?0:4,kings=masks[player==='white'?4:0];
+ if(!kings)return false;
+ const square=31-Math.clz32(kings&-kings),bit=1<<to;
+ if((KING[square]&masks[offset]) || (KNIGHT[square]&(masks[offset+1]|(piece==='knight'?bit:0))))return true;
+ let sliders=(ROOK[square]&(masks[offset+2]|(piece==='rook'?bit:0)))|(BISHOP[square]&(masks[offset+3]|(piece==='bishop'?bit:0)));
+ const occupied=masks[8]|bit;
+ while(sliders){const b=sliders&-sliders,from=31-Math.clz32(b);if(!(BETWEEN[square][from]&occupied))return true;sliders^=b;}
+ return false;
+}

@@ -1,0 +1,20 @@
+{
+  "run": "js-pvguard-r1-fairy-screen-2026-10-27",
+  "sourceFingerprint": "07abac00bf42cf62a1e8ab3f793c485062607f8ceaee5574eab146dffa4c5fe4",
+  "games": 32,
+  "archiveBytes": 1531902,
+  "archiveSha256": "9a9746d3f1b657e008ff61bd1b3aedccbbec463a0cbac7d8a0af5be0ad8ca4c1",
+  "parts": [
+    {
+      "path": "js-pvguard-r1-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "141b384c7ecb0123db2741d70dcbc9b84180a0736213e062e148c94a55c2a763"
+    },
+    {
+      "path": "js-pvguard-r1-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 483326,
+      "sha256": "82d563b22b26870c8be6d156b535de13d70b6357a35f523ba5310fa78b5e4173"
+    }
+  ],
+  "restore": "cat js-pvguard-r1-fairy-screen-2026-10-27.tar.gz.part* > js-pvguard-r1-fairy-screen-2026-10-27.tar.gz; tar -xzf js-pvguard-r1-fairy-screen-2026-10-27.tar.gz"
+}

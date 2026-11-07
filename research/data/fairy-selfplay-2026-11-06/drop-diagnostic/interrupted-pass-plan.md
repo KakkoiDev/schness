@@ -1,0 +1,9 @@
+# Test whether a verified improvement is discarded at the clock
+
+The discovery comparison in interrupted-pass.json used the last attempt at the first incomplete depth and only compared Fairy's move with the returned Schness move. The groups were defined using deeper Schness scores. The 12/27 versus 1/39 comparison is exploratory. It does not estimate the effect of an engine policy.
+
+Freeze this single, teacher-blind shadow rule before evaluating it over all 964 archived decisions. Keep the completed action unless both it and a challenger finished in the last attempt at the first incomplete depth. Require the challenger to finish inside the window, its score to strictly exceed the completed action's upper bound (an upper or inside-window record), and both reported scores to be outside the engine's reserved mate band. Compare only scores from that same pass. Choose the highest eligible challenger, with first in traversal order on ties. The completed depth does not change. No result from an earlier pass or a lower bound can replace the action. A shadow action is not returned by any engine.
+
+Require at least 16 changed decisions across at least eight games and at least twice as many newly matched Fairy actions as lost matches, with ties and unchanged cases kept. Also report the corresponding deepest full-root Schness preferences separately. A branch's window classification describes the selective search under the measured configuration; it is not an exact game-theoretic bound. Fairy agreement is a diagnostic only. Stop this rule if the gate fails, without tuning thresholds, move classes, or aspiration-pass selection.
+
+Only after a pass, preregister a separate fresh fixed-node cut-point test against a completed next iteration with the same search policy. No fresh query, new engine policy, match, or benchmark change is authorized by this plan alone.

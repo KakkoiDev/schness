@@ -1,0 +1,9 @@
+# Archived drop disagreements
+
+This diagnostic reads the frozen Fairy self-play and Schness replays from the parent directory. It performs no engine calls. Run `python3 compare.py > counts.json` and `python3 continuations.py > continuations.json`. The data and scripts can be used with the archive published at PR #123 commit 376251525083b99d8b14dc1f34f4da6748650c5c.
+
+The 100 ms bench disagreed on 185 Fairy drops; 137 disagreements were drop versus drop. At the deepest completed full-root horizon, 43 favored Fairy's move, 130 favored the timed Schness choice, and 12 tied. Fairy was among the three highest-ranked actions in 135 of these disagreements, counting ties by score rank.
+
+In 66 of the drop disagreements, a full-root replay at the timed engine's completed depth strictly favored the timed move and finished at least one deeper horizon. Of those, 27 strictly favored Fairy at the final horizon. These reversals came from 13 games and first appeared one extra ply later in 26 cases, two plies later in one. Across the first strict reversal, the principal variation changed the immediate reply to Fairy's drop in 11/27 cases and to the timed choice in 13/27. In the 39 cases without a final reversal, those changes occurred in 14/39 and 15/39, respectively. Those groups are descriptive, correlated by game, and can end at different horizons. An immediate reply change alone does not clearly distinguish the reversals here.
+
+Full-root replay differs from the timed bench in search settings as well as budget. The within-full-root comparisons isolate changes across completed horizons in that replay; they do not show that giving the production engine extra time would make the same decisions. Scores and PVs are finite-horizon Schness outputs, not quality labels. The results do not justify a drop ordering change or copying Fairy's decisions.

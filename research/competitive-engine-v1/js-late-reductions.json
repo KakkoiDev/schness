@@ -1,0 +1,2408 @@
+{
+  "purpose": "Diagnostic-only temporary post-reduction callback; match resulting positions on exact depth6 PVs of Black4. Compare full-depth nonreduced values with reduced windows. Selected correlation not generalbug/strength.",
+  "c": {
+    "variant": "directdrop",
+    "id": "black__20262001__4",
+    "sourceFingerprint": "2033d955b79b2e36adc3f58acbdb16f4f6c13cb44e72c172e2dedd73baf7a86b",
+    "selection": "decision before first early >=-100 to <=-300 observed crossing",
+    "ply": 43,
+    "position": {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "rook"
+        ],
+        "black": [
+          "rook",
+          "bishop"
+        ]
+      },
+      "turn": "black",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    "playedAction": {
+      "type": "drop",
+      "piece": "bishop",
+      "to": 2
+    },
+    "playedScore": -82,
+    "playedDepth": 5,
+    "trajectory": [
+      {
+        "ply": 27,
+        "score": -134,
+        "depth": 6
+      },
+      {
+        "ply": 29,
+        "score": -110,
+        "depth": 6
+      },
+      {
+        "ply": 31,
+        "score": -62,
+        "depth": 8
+      },
+      {
+        "ply": 33,
+        "score": -62,
+        "depth": 6
+      },
+      {
+        "ply": 35,
+        "score": -62,
+        "depth": 4
+      },
+      {
+        "ply": 37,
+        "score": -76,
+        "depth": 6
+      },
+      {
+        "ply": 39,
+        "score": -42,
+        "depth": 5
+      },
+      {
+        "ply": 41,
+        "score": -80,
+        "depth": 6
+      },
+      {
+        "ply": 43,
+        "score": -82,
+        "depth": 5
+      },
+      {
+        "ply": 45,
+        "score": -638,
+        "depth": 7
+      },
+      {
+        "ply": 47,
+        "score": -858,
+        "depth": 8
+      },
+      {
+        "ply": 49,
+        "score": -917,
+        "depth": 8
+      },
+      {
+        "ply": 51,
+        "score": -955,
+        "depth": 7
+      },
+      {
+        "ply": 53,
+        "score": -1172,
+        "depth": 8
+      },
+      {
+        "ply": 55,
+        "score": -1886,
+        "depth": 7
+      },
+      {
+        "ply": 57,
+        "score": -1000000,
+        "depth": 6
+      },
+      {
+        "ply": 59,
+        "score": -1000000,
+        "depth": 7
+      },
+      {
+        "ply": 61,
+        "score": -1000000,
+        "depth": 6
+      },
+      {
+        "ply": 63,
+        "score": -1000002,
+        "depth": 6
+      },
+      {
+        "ply": 65,
+        "score": -1000004,
+        "depth": 6
+      }
+    ]
+  },
+  "result": {
+    "action": {
+      "type": "drop",
+      "piece": "bishop",
+      "to": 2
+    },
+    "score": -158,
+    "pv": [
+      {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 2
+      },
+      {
+        "type": "move",
+        "from": 11,
+        "to": 2
+      },
+      {
+        "type": "move",
+        "from": 8,
+        "to": 2
+      },
+      {
+        "type": "drop",
+        "piece": "rook",
+        "to": 3
+      },
+      {
+        "type": "drop",
+        "piece": "rook",
+        "to": 0
+      },
+      {
+        "type": "drop",
+        "piece": "bishop",
+        "to": 5
+      }
+    ],
+    "completedDepth": 6,
+    "stopped": false,
+    "variations": [
+      {
+        "action": {
+          "type": "drop",
+          "piece": "bishop",
+          "to": 2
+        },
+        "score": -158,
+        "pv": [
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 2
+          },
+          {
+            "type": "move",
+            "from": 8,
+            "to": 2
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 3
+          },
+          {
+            "type": "drop",
+            "piece": "rook",
+            "to": 0
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 5
+          }
+        ]
+      }
+    ],
+    "requestedDepth": 6,
+    "nodes": 17533,
+    "quiescenceNodes": 14653,
+    "stats": {
+      "cutoffs": 10910,
+      "cacheHits": 324,
+      "tableCutoffs": 232,
+      "hintHits": 956,
+      "rootResearches": 0,
+      "pvsResearches": 30,
+      "aspirationResearches": 1,
+      "historyHits": 11622,
+      "evaluations": 9219,
+      "actionGenerations": 15723,
+      "countGenerations": 2309,
+      "reducedSearches": 102,
+      "reductionResearches": 1,
+      "protectedReductions": 0,
+      "transitions": 17502,
+      "tableEntries": 2550,
+      "hintEntries": 1684
+    }
+  },
+  "targets": [
+    {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "rook"
+        ],
+        "black": [
+          "bishop"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwNbR--wN--|R|B": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "rook"
+        ],
+        "black": [
+          "bishop"
+        ]
+      },
+      "turn": "black",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwNbR--wN--|R|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bBwK--wNbR--wN--|R|B": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "rook"
+        ],
+        "black": [
+          "bishop",
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwNbR--wN--|R|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bBwK--wNbR--wN--|R|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bBwK--wN----bR--|R|BN": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "rook",
+          "rook"
+        ],
+        "black": [
+          "bishop",
+          "knight"
+        ]
+      },
+      "turn": "black",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwNbR--wN--|R|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bBwK--wNbR--wN--|R|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bBwK--wN----bR--|R|BN": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB----wN----wK--|RR|BN": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "rook",
+          "rook"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwNbR--wN--|R|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bBwK--wNbR--wN--|R|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bBwK--wN----bR--|R|BN": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB----wN----wK--|RR|BN": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------bB----bB----wN----wK--|RR|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null
+      ],
+      "banks": {
+        "white": [
+          "rook"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "black",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwNbR--wN--|R|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bBwK--wNbR--wN--|R|B": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bBwK--wN----bR--|R|BN": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB----wN----wK--|RR|BN": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------bB----bB----wN----wK--|RR|N": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------bB----bBwR--wN----wK--|R|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        null,
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [],
+        "black": [
+          "rook"
+        ]
+      },
+      "turn": "black",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB----------bB--wKwN----wN--|R|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB----------bB--wKwNwR--wN--||R": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB----------bB--wKwN----wN--|R|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB----------bB--wKwNwR--wN--||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----------bB--wKwNwR--wN--||": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [],
+        "black": []
+      },
+      "turn": "black",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB----------bB--wKwN----wN--|R|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB----------bB--wKwNwR--wN--||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----------bB--wKwNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bRbKbB----------bBwK--wNwR--wN--||": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null
+      ],
+      "banks": {
+        "white": [],
+        "black": []
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB----------bB--wKwN----wN--|R|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB----------bB--wKwNwR--wN--||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----------bB--wKwNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bRbKbB----------bBwK--wNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----bB------wK--wNwR--wN--||": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": []
+      },
+      "turn": "black",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB----------bB--wKwN----wN--|R|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB----------bB--wKwNwR--wN--||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----------bB--wKwNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bRbKbB----------bBwK--wNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----bB------wK--wNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bRbKbB----wN------wK--wNwR------|B|": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "black",
+          "piece": "bishop"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "white",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB----------bB--wKwN----wN--|R|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB----------bB--wKwNwR--wN--||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----------bB--wKwNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bRbKbB----------bBwK--wNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----bB------wK--wNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bRbKbB----wN------wK--wNwR------|B|": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbK------bB------wK--wNwR------|B|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    },
+    {
+      "board": [
+        {
+          "owner": "black",
+          "piece": "rook"
+        },
+        {
+          "owner": "black",
+          "piece": "king"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "knight"
+        },
+        null,
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "king"
+        },
+        null,
+        null,
+        {
+          "owner": "white",
+          "piece": "rook"
+        },
+        null,
+        null,
+        null
+      ],
+      "banks": {
+        "white": [
+          "bishop",
+          "bishop"
+        ],
+        "black": [
+          "knight"
+        ]
+      },
+      "turn": "black",
+      "phase": "play",
+      "repetitions": {
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB----------bB--wKwN----wN--|R|R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB----------bB--wKwNwR--wN--||R": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----------bB--wKwNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bRbKbB----------bBwK--wNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----bB------wK--wNwR--wN--||": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bRbKbB----wN------wK--wNwR------|B|": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbK------bB------wK--wNwR------|B|N": 1,
+        "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bRbK------wN------wK----wR------|BB|N": 1
+      },
+      "rules": {
+        "allowCheckingDrops": false,
+        "experiment": "capture-bank",
+        "bankCapacity": 6
+      },
+      "research": {
+        "checkingDrops": {
+          "white": 0,
+          "black": 0
+        },
+        "lastCheckingDrop": {
+          "white": false,
+          "black": false
+        },
+        "turns": {
+          "white": 3,
+          "black": 3
+        },
+        "deployed": {
+          "white": [
+            "bishop",
+            "knight",
+            "rook"
+          ],
+          "black": [
+            "bishop",
+            "knight",
+            "rook"
+          ]
+        }
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "position": {
+        "board": [
+          null,
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "bishop"
+          },
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          null
+        ],
+        "banks": {
+          "white": [
+            "rook"
+          ],
+          "black": [
+            "bishop"
+          ]
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwNbR--wN--|R|B": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bBwK--wNbR--wN--|R|B": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      },
+      "action": {
+        "type": "move",
+        "from": 10,
+        "to": 9
+      },
+      "depth": 4,
+      "alpha": -120,
+      "beta": -20,
+      "maximizing": false,
+      "player": "black",
+      "reduced": -364,
+      "exact": {
+        "action": {
+          "type": "move",
+          "from": 12,
+          "to": 14
+        },
+        "score": -256,
+        "pv": [
+          {
+            "type": "move",
+            "from": 12,
+            "to": 14
+          },
+          {
+            "type": "move",
+            "from": 9,
+            "to": 14
+          },
+          {
+            "type": "drop",
+            "piece": "bishop",
+            "to": 6
+          }
+        ],
+        "completedDepth": 3,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 12,
+              "to": 14
+            },
+            "score": -256,
+            "pv": [
+              {
+                "type": "move",
+                "from": 12,
+                "to": 14
+              },
+              {
+                "type": "move",
+                "from": 9,
+                "to": 14
+              },
+              {
+                "type": "drop",
+                "piece": "bishop",
+                "to": 6
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 3,
+        "nodes": 348,
+        "quiescenceNodes": 285,
+        "stats": {
+          "cutoffs": 258,
+          "cacheHits": 13,
+          "tableCutoffs": 11,
+          "hintHits": 15,
+          "rootResearches": 0,
+          "pvsResearches": 1,
+          "aspirationResearches": 1,
+          "historyHits": 21,
+          "evaluations": 205,
+          "actionGenerations": 345,
+          "countGenerations": 4,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 347,
+          "tableEntries": 50,
+          "hintEntries": 37
+        }
+      },
+      "fullValue": -256,
+      "completed": true
+    },
+    {
+      "position": {
+        "board": [
+          {
+            "owner": "black",
+            "piece": "rook"
+          },
+          {
+            "owner": "black",
+            "piece": "king"
+          },
+          {
+            "owner": "black",
+            "piece": "bishop"
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          {
+            "owner": "black",
+            "piece": "bishop"
+          },
+          {
+            "owner": "white",
+            "piece": "king"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          {
+            "owner": "white",
+            "piece": "rook"
+          },
+          null,
+          {
+            "owner": "white",
+            "piece": "knight"
+          },
+          null
+        ],
+        "banks": {
+          "white": [],
+          "black": []
+        },
+        "turn": "black",
+        "phase": "play",
+        "repetitions": {
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK--------------------wK------|BNR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK--------------wB----wK------|NR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN------------wB----wK------|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwR--wK------|N|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--------bB--wBwR--wK------|N|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbNwN------bB--wBwR--wK------||R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wBbB--wK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbN------------wBwN--wK------|B|RR": 2,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bN----bK------wBwN--wK------|B|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bNwN--bK------wB----wK------|B|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbNwN----------wB----wK------|B|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK--bN------------wBwN--wK------|B|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK--bN--------wB--wBwN--wK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bK------------wB--wBwNbNwK------||RR": 2,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bK------wN----wB--wB--bNwK------||RR": 2,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--------wNbK--wB--wB--bNwK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----------bK--wB--wBwNbNwK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK----wN----wB--wB--bNwK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK----wN--------wBwBbNwK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbN--wN--------wBwB--wK------||RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKwN------------wBwB--wK------|N|RR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wBwB--wK------|N|NRR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wBwB--wKwN----||NRR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bR--wBwB--wKwN----||NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------bRwKwBwB----wN----||NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--------bRwKwBwB----wN--bN||R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wN----bRwKwBwB--------bN||R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--bR------wKwBwB--------bN||NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--wK--------wBwB--------bN|R|NR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK--wK--------bNwB----------|R|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK------------wKwB----------|NR|BNR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bKbN----------wKwB----------|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bKbN----------wKwB----wN----|R|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK------------wKbN----wN----|R|BBR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK--------------wK----wN----|NR|BBR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|----bK----------bB--wK----wN----|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|----bK----------bB--wKwN--------|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bK------------bB--wKwN--------|NR|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bK------------bB--wKwN----wN--|R|BR": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|--bKbB----------bB--wKwN----wN--|R|R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|--bKbB----------bB--wKwNwR--wN--||R": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|white|bRbKbB----------bB--wKwNwR--wN--||": 1,
+          "quiet-drops|{\"allowCheckingDrops\":false,\"experiment\":\"capture-bank\",\"bankCapacity\":6}|null|play|black|bRbKbB----------bBwK--wNwR--wN--||": 1
+        },
+        "rules": {
+          "allowCheckingDrops": false,
+          "experiment": "capture-bank",
+          "bankCapacity": 6
+        },
+        "research": {
+          "checkingDrops": {
+            "white": 0,
+            "black": 0
+          },
+          "lastCheckingDrop": {
+            "white": false,
+            "black": false
+          },
+          "turns": {
+            "white": 3,
+            "black": 3
+          },
+          "deployed": {
+            "white": [
+              "bishop",
+              "knight",
+              "rook"
+            ],
+            "black": [
+              "bishop",
+              "knight",
+              "rook"
+            ]
+          }
+        }
+      },
+      "action": {
+        "type": "move",
+        "from": 10,
+        "to": 9
+      },
+      "depth": 3,
+      "alpha": -132,
+      "beta": -82,
+      "maximizing": false,
+      "player": "black",
+      "reduced": -42,
+      "exact": {
+        "action": {
+          "type": "move",
+          "from": 8,
+          "to": 5
+        },
+        "score": -672,
+        "pv": [
+          {
+            "type": "move",
+            "from": 8,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 14,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 2,
+            "to": 5
+          },
+          {
+            "type": "move",
+            "from": 11,
+            "to": 5
+          }
+        ],
+        "completedDepth": 2,
+        "stopped": false,
+        "variations": [
+          {
+            "action": {
+              "type": "move",
+              "from": 8,
+              "to": 5
+            },
+            "score": -672,
+            "pv": [
+              {
+                "type": "move",
+                "from": 8,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 14,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 2,
+                "to": 5
+              },
+              {
+                "type": "move",
+                "from": 11,
+                "to": 5
+              }
+            ]
+          }
+        ],
+        "requestedDepth": 2,
+        "nodes": 304,
+        "quiescenceNodes": 289,
+        "stats": {
+          "cutoffs": 139,
+          "cacheHits": 10,
+          "tableCutoffs": 6,
+          "hintHits": 4,
+          "rootResearches": 0,
+          "pvsResearches": 1,
+          "aspirationResearches": 2,
+          "historyHits": 0,
+          "evaluations": 126,
+          "actionGenerations": 229,
+          "countGenerations": 86,
+          "reducedSearches": 0,
+          "reductionResearches": 0,
+          "protectedReductions": 0,
+          "transitions": 303,
+          "tableEntries": 5,
+          "hintEntries": 5
+        }
+      },
+      "fullValue": -672,
+      "completed": true
+    }
+  ],
+  "tempSearchSource": "/** Two-player zero-sum search. The adapter owns all game-specific rules. */\nexport function strengthOptions(strength) {\n  if (!Number.isInteger(strength) || strength < 0 || strength > 100) throw new RangeError('Level must be an integer 0\u2013100');\n  return {depth:strength, maxNodes:Infinity};\n}\n\nexport function createSearchEngine(adapter) {\n  for (const name of ['actions','apply','turn','terminal','evaluate','key']) {\n    if (typeof adapter[name] !== 'function') throw new TypeError(`Missing search adapter: ${name}`);\n  }\n  if ((typeof adapter.make === 'function') !== (typeof adapter.unmake === 'function')) throw new TypeError('Reversible search requires both make and unmake');\n  if (adapter.scoreStep !== undefined && (!Number.isFinite(adapter.scoreStep) || adapter.scoreStep <= 0)) throw new TypeError('Invalid score step');\n  const STOP = Symbol('search budget exhausted');\n  const order = (p, actions) => adapter.order ? adapter.order(p, actions) : actions;\n  const finite = (value, label) => {\n    if (!Number.isFinite(value)) throw new TypeError(`${label} must be finite`);\n    return value;\n  };\n  function terminal(p, who, depth, facts) {\n    const value = adapter.terminal(p, who, depth, facts);\n    return value === null ? null : finite(value, 'Terminal score');\n  }\n  function optionsFor(options) {\n    const merged = {...(options.strength === undefined ? {} : strengthOptions(options.strength)), ...options};\n    merged.depth ??= 4;\n    merged.quiescenceDepth ??= 0;\n    merged.quiescenceEvasionDepth ??= 0;\n    merged.rootPrincipalVariation ??= false;\n    if(typeof merged.rootPrincipalVariation!=='boolean')throw new TypeError('Invalid rootPrincipalVariation');\n    merged.forkThreatEvasions ??= false;\n    if(typeof merged.forkThreatEvasions!=='boolean')throw new TypeError('Invalid forkThreatEvasions');\n    if(merged.forkThreatEvasions && typeof adapter.quiescenceDanger!=='function')throw new TypeError('Fork threat evasions require adapter.quiescenceDanger');\n    merged.cacheEvaluation ??= false;\n    if(typeof merged.cacheEvaluation!=='boolean')throw new TypeError('Invalid cacheEvaluation');\n    if(merged.cacheEvaluation && typeof adapter.evaluationKey!=='function')throw new TypeError('Evaluation cache requires adapter.evaluationKey');\n    merged.cacheQuiescence ??= false;\n    if(typeof merged.cacheQuiescence!=='boolean')throw new TypeError('Invalid cacheQuiescence');\n    merged.quiescenceChecks ??= false;\n    if(typeof merged.quiescenceChecks!=='boolean')throw new TypeError('Invalid quiescenceChecks');\n    merged.reducePrincipalVariation ??= true;\n    merged.protectHistoryMoves ??= false;\n    for(const name of ['reducePrincipalVariation','protectHistoryMoves'])if(typeof merged[name]!=='boolean')throw new TypeError(`Invalid ${name}`);\n    merged.stagedMoveSelection ??= false;\n    if(typeof merged.stagedMoveSelection!=='boolean')throw new TypeError('Invalid stagedMoveSelection');\n    merged.lateMoveReduction ??= false;\n    if(typeof merged.lateMoveReduction!=='boolean')throw new TypeError('Invalid lateMoveReduction');\n    if(merged.lateMoveReduction && typeof adapter.canReduce!=='function')throw new TypeError('Late move reduction requires adapter.canReduce');\n    if(merged.onIteration!==undefined && typeof merged.onIteration!=='function')throw new TypeError('Invalid onIteration');\n    merged.stopOnProvenWin ??= false;\n    if(typeof merged.stopOnProvenWin!=='boolean')throw new TypeError('Invalid stopOnProvenWin');\n    merged.multiPv ??= 1;\n    merged.maxTableEntries ??= 50000;\n    merged.aspirationWindow ??= 50;\n    if(!Number.isFinite(merged.aspirationWindow) || merged.aspirationWindow<=0)throw new RangeError('Invalid aspiration window');\n    for (const [name, min, max] of [['depth',0,100],['quiescenceDepth',0,8],['quiescenceEvasionDepth',0,8],['multiPv',1,10]]) {\n      if (!Number.isInteger(merged[name]) || merged[name] < min || merged[name] > max) throw new RangeError(`Invalid ${name}`);\n    }\n    if (!Number.isInteger(merged.maxTableEntries) || merged.maxTableEntries < 1) throw new RangeError('Invalid table capacity');\n    return merged;\n  }\n  function context(options) {\n    const {maxNodes=Infinity, maxMillis=Infinity} = options;\n    if (!(maxNodes === Infinity || Number.isInteger(maxNodes) && maxNodes >= 1)) throw new RangeError('Invalid node budget');\n    if (!(maxMillis === Infinity || Number.isFinite(maxMillis) && maxMillis > 0)) throw new RangeError('Invalid time budget');\n    return {options,nodes:0, quiescenceNodes:0, cutoffs:0, cacheHits:0, tableCutoffs:0, hintHits:0,\n      evaluationCacheHits:0,rootResearches:0, aspirationResearches:0, pvsResearches:0, historyHits:0, evaluations:0, actionGenerations:0, countGenerations:0, transitions:0,\n      reducedSearches:0,reductionResearches:0,protectedReductions:0,lateMoveReduction:options.lateMoveReduction,\n      maxNodes, deadline:maxMillis === Infinity ? Infinity : Date.now()+maxMillis,\n      maxTableEntries:options.maxTableEntries, quiescenceDepth:options.quiescenceDepth ?? 0,\n      noisyOptions:Object.freeze({includeChecks:options.quiescenceChecks}),\n      pvs:options.principalVariation !== false && adapter.scoreStep !== undefined,\n      history:options.useHistory === false ? null : new Map(),killers:new Map(),ranks:new Map(),\n      reversible:options.useMutable !== false && typeof adapter.make === 'function',\n      evalCache:options.cacheEvaluation ? new Map() : null,\n      qCache:options.useCache === false || !options.cacheQuiescence ? null : new Map(),\n      cache:options.useCache === false ? null : new Map(), hints:options.useCache === false ? null : new Map()};\n  }\n  const actionIdentity = adapter.actionKey ?? (action => JSON.stringify(action));\n  function boundedSet(table, key, value, ctx) {\n    if (!table) return;\n    if (!table.has(key) && table.size >= ctx.maxTableEntries) table.delete(table.keys().next().value);\n    table.set(key,value);\n  }\n  function factsFor(p,ctx,preferCount=false) {\n    let actions,count;\n    const facts={\n      options:ctx.options,\n      actions(){if(actions===undefined){ctx.actionGenerations++;actions=adapter.actions(p);if(count!==undefined && count!==actions.length)throw new Error('Action count disagrees with legal actions');count=actions.length;}return actions;},\n      actionCount(){\n        if(count===undefined){\n          if(preferCount && adapter.countActions){ctx.countGenerations++;count=adapter.countActions(p);if(!Number.isInteger(count)||count<0)throw new TypeError('Action count must be a nonnegative integer');}\n          else count=facts.actions().length;\n        }\n        return count;\n      },\n    };\n    return facts;\n  }\n  function apply(p,action,ctx) {ctx.transitions++;return adapter.apply(p,action);}\n  function withChild(p,action,ctx,fn,cachedChild) {\n    if(!ctx.reversible)return fn(cachedChild ?? apply(p,action,ctx));\n    ctx.transitions++;\n    const undo=adapter.make(p,action);\n    try {return fn(p);} finally {adapter.unmake(p,undo);}\n  }\n  function ordered(p,actions,hint,ctx,depth) {\n    const player=adapter.turn(p),killers=ctx.killers.get(depth) ?? [];\n    if(ctx.options.stagedMoveSelection && adapter.orderIndependent===true){\n      // Only independent per-move base scoring may be deferred by groups.\n      // Each group owns its actions so nested searches cannot overwrite it.\n      const groups=new Map();let hasHint=false;\n      for(const action of actions){\n        const id=actionIdentity(action),history=ctx.history?.get(`${player}:${id}`)??0;\n        if(history)ctx.historyHits++;\n        if(hint!==undefined && id===hint)hasHint=true;\n        const killer=killers.indexOf(id),tactical=Number(Boolean(adapter.isTactical?.(p,action)));\n        const rank=((Number(id===hint)*2+tactical)*3+(killer<0?0:2-killer))*1000001+history;\n        const group=groups.get(rank)??[];group.push(action);groups.set(rank,group);\n      }\n      if(hasHint)ctx.hintHits++;\n      const ranks=[...groups.keys()].sort((a,b)=>b-a);\n      return (function*(){for(const rank of ranks)yield* order(p,groups.get(rank));})();\n    }\n    const sorted=[...order(p,actions)];\n    const ranks=ctx.options.stagedMoveSelection?new Map():ctx.ranks,stride=sorted.length+1;\n    ranks.clear();let hasHint=false;\n    for(let index=0;index<sorted.length;index++){\n      const action=sorted[index],id=actionIdentity(action),history=ctx.history?.get(`${player}:${id}`) ?? 0;\n      if(history)ctx.historyHits++;\n      if(hint!==undefined && id===hint)hasHint=true;\n      const killer=killers.indexOf(id),tactical=Number(Boolean(adapter.isTactical?.(p,action)));\n      // Same lexicographic order as before, without one wrapper object per move.\n      ranks.set(action,((((Number(id===hint)*2+tactical)*3+(killer<0?0:2-killer))*1000001+history)*stride-index));\n    }\n    if(hasHint)ctx.hintHits++;\n    if(ctx.options.stagedMoveSelection){\n      // Per-node ranks must survive nested searches. Yield only as many moves\n      // as alpha-beta consumes; ties retain the original stable ordering.\n      return (function*(){\n        const remaining=sorted.slice();\n        while(remaining.length){\n          let best=0;\n          for(let i=1;i<remaining.length;i++)if(ranks.get(remaining[i])>ranks.get(remaining[best]))best=i;\n          const action=remaining[best];remaining.splice(best,1);yield action;\n        }\n      })();\n    }\n    sorted.sort((a,b)=>ranks.get(b)-ranks.get(a));\n    return sorted;\n  }\n  function cutoff(p,action,depth,ctx){\n    ctx.cutoffs++;\n    if(!ctx.history || adapter.isTactical?.(p,action))return;\n    const id=actionIdentity(action),key=`${adapter.turn(p)}:${id}`;\n    boundedSet(ctx.history,key,Math.min(1000000,(ctx.history.get(key)??0)+depth*depth),ctx);\n    const killers=ctx.killers.get(depth)??[];\n    ctx.killers.set(depth,[id,...killers.filter(x=>x!==id)].slice(0,2));\n  }\n  function enter(ctx, tactical) {\n    if (ctx.nodes >= ctx.maxNodes || (ctx.deadline !== Infinity && Date.now() >= ctx.deadline)) throw STOP;\n    ctx.nodes++;\n    if (tactical) ctx.quiescenceNodes++;\n  }\n  function visit(p, depth, alpha, beta, player, ctx, remainingQ=ctx.quiescenceDepth, remainingEvasions=ctx.options.quiescenceEvasionDepth) {\n    enter(ctx, depth <= 0 && (ctx.quiescenceDepth > 0 || ctx.options.quiescenceEvasionDepth > 0));\n    const facts=factsFor(p,ctx,depth<=0 && !remainingQ);\n    const result = terminal(p, player, Math.max(0,depth),facts);\n    if (result !== null) return {value:result, line:null};\n    const maximizing = adapter.turn(p) === player;\n    if (depth <= 0) {\n      const qKey=ctx.qCache ? JSON.stringify([adapter.key(p),remainingQ,remainingEvasions]) : null;\n      const startAlpha=alpha,startBeta=beta,cached=qKey===null?null:ctx.qCache.get(qKey);\n      if(cached){\n        ctx.cacheHits++;\n        if(cached.type==='exact')return {value:cached.value,line:cached.line};\n        if(cached.type==='lower')alpha=Math.max(alpha,cached.value);else beta=Math.min(beta,cached.value);\n        if(beta<=alpha){ctx.tableCutoffs++;return {value:cached.value,line:cached.line};}\n      }\n      const finish=best=>{\n        if(qKey!==null)boundedSet(ctx.qCache,qKey,{...best,type:best.value<=startAlpha?'upper':best.value>=startBeta?'lower':'exact'},ctx);\n        return best;\n      };\n      const evalKey=ctx.evalCache ? adapter.evaluationKey(p) : null;\n      let standPat=ctx.evalCache?.get(evalKey);\n      if(standPat!==undefined)ctx.evaluationCacheHits++;\n      else{\n        ctx.evaluations++;\n        standPat=finite(adapter.evaluate(p,player,facts),'Evaluation');\n        if(ctx.evalCache)boundedSet(ctx.evalCache,evalKey,standPat,ctx);\n      }\n      const danger = Boolean(adapter.inDanger?.(p)) || Boolean(ctx.options.forkThreatEvasions &&\n        (remainingQ || remainingEvasions) && adapter.quiescenceDanger(p));\n      // A separate bounded allowance resolves checks at the quiescence horizon.\n      // It never permits stand-pat cutoffs while an evasion is being searched.\n      if ((!remainingQ && !(danger && remainingEvasions)) || (!adapter.noisyActions && !adapter.inDanger && !adapter.quiescenceDanger)) return finish({value:standPat,line:null});\n      let best = {value:danger ? (maximizing ? -Infinity : Infinity) : standPat, line:null};\n      if (!danger) {\n        if (maximizing) alpha = Math.max(alpha, standPat);\n        else beta = Math.min(beta, standPat);\n        if (beta <= alpha) {ctx.cutoffs++;return finish(best);}\n      }\n      const legal = facts.actions();\n      if (!legal.length) throw new Error('Adapter must adjudicate a position without actions');\n      const actions = danger ? legal : (adapter.noisyActions?.(p, legal, ctx.noisyOptions) ?? []);\n      for (const action of order(p, actions)) {\n        const child = withChild(p,action,ctx,next=>visit(next, 0, alpha,beta,player,ctx,Math.max(0,remainingQ-1),remainingQ ? remainingEvasions : remainingEvasions-1));\n        if (maximizing ? child.value > best.value : child.value < best.value) best = {value:child.value,line:{action,next:child.line}};\n        if (maximizing) alpha = Math.max(alpha,best.value);\n        else beta = Math.min(beta,best.value);\n        if (beta <= alpha) {ctx.cutoffs++;break;}\n      }\n      return finish(best);\n    }\n    const stateKey = ctx.cache ? adapter.key(p) : null;\n    // Bounds require the same remaining depth: generic terminal scores may depend on depth.\n    const key = ctx.cache ? `${stateKey}|${depth}` : null;\n    const hintKey=ctx.hints ? (adapter.hintKey?.(p) ?? stateKey) : null;\n    const startAlpha=alpha, startBeta=beta, cached=ctx.cache?.get(key);\n    if (cached) {\n      ctx.cacheHits++;\n      if (cached.type === 'exact') return {value:cached.value,line:cached.line};\n      if (cached.type === 'lower') alpha = Math.max(alpha,cached.value);\n      else beta = Math.min(beta,cached.value);\n      if (beta <= alpha) {ctx.tableCutoffs++;return {value:cached.value,line:cached.line};}\n    }\n    const actions = ordered(p,facts.actions(),ctx.hints?.get(hintKey),ctx,depth);\n    if (!facts.actionCount()) throw new Error('Adapter must adjudicate a position without actions');\n    let best = {value:maximizing ? -Infinity : Infinity,line:null};\n    let moveIndex=0;\n    for (const action of actions) {\n      const id=ctx.options.protectHistoryMoves?actionIdentity(action):null;\n      const protectedMove=ctx.options.protectHistoryMoves && ((ctx.killers.get(depth)??[]).includes(id) ||\n        (ctx.history?.get(`${adapter.turn(p)}:${id}`)??0)>=depth*depth);\n      const eligible=ctx.lateMoveReduction && depth>=3 && moveIndex>=3 &&\n        (ctx.options.reducePrincipalVariation || beta-alpha<=(adapter.scoreStep??1)) &&\n        adapter.canReduce(p,action,ctx.options);\n      if(eligible && protectedMove)ctx.protectedReductions++;\n      const reduce=eligible && !protectedMove;\n      moveIndex++;\n      const child = withChild(p,action,ctx,next=>{\n        // Experimental selective search, never part of the exact default mode.\n        // A reduced fail-low can still hide a full-depth tactical improvement.\n        if(reduce && !adapter.inDanger?.(next)){\n          ctx.reducedSearches++;\n          const reduced=visit(next,depth-2,alpha,beta,player,ctx);\n          ctx.options.onReduction?.({position:next,action,depth,alpha,beta,maximizing,player,reduced:reduced.value});\n          if(maximizing?reduced.value<=alpha:reduced.value>=beta)return reduced;\n          ctx.reductionResearches++;\n        }\n        if(!ctx.pvs || !Number.isFinite(best.value))return visit(next,depth-1,alpha,beta,player,ctx);\n        const step=adapter.scoreStep;\n        let result=maximizing?visit(next,depth-1,alpha,Math.min(beta,alpha+step),player,ctx)\n          :visit(next,depth-1,Math.max(alpha,beta-step),beta,player,ctx);\n        if(result.value>alpha && result.value<beta){ctx.pvsResearches++;result=visit(next,depth-1,alpha,beta,player,ctx);}\n        return result;\n      });\n      if (maximizing ? child.value > best.value : child.value < best.value) best = {value:child.value,line:{action,next:child.line}};\n      if (maximizing) alpha=Math.max(alpha,best.value);\n      else beta=Math.min(beta,best.value);\n      if (beta <= alpha) {cutoff(p,action,depth,ctx);break;}\n    }\n    boundedSet(ctx.cache,key,{...best,type:best.value<=startAlpha ? 'upper' : best.value>=startBeta ? 'lower' : 'exact'},ctx);\n    boundedSet(ctx.hints,hintKey,actionIdentity(best.line.action),ctx);\n    return best;\n  }\n  function choose(position, options={}) {\n    options=optionsFor(options);\n    const ctx=context(options);\n    if(ctx.reversible)position=adapter.prepare?adapter.prepare(position,options):structuredClone(position);\n    const player=adapter.turn(position);\n    const rootFacts=factsFor(position,ctx);\n    const outcome=terminal(position,player,options.depth,rootFacts);\n    if (outcome !== null) return {action:null,score:outcome,requestedDepth:options.depth,nodes:0,quiescenceNodes:0,completedDepth:0,stopped:false,pv:[],variations:[]};\n    let actions=order(position,rootFacts.actions());\n    if (!actions.length) throw new Error('Adapter must adjudicate a position without actions');\n    if (options.depth === 0) return {action:actions[0],score:null,completedDepth:0,requestedDepth:0,stopped:false,pv:[],variations:[],nodes:0,quiescenceNodes:0};\n    let completed={action:actions[0],score:null,completedDepth:0,stopped:false,pv:[],variations:[]};\n    const iterative=Number.isFinite(options.maxNodes) || Number.isFinite(options.maxMillis) || options.iterativeDeepening === true;\n    const rootChildren=new Map();\n    try {\n      for (let depth=iterative ? 1 : options.depth; depth<=options.depth; depth++) {\n        const iteration=(lower,upper)=>{\n        let selected=null, repetitions=Infinity, ties=0;\n        const lines=[];\n        for (const action of actions) {\n          let next;\n          if(!ctx.reversible){\n            next=rootChildren.get(action);\n            if(next===undefined){next=apply(position,action,ctx);rootChildren.set(action,next);}\n          }\n          const {rep,child}=withChild(position,action,ctx,next=>{\n            const rep=options.repetitionAversion ? (adapter.repetitions?.(next) ?? 0) : 0;\n            const alpha=options.multiPv === 1 ? Math.max(lower,selected?.score ?? -Infinity) : -Infinity;\n            const probe=options.rootPrincipalVariation && ctx.pvs && options.multiPv===1 && selected && Number.isFinite(alpha);\n            let child=visit(next,depth-1,alpha,probe?Math.min(upper,alpha+adapter.scoreStep):upper,player,ctx);\n            if(probe && child.value>alpha && child.value<upper){\n              ctx.pvsResearches++;\n              child=visit(next,depth-1,alpha,upper,player,ctx);\n            }\n            // Fail-low equality is a bound. Resolve it before tie selection.\n            if(selected && alpha!==-Infinity && child.value===selected.score &&\n                (rep<repetitions || typeof options.random==='function')){\n              ctx.rootResearches++;\n              child=visit(next,depth-1,-Infinity,Infinity,player,ctx);\n            }\n            return {rep,child};\n          },next);\n          const pv=[action];for(let link=child.line;link;link=link.next)pv.push(link.action);\n          const line={action,score:child.value,pv};\n          lines.push({line,rep});\n          if (!selected || line.score>selected.score || line.score===selected.score && rep<repetitions) {\n            selected=line; repetitions=rep; ties=1;\n          } else if (line.score===selected.score && rep===repetitions && typeof options.random==='function') {\n            ties++;\n            if (options.random()<1/ties) selected=line;\n          }\n          if(selected.score>=upper)break;\n        }\n        lines.sort((a,b)=>b.line.score-a.line.score || a.rep-b.rep);\n        const ranked=[selected,...lines.map(x=>x.line).filter(line=>line!==selected)];\n        return {...selected,ranked};\n        };\n        const aspiration=options.aspiration !== false && adapter.scoreStep !== undefined && options.multiPv===1 && Number.isFinite(completed.score);\n        let window=options.aspirationWindow,lower=aspiration?completed.score-window:-Infinity,upper=aspiration?completed.score+window:Infinity;\n        let result=iteration(lower,upper),retries=0;\n        while(result.score<=lower || result.score>=upper){\n          ctx.aspirationResearches++;window*=4;retries++;\n          lower=retries<3?completed.score-window:-Infinity;\n          upper=retries<3?completed.score+window:Infinity;\n          result=iteration(lower,upper);\n        }\n        const {ranked,...selected}=result;\n        completed={...selected,completedDepth:depth,stopped:false,variations:ranked.slice(0,options.multiPv)};\n        // Publish and reorder only a fully completed, exact iteration.\n        actions=ranked.map(line=>line.action);\n        options.onIteration?.({depth,score:completed.score,nodes:ctx.nodes,pv:[...completed.pv]});\n        // A selective fail-low may have skipped a defense: never call it a proof.\n        if(options.stopOnProvenWin && !options.lateMoveReduction && !options.forkThreatEvasions && adapter.isProvenWin?.(completed.score))break;\n      }\n    } catch (error) {\n      if (error !== STOP) throw error;\n      completed.stopped=true;\n    }\n    return {...completed,requestedDepth:options.depth,nodes:ctx.nodes,quiescenceNodes:ctx.quiescenceNodes,\n      stats:{cutoffs:ctx.cutoffs,cacheHits:ctx.cacheHits,tableCutoffs:ctx.tableCutoffs,hintHits:ctx.hintHits,\n        rootResearches:ctx.rootResearches,pvsResearches:ctx.pvsResearches,aspirationResearches:ctx.aspirationResearches,historyHits:ctx.historyHits,evaluations:ctx.evaluations,actionGenerations:ctx.actionGenerations,countGenerations:ctx.countGenerations,\n        reducedSearches:ctx.reducedSearches,reductionResearches:ctx.reductionResearches,protectedReductions:ctx.protectedReductions,\n        transitions:ctx.transitions,tableEntries:ctx.cache?.size ?? 0,hintEntries:ctx.hints?.size ?? 0}};\n  }\n  function score(position, player, depth=3, options={}) {\n    if (!Number.isInteger(depth) || depth<0 || depth>100) throw new RangeError('Depth must be 0\u2013100');\n    const resolved=optionsFor({...options,depth:Math.max(1,depth)});\n    const ctx=context(resolved);\n    if(ctx.reversible)position=adapter.prepare?adapter.prepare(position,resolved):structuredClone(position);\n    return visit(position,depth,-Infinity,Infinity,player,ctx).value;\n  }\n  return Object.freeze({choose,score});\n}\n",
+  "hashes": {
+    "src/search.js": "ed867633e5f6fc9ab56f76807be78b1b52aa38115f024dd022de8fe6fef847c2",
+    "src/bot.js": "c45c23a129f692b014e543aa12b57441b591b73804db133afc6eaa6ecd04f310",
+    "research/competitive-engine-v1/js-late-horizons.json": "4edfb1d11ddf26d767000505a1e642e0802ea400c00a8b4d82211be94de3c5e6"
+  },
+  "scriptSha256": "12d1525479dbf65a47ce9436732723dba406eba0bf276ab323a90ebbf691004d"
+}

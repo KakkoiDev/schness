@@ -1,0 +1,5 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const base=await import('/Users/kakkoidev/Documents/ChatGPT/Schness/src/bot.js');const candidate=await import('/tmp/schness-king-escape-candidate/src/bot.js');
+const d=JSON.parse(fs.readFileSync('research/competitive-engine-v1/js-king-escape-geometry.json')),rows=[];
+for(const c of d.cases){const before=JSON.stringify(c.position),a=base.schnessSearch.score(c.position,'white',0,{profile:'competitive'}),b=candidate.schnessSearch.score(c.position,'white',0,{profile:'competitive'}),expected=d.rows.filter(x=>x.id===c.id).reduce((s,r)=>s+(r.resultingSafe-r.oldSafe)*(r.owner==='white'?1:-1)*14,0);assert.equal(b-a,expected);assert.equal(JSON.stringify(c.position),before);if(b!==a)rows.push({id:c.id,base:a,candidate:b,expected});}
+fs.writeFileSync('research/competitive-engine-v1/js-king-escape-static-validation.json',JSON.stringify({purpose:'Actual competitive depth0 evaluator delta equals independently measured resulting safe-count difference times existing14 coefficient; all128positions unchanged inputs.',rows,checked:128},null,2)+'\n');console.log(rows);

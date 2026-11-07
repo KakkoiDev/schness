@@ -1,0 +1,72 @@
+{
+  "status": "needs-engine-analysis",
+  "pid": 14173,
+  "updatedAt": 1793080703.046813,
+  "first": "/Users/kakkoidev/Documents/ChatGPT/Schness/output/local-experiments/competitive-r5-fairy-screen-2026-10-27",
+  "screen": "/Users/kakkoidev/Documents/ChatGPT/Schness/output/local-experiments/competitive-r6-fairy-screen-2026-10-27",
+  "confirmation": "/Users/kakkoidev/Documents/ChatGPT/Schness/output/local-experiments/competitive-r6-fairy-confirmation-2026-10-27",
+  "rates": {
+    "targetWinRate": 0.51,
+    "targetReached": false,
+    "candidateWins": 12,
+    "winRate": 0.375,
+    "complete": true,
+    "completed": 32,
+    "total": 32,
+    "sourceFingerprint": "ab36feae4b2a2d9ca7442fd26c35b12169eea8af128fd156438cf9adf55b0a14",
+    "rows": {
+      "white": {
+        "games": 16,
+        "candidateWins": 9,
+        "fairyWins": 6,
+        "draws": 1,
+        "drawReasons": {
+          "threefold-repetition": 1
+        },
+        "candidateMillis": 4019799.9049999993,
+        "fairyMillis": 37764.2599999737,
+        "candidateDecisions": 402,
+        "fairyDecisions": 393,
+        "candidateDepth": 3640,
+        "fairyDepth": 18661,
+        "winRate": 0.5625,
+        "score": 0.59375,
+        "candidateMeanMillis": 9999.502251243779,
+        "candidateMeanDepth": 9.054726368159203,
+        "fairyMeanMillis": 96.09226463097633,
+        "fairyMeanDepth": 47.48346055979644,
+        "candidateDepthRange": {
+          "min": 5,
+          "median": 9,
+          "max": 16
+        }
+      },
+      "black": {
+        "games": 16,
+        "candidateWins": 3,
+        "fairyWins": 12,
+        "draws": 1,
+        "drawReasons": {
+          "threefold-repetition": 1
+        },
+        "candidateMillis": 4269794.910000026,
+        "fairyMillis": 42424.65000004694,
+        "candidateDecisions": 427,
+        "fairyDecisions": 440,
+        "candidateDepth": 3909,
+        "fairyDepth": 20407,
+        "winRate": 0.1875,
+        "score": 0.21875,
+        "candidateMeanMillis": 9999.519695550413,
+        "candidateMeanDepth": 9.15456674473068,
+        "fairyMeanMillis": 96.41965909101577,
+        "fairyMeanDepth": 46.37954545454546,
+        "candidateDepthRange": {
+          "min": 6,
+          "median": 9,
+          "max": 13
+        }
+      }
+    }
+  }
+}

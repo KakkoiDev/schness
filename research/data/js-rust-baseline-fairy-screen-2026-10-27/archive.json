@@ -1,0 +1,20 @@
+{
+  "run": "js-rust-baseline-fairy-screen-2026-10-27",
+  "sourceFingerprint": "5547c6ec0c883abcc1adab491b10f85ee4fa45cdafdcd1bc351a45b51509ea61",
+  "games": 32,
+  "archiveBytes": 1494738,
+  "archiveSha256": "4248f85fe136ac8e01eda9a3defe9df2d46382f84cd7db89768d060a0b5c89a0",
+  "parts": [
+    {
+      "path": "js-rust-baseline-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "5c24dc7f15c0955d4c8171da88fa3c86eed9cc96af61f06d8815be63f818f2ba"
+    },
+    {
+      "path": "js-rust-baseline-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 446162,
+      "sha256": "82c0c088c94bde09799c7984c4a933967378381eef4c696c0a97601bbf9b38eb"
+    }
+  ],
+  "restore": "cat js-rust-baseline-fairy-screen-2026-10-27.tar.gz.part* > js-rust-baseline-fairy-screen-2026-10-27.tar.gz; tar -xzf js-rust-baseline-fairy-screen-2026-10-27.tar.gz"
+}

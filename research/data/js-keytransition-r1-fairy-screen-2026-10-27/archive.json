@@ -1,0 +1,20 @@
+{
+  "run": "js-keytransition-r1-fairy-screen-2026-10-27",
+  "sourceFingerprint": "7907d568d228ad8c022baf5c96926a85f54494211ebca71e24235a242f68a9f7",
+  "games": 32,
+  "archiveBytes": 1517257,
+  "archiveSha256": "996e592cdddeeaa86c488dfa43b5950e84fe9924c7a3ddd5098687ed911f49cb",
+  "parts": [
+    {
+      "path": "js-keytransition-r1-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "deb36ebc8754fe93698ec99446fe26b18b87266fc8defefabcb139fb52723d86"
+    },
+    {
+      "path": "js-keytransition-r1-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 468681,
+      "sha256": "4b6fd0508e9f4e65635c0c9c3de4e6464f9d6e78547c83a05ae49028665b4e20"
+    }
+  ],
+  "restore": "cat js-keytransition-r1-fairy-screen-2026-10-27.tar.gz.part* > js-keytransition-r1-fairy-screen-2026-10-27.tar.gz; tar -xzf js-keytransition-r1-fairy-screen-2026-10-27.tar.gz"
+}

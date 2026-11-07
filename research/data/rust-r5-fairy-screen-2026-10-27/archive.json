@@ -1,0 +1,20 @@
+{
+  "run": "rust-r5-fairy-screen-2026-10-27",
+  "sourceFingerprint": "a1988a40d346f3b80d3af02129c39709e5621fbe922dde90d67f2bfed7a77496",
+  "games": 32,
+  "archiveBytes": 1895461,
+  "archiveSha256": "20510a0d248c788d936f36a78dbd953880451e90506690b93320d497c170da0c",
+  "parts": [
+    {
+      "path": "rust-r5-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "e05bb2dd8cc7a1bbe5ad62f166b3e337ecd20830ad15a1fb88d3628939ce359a"
+    },
+    {
+      "path": "rust-r5-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 846885,
+      "sha256": "bc22d2080980097dd66b1beb3d3d583ac55375488596cbddbf02995fa88f49be"
+    }
+  ],
+  "restore": "cat rust-r5-fairy-screen-2026-10-27.tar.gz.part* > rust-r5-fairy-screen-2026-10-27.tar.gz; tar -xzf rust-r5-fairy-screen-2026-10-27.tar.gz"
+}

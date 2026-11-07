@@ -1,0 +1,41 @@
+✔ direct generation and count-only mobility match frozen legal lists across every preset (117.019792ms)
+✔ check and pin prefilters preserve every move on randomized positions (28.300167ms)
+✔ public actions remain independent while trusted search actions are frozen pooled values (0.173708ms)
+✔ leaf mobility uses count-only generation and rejects invalid adapter counts (0.587791ms)
+✔ linked principal variations remain legal, independent and equal-score to frozen search (5689.26775ms)
+✔ 4×4 masks match independent legacy attacks, including blockers and duplicate pieces (9.535416ms)
+✔ all production presets retain legal moves, results and reversible transitions (463.864875ms)
+✔ incremental evaluation and mutable search agree with the legacy engine for every preset (490.7605ms)
+✔ reversible search unwinds on budget exhaustion and adapter exceptions (0.442292ms)
+✔ undo restores explicit zero history entries and exact bank ordering (0.175416ms)
+✔ PVS and move ordering match exhaustive minimax with transpositions and extra turns (39.749917ms)
+✔ history-sensitive scoring and tactical extensions match the frozen engine (136.684666ms)
+✔ Schness tactical corpus has independently exhaustive mate answers and legal search lines (177.243708ms)
+✔ optimized safety proof matches full simulation on 5,000 sparse and malformed boards (62.670333ms)
+✔ search supports different win/loss objectives without changes to search (0.828417ms)
+✔ budgeted iterative search respects node cap and returns only complete depth or legal fallback (0.315917ms)
+✔ strength is a validated deterministic budget, not a claimed Elo (0.167209ms)
+✔ Schness adapter budgets return a legal action without mutating position (3.419541ms)
+✔ optional tactical extension sees a recapture beyond the nominal horizon (0.432542ms)
+✔ danger forbids standing pat and searches quiet forced replies (0.147083ms)
+✔ extra turns use the actual player identity rather than alternating signs (0.126375ms)
+✔ ranked lines are distinct, sorted, legal and agree with uncached search (0.352ms)
+✔ tactical nodes share the cap and incomplete iterations publish no partial lines (0.257583ms)
+✔ adapter failures and invalid analysis options fail explicitly (0.301ms)
+✔ Schness analysis continuations replay legally and preserve the source state (13.751333ms)
+✔ tic-tac-toe search agrees with exhaustive minimax on every reachable state (150.517208ms)
+✔ level equals requested lookahead, with honest zero and budget-limited results (0.209208ms)
+✔ time exhaustion returns an honest fallback and terminal roots never expand (0.093458ms)
+✔ play prunes root alternatives while multi-PV retains exact alternative scores (0.1815ms)
+✔ fail-low equality cannot masquerade as a real tie for randomness or repetition (0.154291ms)
+✔ bounded cache and cross-iteration hints preserve exact-depth minimax (0.85125ms)
+✔ random transposition graphs agree with independent exhaustive minimax at every depth (16.206041ms)
+✔ per-node legal actions are lazy and shared by terminal, search and evaluation (0.097584ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5886.476708

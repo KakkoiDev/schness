@@ -89,9 +89,9 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 @media(max-width:760px){.game{padding-inline:.85rem}header{margin-bottom:1.5rem}.menu{display:flex;min-height:auto;flex-direction:column;align-items:stretch;gap:1.4rem}.game-page header{margin-bottom:.3rem}.game-page .eyebrow{display:none}.match-actions{margin-bottom:.15rem}.player{min-height:3.7rem}}
 @media(max-width:390px){.game-page h1{font-size:1.55rem}.header-actions{gap:0}.text-button{padding-inline:.42rem;font-size:.8rem}.bank{min-width:8.6rem}.bank-piece{width:2.55rem}.chat-heading small{font-size:.68rem}}
 .lobby-page .game{width:min(100%,42rem);padding-inline:clamp(1rem,5vw,2rem)}
-.lobby-page header{margin-bottom:clamp(4rem,12vh,7rem)}
+.lobby-page header{margin-bottom:var(--space-4)}
 .lobby-page .menu{display:block;min-height:0}
-.lobby-page .lobby-intro{margin-bottom:2.75rem}
+.lobby-page .lobby-intro{margin-bottom:var(--space-4)}
 .lobby-page .lobby-intro h1{margin:0 0 1rem;font-size:clamp(2.25rem,8vw,3.75rem);letter-spacing:-.055em}
 .lobby-page .lobby-intro>p{max-width:34rem;margin:0;color:var(--muted);font-size:1rem;line-height:1.65}
 .lobby-page .mode-buttons{display:grid;gap:var(--space-3)}
@@ -105,12 +105,11 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 .lobby-page .mode-primary::after{color:var(--inverse)}
 
 /*
- * The playable home board. Desktop only: at phone width it pushes the four
- * actions below the fold, and the mobile home stays a menu.
+ * The playable home board is the primary action at every width.
  */
-.lobby-play{display:none;width:min(100%,22rem);margin:0 0 var(--space-6)}
+.lobby-play{display:block;width:min(100%,22rem);margin:0 0 var(--space-6)}
 .lobby-seat{display:flex;min-height:3.25rem;align-items:center;justify-content:space-between;gap:var(--space-3)}
-.lobby-seat .bank-piece,.lobby-seat .bank-slot{width:2.6rem}
+.lobby-seat .bank-piece,.lobby-seat .bank-slot{width:2.75rem;min-width:2.75rem}
 .lobby-play>.lobby-seat:first-of-type{margin-bottom:var(--space-2)}
 .lobby-play>.lobby-seat:last-of-type{margin-top:var(--space-2)}
 .lobby-foot{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);margin:var(--space-3) 0 0;color:var(--muted);font-size:.8125rem}
@@ -2388,3 +2387,8 @@ h1,h2,h3,h4,h5,h6,strong,b,th,legend,summary { font-weight: 640 }
 
 .bank-piece { position:relative }
 .bank-count { position:absolute;right:1px;bottom:0;font-size:.7rem;line-height:1;padding:2px;background:var(--paper);color:var(--ink);border-radius:var(--radius-control);pointer-events:none }
+
+/* Quiet-drop refusals use the same striped state as the Classic reference. */
+.square.refused{cursor:not-allowed}
+.square.refused::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(45deg,rgb(158 34 51 / .26) 0 3px,transparent 3px 7px);box-shadow:inset 0 0 0 2px var(--danger)}
+@media(max-width:760px){.lobby-page .lobby-intro h1{font-size:1.75rem;margin-bottom:.4rem}.lobby-page .lobby-intro>p{font-size:.875rem}.lobby-play{width:min(100%,17rem);margin-inline:auto}.lobby-foot{align-items:flex-start}.lobby-foot button{flex-shrink:0}}

@@ -1,0 +1,20 @@
+✔ direct generation and count-only mobility match frozen legal lists across every preset (118.964458ms)
+✔ check and pin prefilters preserve every move on randomized positions (30.074041ms)
+✔ public actions remain independent while trusted search actions are frozen pooled values (0.19525ms)
+✔ leaf mobility uses count-only generation and rejects invalid adapter counts (0.742625ms)
+✔ linked principal variations remain legal, independent and equal-score to frozen search (5896.444542ms)
+✔ 4×4 masks match independent legacy attacks, including blockers and duplicate pieces (9.647667ms)
+✔ all production presets retain legal moves, results and reversible transitions (502.515916ms)
+✔ incremental evaluation and mutable search agree with the legacy engine for every preset (579.893667ms)
+✔ reversible search unwinds on budget exhaustion and adapter exceptions (0.471667ms)
+✔ undo restores explicit zero history entries and exact bank ordering (0.114584ms)
+✔ PVS and move ordering match exhaustive minimax with transpositions and extra turns (41.530584ms)
+✔ history-sensitive scoring and tactical extensions match the frozen engine (145.7505ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6103.560041

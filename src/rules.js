@@ -1,4 +1,4 @@
-import {boardMasks, masksAfter, masksAttack, masksInCheck, maskAttackers, betweenMask, alignedSliders} from './board-masks.js';
+import {boardMasks, masksCheckAfterDrop, masksAfter, masksAttack, masksInCheck, maskAttackers, betweenMask, alignedSliders} from './board-masks.js';
 export const BOARD_SIZE = 4;
 export const WHITE = 'white';
 export const BLACK = 'black';
@@ -9,6 +9,22 @@ export const KNIGHT = 'knight';
 export const BANK_PIECES = Object.freeze([ROOK, BISHOP, KNIGHT]);
 export const DEFAULT_RULES = Object.freeze({ allowCheckingDrops: false });
 const CHECKING_DROPS_RULES = Object.freeze({ allowCheckingDrops: true });
+// Normalized rules are frozen. Cache only primitive-valued configurations;
+// callers may still mutate nested extension objects on otherwise frozen rules.
+const RULE_SERIALIZATIONS = new WeakMap();
+function serializedRules(rules) {
+  let cached=RULE_SERIALIZATIONS.get(rules);
+  if(cached===undefined){
+    cached=Object.values(rules).every(v=>v===null || ['string','number','boolean','undefined'].includes(typeof v))?JSON.stringify(rules):null;
+    RULE_SERIALIZATIONS.set(rules,cached);
+  }
+  return cached===null?JSON.stringify(rules):cached;
+}
+function bankKey(bank) {
+  let bishops=0,knights=0,rooks=0;
+  for(const piece of bank){if(piece===BISHOP)bishops++;else if(piece===KNIGHT)knights++;else if(piece===ROOK)rooks++;else return [...bank].sort().map(p=>PIECE_CODE[p]).join('');}
+  return 'B'.repeat(bishops)+'N'.repeat(knights)+'R'.repeat(rooks);
+}
 
 const PLAYERS_ARRAY = [WHITE, BLACK];
 const PLAYERS = new Set(PLAYERS_ARRAY);
@@ -148,11 +164,12 @@ function generateLegalActions(position, suppliedMasks, countOnly=false) {
     if(action.type==='move' && board[action.from].piece!==KING && singleKing){
       count++;if(actions)actions.push(action);return;
     }
-    const next=masksAfter(masks,board,player,action,scratch);
+    const simpleDrop=action.type==='drop' && singleKing;
+    const next=simpleDrop?null:masksAfter(masks,board,player,action,scratch);
     // Adding a piece cannot uncover an attack; drops must already block every
     // checking ray. King moves and malformed boards still need the full test.
     if((action.type!=='drop' || !singleKing) && masksInCheck(next,player))return;
-    if(action.type==='drop' && masksInCheck(next,enemy)){
+    if(action.type==='drop' && (simpleDrop?masksCheckAfterDrop(masks,player,action.piece,action.to):masksInCheck(next,enemy))){
       if(!checkingDropAllowed(position,action))return;
       // Checking-drop replies consume reserves, so recursive mate legality terminates.
       if(rules.experiment==='no-drop-mate' && !generateLegalActions(applyUnchecked(position,action,false),undefined,true))return;
@@ -249,8 +266,8 @@ export function positionKey(position) {
     if (!occupant) return '--';
     return `${occupant.owner[0]}${PIECE_CODE[occupant.piece]}`;
   }).join('');
-  const whiteBank = [...position.banks[WHITE]].sort().map((piece) => PIECE_CODE[piece]).join('');
-  const blackBank = [...position.banks[BLACK]].sort().map((piece) => PIECE_CODE[piece]).join('');
+  const whiteBank = bankKey(position.banks[WHITE]);
+  const blackBank = bankKey(position.banks[BLACK]);
   const rules = rulesOf(position).allowCheckingDrops ? 'checking-drops' : 'quiet-drops';
   const researchRules = rulesOf(position);
   const rights = researchRules.experiment === 'protected-opening' ? PLAYERS_ARRAY.map(player => position.research.deployed[player].length > 0)
@@ -259,7 +276,7 @@ export function positionKey(position) {
         : researchRules.experiment === 'limited-check' ? position.research.checkingDrops
           : researchRules.experiment === 'cooldown' ? position.research.lastCheckingDrop
       : researchRules.experiment === 'quiet-return' ? { turns: position.research.turns, deployed: position.research.deployed } : null;
-  const extra = researchRules.experiment ? `|${JSON.stringify(researchRules)}|${JSON.stringify(rights)}` : '';
+  const extra = researchRules.experiment ? `|${serializedRules(researchRules)}|${JSON.stringify(rights)}` : '';
   return `${rules}${extra}|${position.phase}|${position.turn}|${board}|${whiteBank}|${blackBank}`;
 }
 
@@ -307,8 +324,8 @@ function applyUnchecked(position, action, countRepetition) {
 /** Isolated mutable state for a single synchronous search, never a UI/replay state. */
 export function createSearchPosition(position) { return clonePosition(position); }
 
-/** Search-only reversible transition. The caller must supply a generated legal action. */
-export function makeSearchAction(position, action) {
+/** Search-only reversible transition. Supply a generated legal action; optional masks must describe its resulting board. */
+export function makeSearchAction(position, action, nextMasks) {
   const player=position.turn;
   const undo={action,turn:player,phase:position.phase,to:position.board[action.to],
     from:action.type==='move'?position.board[action.from]:null};
@@ -316,7 +333,7 @@ export function makeSearchAction(position, action) {
     undo.research={turns:position.research.turns[player],checkingDrops:position.research.checkingDrops[player],
       lastCheckingDrop:position.research.lastCheckingDrop[player],deployed:position.research.deployed[player].slice()};
   }
-  advancePosition(position,action,true,undo);
+  advancePosition(position,action,true,undo,nextMasks);
   return undo;
 }
 
@@ -330,7 +347,7 @@ export function unmakeSearchAction(position, undo) {
   position.turn=player;position.phase=undo.phase;
 }
 
-function advancePosition(next, action, countRepetition, undo) {
+function advancePosition(next, action, countRepetition, undo, suppliedNextMasks) {
   const player = next.turn;
   const phase = next.phase;
   const rules = rulesOf(next);
@@ -367,7 +384,7 @@ function advancePosition(next, action, countRepetition, undo) {
   }
 
   if (rules.experiment && action.type !== 'place-king') {
-    const wasCheckingDrop = action.type === 'drop' && boardInCheck(next.board, opponent(player));
+    const wasCheckingDrop = action.type === 'drop' && (suppliedNextMasks ? masksInCheck(suppliedNextMasks,opponent(player)) : boardInCheck(next.board, opponent(player)));
     next.research.checkingDrops[player] = Math.min(1, next.research.checkingDrops[player] + Number(wasCheckingDrop));
     next.research.lastCheckingDrop[player] = wasCheckingDrop;
     next.research.turns[player] = Math.min(3, next.research.turns[player] + 1);

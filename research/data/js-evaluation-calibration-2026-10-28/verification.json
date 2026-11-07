@@ -1,0 +1,12 @@
+{
+  "manifestFiles": 15,
+  "positions": 64,
+  "games": 0,
+  "rawCp": 45,
+  "rawMate": 19,
+  "sourceManifestHashesPass": true,
+  "termSumAndPerspectiveAssertions": "executed inside frozen diagnostic runtime at every root",
+  "fullHistoryPreflight": "all64 exactly replayed frozen/current full positions before any teacher query",
+  "initialAttempt": "browser permission failure beforequeries retained; unchanged authorized browser rerun completed once",
+  "uciSetupRecordingBoundary": "Command recorder starts after configuration readiness. All teacher/perft commands and responses are captured; exact preceding setup commands retained in frozen collector source, initial UCI/options/responses in environment/traffic."
+}

@@ -95,7 +95,7 @@ export function setBoardOrientation(element, orientation = 'white') {
 }
 
 export function renderBoard(element, position, {
-  selected = null, targets = new Set(), placements = new Set(), last = null,
+  selected = null, targets = new Set(), refused = new Set(), placements = new Set(), last = null,
   dragging = null, disabled = false, checked = checkedSquares(position), cursor = null,
   mate = checked.size ? checkmateSquare(position) : null,
   label = defaultLabel,
@@ -110,6 +110,9 @@ export function renderBoard(element, position, {
     cell.replaceChildren(...(occupant ? [pieceElement(occupant.owner, occupant.piece)] : []), coordinate);
     cell.classList.toggle('selected', selected === square);
     cell.classList.toggle('target', targets.has(square));
+    cell.classList.toggle('refused', refused.has(square));
+    if (refused.has(square)) cell.setAttribute('title', 'A dropped piece may not give check.');
+    else cell.removeAttribute('title');
     cell.classList.toggle('placement', placements.has(square));
     cell.classList.toggle('capture', targets.has(square) && Boolean(occupant));
     cell.classList.toggle('in-check', checked.has(square));

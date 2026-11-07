@@ -1,0 +1,20 @@
+{
+  "run": "rust-r4-fairy-screen-2026-10-27",
+  "sourceFingerprint": "44d1494eefe934f4ce3c02eb81a4f7db04634d4eeee11c77c5694392a8173173",
+  "games": 32,
+  "archiveBytes": 1903127,
+  "archiveSha256": "0452bb558392243d41c935ae3ce7bae0aae7dc04bd9f540e83b21c107051deeb",
+  "parts": [
+    {
+      "path": "rust-r4-fairy-screen-2026-10-27.tar.gz.part001",
+      "bytes": 1048576,
+      "sha256": "e35eb900ec5932a76745d170128ed2f0e37c57885cd605227971033119d0e7a8"
+    },
+    {
+      "path": "rust-r4-fairy-screen-2026-10-27.tar.gz.part002",
+      "bytes": 854551,
+      "sha256": "714700d4b27634ca78f88dd9ce4e6f472e0331a736b05a35edb6b899362270ab"
+    }
+  ],
+  "restore": "cat rust-r4-fairy-screen-2026-10-27.tar.gz.part* > rust-r4-fairy-screen-2026-10-27.tar.gz; tar -xzf rust-r4-fairy-screen-2026-10-27.tar.gz"
+}
