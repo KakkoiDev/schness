@@ -70,12 +70,10 @@
 .ref-state figcaption { padding-top: .4rem; font-size: .75rem; color: var(--muted); }
 .ref-state .board { pointer-events: none; }
 
-/* PROPOSED — does not ship yet. A drop that would give check is refused; the
-   square says so rather than silently clearing the selection. */
-.square.refused { cursor: not-allowed; }
-.square.refused::after { content: ""; position: absolute; inset: 0;
-  background-image: repeating-linear-gradient(45deg, rgb(158 34 51 / .26) 0 3px, transparent 3px 7px);
-  box-shadow: inset 0 0 0 2px var(--danger); }
+/* SHIPPED since 2026-10. .square.refused now lives in styles.css:2392 and
+   board-ui.js passes a refused set, so this file no longer defines it — the
+   reference shows the real rule. Kept as a note because the October pass
+   proposed it here. */
 
 /* PROPOSED — the brand mark as an <img>, replacing the Arial letterform tile. */
 .brand-mark-img { display: block; }
@@ -112,3 +110,34 @@
   padding: var(--space-4, 16px); border-radius: var(--radius-card, 10px);
   background: var(--paper); color: var(--ink);
 }
+
+/* ---- deliverable 3: refused-drop screen ---------------------------------- */
+.ref-narrow { max-width: 46rem; }
+.ref-h2 { margin: 0 0 .4rem; font-size: 1.15rem; letter-spacing: -.03em; }
+.ref-cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: var(--space-5, 24px); margin-top: var(--space-5, 24px); }
+.ref-case { border: 1px solid var(--line); border-radius: var(--radius-card, 10px);
+  background: var(--surface); padding: var(--space-4, 16px); }
+.ref-case-ok { border-left: 3px solid var(--ok); }
+.ref-case-todo { border-left: 3px solid var(--warn); }
+.ref-case-tag { margin: 0 0 var(--space-3, 12px); font-size: .68rem; font-weight: 750;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.ref-case-note { margin: var(--space-3, 12px) 0 0; font-size: .8rem; line-height: 1.6; color: var(--muted); }
+
+.ref-gamebar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--space-3, 12px); }
+.ref-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--paper); font-size: .8rem; }
+.ref-chip-variant { border-color: var(--accent); color: var(--accent-text); font-weight: 640; }
+.ref-seatdot { width: 11px; height: 11px; border-radius: 3px; background: #FBF7EC; border: 1px solid var(--line); }
+
+.ref-proposal { margin-top: var(--space-7, 40px); padding-top: var(--space-5, 24px);
+  border-top: 1px solid var(--hairline); }
+.ref-copy { display: grid; grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr);
+  gap: 0 var(--space-4, 16px); margin: var(--space-4, 16px) 0 0; }
+.ref-copy dt { padding: var(--space-3, 12px) 0; border-top: 1px solid var(--hairline);
+  font-size: .85rem; font-weight: 640; }
+.ref-copy dd { margin: 0; padding: var(--space-3, 12px) 0; border-top: 1px solid var(--hairline);
+  font-size: .85rem; line-height: 1.6; color: var(--muted); }
+.ref-flag { display: inline-block; margin-left: .4rem; padding: 1px 7px; border-radius: 999px;
+  background: var(--warn); color: var(--inverse); font-size: .6rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; vertical-align: 1px; }
